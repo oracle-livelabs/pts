@@ -1,0 +1,25 @@
+{
+    "workshoptitle": "Capture Oracle Database Changes for CI/CD",
+    "tutorials": [
+        {
+            "title": "Lab 1: Development environment preparation",
+            "description": "Provision Oracle Cloud Infrastructure basic resources to Capture Oracle Database Changes for CI/CD.",
+            "filename": "./../../introduction/intro-cicd-pts.md"
+        },
+        {
+            "title": "Lab 2: Use SQLcl to Capture Database Changes with Liquibase",
+            "description": "This lab shows how easy it is to capture changes in Oracle Database using Liquibase, from SQLcl command line, and push them to your GitHub repository.",
+            "filename": "./../../sqlcl-cicd/sqlcl-cicd.md"
+        },
+        {
+            "title": "Lab 3: Use SQL Developer to Capture Database Changes with Liquibase",
+            "description": "This lab shows how easy it is to capture changes in Oracle Database using Liquibase, from SQL Developer worksheet GUI, and push them to your GitHub repository.",
+            "filename": "./../../sqldev-cicd/sqldev-cicd.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+        }
+    ]
+}

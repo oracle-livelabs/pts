@@ -1,0 +1,41 @@
+{
+  "workshoptitle": "Oracle Machine Learning for Python (OML4Py)",
+  "help": "livelabs-help-db_us@oracle.com",
+  "tutorials": [
+      {
+      "title": "Introduction",
+      "description": "Introduction",
+      "filename": "../../introduction/introduction.md"
+      },
+      {
+      "title": "Lab 1: Environment Setup",
+      "description": "Verify Setup of compute instance",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/verify-compute/verify-compute-novnc.md"
+      },
+      {
+      "title": "Lab 2: Initialize Environment",
+      "description": "Initialize Environment",
+      "filename": "../../initialize-environment-novnc/initialize-environment-novnc.md"
+      },
+      {
+      "title": "Lab 3: Understanding Dataset",
+      "description": "Understanding the Customer Insurance dataset to be used in the lab excercises.",
+      "filename": "./../../../use-case/use-case.md"
+      },
+      {
+      "title": "Lab 4: OML4Py - Part 1",
+      "description": "Handson lab for using OML4Py.",
+      "filename": "./../../oml4py1/oml4py1.md"
+      },
+      {
+      "title": "Lab 5: OML4Py - Part 2 (optional)",
+      "description": "Handson lab for using OML4Py.",
+      "filename": "./../../oml4py2/oml4py2.md"
+      },
+      {
+      "title": "Need Help?",
+      "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-livelabs.md"
+    }
+  ]
+}

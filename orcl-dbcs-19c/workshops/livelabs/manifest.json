@@ -1,0 +1,51 @@
+{
+    "workshoptitle": "Oracle Database Cloud Service Workshop",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction to Oracle Database Cloud Service (DBCS).",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
+            "title": "Lab 1: Oracle Cloud Infrastructure (OCI)",
+            "description": "Oracle Cloud Infrastructure (OCI).",
+            "filename": "./../../oci/oci.md"
+        },
+        {
+            "title": "Lab 2: Application Data Management and Administration",
+            "description": "Application Data Management and Administration.",
+            "filename": "./../../prepare/prepare.md"
+        },
+        {
+            "title": "Lab 3: Performance, Scalability and Elasticity",
+            "description": "Performance, Scalability and Elasticity.",
+            "filename": "./../../scaling-up/scaling-up.md"
+        },
+        {
+            "title": "Lab 4: Database Cloud Service Backup and Recovery",
+            "description": "Database Cloud Service Backup and Recovery.",
+            "filename": "./../../bkup-recovery/bkup-recovery.md"
+        },
+        {
+            "title": "Lab 5: Data Guard Physical Standby Database",
+            "description": "Data Guard Physical Standby Database.",
+            "filename": "./../../dataguard/dataguard.md"
+        },
+        {
+            "title": "Lab 6: Database Cloud Service Patching",
+            "description": "Database Cloud Service Patching.",
+            "filename": "./../../patching/patching.md"
+        },
+        {
+            "title": "Lab 7: Oracle Database Command Line Interface (DBCLI)",
+            "description": "Oracle Database Command Line Interface (DBCLI).",
+            "filename": "./../../dbcli/dbcli.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+        }
+        
+    ]
+}

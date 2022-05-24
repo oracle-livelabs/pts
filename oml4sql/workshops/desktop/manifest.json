@@ -1,0 +1,36 @@
+{
+  "workshoptitle": "Detect anomalies with OML4SQL using one-class support vector machine (SVM)",
+  "help": "livelabs-help-db_us@oracle.com",
+  "tutorials": [
+    {
+      "title": "Introduction",
+      "description": "Introduction",
+      "filename": "../../introduction/introduction.md"
+    },
+    {
+      "title": "Lab 1: Get Started with noVNC Remote Desktop",
+      "description": "Using noVNC Remote Desktop",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/remote-desktop/using-novnc-remote-desktop.md"
+    },
+    {
+   "title": "Lab 2: Initialize environment",
+   "description": "Initialize environment.",
+   "filename": "../../initialize-environment-novnc/initialize-environment-novnc.md"
+   },
+    {
+      "title": "Lab 3: Understand customer insurance use case",
+      "description": "Understanding the use case for this lab.",
+      "filename": "./../../oml4sql-use-case/oml4sql-use-case.md"
+    },
+    {
+      "title": "Lab 4: Detect anomalies with OML4SQL using one-class support vector machine (SVM)",
+      "description": "Handson lab for using OML4SQL.",
+      "filename": "./../../oml4sql-anomaly-detection/oml4sql-anomaly-detection.md"
+    },
+    {
+      "title": "Need Help?",
+      "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+    }
+  ]
+}

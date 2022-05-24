@@ -1,0 +1,31 @@
+{
+  "workshoptitle": "Oracle Multitenant Fundamentals",
+  "help": "livelabs-help-db_us@oracle.com",
+  "tutorials": [
+    {
+      "title": "Introduction",
+      "description": "Introduction to Multitenant Workshop",
+      "filename": "./../../intro/intro.md"
+    },
+    {
+      "title": "Lab 1: Environment Setup (Verify Only)",
+      "description": "Verify Setup of compute instance",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/verify-compute/verify-compute.md"
+    },
+    {
+      "title": "Lab 2: Clone, Plug and Drop",
+      "description": "Clone, Plug and Drop Pluggable Databases",
+      "filename": "./../../clone-plug-drop/clone-plug-drop.md"
+    },
+    {
+      "title": "Lab 3: Application Containers",
+      "description": "Using Application Containers with Multitenant",
+      "filename": "./../../app-containers/app-containers.md"
+    },
+    {
+      "title": "Need Help?",
+      "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+      "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-livelabs.md"
+    }
+  ]
+}

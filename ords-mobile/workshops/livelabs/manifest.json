@@ -1,0 +1,26 @@
+{
+    "workshoptitle": "Develop Mobile Apps using Oracle REST Data Services",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction to Oracle REST Data Services (ORDS).",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
+            "title": "Lab 1: Provision an Autonomous Database (ADW or ATP)",
+            "description": "This lab walks you through the steps to get started using the Oracle Autonomous Database (Autonomous Data Warehouse or Autonomous Transaction Processing) on Oracle Cloud.",
+            "filename": "./../../../../shared/adb-provision/adb-provision-conditional.md"
+        },
+        {
+            "title": "Lab 2: Develop Mobile Apps using Oracle REST Data Services",
+            "description": "This lab shows how easy it is to build a simple mobile application that uses Oracle REST Data Services (ORDS) and JSON documents support on Oracle Autonomous Database.",
+            "filename": "./../../ords-mobile/ords-mobile.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+        }
+        
+    ]
+}
