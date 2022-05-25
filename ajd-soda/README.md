@@ -15,7 +15,7 @@ Run this hands-on workshop to learn how to develop applications faster with open
 
 ## Access the Labs Using Our Web Interface
 
-**[Click here](https://oracle.github.io/learning-library/data-management-library/autonomous-database/developer/ajd-soda/index.html)** to use our easy to navigate HTML format.
+**[Click here](https://objectstorage.us-phoenix-1.oraclecloud.com/p/nYT7C9o-dyhoazDmqXHfgx4yfFCuyB9Ulg9GH3VuRYzRROjpMPQiVqIAZSrdRdOu/n/c4u02/b/pts/ajd-soda/index.html)** to use our easy to navigate HTML format.
 
 ## Oracle Cloud Account
 
