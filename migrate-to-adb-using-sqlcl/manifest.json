@@ -1,0 +1,68 @@
+
+
+{
+    "workshoptitle": "Roberts Doodlings",
+    "help": "robert.pastijn@oracle.com",
+    "tutorials": [
+        {
+            "title": "Welcome",
+            "description":"Welcome to my repo",
+            "filename":"./dir-welcome/welcome.md"
+        },
+        {
+            "title": "URLs and Links",
+            "description":"Various Links to other peoples resources",
+            "filename":"./dir-links/links.md"
+        },
+        {
+            "title": "Custom image from MP image",
+            "description":"Create custom image from Marketplace image",
+            "filename":"./dir-mp-to-custom/mp-to-custom.md"
+        },
+        {
+            "title": "Email from DBaaS",
+            "description":"Extra steps to send email from DBaaS",
+            "filename":"./dir-email/email.md"
+        },
+        {
+            "title": "Multitenant",
+            "description":"Some tests regarding Application Containers",
+            "filename":"./dir-multitenant/application-containers.md"
+        },
+        {
+            "title": "xRDP on Linux 7",
+            "description":"Setup xRDP on Linux 7 on OCI",
+            "filename":"./dir-xrdp/xrdp.md"
+        },
+        {
+            "title": "DBMS_CLOUD Rest",
+            "description":"Example for DBMS_CLOUD REST on ADB",
+            "filename":"./dir-dbms-cloud-rest/dbms-cloud-rest.md"
+        },
+        {
+            "title": "UTF8 issue NAT",
+            "description":"Example for issue with UTF8 on NAT create",
+            "filename":"./dir-utf8/utf8.md"
+        },
+        {
+            "title": "External SMTP for PaaS",
+            "description":"Forwarding to external SMTP server",
+            "filename":"./dir-external-smtp/external-smtp.md"
+        },
+        {
+            "title": "Change SPFILE",
+            "description":"Steps to change an SPFILE after a wrong parameter",
+            "filename":"./dir-spfile/spfile.md"
+        },
+        {
+            "title": "Setup for Vijay",
+            "description":"Changes on Vijays image for Marketplace",
+            "filename":"./dir-autosetup-db/autosetup-db.md"
+        },
+        {
+            "title": "Change AV Image",
+            "description":"Changing the image for WS",
+            "filename":"./dir-avimage/avimage.md"
+        }
+    ]
+}
