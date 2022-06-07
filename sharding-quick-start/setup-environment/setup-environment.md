@@ -22,7 +22,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [shardstack-nodomain-qs.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/shardstack-nodomain-qs.zip) - Packaged terraform primary database instances creation script.
+- [shardstack-marketplace-103-nodomain.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/DK02ZYKxgVDjrB-nP6TUTKdcopOFPKS0BQzI2jzCn9I_vDIgwhkI1SRrDmLqfUXK/n/c4u04/b/livelabsfiles/o/labfiles/shardstack-marketplace-103-nodomain.zip) - Packaged terraform primary database instances creation script.
 
 
 
@@ -325,7 +325,7 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Jan 2021
-* **Last Updated By/Date** - Minqiao Wang, Jul 2021
-* **Workshop Expiry Date** - Jul 2022
+* **Last Updated By/Date** - Minqiao Wang, Jun 2022
+* **Workshop Expiry Date** - Jun 2023
 
 
