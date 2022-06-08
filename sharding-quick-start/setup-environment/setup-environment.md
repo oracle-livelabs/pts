@@ -326,6 +326,5 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Jan 2021
 * **Last Updated By/Date** - Minqiao Wang, Jun 2022
-* **Workshop Expiry Date** - Jun 2023
 
 
