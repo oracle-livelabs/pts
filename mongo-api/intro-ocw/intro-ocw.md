@@ -33,14 +33,9 @@ In this lab, you will:
 Here is a video to help with the Oracle Trial Sign Up Process:
 [](youtube:4U-0SumNz6w)
 
-*At this point, you are ready to start learning! Please proceed.*
+**At this point, you are ready to start learning! Please proceed.**
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
 * **Last Updated By/Date** - Priscila Iruela, June 2022
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
