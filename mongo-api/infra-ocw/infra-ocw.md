@@ -493,7 +493,6 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![DB Actions JSON](./images/task4/db-actions-json.png)
 
-
 **You can proceed to the next lab…**
 
 ## Acknowledgements

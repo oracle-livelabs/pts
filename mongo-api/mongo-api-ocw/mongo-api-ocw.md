@@ -341,9 +341,7 @@ Now, we will change it to specifies IPs and VNs, using our Public IP Address.
 
     ![kill insert-mongoapi-app](./images/task4/insert-mongoapi-app-kill.png)
 
-
 **Congratulations! Well done!**
-
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
