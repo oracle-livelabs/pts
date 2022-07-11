@@ -8,12 +8,12 @@
         },
         {
             "title": "Get Started",
-             "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/cloud-login/pre-register-free-tier-account.md"
+             "filename": "https://oracle-livelabs.github.io/common//labs/cloud-login/cloud-login.md"
         },
         {
             "title": "Lab 1: Infrastructure Configuration",
             "description": "In this Lab you will create the infrastructure that we will need for this content. VCN, Compute, AJD and Prepare the document store.",
-            "filename": "./../../infra-ocw/infra-ocw.md"
+            "filename": "./../../infra-ocw/infra-ocw-free.md"
         },
             {
             "title": "Lab 2: Python SODA Micro-service with Autonomous Database for JSON",
@@ -28,7 +28,7 @@
         {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename":"https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+            "filename":"https://oracle-livelabs.github.io/common//labs/need-help/need-help-freetier.md"
         }
     ]
 }
