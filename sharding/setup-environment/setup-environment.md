@@ -18,7 +18,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [sdb19c-market-num.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb19c-market-num.zip) - Packaged terraform primary database instances creation script.
+- [sdb19c-market-19.14.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/B4ZlrnlqqkuR0_1-qQEKAlFclrnIEQyyd0ZSmwsweoDmNUVg7-Z0wQ8a4j4nfvCC/n/c4u04/b/livelabsfiles/o/labfiles/sdb19c-market-19.14.zip) - Packaged terraform primary database instances creation script.
 
 
 
@@ -214,5 +214,5 @@ You may now proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020
-* **Last Updated By/Date** - Andres Quintana, April 2022
+* **Last Updated By/Date** - Minqiao Wang, July 2022
 
