@@ -1140,7 +1140,153 @@ In this task, we build a classification model for LTV\_BIN prediction and then e
     How does the confusion matrix compare with the one generated previously?
 
 
-## Task 7 Conclusion
+## Task 7: Use Embedded R Functions to Leverage In-Database Parallel Processing
+
+Some of the most significant benefits of using OML4R can be derived from using Embedded R execution in your applications. Embedded R execution allows you to store and run R scripts in the database using R and SQL interfaces.
+
+1. Import libraries and connect to the database
+
+    ```
+    <copy>
+    library(ORE)
+    options(ore.warn.order=FALSE)
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-1.png "Import libraries")
+
+2. Select Algorithm and Build Machine Learning Model  
+
+    Organize data for training and testing.
+
+    ```
+    <copy>
+    CIL <- CUST_INSUR_LTV
+    row.names(CIL) <- CIL$CUST_ID
+
+    set.seed(1)
+    sampleSize <- 4500
+
+    ind <- sample(1:nrow(CIL),sampleSize)
+    group <- as.integer(1:nrow(CIL) %in% ind)
+    CIL.train <- CIL[group==FALSE,]
+    CIL.test <- CIL[group==TRUE,]
+
+    dim(CIL.train)
+    dim(CIL.test)
+    </copy>
+    ```
+
+    Let us first invoke a script with table as input and test using open source R test and the local R data frame.
+
+    ```
+    <copy>
+    cust_insur_ltv_loc <- ore.pull(CIL.train)
+    class(cust_insur_ltv_loc)
+    </copy>
+    ```
+
+    ```
+    <copy>
+    glm.fit <- function(dat){
+                 library(ORE)
+                 glm(LTV ~ N_MORTGAGES + MORTGAGE_AMOUNT + N_OF_DEPENDENTS, data = dat)}
+
+    mod.loc <- glm.fit(cust_insur_ltv_loc)
+    mod.loc
+    class(mod.loc)
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-2.png "Select Algorithm and Build Machine Learning Model")
+
+
+    Now, let us use ore.TableApply function to score the data in a database proxy table as input.
+
+    ```
+    <copy>
+    glm.fit.oml4r <- ore.tableApply(CIL.test, FUN=glm.fit)
+    glm.fit.oml4r
+    class(glm.fit.oml4r)
+    ore.pull(glm.fit.oml4r)
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-3.png "Use ore.TableApply function")
+
+
+3. Save Model in Datastore and
+
+    Save model in data store.
+
+    ```
+    <copy>
+    ore.save(glm.fit.oml4r, name = "GLMFITOML4R", overwrite = TRUE)
+    ore.datastore()
+    </copy>
+    ```
+
+    Create function for generating predictions for a given dataset.
+
+    ```
+    <copy>
+    glm.pred <- function(dat, mod){
+                  return(data.frame(pred=predict(mod, newdata = dat), LTV=dat$LTV))}
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-4.png "Create function for generating predictions for a given dataset")
+
+
+4. Score Data Using ore.rowApply
+
+    Let us first test locally, in open source R first.
+
+    ```
+    <copy>
+    scores.loc <- glm.pred(dat=cust_insur_ltv_loc, mod=mod.loc)
+    head(scores.loc)
+    class(scores.loc)
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-5.png "Score Data Using ore.rowApply")
+
+
+    Now score data using OML4R with database data
+
+    ```
+    <copy>
+    scores.oml4r <- ore.rowApply(CIL.test,
+                 FUN=glm.pred,
+                 mod=mod.loc,
+                 rows=200,
+                 ore.connect=TRUE,
+                 parallel=TRUE,
+                 FUN.VALUE=data.frame(pred=numeric(0),
+                                      LTV=numeric(0)))
+
+    class(scores.oml4r)
+    ore.pull(scores.oml4r)
+    </copy>
+    ```
+
+    Your output should look as follows:
+
+    ![embr](./images/embr-6.png "Score data using OML4R with database data")
+
+
+## Task 8: Conclusion
 
 ### Conclusion
 
