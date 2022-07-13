@@ -137,8 +137,8 @@ In this workshop we choose to co-locate the shard director software on the same 
 4. Download the GSM installation file. You can download it from [OTN](https://otn.oracle.com) or [edelivery](https://edelivery.oracle.com/) using your own account. We have downloaded it and save it in the object storage. You can use the following command to get the installation file.
 
     ```
-    [oracle@cata ~]$ <copy>wget https://objectstorage.ap-seoul-1.oraclecloud.com/p/yb_DbuhcpKQjOWPpU2Z4kpR3j0a9B-p1X-OZAqVICk2ssp8zCrIuJNIuME_HSjkA/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_193000_gsm.zip</copy>
-    --2020-12-06 08:51:16--  https://objectstorage.ap-seoul-1.oraclecloud.com/p/yb_DbuhcpKQjOWPpU2Z4kpR3j0a9B-p1X-OZAqVICk2ssp8zCrIuJNIuME_HSjkA/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_193000_gsm.zip
+    [oracle@cata ~]$ <copy>wget https://objectstorage.ap-seoul-1.oraclecloud.com/p/P3x3bJkUbUaekj5vjlYivhfUmTTwlOKsDdcazgAzICY5HQpQMsDvtN5CWJ_mdip_/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_193000_gsm.zip</copy>
+    --2020-12-06 08:51:16--  https://objectstorage.ap-seoul-1.oraclecloud.com/p/P3x3bJkUbUaekj5vjlYivhfUmTTwlOKsDdcazgAzICY5HQpQMsDvtN5CWJ_mdip_/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_193000_gsm.zip
     Resolving objectstorage.ap-seoul-1.oraclecloud.com (objectstorage.ap-seoul-1.oraclecloud.com)... 134.70.96.3
     Connecting to objectstorage.ap-seoul-1.oraclecloud.com (objectstorage.ap-seoul-1.oraclecloud.com)|134.70.96.3|:443... connected.
     HTTP request sent, awaiting response... 200 OK

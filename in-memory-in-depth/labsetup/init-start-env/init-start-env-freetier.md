@@ -85,7 +85,7 @@ As a result, launching your workshop guide from the remote desktop will further 
 1. From your remote desktop session, launch *Firefox*, browse to *LiveLabs* if not already opened, then click on *Sign In*
 
     ```
-    <copy>http://bit.ly/golivelabs</copy>
+    <copy>http://developer.oracle.com/livelabs</copy>
     ```
 
     ![](./images/livelabs-login-1.png " ")
