@@ -20,7 +20,7 @@ To learn more about this capability go to he following content:
  - [Oracle Database API for MongoDB Blog from Roger Ford, Principal Product Manager] (https://blogs.oracle.com/database/post/mongodb-api)
 
 
-**Estimated Time: 20 minutes**.
+**Estimated Lab Time: 20 minutes**.
 
 ### Objectives
 
@@ -30,12 +30,14 @@ In this lab, you will:
 
 ### Prerequisites
 
-* Lab 1 and 2 from this content completed
+* Lab 1, 2  and 3 from this content completed
+* MongoDB Cloud account (or Google account)
+* Deploy Atlas document store on MongoDB Cloud before the workshop (run Lab 3 Task 1)
 
 
-## Task 1: Develop dual document store micro-service using MongoAPI capability
+## Task 1: Develop dual document store micro-service using MongoAPI capability
 
-1. Access to **cloud shell** again. If you are not connected to **opc@xxx0vm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+1. Access to **cloud shell** again. If you are not connected to **opc@devm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ````
     <copy>
@@ -49,7 +51,7 @@ In this lab, you will:
 
     ````
     <copy>
-    export TNS_ADMIN=/home/opc/Wallet_MyAJD
+    export TNS_ADMIN=/home/opc/Wallet_AJDEV
     export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
     export PATH=$PATH:/usr/lib/oracle/21/client64/bin/
     cd python-simple-project
@@ -84,8 +86,10 @@ In this lab, you will:
     ````
 
     > Note: If you have change the following variables to a different value, please run this commands providing the variable that you have changed. **Remember, we are using the Oracle connections under the MongoDB variables for nor editing the parameters. If you prefer, you can edit them.  Following this method, it is cleaner for the application point of view.**
+    >
 
     The only variable that we need to define, if you haven't changed any variable from the recommended, is **ATP_URL**. A new URL that our AJD has created after adding our IPs in Task 1 of this Lab.
+
 
 4. On the Oracle Cloud Infrastructure Console, click **Database Actions** next to the big green box. Allow pop-ups from cloud.oracle.com.
 
@@ -115,7 +119,7 @@ In this lab, you will:
     mongodb://[user:password@]<ATP_URL_including_tenancy_id.oraclecloudapp.com>:27017[user]authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
     ````
 
-    We need to copy the URL string representing the complete hostname after your _`[user:password@]`_ and until _`:27017`_, including _`oraclecloudapps.com`_. It should be something like: _`AAA8EFD9AA64AA4-XXX0AJD.adb.eu-frankfurt-1.oraclecloudapps.com`_
+    We need to copy the URL string after your _`[user:password@]`_ and until _`:27017`_, including _`oraclecloudapps.com`_. It should be something like: _`AAA8EFD9AA64AA4-AJDEV.adb.eu-frankfurt-1.oraclecloudapps.com`_
 
 
 7. We will **export** the URL using the following command:
@@ -140,13 +144,15 @@ In this lab, you will:
 
 9. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database using MongoAPI capability.
 
-    http://[XXX0VM public-ip address]:5000/oracle/mongo/
+    http://[DEVM public-ip address]:5000/oracle/mongo/
 
-     ![Microservice Company MongoAPI capability](./images/task1/)
+     ![Microservice Company MongoAPI capability](./images/task1/microservice-mongoapi.png)
 
-    > This micro-service has 2 URLs. We already had used previously the Oracle one. In this case we are using a new one /oracle/mongo. Here you have all URLs:
-        - http://[XXX0VM public-ip address]:5000/oracle/ -> for Oracle Autonomous Database
-        - http://[XXX0VM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
+    > This micro-service has 1 URL. We already had used previously the Oracle one and the Mongo one. In this case we are using a new one /oracle/mongo. Here you have the others URLS too:
+    >
+        - http://[DEVM public-ip address]:5000/oracle/ -> for Oracle Autonomous Database
+        - http://[DEVM public-ip address]:5000/mongo/ -> for MongoDB
+        - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
 
 10. Go to **cloud shell terminal.** We will **stop mongoapi-app.py**. for doing this, **press Control + C**.
 
@@ -211,7 +217,7 @@ In this lab, you will:
 
 ## Task 3: Insert Data in the new MongoCollection using insert-mongoapi-app.py
 
-1. Access to **cloud shell** again. If you are not connected to **opc@xxx0vm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+1. Access to **cloud shell** again. If you are not connected to **opc@devm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ````
     <copy>
@@ -224,7 +230,7 @@ In this lab, you will:
 
     ````
     <copy>
-    export TNS_ADMIN=/home/opc/Wallet_MyAJD
+    export TNS_ADMIN=/home/opc/Wallet_AJDEV
     export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
     export PATH=$PATH:/usr/lib/oracle/21/client64/bin/
     cd python-simple-project
@@ -337,12 +343,14 @@ In this lab, you will:
 
 9. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database using MongoAPI capability.
 
-    http://[XXX0VM public-ip address]:5000/oracle/mongo/
+    http://[DEVM public-ip address]:5000/oracle/mongo/
 
-    ![Microservice Company MongoAPI capability MongoCollection](./images/task3/microservice-mongoapi-mongocollection.png)
+     ![Microservice Company MongoAPI capability MongoCollection](./images/task3/microservice-mongoapi-mongocollection.png)
 
-    > This micro-service has 1 URL. We already had used previosly the Oracle one and the Mongo one. In this case we are using a new one / oracle/mongo. Here you have the others URLS too:
-        - http://[XXX0VM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
+    > This micro-service has 1 URL. We already had used previously the Oracle one and the Mongo one. In this case we are using a new one / oracle/mongo. Here you have the others URLS too:
+    >
+        - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
+
 
 10. We can check that the **Two New Companies** (Nice and Ten) are being stored on our **Autonomous JSON Database**, on **MongoCollection** that we created in Task 3 of this Lab. Go to **Database Actions** again and click green **Play** button.
 
@@ -358,9 +366,16 @@ In this lab, you will:
 
     ![kill insert-mongoapi-app](./images/task3/insert-mongoapi-app-kill.png)
 
-**Congratulations! Well done!**
+
+*Congratulations! Well done!*
+
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, June 2022
+* **Last Updated By/Date** - Priscila Iruela, July 2022
+
+## Need Help?
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

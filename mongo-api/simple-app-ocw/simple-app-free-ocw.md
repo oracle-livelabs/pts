@@ -8,7 +8,7 @@ You can use SODA for Python to perform create, read (retrieve), update, and dele
 
 SODA is a set of NoSQL-style APIs that let you create and store collections of documents (in particular JSON) in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the documents are stored in the database.
 
-**Estimated Time: 30 minutes**.
+**Estimated Lab Time: 40 minutes**.
 
 ### Objectives
 
@@ -26,9 +26,7 @@ In this lab, you will:
 
 Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-service application that will allow you to insert and retrieve JSON documents using REST calls.
 
-> Note: Remember your resources in Oracle Cloud Infrastructure have unique names. Replace **XXX0** and **xxxo** with your unique code (case sensitive).
-
-1. Access to **cloud shell** again. If you are not connected to **opc@xxx0vm**, **run** again the **ssh connections** using the **Public IP.** Replace **Public_IP** with your Compute instance public IP address, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+1. Access to **cloud shell** again. If you are not connected to **opc@devm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ````
     <copy>
@@ -38,17 +36,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![ssh Connection](./images/task1/ssh.png)
 
-2. If you had to re-connect via SSH to your Compute instance, you need to **export** the **paths** using the following commands:
-
-    ````
-    <copy>
-    export TNS_ADMIN=/home/opc/Wallet_MyAJD
-    export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
-    export PATH=$PATH:/usr/lib/oracle/21/client64/bin/
-    </copy>
-    ````
-
-3. Download the files that we will use for next steps in this bit.ly running this command:
+2. Download the files that we will use for next steps in this bit.ly running this command:
 
     ````
     <copy>
@@ -58,7 +46,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![wget Command](./images/task1/wget-command.png)
 
-4. **Unzip** the **python-simple-project.zip** using the following command:
+3. **Unzip** the **python-simple-project.zip** using the following command:
 
     ````
     <copy>
@@ -68,7 +56,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![unzip Apps](./images/task1/unzip-apps.png)
 
-5. **Access** to python-simple-project folder. **Create** a Python virtual environment for development, and **activate** it. Run the following commands:
+4. **Access** to python-simple-project folder. **Create** a Python virtual environment for development, and **activate** it. Run the following commands:
 
     ````
     <copy>
@@ -81,7 +69,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![Virtual Env Commands](./images/task1/virtualenv-command.png)
 
-6. Lets have a look at **requirements.pip**. In this file, we have the libraries that we need for the micro-service application. Run the following command to see the code:
+5. Lets have a look at **requirements.pip**. In this file, we have the libraries that we need for the micro-service application. Run the following command to see the code:
 
     ````
     <copy>
@@ -91,7 +79,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![cat Requirements](./images/task1/cat-requirements.png)
 
-7. Use **pip package installer** for Python 3 to **install** the required libraries specified in the requirements.pip file.
+6. Use **pip package installer** for Python 3 to **install** the required libraries specified in the requirements.pip file.
 
     ````
     <copy>
@@ -101,7 +89,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![Requirements](./images/task1/requirements.png)
 
-8. Lets have a look at **simple-app.py**. In this file, we have the Python application code. Run the following command to see the code:
+7. Lets have a look at **simple-app.py**. In this file, we have the Python application code. Run the following command to see the code:
 
     ````
     <copy>
@@ -111,17 +99,17 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![cat simple-app](./images/task1/cat-simple-app.png)
 
-9. **Verify** all connection **variables are correct**. We are using **demo** **user** for Autonomous JSON database and the **password** that we have recommended during the workshop **DBlearnPTS#22_**, replacing xxx0 with your initials and digit.
+8. **Verify** all connection **variables are correct**. We are using **demo** **user** for Autonomous JSON database and the **password** that we have recommended during the workshop **DBlearnPTS#22_**.
 
     > Note: If you have change the user name and password to a different value, please run this commands providing the user and password.
     >
     ````
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
-    export AJSON_SERVICE="xxx0ajd_tp"
+    export AJSON_SERVICE="ajdev_tp"
     ````
 
-10. **After checking if all variables are correct**. **Run** simple-app application using the following command:
+9. **After checking if all variables are correct**. **Run** simple-app application using the following command:
 
     ````
     <copy>
@@ -137,7 +125,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![simple-app Execution](./images/task1/simple-app-launch.png)
 
-11. Lets see what **simple-app.py is doing**, use the following command:
+10. Lets see what **simple-app.py is doing**, use the following command:
 
     ````
     <copy>
@@ -151,7 +139,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     **Your micro-service simple-app.py is being executed** so we can start inserting the documents.
 
-12. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press Enter after each one. First POST:
+11. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First POST:
 
     ````
     <copy>
@@ -173,7 +161,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![POST company One curl](./images/task1/curl-company-one.png)
 
-13. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press Enter after each one. Second POST:
+12. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Second POST:
 
     ````
     <copy>
@@ -195,7 +183,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![POST company Two curl](./images/task1/curl-company-two.png)
 
-14. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press Enter after each one. Third and Fourth POST:
+13. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Third and Fourth POST:
 
     ````
     <copy>
@@ -231,13 +219,13 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     ![POST company Third and Fourth curl](./images/task1/curl-company-three-four.png)
 
 
-15. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database.
+14. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database.
 
-    http://[XXX0VM public-ip address]:5000/oracle/
+    http://[DEVM public-ip address]:5000/oracle/
 
     ![Microservice Company One, Two, Three & Four](./images/task1/microservice-company-one-two-three-four.png)
 
-16. Go to **cloud shell terminal.** We will **stop simple-app.py** running the following command.
+15. Go to **cloud shell terminal.** We will **stop simple-app.py** running the following command.
 
     ````
     <copy>
@@ -250,7 +238,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 ## Task 2: The Advantage of Apex and SQL Knowledge
 
-1. Use the **web browser** tab where Oracle Application Express (Apex) is opened, or open Apex from XXX0AJD using the browser on your laptop. If you need to **Sign In** again use the following credentials:
+1. Use the **web browser** tab where Oracle Application Express (Apex) is opened, or open Apex from AJDEV using the browser on your laptop. If you need to **Sign In** again use the following credentials:
 
      - Workspace Name: **demo**
     ```
@@ -355,7 +343,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![Create App](./images/task2/create-app.png)
 
-    The application will be created immediately.
+    The application will be create immediately.
 
     ![Creating App](./images/task2/creating-app.png)
 
@@ -386,9 +374,14 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     With Oracle Autonomous Database as a document store, JSON data is valued in the same way as relational data.
 
-**You can proceed to the next lab…**
+*You can proceed to the next lab…*
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, June 2022
+* **Last Updated By/Date** - Priscila Iruela, July 2022
+
+## Need Help?
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
