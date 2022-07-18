@@ -26,29 +26,54 @@ In this lab, you will:
 
 ## Task 1: Verify Virtual Cloud Network (VCN)
 
-> Note: You have to give your resources in Oracle Cloud Infrastructure unique names. Use your name initials + a digit from 0 to 9 to create a code. For example, my code is **ORC1**. You will find this code in the labs as **XXX0**, replace it with your unique code.
+> **Note**: You have to give your resources in Oracle Cloud Infrastructure unique names. Use your name initials + a digit from 0 to 9 to create a code. For example, my code is **ORC1**. You will find this code in the labs as **XXX0**, replace it with your unique code.
 
-1. Under My Reservations, click **Launch Workshop**.
+1. Submit a reservation, and wait as it is being processed. Under My Reservations, click **Launch Workshop**.
 
-2. Click **View Login** Info at the top of the page.
+    ![Reserve Workshop](./images/task1/reserve-workshop.png)
+    ![Reservation Submitted](./images/task1/reservation-submitted.png)
+    ![Launch Workshop](./images/task1/launch-workshop.png)
 
-3. Click **Copy Password** button.
+2. Click **View Login Info** at the top of the page.
 
-4. Click **Launch OCI** button.
+    ![View Login Info](./images/task1/view-login-info.png)
 
-5. Paste the password in the corresponding field on the Sign In page.
+3. Click **Copy Password** button. Click **Launch OCI** button.
 
-6. First time you login, you must change the password.
+    ![Reservation Information](./images/task1/reservation-information.png)
 
-7. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment provided on the Login Info dialog.
+4. Paste the password in the corresponding field on the Sign In page.
+
+    ![Sign In](./images/task1/sign-in.png)
+
+5. First time you login, you must change the password.
+
+    ![Change Password](./images/task1/change-password.png)
+
+6. Click on main menu ≡, then Networking > **Virtual Cloud Networks**.
+
+    ![Oracle Console Networking](./images/task1/oracle-console-networking.png)
+
+7. Select your Region and Compartment provided on the Login Info dialog.
+
+    ![Pick Compartment](./images/task1/pick-compartment.png)
 
 8. Click the **LL00000-VCN** you see on the Virtual Cloud Networks page.
 
+    ![Virtual Cloud Network](./images/task1/vcn-pre-created.png)
+
 9. The VCN is created. Click the public subnet **LL00000-SUBNET-PUBLIC**.
+
+    ![Subnet](./images/task1/subnets-pre-created.png)
 
 10. Click the last security list **LL00000-SECLIST**.
 
+    ![Security List](./images/task1/security-lists-pre-created.png)
+
 11. Under Ingress Rules, check ports **5000** for Python Flask and **80** for HTTP are open. These 2 ports are used by the Python micro-service you will develop.
+
+    ![Egress Rules](./images/task1/egress-rules-pre-created.png)
+    ![Ingress Rules](./images/task1/ingress-rules-pre-created.png)
 
 
 ## Task 2: Provision Compute Node for development
@@ -101,10 +126,12 @@ In this lab, you will:
 6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button).
 On the Instance Details page, copy Public IP Address in your notes.
 
+    > **Note**: The mame of the instances in the screenshots may be different from yours.
+
     ![Compute Provisioning](./images/task2/compute-provisioning.png)
     ![Compute Running](./images/task2/compute-running.png)
 
-> Note: On the Instance Details page, copy **Public IP Address** in your notes.
+> **Note**: On the Instance Details page, copy **Public IP Address** in your notes.
 
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
@@ -143,7 +170,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>DBlearnPTS#22_</copy>
     ```
 
-    > We recommend you to use the password as later on, it will be use for running Python scripts. If you consider changing it, remember that later on, you will need to modify the Python scripts manually.
+    > **Note**: We recommend you to use the password as later on, it will be use for running Python scripts. If you consider changing it, remember that later on, you will need to modify the Python scripts manually.
 
     ![Creation AJD Password](./images/task3/creation-ajson-password.png)
 
@@ -229,7 +256,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![scp Command](./images/task3/scp-command.png)
 
-    > NOTE: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
+    > **Note**: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
 
 17. Now we will stablish an **ssh connections** using the **Public IP.** Replace **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
