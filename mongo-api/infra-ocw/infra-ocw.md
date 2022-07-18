@@ -72,8 +72,8 @@ In this lab, you will:
 
 11. Under Ingress Rules, check ports **5000** for Python Flask and **80** for HTTP are open. These 2 ports are used by the Python micro-service you will develop.
 
-    ![Egress Rules](./images/task1/egress-rules-pre-created.png)
     ![Ingress Rules](./images/task1/ingress-rules-pre-created.png)
+    ![Egress Rules](./images/task1/egress-rules-pre-created.png)
 
 
 ## Task 2: Provision Compute Node for development
