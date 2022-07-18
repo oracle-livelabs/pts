@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "Oracle Machine Learning for R Workshop",
+  "workshoptitle": "Introduction to Oracle Machine Learning for R",
   "description": "OML4R Workshop using the Insurance dataset to predict customer's LTV value",
   "help": "livelabs-help-db_us@oracle.com",
   "tutorials": [
@@ -16,7 +16,7 @@
     {
     "title": "Lab 2: Setup Environment ",
     "description": "Verify Setup of compute instance",
-    "filename": "https://objectstorage.us-phoenix-1.oraclecloud.com/p/SJgQwcGUvQ4LqtQ9xGsxRcgoSN19Wip9vSdk-D_lBzi7bhDP6eG1zMBl0I21Qvaz/n/c4u02/b/common/o/labs/verify-compute/verify-compute-novnc.md"
+    "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
     },
     {
       "title": "Lab 3: OML4R Workshop",
@@ -26,7 +26,7 @@
     {
       "title": "Need Help?",
       "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-      "filename": "https://objectstorage.us-phoenix-1.oraclecloud.com/p/SJgQwcGUvQ4LqtQ9xGsxRcgoSN19Wip9vSdk-D_lBzi7bhDP6eG1zMBl0I21Qvaz/n/c4u02/b/common/o/labs/need-help/need-help-livelabs.md"
+      "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
     }
   ]
 }

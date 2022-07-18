@@ -3,7 +3,7 @@
 *Copyright (c) 2022, Oracle and/or its affiliates. All rights reserved.*
 
 Pull requests can be made under the OCA - 
-[Oracle Contributor Agreement](https://www.oracle.com/technetwork/community/oca-486395.html).
+[Oracle Contributor Agreement](https://oca.opensource.oracle.com/).
 
 If you have ideas you want to contribute back, please share them by first 
 [submitting Issues](https://help.github.com/articles/creating-an-issue/).
