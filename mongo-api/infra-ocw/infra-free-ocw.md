@@ -195,7 +195,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     ![Compute Provisioning](./images/task2/compute-provisioning.png)
     ![Compute Running](./images/task2/compute-running.png)
 
-> Note: On the Instance Details page, copy **Public IP Address** in your notes.
+> **Note**: On the Instance Details page, copy **Public IP Address** in your notes.
 
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
@@ -330,7 +330,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![scp Command](./images/task3/scp-command.png)
 
-    > NOTE: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
+    > **Note**: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
 
 17. Now we will stablish an **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
