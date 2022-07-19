@@ -1,17 +1,15 @@
-# Full Python App Development with Autonomous JSON for MongoDB Developers
+# Application Continuity made simple with Universal Connection Pool
 
-**Oracle Autonomous JSON Database (AJD)** is a new service in Autonomous Database family for JSON-centric development. Autonomous JSON Database is built for developers who are looking for an easy to use, cost-effective JSON database with native Document API support. Autonomous JSON Database provides all the core capabilities of a document store along with high performance, simple elasticity, full ACID support and complete SQL functionality. Autonomous JSON Database is available only on Shared Infrastructure. Also, customers can one-click upgrade from Autonomous JSON Database (AJD) to full featured Autonomous Transaction Processing Database (ATP) any time.
+**Application Continuity** makes planned maintenance activities and unplanned outages transparent for end-users by recovering the in-flight work of impacted database sessions.
 
-Run this hands-on workshop to learn how to develop applications faster with open-source document APIs and store JSON documents natively without worrying about data models.
+Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Draining and Application Continuity from Oracle connection pools (UCP). UCP provides explicit request boundaries on check-out and check-in of connections, which makes AC easy to use.
 
 ## Workshop Requirements
 
 * Access to Oracle Cloud Infrastructure
     * Provided by the instructor for instructor-led workshops
-* Access to MongoDB Cloud Altas
 * Access to a laptop or a desktop
-* Knowledge of MongoDB, Oracle Database, and Python is a plus but not required
-* No previous knowledge of Autonomous JSON Database (AJD) required
+* Knowledge of Oracle Database and Java is a plus but not required
 
 ## Access the Labs Using Our Web Interface
 
@@ -32,4 +30,3 @@ Click here to request your trial account: https://cloud.oracle.com/tryit
 
 - [Autonomous JSON Database](https://docs.oracle.com/en/cloud/paas/autonomous-json-database/ajdug/autonomous-json-database.html)
 - [SODA for Python](https://docs.oracle.com/en/database/oracle/simple-oracle-document-access/python/index.html)
-

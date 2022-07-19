@@ -4,26 +4,22 @@
                 {
             "title": "Introduction",
             "description": "Introduction to the workshop.",
-            "filename": "./intro-ac4ucp/intro-ac4ucp.md"
-        },
-        {
-            "title": "Get Started",
-             "filename": "https://oracle-livelabs.github.io/common//labs/cloud-login/cloud-login.md"
+            "filename": "./../../intro-ac4ucp/intro-ac4ucp.md"
         },
         {
             "title": "Lab 1: Set up the environment",
             "description": "In this Lab you will configure the network and create RAC services.",
-            "filename": "./infra-ac4ucp/infra-ac4ucp.md"
+            "filename": "./../../infra-ac4ucp/infra-ac4ucp.md"
         },
             {
             "title": "Lab 2: Simple Application Continuity",
             "description": "In this lab, you will create a simple demo application with a connection pool to a RAC cluster.",
-            "filename": "./simple-ac/simple-ac.md"
+            "filename": "./../../simple-ac/simple-ac.md"
         },
         {
             "title": "Lab 3: Application Continuity for Planned Maintenance",
             "description": "This lab will show you how to use database services for planned maintenance with Application Continuity.",
-            "filename": "./planned-maintenance/planned-maintenance.md"
+            "filename": "./../../planned-maintenance/planned-maintenance.md"
         },
         {
             "title": "Need Help?",
