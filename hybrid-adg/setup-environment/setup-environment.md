@@ -25,7 +25,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
 1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
-	![](https://raw.githubusercontent.com/oracle/learning-library/master/common/images/console/developer-resmgr-stacks.png " ")
+	![](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
   
      ![](./images/step1.3-createstackpage.png " ")
 

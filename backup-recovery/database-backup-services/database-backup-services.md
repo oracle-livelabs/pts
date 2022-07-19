@@ -125,7 +125,7 @@ To perform the steps below, you can remain in the *[oracle@workshop oci_installe
    When you upload the public key in the Console, the fingerprint is also automatically displayed there.
 
 7. From the OCI console, click the user icon (top right of your browser) and click **User Settings**.
-   ![User Settings](https://raw.githubusercontent.com/oracle/learning-library/master/common/images/console/user-settings.png " ")
+   ![User Settings](https://oracle-livelabs.github.io/common/images/console/user-settings.png " ")
 
    Click **API Keys** and **Add API Key**.
    ![API Key](./images/add-api-key.png " ")
@@ -633,7 +633,7 @@ For security reasons, backing up to the Oracle Cloud requires that encryption is
     ```
 
 6. Open a browser and login in to the OCI Console. Click the main menu, select **Storage**, and then click **Buckets**.
-   ![Buckets](https://raw.githubusercontent.com/oracle/learning-library/master/common/images/console/storage-buckets.png " ")
+   ![Buckets](https://oracle-livelabs.github.io/common/images/console/storage-buckets.png " ")
 
 7. Select the correct region and compartment. You can see the bucket named **db\_backups** in the Buckets page. Click the link and drill down.
    ![db backups](./images/db-backups.png " ")
