@@ -103,7 +103,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
     The following screen should be visible on your (remote) desktop:
 
-     ![](./images/01-OUI-1of9.png)
+     ![](./images/oui-1.png)
 
     - Keep the default 'Create and Configure a single instance database' and press `NEXT`
 
@@ -132,13 +132,14 @@ An easy way to make sure all system parameters are correct in a Linux environmen
     - Pluggable database name
         - PDB19C01 **(change this value)**
 
-    ![](./images/02-OUI-3of9.png)
+    ![](./images/oui-2
+.png)
 
     - After you have entered the correct values, please press the `NEXT` button to continue.
 
 5. The following screen should be visible:
 
-    ![](./images/03-sudo.png)
+    ![](./images/oui-3.png)
 
     Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
 
@@ -151,25 +152,25 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
  6. The system will now start checking the prerequisites for the 19c installation.
 
-    ![](./images/05-OUI-5of9.png)
+    ![](./images/oui-4.png)
 
  7. If all prerequisites have been checked and the preparation check can find no warnings or errors, the OUI will display the summary screen:
 
-    ![](./images/07-OUI-6of9.png)
+    ![](./images/oui-5.png)
 
     - Press the `Install` button to start the installation and database creation.
 
-    ![](./images/08-OUI-7of9.png)
+    ![](./images/oui-6.png)
 
  8. After about 5 minutes, provided there are no issues during the install, the root.sh script needs to be executed. If you have entered the password for the root user in the OUI, the pop-up box will ask permission to execute the scripts:
 
-    ![](./images/09-OUI-Pup-up.png)
+    ![](./images/oui-7.png)
 
     - Click the `Yes` button to continue
 
     > If you did not provide a root password or sudo information, a different window will be displayed.
     >
-    > ![](./images/10-OUI-Pop-up-2.png)
+    > ![](./images/oui-8.png)
     >
     > If you do not get the option to click `Yes`, please execute the script mentioned in the window as root user in a terminal environment.
 
@@ -179,7 +180,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
 10. After the database creation has finished, the OUI  will display the following screen (or similar):
 
-    ![](./images/11-OUI-8of8.png)
+    ![](./images/oui-9.png)
 
     - Press the `Close` button to end the Universal Installer session.
 

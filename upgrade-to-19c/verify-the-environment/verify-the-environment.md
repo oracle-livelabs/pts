@@ -22,13 +22,13 @@ In this lab, you will
     - Your IP address is visible on the Livelabs -> View Login Info screen
     - The Launch button and URL to the NoVNC Remote Desktop are also visible on this screen
 
-   ![](./images/01-LL-details.png)
+   ![](./images/ll-details.png)
 
 ## Task 1: Connect to the Hands-On Lab client image using NoVNC ##
 
  Click on the "Launch Remote Desktop: button on the LiveLabs "Reservation Information" page. A new browser window should open and show you a running Linux desktop like this:
 
-   ![](./images/02-NoVNC-Desktop.png)
+   ![](./images/novnc-desktop.png)
 
 If you see a warning that Chrome cannot be updated, simply close this warning.
 
