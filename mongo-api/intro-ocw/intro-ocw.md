@@ -15,7 +15,7 @@ This workshop has three parts:
 
 ## Objectives
 
-In this lab, you will:
+During this workshop you will:
 
 * Create development environment on Oracle Cloud Infrastructure
 * Deploy a document store with one collection on Oracle Autonomous Database for JSON
