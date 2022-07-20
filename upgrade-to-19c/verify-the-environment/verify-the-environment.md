@@ -11,8 +11,7 @@
 In this lab, you will
 
 - Connect to the hands-on lab client
-- Optionally connect using a ssh client
-- Setup the lab instructions inside the lab client
+- Optionally connect using an ssh client
 
 ### Prerequisites ###
 
@@ -20,28 +19,28 @@ In this lab, you will
 
 - Oracle PTS 19c Lab environment
     - This environment has been pre-setup by the Livelabs environment
-    - Your IP address is visible on the Livelabs -> Launch Workshop page
-    - The URL to the NoVNC Remote Desktop is also visible on this screen
+    - Your IP address is visible on the Livelabs -> View Login Info screen
+    - The Launch button and URL to the NoVNC Remote Desktop are also visible on this screen
 
-   ![](./images/01-LL-details.png)
+   ![](./images/ll-details.png)
 
 ## Task 1: Connect to the Hands-On Lab client image using NoVNC ##
 
- Click on the supplied link on the LiveLabs Attendee Page. A new browser window should open and show you a running Linux desktop like this:
+ Click on the "Launch Remote Desktop: button on the LiveLabs "Reservation Information" page. A new browser window should open and show you a running Linux desktop like this:
 
-   ![](./images/02-NoVNC-Desktop.png)
+   ![](./images/novnc-desktop.png)
 
-### Suggestion ####
+If you see a warning that Chrome cannot be updated, simply close this warning.
 
- It is more accessible to cut-and-paste values from the Hands-On Labs if the Hands-On Lab document is open in the same desktop/environment as the prompt you want to paste. We therefore highly recommend you to:
+## Options ##
 
-- Make the remote Linux desktop fullscreen
-- Open a new browser window inside the Linux Desktop Environment
-- Navigate to Oracle Livelabs, log in and go to My Reservations to Launch this workshop
+### Change the size of your remote screen ###
+ If your screen resolution is more than 1280x900, you can increase the size of your screen by setting the Scaling Mode to 'Remote'. This option is available in the NoVNC Settings option.
 
-### Optional: Using SSH to connect to the image ###
+### Connection through SSH ###
+ This hands-on was written to be executed fully through the NoVNC Remote Desktop screen. However, some people prefer using local SSH connections using their SSH application of choice.
 
- By default, the SSH ports are enabled, and the SSH daemon is running in the image so that you can connect your favorite SSH client to the image for all non-graphical steps in the labs.
+ By default, the SSH ports are enabled, and the SSH daemon is running in the image so that you can connect your favourite SSH client to the image for all non-graphical steps in the labs.
 
  > **The ssh server only accepts public/private key authentication. <br>
  > It is NOT allowed to change the authentication method to accept passwords !**
@@ -49,7 +48,7 @@ In this lab, you will
  You are allowed to add your public key to the `authorized_keys` file in the image.
  It is out of the scope of this hands-on lab to demonstrate how to do this.
 
-### Next step: Lab 2 - Install 19c ###
+## Next step: Lab 2 - Install 19c ##
 
 - **All labs depend on the 19c installation in lab 2**
 - There is no dependency between the labs after lab 2
@@ -63,4 +62,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements ##
 
 - **Author** - Robert Pastijn, Database Product Management, PTS EMEA - April 2020
-- **Last update** - Robert Pastijn, Database Product Development, PTS EMEA - November 2021
+- **Last update** - Robert Pastijn, Database Product Development, PTS EMEA - July 2022

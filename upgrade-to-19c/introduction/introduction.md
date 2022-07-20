@@ -31,7 +31,7 @@ Estimated time: 3 hours.
 
 - From the menu, click on the lab that you would like to run. For example, if you want to proceed to **Lab 1**, click **Lab 1: Verify the environment**.
 
-     ![](./images/menu.jpg "")
+     ![](./images/menu.png "")
 
 - You may close the menu by clicking the  ![](./images/menu-button.png "") again.
 
@@ -40,4 +40,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements ##
 
 - **Author** - Robert Pastijn, Database Product Management, PTS EMEA - April 2020
-- **Last Update by** - Robert Pastijn - Adopted to Livelabs - November 2021
+- **Last Update by** - Robert Pastijn - Changed screenshots - July 2022
