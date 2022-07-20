@@ -20,6 +20,7 @@ In this lab, you will:
 * Use the OML4R in-database regression algorithm for building a machine learning model for estimating customer life-time value (LTV)
 * Use the OML4R in-database classification algorithm for building a machine learning model for predicting LTV\_BIN
 * Assess model quality using RMSE (Root Mean Squared Error), and assess classification model quality using a confusion matrix
+* Use embedded R functions to leverage in-database parallel processing
 
 ### Note:
 
@@ -60,6 +61,8 @@ You will be running all the lab steps in the RStudio R Script window, as shown b
     ![rstudio interface](./images/rstudio-1.png "rstudio interface")
 
     The RStudio Graphical User Interface (GUI) provides four panels: Console, Scripts, Environments, and Plots. Instead of working ad-hoc, writing scripts makes the code and workflow reproducible.
+    
+    To run an individual statement, place your cursor anywhere on the statement and click on the green arrow button on top. To run a set of statements, select the block and click on the green arrow button on top. To run an entire file, select the block and press Ctrl+Shift+Enter key.
 
 3. Install packages
 
@@ -69,6 +72,7 @@ You will be running all the lab steps in the RStudio R Script window, as shown b
     if (!require("dplyr")) install.packages("dplyr")
     if (!require("OREdplyr")) install.packages("OREdplyr")
     if (!require("caret")) install.packages("caret")
+    if (!require(“ggplot2”)) install.packages(“ggplot2”)
     </copy>
     ```
 
@@ -84,6 +88,7 @@ You will be running all the lab steps in the RStudio R Script window, as shown b
     library(dplyr)
     library(OREdplyr)
     library(caret)
+    library(ggplot2)
     </copy>
     ```
 
@@ -1100,7 +1105,7 @@ In this task, we build a classification model for LTV\_BIN prediction and then e
     </copy>
     ```
 
-    Fit the model with training data.
+ 10. Fit the model with training data.
 
     ```
     <copy>
@@ -1116,7 +1121,7 @@ In this task, we build a classification model for LTV\_BIN prediction and then e
     </copy>
     ```
 
-    Generate predictions and the confusion matrix.
+  11. Generate predictions and the confusion matrix.
 
     ```
     <copy>
