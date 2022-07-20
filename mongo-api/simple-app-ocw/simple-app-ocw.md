@@ -48,6 +48,8 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     </copy>
     ````
 
+    > **Note**: Press Enter at the end of the last command to be sure, all of them have being executed.
+
 3. Download the files that we will use for next steps in this bit.ly running this command:
 
     ````
@@ -78,6 +80,8 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     . bin/activate
     </copy>
     ````
+
+    > **Note**: Press Enter at the end of the last command to be sure, all of them have being executed.
 
     ![Virtual Env Commands](./images/task1/virtualenv-command.png)
 
@@ -113,8 +117,8 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 9. **Verify** all connection **variables are correct**. We are using **demo** **user** for Autonomous JSON database and the **password** that we have recommended during the workshop **DBlearnPTS#22_**, replacing xxx0 with your initials and digit.
 
-    > Note: If you have change the user name and password to a different value, please run this commands providing the user and password.
-    >
+    > **Note**: If you have change the user name and password to a different value, please run this commands providing the user and password.
+
     ````
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
