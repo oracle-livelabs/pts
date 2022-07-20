@@ -15,14 +15,14 @@ This workshop has three parts:
 
 ## Objectives
 
-This workhop based on a compute instance running a 21c client connected to a 2-node DBCS RAC.
-The 21c client is a simple Java program highlightong how to create a Universal Connection Pool to the RAC.
+This workshop is based on a compute instance running a 21c client connected to a 2-node DBCS RAC.
+The 21c client is a compute instance hosting a simple Java program. Its code shows how to create a Universal Connection Pool to the RAC.
 It demonstrates:
-*	How to set up UCP (good for ISVs)
-*	How to set up ONS & FAN (required for Application Continuity and Transparent Application Continuity )
-*	How to configure and use database services to make planned maintenance as well as other outages transparent to applications
+*	How to set up UCP (good for ISVs);
+*	How to set up ONS & FAN (required for Application Continuity and Transparent Application Continuity );
+*	How to configure and use database services to make planned maintenance as well as other outages transparent to applications.
 
-The demo program allows to interrupt a transaction at will and show whether or not it is transparently replaid on a different node of the RAC
+The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
 
 ## Prerequisites
