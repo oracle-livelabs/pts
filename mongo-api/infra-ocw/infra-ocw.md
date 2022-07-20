@@ -136,7 +136,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
 
-1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**. **Create Autonomous Database**.
+1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**.
 
     ![Oracle Console AJD](./images/task3/oracle-console-ajson.png)
 
@@ -162,6 +162,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Storage (TB): 1 or 0.02 if you are using a Trial account
 
     ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard.png)
+    ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard2.png)
 
 4. Under **Create administrator** credentials:
 
