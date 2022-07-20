@@ -19,7 +19,7 @@ Estimated time: 75 minutes (please note you can run other labs in this training 
 - A new 19c database has been created in this image (previous lab)
 - All databases in the image are running
 
-When in doubt or need to start the databases using the following steps:
+When in doubt or need to start the databases, use the following steps:
 
 1. Please log in as **oracle** user and execute the following command:
 
@@ -199,6 +199,8 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     $ <copy>cat /u01/autoupgrade/DB121C/100/prechecks/db121c_preupgrade.log</copy>
     ````
 
+    If you get a 'file not found' or another error, please navigate manually to the /u01/autoupgrade/DB121C directory and check which subdirectories have been created. Navigate to the ```<jobnumber>/prechecks``` directory and do a ```cat db121c_preupgrade.log``` instead.
+
     The result should be similar to the following:
 
     ````
@@ -332,7 +334,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     upg> <copy>lsj</copy>
     ````
 
-    Only if you see that the actual database upgrade is running, about 6 minutes after the start of autoupgrade, like this:
+    Wait until the 'STAGE' column of the lsj command displays the status 'DBUPGRADE', which takes about 6 minutes. The output should be similar to this:
 
     ````
     upg> lsj
@@ -360,10 +362,10 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 11. The logfiles in the `/u01/autoupgrade/<job#>` directory show you the progress as well, for example:
 
     ````
-    $ <copy>cd /u01/autoupgrade/</copy><job#>
+    $ <copy>cd /u01/autoupgrade/DB121C/101/dbupgrade</copy>
     ````
     ````
-    $ <copy>tail -f dbupgrade_</copy><Press TAB>.log
+    $ <copy>tail -f autoupgrade_*.log</copy><Press TAB>.log
     ````
 
     The output will be similar to the following:
@@ -446,4 +448,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements ##
 
 - **Author** - Robert Pastijn, DB Dev Product Management, PTS EMEA - April 2020
-- **Last updated** - Robert Pastijn, Database Product Development, PTS EMEA - November 2021
+- **Last updated** - Robert Pastijn, Database Product Development, PTS EMEA - July 2022

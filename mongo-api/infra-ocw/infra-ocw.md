@@ -72,8 +72,8 @@ In this lab, you will:
 
 11. Under Ingress Rules, check ports **5000** for Python Flask and **80** for HTTP are open. These 2 ports are used by the Python micro-service you will develop.
 
-    ![Ingress Rules](./images/task1/ingress-rules-pre-created.png)
     ![Egress Rules](./images/task1/egress-rules-pre-created.png)
+    ![Ingress Rules](./images/task1/ingress-rules-pre-created.png)
 
 
 ## Task 2: Provision Compute Node for development
@@ -136,7 +136,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
 
-1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**.
+1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**. **Create Autonomous Database**.
 
     ![Oracle Console AJD](./images/task3/oracle-console-ajson.png)
 
@@ -162,7 +162,6 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Storage (TB): 1 or 0.02 if you are using a Trial account
 
     ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard.png)
-    ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard2.png)
 
 4. Under **Create administrator** credentials:
 
