@@ -1,4 +1,4 @@
-# Application Continuity made simple with Universal Conncection Pool
+# Application Continuity made simple with Universal Connection Pool
 
 ![Intro Application Continuity made simple with Universal Conncection Pool](./images/intro.png)
 
