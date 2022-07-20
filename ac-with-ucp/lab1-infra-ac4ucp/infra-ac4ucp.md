@@ -33,9 +33,9 @@ In this lab, you will:
 
 1. Create a **Network Security Group** rule allowing Oracle Net connectivity.
 
-![NSGdef](./images/task1/image100.png)
+![NSGdef](./images/task1/img100.png)
 
-![NSGrule](./images/task1/image200.png)
+![NSGrule](./images/task1/img200.png)
 
 
 2. Add ONS egress/ingress rules.
