@@ -27,6 +27,7 @@ In this lab, you will:
 
 ### Prerequisites (Optional)
 
+This lab assumes you have:
 * An Oracle LiveLabs sandbox environment
 * Or an Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
 

@@ -16,6 +16,7 @@ In this lab, you will:
 
 ### Prerequisites (Optional)
 
+This lab assumes you have:
 * The Oracle environment prepared in lab 1.
 
 

@@ -4,8 +4,13 @@
 
 ## About this Workshop
 
+**Application Continuity** makes planned maintenance activities and unplanned outages transparent for end-users by recovering the in-flight work of impacted database sessions.
+
+Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Draining and Application Continuity from an Oracle connection pool (UCP). UCP provides explicit request boundaries on check-out and check-in of connections, which makes Application Continuity easy to use.
+
 This workshop is based on a compute instance (a demo application) connected to a 2-node DBCS RAC.
 The demo application is a simple Java program using a 21c client. Its code shows how to create and use a Universal Connection Pool to the RAC.
+
 It demonstrates:
 *	How to set up UCP (good for ISVs).
 *	How to set up ONS & FAN (required for Application Continuity and Transparent Application Continuity ).
@@ -29,6 +34,7 @@ The demo program allows to interrupt a transaction at will and show whether or n
 
 ### Prerequisites (Optional)
 
+This lab assumes you have:
 * An Oracle LiveLabs sandbox environment
 * Or an Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
 
