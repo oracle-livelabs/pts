@@ -22,6 +22,9 @@ In this lab, you will:
 ## Task 1: Configure the lab
 
 1. Configure the pool for 10 connections
+
+Edit the java demo application...
+
 2. Recompile the application
 
 
