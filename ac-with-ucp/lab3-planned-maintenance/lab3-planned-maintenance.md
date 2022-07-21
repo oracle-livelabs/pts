@@ -2,20 +2,21 @@
 
 ## Introduction
 
-In this lab we will create a connection pool with 10 connections and verify that Oracle distributes them equally between the cluster nodes.
+In this lab we will create a connection pool with 10 connections and verify that UCP distributes them equally between the cluster nodes.
 
+Estimated Lab Time: 30 minutes
 
-**Estimated Time: 30 minutes.**
 
 ### Objectives
 
 In this lab, you will:
 
-* Verify that the UCP connection pool balances the connections
-* Move datbase services from a clu
+* Verify that the UCP connection pool balances the connections between available instances
+* Move database services between instances according to planned maintenance needs
 
-### Prerequisites
+### Prerequisites (Optional)
 
+This lab assumes you have:
 * The Oracle environment prepared in lab 1.
 
 
@@ -40,7 +41,7 @@ Edit the java demo application...
 2. Show this is transparent to the program
 
 
-**You can proceed to the next lab…**
+**This is the end of the workshop**
 
 
 ## Acknowledgements

@@ -4,18 +4,20 @@
 
 In this lab we will configure a connection pool with a single connection. This will allow us to interrupt at will the demo application in the middle of a transaction and see whether or not Application Continuity hides the outage.
 
-**Estimated Time: 30 minutes.**
+Estimated Lab Time: 30 minutes
+
 
 ### Objectives
 
 In this lab, you will:
 
-* Interrupt a transaction whilst connected with a standard service and experience an application error and a lost transaction.
-* Interrupt a transaction whilst connected with a database service supporting Application Continuity and verify that the application continues witjout outage nor loss of any transactions.
+* Interrupt a transaction whilst connected with a **standard service** and experience an application error and a lost transaction.
+* Interrupt a transaction whilst connected with a database service supporting **Application Continuity** and verify that the application continues without outage nor loss of any transactions.
 
-### Prerequisites
+### Prerequisites (Optional)
 
 * The Oracle environment prepared in lab 1.
+
 
 ## Task 1: Configure the lab
 

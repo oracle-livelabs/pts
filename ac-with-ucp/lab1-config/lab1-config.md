@@ -1,32 +1,35 @@
-# Setting up the environment
+# Configure the environment
 
 ## Introduction
 
-In this lab we will finalize the environment that will be used to run the rest of the workshop.
+In this lab we will customize the environment that will be used to run the rest of the workshop.
 
-There are three main elements.
+> **Note**: Most components should have been pre-created.
+
+There are three main elements in our environment:
 
 * A **Virtual Cloud Network (VCN)** has been pre-created. It represents the network topology inside the Oracle Cloud by defining the following components (Subnets, Route Tables, Security Lists, Gateways, etc.).
-* A two-node **DBCS RAC database** with ASM storage has been pre-created.
-* A **Compute instance** is a VM hosting our demo appliation.
+* A two-node **DBCS RAC database** with ASM storage (which should have also been pre-created).
+* A **Compute instance** which is a VM hosting our demo application.
 
-> **Note**: Some components have been pre-created.
+Estimated Lab Time: 30 minutes.
 
-**Estimated Time: 30 minutes.**
 
 ### Objectives
 
 In this lab, you will:
 
 * Complete the network configuration
-* Configure RAC services
-* Create a demo schema
+* Configure RAC database services
+* Create a demo schema in the database
 * Compile a demo application
 
-### Prerequisites
 
-* An Oracle Free Tier, Always Free, or Paid Oracle Cloud Account
-* Or Oracle LiveLabs sandbox environment
+### Prerequisites (Optional)
+
+* An Oracle LiveLabs sandbox environment
+* Or an Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
+
 
 ## Task 1: Configure networking
 
