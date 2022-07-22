@@ -1,8 +1,6 @@
 {
     "workshoptitle": "Application Continuity made simple with Universal Connection Pool",
     "help": "livelabs-help-**enterarea**_us@oracle.com",
-    "variables": ["../../variables/variables.json",
-        "../../variables/variables-in-another-file.json"],
     "tutorials": [
         {
             "title": "Get Started",
