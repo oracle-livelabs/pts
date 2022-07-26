@@ -1,4 +1,4 @@
-# Configure the environment
+# Configure the application environment
 
 ## Introduction
 
@@ -25,7 +25,7 @@ In this lab, you will:
 * Compile a demo application
 
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * An Oracle LiveLabs sandbox environment

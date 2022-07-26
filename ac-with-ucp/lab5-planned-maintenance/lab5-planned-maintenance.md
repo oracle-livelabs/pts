@@ -14,7 +14,7 @@ In this lab, you will:
 * Verify that the UCP connection pool balances the connections between available instances
 * Move database services between instances according to planned maintenance needs
 
-### Prerequisites (Optional)
+### Prerequisites 
 
 This lab assumes you have:
 * The Oracle environment prepared in lab 1.

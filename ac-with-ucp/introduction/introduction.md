@@ -32,7 +32,7 @@ This workshop has three objectives:
 The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * An Oracle LiveLabs sandbox environment

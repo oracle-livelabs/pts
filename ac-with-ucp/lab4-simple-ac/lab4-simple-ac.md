@@ -14,7 +14,7 @@ In this lab, you will:
 * Interrupt a transaction whilst connected with a **standard service** and experience an application error and a lost transaction.
 * Interrupt a transaction whilst connected with a database service supporting **Application Continuity** and verify that the application continues without outage nor loss of any transactions.
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * The Oracle environment prepared in lab 1.

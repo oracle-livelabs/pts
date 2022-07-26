@@ -13,19 +13,29 @@
             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login.md"
         },
         {
-            "title": "Lab 1: Setup the Environment",
+            "title": "Lab 1: Provision the RAC database",
+            "description": "In this lab we will create a 2-node RAC database.",
+            "filename": "../../lab1-provision-rac/lab1-provision-rac.md"
+        },
+        {
+            "title": "Lab 2: Provision the client machine",
+            "description": "In this lab, you will provision the client machine.",
+            "filename": "../../lab2-provision-client/lab2-provision-client.md"
+        },
+        {
+            "title": "Lab 3: Setup the Application Environment",
             "description": "In this Lab you will configure the network and create RAC services.",
-            "filename": "../../lab1-config/lab1-config.md"
+            "filename": "../../lab3-config/lab3-config.md"
         },
         {
-            "title": "Lab 2: Simple Application Continuity",
+            "title": "Lab 4: Simple Application Continuity",
             "description": "In this lab, you will create a simple demo application with a connection pool to a RAC cluster.",
-            "filename": "../../lab2-simple-ac/lab2-simple-ac.md"
+            "filename": "../../lab4-simple-ac/lab4-simple-ac.md"
         },
         {
-            "title": "Lab 3: Application Continuity for Planned Maintenance",
+            "title": "Lab 5: Application Continuity for Planned Maintenance",
             "description": "This lab will show you how to use database services for planned maintenance with Application Continuity.",
-            "filename": "../../lab3-planned-maintenance/lab3-planned-maintenance.md"
+            "filename": "../../lab5-planned-maintenance/lab5-planned-maintenance.md"
         },
         {
             "title": "Need Help?",
