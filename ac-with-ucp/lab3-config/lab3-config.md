@@ -59,42 +59,40 @@ This lab assumes you have:
 * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
   ````
-  francois_p@cloudshell:~ (eu-paris-1)$ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+
   (...)
   Are you sure you want to continue connecting (yes/no)? yes
   Warning: Permanently added 'xxx' (ECDSA) to the list of known hosts.
+  (...)
   ````
 
-  ```
-  Adding code examples
-  Indentation is important for the code example to appear inside the step
-  Multiple lines of code
-  <copy>Enclose the text you want to copy in <copy></copy>.</copy>
-  ```
+* Switch to user *oracle*
 
-* switch to *oracle*
-````
-$ <copy>sudo su - oracle</copy>
-````
+  ````
+  $ <copy>sudo su - oracle</copy>
+  ````
 
-````
-[oracle@ruby1 ~]$ <copy>srvctl status nodeapps</copy>
+  ````
+  [oracle@ruby1 ~]$ <copy>srvctl status nodeapps</copy>
 
-VIP 10.0.0.183 is enabled
-VIP 10.0.0.183 is running on node: ruby1
-VIP 10.0.0.80 is enabled
-VIP 10.0.0.80 is running on node: ruby2
-Network is enabled
-Network is running on node: ruby1
-Network is running on node: ruby2
-ONS is enabled
-ONS daemon is running on node: ruby1
-ONS daemon is running on node: ruby2
-````
+  VIP 10.0.0.183 is enabled
+  VIP 10.0.0.183 is running on node: ruby1
+  VIP 10.0.0.80 is enabled
+  VIP 10.0.0.80 is running on node: ruby2
+  Network is enabled
+  Network is running on node: ruby1
+  Network is running on node: ruby2
+  ONS is enabled
+  ONS daemon is running on node: ruby1
+  ONS daemon is running on node: ruby2
+  ````
 
 
 2. Standard service (no Application Continuity)
+
 3. New service (with Application Continuity support)
+
 4. Create TNS aliases in tnsnames.ora for the 2 services
 
 
