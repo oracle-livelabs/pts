@@ -36,23 +36,56 @@ This lab assumes you have:
 
 1. Create a **Network Security Group** rule allowing Oracle Net connectivity.
 
-![NSGdef](./images/task1/img100.png)
+* First create the NSG...
 
-![NSGrule](./images/task1/img200.png)
+![NSGdef1](./images/task1/image100.png " ")
+
+![NSGdef1](./images/task1/image200.png " ")
+
+![NSGdef1](./images/task1/image300.png " ")
+
+* Then add a stateful ingress rule allowing Oracle connectivity within the VCN:
+
+![NSGrule](./images/task1/image400.png)
 
 
-2. Add ONS egress/ingress rules.
+2. Add ONS egress/ingress rules
 
 
 ## Task 2: Configure RAC services
 
 1. Check that ONS is running on the server
 
-* Connect to the first node of the RAC cluster as **opc** and switch to the **grid** user
+* Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
-```
-<copy>sudo su - grid</copy>
-```
+````
+$ <copy>Optional copy of values</copy>
+
+francois_p@cloudshell:~ (eu-paris-1)$ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+(...)
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'xxx' (ECDSA) to the list of known hosts.
+````
+
+* switch to *oracle*
+````
+$ <copy>sudo su - oracle</copy>
+````
+
+````
+[oracle@ruby1 ~]$ <copy>srvctl status nodeapps</copy>
+VIP 10.0.0.183 is enabled
+VIP 10.0.0.183 is running on node: ruby1
+VIP 10.0.0.80 is enabled
+VIP 10.0.0.80 is running on node: ruby2
+Network is enabled
+Network is running on node: ruby1
+Network is running on node: ruby2
+ONS is enabled
+ONS daemon is running on node: ruby1
+ONS daemon is running on node: ruby2
+````
+
 
 2. Standard service (no Application Continuity)
 3. New service (with Application Continuity support)
