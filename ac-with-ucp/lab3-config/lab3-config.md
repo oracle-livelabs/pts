@@ -34,15 +34,15 @@ This lab assumes you have:
 
 ## Task 1: Configure networking
 
-1. Create a **Network Security Group** rule allowing Oracle Net connectivity.
+1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
 * First create the NSG...
 
 ![NSGdef1](./images/task1/image100.png " ")
 
-![NSGdef1](./images/task1/image200.png " ")
+![NSGdef2](./images/task1/image200.png " ")
 
-![NSGdef1](./images/task1/image300.png " ")
+![NSGdef3](./images/task1/image300.png " ")
 
 * Then add a stateful ingress rule allowing Oracle connectivity within the VCN:
 
@@ -59,8 +59,6 @@ This lab assumes you have:
 * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
 ````
-$ <copy>Optional copy of values</copy>
-
 francois_p@cloudshell:~ (eu-paris-1)$ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
 (...)
 Are you sure you want to continue connecting (yes/no)? yes
@@ -74,6 +72,7 @@ $ <copy>sudo su - oracle</copy>
 
 ````
 [oracle@ruby1 ~]$ <copy>srvctl status nodeapps</copy>
+
 VIP 10.0.0.183 is enabled
 VIP 10.0.0.183 is running on node: ruby1
 VIP 10.0.0.80 is enabled
