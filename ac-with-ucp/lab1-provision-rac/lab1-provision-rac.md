@@ -14,7 +14,7 @@ In this lab, you will Provision the RAC database which will be used to demo Appl
 
 ### Prerequisites
 
-This lab assumes you have access to an Oracle tenancy.
+This lab assumes you have access to an Oracle tenancy with the proper privileges.
 
 
 
