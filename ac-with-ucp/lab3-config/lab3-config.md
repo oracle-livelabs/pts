@@ -46,14 +46,14 @@ Create the Network Security Group in the VCN.
 
 2. Then add a stateful ingress rule allowing Oracle connectivity within the VCN
 
-![NSGrule](./images/task1/image400.png)
+![NSGrule](./images/task1/image400.png " ")
 
 
 3. Finally add the NSG to the database
 
-![AddNSG2DB1](./images/task1/image500.png)
+![AddNSG2DB1](./images/task1/image500.png " ")
 
-![AddNSG2DB1](./images/task1/image600.png)
+![AddNSG2DB1](./images/task1/image600.png " ")
 
 
 
@@ -107,18 +107,11 @@ Create the Network Security Group in the VCN.
   ONS is individually disabled on nodes:
   ````
 
-2. Add the ingress rules opening TCP ports for FAN events
+2. Add an ingress rule opening TCP port 6200 to FAN events
 
 Fast Application Notification (FAN) requires the following **ingress** rule to be added to the Network Security Group in order to allow the propagation of FAN events to the connection pool.
 
-
-![NSGruleONS1](./images/task2/image100.jpg)
-
-3. Add the egress rules opening TCP ports for FAN events
-
-Fast Application Notification (FAN) requires the following **egress** rule to be added to the Network Security Group in order to allow the propagation of FAN events to the connection pool.
-
-![NSGruleONS2](./images/task2/image200.jpg)
+![NSGruleONS1](./images/task2/image100.png " ")
 
 
 ## Task 3: Configure RAC services
