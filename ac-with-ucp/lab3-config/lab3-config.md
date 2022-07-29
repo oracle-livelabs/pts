@@ -114,8 +114,8 @@ Fast Application Notification (FAN) requires the following **ingress** rule to b
 ![NSGruleONS1](./images/task2/image100.png " ")
 
 
-## Task 3: Configure RAC services
 
+## Task 3: Configure RAC services
 
 1. Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
@@ -274,14 +274,139 @@ Service tacsrv is running on instance(s) CONT1,CONT2
 
 ## Task 4: Create demo schema
 
-1. Create tablespace and user
-2. Create  schema
+1. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
+
+  ````
+  user@cloudshell:~ $ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
+
+  (...)
+  -rw-r--r--. 1 oracle oinstall 1047 Jul 29 09:27 ddl10_user.sql
+  -rw-r--r--. 1 oracle oinstall 1036 Jul 29 09:27 ddl20_schema.sql
+  -rwxr-xr-x. 1 oracle oinstall   64 Jun 28 07:50 ddl_setup.sh
+  (...)
+  ````
+
+2. Run **ddl_setup.sh** to create the demo schema
+
+> **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
+
+This script essentially connects to the RAC database and creates a user CONTI in PDB1.
+
+CONTI will connect to the Pluggable database PDB1 to make accounting entries in table ACCOUNT.
+
+Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
+
+A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
+
+
+  ````
+  user@cloudshell:~ $ <copy>./ddl_setup.sh</copy>
+
+  (...)
+  SQL> drop user conti cascade;
+  User dropped.
+
+  SQL> drop tablespace conti including contents and datafiles;
+  Tablespace dropped.
+
+  SQL> create smallfile tablespace conti
+    2   datafile '+DATA'	size 100M reuse autoextend on next 100m
+    3   maxsize unlimited
+    4   logging
+    5   extent management local segment space management auto;
+  Tablespace created.
+
+  SQL> create user conti identified by "_MyCloud2022_" default tablespace conti account unlock;
+  User created.
+
+  SQL> grant connect, resource, unlimited tablespace to conti;
+  Grant succeeded.
+
+  (...)
+  SQL> connect conti/_MyCloud2022_@ruby-scan.sub07270956560.vcndemorac.oraclevcn.com:1521/PDB1.sub07270956560.vcndemorac.oraclevcn.com
+  Connected.
+  SQL> --
+  SQL> -- Create demo schema in ADB
+  SQL> --
+
+  SQL> create table account(
+    2  id 	         number(12,0),
+    3  date_create   date,
+    4  service	     varchar2(60),
+    5  dir	         char(1),
+    6  amount	       number
+    7  );
+  Table created.
+
+  SQL> create unique index account_pk on account(id);
+  Index created.
+
+  SQL> alter table account add constraint pk_account primary key (id) using index;
+  Table altered.
+
+  SQL> create sequence account_seq start with 1;
+  Sequence created.
+
+  SQL> -- Retaining Mutable Values in Application Continuity for Java
+  SQL> ALTER SEQUENCE account_seq KEEP;
+  Sequence altered.
+
+  SQL> create or replace trigger biur_account
+    2  before insert on account
+    3  for each row
+    4  begin
+    5  	     select sysdate into :new.date_create from dual;
+    6  	     select account_seq.nextval into :new.id from dual;
+    7  	     select service_name into :new.service from v$session where audsid=userenv('sessionid');
+    8  end biur_account;
+    9  /
+  Trigger created.
+  (...)
+  ````
+
 
 
 ## Task 5: Compile demo application
 
-1. Download libraries and set CLASSPATH
+1. Required CLASSPATH libraries
+
+Our demo program uses JDBC to connect to the RAC database.
+It shows how to create an intelligent connection pool, able to communicate with the cluster database through the Oracle Notification Service.
+
+To compile and run such a Java program, you need:
+* the right jdbc driver (usually ojdbcX.jar)
+* the right Universal Connection Pool jar file (usually ucp.jar or ucp11.jar)
+* the Oracle Notification Service jar file (usually ons.jar)
+
+The jar files you need depend on:
+* the version of your Oracle client
+* the version of Java you are using
+* the version of the database you connect to (to a lesser extent)
+
+You find below the main site where to get these files:
+
+	[Oracle Database JDBC driver and Companion Jars Downloads](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
+
+In our case we are using
+* JDK 11
+* Oracle 21c instant client
+* Oracle 19c database
+
+
+The jar files you need in your **CLASSPATH** have already been downloaded to **work/ac/libcli21c**
+
+````
+user@cloudshell:~ $ <copy>cd $HOME/work/ac/libcli21c ; ls -al</copy>
+
+(...)
+-rw-r--r--. 1 oracle oinstall 5175363 Jun  9 01:44 ojdbc11.jar
+-rw-r--r--. 1 oracle oinstall  198457 Jun  9 01:44 ons.jar
+-rw-r--r--. 1 oracle oinstall 1801328 Jun  9 01:44 ucp11.jar
+(...)
+````
+
 2. Build the JDBC URL for the connection pool
+
 3. Compile demo
 
 
