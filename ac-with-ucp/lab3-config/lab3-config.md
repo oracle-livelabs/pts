@@ -257,9 +257,9 @@ user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv</co
 ````
 
 ````
-user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service demosrv</copy>
+user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
-Service demosrv is running on instance(s) CONT1,CONT2
+Service tacsrv is running on instance(s) CONT1,CONT2
 ````
 
 > **Note**: the service should run on all the preferred instances.
