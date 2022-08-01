@@ -45,7 +45,7 @@ Create the Network Security Group in the VCN.
 ![NSGdef3](./images/task1/image300.png " ")
 
 
-2. Then add a stateful ingress rule allowing Oracle connectivity within the VCN
+2. Then add a stateful ingress rule allowing Oracle Net connectivity within the VCN
 
 ![NSGrule](./images/task1/image400.png " ")
 
@@ -273,7 +273,7 @@ Service tacsrv is running on instance(s) CONT1,CONT2
   ````
 
 
-## Task 4: Create demo schema
+## Task 4: Create the demo schema
 
 
 1. Understand the demo application directory structure
@@ -289,8 +289,8 @@ Here is a description of the directory structure under **/home/oracle/work/ac**:
 
 * **ac** : demo program with its compiling and running scripts
 * **ac/libcli21c** : required java libraries
-* **ac/ddl** : SQL scripts to create the demo ddl20_schema
-* **ac/sql** : SQL scripts used later in the lab
+* **ac/ddl** : SQL scripts to create the demo schema
+* **ac/sql** : SQL scripts used later in the lab to show data and how connections are created
 
 
 
@@ -438,9 +438,9 @@ From the desktop connection as oracle to the client machine, use the text editor
 ![FileStructure](./images/task5/image300.png " ")
 
 
-The most interesting method os **createPool(String strAlias)** which show the commands to create a connection pool able to take full advantage of a RAC database
+The most interesting method is **createPool(String strAlias)** which shows the commands to create a connection pool able to take full advantage of a RAC database.
 
-Notice the following elements
+Notice the following elements:
 
 * the call to configure Replay Driver for Application Continuity
 
@@ -456,7 +456,7 @@ String dbURL = "jdbc:oracle:thin:@" +
 	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
 </code>
 
-* the classical code to size the Pool
+* usual instructions to configure the number of connections in the pool
 
 <code>
 pds.setInitialPoolSize(1);
@@ -472,18 +472,18 @@ pds.setValidateConnectionOnBorrow(true);
 </code>
 
 
-Verify the value of strScan and change it in MyCUPDemo.java if necessary.
+**Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
 
 
-3. Compile demo
+3. Compile the demo application
 
-Open a terminal window and run the following command to compile the program
+Open a terminal window change to the ac directory:
 
 ````
 user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
 ````
 
-Then
+Then run the following command to compile the demo application:
 
 ````
 user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
@@ -491,7 +491,7 @@ user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
 
 
 
-**You can proceed to the next lab…**
+**You can proceed to the next lab.**
 
 
 ## Acknowledgements

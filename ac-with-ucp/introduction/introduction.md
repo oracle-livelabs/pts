@@ -4,9 +4,9 @@
 
 ## About this Workshop
 
-**Application Continuity** makes planned maintenance activities and unplanned outages transparent for end-users by recovering the in-flight work of impacted database sessions.
+**Application Continuity** makes planned maintenance activities and unplanned outages transparent to end-users by recovering the in-flight work of impacted database sessions.
 
-Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Draining and Application Continuity from an Oracle connection pool (UCP).
+Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Connection Draining and Application Continuity from an Oracle connection pool (UCP).
 
 ### Why using UCP ?
 
@@ -28,18 +28,16 @@ It demonstrates:
 
 The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
-Estimated Workshop Time: 2 hours (This estimate is for the entire workshop - it is the sum of the estimates provided for each of the labs included in the workshop.)
+Estimated Workshop Time: 2 hours (this estimate is for the entire workshop - it is the sum of the estimates provided for each of the labs included in the workshop.)
 
 
 ### Objectives
 
 This workshop has three objectives:
 
-* Understand how to configure the client-server Environment (database services, connection pool, etc.)
+* Understand how to best configure the client-server Environment (database services, connection pool, etc.)
 * Show Application Continuity in action
 * Show how to use database services and Application Continuity for Planned Maintenance
-
-The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
 
 ### Prerequisites

@@ -27,7 +27,7 @@ This lab assumes you have:
 
 In this lab, we'll use a pool configured to use a **single connection** to the database. That way, we'll be able to identify the connection more easily from a different session if we want to kill it in the middle of a transaction to simulate an unplanned outage.
 
-Make sure the pool in MyUCPDemo.java is configured to use a single connection.
+**Make sure the pool in MyUCPDemo.java is configured to use a single connection**
 
 <code>
 pds.setMinPoolSize(1);
@@ -53,7 +53,7 @@ user@cloudshell:~ $ <copy>MyRun.sh MyUCPDemo demosrv</copy>
 ````
 
 
-The application gets a connection and starts a first transaction. It connects to the database as user CONTI and makes accounting entries in table ACCOUNT. Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
+The application gets a connection and starts a first transaction. It connects to the database as user **CONTI** and makes accounting entries in table **ACCOUNT**. Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
 
 A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
 
@@ -75,7 +75,7 @@ We are now in the middle of the 4th transaction.
 
 ![ShowData2](./images/task2/image210.png " ")
 
-5. One can see three completed transactions for **110**, **120** and **130** and we should be in the middle of the fourth one for **140**.
+5. One can see three completed transactions for **110**, **120** and **130** and we should be in the middle of the fourth one for **140** (which we do not see since it is not finished and has not yet been committed).
 
 > **Note**: the trigger on the table has captured the database service used by the Connection.
 
@@ -124,7 +124,7 @@ We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a t
 user@cloudshell:~ $ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
 ````
 
-The application gets a connection and starts a first transaction. It connects to the database as user CONTI and makes accounting entries in table ACCOUNT. Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
+The application gets a connection and starts a first transaction. It connects to the database as user **CONTI** and makes accounting entries in table **ACCOUNT**. Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
 
 A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
 
@@ -164,7 +164,7 @@ We can also see the session we have been using by running **show_sessions.sh** f
 
 This time, Application Continuity kicks in and the program continues without showing any errors.
 
-In fact, AC has obtained a new connection and replayed the transaction from the beginning (the first INSERT) when an error was detected. An error was detected (but not shown) when trying to execute the second INSERT through a broken connection. This set AC to work...
+*In fact, AC has obtained a new connection and replayed the transaction from the beginning (the first INSERT) when an error was detected. An error was detected (but not shown) when trying to execute the second INSERT through a broken connection. This set AC to work...*
 
 ![ProgError](./images/task3/image600.png " ")
 
