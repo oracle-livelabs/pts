@@ -59,11 +59,11 @@ A trigger allows to capture the database service that was used to connect when I
 
 ![Demo110](./images/task2/image100.png " ")
 
-2. Strike any key, and the application finishes the first transaction and starts a second one
+2. Strike RETURN, and the application finishes the first transaction and starts a second one
 
 ![Demo120](./images/task2/image110.png " ")
 
-3. Strike any key two more times to complete more transactions
+3. Strike RETURN two more times to complete more transactions
 
 ![Demo140](./images/task2/image120.png " ")
 
@@ -91,7 +91,7 @@ We can also see the session we have been using by running **show_sessions.sh** f
 
 ![KillSess2](./images/task2/image410.png " ")
 
-7. Back to the first terminal window where the application is running, strike any key again !
+7. Back to the first terminal window where the application is running, strike RETURN again !
 
 Since our single connection to the database has been broken, the program expectedly receives an error.
 
@@ -130,11 +130,11 @@ A trigger allows to capture the database service that was used to connect when I
 
 ![Demo110](./images/task3/image200.png " ")
 
-2. Strike any key, and the application finishes the first transaction and starts a second one
+2. Strike RETURN and the application finishes the first transaction and starts a second one
 
 ![Demo120](./images/task3/image210.png " ")
 
-3. Strike any key two more times to complete more transactions
+3. Strike RETURN two more times to complete more transactions
 
 ![Demo140](./images/task3/image220.png " ")
 
@@ -160,7 +160,7 @@ We can also see the session we have been using by running **show_sessions.sh** f
 
 ![KIllSess1](./images/task3/image500.png " ")
 
-7. Back to the first terminal window where the application is running, strike any key again !
+7. Back to the first terminal window where the application is running, strike RETURN again !
 
 This time, Application Continuity kicks in and the program continues without showing any errors.
 
