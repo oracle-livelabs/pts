@@ -6,7 +6,17 @@
 
 **Application Continuity** makes planned maintenance activities and unplanned outages transparent for end-users by recovering the in-flight work of impacted database sessions.
 
-Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Draining and Application Continuity from an Oracle connection pool (UCP). UCP provides explicit request boundaries on check-out and check-in of connections, which makes Application Continuity easy to use.
+Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Draining and Application Continuity from an Oracle connection pool (UCP).
+
+### Why using UCP ?
+
+Managing the connection pool from [UCP](https://docs.oracle.com/en/database/oracle/oracle-database/21/jjucp/index.html) if often the easiest way for a Java application to take full advantage of Application Continuity.
+
+This implementation of a JDBC connection pool, delivered as a jar file, is a free piece of software (UCP is delivered under Oracle Free Use Terms and Conditions).  Its main advantage is that it leverages transparently many high availability and performance features available through an Oracle Real Application Clusters (Oracle RAC) database.
+
+These features include Fast Connection Failover (FCF), Run-time connection Load Balancing (RLB), and Connection Affinity. Furthermore, UCP provides explicit request boundaries on check-in and check-out of connections, which makes Application Continuity easy to use.
+
+### What's in the workshop
 
 This workshop is based on a compute instance (a demo application) connected to a 2-node DBCS RAC.
 The demo application is a simple Java program using a 21c client. Its code shows how to create and use a Universal Connection Pool to the RAC.

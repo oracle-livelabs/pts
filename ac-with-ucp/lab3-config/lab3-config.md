@@ -44,6 +44,7 @@ Create the Network Security Group in the VCN.
 
 ![NSGdef3](./images/task1/image300.png " ")
 
+
 2. Then add a stateful ingress rule allowing Oracle connectivity within the VCN
 
 ![NSGrule](./images/task1/image400.png " ")
@@ -130,7 +131,7 @@ Fast Application Notification (FAN) requires the following **ingress** rule to b
   ````
 
 
-1. Create a database service with standard parameters (no Application Continuity)
+2. Create a database service with standard parameters (no Application Continuity)
 
 * Create the service **demosrv**:
 
@@ -200,7 +201,7 @@ Service demosrv is running on instance(s) CONT1,CONT2
   user@cloudshell:~ $ <copy>srvctl remove service -db cont_prim -service demosrv</copy>
   ````
 
-2. Create a database service with Application Continuity support
+3. Create a database service with Application Continuity support
 
 * Create the service **tacsrv**:
 
@@ -274,7 +275,28 @@ Service tacsrv is running on instance(s) CONT1,CONT2
 
 ## Task 4: Create demo schema
 
-1. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
+
+1. Understand the demo application directory structure
+
+The demo application is installed under the **oracle** user of the client machine **demotac** in **/home/oracle/work/ac**
+
+![FileStructure](./images/task4/image100.png " ")
+
+![FileStructure](./images/task4/image200.png " ")
+
+
+Here is a description of the directory structure under **/home/oracle/work/ac**:
+
+* **ac** : demo program with its compiling and running scripts
+* **ac/libcli21c** : required java libraries
+* **ac/ddl** : SQL scripts to create the demo ddl20_schema
+* **ac/sql** : SQL scripts used later in the lab
+
+
+
+2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
+
+![FileStructure](./images/task4/image300.png " ")
 
   ````
   user@cloudshell:~ $ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
@@ -286,7 +308,7 @@ Service tacsrv is running on instance(s) CONT1,CONT2
   (...)
   ````
 
-2. Run **ddl_setup.sh** to create the demo schema
+3. Run **ddl_setup.sh** to create the demo schema
 
 > **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
 
@@ -368,6 +390,7 @@ A trigger allows to capture the database service that was used to connect when I
 
 ## Task 5: Compile demo application
 
+
 1. Required CLASSPATH libraries
 
 Our demo program uses JDBC to connect to the RAC database.
@@ -383,11 +406,9 @@ The jar files you need depend on:
 * the version of Java you are using
 * the version of the database you connect to (to a lesser extent)
 
-You find below the main site where to get these files:
+Oracle Database JDBC drivers and Companion Jars can be downloaded from [here](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html).
 
-	[Oracle Database JDBC driver and Companion Jars Downloads](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
-
-In our case we are using
+In our case we are using:
 * JDK 11
 * Oracle 21c instant client
 * Oracle 19c database
@@ -407,7 +428,67 @@ user@cloudshell:~ $ <copy>cd $HOME/work/ac/libcli21c ; ls -al</copy>
 
 2. Build the JDBC URL for the connection pool
 
+From the desktop connection as oracle to the client machine, use the text editor to edit the Java program
+
+
+![FileStructure](./images/task5/image100.png " ")
+
+![FileStructure](./images/task5/image200.png " ")
+
+![FileStructure](./images/task5/image300.png " ")
+
+
+The most interesting method os **createPool(String strAlias)** which show the commands to create a connection pool able to take full advantage of a RAC database
+
+Notice the following elements
+
+* the call to configure Replay Driver for Application Continuity
+
+<code>pds.setConnectionFactoryClassName("oracle.jdbc.replay.OracleDataSourceImpl");</code>
+
+* the connection URL which should be of the following form to allow FAN auto-configuration
+
+<code>
+String dbURL = "jdbc:oracle:thin:@" +
+	"(DESCRIPTION=" +
+	"(CONNECT_TIMEOUT=90)(RETRY_COUNT=50)(RETRY_DELAY=3)(TRANSPORT_CONNECT_TIMEOUT=3)" +
+	"(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST="+strScan+")(PORT=1521)))" +			
+	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
+</code>
+
+* the classical code to size the Pool
+
+<code>
+pds.setInitialPoolSize(1);
+pds.setMinPoolSize(1);
+pds.setMaxPoolSize(20);
+</code>
+
+* some additional commands which speak for themselves
+
+<code>
+pds.setFastConnectionFailoverEnabled(true);
+pds.setValidateConnectionOnBorrow(true);
+</code>
+
+
+Verify the value of strScan and change it in MyCUPDemo.java if necessary.
+
+
 3. Compile demo
+
+Open a terminal window and run the following command to compile the program
+
+````
+user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
+````
+
+Then
+
+````
+user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+````
+
 
 
 **You can proceed to the next lab…**
@@ -416,4 +497,4 @@ user@cloudshell:~ $ <copy>cd $HOME/work/ac/libcli21c ; ls -al</copy>
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, July 2022
+* **Last Updated By/Date** - François Pons, August 2022
