@@ -36,35 +36,34 @@ This lab assumes you have:
 
 1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
+  * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
-* From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
+  ![NSGdef1](./images/task1/image100.png " ")
 
-![NSGdef1](./images/task1/image100.png " ")
+  * Select the VCN
 
-* Select the VCN
+  ![NSGdef1](./images/task1/image200.png " ")
 
-![NSGdef1](./images/task1/image200.png " ")
+  * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
+  ![NSGdef1](./images/task1/image300.png " ")
 
-![NSGdef1](./images/task1/image300.png " ")
+  * Enter a name and create the Network Security Group
 
-* Enter a name and create the Network Security Group
-
-````
-Enter <copy>NSG-DEMORAC</copy> in the Name field.
-````
+  ````
+  Enter <copy>NSG-DEMORAC</copy> in the Name field.
+  ````
 
 2. Then add a **stateful ingress rule** allowing Oracle Net connectivity within the VCN
 
-![NSGrule](./images/task1/image400.png " ")
+  ![NSGrule](./images/task1/image400.png " ")
 
 
 3. Finally add the NSG to the database
 
-![AddNSG2DB1](./images/task1/image500.png " ")
+  ![AddNSG2DB1](./images/task1/image500.png " ")
 
-![AddNSG2DB1](./images/task1/image600.png " ")
+  ![AddNSG2DB1](./images/task1/image600.png " ")
 
 
 
@@ -72,7 +71,7 @@ Enter <copy>NSG-DEMORAC</copy> in the Name field.
 
 1. Check that ONS is running on the server
 
-* Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
+  * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
   ````
   user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
@@ -83,13 +82,13 @@ Enter <copy>NSG-DEMORAC</copy> in the Name field.
   (...)
   ````
 
-* Switch to user *oracle*
+  * Switch to user *oracle*
 
   ````
   $ <copy>sudo su - oracle</copy>
   ````
 
-* Check ONS is running on the server
+  * Check ONS is running on the server
 
   ````
   [oracle@ruby1 ~]$ <copy>srvctl status nodeapps</copy>
@@ -106,7 +105,7 @@ Enter <copy>NSG-DEMORAC</copy> in the Name field.
   ONS daemon is running on node: ruby2
   ````
 
-* Also verify the ports used by ONS
+  * Also verify the ports used by ONS
 
   ````
   [oracle@ruby1 ~]$ <copy>srvctl config nodeapps -s</copy>
@@ -120,21 +119,20 @@ Enter <copy>NSG-DEMORAC</copy> in the Name field.
 
 2. Add an ingress rule opening TCP port 6200 to FAN events
 
-Fast Application Notification (FAN) requires the following **ingress** rule to be added to the Network Security Group in order to allow the propagation of FAN events to the connection pool.
+  * Fast Application Notification (FAN) requires the following **ingress** rule to be added to the Network Security Group in order to allow the propagation of FAN events to the connection pool.
 
-![NSGruleONS1](./images/task2/image100.png " ")
-
+  ![NSGruleONS1](./images/task2/image100.png " ")
 
 
 ## Task 3: Configure RAC services
 
-1. Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
+1. Using Cloud Shell, connect to the first node of the RAC cluster as **opc**
 
   ````
   user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
   ````
 
-* Switch to user *oracle*
+  * Switch to user *oracle*
 
   ````
   $ <copy>sudo su - oracle</copy>
@@ -143,13 +141,13 @@ Fast Application Notification (FAN) requires the following **ingress** rule to b
 
 2. Create a database service with standard parameters (no Application Continuity)
 
-* Create the service **demosrv**:
+  * Create the service **demosrv**:
 
   ````
   user@cloudshell:~ $ <copy>srvctl add service -db cont_prim -service demosrv -preferred CONT1,CONT2 -pdb PDB1 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
   ````
 
-* Check service configuration:
+  * Check service configuration:
 
   ````
   user@cloudshell:~ $ <copy>srvctl config service -db cont_prim -service demosrv</copy>
@@ -188,24 +186,24 @@ Fast Application Notification (FAN) requires the following **ingress** rule to b
   CSS critical: no
   ````
 
-> **Note**: failover type is not set.
+  > **Note**: failover type is not set.
 
-* Start the service and check its status
+  * Start the service and check its status
 
-````
-user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service demosrv</copy>
-````
+  ````
+  user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service demosrv</copy>
+  ````
 
-````
-user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service demosrv</copy>
+  ````
+  user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service demosrv</copy>
 
-Service demosrv is running on instance(s) CONT1,CONT2
-````
+  Service demosrv is running on instance(s) CONT1,CONT2
+  ````
 
-> **Note**: the service should run on all the preferred instances.
+  > **Note**: the service should run on all the preferred instances.
 
 
-* If you need to delete the service and create it again, use the following command:
+  * If you need to delete the service and create it again, use the following command:
 
   ````
   user@cloudshell:~ $ <copy>srvctl remove service -db cont_prim -service demosrv</copy>
@@ -213,13 +211,13 @@ Service demosrv is running on instance(s) CONT1,CONT2
 
 3. Create a database service with Application Continuity support
 
-* Create the service **tacsrv**:
+  * Create the service **tacsrv**:
 
   ````
   user@cloudshell:~ $ <copy>srvctl add service -db cont_prim -service tacsrv -pdb PDB1 -preferred CONT1,CONT2 -failover_restore AUTO -commit_outcome TRUE -failovertype AUTO -replay_init_time 600 -retention 86400 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
   ````
 
-* Check service configuration
+  * Check service configuration
 
   ````
   user@cloudshell:~ $ <copy>srvctl config service -db cont_prim -service tacsrv</copy>
@@ -258,25 +256,25 @@ Service demosrv is running on instance(s) CONT1,CONT2
   CSS critical: no
   ````
 
-> **Note**: failover type is set to **AUTO**.
+  > **Note**: failover type is set to **AUTO**.
 
 
-* Start the service and check its status
+  * Start the service and check its status
 
-````
-user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv</copy>
-````
+  ````
+  user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv</copy>
+  ````
 
-````
-user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
+  ````
+  user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
-Service tacsrv is running on instance(s) CONT1,CONT2
-````
+  Service tacsrv is running on instance(s) CONT1,CONT2
+  ````
 
-> **Note**: the service should run on all the preferred instances.
+  > **Note**: the service should run on all the preferred instances.
 
 
-* If you need to delete the service and create it again, use the following command:
+  * If you need to delete the service and create it again, use the following command:
 
   ````
   user@cloudshell:~ $ <copy>srvctl remove service -db cont_prim -service tacsrv</copy>
@@ -288,25 +286,26 @@ Service tacsrv is running on instance(s) CONT1,CONT2
 
 1. Understand the demo application directory structure
 
-The demo application is installed under the **oracle** user of the client machine **demotac** in **/home/oracle/work/ac**
+  * The demo application is installed under the **oracle** user of the client machine **demotac** in **/home/oracle/work/ac**
 
-![FileStructure](./images/task4/image100.png " ")
+  ![FileStructure](./images/task4/image100.png " ")
 
-![FileStructure](./images/task4/image200.png " ")
+  ![FileStructure](./images/task4/image200.png " ")
 
 
-Here is a description of the directory structure under **/home/oracle/work/ac**:
+  * Here is a description of the directory structure under **/home/oracle/work/ac**:
 
-* **ac** : demo program with its compiling and running scripts
-* **ac/libcli21c** : required java libraries
-* **ac/ddl** : SQL scripts to create the demo schema
-* **ac/sql** : SQL scripts used later in the lab to show data and how connections are created
-
+  ```
+  ac           : demo program with its compiling and running scripts
+  ac/libcli21c : required java libraries
+  ac/ddl       : SQL scripts to create the demo schema
+  ac/sql       : SQL scripts used later in the lab to show data and how connections are created
+  ```
 
 
 2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
 
-![FileStructure](./images/task4/image300.png " ")
+  ![FileStructure](./images/task4/image300.png " ")
 
   ````
   user@cloudshell:~ $ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
@@ -320,15 +319,15 @@ Here is a description of the directory structure under **/home/oracle/work/ac**:
 
 3. Run **ddl_setup.sh** to create the demo schema
 
-> **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
+  > **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
 
-This script essentially connects to the RAC database and creates a user CONTI in PDB1.
+  This script essentially connects to the RAC database and creates a user CONTI in PDB1.
 
-CONTI will connect to the Pluggable database PDB1 to make accounting entries in table ACCOUNT.
+  CONTI will connect to the Pluggable database PDB1 to make accounting entries in table ACCOUNT.
 
-Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
+  Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
 
-A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
+  A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
 
 
   ````
@@ -396,10 +395,7 @@ A trigger allows to capture the database service that was used to connect when I
   (...)
   ````
 
-
-
 ## Task 5: Compile demo application
-
 
 1. Required CLASSPATH libraries
 
@@ -423,83 +419,73 @@ In our case we are using:
 * Oracle 21c instant client
 * Oracle 19c database
 
-
 The jar files you need in your **CLASSPATH** have already been downloaded to **work/ac/libcli21c**
-
-````
-user@cloudshell:~ $ <copy>cd $HOME/work/ac/libcli21c ; ls -al</copy>
-
-(...)
--rw-r--r--. 1 oracle oinstall 5175363 Jun  9 01:44 ojdbc11.jar
--rw-r--r--. 1 oracle oinstall  198457 Jun  9 01:44 ons.jar
--rw-r--r--. 1 oracle oinstall 1801328 Jun  9 01:44 ucp11.jar
-(...)
-````
 
 2. Build the JDBC URL for the connection pool
 
-From the desktop connection as oracle to the client machine, use the text editor to edit the Java program
+* From the desktop connection as oracle to the client machine, use the text editor to edit the Java program
+
+  ![FileStructure](./images/task5/image100.png " ")
+
+  ![FileStructure](./images/task5/image200.png " ")
+
+  ![FileStructure](./images/task5/image300.png " ")
 
 
-![FileStructure](./images/task5/image100.png " ")
+* The most interesting method is **createPool(String strAlias)** which shows the commands to create a connection pool able to take full advantage of a RAC database.
 
-![FileStructure](./images/task5/image200.png " ")
+* Notice the following elements:
 
-![FileStructure](./images/task5/image300.png " ")
+  The call to configure Replay Driver for Application Continuity
 
+    ```
+    pds.setConnectionFactoryClassName("oracle.jdbc.replay.OracleDataSourceImpl");
+    ```
 
-The most interesting method is **createPool(String strAlias)** which shows the commands to create a connection pool able to take full advantage of a RAC database.
+  The connection URL which should be of the following form to allow FAN auto-configuration
 
-Notice the following elements:
+    ```
+    String dbURL = "jdbc:oracle:thin:@" +
+    	"(DESCRIPTION=" +
+    	"(CONNECT_TIMEOUT=90)(RETRY_COUNT=50)(RETRY_DELAY=3)(TRANSPORT_CONNECT_TIMEOUT=3)" +
+    	"(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST="+strScan+")(PORT=1521)))" +			
+    	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
+    ```
 
-* the call to configure Replay Driver for Application Continuity
+  Usual instructions to configure the number of connections in the pool
 
-  ```
-  pds.setConnectionFactoryClassName("oracle.jdbc.replay.OracleDataSourceImpl");
-  ```
+    ```
+    pds.setInitialPoolSize(1);
+    pds.setMinPoolSize(1);
+    pds.setMaxPoolSize(20);
+    ```
 
-* the connection URL which should be of the following form to allow FAN auto-configuration
+  Some additional commands which speak for themselves
 
-  ```
-  String dbURL = "jdbc:oracle:thin:@" +
-  	"(DESCRIPTION=" +
-  	"(CONNECT_TIMEOUT=90)(RETRY_COUNT=50)(RETRY_DELAY=3)(TRANSPORT_CONNECT_TIMEOUT=3)" +
-  	"(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST="+strScan+")(PORT=1521)))" +			
-  	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
-  ```
-
-* usual instructions to configure the number of connections in the pool
-
-  ```
-  pds.setInitialPoolSize(1);
-  pds.setMinPoolSize(1);
-  pds.setMaxPoolSize(20);
-  ```
-
-* some additional commands which speak for themselves
-
-  ```
-  pds.setFastConnectionFailoverEnabled(true);
-  pds.setValidateConnectionOnBorrow(true);
-  ```
+    ```
+    pds.setFastConnectionFailoverEnabled(true);
+    pds.setValidateConnectionOnBorrow(true);
+    ```
 
 
-**Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
+3. Update the value of strScan
+
+  * **Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
 
 
-3. Compile the demo application
+4. Compile the demo application
 
-Open a terminal window change to the ac directory:
+  * Open a terminal window change to the ac directory:
 
-````
-user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
-````
+  ````
+  user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
+  ````
 
-Then run the following command to compile the demo application:
+  * Then run the following command to compile the demo application:
 
-````
-user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
-````
+  ````
+  user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+  ````
 
 
 
