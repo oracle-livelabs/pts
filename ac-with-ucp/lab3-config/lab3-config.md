@@ -36,16 +36,26 @@ This lab assumes you have:
 
 1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
-Create the Network Security Group in the VCN.
+
+* From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
 ![NSGdef1](./images/task1/image100.png " ")
 
-![NSGdef2](./images/task1/image200.png " ")
+* Select the VCN
 
-![NSGdef3](./images/task1/image300.png " ")
+![NSGdef1](./images/task1/image200.png " ")
 
+Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-2. Then add a stateful ingress rule allowing Oracle Net connectivity within the VCN
+![NSGdef1](./images/task1/image300.png " ")
+
+* Enter a name and create the Network Security Group
+
+````
+Enter <copy>NSG-DEMORAC</copy> in the Name field.
+````
+
+2. Then add a **stateful ingress rule** allowing Oracle Net connectivity within the VCN
 
 ![NSGrule](./images/task1/image400.png " ")
 
