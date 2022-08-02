@@ -2,9 +2,12 @@
 
 ## Introduction
 
-In this lab we will create a connection pool with 10 connections and verify that UCP distributes them equally between the cluster nodes.
+In this lab we will create a connection pool with 10 connections and first verify that UCP distributes them equally between the cluster nodes.
 
-We will also direct and drain connections to a chosen node of the database cluster as when it is required by planned maintenance on another node.
+We will then also direct (and drain) connections to a chosen node of the database cluster, thus making one node of the cluster available for planned maintenance.
+
+Draining connections means that enough time is provided for current work to complete before maintenance is started on a node.
+
 
 Estimated Lab Time: 30 minutes
 
@@ -51,7 +54,7 @@ We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a t
 ![Refresh2](./images/task1/image110.png " ")
 
 
-## Task 2: Connection routing
+## Task 2: Connection routing to instance 2 only
 
 1. Run the demo program with a database service that uses **Application Continuity**
 
@@ -121,12 +124,13 @@ Service tacsrv is running on instance(s) CONT2
 ![Demo140](./images/task2/image400.png " ")
 
 ![ShowPool1](./images/task2/image500.png " ")
+
 ![ShowPool2](./images/task2/image510.png " ")
 
 
-## Task 3: Connection routing
+## Task 3: Connection routing to instance 1 only
 
-1. We can now do the reverse and move the service to only CONT2
+1. We can now do the reverse and move the service to only CONT1
 
 
 ````
@@ -149,10 +153,11 @@ Service tacsrv is running on instance(s) CONT1
 ![Demo140](./images/task3/image100.png " ")
 
 ![ShowPool1](./images/task3/image200.png " ")
+
 ![ShowPool2](./images/task3/image210.png " ")
 
 
-2. Use both instances again
+3. Use both instances again
 
 ````
 user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT2</copy>

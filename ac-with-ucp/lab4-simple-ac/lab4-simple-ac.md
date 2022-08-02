@@ -23,16 +23,15 @@ This lab assumes you have:
 
 ## Task 1: Configure the lab
 
-1. Configure the pool to a single connection
+1. Configure the pool to use a single connection
 
 In this lab, we'll use a pool configured to use a **single connection** to the database. That way, we'll be able to identify the connection more easily from a different session if we want to kill it in the middle of a transaction to simulate an unplanned outage.
 
 **Make sure the pool in MyUCPDemo.java is configured to use a single connection**
 
-<code>
-pds.setMinPoolSize(1);
-pds.setMaxPoolSize(1);
-</code>
+<code>pds.setMinPoolSize(1);</code>
+<code>pds.setMaxPoolSize(1);</code>
+
 
 
 2. Recompile the application
@@ -172,7 +171,7 @@ This time, Application Continuity kicks in and the program continues without sho
 
 You may run a few more transactions from the first window and check from the second window that no transactions are lost (run **show_data.sh** again)
 
-![LostData](./images/task2/image600.png " ")
+![NoLostData](./images/task3/image700.png " ")
 
 
 **You can now proceed to the next lab…**
