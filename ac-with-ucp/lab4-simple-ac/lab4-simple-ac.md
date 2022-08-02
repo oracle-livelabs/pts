@@ -29,10 +29,10 @@ In this lab, we'll use a pool configured to use a **single connection** to the d
 
 **Make sure the pool in MyUCPDemo.java is configured to use a single connection**
 
-<code>pds.setMinPoolSize(1);</code>
-<code>pds.setMaxPoolSize(1);</code>
-
-
+  ```
+  pds.setMinPoolSize(1);
+  pds.setMaxPoolSize(1);
+  ```
 
 2. Recompile the application
 

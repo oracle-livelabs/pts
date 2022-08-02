@@ -454,32 +454,34 @@ Notice the following elements:
 
 * the call to configure Replay Driver for Application Continuity
 
-<code>pds.setConnectionFactoryClassName("oracle.jdbc.replay.OracleDataSourceImpl");</code>
+  ```
+  pds.setConnectionFactoryClassName("oracle.jdbc.replay.OracleDataSourceImpl");
+  ```
 
 * the connection URL which should be of the following form to allow FAN auto-configuration
 
-<code>
-String dbURL = "jdbc:oracle:thin:@" +
-	"(DESCRIPTION=" +
-	"(CONNECT_TIMEOUT=90)(RETRY_COUNT=50)(RETRY_DELAY=3)(TRANSPORT_CONNECT_TIMEOUT=3)" +
-	"(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST="+strScan+")(PORT=1521)))" +			
-	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
-</code>
+  ```
+  String dbURL = "jdbc:oracle:thin:@" +
+  	"(DESCRIPTION=" +
+  	"(CONNECT_TIMEOUT=90)(RETRY_COUNT=50)(RETRY_DELAY=3)(TRANSPORT_CONNECT_TIMEOUT=3)" +
+  	"(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST="+strScan+")(PORT=1521)))" +			
+  	"(CONNECT_DATA=(SERVICE_NAME="+strService+")))";
+  ```
 
 * usual instructions to configure the number of connections in the pool
 
-<code>
-pds.setInitialPoolSize(1);
-pds.setMinPoolSize(1);
-pds.setMaxPoolSize(20);
-</code>
+  ```
+  pds.setInitialPoolSize(1);
+  pds.setMinPoolSize(1);
+  pds.setMaxPoolSize(20);
+  ```
 
 * some additional commands which speak for themselves
 
-<code>
-pds.setFastConnectionFailoverEnabled(true);
-pds.setValidateConnectionOnBorrow(true);
-</code>
+  ```
+  pds.setFastConnectionFailoverEnabled(true);
+  pds.setValidateConnectionOnBorrow(true);
+  ```
 
 
 **Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
