@@ -397,7 +397,7 @@ This lab assumes you have:
 
 ## Task 5: Compile demo application
 
-1. Required CLASSPATH libraries
+### Step 1 - Understand Required CLASSPATH libraries
 
 Our demo program uses JDBC to connect to the RAC database.
 It shows how to create an intelligent connection pool, able to communicate with the cluster database through the Oracle Notification Service.
@@ -421,7 +421,8 @@ In our case we are using:
 
 The jar files you need in your **CLASSPATH** have already been downloaded to **work/ac/libcli21c**
 
-2. Build the JDBC URL for the connection pool
+
+### Step 2 - Understand Universal Connection Pool configuration
 
 * From the desktop connection as oracle to the client machine, use the text editor to edit the Java program
 
@@ -467,25 +468,24 @@ The jar files you need in your **CLASSPATH** have already been downloaded to **w
     pds.setValidateConnectionOnBorrow(true);
     ```
 
+### Step 3 - Update the value of **strScan**
 
-3. Update the value of strScan
-
-  * **Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
+* **Verify the value of strScan and change it in MyCUPDemo.java if necessary.**
 
 
-4. Compile the demo application
+### Step 4 - Compile the demo application
 
-  * Open a terminal window change to the ac directory:
+* Open a terminal window change to the ac directory:
 
-  ````
-  user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
-  ````
+````
+user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
+````
 
-  * Then run the following command to compile the demo application:
+* Then run the following command to compile the demo application:
 
-  ````
-  user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
-  ````
+````
+user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+````
 
 
 
