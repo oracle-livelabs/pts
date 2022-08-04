@@ -13,7 +13,7 @@ This workshop has three parts:
 
 **Estimated Workshop Time: 90 minutes.**
 
-## Objectives
+### Objectives
 
 During this workshop you will:
 
@@ -25,7 +25,7 @@ During this workshop you will:
 * Use MongoAPI capability for micro-service Python application
 
 
-## Prerequisites
+### Prerequisites
 
 * An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
 * Or Oracle LiveLabs sandbox environment
