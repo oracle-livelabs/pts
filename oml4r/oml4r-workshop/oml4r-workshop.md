@@ -1145,150 +1145,243 @@ In this task, we build a classification model for LTV\_BIN prediction and then e
     How does the confusion matrix compare with the one generated previously?
 
 
-## Task 7: Use Embedded R Functions to Leverage In-Database Parallel Processing
+## Task 7: Use Embedded R Execution Functions to Leverage In-Database Parallel Processing
 
-Some of the most significant benefits of using OML4R can be derived from using Embedded R execution in your applications. Embedded R execution allows you to store and run R scripts in the database using R and SQL interfaces.
+OML4R embedded R execution enables data scientists and other R users to run user-defined R functions 
+in R engines spawned and managed by the database environment. User-defined functions can be run in a 
+single R engine, or in a data or task-parallel manner using multiple R engines, for example, to 
+enable scoring third-party R models at scale. Results from these user-defined R functions can contain both 
+structured and image results and be accessed via the R and SQL APIs.
 
-1. Import libraries and connect to the database
+1. Import libraries, connect to the database, and suppress warning messages.
 
-    ```
-    <copy>
-    library(ORE)
-    options(ore.warn.order=FALSE)
-    </copy>
-    ```
+library(ORE)
 
-    Your output should look as follows:
+ore.connect(user="oml_user",
+            conn_string="MLPDB1",
+            host="rinst5d",
+            password="oml_user",
+            all=TRUE)
 
-    ![embr](./images/embr-1.png "Import libraries")
+options(ore.warn.order=FALSE)
 
-2. Select Algorithm and Build Machine Learning Model  
+2. Prepare Data, Select Algorithm, and Build Machine Learning Model  
 
-    Organize data for training and testing.
+Assign CUST_INSUR_LTV to a convenient, shorter name (CIL) and assign the customer ID as row names.
+  
+CIL <- CUST_INSUR_LTV
+row.names(CIL) <- CIL$CUST_ID
 
-    ```
-    <copy>
-    CIL <- CUST_INSUR_LTV
-    row.names(CIL) <- CIL$CUST_ID
+Create a train and test data sets
 
-    set.seed(1)
-    sampleSize <- 4500
+Set the seed for reproducibility, and choose sample size
 
-    ind <- sample(1:nrow(CIL),sampleSize)
-    group <- as.integer(1:nrow(CIL) %in% ind)
-    CIL.train <- CIL[group==FALSE,]
-    CIL.test <- CIL[group==TRUE,]
+set.seed(1)
+sampleSize <- 4500
 
-    dim(CIL.train)
-    dim(CIL.test)
-    </copy>
-    ```
+Create and explore sample data
 
-    Let us first invoke a script with table as input and test using open source R test and the local R data frame.
+ind <- sample(1:nrow(CIL),sampleSize)
+group <- as.integer(1:nrow(CIL) %in% ind)
 
-    ```
-    <copy>
-    cust_insur_ltv_loc <- ore.pull(CIL.train)
-    class(cust_insur_ltv_loc)
-    </copy>
-    ```
+CIL.train <- CIL[group==FALSE,]
+CIL.test <- CIL[group==TRUE,]
 
-    ```
-    <copy>
-    glm.fit <- function(dat){
-                 library(ORE)
-                 glm(LTV ~ N_MORTGAGES + MORTGAGE_AMOUNT + N_OF_DEPENDENTS, data = dat)}
+dim(CIL.train)
+dim(CIL.test)
 
-    mod.loc <- glm.fit(cust_insur_ltv_loc)
-    mod.loc
-    class(mod.loc)
-    </copy>
-    ```
+A best practice with embedded R execution is to validate the user-defined function before invoking the 
+embedded R APIs. We first build a generalized linear model in R directly, then create a function, fit1, 
+that will run in R engines spawned by the Database environment. 
 
-    Your output should look as follows:
+cust_insur_ltv_loc <- ore.pull(CIL.train)
+class(cust_insur_ltv_loc)
 
-    ![embr](./images/embr-2.png "Select Algorithm and Build Machine Learning Model")
+fit1 <- function(dat){
+    glm(LTV ~ N_MORTGAGES + MORTGAGE_AMOUNT + N_OF_DEPENDENTS, data = dat)}
+
+mod1 <- fit1(cust_insur_ltv_loc)
+mod1
+
+class(mod1)
+
+A glm model object is returned. Your output should look as follows:
+  
+ ![embr](./images/embr-01.png “glm r direct”)
+
+Using embedded R execution, let's build the same model, but using spawned R engines under control of the 
+Database environment. The tableApply function takes the proxy object CIL.train as input data and loads 
+that data to the user-defined function as a data frame. We see that the model comes back as an ORE object, 
+which we can pull to the client and see that it's a generalized linear model.
+
+mod2 <- ore.tableApply(CIL.train, FUN=fit1)
+mod2
+
+class(mod2)
+
+mod2.loc <- ore.pull(mod2)
+class(mod2.loc)
+
+Your output should look as follows:
+  
+ ![embr](./images/embr-02.png “glm embedded r”)
+
+3. Save the model in the OML4R data store.
+
+Next, change the user-defined function to save the model in the OML4R datastore instead of returning it.
+The datastore allows storing R objects in the database under the provided name. 
+
+R objects, including OML4R proxy objects, exist for the duration of the current R session unless 
+you explicitly save them. You can save one or more R objects, including OML4R proxy objects, to a named 
+datastore and then load those objects in a later R session. This is also useful when using embedded R 
+execution. Datastores exist in the user's Oracle Database schema. 
+
+A datastore, and the objects it contains, persist in the database until explicitly deleted.
+The ore.save function saves an R object, an OML4R object, or a list of objects to the specified datastore 
+in the current user's schema.
+
+fit2 <- function(dat, dsname){
+    mod <- glm(LTV ~ N_MORTGAGES + MORTGAGE_AMOUNT + N_OF_DEPENDENTS, data=dat)
+    ore.save(mod, name=dsname, overwrite=TRUE)}
+    
+The function fit2 accepts both the data and datastore name as input. We run tableApply again, 
+passing ds1 as the name of the datastore to the dsname parameter, and we connect to the database 
+setting ore.connect to TRUE.
+
+mod3 = ore.tableApply(CIL.train, 
+                       FUN=fit2, 
+                       dsname="ds1",
+                       ore.connect = TRUE)
+
+Verify the model is saved in the newly created datastore:
+
+ore.datastoreSummary(name="ds1")
+
+4. Build models partitioned by number of mortgages, N_MORTGAGES.
+
+The OML4R embedded R execution function ore.groupApply provides the ability to automatically split the 
+table data based on values in a grouping variable. The user-defined function is then invoked 
+on each group, and the user can specify the desired number of parallel R engines using the parallel argument.
+
+Here, we build three models, one for each group in variable N_MORTGAGES, each in it's own parallel engine, 
+and save all three models to datastore ds2. We first delete datastore ds2 if it exists.
+  
+View the groups in the N_MORTGAGES variable.
+
+table(CIL.test$N_MORTGAGES)
+
+fit3 <- function(dat, dsname){
+  n_mortgages <- dat$N_MORTGAGES[1]
+  mod <- glm(LTV ~ N_MORTGAGES + MORTGAGE_AMOUNT + N_OF_DEPENDENTS, data=dat)
+  name <-paste("mod", dat$N_MORTGAGES[1] ,sep="")
+  assign(name, mod)
+  ore.save(list=name, name=dsname, append=TRUE)}
+
+try(ore.delete("ds2"), silent=TRUE)
+
+res = ore.groupApply(CIL.test, CIL.test$N_MORTGAGES,
+                     FUN=fit3, 
+                     dsname="ds2",
+                     parallel=3,
+                     ore.connect = TRUE)
+
+View the three models built for each group in datastore ds2.
+
+ore.datastoreSummary("ds2")
 
 
-    Now, let us use ore.TableApply function to score the data in a database proxy table as input.
+5. Score Data Using ore.rowApply
 
-    ```
-    <copy>
-    glm.fit.oml4r <- ore.tableApply(CIL.test, FUN=glm.fit)
-    glm.fit.oml4r
-    class(glm.fit.oml4r)
-    ore.pull(glm.fit.oml4r)
-    </copy>
-    ```
+Let us first test locally, in open source R, using the open source glm model created earlier.
 
-    Your output should look as follows:
+Define function to create local predictions
 
-    ![embr](./images/embr-3.png "Use ore.TableApply function")
+score.mod <- function(dat, mod){
+    data.frame(pred=predict(mod, newdata = dat), LTV=dat$LTV)}
+  
 
+Score local data
 
-3. Save Model in Datastore and
-
-    Save model in data store.
-
-    ```
-    <copy>
-    ore.save(glm.fit.oml4r, name = "GLMFITOML4R", overwrite = TRUE)
-    ore.datastore()
-    </copy>
-    ```
-
-    Create function for generating predictions for a given dataset.
-
-    ```
-    <copy>
-    glm.pred <- function(dat, mod){
-                  return(data.frame(pred=predict(mod, newdata = dat), LTV=dat$LTV))}
-    </copy>
-    ```
-
-    Your output should look as follows:
-
-    ![embr](./images/embr-4.png "Create function for generating predictions for a given dataset")
+res <- score.mod(dat=cust_insur_ltv_loc, mod=mod1)
 
 
-4. Score Data Using ore.rowApply
-
-    Let us first test locally, in open source R first.
-
-    ```
-    <copy>
-    scores.loc <- glm.pred(dat=cust_insur_ltv_loc, mod=mod.loc)
-    head(scores.loc)
-    class(scores.loc)
-    </copy>
-    ```
-
-    Your output should look as follows:
-
-    ![embr](./images/embr-5.png "Score Data Using ore.rowApply")
+head(res)
+class(res)
 
 
-    Now score data using OML4R with database data
+Your output should look as follows:
+  
+![embr](./images/embr-03.png “score local”)
 
-    ```
-    <copy>
-    scores.oml4r <- ore.rowApply(CIL.test,
-                 FUN=glm.pred,
-                 mod=mod.loc,
-                 rows=200,
-                 ore.connect=TRUE,
-                 parallel=TRUE,
-                 FUN.VALUE=data.frame(pred=numeric(0),
-                                      LTV=numeric(0)))
+Now score data using OML4R with database data.
 
-    class(scores.oml4r)
-    ore.pull(scores.oml4r)
-    </copy>
-    ```
+Use row_apply to score the data. In this example, the row_apply function takes as arguments the proxy 
+object CIL.test, the user-defined function glm.pred.loc, that we want 200 rows scored at a time in 
+parallel, and that we want the result to be returned as a single table. 
 
-    Your output should look as follows:
+By specifying parallel=TRUE instead of the number of parallel engines, we enable the database default 
+settings for parallelism.
 
-    ![embr](./images/embr-6.png "Score data using OML4R with database data")
+res <- ore.rowApply(CIL.test,
+                       FUN=score.mod,
+                       mod=mod1,
+                       rows=200,
+                       ore.connect=TRUE,
+                       parallel=TRUE,
+                       FUN.VALUE=data.frame(pred=numeric(0),
+                                            LTV=numeric(0)))
+
+class(res)
+head(res)
+
+Your output should look as follows:
+  
+ ![embr](./images/embr-04.png “score row_apply”)
+
+7. SQL API for embedded R execution 
+
+If the goal is to integrate the model results as an operationalized process, we can use rqRowEval, 
+the SQL embedded R interface equivalent to ore.rowApply. We created an updated scoring function, score.mod2,
+that loads the model from the datastore for scoring.  We save our user-defined scoring function to the 
+script repository in the database using the ore.scriptCreate function, overwriting the 
+script if it already exists. Once saved, the script can be called by name in embedded R execution 
+functions, from both the R and SQL APIs.
+
+score.mod2 <- function(dat, dsname){
+    ore.load(dsname)
+    data.frame(pred=predict(mod, newdata = dat), LTV=dat$LTV)}
+  
+
+ore.scriptCreate("scoremod2", score.mod2, overwrite=TRUE)
+
+create a persistent table
+
+ore.create(CIL.test, "CILTEST")
+
+
+res <- ore.rowApply(CILTEST,
+                       FUN=score.mod2,
+                       dsname="ds1",
+                       rows=200,
+                       ore.connect=TRUE,
+                       parallel=TRUE,
+                       FUN.VALUE=data.frame(pred=numeric(0),
+                                            LTV=numeric(0)))
+
+class(res)
+head(res)
+
+Invoke the script through the OML4R SQL interface using rqRowEval. The first parameter is the input cursor 
+that specifies the data to pass to the R function. The third parameter describes the structure of the 
+result, and the fourth parameter specifies the number of rows to run in parallel. The last parameter is 
+the name of the script to run in the R script repository.
+
+select * from table(rqRowEval(
+   cursor(select /*+ parallel(4) */ * from CILTEST),
+   cursor(select 1 as "ore.connect", 'ds1' as "dsname" from dual),
+   'select LTV, 1 PRED from CILTEST', 
+    200,
+   'scoremod2')); 
 
 
 ## Task 8: Conclusion
@@ -1309,4 +1402,4 @@ Consider taking the Oracle Machine Learning with Oracle Autonomous Database Cert
 
 ## Acknowledgements
 * **Authors** - Ravi Sharma, Rajeev Rumale, Milton Wan
-* **Last Updated By/Date** -  Ravi Sharma, April 2022
+* **Last Updated By/Date** -  Ravi Sharma, August 3, 2022
