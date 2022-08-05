@@ -1216,7 +1216,7 @@ structured and image results and be accessed via the R and SQL APIs.
 
   A glm model object is returned. Your output should look as follows:
 
-  ![embr](./images/embr-01.png "glm r direct")
+  ![GLM Model R Direct](./images/embr-01.png "glm r direct")
 
   Using embedded R execution, let's build the same model, but using spawned R engines under control of the
   Database environment. The tableApply function takes the proxy object CIL.train as input data and loads
@@ -1237,7 +1237,7 @@ structured and image results and be accessed via the R and SQL APIs.
 
     Your output should look as follows:
 
-    ![embr](./images/embr-02.png "glm embedded r")
+    ![GLM Model Embedded R](./images/embr-02.png "glm embedded r")
 
 
 3. Save the model in the OML4R data store.
@@ -1351,7 +1351,7 @@ structured and image results and be accessed via the R and SQL APIs.
 
   Your output should look as follows:
 
-  ![embr](./images/embr-03.png "score local")
+  ![GLM Model Score local](./images/embr-03.png "score local")
 
   Now score data using OML4R with database data.
 
