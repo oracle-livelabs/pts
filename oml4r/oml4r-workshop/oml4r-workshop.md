@@ -24,8 +24,9 @@ In this lab, you will:
 
 ### Note:
 
-1. AutoML is not available for OML4R. AutoML is a feature of OML4Py and is available with Autonomous Database through the OML AutoML UI.
+1. AutoML is not available for OML4R. AutoML is a feature of OML4Py and is available with Autonomous Database through the OML4Py Python API and the OML AutoML UI.
 2. We will not be using Autonomous Database as OML4R is currently not available for Autonomous Database.
+
 
 ### Pre-requisites
 
@@ -68,10 +69,6 @@ You will be running all the lab steps in the RStudio R Script window, as shown b
 
     ```
     <copy>
-    if (!require("ORE")) install.packages("ORE")
-    if (!require("dplyr")) install.packages("dplyr")
-    if (!require("OREdplyr")) install.packages("OREdplyr")
-    if (!require("caret")) install.packages("caret")
     if (!require("ggplot2")) install.packages("ggplot2")
     </copy>
     ```
@@ -85,20 +82,12 @@ You will be running all the lab steps in the RStudio R Script window, as shown b
     ```
     <copy>
     library(ORE)
-    library(dplyr)
-    library(OREdplyr)
-    library(caret)
     library(ggplot2)
     </copy>
     ```
 
     ORE - The ORE libraries are a set of packages that contains many useful R functions.
 
-    dplyr - The standard dplyr R package provides grammar of data manipulation, which gives a consistent set of verbs that help you solve the most common data manipulation challenges
-
-    OREdplyr - The OREdplyr package is an overloaded package that provides much of the dplyr functionality. It extends the ORE transparency layer for in-database execution of dplyr function calls.
-
-    OREdplyr allows users to avoid costly movement of data while scaling to larger data volumes. Further, using the transparency layer operations are not constrained by R client memory, the latency of data movement, or single-threaded execution.
 
 5. Set Global Options to Disable Unnecessary Warning Messages
 
@@ -489,7 +478,8 @@ row.names(CIL) <- CIL$CUST\_ID
 
 ```
 <copy>
-CIL <- CUST_INSUR_LTV row.names(CIL) <- CIL$CUST_ID
+CIL <- CUST_INSUR_LTV
+row.names(CIL) <- CIL$CUST_ID
 </copy>
 ```
 1. Filtering Data and Aggregate Data View
@@ -505,6 +495,7 @@ CIL <- CUST_INSUR_LTV row.names(CIL) <- CIL$CUST_ID
     nrow(filter(CIL, SALARY > 110000))
 
     nrow(CIL %>% filter(SALARY > mean(SALARY, na.rm = TRUE)))
+
     </copy>
     ```
 
@@ -1169,7 +1160,7 @@ structured and image results and be accessed via the R and SQL APIs.
     </copy>
     ```
 
-2. Prepare Data, Select Algorithm, and Build Machine Learning Model
+2. Select Algorithm and Build Machine Learning Model
 
   Assign CUST\_INSUR\_LTV to a convenient, shorter name (CIL) and assign the customer ID as row names.
 
