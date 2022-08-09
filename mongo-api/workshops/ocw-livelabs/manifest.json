@@ -22,7 +22,7 @@
             "filename": "./../../mongo-api-ocw/mongo-api-ocw.md"
         },
         {
-            "title": "Lab 4: Infrastructure Cleanup (Optional)",
+            "title": "Lab 4: Clean Up (Optional)",
             "description": "In this lab we will cleanup the infrastructure that we created in Lab 1 and used to run this workshop.",
             "filename": "./../../cleanup-ocw/cleanup-ocw.md"
         },
