@@ -1,4 +1,4 @@
-# Infrastructure Cleanup (Optional)
+# Clean Up (Optional)
 
 ## Introduction
 
@@ -67,7 +67,7 @@ In this lab, you will:
     ![Oracle Console AJD](./images/task2/terminate-instance.png)
 
 
-## Task 3:Terminate the Virtual Cloud Network (VCN)
+## Task 3: Terminate the Virtual Cloud Network (VCN)
 
 1. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the instructor.
 

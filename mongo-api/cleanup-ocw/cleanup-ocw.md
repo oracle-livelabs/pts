@@ -1,4 +1,4 @@
-# Infrastructure Cleanup (Optional)
+# Clean Up (Optional)
 
 ## Introduction
 
