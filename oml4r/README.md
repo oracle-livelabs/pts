@@ -1,2 +1,2 @@
 # OML-R
-Oracle Machine Learning with R
+Introduction to Oracle Machine Learning with R
