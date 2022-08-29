@@ -13,9 +13,9 @@ This workshop has three parts:
 
 **Estimated Workshop Time: 90 minutes.**
 
-## Objectives
+### Objectives
 
-In this lab, you will:
+During this workshop you will:
 
 * Create development environment on Oracle Cloud Infrastructure
 * Deploy a document store with one collection on Oracle Autonomous Database for JSON
@@ -25,7 +25,7 @@ In this lab, you will:
 * Use MongoAPI capability for micro-service Python application
 
 
-## Prerequisites
+### Prerequisites
 
 * An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
 * Or Oracle LiveLabs sandbox environment
