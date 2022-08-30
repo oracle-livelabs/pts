@@ -29,14 +29,14 @@ This lab assumes you have already completed the following:
     [oracle@shd3 ~]$ sqlplus sys/Ora_DB4U@shd3:1521/nspdb as sysdba
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Thu Dec 10 02:09:00 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -228,7 +228,7 @@ To review the sharding configurations and related information that is owned by t
     [oracle@shd3 ~]$ sqlplus app_schema/app_schema@shd3:1521/nspdb
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Thu Dec 10 02:21:21 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -236,7 +236,7 @@ To review the sharding configurations and related information that is owned by t
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
