@@ -18,9 +18,9 @@
             "filename": "../../lab3-config/lab3-config.md"
         },
         {
-            "title": "Lab 2: Simple Application Continuity",
+            "title": "Lab 2: Application Continuity for Unplanned Outages",
             "description": "In this lab, you will create a simple demo application with a connection pool to a RAC cluster.",
-            "filename": "../../lab4-simple-ac/lab4-simple-ac.md"
+            "filename": "../../lab4-unplanned-outages/lab4-unplanned-outages.md"
         },
         {
             "title": "Lab 3: Application Continuity for Planned Maintenance",
