@@ -84,7 +84,7 @@ We can also see the session we have been using by running **show_sessions.sh** f
 
 ![ShowSess2](./images/task2/image310.png " ")
 
-6. Now let's kill that session in the middle of the current transaction. Run **kill_session.sh** from the same terminal window
+6. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
 
 ![KIllSess1](./images/task2/image400.png " ")
 
@@ -155,7 +155,7 @@ We can also see the session we have been using by running **show_sessions.sh** f
 
 ![ShowSess2](./images/task3/image410.png " ")
 
-6. Now let's kill that session in the middle of the current transaction. Run **kill_session.sh** from the same terminal window
+6. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
 
 ![KIllSess1](./images/task3/image500.png " ")
 
