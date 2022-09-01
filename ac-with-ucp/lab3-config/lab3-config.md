@@ -36,45 +36,107 @@ This lab assumes you have:
 
 1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
-  * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
+* From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
-  ![NSGdef1](./images/task1/image100.png " ")
+![NSGdef1](./images/task1/image100.png " ")
 
-  * Select the VCN
+* Select the VCN
 
-  ![NSGdef1](./images/task1/image200.png " ")
+![NSGdef1](./images/task1/image200.png " ")
 
-  * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
+* Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-  ![NSGdef1](./images/task1/image300.png " ")
+![NSGdef1](./images/task1/image300.png " ")
 
-  * Enter a name and create the Network Security Group
+* Enter a name for the Network Security Group
 
-  ````
-  Enter <copy>NSG-DEMORAC</copy> in the Name field.
-  ````
+````
+Name : <copy>NSG-DEMORAC</copy>
+````
+
+Click **Next**
+
 
 2. Then add a **stateful ingress rule** allowing Oracle Net connectivity within the VCN
 
-  ![NSGrule](./images/task1/image400.png " ")
+* Enter the following values in the **Add Security Rules** dialog:
+
+Stateless   : leave unchecked
+
+Direction   : Ingress
+
+Source Type : select CIDR
+````
+Source CIDR : <copy>10.0.0.0/16</copy>
+````
+
+IP Protocol : select TCP
+
+Source Port Range : leave empty (ie ALL)
+
+````
+Destination Port range : <copy>1521</copy>
+````
+
+````
+Description : <copy>Allow Oracle Net connectivity within the VCN</copy>
+````
+
+* Example
+
+![NSGrule](./images/task1/image400.png " ")
+
+Click **Create**
 
 
 3. Finally add the NSG to the database
 
-  ![AddNSG2DB1](./images/task1/image500.png " ")
+* From the Oracle Cloud web console, go to **Oracle Database**
 
-  ![AddNSG2DB1](./images/task1/image600.png " ")
+![AddNSG2DB1](./images/task1/image500.png " ")
 
+* Select database **dbrac**
+
+![AddNSG2DB2](./images/task1/image600.png " ")
+
+* Under Network, Click on **Edit**
+
+![AddNSG2DB3](./images/task1/image700.png " ")
+
+* select NSG-DEMORAC and **Save**
+
+![AddNSG2DB4](./images/task1/image800.png " ")
 
 
 ## Task 2: Configure the network for Oracle Notification Services
 
-1. Check that ONS is running on the server
+
+1. Connect to Cloud shell
+
+* Click on the Cloud Shell icon from the top right of the OCI console
+
+![CS](./images/task2/image100.png " ")
+
+* From the Cloud Shell menu, click **Upload**
+
+![CS2](./images/task2/image200.png " ")
+
+* Upload your private key
+
+* Make sure the mode is set to 400 (chmod 400 <my-key>)
+
+![CS3](./images/task2/image300.png " ")
+
+2. Check that ONS is running on the server
+
+  * From the database details page, select **Nodes** under **Resources** to find out the public IPs of the database nodes
+
+![CS4](./images/task2/image400.png " ")
 
   * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
   ````
-  user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i mykey opc@[node 1 public IP]</copy>
 
   (...)
   Are you sure you want to continue connecting (yes/no)? yes
@@ -117,11 +179,38 @@ This lab assumes you have:
   ONS is individually disabled on nodes:
   ````
 
-2. Add an ingress rule opening TCP port 6200 to FAN events
+3. Add an ingress rule opening TCP port 6200 to FAN events
 
-  * Fast Application Notification (FAN) requires the following **ingress** rule to be added to the Network Security Group in order to allow the propagation of FAN events to the connection pool.
+  * Retrieve the Network Security Group **NSG-DEMORAC** of the database as in Task1 and **Edit** it
 
-  ![NSGruleONS1](./images/task2/image100.png " ")
+  * Fast Application Notification (FAN) requires the following **ingress** rule to be added to allow the propagation of FAN events to the connection pool.
+
+  Stateless   : leave unchecked
+
+  Direction   : Ingress
+
+  Source Type : select CIDR
+  ````
+  Source CIDR : <copy>10.0.0.0/16</copy>
+  ````
+
+  IP Protocol : select TCP
+
+  Source Port Range : leave empty (ie ALL)
+
+  ````
+  Destination Port range : <copy>6200</copy>
+  ````
+
+  ````
+  Description : <copy>Allow Fast Application Notification (FAN) events to propagate	</copy>
+  ````
+
+  * Example
+
+  ![NSGrule2](./images/task2/image500.png " ")
+
+  Click **Add**
 
 
 ## Task 3: Configure RAC services
@@ -129,7 +218,7 @@ This lab assumes you have:
 1. Using Cloud Shell, connect to the first node of the RAC cluster as **opc**
 
   ````
-  user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i mykey opc@[node 1 public IP]</copy>
   ````
 
   * Switch to user *oracle*
