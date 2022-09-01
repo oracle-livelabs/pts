@@ -70,7 +70,13 @@ We are now in the middle of the 4th transaction.
 
 4. From a **second tab** in the terminal session (File > New Tab), go to the **sql** directory and examine the content of the transaction table **ACCOUNT**
 
+````
+oracle@demorac: $ <copy>cd /home/oracle/work/ac/sql</copy>
+````
+
 ![ShowData1](./images/task2/image200.png " ")
+
+Execute **show_data.sh**
 
 ![ShowData2](./images/task2/image210.png " ")
 

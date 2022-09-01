@@ -183,7 +183,9 @@ Click **Create**
 
   * Retrieve the Network Security Group **NSG-DEMORAC** of the database as in Task1 and **Edit** it
 
-  * Fast Application Notification (FAN) requires the following **ingress** rule to be added to allow the propagation of FAN events to the connection pool.
+  * Click **Add Rules**
+
+  * Enter the following values for another **ingress** rule allowing the propagation of Fast Application Notification (FAN) events to the connection pool
 
   Stateless   : leave unchecked
 
@@ -513,7 +515,7 @@ The jar files you need in your **CLASSPATH** have already been downloaded to **w
 
 ### Step 2 - Understand Universal Connection Pool configuration
 
-* From the desktop connection as oracle to the client machine, use the text editor to edit the Java program
+* From the **noVNC** desktop connection as oracle to the client machine, use the text editor to edit the Java program
 
   ![FileStructure](./images/task5/image100.png " ")
 
@@ -567,13 +569,13 @@ The jar files you need in your **CLASSPATH** have already been downloaded to **w
 * Open a terminal window change to the ac directory:
 
 ````
-user@cloudshell:~ $ <copy>cd /home/oracle/work/ac</copy>
+oracle@demorac: $ <copy>cd /home/oracle/work/ac</copy>
 ````
 
 * Then run the following command to compile the demo application:
 
 ````
-user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+oracle@demorac: $ <copy>MyCompile.sh MyUCPDemo.java</copy>
 ````
 
 
