@@ -175,4 +175,4 @@ Service tacsrv is running on instance(s) CONT1,CONT2
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, August 2022
+* **Last Updated By/Date** - François Pons, September 2022

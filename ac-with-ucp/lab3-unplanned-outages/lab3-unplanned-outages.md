@@ -186,4 +186,4 @@ You may run a few more transactions from the first window and check from the sec
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, August 2022
+* **Last Updated By/Date** - François Pons, September 2022

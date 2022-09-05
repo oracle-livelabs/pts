@@ -566,7 +566,7 @@ The jar files you need in your **CLASSPATH** have already been downloaded to **w
 
 ### Step 4 - Compile the demo application
 
-* Open a terminal window change to the ac directory:
+* Open a terminal window and change to the ac directory:
 
 ````
 oracle@demorac: $ <copy>cd /home/oracle/work/ac</copy>
@@ -586,4 +586,4 @@ oracle@demorac: $ <copy>MyCompile.sh MyUCPDemo.java</copy>
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, August 2022
+* **Last Updated By/Date** - François Pons, September 2022
