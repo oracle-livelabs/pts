@@ -13,29 +13,24 @@
             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login.md"
         },
         {
-            "title": "Lab 1: Provision the RAC database",
-            "description": "In this lab we will create a 2-node RAC database.",
-            "filename": "../../lab1-provision-rac/lab1-provision-rac.md"
+            "title": "Lab 1: Provision the environment",
+            "description": "In this lab we will run Terraform to provision the environment.",
+            "filename": "../../lab1-provision-env/lab1-provision-env.md"
         },
         {
-            "title": "Lab 2: Provision the client machine",
-            "description": "In this lab, you will provision the client machine.",
-            "filename": "../../lab2-provision-client/lab2-provision-client.md"
-        },
-        {
-            "title": "Lab 3: Setup the Application Environment",
+            "title": "Lab 2: Configure the environment",
             "description": "In this Lab you will configure the network and create RAC services.",
-            "filename": "../../lab3-config/lab3-config.md"
+            "filename": "../../lab2-configure-env/lab2-configure-env.md"
         },
         {
-            "title": "Lab 4: Application Continuity for Unplanned Outages",
+            "title": "Lab 3: Application Continuity for Unplanned Outages",
             "description": "In this lab, you will create a simple demo application with a connection pool to a RAC cluster.",
-            "filename": "../../lab4-unplanned-outages/lab4-unplanned-outages.md"
+            "filename": "../../lab3-unplanned-outages/lab3-unplanned-outages.md"
         },
         {
-            "title": "Lab 5: Application Continuity for Planned Maintenance",
+            "title": "Lab 4: Application Continuity for Planned Maintenance",
             "description": "This lab will show you how to use database services for planned maintenance with Application Continuity.",
-            "filename": "../../lab5-planned-maintenance/lab5-planned-maintenance.md"
+            "filename": "../../lab4-planned-maintenance/lab4-planned-maintenance.md"
         },
         {
             "title": "Need Help?",
