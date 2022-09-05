@@ -65,7 +65,7 @@ Stateless   : leave unchecked
 
 Direction   : Ingress
 
-Source Type : select CIDR
+Source Type : Enter the following CIDR block
 ````
 Source CIDR : <copy>10.0.0.0/16</copy>
 ````
@@ -191,7 +191,7 @@ Click **Create**
 
   Direction   : Ingress
 
-  Source Type : select CIDR
+  Source Type : Enter the following CIDR block
   ````
   Source CIDR : <copy>10.0.0.0/16</copy>
   ````

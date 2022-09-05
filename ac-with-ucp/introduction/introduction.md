@@ -28,6 +28,8 @@ It demonstrates:
 
 The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
+Different database services with or without application continuity can be tested.
+
 Estimated Workshop Time: 2 hours (this estimate is for the entire workshop - it is the sum of the estimates provided for each of the labs included in the workshop.)
 
 
