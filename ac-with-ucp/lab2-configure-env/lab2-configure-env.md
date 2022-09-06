@@ -40,13 +40,17 @@ This lab assumes you have:
 
 ![NSGdef1](./images/task1/image100.png " ")
 
+*Note: Be sure to select the **region** and **compartment** that have been assigned to you.*
+
+![NSGdef2](./images/task1/image150.png " ")
+
 * Select the VCN
 
-![NSGdef1](./images/task1/image200.png " ")
+![NSGdef3](./images/task1/image200.png " ")
 
 * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-![NSGdef1](./images/task1/image300.png " ")
+![NSGdef4](./images/task1/image300.png " ")
 
 * Enter a name for the Network Security Group
 
@@ -123,7 +127,7 @@ Click **Create**
 
 * Upload your private key
 
-* Make sure the mode is set to 400 (chmod 400 <my-key>)
+* Make sure the mode is set to 400 (chmod 400 <my-pub-key>)
 
 ![CS3](./images/task2/image300.png " ")
 
@@ -136,7 +140,7 @@ Click **Create**
   * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
   ````
-  user@cloudshell:~ $ <copy>ssh -i mykey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
 
   (...)
   Are you sure you want to continue connecting (yes/no)? yes
@@ -220,7 +224,7 @@ Click **Create**
 1. Using Cloud Shell, connect to the first node of the RAC cluster as **opc**
 
   ````
-  user@cloudshell:~ $ <copy>ssh -i mykey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
   ````
 
   * Switch to user *oracle*
@@ -231,6 +235,15 @@ Click **Create**
 
 
 2. Create a database service with standard parameters (no Application Continuity)
+
+
+  *Note: In the following commands, you need to replace the database name cont_prim by its real value.*
+
+  * Find out the database unique name from the details page of the database **CONT** in DBCS **dbrac**
+
+  Replace **cont_prim** by this value in the following commands.
+
+  ![dbname](./images/task3/image100.png " ")
 
   * Create the service **demosrv**:
 

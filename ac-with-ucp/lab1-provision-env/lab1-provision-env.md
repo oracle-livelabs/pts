@@ -104,10 +104,13 @@ Go to the bottom of the log.
 
 The log will confirm the creation of database **dbrac** and client machine **demotac**
 
-Look for the **remote desktop** entry and copy the URL. This URL will allow you to connect to a remote desktop of the client machine as **oracle**.
+Look for the **remote desktop** entry and copy the URL.
+
+![CS8](./images/task1/image700.png " ")
+
+This URL will allow you to connect from a browser to a noVNC remote desktop of the client machine as user **oracle**.
 
 ![CS8](./images/task1/image800.png " ")
-
 
 
 **You can proceed to the next lab…**
