@@ -22,7 +22,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* The Oracle environment prepared in the first lab.
+* The Oracle environment prepared in previous lab.
 
 
 ## Task 1: Configure the lab
@@ -54,7 +54,7 @@ We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a t
 ![Refresh2](./images/task1/image110.png " ")
 
 
-## Task 2: Connection routing to instance 2 only
+## Task 2: Connection Balancing and Draining
 
 1. Run the demo program with a database service that uses **Application Continuity**
 
@@ -83,7 +83,7 @@ Observe that connections are spread across available nodes.
 ![Demo140](./images/task2/image300.png " ")
 
 
-4. Prepare to no longer use node1 (ie instance CONT1)
+4. Prepare to no longer use node1 (ie instance CONT1) and drain existing connections
 
 Let us suppose we need to do some maintenance to node1 of the cluster.
 
@@ -94,7 +94,7 @@ Using Cloud Shell:
 * Connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
   ````
-  user@cloudshell:~ $ <copy>ssh -i fpkey opc@[node 1 public IP]</copy>
+  user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
   ````
 
 * Switch to user *oracle*
@@ -110,13 +110,15 @@ Using Cloud Shell:
 user@cloudshell:~ $ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT1</copy>
 ````
 
+The drain_timeout parameter of the service defines the tipme given to in-progtess trabsactions tpo complete.
+
 ````
 user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
 Service tacsrv is running on instance(s) CONT2
 ````
 
-5. Run a couple more transactions and verify the pool
+5. Run a couple more transactions and verify that the pool
 
 * does not get any errors
 * has recreated all connections to node2
@@ -126,6 +128,9 @@ Service tacsrv is running on instance(s) CONT2
 ![ShowPool1](./images/task2/image500.png " ")
 
 ![ShowPool2](./images/task2/image510.png " ")
+
+
+This would allow a system administrator to take node 1 off the cluster for maintenance with no application outage whatsoever...
 
 
 ## Task 3: Connection routing to instance 1 only

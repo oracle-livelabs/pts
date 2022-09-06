@@ -390,21 +390,23 @@ Click **Create**
 
 1. Understand the demo application directory structure
 
-  * The demo application is installed under the **oracle** user of the client machine **demotac** in **/home/oracle/work/ac**
+
+  * Using noVNC, connect to the remote desktop of the client machine **demotac** as user **oracle**.
+
+  * The demo application is installed in **/home/oracle/work/ac**
 
   ![FileStructure](./images/task4/image100.png " ")
 
-  ![FileStructure](./images/task4/image200.png " ")
-
-
-  * Here is a description of the directory structure under **/home/oracle/work/ac**:
+  * The directory structure under **/home/oracle/work/ac** is explained below:
 
   ```
   ac           : demo program with its compiling and running scripts
-  ac/libcli21c : required java libraries
   ac/ddl       : SQL scripts to create the demo schema
+  ac/libcli21c : required java libraries
   ac/sql       : SQL scripts used later in the lab to show data and how connections are created
   ```
+
+  ![FileStructure](./images/task4/image200.png " ")
 
 
 2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
