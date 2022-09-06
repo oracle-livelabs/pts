@@ -154,7 +154,6 @@ Service tacsrv is running on instance(s) CONT1
 
 2. Run a couple more transactions and verify the pool is now only using connections to node1
 
-
 ![Demo140](./images/task3/image100.png " ")
 
 ![ShowPool1](./images/task3/image200.png " ")
@@ -162,13 +161,17 @@ Service tacsrv is running on instance(s) CONT1
 ![ShowPool2](./images/task3/image210.png " ")
 
 
-3. Use both instances again
+## Task 4: Re-balance Connection to both nodes
+
+1. Restart the service on both nodes
 
 ````
 user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT2</copy>
 
 Service tacsrv is running on instance(s) CONT1,CONT2
 ````
+
+Observe how the pool reconfigures connections to both nodes by running **show_pool.sh** again
 
 ![ShowPool3](./images/task3/image300.png " ")
 
