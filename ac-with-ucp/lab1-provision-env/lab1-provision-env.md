@@ -4,7 +4,7 @@
 
 In this lab, you will run a Terraform script to provision the lab environment.
 
-Estimated Lab Time: 30 minutes
+Estimated Lab Time: 15 minutes to follow the instructions. The provisioning job will then take about 90 mn to complete.
 
 
 ### Objectives
@@ -12,15 +12,15 @@ Estimated Lab Time: 30 minutes
 The following components will be created by Terraform:
 
 * an Oracle Cloud network (VCN)
-* a 2-node RAC database
-* a compute instance with a demo application
+* a 2-node RAC database with Grid Infrastructure and ASM storage
+* a compute instance hosting a demo application
 
 
 ### Prerequisites
 
 This lab assumes you have:
 
-* access to an Oracle tenancy with the proper privileges.
+* access to an Oracle tenancy with the proper privileges
 * a pair of SSH keys
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
@@ -39,38 +39,38 @@ Click **Create Stack**
 
 ![CS1](./images/task1/image100.png " ")
 
-2. Check the **.ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`BusinessContinuityStack.zip`) that you downloaded. Click **Select** to upload the zip file.
+2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityStack.zip**) that you downloaded. Click **Select** to upload the zip file.
 
 
 ![CS2](./images/task1/image200.png " ")
 
-Click **Next**
+Then click **Next**
 
 3. Select the following values and click **Next**
 
 * Availability domain																: AD-1
-* Pubic key for compute instance and database nodes : Browse to and upload your public key
+* Pubic key for compute instance and database nodes : Browse to and upload your public key file
 
 ````
 * Database SYS Password : <copy>_MyCloud2022_</copy>
 ````
 
-* Instance Shape																		: VM.Standard.E3.Flex
+* Instance Shape																		: VM.Standard.E3.Flex or VM.Standard.E4.Flex
 * OCPU																							: 1
 
 ````
 * Instance_image_id  : <copy>ocid1.image.oc1.eu-paris-1.aaaaaaaa4h2jbofel25uzoisymmfr6blevdq5vgh76pthncqrbp6kirusnoa</copy>
 ````
 
-4. Click **Create** to create the Terraform stack
+4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
 
 ![CS3](./images/task1/image300.png " ")
 
-Your stack has now been stackcreated
+You should now see that your stack has been created!
 
 ![CS4](./images/task1/image400.png " ")
 
-**You can proceed to the next lab…**
+
 
 
 ## Task 2: Terraform Plan (OPTIONAL)
@@ -85,20 +85,32 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 ![CS6](./images/task1/image510.png " ")
 
+The **Plan** job should finish with a **SUCCEEDED** message.
+
 
 ## Task 3: Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Apply** job. Let's do that now.
 
-1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will provision the environment. This takes about 15 minutes, please be patient.
+1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
 
 ![CS7](./images/task1/image600.png " ")
 
-2.  Once this job succeeds, you will get an apply complete notification from Terraform. In the end of the apply log,  you can get the **noVNC URL** to connect to the client compute instance.
+2. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
 
-Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
+3. Once the apply job succeeds, click on its name and access to the log.
 
-Click on the job link, to see its log.
+Go to the bottom of the log.
+
+The log will confirm the creation of database **dbrac** and client machine **demotac**
+
+Look for the **remote desktop** entry and copy the URL. This URL will allow you to connect to a remote desktop of the client machine as **oracle**.
+
+![CS8](./images/task1/image800.png " ")
+
+
+
+**You can proceed to the next lab…**
 
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager

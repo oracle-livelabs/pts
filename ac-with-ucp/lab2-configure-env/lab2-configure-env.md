@@ -8,9 +8,9 @@ In this lab we will customize the environment that will be used to run the rest 
 
 There are three main elements in our environment:
 
-* A **Virtual Cloud Network (VCN)** has been pre-created. It represents the network topology inside the Oracle Cloud by defining the following components (Subnets, Route Tables, Security Lists, Gateways, etc.).
-* A two-node **DBCS RAC database** with ASM storage (which should have also been pre-created).
-* A **Compute instance** which is a VM hosting our demo application.
+* **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
+* **dbrac** : a two-node **DBCS RAC database** with ASM storage (which should have also been pre-created)
+* **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
 Estimated Lab Time: 30 minutes.
 
@@ -28,8 +28,8 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle LiveLabs sandbox environment
-* Or an Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account - You can check Getting Started section for more information.
+* An Oracle LiveLabs sandbox environment providing the components described above
+* Or an Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account where you created this environment by following LiveLabs instructions
 
 
 ## Task 1: Configure the network for Oracle Net
@@ -111,7 +111,7 @@ Click **Create**
 ## Task 2: Configure the network for Oracle Notification Services
 
 
-1. Connect to Cloud shell
+1. Connect to Cloud shell from the details page of database **dbrac**
 
 * Click on the Cloud Shell icon from the top right of the OCI console
 
