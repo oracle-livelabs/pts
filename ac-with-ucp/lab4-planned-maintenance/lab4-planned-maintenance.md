@@ -1,4 +1,4 @@
-# Application Continuity for Planned Maintenance
+# Application Continuity for planned maintenance
 
 ## Introduction
 
@@ -8,9 +8,7 @@ We will then also direct (and drain) connections to a chosen node of the databas
 
 Draining connections means that enough time is provided for current work to complete before maintenance is started on a node.
 
-
 Estimated Lab Time: 30 minutes
-
 
 ### Objectives
 
@@ -25,7 +23,7 @@ This lab assumes you have:
 * The Oracle environment prepared in previous lab.
 
 
-## Task 1: Configure the lab
+## Task 1: Configure the Lab
 
 1. Configure the pool for 10 connections
 
@@ -54,7 +52,7 @@ We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a t
 ![Refresh2](./images/task1/image110.png " ")
 
 
-## Task 2: Connection Balancing and Draining
+## Task 2: Observe Connection Balancing And Draining
 
 1. Run the demo program with a database service that uses **Application Continuity**
 
@@ -133,7 +131,7 @@ Service tacsrv is running on instance(s) CONT2
 This would allow a system administrator to take node 1 off the cluster for maintenance with no application outage whatsoever...
 
 
-## Task 3: Connection routing to instance 1 only
+## Task 3: Route Connections To Instance 1 Only
 
 1. We can now do the reverse and move the service to only CONT1
 
@@ -161,7 +159,7 @@ Service tacsrv is running on instance(s) CONT1
 ![ShowPool2](./images/task3/image210.png " ")
 
 
-## Task 4: Re-balance Connection to both nodes
+## Task 4: Re-Balance Connections To Both Nodes
 
 1. Restart the service on both nodes
 

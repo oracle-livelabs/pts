@@ -1,4 +1,4 @@
-# Provision the RAC database
+# Provision the environment
 
 ## Introduction
 
@@ -11,9 +11,9 @@ Estimated Lab Time: 15 minutes to follow the instructions. The provisioning job 
 
 The following components will be created by Terraform:
 
-* an Oracle Cloud network (VCN)
-* a 2-node RAC database with Grid Infrastructure and ASM storage
-* a compute instance hosting a demo application
+* An Oracle Cloud network (VCN)
+* A 2-node RAC database with Grid Infrastructure and ASM storage
+* A compute instance hosting a demo application
 
 
 ### Prerequisites
@@ -31,86 +31,85 @@ Click on the link below to download the Resource Manager zip files you need to b
 
 ## Task 1: Load Terraform Stack
 
-1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
+  1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**.
 
-![](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
+    >**Note:** If you are in a workshop, double check your region to ensure you are on the assigned region.
 
-Click **Create Stack**
+    ![](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
 
-![CS1](./images/task1/image100.png " ")
+    Click **Create Stack**
 
-2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityStack.zip**) that you downloaded. Click **Select** to upload the zip file.
+    ![Create stack dialog](./images/task1/image100.png " ")
 
+  2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityStack.zip**) that you downloaded. Click **Select** to upload the zip file.
 
-![CS2](./images/task1/image200.png " ")
+    ![Create stack dialog validation](./images/task1/image200.png " ")
 
-Then click **Next**
+    Then click **Next**
 
-3. Select the following values and click **Next**
+  3. Select the following values and click **Next**
 
-* Availability domain																: AD-1
-* Pubic key for compute instance and database nodes : Browse to and upload your public key file
+    * Availability domain																: AD-1
+    * Pubic key for compute instance and database nodes : Browse to and upload your public key file
 
-````
-* Database SYS Password : <copy>_MyCloud2022_</copy>
-````
+    ````
+    * Database SYS Password : <copy>_MyCloud2022_</copy>
+    ````
 
-* Instance Shape																		: VM.Standard.E3.Flex or VM.Standard.E4.Flex
-* OCPU																							: 1
+    * Instance Shape																		: VM.Standard.E3.Flex or VM.Standard.E4.Flex
+    * OCPU																							: 1
 
-````
-* Instance_image_id  : <copy>ocid1.image.oc1.eu-paris-1.aaaaaaaa4h2jbofel25uzoisymmfr6blevdq5vgh76pthncqrbp6kirusnoa</copy>
-````
+    ````
+    * Instance_image_id  : <copy>ocid1.image.oc1.eu-paris-1.aaaaaaaa4h2jbofel25uzoisymmfr6blevdq5vgh76pthncqrbp6kirusnoa</copy>
+    ````
 
-4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
+  4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
 
-![CS3](./images/task1/image300.png " ")
+    ![Upload stack dialog](./images/task1/image300.png " ")
 
-You should now see that your stack has been created!
+    You should now see that your stack has been created!
 
-![CS4](./images/task1/image400.png " ")
-
-
-
-
-## Task 2: Terraform Plan (OPTIONAL)
-
-When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional step in this lab.
-
-1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
-
-![CS5](./images/task1/image500.png " ")
-
-(...)
-
-![CS6](./images/task1/image510.png " ")
-
-The **Plan** job should finish with a **SUCCEEDED** message.
+    ![Stack has been uploaded](./images/task1/image400.png " ")
 
 
-## Task 3: Terraform Apply
+## Task 2: Run Terraform Plan Job (OPTIONAL)
 
-When using Resource Manager to deploy an environment, execute a terraform **Apply** job. Let's do that now.
+  When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional step in this lab.
 
-1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
+  1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
 
-![CS7](./images/task1/image600.png " ")
+    ![Plan job running](./images/task1/image500.png " ")
 
-2. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
+    (...)
 
-3. Once the apply job succeeds, click on its name and access to the log.
+    ![Plan job complete](./images/task1/image510.png " ")
 
-Go to the bottom of the log.
+    The **Plan** job should finish with a **SUCCEEDED** message.
 
-The log will confirm the creation of database **dbrac** and client machine **demotac**
 
-Look for the **remote desktop** entry and copy the URL.
+## Task 3: Run Terraform Apply Job
 
-![CS8](./images/task1/image700.png " ")
+  When using Resource Manager to deploy an environment, execute a terraform **Apply** job. Let's do that now.
 
-This URL will allow you to connect from a browser to a noVNC remote desktop of the client machine as user **oracle**.
+  1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
 
-![CS8](./images/task1/image800.png " ")
+    ![Apply job dialog](./images/task1/image600.png " ")
+
+  2. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
+
+  3. Once the apply job succeeds, click on its name and access to the log.
+
+    Go to the bottom of the log.
+
+    The log will confirm the creation of database **dbrac** and client machine **demotac**
+
+    Look for the **remote desktop** entry and copy the URL.
+
+    ![Apply Jov Log with URL](./images/task1/image700.png " ")
+
+    This URL will allow you to connect from a browser to a noVNC remote desktop of the client machine as user **oracle**.
+
+    ![Compute Instance Desktop in noVNC](./images/task1/image800.png " ")
 
 
 **You can proceed to the next lab…**

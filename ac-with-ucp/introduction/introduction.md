@@ -57,4 +57,4 @@ Here is a video to help with the Oracle Trial Sign Up Process:
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, July 2022
+* **Last Updated By/Date** - François Pons, September 2022

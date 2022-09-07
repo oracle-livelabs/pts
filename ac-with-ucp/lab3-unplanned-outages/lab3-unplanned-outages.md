@@ -1,4 +1,4 @@
-# Simple Application Continuity
+# Application Continuity for unplanned outages
 
 ## Introduction
 
@@ -21,7 +21,7 @@ This lab assumes you have:
 * The Oracle environment prepared in the preceding lab.
 
 
-## Task 1: Configure the lab
+## Task 1: Configure the Lab
 
 1. Configure the pool to use a single connection
 
@@ -42,7 +42,7 @@ user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
 
 
 
-## Task 2: See what happens **without** Application Continuity
+## Task 2: Observe What Happens **Without** Application Continuity
 
 1. Run the demo program with a database service that does *not* use Application Continuity
 
@@ -110,7 +110,7 @@ Run **show_data.sh** again to verify
 
 
 
-## Task 3: See what happens **with** Application Continuity
+## Task 3: Observe What Happens **With** Application Continuity
 
 We will now see Application Continuity in action by running the application with the **tacsrv** service.
 
