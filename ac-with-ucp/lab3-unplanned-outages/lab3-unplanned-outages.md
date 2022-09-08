@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab we will configure a connection pool with a single connection. This will allow us to interrupt at will the demo application in the middle of a transaction and see whether or not Application Continuity hides the outage.
+In this lab, we will configure a connection pool with a single connection. This will allow us to interrupt at will the demo application in the middle of a transaction and see whether or not Application Continuity hides the outage.
 
 Estimated Lab Time: 30 minutes
 

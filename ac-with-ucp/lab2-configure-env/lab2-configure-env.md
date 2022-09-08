@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab we will customize the environment that will be used to run the rest of the workshop.
+In this lab, we will customize the environment that will be used to run the rest of the workshop.
 
 > **Note**: Most components should have been pre-created.
 

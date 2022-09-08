@@ -26,7 +26,7 @@ It demonstrates:
 *	How to set up ONS & FAN (required for Application Continuity and Transparent Application Continuity ).
 *	How to configure and use database services to make planned maintenance as well as other outages transparent to applications.
 
-The demo program allows to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
+The demo program allows one to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
 
 Different database services with or without application continuity can be tested.
 

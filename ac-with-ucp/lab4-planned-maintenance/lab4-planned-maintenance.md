@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab we will create a connection pool with 10 connections and first verify that UCP distributes them equally between the cluster nodes.
+In this lab, we will create a connection pool with 10 connections and first verify that UCP distributes them equally between the cluster nodes.
 
 We will then also direct (and drain) connections to a chosen node of the database cluster, thus making one node of the cluster available for planned maintenance.
 
