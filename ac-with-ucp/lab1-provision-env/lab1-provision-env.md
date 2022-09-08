@@ -35,7 +35,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     >**Note:** If you are in a workshop, double check your region to ensure you are on the assigned region.
 
-    ![](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
+    ![OCI console menu stacks](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
 
     Click **Create Stack**
 

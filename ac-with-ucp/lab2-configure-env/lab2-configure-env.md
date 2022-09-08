@@ -38,11 +38,11 @@ This lab assumes you have:
 
     * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
-      ![All VCNs](./images/task1/image100.png " ")
+      ![OCI console menu vcn](https://oracle-livelabs.github.io/common/images/console/networking-vcn.png " ")
 
-      >**Note:** Be sure to select the **region** and **compartment** that have been assigned to you.
+        >**Note:** Be sure to select the **region** and **compartment** that have been assigned to you.
 
-      ![Select compartment](./images/task1/image150.png " ")
+        ![Select compartment](./images/task1/image150.png " ")
 
     * Select the VCN
 
@@ -96,7 +96,8 @@ This lab assumes you have:
 
     * From the Oracle Cloud web console, go to **Oracle Database**
 
-      ![Look for Oracle Base Database](./images/task1/image500.png " ")
+      ![OCI console menu database](https://oracle-livelabs.github.io/common/images/console/database-basedb.png " ")
+
 
     * Select database **dbrac**
 
