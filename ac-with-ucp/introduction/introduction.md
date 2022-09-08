@@ -8,9 +8,9 @@
 
 Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Connection Draining and Application Continuity from an Oracle connection pool (UCP).
 
-### Why using UCP ?
+### Why use UCP?
 
-Managing the connection pool from [UCP](https://docs.oracle.com/en/database/oracle/oracle-database/21/jjucp/index.html) if often the easiest way for a Java application to take full advantage of Application Continuity.
+Managing the connection pool from [UCP](https://docs.oracle.com/en/database/oracle/oracle-database/21/jjucp/index.html) is often the easiest way for a Java application to take full advantage of Application Continuity.
 
 This implementation of a JDBC connection pool, delivered as a jar file, is a free piece of software (UCP is delivered under Oracle Free Use Terms and Conditions).  Its main advantage is that it leverages transparently many high availability and performance features available through an Oracle Real Application Clusters (Oracle RAC) database.
 
@@ -23,7 +23,7 @@ The demo application is a simple Java program using a 21c client. Its code shows
 
 It demonstrates:
 *	How to set up UCP (good for ISVs).
-*	How to set up ONS & FAN (required for Application Continuity and Transparent Application Continuity ).
+*	How to set up ONS & FAN (which is required for both Application Continuity and Transparent Application Continuity).
 *	How to configure and use database services to make planned maintenance as well as other outages transparent to applications.
 
 The demo program allows one to interrupt a transaction at will and show whether or not it is transparently replayed on a different node of the RAC.
