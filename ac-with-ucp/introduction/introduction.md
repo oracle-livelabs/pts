@@ -6,7 +6,7 @@
 
 **Application Continuity** makes planned maintenance activities and unplanned outages transparent to end-users by recovering the in-flight work of impacted database sessions.
 
-Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Connection Draining and Application Continuity from an Oracle connection pool (UCP).
+Run this hands-on workshop to learn how to use RAC services, configure Fast Application Notification, Connection Draining, and Application Continuity from an Oracle connection pool (UCP).
 
 ### Why use UCP?
 

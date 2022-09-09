@@ -25,9 +25,7 @@ This lab assumes you have:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [BusinessContinuityStack.zip](https://objectstorage.eu-paris-1.oraclecloud.com/p/qftSkMvy2UGGaeO-BsmBW0JROXS45kSl0HnjApDGhC_03zrTTuS8A309h1KdYDi3/n/oraclepartnersas/b/demoTac_bucket/o/BusinessContinuityStack.zip) - Packaged Terraform Environment creation script.
-
-
+- [BusinessContinuityStack.zip](https://objectstorage.eu-paris-1.oraclecloud.com/p/hNtnfmA58kds-Ytf6r5DoOE1IdY6K3nmlew4QaBsDPbu5RFisPmUPsxrhyEfnMSQ/n/oraclepartnersas/b/demoTac_bucket/o/BusinessContinuityStackV3.zip) - Packaged Terraform Environment creation script.
 
 ## Task 1: Load Terraform Stack
 
@@ -58,10 +56,6 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     * Instance Shape																		: VM.Standard.E3.Flex or VM.Standard.E4.Flex
     * OCPU																							: 1
-
-    ````
-    * Instance_image_id  : <copy>ocid1.image.oc1.eu-paris-1.aaaaaaaa4h2jbofel25uzoisymmfr6blevdq5vgh76pthncqrbp6kirusnoa</copy>
-    ````
 
   4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
 
