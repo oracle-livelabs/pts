@@ -42,15 +42,15 @@ This lab assumes you have:
 
         >**Note:** Be sure to select the **region** and **compartment** that have been assigned to you.
 
-        ![Select compartment](./images/task1/image150.png " ")
+        ![Select compartment](./images/task1/select-compartment.png " ")
 
     * Select the VCN
 
-      ![Select VCN](./images/task1/image200.png " ")
+      ![Select VCN](./images/task1/select-vcn.png " ")
 
     * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-      ![Create NSG](./images/task1/image300.png " ")
+      ![Create NSG](./images/task1/create-nsg.png " ")
 
     * Enter a name for the Network Security Group
 
@@ -87,7 +87,7 @@ This lab assumes you have:
 
       * Example
 
-        ![Create NSG example](./images/task1/image400.png " ")
+        ![Create NSG example](./images/task1/create-nsg-example.png " ")
 
       * Click **Create**
 
@@ -101,15 +101,15 @@ This lab assumes you have:
 
     * Select database **dbrac**
 
-      ![Select dbrac database](./images/task1/image600.png " ")
+      ![Select dbrac database](./images/task1/select-dbrac-database.png " ")
 
     * Under Network, Click on **Edit**
 
-      ![Add NSG to dbrac](./images/task1/image700.png " ")
+      ![Add NSG to dbrac](./images/task1/add-nsg-to-dbrac.png " ")
 
     * select NSG-DEMORAC and **Save**
 
-      ![Select NSG](./images/task1/image800.png " ")
+      ![Select NSG](./images/task1/select-nsg.png " ")
 
 
 ## Task 2: Configure the Network for Oracle Notification Services
@@ -119,23 +119,23 @@ This lab assumes you have:
 
     * Click on the Cloud Shell icon from the top right of the OCI console
 
-        ![CS](./images/task2/image100.png " ")
+        ![Cloud Shell icon](./images/task2/cloud-shell-icon.png " ")
 
     * From the Cloud Shell menu, click **Upload**
 
-        ![CS2](./images/task2/image200.png " ")
+        ![Cloud Shell window](./images/task2/cloud-shell-window.png " ")
 
     * Upload your private key
 
     * Make sure the mode is set to 400 (chmod 400 <my-pub-key>)
 
-        ![CS3](./images/task2/image300.png " ")
+        ![Upload Public Key](./images/task2/upload-public-key.png " ")
 
   2. Check that ONS is running on the server
 
     * From the database details page, select **Nodes** under **Resources** to find out the public IPs of the database nodes
 
-      ![CS4](./images/task2/image400.png " ")
+      ![DB Nodes IPs](./images/task2/db-nodes-ips.png " ")
 
     * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
@@ -214,7 +214,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSGrule2](./images/task2/image500.png " ")
+      ![NSG ingess rule 6200](./images/task2/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
@@ -243,7 +243,7 @@ This lab assumes you have:
 
         Replace **cont_prim** by this value in the following commands.
 
-        ![Find database unique name](./images/task3/image100.png " ")
+        ![Find database unique name](./images/task3/find-database-unique-name.png " ")
 
         > **Note:** In the following commands, you need to replace the database name **cont_prim** by its real value.
 
@@ -396,11 +396,14 @@ This lab assumes you have:
 
     * Using noVNC, connect to the remote desktop of the client machine **demotac** as user **oracle**.
 
+        ![Remote Desktop](./images/task4/remote-desktop.png " ")
+
     * The demo application is installed in **/home/oracle/work/ac**
 
-        ![FileStructure](./images/task4/image100.png " ")
-
     * The directory structure under **/home/oracle/work/ac** is explained below:
+
+      ![Show Directory Structure](./images/task4/show-directory-structure.png " ")
+
 
         ```
         ac           : demo program with its compiling and running scripts
@@ -409,12 +412,11 @@ This lab assumes you have:
         ac/sql       : SQL scripts to be used in next labs
         ```
 
-        ![Show Directory Structure](./images/task4/image200.png " ")
 
 
   2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
 
-    ![Access client desktop](./images/task4/image300.png " ")
+    ![Access client desktop terminal](./images/task4/client-desktop-terminal.png " ")
 
     ````
     user@cloudshell:~ $ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
@@ -535,11 +537,11 @@ This lab assumes you have:
 
     * From the **noVNC** desktop connection as oracle to the client machine, use the text editor to edit the Java program
 
-      ![Access client desktop](./images/task5/image100.png " ")
+      ![Access client desktop](./images/task5/access-client-desktop.png " ")
 
-      ![Launch code editor](./images/task5/image200.png " ")
+      ![Launch code editor](./images/task5/launch-code-editor.png " ")
 
-      ![Edit Java code](./images/task5/image300.png " ")
+      ![Edit Java code](./images/task5/edit-java-code.png " ")
 
 
     * The most interesting method is **createPool(String strAlias)** which shows the commands to create a connection pool able to take full advantage of a RAC database.

@@ -37,11 +37,11 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     Click **Create Stack**
 
-    ![create-stack-dialog](./images/task1/create-stack-dialog.png " ")
+    ![Create stack dialog](./images/task1/create-stack-dialog.png " ")
 
   2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityStack.zip**) that you downloaded. Click **Select** to upload the zip file.
 
-    ![Create stack dialog validation](./images/task1/image200.png " ")
+    ![Create stack dialog validation](./images/task1/create-stack-dialog-validation.png " ")
 
     Then click **Next**
 
@@ -59,11 +59,11 @@ Click on the link below to download the Resource Manager zip files you need to b
 
   4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
 
-    ![Upload stack dialog](./images/task1/image300.png " ")
+    ![Upload stack dialog](./images/task1/upload-stack-dialog.png " ")
 
     You should now see that your stack has been created!
 
-    ![Stack has been uploaded](./images/task1/image400.png " ")
+    ![Stack has been uploaded](./images/task1/stack-has-been-uploaded.png " ")
 
 
 ## Task 2: Run Terraform Plan Job (OPTIONAL)
@@ -72,11 +72,11 @@ Click on the link below to download the Resource Manager zip files you need to b
 
   1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
 
-    ![Plan job running](./images/task1/image500.png " ")
+    ![Plan job running](./images/task1/plan-job-running.png " ")
 
     (...)
 
-    ![Plan job complete](./images/task1/image510.png " ")
+    ![Plan job complete](./images/task1/plan-job-complete.png " ")
 
     The **Plan** job should finish with a **SUCCEEDED** message.
 
@@ -87,7 +87,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
   1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
 
-    ![Apply job dialog](./images/task1/image600.png " ")
+    ![Apply job dialog](./images/task1/apply-job-dialog.png " ")
 
   2. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
 
@@ -99,11 +99,11 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     Look for the **remote desktop** entry and copy the URL.
 
-    ![Apply Jov Log with URL](./images/task1/image700.png " ")
+    ![Apply Job Log with URL](./images/task1/apply-job-log-with-url.png " ")
 
     This URL will allow you to connect from a browser to a noVNC remote desktop of the client machine as user **oracle**.
 
-    ![Compute Instance Desktop in noVNC](./images/task1/image800.png " ")
+    ![Compute Instance Desktop in noVNC](./images/task1/compute-instance-desktop.png " ")
 
 
 **You can proceed to the next lab…**
