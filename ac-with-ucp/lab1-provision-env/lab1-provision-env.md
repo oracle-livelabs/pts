@@ -37,7 +37,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     Click **Create Stack**
 
-    ![Create stack dialog](./images/task1/image100.png " ")
+    ![create-stack-dialog](./images/task1/create-stack-dialog.png " ")
 
   2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityStack.zip**) that you downloaded. Click **Select** to upload the zip file.
 
