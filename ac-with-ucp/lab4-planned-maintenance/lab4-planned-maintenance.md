@@ -36,7 +36,7 @@ This lab assumes you have:
 2. Recompile the application
 
     ````
-    user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+    [oracle@demotac ac]$ <copy>MyCompile.sh MyUCPDemo.java</copy>
     ````
 
 
@@ -46,6 +46,10 @@ This lab assumes you have:
 
   ![Show script ddl_setup.sh](./images/task1/ddl-setup-script.png " ")
 
+    ````
+    [oracle@demotac ddl]$ <copy>ddl_setup.sh</copy>
+    ````
+
   ![Run script ddl_setup.sh](./images/task1/run-ddl-setup-script.png " ")
 
 
@@ -54,7 +58,7 @@ This lab assumes you have:
 1. Run the demo program with a database service that uses **Application Continuity**
 
     ````
-    user@cloudshell:~ $ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
+    [oracle@demotac ac]$ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
     ````
 
     The application creates a connection pool of 10 connections, gets a connection from the pool and starts a first transaction.
@@ -67,6 +71,10 @@ This lab assumes you have:
     From a **second tab** in the terminal session, go to the **sql** directory and examine the pool by running **show_pool.sh**
 
     ![Show script show_pool.sh](./images/task2/show-pool-script.png " ")
+
+      ````
+      [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+      ````
 
     Observe that connections are spread across available nodes.
 
@@ -118,6 +126,10 @@ This lab assumes you have:
 
       ![Show script show_pool.sh](./images/task2/show-pool-script-again.png " ")
 
+        ````
+        [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+        ````
+
       ![Run script show_pool.sh](./images/task2/show-pool-all-node2.png " ")
 
 
@@ -148,6 +160,10 @@ This lab assumes you have:
 
   ![Show script show_pool.sh](./images/task3/show-pool-script.png " ")
 
+    ````
+    [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+    ````
+
   ![Run script show_pool.sh](./images/task3/show-pool-on-first-node.png " ")
 
 
@@ -162,6 +178,10 @@ This lab assumes you have:
     ````
 
     Observe how the pool reconfigures connections to both nodes by running **show_pool.sh** again
+
+      ````
+      [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+      ````
 
     ![Show pool has connections to both nodes](./images/task3/show-pool-on-both-nodes.png " ")
 

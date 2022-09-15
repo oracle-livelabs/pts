@@ -37,7 +37,7 @@ This lab assumes you have:
   2. Recompile the application
 
     ````
-    user@cloudshell:~ $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+    [oracle@demotac ac]$ <copy>MyCompile.sh MyUCPDemo.java</copy>
     ````
 
 
@@ -46,7 +46,7 @@ This lab assumes you have:
   1. Run the demo program with a database service that does *not* use Application Continuity
 
     ````
-    user@cloudshell:~ $ <copy>MyRun.sh MyUCPDemo demosrv</copy>
+    [oracle@demotac ac]$ <copy>MyRun.sh MyUCPDemo demosrv</copy>
     ````
 
 
@@ -69,12 +69,16 @@ This lab assumes you have:
   4. From a **second tab** in the terminal session (File > New Tab), go to the **sql** directory and examine the content of the transaction table **ACCOUNT**
 
     ````
-    oracle@demorac: $ <copy>cd /home/oracle/work/ac/sql</copy>
+    [oracle@demotac ac]$ <copy>cd /home/oracle/work/ac/sql</copy>
     ````
 
     ![Show script show_data.sh](./images/task2/show-data-script.png " ")
 
     Execute **show_data.sh**
+
+      ````
+      [oracle@demotac sql]$ <copy>show_data.sh</copy>
+      ````
 
     ![Run script show_data.sh](./images/task2/run-show-data-script.png " ")
 
@@ -86,15 +90,19 @@ This lab assumes you have:
 
     ![Show script show_session.sh](./images/task2/show-session-script.png " ")
 
-    ````
-    oracle@demorac: $ <copy>show_session.sh</copy>
-    ````
+      ````
+      [oracle@demotac sql]$ <copy>show_session.sh</copy>
+      ````
 
     ![Run script show_session.sh](./images/task2/run-show-session-script.png " ")
 
   6. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
 
     ![Show script kill_session.sh](./images/task2/kill-session-script.png " ")
+
+      ````
+      [oracle@demotac sql]$ <copy>kill_session.sh</copy>
+      ````
 
     ![Run script kill_session.sh](./images/task2/run-kill-session-script.png " ")
 
@@ -107,6 +115,10 @@ This lab assumes you have:
   8. Even if the program manages to reconnect, one can see that a transaction has been lost.
 
     Run **show_data.sh** again to verify
+
+      ````
+      [oracle@demotac sql]$ <copy>show_data.sh</copy>
+      ````
 
     ![Show missing data](./images/task2/show-missing-data.png " ")
 
@@ -121,13 +133,17 @@ This lab assumes you have:
 
     ![Show script ddl_setup.sh](./images/task3/ddl-setup-script.png " ")
 
+      ````
+      [oracle@demotac ddl]$ <copy>ddl_setup.sh</copy>
+      ````
+
     ![Run script ddl_setup.sh](./images/task3/run-ddl-setup-script.png " ")
 
 
   2. Run the demo program with a database service that uses **Application Continuity**
 
     ````
-    user@cloudshell:~ $ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
+    [oracle@demotac ac]$ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
     ````
 
     The application gets a connection and starts a first transaction. It connects to the database as user **CONTI** and makes accounting entries in table **ACCOUNT**. Each accounting transaction should consist of two lines in ACCOUNT: one with DIR='D' (for Debit) and another one with DIR='C' (for Credit).
@@ -150,6 +166,10 @@ This lab assumes you have:
 
     ![Show script show_data.sh](./images/task3/show-data-script.png " ")
 
+      ````
+      [oracle@demotac sql]$ <copy>show_data.sh</copy>
+      ````
+
     ![Run script show_data.sh](./images/task3/run-show-data-script.png " ")
 
   6. One can see three completed transactions for **110**, **120** and **130** and we should be in the middle of the fourth one for **140**.
@@ -160,9 +180,17 @@ This lab assumes you have:
 
     ![Show script show_session.sh](./images/task3/show-session-script.png " ")
 
+      ````
+      [oracle@demotac sql]$ <copy>show_session.sh</copy>
+      ````
+
     ![Run script show_session.sh](./images/task3/run-show-session-script.png " ")
 
   7. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
+
+      ````
+      [oracle@demotac sql]$ <copy>kill_session.sh</copy>
+      ````
 
     ![Run script kill_session.sh](./images/task3/run-kill-session-script.png " ")
 
