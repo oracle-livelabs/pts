@@ -82,9 +82,13 @@ This lab assumes you have:
 
     > **Note**: the trigger on the table has captured the database service used by the Connection.
 
-    We can also see the session we have been using by running **show_sessions.sh** from the same terminal.
+    We can also see the session we have been using by running **show_session.sh** from the same terminal.
 
     ![Show script show_session.sh](./images/task2/show-session-script.png " ")
+
+    ````
+    oracle@demorac: $ <copy>show_session.sh</copy>
+    ````
 
     ![Run script show_session.sh](./images/task2/run-show-session-script.png " ")
 
