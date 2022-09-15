@@ -183,4 +183,4 @@ This lab assumes you have:
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, September 2022
+* **Last Updated By/Date** - François Pons, September, 15th 2022
