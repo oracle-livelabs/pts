@@ -9,6 +9,9 @@ Queries that need data from multiple shards, and queries that do not specify a s
 
 Estimated Lab Time: 20 minutes.
 
+Watch the video below for a quick walk through of the lab.
+[](youtube:cihT3Ana55A)
+
 ### Objectives
 
 In this lab, you will perform the following steps:
