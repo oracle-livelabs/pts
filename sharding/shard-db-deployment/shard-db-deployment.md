@@ -19,6 +19,9 @@ Following is the topology used for System Managed Sharding we will create in thi
 
 Estimated Lab Time: 60 minutes.
 
+Watch the video below for a quick walk through of the lab.
+[](youtube:8r3cvL5s7nk)
+
 ### Objectives
 
 In this lab, you will deploy a sharded database with 2 shard.
