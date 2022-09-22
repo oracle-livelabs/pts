@@ -758,13 +758,13 @@ The tasks you will accomplish in this step are:
 
        ```
        <copy>
-       set linewidth 180
+       set linesize 180
        set pages 100
        column owner format A13
        column db_link format A13
        select owner,db_link,host from dba_db_links;
        </copy>
-       set linewidth 180
+       set linesize 180
 
         OWNER	      DB_LINK         
         ------------- -------------

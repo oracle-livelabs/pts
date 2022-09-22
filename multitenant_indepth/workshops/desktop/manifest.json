@@ -1,33 +1,32 @@
 {
-  "workshoptitle": "Multitenant Advanced Capabilities",
-  "help": "livelabs-help-db_us@oracle.com",
+  "workshoptitle": "The Title of the Workshop is defined in the manifest",
+  "help": "livelabs-help-**enterarea**_us@oracle.com",
   "tutorials": [
     {
       "title": "Introduction",
       "description": "Introduction to Multitenant Workshop",
-	  "publisheddate": "15/03/2022",
       "filename": "./../../intro/intro.md"
     },
     {
-      "title": "Lab 1: Environment Setup",
-      "description": "Verify Setup of compute instance",
-      "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-ssh-and-novnc.md"
+      "title": "Getting Started",
+      "description": "Using noVNC Remote Desktop",
+      "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
     },
     {
-      "title": "Lab 2: Clone, Plug and Drop",
+      "title": "Lab 1: Clone, Plug and Drop",
       "description": "Clone, Plug and Drop Pluggable Databases",
-	  "publisheddate": "15/03/2022",
+    "publisheddate": "15/03/2022",
       "filename": "./../../clone-plug-drop-novnc/clone-plug-drop-novnc.md"
     },
     {
-      "title": "Lab 3: Application Containers",
+      "title": "Lab 2: Application Containers",
       "description": "Using Application Containers with Multitenant",
-	  "publisheddate": "15/03/2022",
+    "publisheddate": "15/03/2022",
       "filename": "./../../manage-app/manage-app.md"
     },
     {
       "title": "Need Help?",
-      "description": "Solutions to Common Problems and Directions for Receiving Live Help.",
+      "description": "Solutions to Common Problems and Directions for Receiving Live Help",
       "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
     }
   ]
