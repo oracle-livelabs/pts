@@ -1,4 +1,4 @@
-# Develop Mobile Apps using Oracle REST Data Services
+# Develop Mobile Apps with Oracle REST Data Services
 
 ## Introduction
 

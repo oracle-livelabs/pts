@@ -1,5 +1,5 @@
 {
-    "workshoptitle": "Develop Mobile Apps using Oracle REST Data Services",
+    "workshoptitle": "Develop Mobile Apps with Oracle REST Data Services",
     "tutorials": [
         {
             "title": "Oracle Cloud Free Tier",
@@ -17,7 +17,7 @@
             "filename": "https://oracle-livelabs.github.io/adb/shared/adb-15-minutes/provision-database/adb-provision-moviestream.md"
         },
         {
-            "title": "Lab 2: Develop Mobile Apps using Oracle REST Data Services",
+            "title": "Lab 2: Develop Mobile Apps with Oracle REST Data Services",
             "description": "This lab shows how easy it is to build a simple mobile application that uses Oracle REST Data Services (ORDS) and JSON documents support on Oracle Autonomous Database.",
             "filename": "./../../ords-mobile/ords-mobile.md"
         },
