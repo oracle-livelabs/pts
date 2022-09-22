@@ -12,9 +12,9 @@
             "filename": "./../../introduction/introduction.md"
         },
         {
-            "title": "Lab 1: Provision an Autonomous Database (ADW or ATP)",
+            "title": "Lab 1: Provision an Autonomous Database",
             "description": "This lab walks you through the steps to get started using the Oracle Autonomous Database (Autonomous Data Warehouse [ADW] and Autonomous Transaction Processing [ATP]) on Oracle Cloud.",
-            "filename": "./../../../../shared/adb-provision/adb-provision-conditional.md"
+            "filename": "https://oracle-livelabs.github.io/adb/shared/adb-15-minutes/provision-database/adb-provision-moviestream.md"
         },
         {
             "title": "Lab 2: Develop Mobile Apps using Oracle REST Data Services",
