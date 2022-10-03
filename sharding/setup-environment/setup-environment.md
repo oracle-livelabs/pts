@@ -6,6 +6,9 @@ In this lab you will setup 4 compute instances using Oracle Resource Manager and
 
 Estimated Lab Time: 45 minutes.
 
+Watch the video below for a quick walk through of the lab.
+[](youtube:oO-1-XYmFYY)
+
 ### Objectives
 
 -   Use Terraform and Resource Manager to setup the shard catalog and sharded database.
@@ -24,26 +27,26 @@ Click on the link below to download the Resource Manager zip files you need to b
 
 ## Task 1: Prepare the Shard Database
 
-1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
+1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Developer Services > Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
     ![Login to the Oracle Cloud Console.](./images/cloud-homepage.png " ")
 
-    ![Select stacks from resource manager.](./images/resource.png " ")
+    ![image-20220827113112652](images/image-20220827113112652.png)
 
     
 
     ![Click the create stack button.](./images/step1-3-createstackpage.png " ")
 
-2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`sdb19c-primary-num.zip`) that you downloaded. Click **Select** to upload the zip file.
+2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`sdb19c-market-19.14.zip`) that you downloaded before. Click **Select** to upload the zip file.
 
     ![Select and upload zip file.](images/selectzipfile.png)
 
     Accept all the defaults and click **Next**.
 
 
-3. Accept the default value of the  `CataDB_Shape` and `Shard_Shape`. Paste the content of the public key you create before to the `SSH_PUBLIC_KEY`,  and click **Next**. (Note: If you don't want to compare the performance in the following labs and want save the resource, you can change the catalog db shape to VM.Standard2.1).
+3. Accept the default value of the  `Catalog DB VM Shape` and `Shard DB VM Shape`. Upload or Paste the content of the public key you create before to the `Public SSH Key`,  and click **Next**. (Note: If you don't want to compare the performance in the following labs and want save the resource, you can change the catalog db shape to VM.Standard2.1).
 
-    ![Enter SSH key and click next.](images/entersshkey.png)
+    ![image-20220827113653468](images/image-20220827113653468.png)
 
     
 
@@ -53,29 +56,16 @@ Click on the link below to download the Resource Manager zip files you need to b
 
 5. Your stack has now been created!  Now to create your environment. *Note: If you get an error about an invalid DNS label, go back to your Display Name, please do not enter ANY special characters or spaces. It will fail.*
 
-    ![Your stack is now created.](./images/step1-7-stackcreated.png)
+    ![image-20220827114025396](images/image-20220827114025396.png)
 
-## Task 2: Terraform Plan (OPTIONAL)
 
-When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional STEP in this lab.
-
-1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
-
-    ![Click plan from Terraform Actions.](./images/terraformactions.png " ")
-
-    ![Plan window loading.](images/planwindow.png)
-
-    ![Plan job accepted.](./images/planjob.png " ")
-
-    ![Plan job succeeded.](./images/planjob1.png " ")
-
-## Task 3: Terraform Apply
+## Task 2: Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Plan** and **Apply**. Let's do that now.
 
-1. At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
+1. At the top of your page, click on **Stack Details**.  Click the **Apply** button. Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
 
-    ![Begin by clicking stack details.](./images/applyjob1.png " ")
+    ![image-20220827114209669](images/image-20220827114209669.png)
 
     ![Click apply from Terraform Actions.](images/applyterraformactions.png)
 
@@ -100,7 +90,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
     
 
-## Task 4: Connect to your Instance
+## Task 3: Connect to your Instance
 
 ### MAC or Windows CYGWIN Emulator
 
@@ -146,7 +136,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 8.  Click Open to begin your session with the instance.
 
-## Task 5: Verify the Database is Up
+## Task 4: Verify the Database is Up
 
 1.  From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
 
@@ -214,5 +204,5 @@ You may now proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020
-* **Last Updated By/Date** - Minqiao Wang, July 2022
+* **Last Updated By/Date** - Minqiao Wang, Aug 2022
 

@@ -264,13 +264,13 @@ If you encounter the Warning: ORA-16809: multiple warnings detected for the memb
 
 Now, You have completed the fundamentals of the ADG labs. If you are interested, you can perform the following common labs for ADG:
 
-1. [Lab 6: Enable ADG DML Redirection](https://apexapps.oracle.com/pls/apex/dbpm/r/livelabs/workshop-attendee-2?p210_workshop_id=625&p210_type=3)
-2. [Lab 7: Automatic Block Media Recovery](https://apexapps.oracle.com/pls/apex/dbpm/r/livelabs/workshop-attendee-2?p210_workshop_id=625&p210_type=3)
-3. [Lab 8: Restore Point Propagation](https://apexapps.oracle.com/pls/apex/dbpm/r/livelabs/workshop-attendee-2?p210_workshop_id=625&p210_type=3)
+1. [Lab 6: Enable ADG DML Redirection](https://oracle-livelabs.github.io/database-maa/19c-adg-fundamentals/workshops/freetier/?lab=dml-redirection-cs)
+2. [Lab 7: Automatic Block Media Recovery](https://oracle-livelabs.github.io/database-maa/19c-adg-fundamentals/workshops/freetier/?lab=media-recovery-cs)
+3. [Lab 8: Restore Point Propagation](https://oracle-livelabs.github.io/database-maa/19c-adg-fundamentals/workshops/freetier/?lab=restore-point-propagation-cs)
 
 
 
 ## Acknowledgements
 
 * **Author** - Minqiao Wang, Oct 2020 
-* **Last Updated By/Date** - Minqiao Wang, Oct 2021
+* **Last Updated By/Date** - Minqiao Wang, Aug 2022

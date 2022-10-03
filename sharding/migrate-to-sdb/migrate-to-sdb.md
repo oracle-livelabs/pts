@@ -6,6 +6,9 @@ When you want to migrate the application from the non-shard database to the shar
 
 Estimated Lab Time: 30 minutes.
 
+Watch the video below for a quick walk through of the lab.
+[](youtube:KgOFEm7x414)
+
 ### Objectives
 
 In this lab, you will perform the following steps:
@@ -197,7 +200,7 @@ Before the existing database can be migrated to the sharded database, you must d
     [oracle@cata ~]$ <copy>sqlplus /nolog</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Mon Nov 30 01:26:03 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -424,7 +427,7 @@ Before the existing database can be migrated to the sharded database, you must d
     ```
     01:26:41 SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$
     ```
 
@@ -578,7 +581,7 @@ Now, we can verify the sharded demo schema which created in the previous step.
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -813,7 +816,7 @@ Now, we can verify the sharded demo schema which created in the previous step.
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$
     ```
 
@@ -836,14 +839,14 @@ Loading the data directly into the database shards is much faster, because each 
     [oracle@cata ~]$ <copy>sqlplus app_schema/app_schema@cata:1521/catapdb</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Dec 5 03:21:31 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -862,7 +865,7 @@ Loading the data directly into the database shards is much faster, because each 
     
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 
@@ -883,7 +886,7 @@ Loading the data directly into the database shards is much faster, because each 
 
     ```
     Import: Release 19.0.0.0.0 - Production on Mon Dec 7 02:14:07 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
     
@@ -914,7 +917,7 @@ Loading the data directly into the database shards is much faster, because each 
 
     ```
     Import: Release 19.0.0.0.0 - Production on Mon Dec 7 02:15:32 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
     
@@ -947,7 +950,7 @@ Loading the data directly into the database shards is much faster, because each 
 
     ```
     Import: Release 19.0.0.0.0 - Production on Mon Dec 7 02:18:56 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
     
@@ -1037,14 +1040,14 @@ Migrate application to the sharded database a slight change to the application c
     [oracle@cata sql]$ <copy>sqlplus /nolog</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Mon Nov 30 05:54:14 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> <copy>@sdb_demo_app_ext.sql</copy>
     ```
@@ -1205,7 +1208,7 @@ Migrate application to the sharded database a slight change to the application c
 
     
 
-8. Start the workload by executing the command.
+8. Start the workload by executing the command using the sdbdemo.properties parameter file.
 
     ```
     [oracle@cata sdb_demo_app]$ <copy>./run.sh demo sdbdemo.properties</copy>
@@ -1251,7 +1254,7 @@ Migrate application to the sharded database a slight change to the application c
 
     
 
-11. Start the monitoring tool via the following command. Ignore the FileNotFoundException message. (Note: due to the resource limit, start monitor may impact the demo application performance).
+11. Start the monitoring tool via the following command using the sdbdemo.properties parameter file. Ignore the FileNotFoundException message. (Note: due to the resource limit, start monitor may impact the demo application performance).
 
     ```
      [oracle@cata sdb_demo_app]$ <copy>./run.sh monitor sdbdemo.properties</copy>
@@ -1294,4 +1297,4 @@ You may now proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020  
-* **Last Updated By/Date** - Andres Quintana, April 2022
+* **Last Updated By/Date** - Minqiao Wang, Aug 2022
