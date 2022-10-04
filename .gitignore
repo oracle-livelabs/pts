@@ -1,7 +1,0 @@
-.DS_Store
-**/*.rpm
-**/*.jar
-**/*.bin
-*.patch
-env.sh
-oml4r/oml4r-workshop/Informatica agent installation on linux 8.txt
