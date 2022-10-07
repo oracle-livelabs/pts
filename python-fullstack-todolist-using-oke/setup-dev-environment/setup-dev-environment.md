@@ -38,7 +38,7 @@ Estimated Time: ~25 minutes
 
     ```
     <copy>
-    cd ~/oci-react-samples; mv mtdrworkshop ..
+    cd ~/OKE_setup; mv mtdrworkshop ..
     </copy>
     ```
 
