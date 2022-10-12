@@ -1,10 +1,10 @@
-# Develop Mobile Apps using Oracle REST Data Services
+# Develop Mobile Apps with Oracle REST Data Services
 
 ## Workshop Overview
 
 This Getting Started guide will get you ready for the Oracle REST Data Services (ORDS) Workshop labs. This workshop and the labs that follow support either Windows clients or Linux clients.
 
-![](./images/ords-workflow.jpg "")
+![ORDS workflow](./images/ords-workflow.jpg "")
 
 Oracle REST Data Services is a Java Enterprise Edition (Java EE) based data service that provides enhanced security, file caching features, and RESTful Web Services. Oracle REST Data Services also provides increased flexibility by supporting deployments using Oracle WebLogic Server, Apache Tomcat, and a standalone mode.
 
@@ -12,7 +12,7 @@ When you provision an Autonomous Database instance, by default Oracle REST Data 
 
 Watch the video below to see how Oracle REST Data Services enables mobile developers to benefit from Oracle Autonomous Database converged capabilities.
 
-[](youtube:KqGzHKz1XLc)
+[HOL walkthrough](youtube:KqGzHKz1XLc)
 
  >**Note** : Oracle Application Express is not a prerequisite for using Oracle REST Data Services.
 If Oracle Application Express is installed and if RESTful services have been configured during the installation, then Oracle REST Data Services supports it, including executing the RESTful services defined in Oracle Application Express.
