@@ -17,7 +17,7 @@ Watch the video below to see how Oracle REST Data Services enables mobile develo
  >**Note** : Oracle Application Express is not a prerequisite for using Oracle REST Data Services.
 If Oracle Application Express is installed and if RESTful services have been configured during the installation, then Oracle REST Data Services supports it, including executing the RESTful services defined in Oracle Application Express.
 
-## Workshop Requirements
+### Workshop Requirements
 
 * Access to Oracle Cloud Infrastructure
     * Provided by the instructor for instructor-led workshops
@@ -27,7 +27,7 @@ If Oracle Application Express is installed and if RESTful services have been con
 
 Our focus is to show how Oracle REST Data Services (ORDS) can be leveraged and used out-of-the-box on Oracle Autonomous Database, running on Oracle Cloud Infrastructure. In this workshop, we are not teaching programming skills to develop mobile applications for iOS and Android.
 
-## Agenda
+### Agenda
 
 - **Lab 1 : Provision an Autonomous Database (ADW or ATP)**
 - **Lab 2 : Develop Mobile Apps using Oracle REST Data Services**
