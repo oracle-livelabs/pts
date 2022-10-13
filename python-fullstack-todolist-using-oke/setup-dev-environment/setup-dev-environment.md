@@ -32,13 +32,13 @@ Estimated Time: ~25 minutes
 
     ```
     <copy>
-    git clone https://github.com/oracle/oci-react-samples.git
+    git clone https://github.com/vijaybalebail/OKE_setup.git
     </copy>
     ```
 
     ```
     <copy>
-    cd ~/oci-react-samples; mv mtdrworkshop ..
+    cd ~/OKE_setup; mv mtdrworkshop ..
     </copy>
     ```
 

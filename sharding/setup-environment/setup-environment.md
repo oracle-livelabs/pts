@@ -6,8 +6,11 @@ In this lab you will setup 4 compute instances using Oracle Resource Manager and
 
 Estimated Lab Time: 45 minutes.
 
-Watch the video below for a quick walk through of the lab.
-[](youtube:oO-1-XYmFYY)
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:oO-1-XYmFYY)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Setup the Environment](videohub:1_bpctm06z)
 
 ### Objectives
 
