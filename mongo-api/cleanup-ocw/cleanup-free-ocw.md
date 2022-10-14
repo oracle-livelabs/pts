@@ -6,7 +6,10 @@ In this lab we will cleanup the infrastructure that we used to run this workshop
 
 The main three elements that we will cleanup are the **Autonomous JSON Database** where you stored the JSON documents that we ingested our Python apps with, **Compute instance** using an image from the marketplace including the libraries need to execute the scripts needed to create and execute applications in Python. And finally the **Virtual Cloud Network** which you used to define your own data center network topology inside the Oracle Cloud by defining some of the following components (Subnets, Route Tables, Security Lists, Gateways, etc.).
 
-**Estimated Lab Time: 5 minutes.**
+Estimated Lab Time: 5 minutes.
+
+Watch the video below for a quick walk-through of the lab.
+[Clean Up](videohub:1_m0vdw69z)
 
 ### Objectives
 
