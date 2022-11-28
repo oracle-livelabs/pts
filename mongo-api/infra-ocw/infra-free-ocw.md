@@ -8,7 +8,10 @@ The main three elements that we will be creating are a **Virtual Cloud Network**
 
 We will prepare the documents to be capable of accessing to **SODA APIs**, in particular, to create, drop, and list document collections using **APEX** as vehicle to visualize the JSON documents as we used to do with structure data. This capability is unique of Oracle Databases.
 
-**Estimated Lab Time: 40 minutes.**
+Estimated Lab Time: 40 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Infrastructure Configuration](videohub:1_8a593q4e)
 
 ### Objectives
 

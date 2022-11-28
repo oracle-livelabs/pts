@@ -8,7 +8,10 @@ You can use SODA for Python to perform create, read (retrieve), update, and dele
 
 SODA is a set of NoSQL-style APIs that let you create and store collections of documents (in particular JSON) in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the documents are stored in the database.
 
-**Estimated Lab Time: 40 minutes**.
+Estimated Lab Time: 40 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Python SODA micro-service with Autonomous Database for JSON](videohub:1_2ugpfxe2)
 
 ### Objectives
 

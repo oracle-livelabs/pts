@@ -20,7 +20,10 @@ To learn more about this capability go to he following content:
  - [Oracle Database API for MongoDB Blog from Roger Ford, Principal Product Manager] (https://blogs.oracle.com/database/post/mongodb-api)
 
 
-**Estimated Lab Time: 20 minutes**.
+Estimated Lab Time: 20 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Python micro-service with the new MongoAPI capability](videohub:1_44ff0wv1)
 
 ### Objectives
 
