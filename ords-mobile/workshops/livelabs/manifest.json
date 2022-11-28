@@ -1,9 +1,10 @@
 {
-    "workshoptitle": "Develop Mobile Apps using Oracle REST Data Services",
+    "workshoptitle": "Develop mobile apps using Oracle REST Data Services",
+    "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
             "title": "Introduction",
-            "description": "Introduction to Oracle REST Data Services (ORDS).",
+            "description": "Introduction to Oracle REST Data Services (ORDS)",
             "filename": "./../../introduction/introduction.md"
         },
         {
@@ -12,14 +13,14 @@
             "filename": "./../../../../shared/adb-provision/adb-provision-conditional.md"
         },
         {
-            "title": "Lab 2: Develop Mobile Apps using Oracle REST Data Services",
+            "title": "Lab 2: Develop mobile apps using Oracle REST Data Services",
             "description": "This lab shows how easy it is to build a simple mobile application that uses Oracle REST Data Services (ORDS) and JSON documents support on Oracle Autonomous Database.",
             "filename": "./../../ords-mobile/ords-mobile.md"
         },
         {
-            "title": "Need Help?",
+            "title": "Need help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         }
         
     ]
