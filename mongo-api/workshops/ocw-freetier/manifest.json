@@ -1,7 +1,7 @@
 {
     "workshoptitle": "Full Python App Development with Autonomous JSON for MongoDB Developers",
     "tutorials": [
-                {
+        {
             "title": "Introduction",
             "description": "Introduction of the workshop.",
             "filename": "./../../intro-ocw/intro-ocw.md"
