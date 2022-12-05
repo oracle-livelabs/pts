@@ -6,8 +6,11 @@ In this lab, you will setup a non-sharded database application. You will migrate
 
 Estimated Lab Time: 30 minutes.
 
-Watch the video below for a quick walk through of the lab.
-[](youtube:bUC2KXUW21E)
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:bUC2KXUW21E)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Setup a Non-Sharded Application](videohub:1_z2psr30b)
 
 ### Objectives
 

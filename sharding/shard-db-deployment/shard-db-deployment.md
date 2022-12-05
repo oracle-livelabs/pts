@@ -19,8 +19,11 @@ Following is the topology used for System Managed Sharding we will create in thi
 
 Estimated Lab Time: 60 minutes.
 
-Watch the video below for a quick walk through of the lab.
-[](youtube:8r3cvL5s7nk)
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:8r3cvL5s7nk)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Deployment the Sharded Database](videohub:1_m1amf8pg)
 
 ### Objectives
 
@@ -95,7 +98,7 @@ In this workshop we choose to co-locate the shard director software on the same 
 1. Connect to the catalog host, switch to the **oracle** user.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx<copy>
+    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
     
     [opc@cata ~]$ <copy>sudo su - oracle</copy>
     Last login: Fri Nov 27 06:57:03 UTC 2020

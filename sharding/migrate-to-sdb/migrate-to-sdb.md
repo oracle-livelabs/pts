@@ -6,8 +6,11 @@ When you want to migrate the application from the non-shard database to the shar
 
 Estimated Lab Time: 30 minutes.
 
-Watch the video below for a quick walk through of the lab.
-[](youtube:KgOFEm7x414)
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:KgOFEm7x414)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Migrate to Sharded Database](videohub:1_3n6przb1)
 
 ### Objectives
 

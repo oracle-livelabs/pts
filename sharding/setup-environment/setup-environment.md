@@ -6,8 +6,11 @@ In this lab you will setup 4 compute instances using Oracle Resource Manager and
 
 Estimated Lab Time: 45 minutes.
 
-Watch the video below for a quick walk through of the lab.
-[](youtube:oO-1-XYmFYY)
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:oO-1-XYmFYY)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Setup the Environment](videohub:1_bpctm06z)
 
 ### Objectives
 
@@ -21,7 +24,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [sdb19c-market-19.14.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/B4ZlrnlqqkuR0_1-qQEKAlFclrnIEQyyd0ZSmwsweoDmNUVg7-Z0wQ8a4j4nfvCC/n/c4u04/b/livelabsfiles/o/labfiles/sdb19c-market-19.14.zip) - Packaged terraform primary database instances creation script.
+- [sdb19c-market-19.14-1.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/u8b0_dUgBARhabj2Be6wGjxasMz8i4Q0WysZVKH8eP53kcqSAGdw5FmA0Pd21VVz/n/c4u04/b/livelabsfiles/o/labfiles/sdb19c-market-19.14-1.zip) - Packaged terraform primary database instances creation script.
 
 
 
