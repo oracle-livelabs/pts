@@ -9,7 +9,7 @@ In this lab, we will customize the environment that will be used to run the rest
 There are three main elements in our environment:
 
 * **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
-* **dbrac** : a two-node **DBCS RAC database** with ASM storage (which should have also been pre-created)
+* **dbrac** : a two-node DBCS (aka Oracle Base Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
 * **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
 Estimated Lab Time: 30 minutes.
@@ -19,7 +19,12 @@ Estimated Lab Time: 30 minutes.
 
 In this lab, you will:
 
+<if type="tenancy">
 * Complete the network configuration
+</if>
+<if type="sandbox">
+* Review the network configuration
+</if>
 * Configure RAC database services
 * Create a demo schema in the database
 * Compile a demo application
@@ -28,13 +33,25 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle LiveLabs sandbox environment providing the components described above
-* Or an Oracle Cloud Account where you created this environment by following LiveLabs instructions
+
+<if type="tenancy">
+* An Oracle Cloud Account (aka tenancy) where you created this environment by following LiveLabs instructions.
+</if>
+<if type="sandbox">
+* An Oracle LiveLabs sandbox environment providing the components described above.
+</if>
+
 
 
 ## Task 1: Configure the Network for Oracle Net
 
   1. Create a **Network Security Group** rule allowing Oracle Net connectivity
+
+    * It is necessary to **open TCP port 1521** in the VCN to allow the demo application to connect to the database. We can do this by configuring a **Network Security Group Rule** and adding the NSG to the database.
+
+    <if type="sandbox">
+    * As you are running this workshop in a sandbox, **this configuration has already been done automatically**, but you should still follow the instructions in this task to **review and understand** what was done.
+    </if>
 
     * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
@@ -184,6 +201,12 @@ This lab assumes you have:
       ````
 
   3. Add an ingress rule opening TCP port 6200 to FAN events
+
+    * It is necessary to **open TCP port 6200** in the VCN to allow **Fast Application Notification Events** to flow from the cluster database to the client application. We can do this by adding a **Network Security Group Rule** to the database NSG.
+
+    <if type="sandbox">
+    * As you are running this workshop in a sandbox, **this configuration has already been done automatically**, but you should still follow the instructions in this task to **review and understand** what was done.
+    </if>
 
     * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
 
