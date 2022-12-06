@@ -129,7 +129,7 @@ This lab assumes you have:
 
   1. Refresh demo schema
 
-    We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a third tab on your terminal window.
+    We will start by refreshing the demo schema. Interrupt the demo if it is still running (CTRL-C) and run **ddl_setup.sh** again from a third tab on your terminal window.
 
     ![Show script ddl_setup.sh](./images/task3/ddl-setup-script.png " ")
 

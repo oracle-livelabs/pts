@@ -185,7 +185,9 @@ This lab assumes you have:
 
   3. Add an ingress rule opening TCP port 6200 to FAN events
 
-    * Retrieve the Network Security Group **NSG-DEMORAC** of the database as in Task1 and **Edit** it
+    * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
+
+    * Retrieve the Network Security Group **NSG-DEMORAC** of the database under **Resources** and select it.
 
     * Click **Add Rules**
 
@@ -241,14 +243,18 @@ This lab assumes you have:
 
     * Find out the database unique name from the details page of the database **CONT** in DBCS **dbrac**
 
-        Replace **cont_prim** by this value in the following commands.
+        Make a note of your Database Unique Name. In should be in the form ***CONT_uvwxyz***.
 
         ![Find database unique name](./images/task3/find-database-unique-name.png " ")
 
-        > **Note:** In the following commands, you need to replace the database name **cont_prim** by its real value.
+        In the following commands, you will need to replace the template database name **cont_prim** by the real value of this database unique name.
+
+        > **Note:** In most cases one can choose the database unique name when provisioning a database system. However, in our workshop, the value had to be automatically generated and needs to be retrieved.
 
 
     * Create the service **demosrv**:
+
+        Cut and paste the following command in an editor and replace **cont_prim** by the real value of your database unique name before executing the command!
 
         ````
         user@cloudshell:~ $ <copy>srvctl add service -db cont_prim -service demosrv -preferred CONT1,CONT2 -pdb PDB1 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>

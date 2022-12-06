@@ -112,7 +112,7 @@ This lab assumes you have:
         user@cloudshell:~ $ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT1</copy>
         ````
 
-        The drain_timeout parameter of the service defines the tipme given to in-progtess trabsactions tpo complete.
+        The **drain_timeout** parameter of the service defines the time given to in-progress transactions to complete.
 
         ````
         user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
