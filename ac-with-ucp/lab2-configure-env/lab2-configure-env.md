@@ -157,7 +157,7 @@ This lab assumes you have:
     * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
       ````
-      user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
+      user@cloudshell:~ $ <copy>ssh -i [private-key-file] opc@[node 1 public IP]</copy>
 
       (...)
       Are you sure you want to continue connecting (yes/no)? yes
@@ -251,7 +251,7 @@ This lab assumes you have:
     * Using Cloud Shell, connect to the first node of the RAC cluster
 
         ````
-        user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
+        user@cloudshell:~ $ <copy>ssh -i [private-key-file] opc@[node 1 public IP]</copy>
         ````
 
     * Switch to user **oracle**
@@ -459,7 +459,7 @@ This lab assumes you have:
 
   3. Run **ddl_setup.sh** to create the demo schema
 
-    > **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
+    > **Note**: Ignore the error on DROP commands if you are running the script for the first time.
 
     This script essentially connects to the RAC database and creates a user CONTI in PDB1.
 
