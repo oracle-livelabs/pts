@@ -50,7 +50,7 @@ This lab assumes you have:
     * It is necessary to **open TCP port 1521** in the VCN to allow the demo application to connect to the database. We can do this by configuring a **Network Security Group Rule** and adding the NSG to the database.
 
     <if type="sandbox">
-    * *As you are running this workshop in a sandbox, this configuration has already been done automatically, but you should still follow the instructions in this task to review and understand what was done.*
+    * *As you are running this workshop in a sandbox environment, the configuration of the Virtual Cloud Network, Network Security Group, and the association between the NSG and the database have been completed automatically. For a better understanding of what was done, follow the instructions in this task without actually creating these components. Changing them will result in errors throughout the workshop.*
     </if>
 
     * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
@@ -205,7 +205,7 @@ This lab assumes you have:
     * It is necessary to **open TCP port 6200** in the VCN to allow **Fast Application Notification Events** to flow from the cluster database to the client application. We can do this by adding a **Network Security Group Rule** to the database NSG.
 
     <if type="sandbox">
-    * *As you are running this workshop in a sandbox, this configuration has already been done automatically, but you should still follow the instructions in this task to review and understand what was done.*
+    * *As you are running this workshop in a sandbox, this network configuration has already been done automatically, but you should still follow the instructions in this step to review and understand what was done without actually creating the rule to open port 6200.*
     </if>
 
     * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
