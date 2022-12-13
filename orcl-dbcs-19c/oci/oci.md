@@ -17,7 +17,7 @@ Estimated Lab Time: 60 minutes
     - Region
     - User name
     - Initial password
-    - Compartment 
+    - Compartment
 
 2. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
 
@@ -56,7 +56,7 @@ Estimated Lab Time: 60 minutes
     - Host Domain Name: pub.llXXXXXvcn.oraclevcn.com
     - Database Unique Name: WSDB_xxxxxx
     - Node Public IP Address: XX.XX.XX.XX
-    - Node Private IP Address: 10.0.0.XX 
+    - Node Private IP Address: 10.0.0.XX
 
 3. Verify SSH connection from a Linux client. Change the permissions on the private key file you saved from DB System. Change `ssh-key-XXXX-XX-XX` with the private key file you saved on your computer. (Linux only)
 
@@ -78,19 +78,19 @@ Estimated Lab Time: 60 minutes
 
 6. Connect to DB Node Public IP Address port 22. (Windows only)
 
-    ![](./images/putty1.png "")
+    ![Putty session](./images/putty-session.png "")
 
 7. Use the `.ppk` private key you converted with PuttyGen. (Windows only)
 
-    ![](./images/putty2.png "")
+    ![Putty auth](./images/putty-auth.png "")
 
 8. Create a SSH tunnel from Source port 5500 to Destination localhost:5500. Click **Add**. (Windows only)
 
-    ![](./images/putty4.png "")
+    ![Putty tunnels](./images/putty-tunnels.png "")
 
 9. Go back to Session, give it a name, and save it. When asked if you trust this host, click **Yes**. (Windows only)
 
-    ![](./images/putty3.png "")
+    ![Putty security alert](./images/putty-security-alert.png "")
 
 
 ## Task 3: Verify DB connection using SQL*Plus.
@@ -174,4 +174,3 @@ Estimated Lab Time: 60 minutes
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-
