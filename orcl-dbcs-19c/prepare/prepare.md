@@ -1,4 +1,4 @@
-# Application Data Management and Administration
+# Application data management and administration
 
 ## Introduction
 
@@ -12,9 +12,9 @@ The sample database schemas provide a common platform for examples in each relea
 
 This lab explains how to connect to an active DB system with SSH, enable EM Express, create a new PDB in the existing CDB, and install HR sample schema.
 
-Estimated Lab Time: 45 minutes
+Estimated Time: 45 minutes
 
-## Task 1: Enterprise Manager Express 
+## Task 1: Enterprise Manager Express
 
     >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
 
@@ -328,10 +328,11 @@ Estimated Lab Time: 45 minutes
     </copy>
     ````
 
+    You may now **proceed to the next lab**.
+
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-

@@ -1,8 +1,10 @@
-# Oracle Database Cloud Service Workshop
+# Oracle Database Cloud Service features
 
 ### Workshop Overview
 
-This Getting Started guide will get you ready for the Oracle Database Cloud Service labs.  You will be required to download several software tools to access the Oracle Database Cloud Service.  This workshop and the labs that follow support either Windows clients or Linux clients.
+This Getting Started guide will get you ready for the Oracle Database Cloud Service labs.  It is recommended to download several software tools to access the Oracle Database Cloud Service, like Puttygen and Putty, however this is not mandatory.  This workshop and the labs that follow support either Windows clients or Linux clients.
+
+Estimated Time: 10 minutes
 
 ### Workshop Requirements
 
@@ -100,10 +102,11 @@ This Getting Started guide will get you ready for the Oracle Database Cloud Serv
 
     Now you are ready to upload the public key to the Oracle Database Cloud Server when creating the instance.
 
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.

@@ -1,4 +1,4 @@
-# Oracle Cloud Infrastructure (OCI)
+# Oracle Cloud Infrastructure (OCI) resources
 
 ## Introduction
 
@@ -6,7 +6,7 @@ This is the first of several labs that are part of the Oracle Public Cloud Datab
 
 This lab will walk you through creating a new Database Cloud Service instance. You will also connect into a Database image using the SSH private key and familiarize yourself with the image layout.
 
-Estimated Lab Time: 60 minutes
+Estimated Time: 60 minutes
 
 ## Task 1: Provision Database Service
 
@@ -167,10 +167,11 @@ Estimated Lab Time: 60 minutes
     </copy>
     ````
 
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.

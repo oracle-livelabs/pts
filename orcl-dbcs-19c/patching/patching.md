@@ -1,4 +1,4 @@
-# Database Cloud Service Patches and Updates
+# Oracle Database Cloud Service patches and updates
 
 ## Introduction
 
@@ -8,13 +8,13 @@ You can view all patches that have been applied, and if required, re-apply a pat
 
 Database Cloud Service specific patches for DB systems and database homes can be applied. Only the latest patch is available for DB systems while database homes supports both latest and older patches. You can find the list of currently available DB system and database home patches in the [Oracle Cloud Infrastructure technical documentation](https://docs.cloud.oracle.com/en-us/iaas/Content/Database/Tasks/patchingDB.htm).
 
-Estimated Lab Time: 15 minutes
+Estimated Time: 15 minutes
 
 ## Task 1: Check Available Updates
 
 1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 
-2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page. 
+2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page.
 
     - Database Version: 19.7.0.0.0
 
@@ -77,10 +77,11 @@ Estimated Lab Time: 15 minutes
     | Jul 2020 19c Database patch    | Applied    | Apply    |
     | Jul 2020 19c Database patch   | Precheck Passed    | Precheck    |
 
+    You may now **proceed to the next lab**.
+
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-

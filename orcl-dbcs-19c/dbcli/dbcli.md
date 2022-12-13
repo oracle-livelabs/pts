@@ -4,7 +4,7 @@
 
 The database CLI (dbcli) is a command line interface available on bare metal and virtual machine DB systems. After you connect to the DB system, you can use the database CLI to perform tasks such as creating Oracle database homes and databases.
 
-Estimated Lab Time: 45 minutes
+Estimated Time: 45 minutes
 
 ### Operational Notes
 
@@ -29,7 +29,7 @@ where:
 
 ## Task 1: DBCLI Update Command
 
-Occasionally, new commands are added to the database CLI and other commands are updated to support new features. You can use the **cliadm update-dbcli** command to update the database CLI with the latest new and updated commands. 
+Occasionally, new commands are added to the database CLI and other commands are updated to support new features. You can use the **cliadm update-dbcli** command to update the database CLI with the latest new and updated commands.
 
 1. Connect to the Database node using SSH (Use Putty on Windows).
 
@@ -55,7 +55,7 @@ Occasionally, new commands are added to the database CLI and other commands are 
     </copy>
 
     DbSystem Information                                            
-    ---------------------------------------------------------------- 
+    ----------------------------------------------------------------
                          ID: 04697842-f4e0-4b5b-84a5-515e135ba7a7
                    Platform: Vmdb
             Data Disk Count: 0
@@ -63,18 +63,18 @@ Occasionally, new commands are added to the database CLI and other commands are 
                     Created: July 27, 2020 9:29:06 AM UTC
 
     System Information                                                
-    ---------------------------------------------------------------- 
-                       Name: 
+    ----------------------------------------------------------------
+                       Name:
                 Domain Name: sub07141037280.rehevcn.oraclevcn.com
                   Time Zone: UTC
-                 DB Edition: 
-                DNS Servers: 
-                NTP Servers: 169.254.169.254 
+                 DB Edition:
+                DNS Servers:
+                NTP Servers: 169.254.169.254
 
     Disk Group Information
-    ---------------------------------------------------------------- 
+    ----------------------------------------------------------------
     DG Name                   Redundancy                Percentage  
-    ------------------------- ------------------------- ------------ 
+    ------------------------- ------------------------- ------------
 
 
     DcsCli Details                                                  
@@ -179,7 +179,7 @@ With dbcli you can retrieve all the information about a database installation on
 
     Component                                Installed Version    Available Version   
     ---------------------------------------- -------------------- --------------------
-    DB                                        19.7.0.0.0            19.8.0.0 
+    DB                                        19.7.0.0.0            19.8.0.0
     ````
 
 2. Use the list database homes command to display a list of Oracle Home directories installed on this DB System.
@@ -238,7 +238,7 @@ With dbcli you can retrieve all the information about a database installation on
     </copy>
 
     Backup Config details                                             
-    ---------------------------------------------------------------- 
+    ----------------------------------------------------------------
                          ID: e9c1158e-55d9-43b1-afce-8fdc81f5720e
                        Name: bEgRSXwq9R3Bd9iEk1pz_BC
           CrosscheckEnabled: true
@@ -248,8 +248,8 @@ With dbcli you can retrieve all the information about a database installation on
               ObjectStoreId: c31983b7-82a3-4e43-b887-71567d0365a5
                 CreatedTime: July 27, 2020 9:49:23 AM UTC
                 UpdatedTime: July 27, 2020 4:10:24 PM UTC
-           LocationAffinity: 
-                RecoveryTag: 
+           LocationAffinity:
+                RecoveryTag:
     ````
 
 ## Task 3: Control Database Running Status
@@ -377,8 +377,8 @@ With dbcli command you can manage pluggable databases on the container database 
     dbcli describe-pdb -i 512eb207-b4ff-4145-83e6-0212e08d8f3e -n PDB011
     </copy>
 
-    ID                                       PDB Name             CDB Name             Open Mode            Restricted Mode      Database Instance Name 
-    ---------------------------------------- -------------------- -------------------- -------------------- -------------------- -------------------- 
+    ID                                       PDB Name             CDB Name             Open Mode            Restricted Mode      Database Instance Name
+    ---------------------------------------- -------------------- -------------------- -------------------- -------------------- --------------------
     52fa1489-2a1c-47d4-9124-9a2f40fc7ce0     PDB011               WSDB               READ WRITE           NO                   WSDB              
     ````
 
@@ -389,8 +389,8 @@ With dbcli command you can manage pluggable databases on the container database 
     dbcli create-pdb -i 512eb207-b4ff-4145-83e6-0212e08d8f3e -n pdb013 -p -tp
     </copy>
 
-    Admin password of the PDB to be created: 
-    TDE Wallet Password of the CDB: 
+    Admin password of the PDB to be created:
+    TDE Wallet Password of the CDB:
 
     Job details                                                      
     ----------------------------------------------------------------
@@ -674,7 +674,7 @@ You can apply patches and updates with dbcli command. Our primary database shoul
     DbHome Patching                                                          August 1, 2020 1:20:37 PM UTC       August 1, 2020 1:20:37 PM UTC       Running
     ````
 
-13. Repeat the previous command to verify the database home update job has finished successfully. Make sure it gets to 100% progress and all tasks have Success status. 
+13. Repeat the previous command to verify the database home update job has finished successfully. Make sure it gets to 100% progress and all tasks have Success status.
 
     ````
     <copy>
@@ -694,7 +694,7 @@ You can apply patches and updates with dbcli command. Our primary database shoul
     ------------------------------------------------------------------------ ----------------------------------- ----------------------------------- ----------
     Pre-Operations for DbHome Patching                                       August 1, 2020 1:20:18 PM UTC       August 1, 2020 1:20:37 PM UTC       Success   
     DbHome Patching                                                          August 1, 2020 1:20:37 PM UTC       August 1, 2020 1:50:09 PM UTC       Success   
-    Post-Operations for DbHome Patching                                      August 1, 2020 1:50:09 PM UTC       August 1, 2020 2:04:21 PM UTC       Success 
+    Post-Operations for DbHome Patching                                      August 1, 2020 1:50:09 PM UTC       August 1, 2020 2:04:21 PM UTC       Success
     ````
 
 14. Use again the list database homes command to display the list of Oracle Home directories, and confirm the current version is updated to 19.8 in this case.
@@ -737,7 +737,6 @@ You can apply patches and updates with dbcli command. Our primary database shoul
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
 See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-
