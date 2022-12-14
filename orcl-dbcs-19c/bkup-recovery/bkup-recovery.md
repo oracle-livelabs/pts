@@ -1,14 +1,25 @@
-# Oracle Database Cloud Service backup & recovery
+# Oracle Base Database Service backup & recovery
 
 ## Introduction
 
-Backing up your database is a key aspect of any Oracle database environment. There are multiple options available for storing and recovering your backups. You can use the backup and restore feature either within the Oracle Cloud Infrastructure Console, CLI or REST APIs, or manually set up and manage backups using dbcli or RMAN. You can read about all the options in the [Oracle Cloud Infrastructure technical documentation](https://docs.us-phoenix-1.oraclecloud.com/Content/Database/Tasks/backingup.htm).
-
->**Note** : Your automatic incremental backups, on-demand full backups and on-premises to cloud backups are stored in Oracle Cloud Infrastructure Object Storage and you will be charged standard object storage cost.
+Backing up your database is a key aspect of any Oracle database environment. There are multiple options available for storing and recovering your backups. You can use the backup and restore feature either within the Oracle Cloud Infrastructure Console, CLI or REST APIs, or manually set up and manage backups using dbcli or RMAN.
 
 When you use the Console, you can create full backups or set up automatic incremental backups with a few clicks. Similarly, you can view your backups and restore your database using the last known good state, a point-in-time, or SCN (System Change Number). You can also create a new database from your backup in an existing or a new DB system.
 
 Estimated Time: 30 minutes
+
+### Objectives
+
+In this lab you will:
+* Create a full database backup
+* Restore your Base Database Service from a backup
+* Use automatic backups and clone from backup features
+* Verify and then terminate your database clone created from backup to release resources
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
 
 ## Task 1: Create a Full Database Backup
 
@@ -232,4 +243,8 @@ Estimated Time: 30 minutes
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

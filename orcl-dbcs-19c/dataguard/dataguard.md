@@ -4,17 +4,25 @@
 
 In this lab you will learn how to use the cloud console to manage Oracle Data Guard associations in your DB System. An Oracle Data Guard implementation requires two DB systems, one containing the primary database and one containing the standby database. When you enable Oracle Data Guard for a virtual machine DB system database, a new DB system with the standby database is created and associated with the primary database.
 
->**Note** : An Oracle Data Guard configuration on the Oracle Cloud Infrastructure is limited to one standby database for each primary database.
-
-Basic requirements:
-
-- Both DB systems must be in the same compartment.
-- The DB systems must be the same shape type.
-- The database versions and editions must be identical.
-- Oracle Data Guard does not support Oracle Database Standard Edition.
-- Active Data Guard requires Enterprise Edition - Extreme Performance.
-
 Estimated Time: 45 minutes
+
+### Objectives
+
+In this lab you will:
+* Deploy a Data Guard standby database for disaster recovery
+* Test DR strategy by performing a switchover operation
+* Enable Fast-Start Failover
+* Change Data Guard protection mode configuration
+* Pause and resume redo apply on standby
+* Test Fast-Start Failover with Maximum Availability configuration
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service Enterprise Edition - Extreme Performance
+* Both DB Systems must be in the same compartment.
+* The DB Systems must be the same shape type.
+* The database versions and editions must be identical.
 
 ## Task 1: Enable Data Guard
 
@@ -594,4 +602,8 @@ Maximum Availability mode provides the highest level of data protection that is 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

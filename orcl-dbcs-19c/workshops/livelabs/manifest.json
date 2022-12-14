@@ -1,9 +1,9 @@
 {
-    "workshoptitle": "Oracle Database Cloud Service features",
+    "workshoptitle": "Oracle Base Database Service features",
     "tutorials": [
         {
             "title": "Introduction",
-            "description": "Introduction to Oracle Database Cloud Service (DBCS).",
+            "description": "Introduction to Oracle Base Database Service.",
             "filename": "./../../introduction/introduction.md"
         },
         {
@@ -23,7 +23,7 @@
         },
         {
             "title": "Lab 4: Backup and recovery",
-            "description": "Database Cloud Service backup and recovery.",
+            "description": "Oracle Base Database backup and recovery.",
             "filename": "./../../bkup-recovery/bkup-recovery.md"
         },
         {
@@ -33,7 +33,7 @@
         },
         {
             "title": "Lab 6: Patching",
-            "description": "Oracle Database Cloud Service patching.",
+            "description": "Oracle Base Database Service patching.",
             "filename": "./../../patching/patching.md"
         },
         {

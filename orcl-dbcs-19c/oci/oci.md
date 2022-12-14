@@ -2,13 +2,27 @@
 
 ## Introduction
 
-This is the first of several labs that are part of the Oracle Public Cloud Database Cloud Service workshop. These labs will give you a basic understanding of the Oracle Database Cloud Service and many of the capabilities around administration and database development.
-
-This lab will walk you through creating a new Database Cloud Service instance. You will also connect into a Database image using the SSH private key and familiarize yourself with the image layout.
+These labs will give you a basic understanding of the Oracle Base Database Service and many of the capabilities around administration and database development. This lab will walk you through creating a new Oracle Base Database Service instance. You will also connect into a Database image using the SSH private key and familiarize yourself with the image layout.
 
 Estimated Time: 60 minutes
 
-## Task 1: Provision Database Service
+### Objectives
+
+In this lab you will:
+* Provision a Database System
+* Connect to DB System Node via SSH
+* Verify database connection using SQL*Plus
+
+### Prerequisites
+
+This lab assumes you have:
+* Access to Oracle Cloud Infrastructure
+    * Provided by the instructor for instructor-led workshops
+* Access to a laptop or a desktop with
+    * Microsoft Remote Desktop software
+    * Putty or OpenSSH, PuttyGen, and web browser
+
+## Task 1: Provision Database System
 
 1. Use Copy Password to copy the initial password in your clipboard, and click on Launch Console. Use the same initial password when asked to reset the password, so you don't have to remember it. You are in the Oracle cloud console using the Workshop Details received.
 
@@ -174,4 +188,8 @@ Estimated Time: 60 minutes
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
