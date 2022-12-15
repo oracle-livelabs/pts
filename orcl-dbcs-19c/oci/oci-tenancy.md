@@ -51,6 +51,12 @@ This lab assumes you have:
     - Destination Port Range: 1521
     - Description: Database connection
 
+8. Click **Add Ingress Rules**. (Optional. SSH tunnel can be used for EM Express connection)
+
+        - CIDR Block: 0.0.0.0/0
+        - Destination Port Range: 5500
+        - Description: EM Express
+
 8. Click **Save Changes**.
 
 
@@ -78,7 +84,7 @@ This lab assumes you have:
     - Database name: **WSDB**
     - Database version: 19c (default)
     - PDB name: **PDB011**
-    - Password: **DatabaseCloud#22_**
+    - Password: Use a strong password and write it down in your notes.
     - Select workload type: Transaction Processing (default)
     - Configure database backups: **Enable automatic backups**
 

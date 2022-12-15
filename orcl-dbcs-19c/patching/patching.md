@@ -84,10 +84,10 @@ This lab assumes you have:
 
 7. At the bottom of this page, click **Update History**. Review the list of patches applied to this Database Service instance.
 
-    | Description  | State  | Operation Type  |
+    | Description | State | Operation Type |
     |:----------|:----------|:----------|
-    | Jul 2020 19c Database patch    | Applied    | Apply    |
-    | Jul 2020 19c Database patch   | Precheck Passed    | Precheck    |
+    | Jul 2020 19c Database patch | Applied | Apply |
+    | Jul 2020 19c Database patch | Precheck Passed | Precheck |
 
     You may now **proceed to the next lab**.
 

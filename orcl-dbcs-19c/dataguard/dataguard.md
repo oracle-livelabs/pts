@@ -43,7 +43,7 @@ This lab assumes you have:
     - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
     - Hostname prefix: db-hoststb
     - Protection mode: Maximum Performance
-    - Password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
 
 6. Click **Enable Data Guard**.
 
@@ -94,7 +94,7 @@ This lab assumes you have:
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````
@@ -258,7 +258,7 @@ This lab assumes you have:
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
-3. Click **Data Guard Associations** in the lower left menu. Observe Peer DB System and it's details like Peer Role, Shape, Availability Domain. Click right menu **⋮** > **Switchover**. Enter the database admin password: DatabaseCloud#22_.
+3. Click **Data Guard Associations** in the lower left menu. Observe Peer DB System and it's details like Peer Role, Shape, Availability Domain. Click right menu **⋮** > **Switchover**. Enter the database admin password: Use the strong password written down in your notes.
 
 4. Status will change to Updating... Click **Work Requests** in the lower left menu, and the Operation name link. Here you can see Log Messages, Error Messages, Associated Resources.
 
@@ -278,7 +278,7 @@ This lab assumes you have:
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````
@@ -553,7 +553,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
-3. Click **Data Guard Associations** in the lower left menu. Click **⋮** > **Switchover**. Enter the database admin password: DatabaseCloud#22_. Wait for the status to become Available.
+3. Click **Data Guard Associations** in the lower left menu. Click **⋮** > **Switchover**. Enter the database admin password: Use the strong password written down in your notes. Wait for the status to become Available.
 
 4. Launch DGMGRL.
 
@@ -569,7 +569,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````

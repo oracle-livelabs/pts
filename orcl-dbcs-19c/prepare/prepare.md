@@ -57,7 +57,7 @@ This lab assumes you have:
 5. Use the following credentials:
 
     - Username: system
-    - Password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
     - Container Name: CDB$ROOT for the Container Database, or PDB011 for the Pluggable Database. Try both.
 
 6. Explore Enterprise Manager Express console, and see what this tool has to offer.
@@ -87,8 +87,8 @@ This lab assumes you have:
 
     - Enter PDB Name: PDB012
     - Unlock my PDB Admin account
-    - PDB Admin password: DatabaseCloud#22_
-    - TDE wallet password of database: DatabaseCloud#22_
+    - PDB Admin password: Use the strong password written down in your notes.
+    - TDE wallet password of database: Use the strong password written down in your notes.
 
 5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click Pluggable Databases in the left menu at the bottom o the page. PDB012 is Available.
 

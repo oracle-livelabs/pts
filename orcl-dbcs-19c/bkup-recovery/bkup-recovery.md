@@ -135,8 +135,8 @@ This lab assumes you have:
     - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
     - Hostname prefix: db-clone
     - Database name: WSDBB
-    - Password: DatabaseCloud#22_
-    - Enter the source database's TDE wallet or RMAN password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
+    - Enter the source database's TDE wallet or RMAN password: Use the strong password written down in your notes.
 
 5. Click **Create Database**. Status is Provisioning...
 

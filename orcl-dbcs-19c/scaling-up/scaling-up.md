@@ -194,7 +194,7 @@ This lab assumes you have:
     - Name: WS-Secret
     - Description: Database Management Password
     - Encryption Key: WS-Key
-    - Secret Contents: DatabaseCloud#22_
+    - Secret Contents: Use the strong password written down in your notes.
 
 7. When Secret is Active (refresh page), click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 

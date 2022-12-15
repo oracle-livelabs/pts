@@ -55,7 +55,7 @@ This lab assumes you have:
     - Database name: **WSDB**
     - Database version: 19c (default)
     - PDB name: **PDB011**
-    - Password: **DatabaseCloud#22_**
+    - Password: Use a strong password and write it down in your notes.
     - Select workload type: Transaction Processing (default)
     - Configure database backups: **Enable automatic backups**
 
