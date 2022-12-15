@@ -104,7 +104,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    conn sys/DatabaseCloud#22_@db-host:1521/pdb012.<Host Domain Name> as sysdba
+    conn sys/<Strong Password>@db-host:1521/pdb012.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -231,7 +231,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -239,7 +239,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    @db-sample-schemas-19c/human_resources/hr_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/human_resources/hr_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 
@@ -298,7 +298,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -306,7 +306,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    @db-sample-schemas-19c/sales_history/sh_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/sales_history/sh_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 

@@ -28,7 +28,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -54,7 +54,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -170,7 +170,7 @@ This lab assumes you have:
     GRANT ALTER SYSTEM TO dbsnmp;
     GRANT ADVISOR TO dbsnmp;
     GRANT EXECUTE ON DBMS_WORKLOAD_REPOSITORY TO dbsnmp;
-    alter user dbsnmp identified by "DatabaseCloud#22_" account unlock;
+    alter user dbsnmp identified by "<Strong Password>" account unlock;
     exit
     </copy>
     ````

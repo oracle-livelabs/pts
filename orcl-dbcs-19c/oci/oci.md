@@ -121,7 +121,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@<Database Unique Name> as sysdba
+    sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
     ````
 
@@ -145,7 +145,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.<Host Domain Name> as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -153,7 +153,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
     ````
 
