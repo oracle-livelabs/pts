@@ -9,7 +9,7 @@
         {
             "title": "Lab 1: OCI resources",
             "description": "Oracle Cloud Infrastructure (OCI) resources.",
-            "filename": "./../../oci/oci.md"
+            "filename": "./../../oci/oci-tenancy.md"
         },
         {
             "title": "Lab 2: Application data",

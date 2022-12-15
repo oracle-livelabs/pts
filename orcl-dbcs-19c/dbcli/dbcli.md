@@ -6,26 +6,20 @@ The database CLI (dbcli) is a command line interface available on bare metal and
 
 Estimated Time: 45 minutes
 
-### Operational Notes
+### Objectives
 
-- The database CLI commands must be run as the root user.
-- **dbcli** is in the /opt/oracle/dcs/bin/ directory.
-- This directory is included in the path for the root user's environment.
-- Oracle Database maintains logs of the **dbcli** command output in the dcscli.log and dcs-agent.log files in the /opt/oracle/dcs/log/ directory.
-- The database CLI commands and most parameters are case sensitive and should be typed as shown. A few parameters are not case sensitive, as indicated in the parameter descriptions, and can be typed in uppercase or lowercase.
+In this lab you will:
+* Get the latest new and updated DBCLI commands
+* Retrieve your Base Database Service installation information
+* Control your Base Database Service running status
+* Manage pluggable databases
+* Apply patches from command line
 
-### Syntax
+### Prerequisites
 
-The database CLI commands use the following syntax:
-
-````
-dbcli command [parameters]
-````
-
-where:
-
-- **command** is a verb-object combination such as create-database.
-- **parameters** include additional options for the command. Most parameter names are preceded with two dashes, for example, --help. Abbreviated parameter names are preceded with one dash, for example, -h.
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
+* The database CLI commands must be run as the root user
 
 ## Task 1: DBCLI Update Command
 
@@ -382,7 +376,7 @@ With dbcli command you can manage pluggable databases on the container database 
     52fa1489-2a1c-47d4-9124-9a2f40fc7ce0     PDB011               WSDB               READ WRITE           NO                   WSDB              
     ````
 
-3. Create a new pluggable database, name it **pdb013**. Provide a password for the Admin user, and the password of the Transparent Data Encryption Wallet when asked. Use **DatabaseCloud#22_** for both passwords. A new job is generated.
+3. Create a new pluggable database, name it **pdb013**. Provide a password for the Admin user, and the password of the Transparent Data Encryption Wallet when asked. Use the strong password written down in your notes for both passwords. A new job is generated.
 
     ````
     <copy>
@@ -739,4 +733,8 @@ You can apply patches and updates with dbcli command. Our primary database shoul
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

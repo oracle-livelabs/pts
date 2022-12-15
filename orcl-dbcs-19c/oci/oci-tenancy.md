@@ -9,6 +9,7 @@ Estimated Time: 60 minutes
 ### Objectives
 
 In this lab you will:
+* Create a Virtual Cloud Network
 * Provision a Database System
 * Connect to DB System Node via SSH
 * Verify database connection using SQL*Plus
@@ -22,18 +23,46 @@ This lab assumes you have:
     * Microsoft Remote Desktop software
     * Putty or OpenSSH, PuttyGen, and web browser
 
-## Task 1: Provision Database System
+## Task 1: Create a Virtual Cloud Network
 
-1. Use Copy Password to copy the initial password in your clipboard, and click on Launch Console. Use the same initial password when asked to reset the password, so you don't have to remember it. You are in the Oracle cloud console using the Workshop Details received.
+1. Access Oracle cloud console via URL: [https://cloud.oracle.com/](https://cloud.oracle.com/)
 
-    - Login URL 	
-    - Tenancy name
-    - Region
-    - User name
-    - Initial password
-    - Compartment
+    - Cloud Account Name: oci-tenant
 
-2. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+2. Click **Next**, and provide your credentials.
+
+    - User Name: oci-username
+    - Password: oci-password
+
+3. Click **Sign In**.
+
+4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+
+5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+
+    - VCN Name: LL[Your Initials]-VCN (e.g. LLVLT-VCN)
+    - Compartment: [Your Compartment]
+
+6. Click **Next** and **Create**.
+
+7. When complete, create a Security Rule. Click **Public Subnet LLXXXXX-SUBNET-PUBLIC**. Click **Default Security List for LLXXXXX-VCN**. Click **Add Ingress Rules**.
+
+    - CIDR Block: 10.0.0.0/24
+    - Destination Port Range: 1521
+    - Description: Database connection
+
+8. Click **Add Ingress Rules**. (Optional. SSH tunnel can be used for EM Express connection)
+
+        - CIDR Block: 0.0.0.0/0
+        - Destination Port Range: 5500
+        - Description: EM Express
+
+8. Click **Save Changes**.
+
+
+## Task 2: Provision Database System
+
+1. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
 
     - Select your compartment (default)
     - Name your DB system: **WS-DB**
@@ -44,13 +73,13 @@ This lab assumes you have:
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key)
     - Choose a license type: Bring Your Own License (BYOL)
 
-3. Specify the network information.
+2. Specify the network information.
 
     - Virtual cloud network: LLXXXXX-VCN
     - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
     - Hostname prefix: **db-host**
 
-4. Click Next.
+3. Click Next.
 
     - Database name: **WSDB**
     - Database version: 19c (default)
@@ -59,10 +88,10 @@ This lab assumes you have:
     - Select workload type: Transaction Processing (default)
     - Configure database backups: **Enable automatic backups**
 
-5. Click **Create DB System**.
+4. Click **Create DB System**.
 
 
-## Task 2: DB Node SSH Connection
+## Task 3: DB Node SSH Connection
 
 1. Wait for DB System to finish provisioning, and have status Available (refresh page).
 
@@ -107,7 +136,7 @@ This lab assumes you have:
     ![Putty security alert](./images/putty-security-alert.png "")
 
 
-## Task 3: Verify DB connection using SQL*Plus.
+## Task 4: Verify DB connection using SQL*Plus.
 
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 

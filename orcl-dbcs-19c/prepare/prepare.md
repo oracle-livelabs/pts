@@ -2,21 +2,29 @@
 
 ## Introduction
 
-Secure Shell (SSH) is a cryptographic network protocol for operating network services securely over the Internet. This access requires the full path to the file that contains the private key associated with the public key used when the DB system was launched.
-
 Oracle Enterprise Manager Database Express, also referred to as EM Express, is a web-based tool for managing Oracle Database 19c. Built inside the database server, it offers support for basic administrative tasks.
 
-The multitenant architecture enables an Oracle database to function as a multitenant container database (CDB). A CDB includes zero, one, or many customer-created pluggable databases (PDBs). A PDB is a portable collection of schemas, schema objects, and nonschema objects.
+Oracle Database sample schemas are based on a fictitious sample company that sells goods through various channels. The company operates worldwide to fill orders for products. It has several divisions, each of which is represented by a sample database schema. Schema Human Resources (HR) represents Division Human Resources and tracks information about the company employees and facilities. Schema Sales History (SH) represents Division Sales and tracks business statistics to facilitate business decisions.
 
-The sample database schemas provide a common platform for examples in each release of the Oracle Database. The sample schemas are a set of interlinked database schemas. The Oracle Database sample schemas are based on a fictitious sample company that sells goods through various channels. The company operates worldwide to fill orders for products. It has several divisions, each of which is represented by a sample database schema. Schema Human Resources (HR) represents Division Human Resources and tracks information about the company employees and facilities. Schema Sales History (SH) represents Division Sales and tracks business statistics to facilitate business decisions.
-
-This lab explains how to connect to an active DB system with SSH, enable EM Express, create a new PDB in the existing CDB, and install HR sample schema.
+This lab explains how to
 
 Estimated Time: 45 minutes
 
+### Objectives
+
+In this lab you will:
+* Enable Enterprise Manager Express web management tool
+* Create a new Pluggable Database in the existing Root Container
+* Install Oracle Database sample schemas
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
+
 ## Task 1: Enterprise Manager Express
 
-    >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
+>**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
 
 1. Connect to the database instance specified by environment variables.
 
@@ -49,7 +57,7 @@ Estimated Time: 45 minutes
 5. Use the following credentials:
 
     - Username: system
-    - Password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
     - Container Name: CDB$ROOT for the Container Database, or PDB011 for the Pluggable Database. Try both.
 
 6. Explore Enterprise Manager Express console, and see what this tool has to offer.
@@ -79,8 +87,8 @@ Estimated Time: 45 minutes
 
     - Enter PDB Name: PDB012
     - Unlock my PDB Admin account
-    - PDB Admin password: DatabaseCloud#22_
-    - TDE wallet password of database: DatabaseCloud#22_
+    - PDB Admin password: Use the strong password written down in your notes.
+    - TDE wallet password of database: Use the strong password written down in your notes.
 
 5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click Pluggable Databases in the left menu at the bottom o the page. PDB012 is Available.
 
@@ -335,4 +343,8 @@ Estimated Time: 45 minutes
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

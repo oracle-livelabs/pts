@@ -1,32 +1,34 @@
-# Oracle Database Cloud Service features
+# Oracle Base Database Service features
 
-### Workshop Overview
+## Introduction
 
-This Getting Started guide will get you ready for the Oracle Database Cloud Service labs.  It is recommended to download several software tools to access the Oracle Database Cloud Service, like Puttygen and Putty, however this is not mandatory.  This workshop and the labs that follow support either Windows clients or Linux clients.
+Oracle Cloud Infrastructure offers single-node DB systems on either bare metal or virtual machines, and 2-node RAC DB systems on virtual machines.
 
-Estimated Time: 10 minutes
+Estimated Time: 4 hours 30 minutes
 
-### Workshop Requirements
+### Objectives
 
+In this workshop you will:
+* Provision Oracle Cloud Infrastructure (OCI) resources
+* Perform application data management and administration
+* Manage performance, scalability and elasticity
+* Use Oracle Base Database Service backup & recovery
+* Deploy Data Guard physical standby database
+* Apply Oracle Base Database Service patches and updates
+* Learn Oracle Database Command Line Interface (DBCLI)
+
+### Prerequisites
+
+This workshop assumes you have:
 * Access to Oracle Cloud Infrastructure
     * Provided by the instructor for instructor-led workshops
 * Access to a laptop or a desktop with
     * Microsoft Remote Desktop software
     * Putty or OpenSSH, PuttyGen, and web browser
 
-
-### Agenda
-
-- **Lab 1 : Oracle Cloud Infrastructure (OCI)**
-- **Lab 2 : Application Data Management and Administration**
-- **Lab 3 : Performance, Scalability and Elasticity**
-- **Lab 4 : Database Cloud Service Backup and Recovery**
-- **Lab 5 : Data Guard Physical Standby Database**
-- **Lab 6 : Database Cloud Service Patching**
-- **Lab 7 : Oracle Database Command Line Interface (DBCLI)**
-
-
 ## Task 1: Generate SSH Keys (optional)
+
+1. This task will get you ready for the Oracle Base Database Service labs.  It is recommended to download several software tools to access the Oracle Base Database Service, like Puttygen and Putty, however this is not mandatory.  This workshop and the labs that follow support either Windows clients or Linux clients.
 
 1. Keys are part of the key pairs used to securely connect to the Oracle Database Cloud.  By default Oracle Cloud uses the secure key infrastructure for connectivity from a client.
     - id_rsa – private key on Linux client
@@ -109,4 +111,8 @@ Estimated Time: 10 minutes
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
+
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
