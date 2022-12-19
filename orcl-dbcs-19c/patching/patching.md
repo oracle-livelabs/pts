@@ -1,20 +1,32 @@
-# Database Cloud Service Patches and Updates
+# Oracle Base Database Service patches and updates
 
 ## Introduction
 
-The Database Cloud Service patching feature simplifies the steps required to patch your DB systems and databases. You can use the Oracle Cloud Infrastructure console and APIs to view applicable patches for your DB system or database home and submit a patching request. The Database Cloud Service will then run the end-to-end patching steps for you while displaying the status.
+The Oracle Base Database Service patching feature simplifies the steps required to patch your DB systems and databases. You can use the Oracle Cloud Infrastructure console and APIs to view applicable patches for your DB system or database home and submit a patching request. The Oracle Base Database Service will then run the end-to-end patching steps for you while displaying the status.
 
-You can view all patches that have been applied, and if required, re-apply a patch. In addition, you can use Oracle Identity and Access Management (IAM) controls to manage access to patching features.
+You can view all patches that have been applied, and if required, re-apply a patch.
 
-Database Cloud Service specific patches for DB systems and database homes can be applied. Only the latest patch is available for DB systems while database homes supports both latest and older patches. You can find the list of currently available DB system and database home patches in the [Oracle Cloud Infrastructure technical documentation](https://docs.cloud.oracle.com/en-us/iaas/Content/Database/Tasks/patchingDB.htm).
+Oracle Base Database Service specific patches for DB systems and database homes can be applied. Only the latest patch is available for DB systems while database homes supports both latest and older patches. You can find the list of currently available DB system and database home patches in the [Oracle Cloud Infrastructure technical documentation](https://docs.cloud.oracle.com/en-us/iaas/Content/Database/Tasks/patchingDB.htm).
 
-Estimated Lab Time: 15 minutes
+Estimated Time: 15 minutes
+
+### Objectives
+
+In this lab you will:
+* Check available software updates
+* Run a Pre-Check task to verify update compatibility
+* Execute the Apply Patch procedure on your DB System
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
 
 ## Task 1: Check Available Updates
 
 1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 
-2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page. 
+2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page.
 
     - Database Version: 19.7.0.0.0
 
@@ -72,15 +84,20 @@ Estimated Lab Time: 15 minutes
 
 7. At the bottom of this page, click **Update History**. Review the list of patches applied to this Database Service instance.
 
-    | Description  | State  | Operation Type  |
+    | Description | State | Operation Type |
     |:----------|:----------|:----------|
-    | Jul 2020 19c Database patch    | Applied    | Apply    |
-    | Jul 2020 19c Database patch   | Precheck Passed    | Precheck    |
+    | Jul 2020 19c Database patch | Applied | Apply |
+    | Jul 2020 19c Database patch | Precheck Passed | Precheck |
+
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
 
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

@@ -1,15 +1,26 @@
-# Performance, Scalability and Elasticity
+# Performance, scalability and elasticity
 
 ## Introduction
 
-Oracle Database technology used for the Database Cloud Service is the standard for scalability, robustness and enterprise strength. Virtual Machine VM.Standard2 Shapes provide a virtual machine DB system database provisioned on X7 machines, with six VM options available, having 1 to 24 CPU cores and 15 GB to 320 GB memory. You can scale up or down the number of OCPUs on the instance by changing the shape the DB System is running on.
+Oracle Database technology used for the Oracle Base Database Service is the standard for scalability, robustness and enterprise strength. Virtual Machine VM.Standard2 Shapes provide a virtual machine DB system database provisioned on X7 machines, with six VM options available, having 1 to 24 CPU cores and 15 GB to 320 GB memory. You can scale up or down the number of OCPUs on the instance by changing the shape the DB System is running on.
 
-Oracle Database on virtual machines uses remote block storage, and enables scaling storage from 256 GB to 40 TB, with no downtime when scaling up storage. You specify a storage size when you launch the DB system, and you can scale up the storage as needed at any time. You can easily scale up storage for a DB system by using the console, REST APIs, CLI and SDKs. 
+Oracle Database on virtual machines uses remote block storage, and enables scaling storage from 256 GB to 40 TB, with no downtime when scaling up storage. You specify a storage size when you launch the DB system, and you can scale up the storage as needed at any time. You can easily scale up storage for a DB system by using the console, REST APIs, CLI and SDKs.
 
 >**Note** : The total storage attached to an instance will be a sum of available storage, reco storage, and software size. Available storage is selected by the customer, reco storage is automatically calculated based on available storage, and software size is a fixed size Oracle database cost.
 
-Estimated Lab Time: 25 minutes
+Estimated Time: 25 minutes
 
+### Objectives
+
+In this lab you will:
+* Change Database System Node shape for more CPU resources
+* Scale-up storage volumes for more space
+* Enable Database Management Services
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
 
 ## Task 1: Change Shape for More CPUs
 
@@ -183,7 +194,7 @@ Estimated Lab Time: 25 minutes
     - Name: WS-Secret
     - Description: Database Management Password
     - Encryption Key: WS-Key
-    - Secret Contents: DatabaseCloud#22_
+    - Secret Contents: Use the strong password written down in your notes.
 
 7. When Secret is Active (refresh page), click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 
@@ -197,11 +208,15 @@ Estimated Lab Time: 25 minutes
 
 11. Database Status will change to Updating. Wait for Status to become Available (refresh page). Click Metrics on the left side menu. Now you can see all performance metrics, because Database Management status is Full.
 
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
 
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

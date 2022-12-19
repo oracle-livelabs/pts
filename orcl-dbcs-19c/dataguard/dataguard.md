@@ -1,24 +1,32 @@
-# Data Guard Physical Standby Database
+# Data Guard physical standby database
 
 ## Introduction
 
 In this lab you will learn how to use the cloud console to manage Oracle Data Guard associations in your DB System. An Oracle Data Guard implementation requires two DB systems, one containing the primary database and one containing the standby database. When you enable Oracle Data Guard for a virtual machine DB system database, a new DB system with the standby database is created and associated with the primary database.
 
->**Note** : An Oracle Data Guard configuration on the Oracle Cloud Infrastructure is limited to one standby database for each primary database.
+Estimated Time: 45 minutes
 
-Basic requirements:
+### Objectives
 
-- Both DB systems must be in the same compartment.
-- The DB systems must be the same shape type.
-- The database versions and editions must be identical. 
-- Oracle Data Guard does not support Oracle Database Standard Edition. 
-- Active Data Guard requires Enterprise Edition - Extreme Performance.
+In this lab you will:
+* Deploy a Data Guard standby database for disaster recovery
+* Test DR strategy by performing a switchover operation
+* Enable Fast-Start Failover
+* Change Data Guard protection mode configuration
+* Pause and resume redo apply on standby
+* Test Fast-Start Failover with Maximum Availability configuration
 
-Estimated Lab Time: 45 minutes
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service Enterprise Edition - Extreme Performance
+* Both DB Systems must be in the same compartment.
+* The DB Systems must be the same shape type.
+* The database versions and editions must be identical.
 
 ## Task 1: Enable Data Guard
 
-1. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System. 
+1. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 
 2. Add to your notes the Availability Domain you see on the DB System Information page (e.g. IWcS:EU-FRANKFURT-1-AD-1).
 
@@ -35,7 +43,7 @@ Estimated Lab Time: 45 minutes
     - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
     - Hostname prefix: db-hoststb
     - Protection mode: Maximum Performance
-    - Password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
 
 6. Click **Enable Data Guard**.
 
@@ -86,7 +94,7 @@ Estimated Lab Time: 45 minutes
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````
@@ -107,7 +115,7 @@ Estimated Lab Time: 45 minutes
       Protection Mode: MaxPerformance
       Members:
       WSDB_fra3hb - Primary database
-        WSDB_fra2qq - Physical standby database 
+        WSDB_fra2qq - Physical standby database
 
     Fast-Start Failover:  Disabled
 
@@ -203,7 +211,7 @@ Estimated Lab Time: 45 minutes
     SUCCESS
     ````
 
-9. The SHOW FAST_START FAILOVER command displays all fast-start failover related information. 
+9. The SHOW FAST_START FAILOVER command displays all fast-start failover related information.
 
     ````
     <copy>
@@ -246,11 +254,11 @@ Estimated Lab Time: 45 minutes
 
 ## Task 3: Perform Switchover Operation
 
-1. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System. 
+1. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
-3. Click **Data Guard Associations** in the lower left menu. Observe Peer DB System and it's details like Peer Role, Shape, Availability Domain. Click right menu **⋮** > **Switchover**. Enter the database admin password: DatabaseCloud#22_.
+3. Click **Data Guard Associations** in the lower left menu. Observe Peer DB System and it's details like Peer Role, Shape, Availability Domain. Click right menu **⋮** > **Switchover**. Enter the database admin password: Use the strong password written down in your notes.
 
 4. Status will change to Updating... Click **Work Requests** in the lower left menu, and the Operation name link. Here you can see Log Messages, Error Messages, Associated Resources.
 
@@ -270,7 +278,7 @@ Estimated Lab Time: 45 minutes
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````
@@ -287,7 +295,7 @@ Estimated Lab Time: 45 minutes
       Protection Mode: MaxPerformance
       Members:
       WSDB_fra2qq - Primary database
-        WSDB_fra3hb - Physical standby database 
+        WSDB_fra3hb - Physical standby database
 
     Fast-Start Failover:  Disabled
 
@@ -328,7 +336,7 @@ Fast-start failover allows the broker to automatically fail over to a previously
 
 2. Because our Protection Mode is MaxPerformance and LogXptMode database property is ASYNC, Fast-Start Failover is Enabled in Potential Data Loss Mode.
 
-    >**Note** : Enabling fast-start failover in a configuration operating in maximum performance mode provides better overall performance on the primary database because redo data is sent asynchronously to the target standby database. Note that this does not guarantee no data will be lost. 
+    >**Note** : Enabling fast-start failover in a configuration operating in maximum performance mode provides better overall performance on the primary database because redo data is sent asynchronously to the target standby database. Note that this does not guarantee no data will be lost.
 
     ````
     <copy>
@@ -362,7 +370,7 @@ Fast-start failover allows the broker to automatically fail over to a previously
         (none)
     ````
 
-3. By default, the fast-start failover target for the Primary database is the Physical standby database. 
+3. By default, the fast-start failover target for the Primary database is the Physical standby database.
 
     ````
     <copy>
@@ -384,7 +392,7 @@ Fast-start failover allows the broker to automatically fail over to a previously
 
 Oracle Data Guard provides three protection modes: maximum availability, maximum performance, and maximum protection.
 
-Maximum Performance mode provides the highest level of data protection that is possible without affecting the performance of a primary database. This is accomplished by allowing transactions to commit as soon as all redo data generated by those transactions has been written to the online log. Redo data is also written to one or more standby databases, but this is done asynchronously with respect to transaction commitment, so primary database performance is unaffected by the time required to transmit redo data and receive acknowledgment from a standby database. 
+Maximum Performance mode provides the highest level of data protection that is possible without affecting the performance of a primary database. This is accomplished by allowing transactions to commit as soon as all redo data generated by those transactions has been written to the online log. Redo data is also written to one or more standby databases, but this is done asynchronously with respect to transaction commitment, so primary database performance is unaffected by the time required to transmit redo data and receive acknowledgment from a standby database.
 
 Maximum Availability mode provides the highest level of data protection that is possible without compromising the availability of a primary database. Under normal operations, transactions do not commit until all redo data needed to recover those transactions has been written to the online redo log AND based on user configuration, one of the following is true:
 - redo has been received at the standby, I/O to the standby redo log has been initiated, and acknowledgement sent back to primary;
@@ -440,7 +448,7 @@ Maximum Availability mode provides the highest level of data protection that is 
       WSDB_fra2qq - Primary database
         Warning: ORA-16629: database reports a different protection level from the protection mode
 
-        WSDB_fra3hb - Physical standby database 
+        WSDB_fra3hb - Physical standby database
 
     Fast-Start Failover:  Disabled
 
@@ -460,7 +468,7 @@ Maximum Availability mode provides the highest level of data protection that is 
       Protection Mode: MaxAvailability
       Members:
       WSDB_fra2qq - Primary database
-        WSDB_fra3hb - Physical standby database 
+        WSDB_fra3hb - Physical standby database
 
     Fast-Start Failover:  Disabled
 
@@ -539,13 +547,13 @@ Maximum Availability mode provides the highest level of data protection that is 
     </copy>
     ````
 
-## Task 7: Test Fast-Start Failover with Maximum Availability 
+## Task 7: Test Fast-Start Failover with Maximum Availability
 
 1. On Oracle cloud console, click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DBStb** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
-3. Click **Data Guard Associations** in the lower left menu. Click **⋮** > **Switchover**. Enter the database admin password: DatabaseCloud#22_. Wait for the status to become Available.
+3. Click **Data Guard Associations** in the lower left menu. Click **⋮** > **Switchover**. Enter the database admin password: Use the strong password written down in your notes. Wait for the status to become Available.
 
 4. Launch DGMGRL.
 
@@ -561,7 +569,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     <copy>
     CONNECT sysdg;
     </copy>
-    Password: DatabaseCloud#22_
+    Password: Use the strong password written down in your notes.
     Connected to "WSDB_fra2qq"
     Connected as SYSDBA.
     ````
@@ -575,7 +583,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     Enabled in Zero Data Loss Mode.
     ````
 
-7. Type **exit** command tree times followed by Enter to close all sessions (DGMGRL, oracle user, and SSH). 
+7. Type **exit** command tree times followed by Enter to close all sessions (DGMGRL, oracle user, and SSH).
 
     ````
     <copy>
@@ -587,10 +595,15 @@ Maximum Availability mode provides the highest level of data protection that is 
     exit
     ````
 
+    You may now **proceed to the next lab**.
+
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
 
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
+## Need help?
 
+Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
+
+If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
