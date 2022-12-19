@@ -24,7 +24,7 @@ This lab assumes you have:
 
 ## Task 1: Check Available Updates
 
-1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page.
 

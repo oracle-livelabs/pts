@@ -26,7 +26,7 @@ This lab assumes you have:
 
 ## Task 1: Enable Data Guard
 
-1. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Add to your notes the Availability Domain you see on the DB System Information page (e.g. IWcS:EU-FRANKFURT-1-AD-1).
 
@@ -47,7 +47,7 @@ This lab assumes you have:
 
 6. Click **Enable Data Guard**.
 
-7. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
+7. Click ≡, then **Oracle Base Database** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
 
 8. If you want to see more details, click **Work Requests** in the lower left menu. Check Operation Create Data Guard having status In Progress... Wait until your Standby DB System is Available. On **WS-DBStb** DB System details page, click **Nodes** in the lower left menu, and and copy Public IP Address and Private IP Address in your notes.
 
@@ -254,7 +254,7 @@ This lab assumes you have:
 
 ## Task 3: Perform Switchover Operation
 
-1. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+1. Click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
@@ -549,7 +549,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 ## Task 7: Test Fast-Start Failover with Maximum Availability
 
-1. On Oracle cloud console, click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DBStb** DB System.
+1. On Oracle cloud console, click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DBStb** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 

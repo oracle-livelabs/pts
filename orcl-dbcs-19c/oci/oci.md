@@ -33,7 +33,7 @@ This lab assumes you have:
     - Initial password
     - Compartment
 
-2. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+2. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default)
     - Name your DB system: **WS-DB**

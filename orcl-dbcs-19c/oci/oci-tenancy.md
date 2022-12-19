@@ -62,7 +62,7 @@ This lab assumes you have:
 
 ## Task 2: Provision Database System
 
-1. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default)
     - Name your DB system: **WS-DB**

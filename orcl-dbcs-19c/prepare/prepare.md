@@ -81,7 +81,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 4. Click the database name link **WSDB** in the bottom table called Databases. Click Pluggable Databases in the left menu at the bottom o the page. Click Create Pluggable Database.
 

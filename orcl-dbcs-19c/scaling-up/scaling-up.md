@@ -44,7 +44,7 @@ This lab assumes you have:
     cpu_count   integer   2
     ````
 
-3. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
+3. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
 4. On DB System Details page, click **Change Shape** button. Select VM.Standard2.2 shape. Click **Change Shape** to confirm.
 
@@ -196,7 +196,7 @@ This lab assumes you have:
     - Encryption Key: WS-Key
     - Secret Contents: Use the strong password written down in your notes.
 
-7. When Secret is Active (refresh page), click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+7. When Secret is Active (refresh page), click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 8. Click the database name link **WSDB** in the bottom table called Databases.
 
