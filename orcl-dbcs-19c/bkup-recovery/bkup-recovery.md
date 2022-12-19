@@ -53,7 +53,7 @@ This lab assumes you have:
     </copy>
     ````
 
-4. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+4. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 5. Click the database name link **WSDB** in the bottom table called Databases.
 
@@ -226,7 +226,7 @@ This lab assumes you have:
 
 ## Task 7: Terminate New Database Service to Release Resources
 
-1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Databases. Click **WS-DBb** DB System.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
 
 2. Click **More Actions** > **Terminate**.
 

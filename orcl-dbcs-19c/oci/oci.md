@@ -33,7 +33,7 @@ This lab assumes you have:
     - Initial password
     - Compartment
 
-2. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+2. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default)
     - Name your DB system: **WS-DB**
@@ -121,7 +121,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@<Database Unique Name> as sysdba
+    sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
     ````
 
@@ -145,7 +145,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.<Host Domain Name> as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -153,7 +153,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
     ````
 

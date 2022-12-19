@@ -53,16 +53,16 @@ This lab assumes you have:
 
 8. Click **Add Ingress Rules**. (Optional. SSH tunnel can be used for EM Express connection)
 
-        - CIDR Block: 0.0.0.0/0
-        - Destination Port Range: 5500
-        - Description: EM Express
+    - CIDR Block: 0.0.0.0/0
+    - Destination Port Range: 5500
+    - Description: EM Express
 
 8. Click **Save Changes**.
 
 
 ## Task 2: Provision Database System
 
-1. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default)
     - Name your DB system: **WS-DB**
@@ -150,7 +150,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@<Database Unique Name> as sysdba
+    sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
     ````
 
@@ -174,7 +174,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.<Host Domain Name> as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -182,7 +182,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
     ````
 

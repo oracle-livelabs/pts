@@ -81,7 +81,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 4. Click the database name link **WSDB** in the bottom table called Databases. Click Pluggable Databases in the left menu at the bottom o the page. Click Create Pluggable Database.
 
@@ -104,7 +104,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    conn sys/DatabaseCloud#22_@db-host:1521/pdb012.<Host Domain Name> as sysdba
+    conn sys/<Strong Password>@db-host:1521/pdb012.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -231,7 +231,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -239,7 +239,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    @db-sample-schemas-19c/human_resources/hr_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/human_resources/hr_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 
@@ -298,7 +298,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -306,7 +306,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    @db-sample-schemas-19c/sales_history/sh_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/sales_history/sh_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 
