@@ -6,6 +6,10 @@ Backing up your database is a key aspect of any Oracle database environment. The
 
 When you use the Console, you can create full backups or set up automatic incremental backups with a few clicks. Similarly, you can view your backups and restore your database using the last known good state, a point-in-time, or SCN (System Change Number). You can also create a new database from your backup in an existing or a new DB system.
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Configure Automatic Backups] (youtube:A258cuNZHfw)
+
 Estimated Time: 30 minutes
 
 ### Objectives
@@ -64,6 +68,10 @@ This lab assumes you have:
 8. At this point you can see the Manual-Backup on Backups table is now Active.
 
 ## Task 2: Restore Database Service from Backup
+
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Restore a BaseDB Database from a Backup] (youtube:deQJ5N9k6eI)
 
 1. Write down the Started and Ended times for backup called **Automatic Backup** in the bottom table called Backups - e.g. Started: 09:38:13 UTC, Ended: 09:56:36 UTC.
 

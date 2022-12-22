@@ -25,6 +25,10 @@ This lab assumes you have:
 
 ## Task 1: Create a Virtual Cloud Network
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[How to Create VCN] (youtube:dqikNCqjsmk)
+
 1. Access Oracle cloud console via URL: [https://cloud.oracle.com/](https://cloud.oracle.com/)
 
     - Cloud Account Name: oci-tenant
@@ -62,16 +66,20 @@ This lab assumes you have:
 
 ## Task 2: Provision Database System
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Create Flex VM DB System] (youtube:_GwZYPRwLV8)
+
 1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
-    - Select your compartment (default)
-    - Name your DB system: **WS-DB**
-    - Select a shape type: Virtual Machine (default)
-    - Select a shape: **VM.Standard2.1**
-    - Oracle Database software edition: **Enterprise Edition Extreme Performance**
-    - Choose Storage Management Software: **Logical Volume Manager**
-    - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key)
-    - Choose a license type: Bring Your Own License (BYOL)
+    - Select your compartment (default).
+    - Name your DB system: **WS-DB**.
+    - Select a shape type: Virtual Machine (default).
+    - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
+    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
+    - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
+    - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
+    - Choose a license type: Bring Your Own License (BYOL).
 
 2. Specify the network information.
 
@@ -82,11 +90,11 @@ This lab assumes you have:
 3. Click Next.
 
     - Database name: **WSDB**
-    - Database version: 19c (default)
-    - PDB name: **PDB011**
+    - Database version: 19c (default).
+    - PDB name: **PDB011**.
     - Password: Use a strong password and write it down in your notes.
-    - Select workload type: Transaction Processing (default)
-    - Configure database backups: **Enable automatic backups**
+    - Select workload type: Transaction Processing (default).
+    - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
 4. Click **Create DB System**.
 

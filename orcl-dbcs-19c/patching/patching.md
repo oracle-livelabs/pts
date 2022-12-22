@@ -24,6 +24,10 @@ This lab assumes you have:
 
 ## Task 1: Check Available Updates
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Update a VM DB System Demo] (youtube:rKKnu153kww)
+
 1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page.
