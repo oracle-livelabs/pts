@@ -26,6 +26,10 @@ This lab assumes you have:
 
 ## Task 1: Enable Data Guard
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Enable Data Guard for a VM DB System] (youtube:8zyIMjJoRF8)
+
 1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Add to your notes the Availability Domain you see on the DB System Information page (e.g. IWcS:EU-FRANKFURT-1-AD-1).

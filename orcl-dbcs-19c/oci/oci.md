@@ -24,6 +24,10 @@ This lab assumes you have:
 
 ## Task 1: Provision Database System
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Create Flex VM DB System] (youtube:_GwZYPRwLV8)
+
 1. Use Copy Password to copy the initial password in your clipboard, and click on Launch Console. Use the same initial password when asked to reset the password, so you don't have to remember it. You are in the Oracle cloud console using the Workshop Details received.
 
     - Login URL 	

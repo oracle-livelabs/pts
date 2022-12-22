@@ -24,6 +24,10 @@ This lab assumes you have:
 
 ## Task 1: Change Shape for More CPUs
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Change the Shape of a VM DB System] (youtube:CkQu4UOYico)
+
 1. Connect to your PDB012 pluggable database as SYSDBA using SQL*Plus.
 
     ````
@@ -87,6 +91,10 @@ This lab assumes you have:
     ````
 
 ## Task 2: Scale Up Storage Volumes
+
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Scale the Storage for VM DB System] (youtube:gPIPym5pt9M)
 
 1. On DB System Information page review the allocated storage resources:
 

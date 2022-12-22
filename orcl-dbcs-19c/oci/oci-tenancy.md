@@ -25,6 +25,10 @@ This lab assumes you have:
 
 ## Task 1: Create a Virtual Cloud Network
 
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[How to Create VCN] (youtube:dqikNCqjsmk)
+
 1. Access Oracle cloud console via URL: [https://cloud.oracle.com/](https://cloud.oracle.com/)
 
     - Cloud Account Name: oci-tenant
@@ -61,6 +65,10 @@ This lab assumes you have:
 
 
 ## Task 2: Provision Database System
+
+Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+
+[Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
 1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
