@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Oracle Database technology used for the Oracle Base Database Service is the standard for scalability, robustness and enterprise strength. Virtual Machine VM.Standard2 Shapes provide a virtual machine DB system database provisioned on X7 machines, with six VM options available, having 1 to 24 CPU cores and 15 GB to 320 GB memory. You can scale up or down the number of OCPUs on the instance by changing the shape the DB System is running on.
+Oracle Database technology used for the Oracle Base Database Service is the standard for scalability, robustness and enterprise strength. Virtual Machines with AMD Standard E4 Flex shape allow you to provision any number of OCPUs, up to a maximum of 64 OCPUs (128 vCPUs) and 1 TB of memory with a single Base Database Service. OCI Block Volume storage with higher performance provides the best throughput for workloads that have high IO requirements.
 
-Oracle Database on virtual machines uses remote block storage, and enables scaling storage from 256 GB to 40 TB, with no downtime when scaling up storage. You specify a storage size when you launch the DB system, and you can scale up the storage as needed at any time. You can easily scale up storage for a DB system by using the console, REST APIs, CLI and SDKs.
+You can easily scale up and down resources for a DB system by using the console, REST APIs, CLI and SDKs.
 
 >**Note** : The total storage attached to an instance will be a sum of available storage, reco storage, and software size. Available storage is selected by the customer, reco storage is automatically calculated based on available storage, and software size is a fixed size Oracle database cost.
 
@@ -22,7 +22,7 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned Oracle Base Database Service
 
-## Task 1: Change Shape for More CPUs
+## Task 1: Change shape for More CPUs
 
 Please take a moment to watch the video below, and then afterwards, follow the steps shown.
 
@@ -50,9 +50,9 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 3. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
-4. On DB System Details page, click **Change Shape** button. Select VM.Standard2.2 shape. Click **Change Shape** to confirm.
+4. On DB System Details page, click **Change shape** button. Select **Shape series: AMD**, VM.Standard.E4.Flex shape with **Number of OCPUs per node: 2**. Click **Change shape** to confirm.
 
-5. Read the warning: *Changing shapes stops a running DB System and restarts it on the selected shape. Are you sure you want to change the shape from VM.Standard2.1 to VM.Standard2.2?* Click again **Change Shape** to confirm.
+5. Under Confirm shape change, click again **Change shape** to confirm.
 
 6. DB System Status will change to Updating... Wait for Status to become Available (refresh page). Re-connect to your DB Node via SSH, and DB System database as SYSDBA using SQL*Plus.
 
