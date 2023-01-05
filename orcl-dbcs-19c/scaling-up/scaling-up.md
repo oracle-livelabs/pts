@@ -74,15 +74,7 @@ Please take a moment to watch the video below, and then afterwards, follow the s
     cpu_count   integer   4
     ````
 
-8. After restarting the DB System on a new shape, your pluggable database is in mounted state. Open pluggable database PDB012.
-
-    ````
-    <copy>
-    alter pluggable database PDB012 open;
-    </copy>
-    ````
-
-9. Type **exit** command to close SQL*Plus.
+8. Type **exit** command to close SQL*Plus.
 
     ````
     <copy>

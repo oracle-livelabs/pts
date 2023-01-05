@@ -564,11 +564,11 @@ You can apply patches and updates with dbcli command. Our primary database shoul
     >
     >Pre-update check.
     >````
-    >dbcli update-server -c os -p
+    dbcli update-server -c os -p
     >````
     >OS update.
     >````
-    >dbcli update-server -c os
+    dbcli update-server -c os
     >````
     >Reboot DB System Node.
 

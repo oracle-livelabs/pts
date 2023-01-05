@@ -34,64 +34,45 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
     - Database Version: 19.7.0.0.0
 
-3. At the bottom of this page, click on **Updates**.
+3. Click on **View** link next to Database Version value.
 
-4. Verify if there are available updates in the table.
+4. Make sure DB System and Database are selected on the left menu under Scope. Verify if there are available updates in the DB System and Database tables.
 
-    | Patch Description | State | Version  |
-    |:----------|:----------|:----------|
-    | Jul 2020 19c Database patch    | Available    | 19.8.0.0.200714    |
+    DB System: WS-DB
+    | Update description | Type | State | Component | Version | Last successful precheck | Release date |
+    |:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+    |Oct 2022 19c Db System patch | Patch | Available | GI patch | 19.17.0.0.0 | Wed, Nov 2, 2022, 10:45:22 UTC | Fri, Oct 21, 2022, 17:09:27 UTC |
+Jul 2022 19c Db System patch	Patch
+Available	GI patch	19.16.0.0.0	Mon, Oct 31, 2022, 08:51:46 UTC	Tue, Jul 19, 2022, 01:00:00 UTC
 
-## Task 2: Pre-Check Update Compatibility
+    Database: WSDB
+    | Patch description | Type | State | Version | Release date |
+    |:----------|:----------|:----------|:----------|:----------|
+    | Oct 2022 19c Database patch | Patch | Available | 19.17.0.0.0 | Fri, Oct 21, 2022, 17:11:06 UTC |
+    | Jul 2022 19c Database patch | Patch | Available | 19.16.0.0.0 | Tue, Jul 19, 2022, 01:00:00 UTC |
 
-1. At the end of the update row, click ⋮ > **Precheck**. Click **Run Precheck** in the Confirm dialog. Patch state is now Checking.
+## Task 2: Precheck and apply DB System update
 
-2. Click on **Work Requests**. View the last one in the table:
+1. At the end of the DB System update row, click ⋮ > **Run precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
 
-    - Operation: Patch DB Home
-    - Status: In Progress...
-    - % Complete: 15%
+2. Click on **Update History** on the left menu. View the first row in the Database System table, with Checking State. Wait until it finishes with State Precheck Passed.
 
-3. Click on **Patch DB Home** link. Review the Workrequest Information page. Under Resources, click on the links to view more information about this execution:
+3. Click on **Updates** on the left menu. Click on ⋮ > **Apply**. Click **Apply patch** in the confirm dialog. Patch state is now Applying.
 
-    - Log Messages (2)
-    - Error Messages (0)
-    - Associated Resources (2)
+4. Click on **Update History** on the left menu. View the first row in the Database System table, with Applying State. Wait until it finishes with State Applied.
 
-4. Wait for the Work Requests to become 100% complete.
 
-5. You can use the breadcrumbs links in the upper section of the page to navigate to superior levels: Overview > Bare Metal, VM and Exadata > DB Systems > DB System Details > Database Home Details > Database Details. Click **Database Details**, wait for Status to become Available.
+## Task 3: Precheck and apply Database update
 
-## Task 3: Apply Patch
+1. Click on **Update History** on the left menu.
 
-1. At the bottom of this page, click again on **Updates**. At the end of the patch row, click ⋮ > **Apply**. Click **OK** in the Confirm dialog. Patch state is now Applying.
+2. At the end of the Database update row, click ⋮ > **Precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
 
-2. Click on **Work Requests**. View the last one in the table:
+3. Click on **Update History** on the left menu. View the first row in the Database table below, with Checking State. Wait until it finishes with State Precheck Passed.
 
-    - Operation: Patch DB Home
-    - Status: In Progress...
-    - % Complete: 15%
+4. Click on **Updates** on the left menu. Click on ⋮ > **Apply**. Click **OK** in the confirm dialog. Patch state is now Applying.
 
-3. Click on **Patch DB Home** link having Status In Progress... Review the Workrequest Information page. Under Resources, click on the links to view more information about this execution:
-
-    - Log Messages (2)
-    - Error Messages (0)
-    - Associated Resources (2)
-
-4. Wait for the Work Requests to become 100% complete.
-
-5. You can use the breadcrumbs links in the upper section of the page to navigate to superior levels: Overview > Bare Metal, VM and Exadata > DB Systems > DB System Details > Database Home Details > Database Details. Click **Database Details**.
-
-6. Review Database Version field on the Database Information Page. Now it should display the new version, after applying the patch.
-
-    - Database Version: 19.8.0.0.0
-
-7. At the bottom of this page, click **Update History**. Review the list of patches applied to this Database Service instance.
-
-    | Description | State | Operation Type |
-    |:----------|:----------|:----------|
-    | Jul 2020 19c Database patch | Applied | Apply |
-    | Jul 2020 19c Database patch | Precheck Passed | Precheck |
+5. Click on **Update History** on the left menu. View the first row in the Database table, with Applying State. Wait until it finishes with State Applied.
 
     You may now **proceed to the next lab**.
 
