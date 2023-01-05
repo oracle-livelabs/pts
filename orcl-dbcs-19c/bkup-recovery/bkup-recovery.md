@@ -77,6 +77,8 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 2. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the next possible value after your Automatic Backup Ended field - e.g. 10:00 UTC. Click **Restore Database** to confirm.
 
+    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder /opt/oracle/dcs/log/db-host/rman/bkup/<Database unique name>/ for more information.
+
 3. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
 4. Connect again to the database instance specified by environment variables.
@@ -134,7 +136,7 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
     - Select **Create a new DB system** radio button
     - Name your DB system: WS-DBb
-    - Change Shape: VM.Standard2.1
+    - Change Shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
     - Oracle Database software edition: Enterprise Edition Extreme Performance
     - Choose Storage Management Software: Logical Volume Manager
     - Upload SSH key files: Browse and select the public key file saved from the first DB System (ssh-key-XXXX-XX-XX.key.pub).

@@ -49,19 +49,19 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 6. Click **Next** and **Create**.
 
-7. When complete, create a Security Rule. Click **Public Subnet LLXXXXX-SUBNET-PUBLIC**. Click **Default Security List for LLXXXXX-VCN**. Click **Add Ingress Rules**.
+7. When complete, create a Security Rule. Click **Public Subnet LLXXXXX-VCN**. Click **Default Security List for LLXXXXX-VCN**. Click **Add Ingress Rules**.
 
-    - CIDR Block: 10.0.0.0/24
+    - CIDR Block: 10.0.0.0/16
     - Destination Port Range: 1521
     - Description: Database connection
 
-8. Click **Add Ingress Rules**. (Optional. SSH tunnel can be used for EM Express connection)
+8. Click **+Another Ingress Rule**. (Optional. SSH tunnel can be used for EM Express connection). Under Ingress Rule 2:
 
     - CIDR Block: 0.0.0.0/0
     - Destination Port Range: 5500
     - Description: EM Express
 
-8. Click **Save Changes**.
+8. Click **Add Ingress Rules**.
 
 
 ## Task 2: Provision Database System

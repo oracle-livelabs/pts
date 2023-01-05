@@ -104,7 +104,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    conn sys/<Strong Password>@db-host:1521/pdb012.<Host Domain Name> as sysdba
+    conn sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
