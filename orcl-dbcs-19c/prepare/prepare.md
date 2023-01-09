@@ -1,4 +1,4 @@
-# Application data management and administration
+# Prepare for application data
 
 ## Introduction
 
@@ -64,6 +64,10 @@ This lab assumes you have:
 
 
 ## Task 2: Create a Pluggable Database
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Create PDB in existing DB System] (youtube:TObFL67hjro)
 
 1. Connect to your DB System database using SQL*Plus, if not connected already.
 

@@ -9,13 +9,13 @@ Estimated Time: 4 hours 30 minutes
 ### Objectives
 
 In this workshop you will:
-* Provision Oracle Cloud Infrastructure (OCI) resources
-* Perform application data management and administration
-* Manage performance, scalability and elasticity
-* Use Oracle Base Database Service backup & recovery
-* Deploy Data Guard physical standby database
-* Apply Oracle Base Database Service patches and updates
-* Learn Oracle Database Command Line Interface (DBCLI)
+* Provision OCI resources
+* Prepare for application data
+* Manage database service
+* Back up and recover your data
+* Deploy disaster recovery
+* Patch and update components
+* Use command line interface
 
 ### Prerequisites
 

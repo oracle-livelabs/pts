@@ -1,4 +1,4 @@
-# Oracle Base Database Service backup & recovery
+# Back up and recover your data
 
 ## Introduction
 
@@ -6,7 +6,7 @@ Backing up your database is a key aspect of any Oracle database environment. The
 
 When you use the Console, you can create full backups or set up automatic incremental backups with a few clicks. Similarly, you can view your backups and restore your database using the last known good state, a point-in-time, or SCN (System Change Number). You can also create a new database from your backup in an existing or a new DB system.
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Configure Automatic Backups] (youtube:A258cuNZHfw)
 
@@ -69,7 +69,7 @@ This lab assumes you have:
 
 ## Task 2: Restore Database Service from Backup
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Restore a BaseDB Database from a Backup] (youtube:deQJ5N9k6eI)
 
