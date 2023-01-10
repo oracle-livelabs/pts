@@ -1,4 +1,4 @@
-# Oracle Cloud Infrastructure (OCI) resources
+# Provision OCI resources
 
 ## Introduction
 
@@ -24,7 +24,7 @@ This lab assumes you have:
 
 ## Task 1: Provision Database System
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
@@ -67,6 +67,10 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 
 ## Task 2: DB Node SSH Connection
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Connect On-Premises SQL Dev Tool] (youtube:3bJ3JlpGlPo)
 
 1. Wait for DB System to finish provisioning, and have status Available (refresh page).
 
@@ -112,6 +116,10 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 
 ## Task 3: Verify DB connection using SQL*Plus.
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Connect On-Premises SQL Dev Tool] (youtube:3bJ3JlpGlPo)
 
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 

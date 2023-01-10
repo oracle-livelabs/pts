@@ -1,4 +1,4 @@
-# Oracle Base Database Service patches and updates
+# Patch and update components
 
 ## Introduction
 
@@ -24,7 +24,7 @@ This lab assumes you have:
 
 ## Task 1: Check Available Updates
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Update a VM DB System Demo] (youtube:rKKnu153kww)
 

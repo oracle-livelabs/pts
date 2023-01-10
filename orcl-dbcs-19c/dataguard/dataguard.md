@@ -1,4 +1,4 @@
-# Data Guard physical standby database
+# Deploy disaster recovery
 
 ## Introduction
 
@@ -26,7 +26,7 @@ This lab assumes you have:
 
 ## Task 1: Enable Data Guard
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Enable Data Guard for a VM DB System] (youtube:8zyIMjJoRF8)
 

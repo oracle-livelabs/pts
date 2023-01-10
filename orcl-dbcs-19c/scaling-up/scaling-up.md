@@ -1,4 +1,4 @@
-# Performance, scalability and elasticity
+# Manage database service
 
 ## Introduction
 
@@ -24,7 +24,7 @@ This lab assumes you have:
 
 ## Task 1: Change shape for More CPUs
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Change the Shape of a VM DB System] (youtube:CkQu4UOYico)
 
@@ -84,7 +84,7 @@ Please take a moment to watch the video below, and then afterwards, follow the s
 
 ## Task 2: Scale Up Storage Volumes
 
-Please take a moment to watch the video below, and then afterwards, follow the steps shown.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Scale the Storage for VM DB System] (youtube:gPIPym5pt9M)
 

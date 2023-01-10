@@ -1,4 +1,4 @@
-# Oracle Database Command Line Interface (DBCLI)
+# Use command line interface
 
 ## Introduction
 
@@ -564,11 +564,15 @@ You can apply patches and updates with dbcli command. Our primary database shoul
     >
     >Pre-update check.
     ````
+    <copy>
     dbcli update-server -c os -p
+    </copy>
     ````
     >OS update.
     ````
+    <copy>
     dbcli update-server -c os
+    </copy>
     ````
     >Reboot DB System Node.
 
