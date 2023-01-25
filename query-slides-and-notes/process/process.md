@@ -18,7 +18,7 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned
 
-## Task 1: create collections and cleanup_pptx procedure
+## Task 1: Create collections and cleanup procedure
 
 1. All JSON files can be imported into Autonomous JSON Database into collections. For this example, you will import only slides and notes content. Write a procedure to create the required collections. This procedure can be used for cleaning up all JSON documents and start importing them again from the beginning. Click **Run Script** button or F5.
 
@@ -61,7 +61,7 @@ This lab assumes you have:
     </copy>
     ````
 
-## Task 2: create process_pptx procedure and run
+## Task 2: Write and run document processing procedure
 
 1. This procedure will import JSON documents into collections. It uses the presentation name as the input parameter. Click **Run Script** button or F5.
 
@@ -150,7 +150,7 @@ This lab assumes you have:
     ````
 
 
-## Task 3: create V_PPJSON, V_SLIDES_TEXT and V_NOTES_TEXT views
+## Task 3: Create presentation structure, slides and notes views
 
 1. Create a view on PPJSON collection used to store the structure of the presentation in JSON format. This view provides a relational representation of the slides and notes in your presentations.
 
@@ -171,7 +171,7 @@ This lab assumes you have:
     </copy>
     ````
 
-1. PowerPoint stores slides content in multiple fields. You can use JSON data guide to identify those fields and retrieve their values in a table. The easiest way to build this table is using a SQL Macros function. Use **Run Script** button or F5 to create this function.
+2. PowerPoint stores slides content in multiple fields. You can use JSON data guide to identify those fields and retrieve their values in a table. The easiest way to build this table is using a SQL Macros function. Use **Run Script** button or F5 to create this function.
 
     ````
     <copy>
@@ -192,7 +192,7 @@ This lab assumes you have:
     </copy>
     ````
 
-2. Query the SQL Macros function like a standard table to retrieve the contents of the slides.
+3. Query the SQL Macros function like a standard table to retrieve the contents of the slides.
 
     ````
     <copy>
@@ -200,7 +200,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Use **Run Script** button or F5 to create the second SQL Macros function that retrieves the content of the notes.
+4. Use **Run Script** button or F5 to create the second SQL Macros function that retrieves the content of the notes.
 
     ````
     <copy>
@@ -221,7 +221,7 @@ This lab assumes you have:
     </copy>
     ````
 
-2. Query the SQL Macros function like a standard table to retrieve the contents of the notes.
+5. Query the SQL Macros function like a standard table to retrieve the contents of the notes.
 
     ````
     <copy>
@@ -229,7 +229,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Create a view that joins the structure of the presentation with the content of the slides. This will be used to organize the slides content by document.
+6. Create a view that joins the structure of the presentation with the content of the slides. This will be used to organize the slides content by document.
 
     ````
     <copy>
@@ -240,7 +240,7 @@ This lab assumes you have:
     </copy>
     ````
 
-4. Retrieve slides content fields organized by slide document and presentation.
+7. Retrieve slides content fields organized by slide document and presentation.
 
     ````
     <copy>
@@ -248,7 +248,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Create a view that joins the structure of the presentation with the content of the notes. This will be used to organize the notes content by document.
+8. Create a view that joins the structure of the presentation with the content of the notes. This will be used to organize the notes content by document.
 
     ````
     <copy>
@@ -259,7 +259,7 @@ This lab assumes you have:
     </copy>
     ````
 
-4. Retrieve notes content fields organized by notes document and presentation.
+9. Retrieve notes content fields organized by notes document and presentation.
 
     ````
     <copy>
@@ -267,7 +267,7 @@ This lab assumes you have:
     </copy>
     ````
 
-5. Slide contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
+10. Slide contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
 
     ````
     <copy>
@@ -283,7 +283,7 @@ This lab assumes you have:
     </copy>
     ````
 
-6. Note contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
+11. Note contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
 
     ````
     <copy>
@@ -300,7 +300,7 @@ This lab assumes you have:
     </copy>
     ````
 
-7. Query the slide number and slide text in your presentation.
+12. Query the slide number and slide text in your presentation.
 
     ````
     <copy>
@@ -308,7 +308,7 @@ This lab assumes you have:
     </copy>
     ````
 
-8. Query the slide number and note text in your presentation.
+13. Query the slide number and note text in your presentation.
 
     ````
     <copy>
@@ -317,7 +317,7 @@ This lab assumes you have:
     ````
 
 
-## Task 4: Conclusions
+## Task 4: Conclusions and workflow summary
 
 >**Note** : After creating all these scripts, procedures and views, you can add more presentations in 6 simple steps.
 
@@ -369,40 +369,46 @@ This lab assumes you have:
 
 1. Use **Run Script** button or F5 to create a procedure that takes a presentation name as input parameter to remove it from the records.
 
-````
-<copy>
-create or replace PROCEDURE PPTXJSON.REMOVE_PPTX (i_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
-  l_id VARCHAR2(255);
-  d_collection SODA_COLLECTION_T;
-  d_document SODA_DOCUMENT_T;
-  d_status NUMBER default 0;
-BEGIN
-  select d.ID into l_id from PPJSON d where d.JSON_DOCUMENT.pptx_name = i_pptx_name;
-  dbms_output.put_line('PPT JSON id ' || l_id);
-  FOR record IN (select PPT_JSON_ID, PPTX_NAME, JSON_ID, COLLECTION from V_PPJSON where PPT_JSON_ID = l_id)
-  LOOP
-    dbms_output.put_line('JSON id ' || record.JSON_ID || ' from collection ' || record.COLLECTION);
-    d_collection := DBMS_SODA.open_collection(record.COLLECTION);
-    d_status := d_collection.find().key(record.JSON_ID).remove;
-  END LOOP;
-  d_collection := DBMS_SODA.open_collection('PPJSON');
-  d_status := d_collection.find().key(l_id).remove;
-  delete from PPTX_DONE where PPTX_NAME = i_pptx_name;
-  commit;
-END remove_pptx;
-/
+    ````
+    <copy>
+    create or replace PROCEDURE PPTXJSON.REMOVE_PPTX (i_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
+      l_id VARCHAR2(255);
+      d_collection SODA_COLLECTION_T;
+      d_document SODA_DOCUMENT_T;
+      d_status NUMBER default 0;
+    BEGIN
+      select d.ID into l_id from PPJSON d where d.JSON_DOCUMENT.pptx_name = i_pptx_name;
+      dbms_output.put_line('PPT JSON id ' || l_id);
+      FOR record IN (select PPT_JSON_ID, PPTX_NAME, JSON_ID, COLLECTION from V_PPJSON where PPT_JSON_ID = l_id)
+      LOOP
+        dbms_output.put_line('JSON id ' || record.JSON_ID || ' from collection ' || record.COLLECTION);
+        d_collection := DBMS_SODA.open_collection(record.COLLECTION);
+        d_status := d_collection.find().key(record.JSON_ID).remove;
+      END LOOP;
+      d_collection := DBMS_SODA.open_collection('PPJSON');
+      d_status := d_collection.find().key(l_id).remove;
+      delete from PPTX_DONE where PPTX_NAME = i_pptx_name;
+      commit;
+    END remove_pptx;
+    /
+    </copy>
+    ````
 
-4. Select processed presentation names from V_PPTX_DONE view.
+2. Select processed presentation names from V_PPTX_DONE view.
 
-````
-<copy>
-select PPTX_NAME from V_PPTX_DONE where PROCESSED is not NULL;
+    ````
+    <copy>
+    select PPTX_NAME from V_PPTX_DONE where PROCESSED is not NULL;
+    </copy>
+    ````
 
-5. Execute the procedure that removes the presentation using the name from previous step as the input parameter.
+3. Execute the procedure that removes the presentation using the name from previous step as the input parameter.
 
-````
-<copy>
-exec remove_pptx('<presentation name>');
+    ````
+    <copy>
+    exec remove_pptx('<presentation name>');
+    </copy>
+    ````
 
 
 ## Acknowledgements

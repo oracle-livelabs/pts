@@ -1,8 +1,8 @@
-# Provision cloud resources
+XXX# Provision cloud resources
 
 ## Introduction
 
-Oracle
+Oracle Cloud Infrastructure (OCI) offers 
 
 This lab explains how to
 
@@ -18,7 +18,7 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned
 
-## Task 1: provision VCN
+## Task 1: Provision Virtual Cloud Network (VCN)
 
 1. Access Oracle cloud console via URL: [https://cloud.oracle.com/](https://cloud.oracle.com/)
 
@@ -35,30 +35,30 @@ This lab assumes you have:
 
 5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
 
-    - VCN Name: LL[Your Initials]-VCN (e.g. LLVLT-VCN)
+    - VCN Name: LL[Your Initials]-VCN (e.g. LLXXX-VCN)
     - Compartment: [Your Compartment]
     - leave other fields with default values
 
 6. Click **Next** and **Create**.
 
-## Task 2: provision object storage buckets
+## Task 2: Provision object storage buckets
 
 1. Click on main menu ≡, then Storage > **Buckets**. Use **Create Bucket** button to create the LLXXX-PPTX bucket for the PPTX presentations.
 
-    - Bucket Name: LL[Your Initials]-PPTX (e.g. LLVLT-PPTX)
+    - Bucket Name: LL[Your Initials]-PPTX (e.g. LLXXX-PPTX)
     - leave other fields with default values
 
 2. Click on main menu ≡, then Storage > **Buckets**. Use **Create Bucket** button to create the LLXXX-JSON bucket for the JSON documents processing.
 
-    - Bucket Name: LL[Your Initials]-JSON (e.g. LLVLT-JSON)
+    - Bucket Name: LL[Your Initials]-JSON (e.g. LLXXX-JSON)
     - leave other fields with default values
 
 
-## Task 3: provision compute
+## Task 3: Provision compute instance
 
 1. Click on main menu ≡, then Compute > **Instances**. Click **Create instance**.
 
-    - Name: LL[Your Initials]-VM (e.g. LLVLT-VM)
+    - Name: LL[Your Initials]-VM (e.g. LLXXX-VM)
     - Primary network: LLXXX-VCN
     - Subnet: Public Subnet-LLXXX-VCN
     - leave other fields with default values
@@ -96,7 +96,7 @@ This lab assumes you have:
     ![Putty security alert](./images/putty-security-alert.png "")
 
 
-## Task 4: install XQ to convert XML to JSON
+## Task 4: Install XQ to convert XML to JSON
 
 1. Use pip3 package manager to install **yq** YAML/XML processor.
 
@@ -122,7 +122,7 @@ This lab assumes you have:
     </copy>
     ````
 
-## Task 5: mount buckets on compute
+## Task 5: Mount object storage buckets on compute
 
 1. Click on user menu 👤 in the upper-right corner, then click your **oci-username** under Profile.
 
@@ -130,7 +130,7 @@ This lab assumes you have:
 
 3. Click **Generate Secret Key**. Specify a name.
 
-    - Name: LL[Your Initials]-KEY (e.g. LLVLT-KEY)
+    - Name: LL[Your Initials]-KEY (e.g. LLXXX-KEY)
 
 4. Copy this password for your records. It will not be shown again. Click **Copy** and paste it in your notes. This is your Secret Key value. Now close the dialog.
 
@@ -152,7 +152,7 @@ This lab assumes you have:
     https://myaccount.compat.objectstorage.eu-frankfurt-1.oraclecloud.com
     ````
 
-7. Save credentials in a file inside your compute node.
+7. Save credentials in a file inside your compute instance.
 
     ````
     <copy>
@@ -185,7 +185,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    s3fs LLXXX-PPTX ${HOME}/LLPPTX-PPTX -o endpoint=eu-frankfurt-1 -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
+    s3fs LLXXX-PPTX ${HOME}/LLPPTX-PPTX -o endpoint=<region> -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
     </copy>
     ````
 
@@ -193,11 +193,11 @@ This lab assumes you have:
 
     ````
     <copy>
-    s3fs LLXXX-JSON ${HOME}/LLPPTX-JSON -o endpoint=eu-frankfurt-1 -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
+    s3fs LLXXX-JSON ${HOME}/LLPPTX-JSON -o endpoint=<region> -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
     </copy>
     ````
 
-## Task 6: upload PPTX file in LLXXX-PPTX bucket
+## Task 6: Upload PPTX file to LLXXX-PPTX bucket
 
 1. Click on main menu ≡, then Storage > **Buckets**. Click **LLXXX-PPTX**.
 
@@ -207,7 +207,7 @@ This lab assumes you have:
 
 4. Select a PPTX file from your laptop and click **Upload**.
 
-5. On the compute node, list files in LLPPTX-PPTX folder.
+5. On the compute instance, list files in LLPPTX-PPTX folder.
 
     ````
     <copy>
@@ -216,12 +216,12 @@ This lab assumes you have:
     ````
 
 
-## Task 7: provision AJD
+## Task 7: Provision Autonomous JSON Database (AJD)
 
 1. Click on main menu ≡, then Oracle Database > **Autonomous JSON Database**. Click **Create Autonomous JSON Database**.
 
-    - Display name: LL[Your Initials]-AJD (e.g. LLVLT-AJD)
-    - Database name: LL[Your Initials]AJD (e.g. LLVLTAJD)
+    - Display name: LL[Your Initials]-AJD (e.g. LLXXX-AJD)
+    - Database name: LL[Your Initials]AJD (e.g. LLXXXAJD)
     - Password: use a strong password and write it down in your notes
     - leave other fields with default values
 

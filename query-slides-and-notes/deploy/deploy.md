@@ -18,7 +18,7 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned
 
-## Task 1: create credentials and list files in bucket
+## Task 1: Create OCI credentials to access files in bucket
 
 1. On the previous tab where ADMIN user is connected to Database Actions, click main menu ≡ or Database Actions in the lower-left corner, and **SQL**.
 
@@ -70,7 +70,7 @@ This lab assumes you have:
     ````
 
 
-## Task 2: create PPTX_DONE table and V_PPTX_DONE view
+## Task 2: Create processing status table and view
 
 1. Create a new table to store processed presentations.
 
@@ -113,7 +113,7 @@ This lab assumes you have:
     ````
 
 
-## Task 3: create to_process_csv procedure and run it
+## Task 3: Create unprocessed presentations procedure
 
 1. Create a procedure to list unprocessed presentations from LLXXX-PPTX bucket and write them in a flat file into LLXXX-JSON bucket, where they will be processed. Use **Run Script** button or F5 to run this code.
 
@@ -142,7 +142,7 @@ This lab assumes you have:
     ````
 
 
-## Task 4: run convert2json.sh
+## Task 4: Write and execute PPTX to JSON conversion script
 
 1. Connect to the LLXXX-VM compute instance using SSH.
 
@@ -245,7 +245,7 @@ This lab assumes you have:
     ````
 
 
-## Task 5: create the external table for JSON files
+## Task 5: Create the external table for JSON files
 
 1. Switch to the browser tab where PPTXJSON user is connected to Database Actions. It should be on the SQL Worksheet.
 
