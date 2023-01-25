@@ -1,0 +1,26 @@
+{
+    "workshoptitle": "Run queries on PowerPoint slides and notes",
+    "tutorials": [
+        {
+            "title": "Lab 1: Provision cloud resources",
+            "description": "Oracle Cloud Infrastructure (OCI) resources.",
+            "filename": "./../../provision/provision.md"
+        },
+        {
+            "title": "Lab 2: Deploy file processing components",
+            "description": "Application data management and administration.",
+            "filename": "./../../deploy/deploy.md"
+        },
+        {
+            "title": "Lab 3: Process JSON files in collections",
+            "description": "Performance, scalability and elasticity.",
+            "filename": "./../../process/process.md"
+        },
+        {
+            "title": "Need help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+        }
+        
+    ]
+}
