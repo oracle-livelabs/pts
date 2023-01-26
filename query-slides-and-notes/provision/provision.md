@@ -1,22 +1,31 @@
-XXX# Provision cloud resources
+# Provision cloud resources
 
 ## Introduction
 
-Oracle Cloud Infrastructure (OCI) offers 
+Wouldn't it be awesome if we could query PowerPoint presentations using SQL to find some information in the slides or in the notes? Oracle Database can access data from any sources, structured or unstructured. You just need to find a way to ingest those sources into the database and understand their format. This workflow can be built and deployed on Oracle Cloud Infrastructure (OCI), where you have all the resources you need at a click. It is possible even with a free cloud account, if we consider a simple task like this. For example, this challenge requires an autonomous database instance, the most basic compute instance, and some object storage space. Run this hands-on workshop to find out more.
 
-This lab explains how to
+This is just a hands-on workshop meant to be used as an exercise, and is not a solution or a best practice for extracting data from documents. It should be used for training purposes to understand how Oracle cloud resources can be integrated and used to build a solution.
 
-Estimated Time: 60 minutes
+This lab explains how to provision OCI resources and prepare them for the solution deployment.
+
+Estimated Time: 40 minutes
 
 ### Objectives
 
 In this lab you will:
-* Enable
+* Provision networking resources
+* Create object storage buckets
+* Provision a small compute instance
+* Install the XML file processor
+* Mount object storage on compute
+* Upload your PowerPoint file to object storage
+* Provision an autonomous database instance
 
 ### Prerequisites
 
 This lab assumes you have:
-* Provisioned
+* Access to Oracle Cloud Infrastructure
+* Basic knowledge about Oracle Cloud resources
 
 ## Task 1: Provision Virtual Cloud Network (VCN)
 
@@ -197,7 +206,7 @@ This lab assumes you have:
     </copy>
     ````
 
-## Task 6: Upload PPTX file to LLXXX-PPTX bucket
+## Task 6: Upload PPTX file to presentations bucket
 
 1. Click on main menu ≡, then Storage > **Buckets**. Click **LLXXX-PPTX**.
 
@@ -240,7 +249,7 @@ This lab assumes you have:
     - Password: use the strong password you wrote down in your notes
     - Quota on tablespace DATA: UNLIMITED
     - Enable: Web Access and OML
-    - Click Granted Roles tab, and add SODA_APP (Granted and Default)
+    - Click Granted Roles tab, and add `SODA_APP` (Granted and Default)
     - leave other fields with default values
 
 6. Click **Create User**.

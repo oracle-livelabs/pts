@@ -2,31 +2,37 @@
 
 ## Introduction
 
-Oracle
+Oracle cloud resources like object storage, compute nodes and database instances can be used to build complex workflows. With minimal knowledge and out-of-the-box tools, you can combine them into complex configurations. Everything can be automated using custom code in scripts, stored procedures and data structures.
 
-This lab explains how to
+This lab explains how to connect cloud resources to build a simple solution for your problem.
 
-Estimated Time: 60 minutes
+Estimated Time: 40 minutes
 
 ### Objectives
 
 In this lab you will:
-* Create
+* Create credentials and access object storage assets
+* Create tables and views to track file processing
+* Create procedures for data processing inside Oracle database
+* Write Bash (Bourne Again Shell) scripts for file type conversions
+* Create external tables based on flat files
 
 ### Prerequisites
 
 This lab assumes you have:
-* Provisioned
+* Provisioned Oracle Cloud Resources completing the first lab
+* Basic knowledge about Linux Bash programming
+* Advanced Oracle SQL and PL/SQL experience
 
 ## Task 1: Create OCI credentials to access files in bucket
 
 1. On the previous tab where ADMIN user is connected to Database Actions, click main menu ≡ or Database Actions in the lower-left corner, and **SQL**.
 
-2. Grant privileges on DBMS_CLOUD package to PPTXJSON user.
+2. Grant privileges on `DBMS_CLOUD` package to **PPTXJSON** user.
 
     ````
     <copy>
-    grant execute on dbms_cloud to PPTXJSON;
+    grant execute on DBMS_CLOUD to PPTXJSON;
     </copy>
     ````
 
@@ -104,7 +110,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Select all records from V_PPTX_DONE, and notice your PPTX file hasn't been processed yet.
+3. Select all records from `V_PPTX_DONE`, and notice your PPTX file hasn't been processed yet.
 
     ````
     <copy>
@@ -133,7 +139,7 @@ This lab assumes you have:
     </copy>
     ````
 
-2. Run the TO_PROCESS_CSV procedure.
+2. Run the `TO_PROCESS_CSV` procedure.
 
     ````
     <copy>
@@ -236,7 +242,7 @@ This lab assumes you have:
     </copy>
     ````
 
-9. The conversion script unpacked the ZIP archive into a folder with the same name as your PPTX presentation. It converted the XML files to JSON. It also wrote all XML files as a list into the xml_files.csv flat file, and all JSON files into json_files.csv flat file.
+9. The conversion script unpacked the ZIP archive into a folder with the same name as your PPTX presentation. It converted the XML files to JSON. It also wrote all XML files as a list into the `xml_files.csv` flat file, and all JSON files into `json_files.csv` flat file.
 
     ````
     <copy>
@@ -249,7 +255,7 @@ This lab assumes you have:
 
 1. Switch to the browser tab where PPTXJSON user is connected to Database Actions. It should be on the SQL Worksheet.
 
-2. Run the following code to create an external table with all JSON files in the json_files.csv flat file. Click **Run Script** button or F5.
+2. Run the following code to create an external table with all JSON files in the `json_files.csv` flat file. Click **Run Script** button or F5.
 
     ````
     <copy>
@@ -267,7 +273,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Query the records of the JSON_FILES external table.
+3. Query the records of the `JSON_FILES` external table.
 
     ````
     <copy>

@@ -2,21 +2,27 @@
 
 ## Introduction
 
-Oracle
+Oracle Autonomous JSON Database is a cloud document database service that makes it simple to develop document-centric applications. Basic components like JSON document collections, JSON data guide, PL/SQL stored procedures, or SQL macros constructs prove the advantage Oracle Converged Database gives developers to make them more productive. This solution can be improved using other converged database capabilities like machine learning, REST data services, graph analytics, streaming, but these are topics for other workshops.
 
-This lab explains how to
+This lab explains how to use JSON collections, JSON data guide, and SQL macros to extract information from documents.
 
-Estimated Time: 60 minutes
+Estimated Time: 40 minutes
 
 ### Objectives
 
 In this lab you will:
-* Install
+* Create document collections to store JSON inside Oracle database
+* Write PL/SQL stored procedures to process PowerPoint presentations
+* Create views to expose structure, slides and notes data
+* Draw conclusions and summarize the workflow
+* Write maintenance procedures to clean the repository
 
 ### Prerequisites
 
 This lab assumes you have:
-* Provisioned
+* Provisioned Oracle Cloud Resources completing the first lab
+* Deployed file processing components completing the second lab
+* Advanced Oracle SQL and PL/SQL experience
 
 ## Task 1: Create collections and cleanup procedure
 
@@ -133,7 +139,7 @@ This lab assumes you have:
     </copy>
     ````
 
-2. Query view V_PPTX_DONE and get the presentation name (PPTX_NAME) with PPTX_DONE and PROCESSED columns with NULL values. This is a presentation that wasn't processed.
+2. Query view `V_PPTX_DONE` and get the presentation name (`PPTX_NAME`) with `PPTX_DONE` and `PROCESSED` columns with NULL values. This is a presentation that wasn't processed.
 
     ````
     <copy>
@@ -141,7 +147,7 @@ This lab assumes you have:
     </copy>
     ````
 
-3. Execute process_pptx for the unprocessed presentation.
+3. Execute `PROCESS_PPTX` for the unprocessed presentation.
 
     ````
     <copy>
@@ -152,7 +158,7 @@ This lab assumes you have:
 
 ## Task 3: Create presentation structure, slides and notes views
 
-1. Create a view on PPJSON collection used to store the structure of the presentation in JSON format. This view provides a relational representation of the slides and notes in your presentations.
+1. Create a view on `PPJSON` collection used to store the structure of the presentation in JSON format. This view provides a relational representation of the slides and notes in your presentations.
 
     ````
     <copy>
@@ -339,7 +345,7 @@ This lab assumes you have:
     </copy>
     ````
 
-4. Select unprocessed presentation name from V_PPTX_DONE view, that has been converted to JSON but not imported into the Autonomous Database.
+4. Select unprocessed presentation name from `V_PPTX_DONE` view, that has been converted to JSON but not imported into the Autonomous Database.
 
     ````
     <copy>
@@ -394,7 +400,7 @@ This lab assumes you have:
     </copy>
     ````
 
-2. Select processed presentation names from V_PPTX_DONE view.
+2. Select processed presentation names from `V_PPTX_DONE` view.
 
     ````
     <copy>
