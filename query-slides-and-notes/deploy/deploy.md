@@ -52,7 +52,7 @@ This lab assumes you have:
 
 9. Run the following code to create cloud credentials into your autonomous database using **Run Script** button or F5.
 
-    ````
+    ````plsql
     <copy>
     SET DEFINE OFF;
     BEGIN
