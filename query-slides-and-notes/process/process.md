@@ -22,7 +22,7 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned Oracle Cloud Resources completing the first lab
 * Deployed file processing components completing the second lab
-* Advanced Oracle SQL and PL/SQL experience
+* Intermediate Oracle SQL and PL/SQL experience
 
 ## Task 1: Create collections and cleanup procedure
 

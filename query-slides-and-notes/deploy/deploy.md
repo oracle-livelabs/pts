@@ -21,8 +21,8 @@ In this lab you will:
 
 This lab assumes you have:
 * Provisioned Oracle Cloud Resources completing the first lab
-* Basic knowledge about Linux Bash programming
-* Advanced Oracle SQL and PL/SQL experience
+* Basic knowledge of Linux Bash programming
+* Intermediate Oracle SQL and PL/SQL experience
 
 ## Task 1: Create OCI credentials to access files in bucket
 

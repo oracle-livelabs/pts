@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Wouldn't it be awesome if we could query PowerPoint presentations using SQL to find some information in the slides or in the notes? Oracle Database can access data from any sources, structured or unstructured. You just need to find a way to ingest those sources into the database and understand their format. This workflow can be built and deployed on Oracle Cloud Infrastructure (OCI), where you have all the resources you need at a click. It is possible even with a free cloud account, if we consider a simple task like this. For example, this challenge requires an autonomous database instance, the most basic compute instance, and some object storage space. Run this hands-on workshop to find out more.
+Wouldn't it be awesome to query PowerPoint presentations using SQL to find some information in the slides or the notes? Oracle Database can access data from any source, structured or unstructured. You must find a way to ingest those sources into the database and understand their format. This workflow can be built and deployed on Oracle Cloud Infrastructure, where you have all the resources you need at a click. Even a free cloud account can do the job if we consider a simple task like this. For example, this challenge requires an autonomous database, the most basic compute instance and some object storage space. Run this hands-on workshop to find out more.
 
 This is just a hands-on workshop meant to be used as an exercise, and is not a solution or a best practice for extracting data from documents. It should be used for training purposes to understand how Oracle cloud resources can be integrated and used to build a solution.
 
@@ -25,7 +25,7 @@ In this lab you will:
 
 This lab assumes you have:
 * Access to Oracle Cloud Infrastructure
-* Basic knowledge about Oracle Cloud resources
+* Basic knowledge of Oracle Cloud resources
 
 ## Task 1: Provision Virtual Cloud Network (VCN)
 
