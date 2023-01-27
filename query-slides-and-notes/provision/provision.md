@@ -145,21 +145,15 @@ This lab assumes you have:
 
 5. Copy the Access Key value from the table. You should have two values in your notes, similar to:
 
-    ````
-    Access Key: c3e00example0028453729eb8256329a1b4b4s
-    Secret Key: vC0this0is0example0sf5Yp3K32tIDaStHwVajzI+N=
-    ````
+    * Access Key: c3e00example0028453729eb8256329a1b4b4s
+    * Secret Key: vC0this0is0example0sf5Yp3K32tIDaStHwVajzI+N=
 
 6. The third value you need is the API endpoint. Replace <tenancy> and <region> with your values in the following URL to obtain your API endpoint.
 
-    ````
-    API endpoint: https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com
-    ````
+    * API endpoint: https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com
 
     E.g.:
-    ````
-    https://myaccount.compat.objectstorage.eu-frankfurt-1.oraclecloud.com
-    ````
+    * API endpoint: https://myaccount.compat.objectstorage.eu-frankfurt-1.oraclecloud.com
 
 7. Save credentials in a file inside your compute instance.
 
@@ -170,9 +164,7 @@ This lab assumes you have:
     ````
 
     E.g.:
-    ````
-    echo c3e00example0028453729eb8256329a1b4b4s:vC0this0is0example0sf5Yp3K32tIDaStHwVajzI+N= > ${HOME}/.clave-s3fs
-    ````
+    `echo c3e00example0028453729eb8256329a1b4b4s:vC0this0is0example0sf5Yp3K32tIDaStHwVajzI+N= > ${HOME}/.clave-s3fs`
 
 8. Change permission for your credentials file.
 
