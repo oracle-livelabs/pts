@@ -28,7 +28,7 @@ This lab assumes you have:
 
 1. All JSON files can be imported into Autonomous JSON Database into collections. For this example, you will import only slides and notes content. Write a procedure to create the required collections. This procedure can be used for cleaning up all JSON documents and start importing them again from the beginning. Click **Run Script** button or F5.
 
-    ````
+    ````sql
     <copy>
     create or replace PROCEDURE CLEANUP_PPTX AUTHID CURRENT_USER IS
         status NUMBER;
@@ -61,7 +61,7 @@ This lab assumes you have:
 
 2. Execute this cleanup procedure to create the collections and indexes.
 
-    ````
+    ````sql
     <copy>
     exec CLEANUP_PPTX;
     </copy>
@@ -71,7 +71,7 @@ This lab assumes you have:
 
 1. This procedure will import JSON documents into collections. It uses the presentation name as the input parameter. Click **Run Script** button or F5.
 
-    ````
+    ````sql
     <copy>
     create or replace PROCEDURE PROCESS_PPTX (p_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
       oci_bucket VARCHAR2(128) default 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<tenancy>/LLXXX-JSON/';
@@ -141,7 +141,7 @@ This lab assumes you have:
 
 2. Query view `V_PPTX_DONE` and get the presentation name (`PPTX_NAME`) with `PPTX_DONE` and `PROCESSED` columns with NULL values. This is a presentation that wasn't processed.
 
-    ````
+    ````sql
     <copy>
     select * from V_PPTX_DONE;
     </copy>
@@ -149,7 +149,7 @@ This lab assumes you have:
 
 3. Execute `PROCESS_PPTX` for the unprocessed presentation.
 
-    ````
+    ````sql
     <copy>
     exec process_pptx('<presentation name>');
     </copy>
@@ -160,7 +160,7 @@ This lab assumes you have:
 
 1. Create a view on `PPJSON` collection used to store the structure of the presentation in JSON format. This view provides a relational representation of the slides and notes in your presentations.
 
-    ````
+    ````sql
     <copy>
     create or replace editionable view V_PPJSON as
       select d.ID as ppt_json_id, j.*,
@@ -179,7 +179,7 @@ This lab assumes you have:
 
 2. PowerPoint stores slides content in multiple fields. You can use JSON data guide to identify those fields and retrieve their values in a table. The easiest way to build this table is using a SQL Macros function. Use **Run Script** button or F5 to create this function.
 
-    ````
+    ````sql
     <copy>
     create or replace function slides_content
                 RETURN clob SQL_MACRO(TABLE) IS
@@ -200,7 +200,7 @@ This lab assumes you have:
 
 3. Query the SQL Macros function like a standard table to retrieve the contents of the slides.
 
-    ````
+    ````sql
     <copy>
     SELECT * FROM slides_content();
     </copy>
@@ -208,7 +208,7 @@ This lab assumes you have:
 
 4. Use **Run Script** button or F5 to create the second SQL Macros function that retrieves the content of the notes.
 
-    ````
+    ````sql
     <copy>
     create or replace function slides_notes
                 RETURN clob SQL_MACRO(TABLE) IS
@@ -229,7 +229,7 @@ This lab assumes you have:
 
 5. Query the SQL Macros function like a standard table to retrieve the contents of the notes.
 
-    ````
+    ````sql
     <copy>
     SELECT * FROM slides_notes();
     </copy>
@@ -237,7 +237,7 @@ This lab assumes you have:
 
 6. Create a view that joins the structure of the presentation with the content of the slides. This will be used to organize the slides content by document.
 
-    ````
+    ````sql
     <copy>
     create or replace editionable view V_SLIDES_CONTENT as
     select s.ppt_json_id, s.pptx_name, s.file_name, s.short_name, sc.* from slides_content() sc
@@ -248,7 +248,7 @@ This lab assumes you have:
 
 7. Retrieve slides content fields organized by slide document and presentation.
 
-    ````
+    ````sql
     <copy>
     select * from V_SLIDES_CONTENT;
     </copy>
@@ -256,7 +256,7 @@ This lab assumes you have:
 
 8. Create a view that joins the structure of the presentation with the content of the notes. This will be used to organize the notes content by document.
 
-    ````
+    ````sql
     <copy>
     create or replace editionable view V_SLIDES_NOTES as
     select n.ppt_json_id, n.pptx_name, n.file_name, n.short_name, sn.* from slides_notes() sn
@@ -267,7 +267,7 @@ This lab assumes you have:
 
 9. Retrieve notes content fields organized by notes document and presentation.
 
-    ````
+    ````sql
     <copy>
     select * from V_SLIDES_NOTES;
     </copy>
@@ -275,7 +275,7 @@ This lab assumes you have:
 
 10. Slide contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
 
-    ````
+    ````sql
     <copy>
     create or replace editionable view V_SLIDES_TEXT as
     select PPT_JSON_ID, SLIDE_ID, PPTX_NAME, to_number(substr(SHORT_NAME, 6)) as slide#,
@@ -291,7 +291,7 @@ This lab assumes you have:
 
 11. Note contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
 
-    ````
+    ````sql
     <copy>
     create or replace editionable view V_NOTES_TEXT as
     select PPT_JSON_ID, NOTE_ID, PPTX_NAME,
@@ -308,7 +308,7 @@ This lab assumes you have:
 
 12. Query the slide number and slide text in your presentation.
 
-    ````
+    ````sql
     <copy>
     select SLIDE#, SLIDE_TEXT from V_SLIDES_TEXT;
     </copy>
@@ -316,7 +316,7 @@ This lab assumes you have:
 
 13. Query the slide number and note text in your presentation.
 
-    ````
+    ````sql
     <copy>
     select SLIDE#, NOTE_TEXT from V_NOTES_TEXT;
     </copy>
@@ -331,7 +331,7 @@ This lab assumes you have:
 
 2. Execute the unprocessed presentations listing procedure.
 
-    ````
+    ````sql
     <copy>
     exec to_process_csv;
     </copy>
@@ -339,7 +339,7 @@ This lab assumes you have:
 
 3. Use the SSH connection to the LLXXX-VM compute instance to run the conversion script in LLPPTX-JSON folder.
 
-    ````
+    ````bash
     <copy>
     ./convert2json.sh
     </copy>
@@ -347,7 +347,7 @@ This lab assumes you have:
 
 4. Select unprocessed presentation name from `V_PPTX_DONE` view, that has been converted to JSON but not imported into the Autonomous Database.
 
-    ````
+    ````sql
     <copy>
     select PPTX_NAME from V_PPTX_DONE where JSON_DONE is not NULL and PROCESSED is NULL;
     </copy>
@@ -355,7 +355,7 @@ This lab assumes you have:
 
 5. Execute the procedure that imports JSON documents into collections, using the presentation name from previous step as the input parameter.
 
-    ````
+    ````sql
     <copy>
     exec process_pptx('<presentation name>');
     </copy>
@@ -363,7 +363,7 @@ This lab assumes you have:
 
 6. Query the slide number and slide or note text.
 
-    ````
+    ````sql
     <copy>
     select SLIDE#, SLIDE_TEXT from V_SLIDES_TEXT where PPTX_NAME = '<presentation name>';
     select SLIDE#, NOTE_TEXT from V_NOTES_TEXT where PPTX_NAME = '<presentation name>';
@@ -375,7 +375,7 @@ This lab assumes you have:
 
 1. Use **Run Script** button or F5 to create a procedure that takes a presentation name as input parameter to remove it from the records.
 
-    ````
+    ````sql
     <copy>
     create or replace PROCEDURE PPTXJSON.REMOVE_PPTX (i_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
       l_id VARCHAR2(255);
@@ -402,7 +402,7 @@ This lab assumes you have:
 
 2. Select processed presentation names from `V_PPTX_DONE` view.
 
-    ````
+    ````sql
     <copy>
     select PPTX_NAME from V_PPTX_DONE where PROCESSED is not NULL;
     </copy>
@@ -410,7 +410,7 @@ This lab assumes you have:
 
 3. Execute the procedure that removes the presentation using the name from previous step as the input parameter.
 
-    ````
+    ````sql
     <copy>
     exec remove_pptx('<presentation name>');
     </copy>

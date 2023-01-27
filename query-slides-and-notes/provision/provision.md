@@ -76,7 +76,7 @@ This lab assumes you have:
 
 3. Verify SSH connection from a Linux client. Change the permissions on the private key file you saved. Change `ssh-key-XXXX-XX-XX` with the private key file you saved on your computer. (Linux only)
 
-    ````
+    ````bash
     <copy>
     chmod 400 Downloads/ssh-key-XXXX-XX-XX.key
     </copy>
@@ -84,7 +84,7 @@ This lab assumes you have:
 
 4. Connect to the LLXXX-VM compute instance using SSH. (Linux only)
 
-    ````
+    ````bash
     <copy>
     ssh -C -i Downloads/ssh-key-XXXX-XX-XX.key opc@<LLXXX-VM Public IP Address>
     </copy>
@@ -109,7 +109,7 @@ This lab assumes you have:
 
 1. Use pip3 package manager to install **yq** YAML/XML processor.
 
-    ````
+    ````bash
     <copy>
     sudo pip3 install yq
     </copy>
@@ -117,7 +117,7 @@ This lab assumes you have:
 
 2. Create a new folder for the PowerPoint PPTX presentations.
 
-    ````
+    ````bash
     <copy>
     mkdir LLPPTX-PPTX
     </copy>
@@ -125,7 +125,7 @@ This lab assumes you have:
 
 3. Create a new folder for processing PPTX files as JSON documents.
 
-    ````
+    ````bash
     <copy>
     mkdir LLPPTX-JSON
     </copy>
@@ -148,16 +148,16 @@ This lab assumes you have:
     * Access Key: c3e00example0028453729eb8256329a1b4b4s
     * Secret Key: vC0this0is0example0sf5Yp3K32tIDaStHwVajzI+N=
 
-6. The third value you need is the API endpoint. Replace <tenancy> and <region> with your values in the following URL to obtain your API endpoint.
+6. The third value you need is the API endpoint. Replace `<tenancy>` and `<region>` with your values in the following URL to obtain your API endpoint.
 
-    * API endpoint: https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com
+    * API endpoint: https://`<tenancy>`.compat.objectstorage.`<region>`.oraclecloud.com
 
     E.g.:
     * API endpoint: https://myaccount.compat.objectstorage.eu-frankfurt-1.oraclecloud.com
 
 7. Save credentials in a file inside your compute instance.
 
-    ````
+    ````bash
     <copy>
     echo <Access Key>:<Secret Key> > ${HOME}/.clave-s3fs
     </copy>
@@ -168,7 +168,7 @@ This lab assumes you have:
 
 8. Change permission for your credentials file.
 
-    ````
+    ````bash
     <copy>
     chmod 600 ${HOME}/.clave-s3fs
     </copy>
@@ -176,7 +176,7 @@ This lab assumes you have:
 
 9. Install FUSE-based file system.
 
-    ````
+    ````bash
     <copy>
     sudo yum --enablerepo="ol8_developer_EPEL" -y install s3fs-fuse
     </copy>
@@ -184,7 +184,7 @@ This lab assumes you have:
 
 10. Run this s3fs command to mount the LLXXX-PPTX bucket for the PPTX presentations.
 
-    ````
+    ````bash
     <copy>
     s3fs LLXXX-PPTX ${HOME}/LLPPTX-PPTX -o endpoint=<region> -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
     </copy>
@@ -192,7 +192,7 @@ This lab assumes you have:
 
 11. Run this s3fs command to mount the LLXXX-JSON bucket for the JSON documents processing.
 
-    ````
+    ````bash
     <copy>
     s3fs LLXXX-JSON ${HOME}/LLPPTX-JSON -o endpoint=<region> -o passwd_file=${HOME}/.clave-s3fs -o url=https://<tenancy>.compat.objectstorage.<region>.oraclecloud.com/ -onomultipart -o use_path_request_style
     </copy>
@@ -210,7 +210,7 @@ This lab assumes you have:
 
 5. On the compute instance, list files in LLPPTX-PPTX folder.
 
-    ````
+    ````bash
     <copy>
     ls -lah ${HOME}/LLPPTX-PPTX
     </copy>
