@@ -42,15 +42,29 @@ This lab assumes you have:
 
 3. Click **Sign In**.
 
-4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**.
 
-5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+    ![Virtual Cloud Networks](./images/vcns.png "")
+
+5. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+
+    ![Start VCN Wizard](./images/start-vcn-wizard.png "")
+
+6. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+
+    ![VCN with Internet Connectivity](./images/internet-conn.png "")
 
     - VCN Name: LL[Your Initials]-VCN (e.g. LLXXX-VCN)
     - Compartment: [Your Compartment]
+
+    ![Basic information](./images/vcn-info.png "")
+
     - leave other fields with default values
 
-6. Click **Next** and **Create**.
+    ![Configure VCN and Subnets](./images/vcn-defaults.png "")
+
+7. Click **Next** and **Create**.
+
 
 ## Task 2: Provision object storage buckets
 
