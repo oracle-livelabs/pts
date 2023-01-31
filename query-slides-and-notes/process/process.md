@@ -74,7 +74,7 @@ This lab assumes you have:
     ````sql
     <copy>
     create or replace PROCEDURE PROCESS_PPTX (p_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
-      oci_bucket VARCHAR2(128) default 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<tenancy>/LLXXX-JSON/';
+      oci_bucket VARCHAR2(128) default 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<bucket namespace>/LLXXX-JSON/';
       l_json_file VARCHAR2(255);
       l_check NUMBER;
       l_ppjson CLOB default '{';
@@ -235,14 +235,22 @@ This lab assumes you have:
     </copy>
     ````
 
-6. Create a view that joins the structure of the presentation with the content of the slides. This will be used to organize the slides content by document.
+6. Create a view that joins the structure of the presentation with the content of the slides. This will be used to organize the slides content by document. Use **Run Script** button or F5.
 
     ````sql
     <copy>
-    create or replace editionable view V_SLIDES_CONTENT as
-    select s.ppt_json_id, s.pptx_name, s.file_name, s.short_name, sc.* from slides_content() sc
-       left join (select * from V_PPJSON where COLLECTION = 'SLIDES') s
-         on sc.slide_id = s.JSON_ID;
+    create or replace PROCEDURE EXTRACT_SLIDES_CONTENT AUTHID CURRENT_USER IS
+      view_query VARCHAR2(4000);
+    BEGIN
+    alter function slides_content compile;
+    view_query := 'create or replace editionable view V_SLIDES_CONTENT as
+                   select s.ppt_json_id, s.pptx_name, s.file_name, s.short_name, sc.*
+                   from slides_content() sc left join
+                   (select * from V_PPJSON where COLLECTION = ''SLIDES'') s on sc.slide_id = s.JSON_ID';
+    execute immediate view_query;
+    END extract_slides_content;
+    /
+    exec EXTRACT_SLIDES_CONTENT;
     </copy>
     ````
 
@@ -273,19 +281,35 @@ This lab assumes you have:
     </copy>
     ````
 
-10. Slide contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column.
+10. Slide contents are retrieved by the SQL Macros as JSON array literals distributed across multiple columns. Use a view to consolidate these fragments into a single text column. Use **Run Script** button or F5.
 
     ````sql
     <copy>
-    create or replace editionable view V_SLIDES_TEXT as
-    select PPT_JSON_ID, SLIDE_ID, PPTX_NAME, to_number(substr(SHORT_NAME, 6)) as slide#,
-     replace(rtrim(ltrim(replace(replace(replace(replace(CONTENT1,'null,',''),'\"','|||'),'",',' '),' "',' '),'["'),'"]'),'|||','"') ||
-     ' ' || rtrim(ltrim(replace(CONTENT3,'","',' '),'["'),'"]') || ' ' ||
-     rtrim(ltrim(replace(CONTENT4,'","',' '),'["'),'"]') || ' ' ||
-     rtrim(ltrim(replace(CONTENT5,'","',' '),'["'),'"]') || ' ' ||
-     rtrim(ltrim(replace(CONTENT6,'","',' '),'["'),'"]') as SLIDE_TEXT
-     from V_SLIDES_CONTENT
-     order by PPT_JSON_ID, slide#;
+    create or replace PROCEDURE EXTRACT_SLIDES_TEXT AUTHID CURRENT_USER IS
+      content_cols NUMBER;
+      content_col NUMBER default 2;
+      view_query VARCHAR2(4000);
+    BEGIN
+      view_query :=  'create or replace editionable view V_SLIDES_TEXT as
+      select PPT_JSON_ID, SLIDE_ID, PPTX_NAME, to_number(substr(SHORT_NAME, 6)) as slide#,
+      replace(rtrim(ltrim(replace(replace(replace(replace(CONTENT1,''null,'',''''),''\"'',''|||''),
+      ''",'','' ''),'' "'','' ''),''["''),''"]''),''|||'',''"'')';
+      SELECT count(*) into content_cols
+        FROM   user_json_dataguide_fields
+        WHERE  table_name  = 'SLIDES'
+        AND    column_name = 'JSON_DOCUMENT'
+        AND	 path like '%"a:t"';
+      WHILE content_cols > content_col
+        LOOP
+          content_col := content_col + 1;
+          view_query := view_query || ' || '' '' || rtrim(ltrim(replace(CONTENT' ||
+                        to_char(content_col) || ',''","'','' ''),''["''),''"]'')';
+      END LOOP;
+      view_query := view_query || ' as SLIDE_TEXT from V_SLIDES_CONTENT order by PPT_JSON_ID, slide#';
+      execute immediate view_query;
+    END extract_slides_text;
+    /
+    exec EXTRACT_SLIDES_TEXT;
     </copy>
     ````
 
@@ -361,7 +385,16 @@ This lab assumes you have:
     </copy>
     ````
 
-6. Query the slide number and slide or note text.
+6. Use **Run Script** button or F5 to execute the procedures that refresh SQL Macros functions and views.
+
+    ````sql
+    <copy>
+    exec EXTRACT_SLIDES_CONTENT;
+    exec EXTRACT_SLIDES_TEXT;
+    </copy>
+    ````
+
+7. Query the slide number and slide or note text.
 
     ````sql
     <copy>
@@ -377,7 +410,7 @@ This lab assumes you have:
 
     ````sql
     <copy>
-    create or replace PROCEDURE PPTXJSON.REMOVE_PPTX (i_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
+    create or replace PROCEDURE REMOVE_PPTX (i_pptx_name IN VARCHAR2) AUTHID CURRENT_USER IS
       l_id VARCHAR2(255);
       d_collection SODA_COLLECTION_T;
       d_document SODA_DOCUMENT_T;

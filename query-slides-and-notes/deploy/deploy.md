@@ -28,6 +28,8 @@ This lab assumes you have:
 
 1. On the previous tab where ADMIN user is connected to Database Actions, click main menu ≡ or Database Actions in the lower-left corner, and **SQL**.
 
+    ![Database Actions SQL](./images/db-actions-sql.png "")
+
 2. Grant privileges on `DBMS_CLOUD` package to **PPTXJSON** user.
 
     ````sql
@@ -36,21 +38,35 @@ This lab assumes you have:
     </copy>
     ````
 
+    ![Grant DBMS_CLOUD](./images/grant-dbms-cloud.png "")
+
 3. On the cloud console, click on user menu 👤 in the upper-right corner, then click your **oci-username** under Profile.
 
-4. In the lower-left Resources menu, click **Auth Tokens**.
+    ![OCI username](./images/oci-username.png "")
 
-5. Click **Generate Token**.
+4. Check if you user account is federated.
+
+    ![User information](./images/user-information.png "")
+
+5. In the lower-left Resources menu, click **Auth Tokens**.
+
+    ![Auth Tokens](./images/auth-tokens.png "")
+
+6. Click **Generate Token**.
 
     - Description: PPTX to JSON
 
-6. Click **Generate Token**. Copy this password for your records. It will not be shown again.
+    ![Generate Token](./images/generate-token.png "")
 
-7. Click **Copy** and paste it in your notes. This is your Token value. Now close the dialog.
+7. Click **Generate Token**. Copy this password for your records. It will not be shown again.
 
-8. Switch to the browser tab where PPTXJSON user is connected to Database Actions. It should be on the SQL Worksheet.
+    ![Copy Token](./images/copy-token.png "")
 
-9. Run the following code to create cloud credentials into your autonomous database using **Run Script** button or F5.
+8. Click **Copy** and paste it in your notes. This is your Token value. Now close the dialog.
+
+9. Switch to the browser tab where PPTXJSON user is connected to Database Actions. It should be on the SQL Worksheet.
+
+10. Run the following code to create cloud credentials into your autonomous database using **Run Script** button or F5. Depending on your account, you may need to use `oracleidentitycloudservice/` if it is federated.
 
     ````sql
     <copy>
@@ -58,20 +74,22 @@ This lab assumes you have:
     BEGIN
         DBMS_CLOUD.create_credential(
         credential_name => 'CLOUD_CREDENTIAL',
-        username => '<oci-username>',
+        username => '[oracleidentitycloudservice/]<oci-username>',
         password => '<token>');
     END;
     /
     </copy>
     ````
 
-10. Test access to your PPTX bucket using the cloud credentials. This query must return the PPTX file you uploaded into LLXXX-PPTX bucket.
+    ![Create Credential](./images/create-credential.png "")
+
+11. Test access to your PPTX bucket using the cloud credentials. This query must return the PPTX file you uploaded into LLXXX-PPTX bucket.
 
     ````sql
     <copy>
     SELECT * FROM table(dbms_cloud.list_objects(
             credential_name => 'CLOUD_CREDENTIAL',
-            location_uri => 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<tenancy>/LLXXX-PPTX/'));
+            location_uri => 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<bucket namespace>/LLXXX-PPTX/'));
     </copy>
     ````
 
@@ -90,7 +108,26 @@ This lab assumes you have:
      </copy>
      ````
 
-2. Create a view to list all PPTX files uploaded into LLXXX-PPTX bucket, and whether or not have been processed.
+2. Run the following code to create an external table with all JSON files in the `LLXXX-JSON` bucket that will be written to a `json_files.csv` flat file. Click **Run Script** button or F5.
+
+    ````sql
+    <copy>
+    declare
+     oci_bucket VARCHAR2(128) default 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<bucket namespace>/LLXXX-JSON/';
+    begin
+     dbms_cloud.create_external_table(
+        table_name =>'JSON_FILES',
+        credential_name =>'CLOUD_CREDENTIAL',
+        file_uri_list => oci_bucket || 'json_files.csv',
+        format => json_object('type' VALUE 'CSV'),
+        column_list => 'FILE_NAME  VARCHAR2(256)'
+     );
+    end;
+    /
+    </copy>
+    ````
+
+3. Create a view to list all PPTX files uploaded into LLXXX-PPTX bucket, and whether or not have been processed.
 
     ````sql
     <copy>
@@ -103,14 +140,14 @@ This lab assumes you have:
            ppd.processed,
            jd.json_done
       FROM table(dbms_cloud.list_objects(credential_name => 'CLOUD_CREDENTIAL',
-              location_uri => 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<tenancy>/LLXXX-PPTX/')) obst
+              location_uri => 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<bucket namespace>/LLXXX-PPTX/')) obst
       left join PPTX_DONE ppd on substr(obst.object_name,1,length(obst.object_name)-5) = ppd.pptx_name
       left join (select unique NVL(SUBSTR(FILE_NAME, 0, INSTR(FILE_NAME, '/')-1), FILE_NAME) as JSON_DONE from JSON_FILES) jd
         on jd.JSON_DONE = substr(obst.object_name,1,length(obst.object_name)-5);
     </copy>
     ````
 
-3. Select all records from `V_PPTX_DONE`, and notice your PPTX file hasn't been processed yet.
+4. Select all records from `V_PPTX_DONE`, and notice your PPTX file hasn't been processed yet.
 
     ````sql
     <copy>
@@ -132,7 +169,7 @@ This lab assumes you have:
     ')) into my_blob_data from V_PPTX_DONE where PPTX_DONE is NULL;
     DBMS_CLOUD.PUT_OBJECT(
          credential_name => 'CLOUD_CREDENTIAL',
-         object_uri => 'https://objectstorage.<region>.oraclecloud.com/n/<tenancy>/b/LLXXX-JSON/o/to_process.csv',
+         object_uri => 'https://objectstorage.<region>.oraclecloud.com/n/<bucket namespace>/b/LLXXX-JSON/o/to_process.csv',
          contents => my_blob_data);
     END to_process_csv;
     /
@@ -216,7 +253,7 @@ This lab assumes you have:
 
 4. This is the conversion script. Take some time to read the comments in order to understand the process.
 
-5. Save this file as `convert2json.sh` on your computer, and upload it to LLXXX-JSON bucket.
+5. Save this file as `convert2json.sh` on your computer, and upload it to **LLXXX-JSON** bucket.
 
 6. Use the SSH connection to the LLXXX-VM compute instance to make the conversion script executable.
 
@@ -247,37 +284,6 @@ This lab assumes you have:
     ````bash
     <copy>
     ls
-    </copy>
-    ````
-
-
-## Task 5: Create the external table for JSON files
-
-1. Switch to the browser tab where PPTXJSON user is connected to Database Actions. It should be on the SQL Worksheet.
-
-2. Run the following code to create an external table with all JSON files in the `json_files.csv` flat file. Click **Run Script** button or F5.
-
-    ````sql
-    <copy>
-    declare
-     oci_bucket VARCHAR2(128) default 'https://swiftobjectstorage.<region>.oraclecloud.com/v1/<tenancy>/LLXXX-JSON/';
-    begin
-     dbms_cloud.create_external_table(
-        table_name =>'JSON_FILES',
-        credential_name =>'CLOUD_CREDENTIAL',
-        file_uri_list => oci_bucket || 'json_files.csv',
-        format => json_object('type' VALUE 'CSV'),
-        column_list => 'FILE_NAME  VARCHAR2(256)'
-    ); end;
-    /
-    </copy>
-    ````
-
-3. Query the records of the `JSON_FILES` external table.
-
-    ````sql
-    <copy>
-    select * from JSON_FILES;
     </copy>
     ````
 

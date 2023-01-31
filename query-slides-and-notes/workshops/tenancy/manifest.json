@@ -2,6 +2,11 @@
     "workshoptitle": "Run SQL queries on PowerPoint slides and notes",
     "tutorials": [
         {
+            "title": "Introduction",
+            "description": "Introduction.",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
             "title": "Lab 1: Provision cloud resources",
             "description": "Oracle Cloud Infrastructure (OCI) resources.",
             "filename": "./../../provision/provision.md"
