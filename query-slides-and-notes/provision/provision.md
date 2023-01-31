@@ -33,7 +33,7 @@ This lab assumes you have:
 
     ![Tenancy name](./images/tenancy.png "")
 
-2. Click **Next**, and provide your credentials.
+2. Click **Continue**, and provide your credentials.
 
     - User Name: oci-username
     - Password: oci-password
