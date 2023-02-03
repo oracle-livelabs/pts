@@ -18,6 +18,10 @@ In this workshop you will:
 * Write PL/SQL stored procedures to process PowerPoint presentations
 * Create views to expose structure, slides and notes data in a relational format
 
+You will deploy this workflow to process PowerPoint documents and retrieve text data that can be used for any purpose inside your Oracle Autonomous Database.
+
+![Workflow](./images/workflow.png "")
+
 ### Prerequisites
 
 This workshop assumes you have:
