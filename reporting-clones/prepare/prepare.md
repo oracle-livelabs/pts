@@ -56,7 +56,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 8. Click **Add Ingress Rules**.
 
 
-## Task 2: Provision Database System
+## Task 2: Provision Database Systems
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 

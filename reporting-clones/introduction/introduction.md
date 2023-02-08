@@ -18,9 +18,9 @@ In this workshop you will:
 * Perform cross-container operations on application PDBs
 * Implement bidirectional application data cloning between sites
 
-You will deploy this workflow
+You will deploy this architecture on Oracle Cloud Infrastructure to achieve these objectives and understand the concepts behind this configuration.
 
-![Workflow](./images/.png "")
+![Sandbox architecture](./images/architecture.png "")
 
 ### Prerequisites
 
