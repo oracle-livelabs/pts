@@ -65,13 +65,25 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. Click **Next** and **Create**.
 
-8. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**. Click **Default Security List for LLXXX-VCN**. Click **Add Ingress Rules**.
+8. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**.
+
+    ![Subnets](./images/subnets.png "")
+
+9. Click **Default Security List for LLXXX-VCN**.
+
+    ![Security Lists](./images/security-lists.png "")
+
+10. Click **Add Ingress Rules**.
+
+    ![Ingress Rules](./images/ingress-rules.png "")
 
     - CIDR Block: 10.0.0.0/16
     - Destination Port Range: 1521
     - Description: Database connection
 
-9. Click **Add Ingress Rules**.
+    ![Add Ingress Rules](./images/add-ingress-rules.png "")
+
+11. Click **Add Ingress Rules**.
 
 
 ## Task 2: Provision Database Systems
