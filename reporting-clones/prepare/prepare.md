@@ -31,29 +31,47 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     - Cloud Account Name: oci-tenant
 
+    ![Tenancy name](./images/tenancy.png "")
+
 2. Click **Next**, and provide your credentials.
 
     - User Name: oci-username
     - Password: oci-password
 
+    ![Sing in](./images/sign-in.png "")
+
 3. Click **Sign In**.
 
-4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**.
 
-5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+    ![Virtual Cloud Networks](./images/vcns.png "")
+
+5. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+
+    ![Start VCN Wizard](./images/start-vcn-wizard.png "")
+
+6. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+
+    ![VCN with Internet Connectivity](./images/internet-conn.png "")
 
     - VCN Name: LL[Your Initials]-VCN (e.g. LLXXX-VCN)
     - Compartment: [Your Compartment]
 
-6. Click **Next** and **Create**.
+    ![Basic information](./images/vcn-info.png "")
 
-7. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**. Click **Default Security List for LLXXX-VCN**. Click **Add Ingress Rules**.
+    - leave other fields with default values
+
+    ![Configure VCN and Subnets](./images/vcn-defaults.png "")
+
+7. Click **Next** and **Create**.
+
+8. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**. Click **Default Security List for LLXXX-VCN**. Click **Add Ingress Rules**.
 
     - CIDR Block: 10.0.0.0/16
     - Destination Port Range: 1521
     - Description: Database connection
 
-8. Click **Add Ingress Rules**.
+9. Click **Add Ingress Rules**.
 
 
 ## Task 2: Provision Database Systems
@@ -121,21 +139,21 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 ## Task 3: Setup workshop environment
 
-1. Download prepare.sh on your laptop.
+1. Download [prepare.sh](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/xuJQz3bN4iDWvRGmYmFScAqM1FiL0PYsZm4FdYibDZnv6BAQP0ClxoBXyVONaBgP/n/oraclepartnersas/b/WS-files/o/prepare.sh) on your laptop.
 
-2. Edit prepare.sh in any text editor.
+2. Edit prepare.sh in any text editor on your laptop.
 
 3. Set values for all variables in prepare.sh script.
 
-    - SSH key file name SSH_KEY_FILE. This is the name of the Private Key file downloaded during DBS21A DB System creation.
-    - DBS21A Public IP address DBS21A_PUBLIC. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21A Private IP address DBS21A_PRIVATE. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21B Public IP address DBS21B_PUBLIC. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21B Private IP address DBS21B_PRIVATE. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21A Database unique name DBS21A_DB_NAME. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
-    - DBS21B Database unique name DBS21B_DB_NAME. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
-    - Host domain name DOMAIN_NAME. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
-    - Strong password STRONG_PASS. Use the strong password you saved in your notes.
+    - SSH key file name **SSH_KEY_FILE**. This is the name of the Private Key file downloaded during DBS21A DB System creation.
+    - DBS21A Public IP address **DBS21A_PUBLIC**. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21A Private IP address **DBS21A_PRIVATE**. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21B Public IP address **DBS21B_PUBLIC**. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21B Private IP address **DBS21B_PRIVATE**. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21A Database unique name **DBS21A_DB_NAME**. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
+    - DBS21B Database unique name **DBS21B_DB_NAME**. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
+    - Host domain name **DOMAIN_NAME**. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
+    - Strong password **STRONG_PASS**. Use the strong password you saved in your notes.
 
 4. Open Oracle Cloud Shell.
 
