@@ -92,29 +92,57 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
-1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**. This is Site A.
+1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**.
+
+    ![Oracle Base Database](./images/oracle-database.png "")
+
+2. Click **Create DB System**. This is Site A.
+
+    ![Create DB System](./images/db-systems.png "")
 
     - Select your compartment (default).
     - Name your DB system: **DBS21A**
+
+    ![DB system information](./images/create-dbs21a.png "")
+
     - Select a shape type: Virtual Machine (default).
-    - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
-    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
-    - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
+    - Select a shape: **VM.Standard.E4.Flex**.
+
+    ![Configure Shape](./images/configure-shape.png "")
+
+    - Click **Change Shape**. Set **Number of OCPUs per node: 1** (default).
+
+    ![Change Shape](./images/change-shape.png "")
+
     - Generate SSH key pair, and save both Private Key (this is the SSH_KEY_FILE) and Public Key files on your computer.
+
+    ![Add SSH keys](./images/add-ssh-keys.png "")
+
     - Choose a license type: Bring Your Own License (BYOL).
 
-2. Specify the network information.
+3. Specify the network information.
 
     - Virtual cloud network: LLXXX-VCN
     - Client Subnet: Public Subnet LLXXX-SUBNET-PUBLIC
     - Hostname prefix: **dbs21a-host**
 
+    ![Network information](./images/network-information-a.png "")
+
 3. Click Next.
 
     - Database name: **DBS21A**
-    - Database version: **21c**
+    - Database image: **Oracle Database 21c**
+
+    ![Change database image](./images/select-database-image.png "")
+
     - PDB name: Do NOT specify any value.
+
+    ![Database information](./images/database-information-a.png "")
+
     - Password: Use a strong password and write it down in your notes (this is the STRONG_PASS).
+
+    ![Create administrator credentials](./images/admin-credentials.png "")
+
     - Select workload type: Transaction Processing (default).
     - Leave default values for database backups configuration (default).
 
@@ -124,10 +152,18 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     - Select your compartment (default).
     - Name your DB system: **DBS21B**
+
+    ![DB system information](./images/create-dbs21b.png "")
+
     - Select a shape type: Virtual Machine (default).
-    - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
-    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
-    - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
+    - Select a shape: **VM.Standard.E4.Flex**.
+
+    ![Configure Shape](./images/configure-shape.png "")
+
+    - Click **Change Shape**. Set **Number of OCPUs per node: 1** (default).
+
+    ![Change Shape](./images/change-shape.png "")
+
     - Use the Public Key file generated when creating the first DB System DBS21B from your computer.
     - Choose a license type: Bring Your Own License (BYOL).
 
@@ -137,12 +173,23 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Client Subnet: Public Subnet LLXXX-SUBNET-PUBLIC
     - Hostname prefix: **dbs21b-host**
 
+    ![Network information](./images/network-information-b.png "")
+
 7. Click Next.
 
     - Database name: **DBS21B**
-    - Database version: **21c**
+    - Database image: **Oracle Database 21c**
+
+    ![Change database image](./images/select-database-image.png "")
+
     - PDB name: Do NOT specify any value.
+
+    ![Database information](./images/database-information-b.png "")
+
     - Password: Use the strong password you saved in your notes (this is the STRONG_PASS).
+
+    ![Create administrator credentials](./images/admin-credentials.png "")
+
     - Select workload type: Transaction Processing (default).
     - Leave default values for database backups configuration (default).
 
@@ -168,6 +215,8 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Strong password **STRONG_PASS**. Use the strong password you saved in your notes.
 
 4. Open Oracle Cloud Shell.
+
+    ![Cloud Shell](./images/cloud-shell.png "")
 
 5. Upload on Cloud Shell environment the **Private Key** downloaded during DBS21A DB System creation and **prepare.sh** script.
 
