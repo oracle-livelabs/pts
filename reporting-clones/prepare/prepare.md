@@ -27,30 +27,15 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [How to Create VCN] (youtube:dqikNCqjsmk)
 
-1. Access Oracle cloud console via URL: [https://cloud.oracle.com/](https://cloud.oracle.com/)
-
-    - Cloud Account Name: oci-tenant
-
-    ![Tenancy name](./images/tenancy.png "")
-
-2. Click **Next**, and provide your credentials.
-
-    - User Name: oci-username
-    - Password: oci-password
-
-    ![Sing in](./images/sign-in.png "")
-
-3. Click **Sign In**.
-
-4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**.
+1. Click on main menu ≡, then Networking > **Virtual Cloud Networks**.
 
     ![Virtual Cloud Networks](./images/vcns.png "")
 
-5. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+2. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
 
     ![Start VCN Wizard](./images/start-vcn-wizard.png "")
 
-6. Select **VCN with Internet Connectivity**. Start VCN Wizard.
+3. Select **VCN with Internet Connectivity**. Start VCN Wizard.
 
     ![VCN with Internet Connectivity](./images/internet-conn.png "")
 
@@ -63,17 +48,17 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Configure VCN and Subnets](./images/vcn-defaults.png "")
 
-7. Click **Next** and **Create**.
+4. Click **Next** and **Create**.
 
-8. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**.
+5. When complete, create a Security Rule. Click **Public Subnet LLXXX-VCN**.
 
     ![Subnets](./images/subnets.png "")
 
-9. Click **Default Security List for LLXXX-VCN**.
+6. Click **Default Security List for LLXXX-VCN**.
 
     ![Security Lists](./images/security-lists.png "")
 
-10. Click **Add Ingress Rules**.
+7. Click **Add Ingress Rules**.
 
     ![Ingress Rules](./images/ingress-rules.png "")
 
@@ -83,7 +68,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Add Ingress Rules](./images/add-ingress-rules.png "")
 
-11. Click **Add Ingress Rules**.
+8. Click **Add Ingress Rules**.
 
 
 ## Task 2: Provision Database Systems
@@ -139,7 +124,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Database information](./images/database-information-a.png "")
 
-    - Password: Use a strong password and write it down in your notes (this is the STRONG_PASS).
+    - Password: Use a strong password and write it down in your notes (this is the `STRONG_PASS`).
 
     ![Create administrator credentials](./images/admin-credentials.png "")
 
@@ -186,7 +171,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Database information](./images/database-information-b.png "")
 
-    - Password: Use the strong password you saved in your notes (this is the STRONG_PASS).
+    - Password: Use the strong password you saved in your notes (this is the `STRONG_PASS`).
 
     ![Create administrator credentials](./images/admin-credentials.png "")
 
@@ -204,15 +189,15 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Set values for all variables in prepare.sh script.
 
-    - SSH key file name **SSH_KEY_FILE**. This is the name of the Private Key file downloaded during DBS21A DB System creation.
-    - DBS21A Public IP address **DBS21A_PUBLIC**. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21A Private IP address **DBS21A_PRIVATE**. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21B Public IP address **DBS21B_PUBLIC**. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21B Private IP address **DBS21B_PRIVATE**. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21A Database unique name **DBS21A_DB_NAME**. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
-    - DBS21B Database unique name **DBS21B_DB_NAME**. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
-    - Host domain name **DOMAIN_NAME**. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
-    - Strong password **STRONG_PASS**. Use the strong password you saved in your notes.
+    - SSH key file name `SSH_KEY_FILE`. This is the name of the Private Key file downloaded during DBS21A DB System creation.
+    - DBS21A Public IP address `DBS21A_PUBLIC`. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21A Private IP address `DBS21A_PRIVATE`. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21B Public IP address `DBS21B_PUBLIC`. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21B Private IP address `DBS21B_PRIVATE`. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21A Database unique name `DBS21A_DB_NAME`. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
+    - DBS21B Database unique name `DBS21B_DB_NAME`. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
+    - Host domain name `DOMAIN_NAME`. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
+    - Strong password `STRONG_PASS`. Use the strong password you saved in your notes.
 
 4. Open Oracle Cloud Shell.
 
@@ -265,6 +250,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 3. This is the SQL script userdata.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A_PDB1 pluggable database on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/dbs21a_pdb1.DOMAIN_NAME as sysdba
 
@@ -333,6 +319,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     -- Verify rows in application table.
     SELECT * FROM people;
+    </copy>
     ````
 
 ## Task 5: Create clone administrator
@@ -356,6 +343,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 3. This is the SQL script cloneadmin.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A container on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/DBS21A_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -391,6 +379,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     -- Test database link from Site B to Site A.
     select * from dual@dbs21a;
+    </copy>
     ````
 
     You may now **proceed to the next lab**.

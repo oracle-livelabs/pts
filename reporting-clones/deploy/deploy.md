@@ -42,6 +42,7 @@ This lab assumes you have:
 3. This is the SQL script refreshable.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A container database on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/DBS21A_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -105,6 +106,7 @@ This lab assumes you have:
 
     -- Select all records in application table.
     SELECT * FROM people;
+    </copy>
     ````
 
 ## Task 2: Configure auto-refresh mode
@@ -128,6 +130,7 @@ This lab assumes you have:
 3. This is the SQL script autorefresh.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A cotainer on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/DBS21A_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -184,6 +187,7 @@ This lab assumes you have:
 
     -- Select all rows from application table. The new record should be in the results.
     SELECT * FROM people;
+    </copy>
     ````
 
 ## Task 3: Create global application user
@@ -207,6 +211,7 @@ This lab assumes you have:
 3. This is the SQL script globalmanager.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A container on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/DBS21A_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -270,6 +275,7 @@ This lab assumes you have:
 
     -- Create the synonym of the application data table.
     CREATE SYNONYM C##GLOBALMGR.people_syn FOR PEOPLEMGR.people;
+    </copy>
     ````
 
 ## Task 4: Perform cross containers operations
@@ -293,6 +299,7 @@ This lab assumes you have:
 3. This is the SQL script crosspdbs.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21A container on Site A as SYSDBA.
     conn sys/STRONG_PASS@DBS21A_PRIVATE:1521/DBS21A_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -341,6 +348,7 @@ This lab assumes you have:
 
     -- Select all application records across all pluggable databases to verify the two new rows have been included.
     SELECT con_id, id, given_name, family_name, title, birth_date FROM CONTAINERS(people_syn) ORDER BY con_id, id;
+    </copy>
     ````
 
 ## Task 5: Implement two-way site cloning
@@ -364,6 +372,7 @@ This lab assumes you have:
 3. This is the SQL script roundtrip.sql, you don't need to copy and execute it from here.
 
     ````sql
+    <copy>
     -- Connect to DBS21B container database on Site B as SYSDBA.
     conn sys/STRONG_PASS@DBS21B_PRIVATE:1521/DBS21B_DB_NAME.DOMAIN_NAME as sysdba
 
@@ -428,6 +437,7 @@ This lab assumes you have:
     -- Re-enable the manual refresh mode on former refreshable clone DBS21B_PDB1C.
     -- It returns: RA-65261: pluggable database DBS21B_PDB1C not enabled for refresh
     alter pluggable database DBS21B_PDB1C refresh mode manual;
+    </copy>
     ````
 
 ## Acknowledgements

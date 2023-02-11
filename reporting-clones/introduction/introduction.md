@@ -1,6 +1,6 @@
-# Read-only clones for reporting
+# Introduction
 
-## Introduction
+## About this Workshop
 
 Refreshable bidirectional read-only clones at pluggable database level and cross container operations can be used for data replication and reporting purposes. This workshop use case has two sites, Site A and Site B, but these principles can be applied to a multi-site configuration. Data in local pluggable databases can be updated, and data from read-only refreshable clones can be used for reporting. These clones can be used in read/write mode for testing purposes, too, and re-created when finished because it's not possible to turn them back into refreshable read-only clone mode.
 
