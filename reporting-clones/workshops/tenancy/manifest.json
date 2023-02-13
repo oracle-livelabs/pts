@@ -1,5 +1,6 @@
 {
     "workshoptitle": "Run SQL queries on PowerPoint slides and notes",
+    "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
             "title": "Introduction",
