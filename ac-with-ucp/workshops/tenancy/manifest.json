@@ -19,6 +19,7 @@
         },
         {
             "title": "Lab 2: Configure the application environment",
+            "type": "tenancy",
             "description": "In this Lab you will configure the network and create RAC services.",
             "filename": "../../lab2-configure-env/lab2-configure-env.md"
         },

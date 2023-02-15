@@ -1,0 +1,32 @@
+{
+    "workshoptitle": "Run SQL queries on PowerPoint slides and notes",
+    "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction.",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
+            "title": "Lab 1: Provision cloud resources",
+            "description": "Oracle Cloud Infrastructure (OCI) resources.",
+            "filename": "./../../provision/provision.md"
+        },
+        {
+            "title": "Lab 2: Deploy file processing components",
+            "description": "Application data management and administration.",
+            "filename": "./../../deploy/deploy.md"
+        },
+        {
+            "title": "Lab 3: Process JSON files in collections",
+            "description": "Performance, scalability and elasticity.",
+            "filename": "./../../process/process.md"
+        },
+        {
+            "title": "Need help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+        }
+        
+    ]
+}

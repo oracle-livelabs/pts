@@ -1,14 +1,29 @@
-# Database Cloud Service Backup & Recovery
+# Back up and recover your data
 
 ## Introduction
 
-Backing up your database is a key aspect of any Oracle database environment. There are multiple options available for storing and recovering your backups. You can use the backup and restore feature either within the Oracle Cloud Infrastructure Console, CLI or REST APIs, or manually set up and manage backups using dbcli or RMAN. You can read about all the options in the [Oracle Cloud Infrastructure technical documentation](https://docs.us-phoenix-1.oraclecloud.com/Content/Database/Tasks/backingup.htm).
-
->**Note** : Your automatic incremental backups, on-demand full backups and on-premises to cloud backups are stored in Oracle Cloud Infrastructure Object Storage and you will be charged standard object storage cost.
+Backing up your database is a key aspect of any Oracle database environment. There are multiple options available for storing and recovering your backups. You can use the backup and restore feature either within the Oracle Cloud Infrastructure Console, CLI or REST APIs, or manually set up and manage backups using dbcli or RMAN.
 
 When you use the Console, you can create full backups or set up automatic incremental backups with a few clicks. Similarly, you can view your backups and restore your database using the last known good state, a point-in-time, or SCN (System Change Number). You can also create a new database from your backup in an existing or a new DB system.
 
-Estimated Lab Time: 30 minutes
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Configure Automatic Backups] (youtube:A258cuNZHfw)
+
+Estimated Time: 30 minutes
+
+### Objectives
+
+In this lab you will:
+* Create a full database backup
+* Restore your Base Database Service from a backup
+* Use automatic backups and clone from backup features
+* Verify and then terminate your database clone created from backup to release resources
+
+### Prerequisites
+
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
 
 ## Task 1: Create a Full Database Backup
 
@@ -42,7 +57,7 @@ Estimated Lab Time: 30 minutes
     </copy>
     ````
 
-4. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+4. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 5. Click the database name link **WSDB** in the bottom table called Databases.
 
@@ -54,9 +69,15 @@ Estimated Lab Time: 30 minutes
 
 ## Task 2: Restore Database Service from Backup
 
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Restore a BaseDB Database from a Backup] (youtube:deQJ5N9k6eI)
+
 1. Write down the Started and Ended times for backup called **Automatic Backup** in the bottom table called Backups - e.g. Started: 09:38:13 UTC, Ended: 09:56:36 UTC.
 
 2. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the next possible value after your Automatic Backup Ended field - e.g. 10:00 UTC. Click **Restore Database** to confirm.
+
+    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder /opt/oracle/dcs/log/db-host/rman/bkup/<Database unique name>/ for more information.
 
 3. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
@@ -115,17 +136,17 @@ Estimated Lab Time: 30 minutes
 
     - Select **Create a new DB system** radio button
     - Name your DB system: WS-DBb
-    - Change Shape: VM.Standard2.1
+    - Change Shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
     - Oracle Database software edition: Enterprise Edition Extreme Performance
     - Choose Storage Management Software: Logical Volume Manager
-    - Upload SSH key files: Browse and select the public key file saved from the first DB System (ssh-key-XXXX-XX-XX.key.pub). 
+    - Upload SSH key files: Browse and select the public key file saved from the first DB System (ssh-key-XXXX-XX-XX.key.pub).
     - Choose a license type: Bring Your Own License (BYOL)
     - Virtual cloud network: LLXXXXX-VCN
     - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
     - Hostname prefix: db-clone
     - Database name: WSDBB
-    - Password: DatabaseCloud#22_
-    - Enter the source database's TDE wallet or RMAN password: DatabaseCloud#22_
+    - Password: Use the strong password written down in your notes.
+    - Enter the source database's TDE wallet or RMAN password: Use the strong password written down in your notes.
 
 5. Click **Create Database**. Status is Provisioning...
 
@@ -215,20 +236,19 @@ Estimated Lab Time: 30 minutes
 
 ## Task 7: Terminate New Database Service to Release Resources
 
-1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Databases. Click **WS-DBb** DB System.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
 
-2. Click **More Actions** > **Terminate**. 
+2. Click **More Actions** > **Terminate**.
 
-3. Type in the DB System Name to confirm termination: **WS-DBb**. 
+3. Type in the DB System Name to confirm termination: **WS-DBb**.
 
-4. Click **Terminate DB System**. Status becomes Terminating... 
+4. Click **Terminate DB System**. Status becomes Terminating...
 
 5. If you want to see more details, click **Work Requests** in the lower left menu. Click on **Terminate DB System** operation. Here you can see Log Messages, Error Messages, Associated Resources.
+
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
-
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
