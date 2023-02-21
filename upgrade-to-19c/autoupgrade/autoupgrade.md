@@ -1,6 +1,6 @@
 # Upgrade using the Autoupgrade tool #
 
-## Introduction ##
+## Task ##
 
 In this lab, we will leverage the Autoupgrade tool and upgrade an existing 12.1 CDB with 2 PDBs to 19c in a single command and configuration file.
 
@@ -40,7 +40,7 @@ When in doubt or need to start the databases, use the following steps:
 
     The output should be similar to this:
     ````
-    Processing Database instance "DB112": log file /u01/app/oracle/product/11.2.0/dbhome_112/rdbms/log/startup.log
+    <copy></copy>Processing Database instance "DB112": log file /u01/app/oracle/product/11.2.0/dbhome_112/rdbms/log/startup.log
     Processing Database instance "DB121C": log file /u01/app/oracle/product/12.1.0/dbhome_121/rdbms/log/startup.log
     Processing Database instance "DB122": log file /u01/app/oracle/product/12.2.0/dbhome_122/rdbms/log/startup.log
     Processing Database instance "DB18C": log file /u01/app/oracle/product/18.1.0/dbhome_18c/rdbms/log/startup.log
@@ -71,10 +71,7 @@ We will use the preinstalled 12.1.0.2 database for this exercise (although we co
 3. Execute the following command to check if all PDBs are open
     ````
     SQL> <copy>show pdbs</copy>
-    ````
-
-    The following will probably be visible:
-    ````
+    
         CON_ID CON_NAME                       OPEN MODE  RESTRICTED
     ---------- ------------------------------ ---------- ----------
              2 PDB$SEED                       READ ONLY  NO
@@ -169,11 +166,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ````
     $ <copy>java -jar $ORACLE_HOME/rdbms/admin/autoupgrade.jar -config DB121C.cfg -mode analyze -noconsole</copy>
-    ````
 
-    The result should be similar to this:
-
-    ````
     AutoUpgrade tool launched with default options
     Processing config file ...
     +--------------------------------+
@@ -204,6 +197,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The result should be similar to the following:
 
     ````
+    <copy></copy>
     [dbname]          [DB121C]
     ==========================================
     [container]          [CDB$ROOT]
@@ -249,11 +243,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ````
     $ <copy>java -jar $ORACLE_HOME/rdbms/admin/autoupgrade.jar -config DB121C.cfg -mode deploy</copy>
-    ````
 
-    The output should be similar to the following:
-
-    ````
     Autoupgrade tool launched with default options
     +--------------------------------+
     | Starting AutoUpgrade execution |
@@ -272,6 +262,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The following is an example output:
 
     ````
+    <copy></copy>
     +----+-------+---------+---------+-------+--------------+--------+--------+-----------------+
     |JOB#|DB NAME|    STAGE|OPERATION| STATUS|    START TIME|END TIME| UPDATED|          MESSAGE|
     +----+-------+---------+---------+-------+--------------+--------+--------+-----------------+
@@ -337,7 +328,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Wait until the 'STAGE' column of the lsj command displays the status 'DBUPGRADE', which takes about 6 minutes. The output should be similar to this:
 
     ````
-    upg> lsj
+    upg> <copy>lsj</copy>
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
     |JOB#|DB NAME|    STAGE|OPERATION| STATUS|    START TIME|END TIME| UPDATED|MESSAGE|
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
@@ -354,12 +345,13 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The output will be similar to the following (if the upgrade is running, this command will not result in an output during the precheck or prefixup steps):
 
     ````
+    <copy></copy>
     oracle   17211 11951  0 10:13 pts/4    00:00:01 /u01/app/oracle/product/19.0.0/dbhome_193/perl/bin/perl /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/catctl.pl -A -l /u01/autoupgrade/100/dbupgrade -i 20190321101158db112 -d /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin catupgrd.sql
     ````
 
     Please, again, note that the perl command will only give you a result if the autoupgrade tool is actually running the perl scripts.
 
-11. The logfiles in the `/u01/autoupgrade/<job#>` directory show you the progress as well, for example:
+11. The logfiles in the `/u01/autoupgrade/DB121C/<job#>` directory show you the progress as well, for example:
 
     ````
     $ <copy>cd /u01/autoupgrade/DB121C/101/dbupgrade</copy>
@@ -371,6 +363,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The output will be similar to the following:
 
     ````
+    <copy></copy>
     2019-04-17 12:44:23.670 INFO Finished - Utilities.autoReadFileToAry
     2019-04-17 12:44:23.670 INFO Finished - Utilities.getPhaseNo
     2019-04-17 12:44:23.672 INFO [Upgrading] is [92%] completed for [db121c-pdb$seed]
@@ -391,6 +384,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     After a while, you will see that the upgrade has finished:
 
     ````
+    <copy></copy>
     +-------------------------------+
     | Starting AutoUpgrade execution |
     +--------------------------------+
@@ -418,6 +412,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database):
 
     ````
+    <copy></copy>
     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Mar 22 16:38:53 2019
     Version 19.3.0.0.0
 
@@ -432,11 +427,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ````
     SQL> <copy>select version from v$instance;</copy>
-    ````
 
-    The output will be similar to this:
-
-    ````
     VERSION
     -----------------
     19.0.0.0.0

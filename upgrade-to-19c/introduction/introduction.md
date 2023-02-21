@@ -1,6 +1,6 @@
 # Introduction #
 
-## About this workshop ##
+## Task ##
 
 **19c Database** is the current version Oracle promotes to customers and partners as the best target version for a database upgrade. Oracle 19c is the long-term support version and will be supported for at least four years after the initial release. After this, Extended support and Sustaining support will be available. This hands-on workshop focuses on **Upgrading your environment to 19c** demonstrating three scenarios that you can use (both on-premises and in the cloud) to upgrade your environment to 19c in a Container/Multitenant setup.
 

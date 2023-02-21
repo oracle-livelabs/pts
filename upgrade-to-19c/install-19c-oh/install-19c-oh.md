@@ -132,8 +132,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
     - Pluggable database name
         - PDB19C01 **(change this value)**
 
-    ![](./images/oui-2
-.png)
+    ![](./images/oui-2.png)
 
     - After you have entered the correct values, please press the `NEXT` button to continue.
 
