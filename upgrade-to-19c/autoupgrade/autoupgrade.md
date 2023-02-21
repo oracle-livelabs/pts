@@ -40,7 +40,8 @@ When in doubt or need to start the databases, use the following steps:
 
     The output should be similar to this:
     ```
-    <copy></copy>Processing Database instance "DB112": log file /u01/app/oracle/product/11.2.0/dbhome_112/rdbms/log/startup.log
+    <copy> </copy>
+    Processing Database instance "DB112": log file /u01/app/oracle/product/11.2.0/dbhome_112/rdbms/log/startup.log
     Processing Database instance "DB121C": log file /u01/app/oracle/product/12.1.0/dbhome_121/rdbms/log/startup.log
     Processing Database instance "DB122": log file /u01/app/oracle/product/12.2.0/dbhome_122/rdbms/log/startup.log
     Processing Database instance "DB18C": log file /u01/app/oracle/product/18.1.0/dbhome_18c/rdbms/log/startup.log
@@ -197,7 +198,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The result should be similar to the following:
 
     ```
-    <copy></copy>
+    <copy> </copy>
     [dbname]          [DB121C]
     ==========================================
     [container]          [CDB$ROOT]
@@ -262,7 +263,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The following is an example output:
 
     ```
-    <copy></copy>
+    <copy> </copy>
     +----+-------+---------+---------+-------+--------------+--------+--------+-----------------+
     |JOB#|DB NAME|    STAGE|OPERATION| STATUS|    START TIME|END TIME| UPDATED|          MESSAGE|
     +----+-------+---------+---------+-------+--------------+--------+--------+-----------------+
@@ -345,7 +346,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The output will be similar to the following (if the upgrade is running, this command will not result in an output during the precheck or prefixup steps):
 
     ```
-    <copy></copy>
+    <copy> </copy>
     oracle   17211 11951  0 10:13 pts/4    00:00:01 /u01/app/oracle/product/19.0.0/dbhome_193/perl/bin/perl /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/catctl.pl -A -l /u01/autoupgrade/100/dbupgrade -i 20190321101158db112 -d /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin catupgrd.sql
     ```
 
@@ -363,7 +364,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     The output will be similar to the following:
 
     ```
-    <copy></copy>
+    <copy> </copy>
     2019-04-17 12:44:23.670 INFO Finished - Utilities.autoReadFileToAry
     2019-04-17 12:44:23.670 INFO Finished - Utilities.getPhaseNo
     2019-04-17 12:44:23.672 INFO [Upgrading] is [92%] completed for [db121c-pdb$seed]
@@ -384,7 +385,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     After a while, you will see that the upgrade has finished:
 
     ```
-    <copy></copy>
+    <copy> </copy>
     +-------------------------------+
     | Starting AutoUpgrade execution |
     +--------------------------------+
@@ -412,7 +413,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database):
 
     ```
-    <copy></copy>
+    <copy> </copy>
     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Mar 22 16:38:53 2019
     Version 19.3.0.0.0
 
