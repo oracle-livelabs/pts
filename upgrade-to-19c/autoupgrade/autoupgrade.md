@@ -1,6 +1,6 @@
 # Upgrade using the Autoupgrade tool #
 
-## Task ##
+## Introduction ##
 
 In this lab, we will leverage the Autoupgrade tool and upgrade an existing 12.1 CDB with 2 PDBs to 19c in a single command and configuration file.
 
@@ -36,11 +36,7 @@ When in doubt or need to start the databases, use the following steps:
 
     ```
     $ <copy>dbstart $ORACLE_HOME</copy>
-    ```
 
-    The output should be similar to this:
-    ```
-    <copy> </copy>
     Processing Database instance "DB112": log file /u01/app/oracle/product/11.2.0/dbhome_112/rdbms/log/startup.log
     Processing Database instance "DB121C": log file /u01/app/oracle/product/12.1.0/dbhome_121/rdbms/log/startup.log
     Processing Database instance "DB122": log file /u01/app/oracle/product/12.2.0/dbhome_122/rdbms/log/startup.log
@@ -191,14 +187,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ```
     $ <copy>cat /u01/autoupgrade/DB121C/100/prechecks/db121c_preupgrade.log</copy>
-    ```
 
-    If you get a 'file not found' or another error, please navigate manually to the /u01/autoupgrade/DB121C directory and check which subdirectories have been created. Navigate to the ```<jobnumber>/prechecks``` directory and do a ```cat db121c_preupgrade.log``` instead.
-
-    The result should be similar to the following:
-
-    ```
-    <copy> </copy>
     [dbname]          [DB121C]
     ==========================================
     [container]          [CDB$ROOT]
@@ -234,6 +223,9 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
                          EXECUTE DBMS_STATS.GATHER_DICTIONARY_STATS;
     ....
     ```
+
+    If you get a 'file not found' or another error, please navigate manually to the /u01/autoupgrade/DB121C directory and check which subdirectories have been created. Navigate to the ```<jobnumber>/prechecks``` directory and do a ```cat db121c_preupgrade.log``` instead.
+
     In a typical upgrade situation, you can now check whether or not there are blocking issues concerning your upgrade. The step executed here is the same as running the preupgrade.jar manually or through the DBUA.
 
     In this hands-on lab, no changes are required so we can continue with the actual upgrade process.
@@ -341,16 +333,11 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ```
     $ <copy>ps -ef | grep perl</copy>
-    ```
 
-    The output will be similar to the following (if the upgrade is running, this command will not result in an output during the precheck or prefixup steps):
-
-    ```
-    <copy> </copy>
     oracle   17211 11951  0 10:13 pts/4    00:00:01 /u01/app/oracle/product/19.0.0/dbhome_193/perl/bin/perl /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/catctl.pl -A -l /u01/autoupgrade/100/dbupgrade -i 20190321101158db112 -d /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin catupgrd.sql
     ```
 
-    Please, again, note that the perl command will only give you a result if the autoupgrade tool is actually running the perl scripts.
+    The output will be similar to the example, but only if the actual upgrade step is running. There will be no output during the precheck or prefixup steps. In case of no output, make sure the 'lsj' command still shows a running process and execute the ps -ef command again.
 
 11. The logfiles in the `/u01/autoupgrade/DB121C/<job#>` directory show you the progress as well, for example:
 
@@ -359,12 +346,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     ```
     ```
     $ <copy>tail -f autoupgrade_*.log</copy><Press TAB>.log
-    ```
 
-    The output will be similar to the following:
-
-    ```
-    <copy> </copy>
     2019-04-17 12:44:23.670 INFO Finished - Utilities.autoReadFileToAry
     2019-04-17 12:44:23.670 INFO Finished - Utilities.getPhaseNo
     2019-04-17 12:44:23.672 INFO [Upgrading] is [92%] completed for [db121c-pdb$seed]
@@ -385,7 +367,8 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     After a while, you will see that the upgrade has finished:
 
     ```
-    <copy> </copy>
+    $ <copy>tail -f autoupgrade_*.log</copy><Press TAB>.log
+
     +-------------------------------+
     | Starting AutoUpgrade execution |
     +--------------------------------+
@@ -440,4 +423,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements ##
 
 - **Author** - Robert Pastijn, DB Dev Product Management, PTS EMEA - April 2020
-- **Last updated** - Robert Pastijn, Database Product Development, PTS EMEA - July 2022
+- **Last updated** - Robert Pastijn, Database Product Development, PTS EMEA - February 2023
