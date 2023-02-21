@@ -27,7 +27,7 @@ Estimated time: 3 hours.
 ## Task 1: Access the labs ##
 
 - Use **Lab Contents** menu on the left side of the screen to access the labs.
-    - If the menu is not displayed, click the menu button ![](./images/menu-button.png) on the top left to make it visible.
+    - If the menu is not displayed, click the menu button ![Livelabs Menu button](./images/menu-button.png) on the top left to make it visible.
 
 - From the menu, click on the lab that you would like to run. For example, if you want to proceed to **Lab 1**, click **Lab 1: Verify the environment**.
 
