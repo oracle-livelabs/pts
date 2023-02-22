@@ -368,7 +368,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     After a while, you will see that the upgrade has finished:
 
     ```
-    $ <copy>tail -f autoupgrade_*.log</copy><Press TAB>.log
+    $ <copy>tail -f autoupgrade_*.log</copy>
 
     +-------------------------------+
     | Starting AutoUpgrade execution |
