@@ -215,7 +215,6 @@ When in doubt or need to start the databases using the following steps:
 
     ```
     ...
-    ,copy>...</copy>
     Serial   Phase #:105  [PDB18C01] Files:1    Time: 1s
     Serial   Phase #:106  [PDB18C01] Files:1    Time: 1s
     Serial   Phase #:107  [PDB18C01] Files:1     Time: 0s

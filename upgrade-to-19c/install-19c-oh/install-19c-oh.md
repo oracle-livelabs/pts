@@ -3,7 +3,8 @@
 ## Introduction ##
 
 In this lab, we will install the 19c database software and create a new 19c database (and listener) as a target for the other upgrades.
-```
+
+
 Estimated Time: 30 minutes
 
 ### Objectives ###

@@ -322,6 +322,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
 
     ```
     upg> <copy>lsj</copy>
+
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
     |JOB#|DB NAME|    STAGE|OPERATION| STATUS|    START TIME|END TIME| UPDATED|MESSAGE|
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
@@ -392,11 +393,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     ```
     ```
     $ <copy>sqlplus / as sysdba</copy>
-    ```
-    Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database):
 
-    ```
-    <copy> </copy>
     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Mar 22 16:38:53 2019
     Version 19.3.0.0.0
 
@@ -406,6 +403,8 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.3.0.0.0
     ```
+
+    Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database)    ```
 
 2. Check the version of the database by querying the `v$instance` view:
 

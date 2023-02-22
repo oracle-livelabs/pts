@@ -147,34 +147,24 @@ The migration described in this lab requires a directory object for Datapump and
 
     no rows selected
     ```
-    ```
-    The correct answer should be:
-
-    ```
+    The correct answer should be that no rows are available as the table has not been imported yet from the source database.
 
 
 11. The second check, to be sure, see if the table exists in the source database:
     ```
     SQL> <copy>select table_name from dba_tables@sourcedb where owner='PARKINGFINE';</copy>
-    ```
 
-    The correct response should be:
-
-    ```
     TABLE_NAME
     --------------------------------------------------------------------------------
     PARKING_CITATIONS
     ```
+    This time the table should be visible as we are querying the source database.
 
  12. As a quick check, we determine how many records are in the remote table:
 
     ```
     SQL> <copy>select count(*) from PARKINGFINE.PARKING_CITATIONS@sourcedb;</copy>
-    ```
 
-    The correct response should be:
-
-    ```
       COUNT(*)
     ----------
        9060183
@@ -233,11 +223,7 @@ The migration described in this lab requires a directory object for Datapump and
     SQL> <copy>select name from v$datafile where ts# in (select ts#
                                                          from v$tablespace
                                                          where name='USERS');</copy>
-    ```
 
-    The following should be the result:
-
-    ```
     NAME
     --------------------------------------------------------------------------------
     /u01/oradata/DB122/users01.dbf
@@ -280,11 +266,7 @@ Data Pump will take care of everything (currently except XDB and AWR) you need f
     $ <copy>impdp system/Welcome_123@//localhost:1521/PDB19C02 network_link=sourcedb \
             full=y transportable=always metrics=y exclude=statistics logfile=homedir:db122ToPdb.log \
             logtime=all transport_datafiles='/u01/oradata/DB19C/PDB19C02/users01.dbf'</copy>
-    ```
 
-    A similar output should be visible:
-
-    ```
     Import: Release 19.0.0.0.0 - Production on Fri Apr 3 12:09:40 2020
     Version 19.3.0.0.0
 
@@ -314,7 +296,6 @@ Data Pump will take care of everything (currently except XDB and AWR) you need f
     Usually, you will find errors when using FTTS:
 
     ```
-    <copy>...</copy>
     03-APR-20 12:11:15.770: ORA-39083: Object type PROCACT_SCHEMA failed to create with error:
     ORA-31625: Schema SPATIAL_CSW_ADMIN_USR is needed to import this object, but is unaccessible
     ORA-01435: user does not exist
@@ -323,7 +304,6 @@ Data Pump will take care of everything (currently except XDB and AWR) you need f
     or
 
     ```  
-    <copy>...</copy>  
     03-APR-20 12:11:44.837: ORA-39342: Internal error - failed to import internal objects tagged with ORDIM due to ORA-00955: name is already used by an existing object
     ```
 
@@ -354,14 +334,11 @@ The Data Pump process should have migrated the most crucial user in the database
 
     Session altered.
     ```
-3. Check if the table that is so important, exists in the target database:
+3. Check if the table, which is so important, exists in the target database:
 
     ```
     SQL> <copy>select table_name from dba_tables where owner='PARKINGFINE';</copy>
-    ```
 
-    The result should be this:
-    ```
     TABLE_NAME
     --------------------------------------------------------------------------------
     PARKING_CITATIONS
