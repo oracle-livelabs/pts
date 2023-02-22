@@ -404,7 +404,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Version 19.3.0.0.0
     ```
 
-    Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database)    ```
+    Although we just set the environment variables for the SID DB121C, the SQL*Plus output already shows that the Autoupgrade tool has changed the `\etc\oratab` file and updated the home for the DB121C database (which is now the 19c database)
 
 2. Check the version of the database by querying the `v$instance` view:
 
