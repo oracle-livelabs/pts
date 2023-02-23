@@ -1,4 +1,4 @@
-# Customer Insurance Use Case
+# Understand the dataset
 
 ## Introduction
 
@@ -42,10 +42,11 @@ Since the data already has the buy insurance and LTV information and the other d
 
   ![customer-data-4](./images/customer-data-4.png)
 
-In this workshop, you will pass new records to machine learning models to predict whether the customer will buy the insurance and automatically determine the LTV without humans.  Have fun.
+5. In this workshop, you will pass new records to machine learning models to predict whether the customer will buy the insurance and automatically determine the LTV without humans.  Have fun.
 
-You may now [proceed to the next lab](#next).
+    You may now **proceed to the next lab**.
+
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** -  Rajeev Rumale, April 2022
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, February 2023

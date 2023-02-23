@@ -13,22 +13,22 @@
       "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
     },
     {
-    "title": "Lab 3: Initialize Environment",
+    "title": "Lab 3: Initialize the environment",
     "description": "Initialize Environment",
     "filename": "../../initialize-environment-novnc/initialize-environment-novnc.md"
     },
     {
-    "title": "Lab 4: Understanding Dataset",
+    "title": "Lab 4: Understand the dataset",
     "description": "Understanding the Customer Insurance dataset to be used in the lab excercises.",
     "filename": "./../../../use-case/use-case.md"
     },
     {
-    "title": "Lab 5: OML4Py - Part 1",
+    "title": "Lab 5: Run OML4Py notebook part 1",
     "description": "Handson lab for using OML4Py.",
     "filename": "./../../oml4py1/oml4py1.md"
     },
     {
-    "title": "Lab 6: OML4Py - Part 2 (optional)",
+    "title": "Lab 6: Run OML4Py notebook part 2",
     "description": "Handson lab for using OML4Py.",
     "filename": "./../../oml4py2/oml4py2.md"
     },
