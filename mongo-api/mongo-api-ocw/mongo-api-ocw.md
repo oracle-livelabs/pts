@@ -14,13 +14,11 @@ On the other hand, you're looking to future-proof your applications and make the
 
 Oracle Database API for MongoDB, or Mongo API for short, provides all of that. It translates the MongoDB wire protocol into SQL statements that are executed by Oracle Database. This means you can continue to use the drivers, frameworks, and tools you're used to, to develop your JSON document-store applications.
 
-
 To learn more about this capability go to he following content:
  - [Oracle Database API for MongoDB](https://docs.oracle.com/en/database/oracle/mongodb-api/mgapi/overview-oracle-database-api-mongodb.html#GUID-1CF44843-6294-45F0-8065-B9E8034D6CB1)
  - [Oracle Database API for MongoDB Blog from Roger Ford, Principal Product Manager] (https://blogs.oracle.com/database/post/mongodb-api)
 
-
-**Estimated Time: 20 minutes**.
+Estimated Time: 20 minutes
 
 ### Objectives
 
@@ -37,7 +35,7 @@ In this lab, you will:
 
 1. Access to **cloud shell** again. If you are not connected to **opc@xxx0vm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ````bash
     <copy>
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
@@ -47,7 +45,7 @@ In this lab, you will:
 
 2. We will **export** the **paths** and **Access** to python-simple-project folder using the following commands:
 
-    ````
+    ````bash
     <copy>
     export TNS_ADMIN=/home/opc/Wallet_MyAJD
     export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
@@ -63,7 +61,7 @@ In this lab, you will:
 
 3. Lets have a look at **mongoapi-app.py**. In this file, we have the Python application code. Run the following command to see the code:
 
-    ````
+    ````bash
     <copy>
     cat mongoapi-app.py
     </copy>
@@ -73,7 +71,7 @@ In this lab, you will:
 
 3. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **SimpleCollection**. We will **run** the following export commands:
 
-    ````
+    ````bash
     <copy>
     export MONGO_USER="demo"
     export MONGO_PASSWORD="DBlearnPTS#22_"
@@ -119,7 +117,7 @@ In this lab, you will:
 
 7. We will **export** the URL using the following command:
 
-    ````
+    ````bash
     <copy>
     export ATP_URL="URL_FROM_ABOVE"
     </copy>
@@ -129,7 +127,7 @@ In this lab, you will:
 
 8. **After checking if all variables are correct**. **Run** mongoapi-app application using the following command:
 
-    ````
+    ````bash
     <copy>
     python3 mongoapi-app.py
     </copy>
@@ -211,7 +209,7 @@ In this lab, you will:
 
 1. Access to **cloud shell** again. If you are not connected to **opc@xxx0vm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ````bash
     <copy>
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
@@ -220,7 +218,7 @@ In this lab, you will:
 
 2. We will **export** the **paths** and **Access** to python-simple-project folder using the following commands:
 
-    ````
+    ````bash
     <copy>
     export TNS_ADMIN=/home/opc/Wallet_MyAJD
     export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
@@ -236,7 +234,7 @@ In this lab, you will:
 
 3. Lets have a look at **insert-mongoapi-app.py**. In this file, we have the Python application code. Run the following command to see the code:
 
-    ````
+    ````bash
     <copy>
     cat insert-mongoapi-app.py
     </copy>
@@ -246,7 +244,7 @@ In this lab, you will:
 
 4. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **MongoCollection**. We will **run** the following export commands:
 
-    ````
+    ````bash
     <copy>
     export MONGO_USER="demo"
     export MONGO_PASSWORD="DBlearnPTS#22_"
@@ -258,7 +256,7 @@ In this lab, you will:
 
 5. Make sure ATP_URL variable is also exported.
 
-    ````
+    ````bash
     <copy>
     echo $ATP_URL
     </copy>
@@ -271,7 +269,7 @@ In this lab, you will:
 
 6. **After checking if all variables are correct**. **Run** mongoapi-app application using the following command:
 
-    ````
+    ````bash
     <copy>
     nohup python3 insert-mongoapi-app.py > insert-mongoapi-app.log 2>&1 & echo $! > insert-mongoapi-app.pid
     </copy>
@@ -286,7 +284,7 @@ In this lab, you will:
 
 7. Lets see what **insert-mongoapi-app.py is doing**, use the following command:
 
-    ````
+    ````bash
     <copy>
     cat insert-mongoapi-app.log
     </copy>
@@ -300,7 +298,7 @@ In this lab, you will:
 
 8. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First and Second POST:
 
-    ````
+    ````bash
     <copy>
     curl --request POST \
             --url http://localhost:5000/oracle/mongo/ \
@@ -348,7 +346,7 @@ In this lab, you will:
 
 11. Go to **cloud shell terminal.** We will **stop insert-mongoapi-app.py** running the following command.
 
-    ````
+    ````bash
     <copy>
     kill $(cat insert-mongoapi-app.pid)
     </copy>
@@ -356,9 +354,9 @@ In this lab, you will:
 
     ![kill insert-mongoapi-app](./images/task3/insert-mongoapi-app-kill.png)
 
-**Congratulations! Well done!**
+You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, June 2022
+* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023

@@ -1,4 +1,4 @@
-# Infrastructure Configuration
+# Infrastructure configuration
 
 ## Introduction
 
@@ -8,7 +8,7 @@ The main three elements that we will be creating are a **Virtual Cloud Network**
 
 We will prepare the documents to be capable of accessing to **SODA APIs**, in particular, to create, drop, and list document collections using **APEX** as vehicle to visualize the JSON documents as we used to do with structure data. This capability is unique of Oracle Databases.
 
-Estimated Lab Time: 40 minutes
+Estimated Time: 40 minutes
 
 Watch the video below for a quick walk-through of the lab.
 [Infrastructure Configuration](videohub:1_8a593q4e)
@@ -24,7 +24,7 @@ In this lab, you will:
 
 ### Prerequisites
 
-* An Oracle Free Tier, Always Free, or Paid Oracle Cloud Account
+* An Oracle Cloud Infrastructure (OCI) account
 
 
 ## Task 1: Create Virtual Cloud Network (VCN)
@@ -160,7 +160,7 @@ In this lab, you will:
     - Compartment: Be sure you have selected the correct one for this workshop purpose. **Root** is the recommended one
     - Image and shape: click **Edit/Collapse** and after **Change shape** if you don't have the following information:
         - Image: **MongoDB and Autonomous JSON workshop**
-        - Shape: **VM.Standard.E2.1.Micro - Always Free eligible**
+        - Shape: **VM.Standard.E2.1.Micro**
 
     ![Marketplace Compute Instance Creation](./images/task2/marketplace-compute-instance-creation.png)
 
@@ -173,7 +173,7 @@ In this lab, you will:
     - Compartment: Be sure you have selected the correct one for this workshop purpose. **Root** is the recommended one
     - Image and shape: click **Edit/Collapse** and after **Change shape** if you don't have the following information:
         - Image: **MongoDB and Autonomous JSON workshop**
-        - Shape: **VM.Standard.E2.1.Micro - Always Free eligible**
+        - Shape: **VM.Standard.E2.1.Micro**
 
     ![Marketplace Compute Instance Creation No Trial](./images/task2/marketplace-compute-instance-creation-no-trial.png)
 
@@ -224,7 +224,6 @@ On the Instance Details page, copy Public IP Address in your notes.
     ```
     - Choose a workload type: JSON
     - Choose a deployment type: Shared Infrastructure
-    - Always Free: Show only Always Free configuration options
     - Choose database version: 19c
     - OCPU count: 1
     - Storage (TB): 1 or 0.02 if you are using a Trial account
@@ -307,7 +306,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 15. You can **verify** if the files have been transferred correctly using the following command:
 
-    ````
+    ````bash
     <copy>
     ll   
     </copy>
@@ -317,17 +316,17 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 16. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ```bash
     <copy>
     chmod 400 <private-key-file-name>.key
     </copy>
     ```
 
-    ```
+    ```bash
     <copy>
     scp -i <private-key-file-name>.key ./Wallet_AJDEV.zip opc@<Public_IP>:/home/opc
     </copy>
-    ````
+    ```
 
     ![scp Command](./images/task3/scp-command.png)
 
@@ -335,7 +334,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 17. Now we will stablish an **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ````bash
     <copy>
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
@@ -345,7 +344,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 18. We will **unzip** the **Wallet** running the following commands:
 
-    ````
+    ````bash
     <copy>
     unzip Wallet_AJDEV.zip -d Wallet_AJDEV
     </copy>
@@ -355,7 +354,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 19. We will **export** the **paths** using the following commands:
 
-    ````
+    ````bash
     <copy>
     sed -i 's/?\/network\/admin/\${TNS_ADMIN}/g' Wallet_AJDEV/sqlnet.ora
     export TNS_ADMIN=/home/opc/Wallet_AJDEV
@@ -532,14 +531,9 @@ On the Instance Details page, copy Public IP Address in your notes.
     ![DB Actions JSON Create Collection](./images/task4/simple-collection.png)
 
 
-*You can proceed to the next lab…*
+You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, July 2022
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
