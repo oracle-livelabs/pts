@@ -20,7 +20,10 @@ To learn more about this capability go to he following content:
  - [Oracle Database API for MongoDB Blog from Roger Ford, Principal Product Manager] (https://blogs.oracle.com/database/post/mongodb-api)
 
 
-**Estimated Lab Time: 20 minutes**.
+Estimated Lab Time: 20 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Python micro-service with the new MongoAPI capability](videohub:1_44ff0wv1)
 
 ### Objectives
 
@@ -73,7 +76,7 @@ In this lab, you will:
 
     ![cat mongoapi-app](./images/task1/cat-mongoapi-app.png)
 
-3. For the Oracle Autonomous JSON database connection: We are using **demo** user and the **password** that we have recommended during the workshop **DBlearnPTS#22_**. The name of the Oracle Database schema is **demo**. And the Oracle collection is **SimpleCollection**. We will **run** the following export commands:
+3. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **SimpleCollection**. We will **run** the following export commands:
 
     ````
     <copy>
@@ -101,9 +104,8 @@ In this lab, you will:
     <copy>admin</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
 5. Under the **Related Services** section, click on **Oracle Database API for MongoDB**.
 
@@ -179,9 +181,8 @@ In this lab, you will:
     <copy>demo</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![DB Actions DEMO sign in](./images/task2/sign-in-demo.png)
 
@@ -252,7 +253,7 @@ In this lab, you will:
 
     ![cat insert-mongoapi-app](./images/task3/cat-insert-mongoapi-app.png)
 
-4. For the Oracle Autonomous JSON database connection: We are using **demo** user and the **password** that we have recommended during the workshop **DBlearnPTS#22_**. The name of the Oracle Database schema is **demo**. And the Oracle collection is **MongoCollection**. We will **run** the following export commands:
+4. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **MongoCollection**. We will **run** the following export commands:
 
     ````
     <copy>

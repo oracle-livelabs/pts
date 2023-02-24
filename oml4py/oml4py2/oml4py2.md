@@ -1,10 +1,10 @@
-# Oracle Machine Learning for Python (OML4Py) - part 2 (*optional*)
+# Run OML4Py notebook part 2
 
 ## Introduction
 
-Before running this lab, make sure you have completed **Oracle Machine Learning for Python (OML4Py) - part 1**.
+Before running this lab, make sure you have completed **Run OML4Py notebook part 1**.
 
-Estimated Lab Time: 1 hour 50 min
+Estimated Time: 1 hour 50 min
 
 ### Objectives
 
@@ -26,7 +26,7 @@ In this lab, you will:
 
 7. Optioanlly, an example invocation of model tuning with user-defined search ranges for selected hyperparameters on a new tuning metric (`f1_macro`).
 
-    ```
+    ```python
     <copy>
     search_space = {
        'RFOR_SAMPLING_RATIO': {'type': 'continuous', 'range': [0.01, 0.5]},
@@ -39,7 +39,7 @@ In this lab, you will:
 
 8. Start an automated model tuning run with a Random Forest (RF) model, for comparison.
 
-    ```
+    ```python
     <copy>
     results = at.tune('rf', X, y, param_space=search_space)
     score, params = results['all_evals'][0]
@@ -49,7 +49,7 @@ In this lab, you will:
 
 9. Show the RF tuned model details.
 
-    ```
+    ```python
     <copy>
     tuned_model = results['best_model']
     tuned_model
@@ -58,7 +58,7 @@ In this lab, you will:
 
 10. Use the RF tuned model to get the score on the test set. How is the score of RF model compared to DT model?
 
-    ```
+    ```python
     <copy>
     "{:.2}".format(tuned_model.score(X_test, y_test))
     </copy>
@@ -66,7 +66,7 @@ In this lab, you will:
 
 11. Some hyperparameter search ranges need to be defined based on the training data set sizes (for example, the number of samples and features). You can use placeholders specific to the data set, such as `$nr_features` and `$nr_samples`, as the search ranges.
 
-    ```
+    ```python
     <copy>
     search_space = {'RFOR_MTRY': {'type': 'discrete',
                                   'range': [1, '$nr_features/2']}}
@@ -94,7 +94,7 @@ Watch the video below for a quick walk through of the lab.
 
     > **Note** :  Notice at this step you create an OML data frame from a database query, instead of a database table, using the same `oml.sync` transparency layer function.
 
-    ```
+    ```python
     <copy>
     train_dat = oml.sync(query = 'select CUST_ID, MARITAL_STATUS, LTV_BIN from CUST_INSUR_LTV')
     train_dat
@@ -103,7 +103,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Count insurance customers in your training data frame by `MARITAL_STATUS` and `LTV_BIN` attributes.
 
-    ```
+    ```python
     <copy>
     train_dat.crosstab('MARITAL_STATUS',
                        'LTV_BIN').sort_values(['MARITAL_STATUS',
@@ -113,7 +113,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Convert data set to a pivot table using `MARITAL_STATUS` and `LTV_BIN` as columns containing the keys to group by.
 
-    ```
+    ```python
     <copy>
     train_dat.pivot_table('MARITAL_STATUS', 'LTV_BIN',
                           aggfunc = oml.DataFrame.count)
@@ -122,7 +122,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Specify settings.
 
-    ```
+    ```python
     <copy>
     setting = {'asso_min_support':'0.15', 'asso_min_confidence':'0.15'}
     </copy>
@@ -132,7 +132,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. Create an AR model object.
 
-    ```
+    ```python
     <copy>
     ar_mod = oml.ar(**setting)
     </copy>
@@ -142,7 +142,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. Fit the model according to the training data and parameter settings. `case_id` parameter represents the name of a column that contains unique case identifiers.
 
-    ```
+    ```python
     <copy>
     ar_mod = ar_mod.fit(train_dat, case_id = 'CUST_ID')
     </copy>
@@ -150,7 +150,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. Show details of the model.
 
-    ```
+    ```python
     <copy>
     ar_mod
     </copy>
@@ -158,7 +158,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. Specify new settings for your Association machine learning function.
 
-    ```
+    ```python
     <copy>
     setting = {'asso_min_support':'0.1', 'asso_min_confidence':'0.1'}
     </copy>
@@ -166,7 +166,7 @@ Watch the video below for a quick walk through of the lab.
 
 9. Re-create an AR model object with new settings.
 
-    ```
+    ```python
     <copy>
     ar_mod = oml.ar(**setting)
     </copy>
@@ -174,7 +174,7 @@ Watch the video below for a quick walk through of the lab.
 
 10. Fit the model according to the training data and parameter settings, and show model details. `case_id` parameter represents the name of a column that contains unique case identifiers.
 
-    ```
+    ```python
     <copy>
     ar_mod = ar_mod.fit(train_dat, case_id = 'CUST_ID')    
     ar_mod
@@ -200,7 +200,7 @@ Watch the video below for a quick walk through of the lab.
 
 1. Generate an OML data frame from your database table. Use the entire data set, attributes and labels.
 
-    ```
+    ```python
     <copy>
     oml_cust = oml.sync(table = "CUST_INSUR_LTV")
     oml_cust.head()
@@ -209,7 +209,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Split the data set into training and test data. Use 75% train and 25% test ratio.
 
-    ```
+    ```python
     <copy>
     ltv_dat = oml_cust.split(ratio=(.75, .25))
     [split.shape for split in ltv_dat]
@@ -218,7 +218,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Create training data and test data.
 
-    ```
+    ```python
     <copy>
     train_ltv = ltv_dat[0]
     test_ltv = ltv_dat[1]
@@ -227,7 +227,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Specify algorithm settings.
 
-    ```
+    ```python
     <copy>
     setting = {'emcs_num_iterations': 100}
     </copy>
@@ -237,7 +237,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. Create an EM model object.
 
-    ```
+    ```python
     <copy>
     em_mod = oml.em(n_clusters = 4, **setting)
     </copy>
@@ -247,7 +247,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. Fit the EM model according to the training data and parameter settings.
 
-    ```
+    ```python
     <copy>
     em_mod = em_mod.fit(train_ltv)
     </copy>
@@ -255,7 +255,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. Show details of the model.
 
-    ```
+    ```python
     <copy>
     em_mod
     </copy>
@@ -263,7 +263,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. Did your EM model converge? Convergence means the optimal solution has been reached and the iterations of the optimization has come to an end. EM has limited capacity for modeling high dimensional (wide) data. The presence of many attributes slows down model convergence, and the algorithm becomes less able to distinguish between meaningful attributes and noise. The algorithm is thus compromised in its ability to find correlations.
 
-    ```
+    ```python
     <copy>
     em_mod.global_stats[em_mod.global_stats['attribute name'] == 'CONVERGED']
     </copy>
@@ -271,7 +271,7 @@ Watch the video below for a quick walk through of the lab.
 
 9. What are the attributes your EM model considered as most important?
 
-    ```
+    ```python
     <copy>
     em_mod.attribute_importance.sort_values('ATTRIBUTE_RANK')
     </copy>
@@ -279,7 +279,7 @@ Watch the video below for a quick walk through of the lab.
 
 10. Increase the maximum number of iterations in the EM algorithm.
 
-    ```
+    ```python
     <copy>
     setting = {'emcs_num_iterations': 200}
     </copy>
@@ -287,7 +287,7 @@ Watch the video below for a quick walk through of the lab.
 
 11. Recreate an EM model object using new settings.
 
-    ```
+    ```python
     <copy>
     em_mod = oml.em(n_clusters = 4, **setting)
     </copy>
@@ -295,7 +295,7 @@ Watch the video below for a quick walk through of the lab.
 
 12. Refit the EM model using only the attributes identified by AI model.
 
-    ```
+    ```python
     <copy>
     em_mod = em_mod.fit(train_ltv[['N_MORTGAGES','HOUSE_OWNERSHIP',
                                'MORTGAGE_AMOUNT','N_TRANS_WEB_BANK',
@@ -306,7 +306,7 @@ Watch the video below for a quick walk through of the lab.
 
 13. Show details of the model. Did your EM model converge this time?
 
-    ```
+    ```python
     <copy>
     em_mod
     </copy>
@@ -314,7 +314,7 @@ Watch the video below for a quick walk through of the lab.
 
 14. Use the model to make predictions on the test data. Each customer in the test data frame is assigned to one cluster. Clusters are identified by the `CLUSTER_ID` column.
 
-    ```
+    ```python
     <copy>
     em_mod.predict(test_ltv, supplemental_cols = test_ltv[:, ['CUST_ID','LAST','FIRST','LTV_BIN']])
     </copy>
@@ -322,7 +322,7 @@ Watch the video below for a quick walk through of the lab.
 
 15. Retrieve the `CLUSTER_ID` for the four clusters.
 
-    ```
+    ```python
     <copy>
     em_mod.predict(test_ltv).drop_duplicates().sort_values('CLUSTER_ID')
     </copy>
@@ -330,7 +330,7 @@ Watch the video below for a quick walk through of the lab.
 
 16. Count cluster members grouped by predefined life-time value class.
 
-    ```
+    ```python
     <copy>
     em_mod.predict(test_ltv,
           supplemental_cols = test_ltv[:,
@@ -341,7 +341,7 @@ Watch the video below for a quick walk through of the lab.
 
 17. Can you state that the four clusters are based on the predefined life-time value classes? Create an OML data frame with these predictions so you can investigate.
 
-    ```
+    ```python
     <copy>
     predictions = em_mod.predict(test_ltv,
                                  supplemental_cols = test_ltv[:, ['LTV',
@@ -352,7 +352,7 @@ Watch the video below for a quick walk through of the lab.
 
 18. Plot these clusters using cluster ID on x-axis, and `LTV` value on y-axis. This way you can see if there is any relationship between predefined classes and clusters (cluster IDs have been changed, ID 3 is 1, ID 5 is 2, ID 6 is 3, and ID 7 is 4).
 
-    ```
+    ```python
     <copy>
     import matplotlib.pyplot as plt
     plt.rcParams["figure.figsize"] = (8,10)
@@ -385,7 +385,7 @@ Watch the video below for a quick walk through of the lab.
 
 1. Create an OML data frame proxy object in Python that represents your Oracle Database data set.
 
-    ```
+    ```python
     <copy>
     oml_cust = oml.sync(table = "CUST_INSUR_LTV")
     oml_cust = oml_cust.drop('LTV')
@@ -395,7 +395,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Split the data set into training and test data.
 
-    ```
+    ```python
     <copy>
     ltv_dat = oml_cust.split()
     [split.shape for split in ltv_dat]
@@ -404,7 +404,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Create training data and test data.
 
-    ```
+    ```python
     <copy>
     train_x = ltv_dat[0].drop('LTV_BIN')
     train_y = ltv_dat[0]['LTV_BIN']
@@ -414,7 +414,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Provide user specified settings for the mining function.
 
-    ```
+    ```python
     <copy>
     setting = {'CLAS_WEIGHTS_BALANCED': 'ON'}
     </copy>
@@ -424,7 +424,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. Create a NB model object.
 
-    ```
+    ```python
     <copy>
     nb_mod = oml.nb(**setting)
     </copy>
@@ -434,7 +434,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. Fit the NB model according to the training data and parameter settings.
 
-    ```
+    ```python
     <copy>
     nb_mod = nb_mod.fit(train_x, train_y, case_id = 'CUST_ID')
     </copy>
@@ -442,7 +442,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. Show details of the model. A prior probability distribution, often simply called the prior, represent the relative proportions of customers by each pre-defined class. What are your NB model default priors?
 
-    ```
+    ```python
     <copy>
     nb_mod
     </copy>
@@ -450,7 +450,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. List the 10 most important conditionals for customer to be in `LTV_BIN` class *VERY HIGH* and their probability of occurrence.
 
-    ```
+    ```python
     <copy>
     nb_mod.conditionals[
         nb_mod.conditionals['TARGET_VALUE']
@@ -464,7 +464,7 @@ Watch the video below for a quick walk through of the lab.
 
 10. Use the model to make predictions on test data.
 
-    ```
+    ```python
     <copy>
     nb_mod.predict(test_ltv.drop('LTV_BIN'),
                    supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -474,7 +474,7 @@ Watch the video below for a quick walk through of the lab.
 
 11. Make predictions on new data and return the mean accuracy to score your model. Is your model accurate?
 
-    ```
+    ```python
     <copy>
     nb_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -482,7 +482,7 @@ Watch the video below for a quick walk through of the lab.
 
 12. There are ways to improve model accuracy. To correct for unrealistic distributions in the training data, you can specify priors for the model build process.
 
-    ```
+    ```python
     <copy>
     oml_cust[['LTV_BIN']].crosstab('LTV_BIN')
     </copy>
@@ -490,7 +490,7 @@ Watch the video below for a quick walk through of the lab.
 
 13. Calculate priors based on entire data set.
 
-    ```
+    ```python
     <copy>
     oml_cust[['LTV_BIN']].crosstab('LTV_BIN').concat(oml_cust[[
                             'LTV_BIN']].crosstab('LTV_BIN').rename({'count':
@@ -502,7 +502,7 @@ Watch the video below for a quick walk through of the lab.
 
 14. Create a priors table in the database.
 
-    ```
+    ```python
     <copy>
     try:
        oml.drop('NB_PRIOR_PROBABILITY_LTV')
@@ -517,7 +517,7 @@ Watch the video below for a quick walk through of the lab.
 
 15. Change the setting parameter and refit the model with your user-defined prior table.
 
-    ```
+    ```python
     <copy>
     new_setting = {'CLAS_WEIGHTS_BALANCED': 'OFF'}
     nb_mod = nb_mod.set_params(**new_setting).fit(train_x, train_y,
@@ -527,7 +527,7 @@ Watch the video below for a quick walk through of the lab.
 
 16. Show details of the new model.
 
-    ```
+    ```python
     <copy>
     nb_mod
     </copy>
@@ -535,7 +535,7 @@ Watch the video below for a quick walk through of the lab.
 
 17. Use the new model to make predictions on test data.
 
-    ```
+    ```python
     <copy>
     nb_mod.predict(test_ltv.drop('LTV_BIN'),
                    supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -545,7 +545,7 @@ Watch the video below for a quick walk through of the lab.
 
 18. Make predictions on test data and return the new mean accuracy. How much did your model accuracy improve?
 
-    ```
+    ```python
     <copy>
     nb_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -553,7 +553,7 @@ Watch the video below for a quick walk through of the lab.
 
 19. Change the setting parameter and refit the model, using the same user-defined prior table.
 
-    ```
+    ```python
     <copy>
     new_setting = {'CLAS_WEIGHTS_BALANCED': 'OFF',
                    'NABS_PAIRWISE_THRESHOLD': 0.022,
@@ -567,7 +567,7 @@ Watch the video below for a quick walk through of the lab.
 
 20. Make predictions on test data and return the mean accuracy. Did your model accuracy improve with the new settings but using the same priors table?
 
-    ```
+    ```python
     <copy>
     nb_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -588,7 +588,7 @@ Watch the video below for a quick walk through of the lab.
 
 1. Create an OML data frame proxy object that represents your database table.
 
-    ```
+    ```python
     <copy>
     oml_cust = oml.sync(table = "CUST_INSUR_LTV")
     oml_cust = oml_cust.drop('LTV')
@@ -598,7 +598,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Split the data set into training and test data. Use 75% train and 25% test ratio.
 
-    ```
+    ```python
     <copy>
     ltv_dat = oml_cust.split(ratio=(.75, .25))
     [split.shape for split in ltv_dat]
@@ -607,7 +607,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Create training data and test data.
 
-    ```
+    ```python
     <copy>
     train_x = ltv_dat[0].drop('LTV_BIN')
     train_y = ltv_dat[0]['LTV_BIN']
@@ -617,7 +617,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Create a cost matrix table in the database.
 
-    ```
+    ```python
     <copy>
     try:
        oml.drop('LTV_COST_MATRIX')
@@ -651,7 +651,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. Create an RF model object.
 
-    ```
+    ```python
     <copy>
     rf_mod = oml.rf(tree_term_max_depth = '2')
     </copy>
@@ -663,7 +663,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. Fit the RF model according to the training data and parameter settings.
 
-    ```
+    ```python
     <copy>
     rf_mod = rf_mod.fit(train_x, train_y, cost_matrix = cost_matrix)
     </copy>
@@ -671,7 +671,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. Show details of the model.
 
-    ```
+    ```python
     <copy>
     rf_mod
     </copy>
@@ -679,7 +679,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. Use the model to make predictions on the test data.
 
-    ```
+    ```python
     <copy>
     rf_mod.predict(test_ltv.drop('LTV_BIN'),
                    supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -689,7 +689,7 @@ Watch the video below for a quick walk through of the lab.
 
 9. Return the prediction probability.
 
-    ```
+    ```python
     <copy>
     rf_mod.predict(test_ltv.drop('LTV_BIN'),
                    supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -700,7 +700,7 @@ Watch the video below for a quick walk through of the lab.
 
 10. Return the top two highest probability classes.
 
-    ```
+    ```python
     <copy>
     rf_mod.predict_proba(test_ltv.drop('LTV_BIN'),
                          supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -711,7 +711,7 @@ Watch the video below for a quick walk through of the lab.
 
 11. Return mean accuracy for classification. Is your RF model accurate?
 
-    ```
+    ```python
     <copy>
     rf_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -719,7 +719,7 @@ Watch the video below for a quick walk through of the lab.
 
 12. Try to increase accuracy with new parameters. Reset `TREE_TERM_MAX_DEPTH` and refit the model.
 
-    ```
+    ```python
     <copy>
     rf_mod.set_params(tree_term_max_depth = '3').fit(train_x, train_y, cost_matrix = cost_matrix)
     </copy>
@@ -727,7 +727,7 @@ Watch the video below for a quick walk through of the lab.
 
 13. Return new mean accuracy for classification. Did it work?
 
-    ```
+    ```python
     <copy>
     rf_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -748,7 +748,7 @@ Watch the video below for a quick walk through of the lab.
 
 1. Create training and test data as data frame proxy objects that represent your database table.
 
-    ```
+    ```python
     <copy>
     oml_cust = oml.sync(table = "CUST_INSUR_LTV")
     oml_cust = oml_cust.drop('LTV')
@@ -761,7 +761,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Create an SVM model object.
 
-    ```
+    ```python
     <copy>
     svm_mod = oml.svm('classification',
                       svms_kernel_function = 'dbms_data_mining.svms_linear')
@@ -774,7 +774,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Fit the SVM model according to the training data and parameter settings. Did you model converge?
 
-    ```
+    ```python
     <copy>
     svm_mod.fit(train_x, train_y)
     </copy>
@@ -782,7 +782,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Re-create your SVM model using Gaussian kernel function.
 
-    ```
+    ```python
     <copy>
     svm_mod = oml.svm('classification',
                       svms_kernel_function = 'dbms_data_mining.svms_gaussian')
@@ -793,7 +793,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. Re-fit the SVM model. Did you model converge?
 
-    ```
+    ```python
     <copy>
     svm_mod.fit(train_x, train_y)
     </copy>
@@ -801,7 +801,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. Use the model to make predictions on test data.
 
-    ```
+    ```python
     <copy>
     svm_mod.predict(test_ltv.drop('LTV_BIN'),
                     supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -811,7 +811,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. Return the prediction probability.
 
-    ```
+    ```python
     <copy>
     svm_mod.predict(test_ltv.drop('LTV_BIN'),
                     supplemental_cols = test_ltv[:, ['CUST_ID','LAST',
@@ -822,7 +822,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. Return mean accuracy for classification.
 
-    ```
+    ```python
     <copy>
     svm_mod.score(test_ltv.drop('LTV_BIN'), test_ltv[:, ['LTV_BIN']])
     </copy>
@@ -848,7 +848,7 @@ Watch the video below for a quick walk through of the lab.
 
 1. Select one review comment from any of the two tables, to see the format. These reviews are gathered on a web portal, and may contain some HTML tags.
 
-    ```
+    ```python
     <copy>
     pd.set_option('display.max_colwidth', 0)
     comment = oml.sync(query = 'select ID, SENTIMENT, FILE_CONTENT \
@@ -859,7 +859,7 @@ Watch the video below for a quick walk through of the lab.
 
 2. Table `TRAINING_DATA` is used for training.
 
-    ```
+    ```python
     <copy>
     train_dat = oml.sync(query = 'select ID, SENTIMENT, FILE_CONTENT from TRAINING_DATA')
     train_dat.shape
@@ -868,7 +868,7 @@ Watch the video below for a quick walk through of the lab.
 
 3. Table \`TEST\_DATA \` is used for testing.
 
-    ```
+    ```python
     <copy>
     test_dat = oml.sync(query = 'select ID, SENTIMENT, FILE_CONTENT from TEST_DATA')
     test_dat.shape
@@ -877,7 +877,7 @@ Watch the video below for a quick walk through of the lab.
 
 4. Training data needs to be separated between features and labels. \`train\_x\` are the features, in this case user reviews and comments.
 
-    ```
+    ```python
     <copy>
     train_x = train_dat.drop('SENTIMENT')
     train_x.shape
@@ -886,7 +886,7 @@ Watch the video below for a quick walk through of the lab.
 
 5. \`train\_y\` specifies the label for each review, in this case \`SENTIMENT\` value.
 
-    ```
+    ```python
     <copy>
     train_y = train_dat['SENTIMENT']
     train_y.shape
@@ -895,7 +895,7 @@ Watch the video below for a quick walk through of the lab.
 
 6. \`CREATE\_PREFERENCE\` creates a lexer preference in the Text data dictionary, named \`sentiment\_anlsys_policy\`. \`CREATE\_POLICY\` procedure creates a policy to be used by OML.
 
-    ```
+    ```python
     <copy>
     cr = oml.cursor()
     cr.execute("Begin ctx_ddl.CREATE_PREFERENCE('sentiment_anlsys_lexer', 'BASIC_LEXER'); End;")
@@ -906,7 +906,7 @@ Watch the video below for a quick walk through of the lab.
 
 7. `ctx_settings` is a list that specifies Oracle Text attribute-specific settings.
 
-    ```
+    ```python
     <copy>
     ctx_settings = {'FILE_CONTENT': 'TEXT(POLICY_NAME:sentiment_anlsys_policy)(TOKEN_TYPE:NORMAL)'}
     </copy>
@@ -914,7 +914,7 @@ Watch the video below for a quick walk through of the lab.
 
 8. Specify Generalized Linear Model (GLM) classification model settings.
 
-    ```
+    ```python
     <copy>
     settings = {'odms_text_policy_name': 'sentiment_anlsys_policy',
                 'GLMS_SOLVER': 'dbms_data_mining.GLMS_SOLVER_QR'}
@@ -925,7 +925,7 @@ Watch the video below for a quick walk through of the lab.
 
 9. Create a GLM classification model object.
 
-    ```
+    ```python
     <copy>
     glm_mod = oml.glm("classification", **settings)
     </copy>
@@ -933,7 +933,7 @@ Watch the video below for a quick walk through of the lab.
 
 10. Fit the GLM model according to the training data and parameter settings. The name of a column that contains unique case identifiers is used for `case_id` parameter. Use Oracle Text attribute-specific settings `ctx_settings` for this semantic binary classification use case.
 
-    ```
+    ```python
     <copy>
     glm_mod = glm_mod.fit(train_x, train_y, case_id = 'ID', ctx_settings = ctx_settings)
     </copy>
@@ -941,7 +941,7 @@ Watch the video below for a quick walk through of the lab.
 
 11. Show the model details. Did your model converge?
 
-    ```
+    ```python
     <copy>
     glm_mod
     </copy>
@@ -949,7 +949,7 @@ Watch the video below for a quick walk through of the lab.
 
 12. Use the model to make predictions on the test data. How are the `PREDICTION` values compared to the exact `SENTIMENT` values?
 
-    ```
+    ```python
     <copy>
     glm_mod.predict(test_dat.drop('SENTIMENT'),
                     supplemental_cols = test_dat[:, ['ID', 'SENTIMENT']])
@@ -958,7 +958,7 @@ Watch the video below for a quick walk through of the lab.
 
 13. Calculate the accuracy score value based on the test data. Is this score satisfactory? How would you improve this mean accuracy?
 
-    ```
+    ```python
     <copy>
     glm_mod.score(test_dat.drop('SENTIMENT'),
                   test_dat[:, ['SENTIMENT']])
@@ -967,7 +967,7 @@ Watch the video below for a quick walk through of the lab.
 
 14. Return the prediction probability.
 
-    ```
+    ```python
     <copy>
     glm_proba = glm_mod.predict(test_dat.drop('SENTIMENT'),
                                 supplemental_cols = test_dat[:, ['ID', 'SENTIMENT']],
@@ -978,7 +978,7 @@ Watch the video below for a quick walk through of the lab.
 
 15. As data is ordered by pre-label values, return first 15 rows that have a different prediction from the pre-label value (wrong predictions). These results are called *false negative*.
 
-    ```
+    ```python
     <copy>
     glm_proba[glm_proba['SENTIMENT'] != glm_proba['PREDICTION']].head(15)
     </copy>
@@ -986,7 +986,7 @@ Watch the video below for a quick walk through of the lab.
 
 16. Return first 15 rows that have a different prediction from the pre-label value (wrong predictions). These results are called *false positive*.
 
-    ```
+    ```python
     <copy>
     glm_proba[glm_proba['SENTIMENT'] != glm_proba['PREDICTION']].tail(15)
     </copy>
@@ -994,7 +994,7 @@ Watch the video below for a quick walk through of the lab.
 
 17. Calculate the number of *false positive* values from the total of 12,500 pre-labeled negative values.
 
-    ```
+    ```python
     <copy>
     false_positive = glm_proba[(glm_proba['SENTIMENT'] == 'NEGATIVE') &
                                (glm_proba['PREDICTION'] == 'POSITIVE'), :].__len__()
@@ -1004,7 +1004,7 @@ Watch the video below for a quick walk through of the lab.
 
 18. Calculate the number of *false negative* values from the total of 12,500 pre-labeled positive values.
 
-    ```
+    ```python
     <copy>
     false_negative = glm_proba[(glm_proba['SENTIMENT'] == 'POSITIVE') &
                                (glm_proba['PREDICTION'] == 'NEGATIVE'), :].__len__()
@@ -1014,7 +1014,7 @@ Watch the video below for a quick walk through of the lab.
 
 19. Populate the *confusion matrix*, also known as an *error matrix*.
 
-    ```
+    ```python
     <copy>
     confusion_matrix = pd.DataFrame({' ':['Predicted Positive', 'Predicted Negative'],
                                      'Actual Positive':[12500 - false_negative, false_negative],
@@ -1026,9 +1026,4 @@ Watch the video below for a quick walk through of the lab.
 
 ## Acknowledgements
 * **Authors** - Milton Wan, Valentin Leonard Tabacaru
-* **Last Updated By/Date** -  Valentin Leonard Tabacaru, July 2021
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, February 2023

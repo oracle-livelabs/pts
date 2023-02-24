@@ -104,7 +104,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
     The following screen should be visible on your (remote) desktop:
 
-     ![Oracle Universal Installer introduction screen 1](./images/oui-1.png)
+    ![Oracle Universal Installer introduction screen 1](./images/oui-1.png)
 
     - Keep the default 'Create and Configure a single instance database' and press `NEXT`
 

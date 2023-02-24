@@ -9,6 +9,12 @@ Queries that need data from multiple shards, and queries that do not specify a s
 
 Estimated Lab Time: 20 minutes.
 
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:cihT3Ana55A)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Database Request Rout to Shard](videohub:1_yxecewxc)
+
 ### Objectives
 
 In this lab, you will perform the following steps:
@@ -51,7 +57,7 @@ This lab assumes you have already completed the following:
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -131,7 +137,7 @@ This lab assumes you have already completed the following:
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 
@@ -151,7 +157,7 @@ This lab assumes you have already completed the following:
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -231,7 +237,7 @@ This lab assumes you have already completed the following:
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 
@@ -253,7 +259,7 @@ This lab assumes you have already completed the following:
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -295,7 +301,7 @@ This lab assumes you have already completed the following:
     
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 
@@ -314,7 +320,7 @@ A multi-shard query maps to more than one shard and the coordinator might need t
     [oracle@cata ~]$ <copy>sqlplus app_schema/app_schema@catapdb</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Mon Nov 30 09:23:44 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -322,7 +328,7 @@ A multi-shard query maps to more than one shard and the coordinator might need t
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -528,7 +534,7 @@ A multi-shard query maps to more than one shard and the coordinator might need t
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 

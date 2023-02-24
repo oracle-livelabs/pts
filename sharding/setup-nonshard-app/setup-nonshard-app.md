@@ -6,6 +6,12 @@ In this lab, you will setup a non-sharded database application. You will migrate
 
 Estimated Lab Time: 30 minutes.
 
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:bUC2KXUW21E)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Setup a Non-Sharded Application](videohub:1_z2psr30b)
+
 ### Objectives
 
 In this lab, you will perform the following steps:
@@ -47,21 +53,21 @@ This lab assumes you have already completed the following:
     [oracle@shd3 ~]$ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Dec 4 11:32:41 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
 
    
 
-3. Create a new pdb name sipdb.
+3. Create a new pdb name nspdb.
 
     ```
     SQL> <copy>CREATE PLUGGABLE DATABASE nspdb ADMIN USER admin IDENTIFIED BY Ora_DB4U 
@@ -132,7 +138,7 @@ This lab assumes you have already completed the following:
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@shd3 ~]$ 
     ```
 
@@ -299,7 +305,7 @@ This lab assumes you have already completed the following:
     [oracle@shd3 ~]$ <copy>sqlplus /nolog</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Dec 5 01:44:19 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -446,7 +452,7 @@ This lab assumes you have already completed the following:
     ```
     02:37:45 SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@shd3 ~]$ <copy>exit</copy>
     logout
     [opc@shd3 ~]$ <copy>exit</copy>
@@ -721,7 +727,7 @@ This lab assumes you have already completed the following:
     [oracle@cata sql]$ <copy>sqlplus /nolog</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Dec 4 12:23:11 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -879,7 +885,7 @@ This lab assumes you have already completed the following:
 
    
 
-10. Start the workload by executing command: `./run.sh demo nonsharddemo.properties`.
+10. Start the workload by executing command using the nonsharddemo.properties parameter file: `"./run.sh demo nonsharddemo.properties"`.
 
     ```
     [oracle@cata sdb_demo_app]$ <copy>./run.sh demo nonsharddemo.properties</copy>
@@ -966,7 +972,7 @@ In this step, you will export the demo application data and copy the dmp file to
     [oracle@shd3 ~]$ <copy>sqlplus app_schema/app_schema@shd3:1521/nspdb</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Dec 5 07:43:15 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
@@ -974,7 +980,7 @@ In this step, you will export the demo application data and copy the dmp file to
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
@@ -990,7 +996,7 @@ In this step, you will export the demo application data and copy the dmp file to
     
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@shd3 ~]$
     ```
 
@@ -1012,7 +1018,7 @@ In this step, you will export the demo application data and copy the dmp file to
 
     ```
     Export: Release 19.0.0.0.0 - Production on Mon Dec 7 01:35:33 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
     
@@ -1131,7 +1137,7 @@ In this step, you will export the demo application data and copy the dmp file to
 12. From shard3 host side. Copy the dmp file to the catalog, shard1 and shard2 host. Press yes when prompt ask if you want to  continue.
 
     ```
-    [oracle@shd3 ~]$ <copy>scp original.dmp oracle@cata:~</copy>
+    [oracle@shd3 ~]$ scp original.dmp oracle@cata:~
     The authenticity of host 'shd1 (10.0.0.3)' can't be established.
     ECDSA key fingerprint is SHA256:fdIUiIXRNQ8LsOsDjN1/OLeLaz2kDeIzpLngV/15tPs.
     ECDSA key fingerprint is MD5:ea:d8:d5:fe:6e:a4:98:3e:e3:a4:dc:a3:24:ed:40:65.
@@ -1139,7 +1145,7 @@ In this step, you will export the demo application data and copy the dmp file to
     Warning: Permanently added 'cata,10.0.0.2' (ECDSA) to the list of known hosts.
     original.dmp                                                  100% 6864KB  46.0MB/s   00:00    
     
-    [oracle@shd3 ~]$ <copy>scp original.dmp oracle@shd1:~</copy>
+    [oracle@shd3 ~]$ scp original.dmp oracle@shd1:~
     The authenticity of host 'shd1 (10.0.0.3)' can't be established.
     ECDSA key fingerprint is SHA256:fdIUiIXRNQ8LsOsDjN1/OLeLaz2kDeIzpLngV/15tPs.
     ECDSA key fingerprint is MD5:ea:d8:d5:fe:6e:a4:98:3e:e3:a4:dc:a3:24:ed:40:65.
@@ -1147,7 +1153,7 @@ In this step, you will export the demo application data and copy the dmp file to
     Warning: Permanently added 'shd1,10.0.0.3' (ECDSA) to the list of known hosts.
     original.dmp                                                  100% 6864KB  46.0MB/s   00:00    
     
-    [oracle@shd3 ~]$ <copy>scp original.dmp oracle@shd2:~</copy>
+    [oracle@shd3 ~]$ scp original.dmp oracle@shd2:~
     The authenticity of host 'shd2 (10.0.0.4)' can't be established.
     ECDSA key fingerprint is SHA256:DZD3FA2afLdsB17yvn1IoGxHqmTiei6fiqnUHRJXVNw.
     ECDSA key fingerprint is MD5:49:b0:06:11:14:1f:85:76:47:4f:9c:04:d2:15:a9:00.
@@ -1165,5 +1171,5 @@ You may now proceed to the next lab..
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020 
-* **Last Updated By/Date** - Andres Quintana, April 2022
+* **Last Updated By/Date** - Minqiao Wang, Aug 2022
 

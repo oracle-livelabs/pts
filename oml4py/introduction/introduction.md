@@ -25,12 +25,9 @@ The labs in this workshop focus on the following:
 * Embedded Python Execution
 * Explore ML algorithms and compare the prediction results
 
-
 ### Prerequisites
 
 - An Oracle Cloud Account. Please view this workshop's LiveLabs landing page to see which environments are supported
-
-> **Note:** If you have a Free Trial account, when your Free Trial expires your account will be converted to an **Always Free** account. You will not be able to conduct Free Tier workshops unless the Always Free environment is available. **[Click here for the Free Tier FAQ page.](https://www.oracle.com/cloud/free/faq.html)**
 
 
 ## Learn More
@@ -42,9 +39,4 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Valentin Leonard Tabacaru, Milton Wan
-* **Last Updated By/Date** -  Rajeev Rumale
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, February 2023

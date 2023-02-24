@@ -6,6 +6,12 @@ Now, we will add the shard (on shd3) to the Shard Database and thus elastically 
 
 Estimated Lab Time: 30 minutes.
 
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:oojbS9Wp1RQ)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Elastic Scaling](videohub:1_gz6r23yf)
+
 ### Objectives
 
 In this lab, you will perform the following steps:
@@ -171,7 +177,7 @@ This lab assumes you have already completed the following:
 10. The host name of shard3 is already there. Manually add shard3 private IP addresses to the shard catalog metadata.
 
     ```
-    GDSCTL> <copy>add invitednode 10.0.1.3<copy>
+    GDSCTL> <copy>add invitednode 10.0.1.3</copy>
     GDSCTL>
     ```
 
@@ -350,14 +356,14 @@ This lab assumes you have already completed the following:
     [oracle@cata ~]$ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Tue Dec 1 03:27:17 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> <copy>alter session set container=catapdb;</copy>
     
@@ -385,7 +391,7 @@ This lab assumes you have already completed the following:
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$
     ```
 
@@ -400,7 +406,7 @@ This lab assumes you have already completed the following:
 
     
 
-6. Start the workload by executing command:
+6. Start the workload by executing command using the sdbdemo.properties parameter file:
 
     ```
     [oracle@cata sdb_demo_app]$ <copy>./run.sh demo sdbdemo.properties</copy>
@@ -447,7 +453,7 @@ This lab assumes you have already completed the following:
 
     
 
-9. Start the monitoring tool via the following command. (Note: due to the resource limit, start monitor may impact the application performance).
+9. Start the monitoring tool via the following command using the sdbdemo.properties parameter file. (Note: due to the resource limit, start monitor may impact the application performance).
 
     ```
     [oracle@cata sdb_demo_app]$ <copy>./run.sh monitor sdbdemo.properties</copy>
@@ -475,4 +481,4 @@ This lab assumes you have already completed the following:
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020 
-* **Last Updated By/Date** - Minqiao Wang, Jun 2021
+* **Last Updated By/Date** - Minqiao Wang, Aug 2021

@@ -19,6 +19,12 @@ Following is the topology used for System Managed Sharding we will create in thi
 
 Estimated Lab Time: 60 minutes.
 
+<!--Watch the video below for a quick walk through of the lab.
+[](youtube:8r3cvL5s7nk)-->
+
+Watch the video below for a quick walk-through of the lab.
+[Deployment the Sharded Database](videohub:1_m1amf8pg)
+
 ### Objectives
 
 In this lab, you will deploy a sharded database with 2 shard.
@@ -92,15 +98,15 @@ In this workshop we choose to co-locate the shard director software on the same 
 1. Connect to the catalog host, switch to the **oracle** user.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx<copy>
+    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
     
     [opc@cata ~]$ <copy>sudo su - oracle</copy>
     Last login: Fri Nov 27 06:57:03 UTC 2020
     [oracle@cata ~]$
     ```
+
    
-   
-   
+
 2. Edit two config files to switch environment between catalog and GSM.
 
     - create a file named gsm.sh.
@@ -336,20 +342,20 @@ In this workshop we choose to co-locate the shard director software on the same 
     [oracle@cata ~]$ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sun Nov 29 02:50:15 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
+
    
-   
-   
+
 3. Because the shard catalog database can run multi-shard queries which connect to shards over database links, the `OPEN_LINKS` and `OPEN_LINKS_PER_INSTANCE` database initialization parameter values must be greater than or equal to the number of shards that will be part of the sharded database configuration.
 
     ```
@@ -524,7 +530,7 @@ In this workshop we choose to co-locate the shard director software on the same 
     ```
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     [oracle@cata ~]$ 
     ```
 
@@ -555,20 +561,20 @@ The following steps need to do in all the shard database side. We only provide s
     [oracle@shd1 ~]$ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sun Nov 29 03:16:25 2020
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
     
     
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.10.0.0.0
+    Version 19.14.0.0.0
     
     SQL> 
     ```
+
    
-   
-   
+
 3. Unlock the gsmrootuser user.
 
     ```
@@ -651,7 +657,7 @@ The following steps need to do in all the shard database side. We only provide s
 
    
 
-8. (Optional) To support file movement from shard to shard, the `DB_FILE_NAME_CONVERT` database parameter must be set to a valid value. This location is used when standby databases are in use, as is typical with non-sharded databases, and the location can also be used during chunk movement operations.
+8. (Optional) To support file movement from shard to shard, the `DB_FILE_NAME_CONVERT` database parameter must be set to a valid value. This location is used when standby databases are in use, as is typical with non-sharded databases, and the location can also be used during chunk movement operations. (**Note**: If you current host is shd2 or shd3, you should modify the command from SHDSTB1, SHD1 to SHDSTB2, SHD2 or SHDSTB3, SHD3)
 
     ```
     SQL> <copy>alter system set db_file_name_convert='/SHDSTB1/','/SHD1/' scope=spfile;</copy>
@@ -663,7 +669,7 @@ The following steps need to do in all the shard database side. We only provide s
 
    
 
-9. Connect to the shard pdb.
+9. Connect to the shard pdb. (**Note**: If you current host is shd2 or shd3, you should change the pub name from shdpdb1 to shdpdb2 or shdpdb3)
 
     ```
     SQL> <copy>show pdbs</copy>
@@ -787,7 +793,7 @@ The following steps need to do in all the shard database side. We only provide s
 
     
 
-15. Connect to the shard pdb and validate the shard. The `validateShard` procedure can and should be run against primary, mounted (unopened) standby, and Active Data Guard standby databases that are part of the sharded database configuration. 
+15. Connect to the shard pdb and validate the shard. The `validateShard` procedure can and should be run against primary, mounted (unopened) standby, and Active Data Guard standby databases that are part of the sharded database configuration. (**Note**: If you current host is shd2 or shd3, you should change the container name from shdpdb1 to shdpdb2 or shdpdb3).
 
     ```
     SQL> <copy>alter session set container=shdpdb1;</copy>
@@ -880,7 +886,7 @@ The following steps need to do in all the shard database side. We only provide s
     Current GSM is set to GSMORA
     GDSCTL> 
     ```
-   
+
    
 
 4. Create the shard catalog using the System-Managed sharding method. In this workshop, we have no data guard environment, so just set one region. In this workshop, we set the chunks to 12, the default value is 120 for each of the shard database.
@@ -914,7 +920,7 @@ The following steps need to do in all the shard database side. We only provide s
 6. Add shard group, each shardspace must contain at least one primary shardgroup and may contain any number or type of standby shardgroups. In this workshop, we have only one primary shardgroup.
 
     ```
-    GDSCTL> <copy>add shardgroup -shardgroup shardgroup_primary -deploy_as primary -region region1<copy>
+    GDSCTL> <copy>add shardgroup -shardgroup shardgroup_primary -deploy_as primary -region region1</copy>
     The operation completed successfully
     GDSCTL> 
     ```
@@ -1086,7 +1092,7 @@ The following steps need to do in all the shard database side. We only provide s
 
     
 
-13. Run the `ADD INVITEDNODE` command to manually add all host names and IP addresses of your shard hosts to the shard catalog metadata.
+13. Run the `ADD INVITEDNODE` command to manually add all host names and IP addresses of your shard hosts( At this time add private IP address of shd1 and shd2) to the shard catalog metadata.
 
     ```
     GDSCTL> <copy>add invitednode 127.0.0.1</copy>
@@ -1248,5 +1254,5 @@ You may now proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, DB Product Management, Dec 2020
-* **Last Updated By/Date** - Andres Quintana, April 2022
+* **Last Updated By/Date** - Minqiao Wang, Aug 2022
 

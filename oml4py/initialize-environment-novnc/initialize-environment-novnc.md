@@ -1,4 +1,4 @@
-# Initialize Environment
+# Initialize the environment
 
 ## Introduction
 This lab will show you how launch Jupyter Notebooks in your NoVNC instance.

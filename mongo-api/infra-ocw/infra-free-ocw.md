@@ -8,7 +8,10 @@ The main three elements that we will be creating are a **Virtual Cloud Network**
 
 We will prepare the documents to be capable of accessing to **SODA APIs**, in particular, to create, drop, and list document collections using **APEX** as vehicle to visualize the JSON documents as we used to do with structure data. This capability is unique of Oracle Databases.
 
-**Estimated Lab Time: 40 minutes.**
+Estimated Lab Time: 40 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Infrastructure Configuration](videohub:1_8a593q4e)
 
 ### Objectives
 
@@ -200,7 +203,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
 
-1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**. **Create Autonomous Database**.
+1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**.
 
     ![Oracle Console AJD](./images/task3/oracle-console-ajson.png)
 
@@ -227,15 +230,13 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Storage (TB): 1 or 0.02 if you are using a Trial account
 
     ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard.png)
+    ![Creation AJD Dashboard](./images/task3/creation-ajson-dashboard2.png)
 
 4. Under **Create administrator** credentials:
 
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
 
-    > We recommend you to use the password as later on, it will be use for running Python scripts. If you consider changing it, remember that later on, you will need to modify the Python scripts manually.
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![Creation AJD Password](./images/task3/creation-ajson-password.png)
 
@@ -281,13 +282,13 @@ On the Instance Details page, copy Public IP Address in your notes.
 11. Type the following information:
 
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
+
     - Confirm Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
+
     - Click **Download**
 
     ![Download Wallet Password](./images/task3/download-wallet-password.png)
@@ -378,9 +379,8 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>admin</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
 2. Under the **Administration** section, click on **Database Users**.
 
@@ -397,13 +397,13 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>DEMO</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
+
     - Confirm Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
+
     - Quota on tablespace DATA: **UNLIMITED**
     - Enable **Web Access** and **OML**
 
@@ -428,9 +428,8 @@ On the Instance Details page, copy Public IP Address in your notes.
 7. On **Administration Services** login page, use password for **ADMIN**.
 
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![Apex ADMIN](./images/task4/apex-admin.png)
 
@@ -454,9 +453,9 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>DEMOWS</copy>
     ```
     - Workspace Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
+
     - Click **Create Workspace**
 
     ![Apex Workspace DEMO](./images/task4/create-workspace-info.png)
@@ -476,9 +475,8 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>demows</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![Login DEMO](./images/task4/log-in-demo-new.png)
 
@@ -501,9 +499,8 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>demo</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![DB Actions DEMO sign in](./images/task4/sign-in-demo.png)
 

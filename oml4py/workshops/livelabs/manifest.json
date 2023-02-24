@@ -8,27 +8,32 @@
       "filename": "../../introduction/introduction.md"
       },
       {
-      "title": "Lab 1: Environment Setup",
+      "title": "Get Started",
+      "description": "This is the prerequisites for customers using LiveLabs sandbox.",
+      "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs.md"
+      },
+      {
+      "title": "Lab 1: Setup the environment",
       "description": "Verify Setup of compute instance",
       "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
       },
       {
-      "title": "Lab 2: Initialize Environment",
+      "title": "Lab 2: Initialize the environment",
       "description": "Initialize Environment",
       "filename": "../../initialize-environment-novnc/initialize-environment-novnc.md"
       },
       {
-      "title": "Lab 3: Understanding Dataset",
+      "title": "Lab 3: Understand the dataset",
       "description": "Understanding the Customer Insurance dataset to be used in the lab excercises.",
       "filename": "./../../../use-case/use-case.md"
       },
       {
-      "title": "Lab 4: OML4Py - Part 1",
+      "title": "Lab 4: Run OML4Py notebook part 1",
       "description": "Handson lab for using OML4Py.",
       "filename": "./../../oml4py1/oml4py1.md"
       },
       {
-      "title": "Lab 5: OML4Py - Part 2 (optional)",
+      "title": "Lab 5: Run OML4Py notebook part 2",
       "description": "Handson lab for using OML4Py.",
       "filename": "./../../oml4py2/oml4py2.md"
       },

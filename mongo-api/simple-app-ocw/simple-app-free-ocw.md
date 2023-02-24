@@ -8,7 +8,10 @@ You can use SODA for Python to perform create, read (retrieve), update, and dele
 
 SODA is a set of NoSQL-style APIs that let you create and store collections of documents (in particular JSON) in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the documents are stored in the database.
 
-**Estimated Lab Time: 40 minutes**.
+Estimated Lab Time: 40 minutes
+
+Watch the video below for a quick walk-through of the lab.
+[Python SODA micro-service with Autonomous Database for JSON](videohub:1_2ugpfxe2)
 
 ### Objectives
 
@@ -36,7 +39,19 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![ssh Connection](./images/task1/ssh.png)
 
-2. Download the files that we will use for next steps in this bit.ly running this command:
+2. If you had to re-connect via SSH to your Compute instance, you need to **export** the **paths** using the following commands:
+
+    ````
+    <copy>
+    export TNS_ADMIN=/home/opc/Wallet_AJDEV
+    export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
+    export PATH=$PATH:/usr/lib/oracle/21/client64/bin/
+    </copy>
+    ````
+
+    > **Note**: Press Enter at the end of the last command to be sure, all of them have being executed.
+
+3. Download the files that we will use for next steps in this bit.ly running this command:
 
     ````
     <copy>
@@ -46,7 +61,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![wget Command](./images/task1/wget-command.png)
 
-3. **Unzip** the **python-simple-project.zip** using the following command:
+4. **Unzip** the **python-simple-project.zip** using the following command:
 
     ````
     <copy>
@@ -56,7 +71,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![unzip Apps](./images/task1/unzip-apps.png)
 
-4. **Access** to python-simple-project folder. **Create** a Python virtual environment for development, and **activate** it. Run the following commands:
+5. **Access** to python-simple-project folder. **Create** a Python virtual environment for development, and **activate** it. Run the following commands:
 
     ````
     <copy>
@@ -67,9 +82,11 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     </copy>
     ````
 
+    > **Note**: Press Enter at the end of the last command to be sure, all of them have being executed.
+
     ![Virtual Env Commands](./images/task1/virtualenv-command.png)
 
-5. Lets have a look at **requirements.pip**. In this file, we have the libraries that we need for the micro-service application. Run the following command to see the code:
+6. Lets have a look at **requirements.pip**. In this file, we have the libraries that we need for the micro-service application. Run the following command to see the code:
 
     ````
     <copy>
@@ -79,7 +96,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![cat Requirements](./images/task1/cat-requirements.png)
 
-6. Use **pip package installer** for Python 3 to **install** the required libraries specified in the requirements.pip file.
+7. Use **pip package installer** for Python 3 to **install** the required libraries specified in the requirements.pip file.
 
     ````
     <copy>
@@ -89,7 +106,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![Requirements](./images/task1/requirements.png)
 
-7. Lets have a look at **simple-app.py**. In this file, we have the Python application code. Run the following command to see the code:
+8. Lets have a look at **simple-app.py**. In this file, we have the Python application code. Run the following command to see the code:
 
     ````
     <copy>
@@ -99,17 +116,17 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![cat simple-app](./images/task1/cat-simple-app.png)
 
-8. **Verify** all connection **variables are correct**. We are using **demo** **user** for Autonomous JSON database and the **password** that we have recommended during the workshop **DBlearnPTS#22_**.
+9. **Verify** all connection **variables are correct**. We are using **demo** **user** for Autonomous JSON database and the strong **password** that we have recommended.
 
-    > Note: If you have change the user name and password to a different value, please run this commands providing the user and password.
-    >
+    > **Note**: If you have change the user name and password to a different value, please run this commands providing the user and password.
+
     ````
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
     export AJSON_SERVICE="ajdev_tp"
     ````
 
-9. **After checking if all variables are correct**. **Run** simple-app application using the following command:
+10. **After checking if all variables are correct**. **Run** simple-app application using the following command:
 
     ````
     <copy>
@@ -125,7 +142,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![simple-app Execution](./images/task1/simple-app-launch.png)
 
-10. Lets see what **simple-app.py is doing**, use the following command:
+11. Lets see what **simple-app.py is doing**, use the following command:
 
     ````
     <copy>
@@ -139,7 +156,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     **Your micro-service simple-app.py is being executed** so we can start inserting the documents.
 
-11. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First POST:
+12. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First POST:
 
     ````
     <copy>
@@ -161,7 +178,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![POST company One curl](./images/task1/curl-company-one.png)
 
-12. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Second POST:
+13. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Second POST:
 
     ````
     <copy>
@@ -183,7 +200,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ![POST company Two curl](./images/task1/curl-company-two.png)
 
-13. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Third and Fourth POST:
+14. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Third and Fourth POST:
 
     ````
     <copy>
@@ -219,13 +236,13 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     ![POST company Third and Fourth curl](./images/task1/curl-company-three-four.png)
 
 
-14. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database.
+15. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database.
 
     http://[DEVM public-ip address]:5000/oracle/
 
     ![Microservice Company One, Two, Three & Four](./images/task1/microservice-company-one-two-three-four.png)
 
-15. Go to **cloud shell terminal.** We will **stop simple-app.py** running the following command.
+16. Go to **cloud shell terminal.** We will **stop simple-app.py** running the following command.
 
     ````
     <copy>
@@ -249,9 +266,8 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     <copy>demows</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![Login DEMO](./images/task2/log-in-demo-new.png)
 
@@ -358,9 +374,8 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     <copy>demows</copy>
     ```
     - Password: **DBlearnPTS#22_**
-    ```
-    <copy>DBlearnPTS#22_</copy>
-    ```
+
+    > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
     ![Log In Companies](./images/task2/log-in-companies-new.png)
 

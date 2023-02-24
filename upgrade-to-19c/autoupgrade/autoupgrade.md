@@ -321,8 +321,6 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     Wait until the 'STAGE' column of the lsj command displays the status 'DBUPGRADE', which takes about 6 minutes. The output should be similar to this:
 
     ```
-    upg> <copy>lsj</copy>
-
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
     |JOB#|DB NAME|    STAGE|OPERATION| STATUS|    START TIME|END TIME| UPDATED|MESSAGE|
     +----+-------+---------+---------+-------+--------------+--------+--------+-------+
@@ -346,7 +344,7 @@ The Auto Upgrade tool is part of the 19c Oracle Home distribution. Previous vers
     $ <copy>cd /u01/autoupgrade/DB121C/101/dbupgrade</copy>
     ```
     ```
-    $ <copy>tail -f autoupgrade_*.log</copy><Press TAB>.log
+    $ <copy>tail -f autoupgrade_*.log</copy>(Press TAB).log
 
     2019-04-17 12:44:23.670 INFO Finished - Utilities.autoReadFileToAry
     2019-04-17 12:44:23.670 INFO Finished - Utilities.getPhaseNo
