@@ -2,7 +2,7 @@
 
 ## Workshop overview
 
-This Getting Started guide will get you ready for the Oracle REST Data Services (ORDS) Workshop labs. This workshop and the labs that follow support either Windows clients or Linux clients.
+This Get Started guide will get you ready for the Oracle REST Data Services (ORDS) Workshop labs. This workshop and the labs that follow support either Windows clients or Linux clients.
 
 ![ORDS workflow](./images/ords-workflow.jpg "")
 
@@ -37,10 +37,4 @@ Estimated Time: 2 hours
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, Principal Product Manager, DB Product Management, Sep 2021
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, March 2023
