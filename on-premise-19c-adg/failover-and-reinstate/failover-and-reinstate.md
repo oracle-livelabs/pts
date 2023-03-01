@@ -215,7 +215,7 @@ Now, the primary is the back to the **ORCL** database, and the standby database 
     DGMGRL> <copy>connect sys/Ora_DB4U@orcl</copy>
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> reinstate database orclstby
+    DGMGRL> <copy>reinstate database orclstby</copy>
     Reinstating database "orclstby", please wait...
     Reinstatement of database "orclstby" succeeded
     DGMGRL> <copy>show configuration</copy>
