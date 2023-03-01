@@ -122,12 +122,17 @@ Now you will configure the prompt-less ssh for oracle users between the primary 
     |      .   = .    |
     |        o= .     |
     |       o=o.      |
-    +----[SHA256]-----+
-    [oracle@primary ~]$ cat .ssh/id_rsa.pub
+    +----[SHA256]-----+ 
+    ```
+
+    ```
+    [oracle@primary ~]$ <copy>cat .ssh/id_rsa.pub</copy>
     ssh-rsaAAAA***
     ...
-    ***IbTNY+k1sfHwyuUl oracle@workshop  
+    ***IbTNY+k1sfHwyuUl oracle@workshop 
     ```
+
+    
 
     - From the standby side, edit the `authorized_keys` file, copy all the content in the id_rsa.pub into it, save and close
 
@@ -185,25 +190,30 @@ Now you will configure the prompt-less ssh for oracle users between the primary 
     |   o = =.o.      |
     |    o.=o+ o.     |
     +----[SHA256]-----+
-    [oracle@standby ~]$ cat .ssh/id_rsa.pub
+    ```
+    
+    ```
+    [oracle@standby ~]$ <copy>cat .ssh/id_rsa.pub</copy>
     ssh-rsa AAAAB3***
     ...
     ***kIPaTfSlgx0E1 oracle@dbstby
     [oracle@standby ~]$ 
     ```
-
+    
+    
+    
     - From the primary side, edit the `authorized_keys` file, copy all the content in the `id_rsa.pub` into it, save and close
     
     ```
     <copy>vi .ssh/authorized_keys</copy>
     ```
-
+    
     - Change mode of the file.
     
     ```
     <copy>chmod 600 .ssh/authorized_keys</copy>
     ```
-
+    
     - From the standby side, test the connection from standby to primary, using the public ip or hostname of the primary hosts.
     
     ```
@@ -221,7 +231,7 @@ You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oct 2020 
-* **Last Updated By/Date** - Minqiao Wang, Oct 2021
+* **Last Updated By/Date** - Minqiao Wang, Feb 2023
 
 
 
