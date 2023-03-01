@@ -1,4 +1,4 @@
-# Infrastructure Configuration
+# Infrastructure configuration
 
 ## Introduction
 
@@ -8,7 +8,7 @@ The main three elements that we will be creating are a **Virtual Cloud Network**
 
 We will prepare the documents to be capable of accessing to **SODA APIs**, in particular, to create, drop, and list document collections using **APEX** as vehicle to visualize the JSON documents as we used to do with structure data. This capability is unique to Oracle Databases.
 
-**Estimated Time: 30 minutes.**
+Estimated Time: 30 minutes
 
 ### Objectives
 
@@ -21,7 +21,7 @@ In this lab, you will:
 
 ### Prerequisites
 
-* An Oracle Free Tier, Always Free, or Paid Oracle Cloud Account
+* An Oracle Cloud Infrastructure (OCI) account
 * Or Oracle LiveLabs sandbox environment
 
 ## Task 1: Verify Virtual Cloud Network (VCN)
@@ -235,7 +235,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 15. You can **verify** if the files have been transferred correctly using the following command:
 
-    ````
+    ````bash
     <copy>
     ll   
     </copy>
@@ -245,7 +245,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 16. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands, replacing XXX0 with your initials and digit:
 
-    ````
+    ````bash
     <copy>
     chmod 400 <private-key-file-name>.key
     scp -i <private-key-file-name>.key Wallet_XXX0AJD.zip opc@<Public_IP>:/home/opc
@@ -258,7 +258,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 17. Now we will stablish an **ssh connections** using the **Public IP.** Replace **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ````bash
     <copy>
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
@@ -268,7 +268,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 18. We will **unzip** the **Wallet** running the following command, replacing XXX0 with your initials and digit:
 
-    ````
+    ````bash
     <copy>
     unzip Wallet_XXX0AJD.zip -d Wallet_MyAJD
     </copy>
@@ -278,7 +278,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 19. We will **export** the **paths** using the following commands:
 
-    ````
+    ````bash
     <copy>
     sed -i 's/?\/network\/admin/\${TNS_ADMIN}/g' Wallet_MyAJD/sqlnet.ora
     export TNS_ADMIN=/home/opc/Wallet_MyAJD
@@ -454,9 +454,9 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![DB Actions JSON Create Collection](./images/task4/simple-collection.png)
 
-**You can proceed to the next lab…**
+You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, June 2022
+* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023

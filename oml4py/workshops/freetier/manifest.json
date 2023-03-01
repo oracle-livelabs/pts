@@ -8,39 +8,39 @@
     "filename": "../../introduction/introduction.md"
     },
     {
-    "title": "Getting Started",
-    "description": "This is the prerequisites for customers using Free Trial and Paid tenancies, and Always Free accounts (if applicable). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
-    "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
+    "title": "Get Started",
+    "description": "This is the prerequisites for customers using own tenancies.",
+    "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login.md"
     },
     {
-    "title": "Lab 1: Prepare Setup",
+    "title": "Lab 1: Prepare setup",
     "description": "How to download your ORM stack",
     "publisheddate": "11/12/2021",
     "filename": "../../prepare-setup/prepare-setup.md"
     },
     {
-    "title": "Lab 2 Environment Setup",
+    "title": "Lab 2: Setup the environment",
     "description": "How to provision the workshop environment and connect to it",
     "publisheddate": "06/30/2020",
     "filename": "https://oracle-livelabs.github.io/common/labs/setup-compute-generic/setup-compute-novnc-ssh.md"
     },
     {
-    "title": "Lab 3: Initialize Environment",
+    "title": "Lab 3: Initialize the environment",
     "description": "Initialize Environment",
     "filename": "../../initialize-environment-novnc/initialize-environment-novnc.md"
     },
     {
-    "title": "Lab 4: Understanding Dataset",
+    "title": "Lab 4: Understand the dataset",
     "description": "Understanding the Customer Insurance dataset to be used in the lab excercises.",
     "filename": "./../../../use-case/use-case.md"
     },
     {
-    "title": "Lab 5: OML4Py - Part 1",
+    "title": "Lab 5: Run OML4Py notebook part 1",
     "description": "Handson lab for using OML4Py.",
     "filename": "./../../oml4py1/oml4py1.md"
     },
     {
-    "title": "Lab 6: OML4Py - Part 2 (optional)",
+    "title": "Lab 6: Run OML4Py notebook part 2",
     "description": "Handson lab for using OML4Py.",
     "filename": "./../../oml4py2/oml4py2.md"
     },

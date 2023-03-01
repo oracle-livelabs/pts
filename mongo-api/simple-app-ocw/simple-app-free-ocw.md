@@ -8,7 +8,7 @@ You can use SODA for Python to perform create, read (retrieve), update, and dele
 
 SODA is a set of NoSQL-style APIs that let you create and store collections of documents (in particular JSON) in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the documents are stored in the database.
 
-Estimated Lab Time: 40 minutes
+Estimated Time: 40 minutes
 
 Watch the video below for a quick walk-through of the lab.
 [Python SODA micro-service with Autonomous Database for JSON](videohub:1_2ugpfxe2)
@@ -31,7 +31,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 1. Access to **cloud shell** again. If you are not connected to **opc@devm**, **run** again the **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing < and > too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
-    ````
+    ````bash
     <copy>
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
@@ -41,7 +41,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 2. If you had to re-connect via SSH to your Compute instance, you need to **export** the **paths** using the following commands:
 
-    ````
+    ````bash
     <copy>
     export TNS_ADMIN=/home/opc/Wallet_AJDEV
     export LD_LIBRARY_PATH=/usr/lib/oracle/21/client64/lib
@@ -53,7 +53,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 3. Download the files that we will use for next steps in this bit.ly running this command:
 
-    ````
+    ````bash
     <copy>
     wget -O python-simple-project.zip https://bit.ly/3EekcqE
     </copy>
@@ -63,7 +63,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 4. **Unzip** the **python-simple-project.zip** using the following command:
 
-    ````
+    ````bash
     <copy>
     unzip python-simple-project.zip
     </copy>
@@ -73,7 +73,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 5. **Access** to python-simple-project folder. **Create** a Python virtual environment for development, and **activate** it. Run the following commands:
 
-    ````
+    ````bash
     <copy>
     cd python-simple-project
     pip3 install --user virtualenv
@@ -88,7 +88,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 6. Lets have a look at **requirements.pip**. In this file, we have the libraries that we need for the micro-service application. Run the following command to see the code:
 
-    ````
+    ````bash
     <copy>
     cat requirements.pip
     </copy>
@@ -98,7 +98,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 7. Use **pip package installer** for Python 3 to **install** the required libraries specified in the requirements.pip file.
 
-    ````
+    ````bash
     <copy>
     pip3 install -r requirements.pip
     </copy>
@@ -108,7 +108,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 8. Lets have a look at **simple-app.py**. In this file, we have the Python application code. Run the following command to see the code:
 
-    ````
+    ````bash
     <copy>
     cat simple-app.py
     </copy>
@@ -120,7 +120,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     > **Note**: If you have change the user name and password to a different value, please run this commands providing the user and password.
 
-    ````
+    ````bash
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
     export AJSON_SERVICE="ajdev_tp"
@@ -128,7 +128,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 10. **After checking if all variables are correct**. **Run** simple-app application using the following command:
 
-    ````
+    ````bash
     <copy>
     nohup python3 simple-app.py > simple-app.log 2>&1 & echo $! > simple.pid
     </copy>
@@ -144,7 +144,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 11. Lets see what **simple-app.py is doing**, use the following command:
 
-    ````
+    ````bash
     <copy>
     cat simple-app.log
     </copy>
@@ -158,7 +158,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 12. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First POST:
 
-    ````
+    ````bash
     <copy>
     curl --request POST \
             --url http://localhost:5000/oracle/ \
@@ -180,7 +180,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 13. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Second POST:
 
-    ````
+    ````bash
     <copy>
     curl --request POST \
             --url http://localhost:5000/oracle/ \
@@ -202,7 +202,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 14. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. Third and Fourth POST:
 
-    ````
+    ````bash
     <copy>
     curl --request POST \
             --url http://localhost:5000/oracle/ \
@@ -244,7 +244,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 16. Go to **cloud shell terminal.** We will **stop simple-app.py** running the following command.
 
-    ````
+    ````bash
     <copy>
     kill $(cat simple.pid)
     </copy>
@@ -278,7 +278,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 3. **Run** this SQL query:
 
-    ````
+    ````sql
     <copy>
     select TABLE_NAME from USER_TABLES;
     </copy>
@@ -288,7 +288,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 4. **Describe** the table that holds JSON documents data in the collection. The name of the column that stores JSON documents is JSON_DOCUMENT.
 
-    ````
+    ````sql
     <copy>
     desc "SimpleCollection"
     </copy>
@@ -298,7 +298,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
 5. SQL dot-notation syntax is designed for easy queries to return JSON values from tables. **Run** a JSON dot-notation query.
 
-    ````
+    ````sql
     <copy>
     SELECT co.JSON_DOCUMENT.company,
            co.JSON_DOCUMENT.address.country Country,
@@ -341,7 +341,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     ```
     - SQL Query:
 
-    ````
+    ````sql
     <copy>
     SELECT co.JSON_DOCUMENT.company,
            co.JSON_DOCUMENT.address.country Country,
@@ -389,14 +389,9 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     With Oracle Autonomous Database as a document store, JSON data is valued in the same way as relational data.
 
-*You can proceed to the next lab…*
+You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, July 2022
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023

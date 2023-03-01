@@ -14,6 +14,7 @@
         },
         {
             "title": "Lab 1: Configure the application environment",
+            "type": "sandbox",
             "description": "In this Lab you will configure the network and create RAC services.",
             "filename": "../../lab2-configure-env/lab2-configure-env.md"
         },
