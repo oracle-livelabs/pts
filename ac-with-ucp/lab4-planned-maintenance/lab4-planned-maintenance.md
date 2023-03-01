@@ -28,9 +28,11 @@ This lab assumes you have:
 1. Edit the java demo application MyUCPDemo.java and make sure the pool is configured to use a 10 connections. For example:
 
     ```
+    <copy>
     pds.setInitialPoolSize(10);
     pds.setMinPoolSize(10);
     pds.setMaxPoolSize(20);
+    </copy>
     ```
 
 2. Recompile the application

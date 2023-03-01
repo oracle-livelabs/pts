@@ -239,7 +239,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSG ingess rule 6200](./images/task2/nsg-ingress-rule.png " ")
+      ![NSG ingress rule 6200](./images/task2/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
