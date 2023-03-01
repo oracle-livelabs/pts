@@ -1,10 +1,10 @@
-# Performance, scalability and elasticity
+# Manage database service
 
 ## Introduction
 
-Oracle Database technology used for the Oracle Base Database Service is the standard for scalability, robustness and enterprise strength. Virtual Machine VM.Standard2 Shapes provide a virtual machine DB system database provisioned on X7 machines, with six VM options available, having 1 to 24 CPU cores and 15 GB to 320 GB memory. You can scale up or down the number of OCPUs on the instance by changing the shape the DB System is running on.
+Oracle Database technology used for the Oracle Base Database Service is the standard for scalability, robustness and enterprise strength. Virtual Machines with AMD Standard E4 Flex shape allow you to provision any number of OCPUs, up to a maximum of 64 OCPUs (128 vCPUs) and 1 TB of memory with a single Base Database Service. OCI Block Volume storage with higher performance provides the best throughput for workloads that have high IO requirements.
 
-Oracle Database on virtual machines uses remote block storage, and enables scaling storage from 256 GB to 40 TB, with no downtime when scaling up storage. You specify a storage size when you launch the DB system, and you can scale up the storage as needed at any time. You can easily scale up storage for a DB system by using the console, REST APIs, CLI and SDKs.
+You can easily scale up and down resources for a DB system by using the console, REST APIs, CLI and SDKs.
 
 >**Note** : The total storage attached to an instance will be a sum of available storage, reco storage, and software size. Available storage is selected by the customer, reco storage is automatically calculated based on available storage, and software size is a fixed size Oracle database cost.
 
@@ -22,13 +22,17 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned Oracle Base Database Service
 
-## Task 1: Change Shape for More CPUs
+## Task 1: Change shape for More CPUs
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Change the Shape of a VM DB System] (youtube:CkQu4UOYico)
 
 1. Connect to your PDB012 pluggable database as SYSDBA using SQL*Plus.
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -44,17 +48,17 @@ This lab assumes you have:
     cpu_count   integer   2
     ````
 
-3. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
+3. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
-4. On DB System Details page, click **Change Shape** button. Select VM.Standard2.2 shape. Click **Change Shape** to confirm.
+4. On DB System Details page, click **Change shape** button. Select **Shape series: AMD**, VM.Standard.E4.Flex shape with **Number of OCPUs per node: 2**. Click **Change shape** to confirm.
 
-5. Read the warning: *Changing shapes stops a running DB System and restarts it on the selected shape. Are you sure you want to change the shape from VM.Standard2.1 to VM.Standard2.2?* Click again **Change Shape** to confirm.
+5. Under Confirm shape change, click again **Change shape** to confirm.
 
 6. DB System Status will change to Updating... Wait for Status to become Available (refresh page). Re-connect to your DB Node via SSH, and DB System database as SYSDBA using SQL*Plus.
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -70,15 +74,7 @@ This lab assumes you have:
     cpu_count   integer   4
     ````
 
-8. After restarting the DB System on a new shape, your pluggable database is in mounted state. Open pluggable database PDB012.
-
-    ````
-    <copy>
-    alter pluggable database PDB012 open;
-    </copy>
-    ````
-
-9. Type **exit** command to close SQL*Plus.
+8. Type **exit** command to close SQL*Plus.
 
     ````
     <copy>
@@ -87,6 +83,10 @@ This lab assumes you have:
     ````
 
 ## Task 2: Scale Up Storage Volumes
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Scale the Storage for VM DB System] (youtube:gPIPym5pt9M)
 
 1. On DB System Information page review the allocated storage resources:
 
@@ -170,7 +170,7 @@ This lab assumes you have:
     GRANT ALTER SYSTEM TO dbsnmp;
     GRANT ADVISOR TO dbsnmp;
     GRANT EXECUTE ON DBMS_WORKLOAD_REPOSITORY TO dbsnmp;
-    alter user dbsnmp identified by "DatabaseCloud#22_" account unlock;
+    alter user dbsnmp identified by "<Strong Password>" account unlock;
     exit
     </copy>
     ````
@@ -196,7 +196,7 @@ This lab assumes you have:
     - Encryption Key: WS-Key
     - Secret Contents: Use the strong password written down in your notes.
 
-7. When Secret is Active (refresh page), click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+7. When Secret is Active (refresh page), click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 8. Click the database name link **WSDB** in the bottom table called Databases.
 
@@ -214,9 +214,3 @@ This lab assumes you have:
 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

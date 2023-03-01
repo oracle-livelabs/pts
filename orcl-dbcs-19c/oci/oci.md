@@ -1,4 +1,4 @@
-# Oracle Cloud Infrastructure (OCI) resources
+# Provision OCI resources
 
 ## Introduction
 
@@ -24,6 +24,10 @@ This lab assumes you have:
 
 ## Task 1: Provision Database System
 
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Create Flex VM DB System] (youtube:_GwZYPRwLV8)
+
 1. Use Copy Password to copy the initial password in your clipboard, and click on Launch Console. Use the same initial password when asked to reset the password, so you don't have to remember it. You are in the Oracle cloud console using the Workshop Details received.
 
     - Login URL 	
@@ -33,36 +37,40 @@ This lab assumes you have:
     - Initial password
     - Compartment
 
-2. Click on main menu ≡, then **Oracle Database** > **Bare Metal, VM, and Exadata**. Click **Create DB System**.
+2. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
-    - Select your compartment (default)
-    - Name your DB system: **WS-DB**
-    - Select a shape type: Virtual Machine (default)
-    - Select a shape: **VM.Standard2.1**
-    - Oracle Database software edition: **Enterprise Edition Extreme Performance**
-    - Choose Storage Management Software: **Logical Volume Manager**
-    - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key)
-    - Choose a license type: Bring Your Own License (BYOL)
+    - Select your compartment (default).
+    - Select a shape type: Virtual Machine (default).
+    - Name your DB system: **WS-DB**.
+    - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
+    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
+    - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
+    - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
+    - Choose a license type: Bring Your Own License (BYOL).
 
-3. Specify the network information.
+2. Specify the network information.
 
     - Virtual cloud network: LLXXXXX-VCN
     - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
     - Hostname prefix: **db-host**
 
-4. Click Next.
+3. Click Next.
 
     - Database name: **WSDB**
-    - Database version: 19c (default)
-    - PDB name: **PDB011**
+    - Database version: 19c (default).
+    - PDB name: **PDB011**.
     - Password: Use a strong password and write it down in your notes.
-    - Select workload type: Transaction Processing (default)
-    - Configure database backups: **Enable automatic backups**
+    - Select workload type: Transaction Processing (default).
+    - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
-5. Click **Create DB System**.
+4. Click **Create DB System**.
 
 
 ## Task 2: DB Node SSH Connection
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Connect On-Premises SQL Dev Tool] (youtube:3bJ3JlpGlPo)
 
 1. Wait for DB System to finish provisioning, and have status Available (refresh page).
 
@@ -109,6 +117,10 @@ This lab assumes you have:
 
 ## Task 3: Verify DB connection using SQL*Plus.
 
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Connect On-Premises SQL Dev Tool] (youtube:3bJ3JlpGlPo)
+
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 
     ````
@@ -121,7 +133,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@<Database Unique Name> as sysdba
+    sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
     ````
 
@@ -145,7 +157,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.<Host Domain Name> as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
     ````
 
@@ -153,7 +165,7 @@ This lab assumes you have:
 
     ````
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb011.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
     ````
 
@@ -187,9 +199,3 @@ This lab assumes you have:
 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

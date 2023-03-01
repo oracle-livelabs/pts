@@ -1,8 +1,8 @@
-# Data Guard physical standby database
+# Deploy disaster recovery
 
 ## Introduction
 
-In this lab you will learn how to use the cloud console to manage Oracle Data Guard associations in your DB System. An Oracle Data Guard implementation requires two DB systems, one containing the primary database and one containing the standby database. When you enable Oracle Data Guard for a virtual machine DB system database, a new DB system with the standby database is created and associated with the primary database.
+In this lab you will learn how to use the cloud console to manage Oracle Data Guard associations in your DB System. An Oracle Data Guard implementation includes two DB systems, one containing the primary database and one containing the standby database. When you enable Oracle Data Guard for a virtual machine DB system database, a new DB system with the standby database is created and associated with the primary database.
 
 Estimated Time: 45 minutes
 
@@ -26,7 +26,11 @@ This lab assumes you have:
 
 ## Task 1: Enable Data Guard
 
-1. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Enable Data Guard for a VM DB System] (youtube:8zyIMjJoRF8)
+
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Add to your notes the Availability Domain you see on the DB System Information page (e.g. IWcS:EU-FRANKFURT-1-AD-1).
 
@@ -38,22 +42,26 @@ This lab assumes you have:
 
     - Display name: WS-DBStb
     - Availability domain: AD2 (different from your DB System AD)
-    - Select a shape: VM.Standard2.1
+    - Select a shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
     - Virtual cloud network: LLXXXXX-VCN
     - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
     - Hostname prefix: db-hoststb
+    - Data Guard Type: Active Data Guard
     - Protection mode: Maximum Performance
     - Password: Use the strong password written down in your notes.
 
 6. Click **Enable Data Guard**.
 
-7. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
+7. Click ≡, then **Oracle Base Database** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
 
 8. If you want to see more details, click **Work Requests** in the lower left menu. Check Operation Create Data Guard having status In Progress... Wait until your Standby DB System is Available. On **WS-DBStb** DB System details page, click **Nodes** in the lower left menu, and and copy Public IP Address and Private IP Address in your notes.
 
+9. Check **Data Guard Associations** in the lower left menu to see all details about your disaster-recovery configuration. Also check the **Database Role** field on the Database Details page under General information.
+
+
 ## Task 2: Connect to Standby DB System
 
-1. Connect to the Standby DB System node using SSH (Use Putty on Windows).
+1. Connect to the WS-DBStb standby DB System node using SSH (Use Putty on Windows).
 
     ````
     <copy>
@@ -67,17 +75,6 @@ This lab assumes you have:
     <copy>
     sudo su - oracle
     </copy>
-    ````
-
-3. Set environment variables required by administration tools.
-
-    ````
-    <copy>
-    export PATH=$PATH:/u01/app/oracle/product/19.0.0/dbhome_1/bin
-    . oraenv
-    </copy>
-    ORACLE_SID = [oracle] ? WSDB
-    The Oracle base has been set to /u01/app/oracle
     ````
 
 3. The Data Guard command-line interface (DGMGRL) enables you to manage a Data Guard broker configuration and its databases directly from the command line, or from batch programs or scripts.
@@ -189,7 +186,7 @@ This lab assumes you have:
     SUCCESS
     ````
 
-8. Show the brief summary of the Physical stadnby database.
+8. Show the brief summary of the Physical standby database.
 
     ````
     <copy>
@@ -254,7 +251,7 @@ This lab assumes you have:
 
 ## Task 3: Perform Switchover Operation
 
-1. Click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+1. Click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
@@ -262,9 +259,11 @@ This lab assumes you have:
 
 4. Status will change to Updating... Click **Work Requests** in the lower left menu, and the Operation name link. Here you can see Log Messages, Error Messages, Associated Resources.
 
-5. You can use the breadcrumbs links in the upper section of the page to navigate to superior levels: Overview > Bare Metal, VM and Exadata > DB Systems > DB System Details > Database Home Details > Database Details. Click **Database Details**, wait for Status to become Available.
+5. You can use the breadcrumbs links in the upper section of the page to navigate to superior levels: Overview > Oracle Base Database > DB Systems > DB System Details > Database Home Details > Database Details. Click **Database Details**, wait for Status to become Available.
 
-6. Launch DGMGRL.
+6. Check again the **Database Role** field on the Database Details page under General information.
+
+7. Launch DGMGRL on the WS-DBStb standby DB System node.
 
     ````
     <copy>
@@ -272,7 +271,7 @@ This lab assumes you have:
     </copy>
     ````
 
-7. Log in as user SYSDG with the SYSDG administrative privilege.
+8. Log in as user SYSDG with the SYSDG administrative privilege.
 
     ````
     <copy>
@@ -283,7 +282,7 @@ This lab assumes you have:
     Connected as SYSDBA.
     ````
 
-8. Show the current configuration. Observe the roles of the two databases are swapped.
+9. Show the current configuration. Observe the roles of the two databases are swapped.
 
     ````
     <copy>
@@ -303,7 +302,7 @@ This lab assumes you have:
     SUCCESS   (status updated 56 seconds ago)
     ````
 
-9. View the Primary database information.
+10. View the Primary database information.
 
     ````
     <copy>
@@ -321,11 +320,17 @@ This lab assumes you have:
     SUCCESS
     ````
 
+    >**Note** : At this moment, WS-DBStb DB System hosts the WSDB Primary database, and WS-DB DB System hosts the WSDB Standby database.
+    WSDB on WS-DBStb DB System has Database Management services enabled.
+    WSDB on WS-DB DB System has Database Management services disabled (No Metrics).
+    WSDB on WS-DB DB System has Automatic backup enabled, however automatic backups for that database will not be created until it assumes the primary role.
+    WSDB on WS-DBStb DB System has Automatic backup disabled, and you can enable it using **Configure automatic backups** button.
+
 ## Task 4: Enable Fast-Start Failover
 
 Fast-start failover allows the broker to automatically fail over to a previously chosen standby database in the event of loss of the primary database. Fast-start failover quickly and reliably fails over the target standby database to the primary database role, without requiring you to perform any manual steps to invoke the failover. Fast-start failover can be used only in a broker configuration and can be configured only through DGMGRL or Enterprise Manager Cloud Control.
 
-1. Use DGMGRL to enable fast-start failover.
+1. Use DGMGRL on the WS-DBStb primary DB System node to enable fast-start failover.
 
     ````
     <copy>
@@ -398,7 +403,19 @@ Maximum Availability mode provides the highest level of data protection that is 
 - redo has been received at the standby, I/O to the standby redo log has been initiated, and acknowledgement sent back to primary;
 - redo has been received and written to standby redo log at the standby and acknowledgement sent back to primary.
 
-1. Use DGMGRL to disable fast-start failover.
+1. Use the cloud console to change the protection mode. Click ≡, then Oracle Base Database under Oracle Database. Click WS-DBStb DB System.
+
+2. On the DB System Details page, click the database name link WSDB in the bottom table called Databases. This should have Database Role: Primary under Database information.
+
+3. Click Data Guard Associations in the lower left menu. Click ⋮ > Edit Data Guard Association.
+
+4. Set Protection mode: Maximum Availability. Observe how Transport type is set to Sync.
+
+5. Type in Database admin password field the strong password written down in your notes. Click **Edit Data Guard** to save changes.
+
+6. Optionally, use DGMGRL on the WS-DBStb primary DB System node to disable fast-start failover, and change the protection mode.
+
+    >**Note** : The following steps from this task are optional. You may skip these steps and run the next task.
 
     ````
     <copy>
@@ -407,7 +424,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     Disabled.
     ````
 
-2. Configure the redo transport service to SYNC on Primary database.
+7. Configure the redo transport service to SYNC on Primary database.
 
     ````
     <copy>
@@ -416,7 +433,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     Property "logxptmode" updated
     ````
 
-3. Configure also the redo transport service to SYNC on Physical standby database.
+8. Configure also the redo transport service to SYNC on Physical standby database.
 
     ````
     <copy>
@@ -425,7 +442,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     Property "logxptmode" updated
     ````
 
-4. Upgrade the broker configuration to the MAXAVAILABILITY protection mode.
+9. Upgrade the broker configuration to the MAXAVAILABILITY protection mode.
 
     ````
     <copy>
@@ -434,7 +451,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     Succeeded.
     ````
 
-5. Display the configuration information. If this command is executed immediately, it will display a warning message. The information was not fully updated, and you need to wait a few seconds to verify the configuration.
+10. Display the configuration information. If this command is executed immediately, it will display a warning message. The information was not fully updated, and you need to wait a few seconds to verify the configuration.
 
     ````
     <copy>
@@ -456,7 +473,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     WARNING   (status updated 54 seconds ago)
     ````
 
-6. After a minute, display again the configuration information. As you can see, the protection mode was updated.
+11. After a minute, display again the configuration information. As you can see, the protection mode was updated.
 
     ````
     <copy>
@@ -478,7 +495,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 ## Task 6: Stop Redo Apply on Standby
 
-1. It is possible to temporarily stop the Redo Apply on a Physical standby database. To change the state of the standby database to APPLY-OFF, enter the EDIT DATABASE command as shown in the following line.
+1. It is possible to temporarily stop the Redo Apply on a Physical standby database. To change the state of the standby database to APPLY-OFF, use DGMGRL on the WS-DBStb primary DB System node. Execute the EDIT DATABASE command as shown in the following line.
 
     ````
     <copy>
@@ -549,7 +566,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 ## Task 7: Test Fast-Start Failover with Maximum Availability
 
-1. On Oracle cloud console, click ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DBStb** DB System.
+1. On Oracle cloud console, click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DBStb** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
@@ -601,9 +618,3 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

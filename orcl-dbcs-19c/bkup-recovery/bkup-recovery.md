@@ -1,10 +1,14 @@
-# Oracle Base Database Service backup & recovery
+# Back up and recover your data
 
 ## Introduction
 
 Backing up your database is a key aspect of any Oracle database environment. There are multiple options available for storing and recovering your backups. You can use the backup and restore feature either within the Oracle Cloud Infrastructure Console, CLI or REST APIs, or manually set up and manage backups using dbcli or RMAN.
 
 When you use the Console, you can create full backups or set up automatic incremental backups with a few clicks. Similarly, you can view your backups and restore your database using the last known good state, a point-in-time, or SCN (System Change Number). You can also create a new database from your backup in an existing or a new DB system.
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Configure Automatic Backups] (youtube:A258cuNZHfw)
 
 Estimated Time: 30 minutes
 
@@ -53,7 +57,7 @@ This lab assumes you have:
     </copy>
     ````
 
-4. On Oracle cloud console, click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+4. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 5. Click the database name link **WSDB** in the bottom table called Databases.
 
@@ -65,9 +69,15 @@ This lab assumes you have:
 
 ## Task 2: Restore Database Service from Backup
 
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Restore a BaseDB Database from a Backup] (youtube:deQJ5N9k6eI)
+
 1. Write down the Started and Ended times for backup called **Automatic Backup** in the bottom table called Backups - e.g. Started: 09:38:13 UTC, Ended: 09:56:36 UTC.
 
 2. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the next possible value after your Automatic Backup Ended field - e.g. 10:00 UTC. Click **Restore Database** to confirm.
+
+    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder /opt/oracle/dcs/log/db-host/rman/bkup/<Database unique name>/ for more information.
 
 3. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
@@ -126,7 +136,7 @@ This lab assumes you have:
 
     - Select **Create a new DB system** radio button
     - Name your DB system: WS-DBb
-    - Change Shape: VM.Standard2.1
+    - Change Shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
     - Oracle Database software edition: Enterprise Edition Extreme Performance
     - Choose Storage Management Software: Logical Volume Manager
     - Upload SSH key files: Browse and select the public key file saved from the first DB System (ssh-key-XXXX-XX-XX.key.pub).
@@ -226,7 +236,7 @@ This lab assumes you have:
 
 ## Task 7: Terminate New Database Service to Release Resources
 
-1. On Oracle cloud console, click on hamburger menu ≡, then **Bare Metal, VM, and Exadata** under Databases. Click **WS-DBb** DB System.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
 
 2. Click **More Actions** > **Terminate**.
 
@@ -242,9 +252,3 @@ This lab assumes you have:
 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.

@@ -4,6 +4,7 @@
 
 In this lab, we will install the 19c database software and create a new 19c database (and listener) as a target for the other upgrades.
 
+
 Estimated Time: 30 minutes
 
 ### Objectives ###
@@ -33,17 +34,17 @@ In this lab you will
 
 1. First, we need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
 
-    ````
+    ```
     $ <copy>mkdir -p /u01/app/oracle/product/19.0.0/dbhome_193</copy>
-    ````
+    ```
 
 2. We can now use this new location to unzip our software.
 
-    ````
+    ```
     $ <copy>cd /u01/app/oracle/product/19.0.0/dbhome_193</copy>
-    ````
+    ```
 
-    ````
+    ```
     $ <copy>unzip /source/db_home_193_V982063.zip</copy>
 
     ...
@@ -56,7 +57,7 @@ In this lab you will
       javavm/lib/security/README.txt -> ../../../javavm/jdk/jdk8/lib/security/README.txt
       javavm/lib/security/java.security -> ../../../javavm/jdk/jdk8/lib/security/java.security
       jdk/jre/lib/amd64/server/libjsig.so -> ../libjsig.so
-    ````
+    ```
 
 We will not install any patches during this workshop; therefore, we can continue to prepare the operating system environment.
 
@@ -66,7 +67,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
 4. Run the installer to start the database software install
 
-    ````
+    ```
     $ <copy>sudo yum -y localinstall /source/oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm</copy>
 
     Loaded plugins: langpacks, ulninfo
@@ -82,7 +83,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
       oracle-database-preinstall-19c.x86_64 0:1.0-1.el7                                                                    
 
     Complete!
-    ````
+    ```
 
 ## Task 2: run OUI and create new 19c database ##
 
@@ -94,22 +95,22 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
  1. Execute the following commands in your terminal window as oracle user:
 
-    ````
+    ```
     $ <copy>cd /u01/app/oracle/product/19.0.0/dbhome_193</copy>
-    ````
-    ````
+    ```
+    ```
     $ <copy>./runInstaller</copy>
-    ````
+    ```
 
     The following screen should be visible on your (remote) desktop:
 
-     ![](./images/oui-1.png)
+    ![Oracle Universal Installer introduction screen 1](./images/oui-1.png)
 
     - Keep the default 'Create and Configure a single instance database' and press `NEXT`
 
 3. In the next screen, choose 'Desktop class' and press `NEXT`
 
-4. The desktop class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used. For the Oracle provided Workshop environment, the Desktop class is enough.
+4. The desktop-class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used. For the Oracle provided Workshop environment, the Desktop class is enough.
 
     Make sure to check and change the following values in the various fields:
 
@@ -132,16 +133,15 @@ An easy way to make sure all system parameters are correct in a Linux environmen
     - Pluggable database name
         - PDB19C01 **(change this value)**
 
-    ![](./images/oui-2
-.png)
+    ![Oracle Universal Installer screen 2](./images/oui-2.png)
 
     - After you have entered the correct values, please press the `NEXT` button to continue.
 
 5. The following screen should be visible:
 
-    ![](./images/oui-3.png)
+    ![Oracle Universal Installer root script screen](./images/oui-3.png)
 
-    Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
+    Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
 
     - Check the option to execute the configuration scripts automatically
         - Select the 'Use sudo' radio button
@@ -152,25 +152,25 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
  6. The system will now start checking the prerequisites for the 19c installation.
 
-    ![](./images/oui-4.png)
+    ![Oracle Universal Installer root script screen with contents](./images/oui-4.png)
 
  7. If all prerequisites have been checked and the preparation check can find no warnings or errors, the OUI will display the summary screen:
 
-    ![](./images/oui-5.png)
+    ![Oracle Universal Installer Summary screen](./images/oui-5.png)
 
     - Press the `Install` button to start the installation and database creation.
 
-    ![](./images/oui-6.png)
+    ![Oracle Universal Installer progress screen](./images/oui-6.png)
 
- 8. After about 5 minutes, provided there are no issues during the install, the root.sh script needs to be executed. If you have entered the password for the root user in the OUI, the pop-up box will ask permission to execute the scripts:
+ 8. After about 5 minutes, provided there are no issues during the installation, the root.sh script needs to be executed. If you have entered the password for the root user in the OUI, the pop-up box will ask permission to execute the scripts:
 
-    ![](./images/oui-7.png)
+    ![Oracle Universal Installer run rootscript pop-up](./images/oui-7.png)
 
     - Click the `Yes` button to continue
 
     > If you did not provide a root password or sudo information, a different window will be displayed.
     >
-    > ![](./images/oui-8.png)
+    > ![Oracle Universal Installer manually run root script pop-up](./images/oui-8.png)
     >
     > If you do not get the option to click `Yes`, please execute the script mentioned in the window as root user in a terminal environment.
 
@@ -180,7 +180,7 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
 10. After the database creation has finished, the OUI  will display the following screen (or similar):
 
-    ![](./images/oui-9.png)
+    ![Oracle Universal Installer Installation complete screen](./images/oui-9.png)
 
     - Press the `Close` button to end the Universal Installer session.
 
@@ -192,14 +192,14 @@ An easy way to make sure all system parameters are correct in a Linux environmen
 
 1. Please execute the following commands as Oracle user to login to the database:
 
-    ````
+    ```
     $ <copy>. oraenv</copy>
-    ````
-    ````
+    ```
+    ```
     ORACLE_SID = [oracle] ? <copy>DB19C</copy>
     The Oracle base remains unchanged with value /u01/app/oracle\
-    ````
-    ````
+    ```
+    ```
     $ <copy>sqlplus / as sysdba</copy>
 
     SQL*Plus: Release 19.0.0.0.0 - Production on Thu Apr 2 11:39:20 2020
@@ -210,28 +210,28 @@ An easy way to make sure all system parameters are correct in a Linux environmen
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.3.0.0.0
-    ````
+    ```
 2. Change the parameters for the memory setting to a lower value:
 
-    ````
+    ```
     SQL> <copy>alter system set sga_max_size=1300M scope=spfile;</copy>
 
     System altered.
-    ````
-    ````
+    ```
+    ```
     SQL> <copy>alter system set sga_target=1300M scope=spfile;</copy>
 
     System altered.
-    ````
+    ```
 3. Shutdown and startup the database to get the parameters into effect:
 
-    ````
+    ```
     SQL> <copy>shutdown immediate</copy>
     Database closed.
     Database dismounted.
     ORACLE instance shut down.
-    ````
-    ````
+    ```
+    ```
     SQL> <copy>startup</copy>
     ORACLE instance started.
 
@@ -242,21 +242,21 @@ An easy way to make sure all system parameters are correct in a Linux environmen
     Redo Buffers                7639040 bytes
     Database mounted.
     Database opened.
-    ````
+    ```
 
 4. We can now exit SQLPlus:
 
-    ````
+    ```
     SQL> <copy>exit</copy>
-    ````
+    ```
 
 ### Make your 19c database startup using dbstart ###
 
 5. If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
 
-    ````
+    ```
     $ <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
-    ````
+    ```
 
 ## Task 4: upgrade autoupgrade.jar file ##
 
@@ -264,12 +264,12 @@ For the autoupgrade lab, we need to put the latest version in the new 19c Oracle
 
 1. Please execute the following commands:
 
-    ````
+    ```
     $ <copy>mv /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/autoupgrade.jar /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/autoupgrade.jar.org</copy>
-    ````
-    ````
+    ```
+    ```
     $ <copy>cp /source/autoupgrade.jar /u01/app/oracle/product/19.0.0/dbhome_193/rdbms/admin/</copy>
-    ````
+    ```
 
 You may now proceed to the next lab.
 

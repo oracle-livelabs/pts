@@ -1,4 +1,4 @@
-# Oracle Database Command Line Interface (DBCLI)
+# Use command line interface
 
 ## Introduction
 
@@ -13,7 +13,7 @@ In this lab you will:
 * Retrieve your Base Database Service installation information
 * Control your Base Database Service running status
 * Manage pluggable databases
-* Apply patches from command line
+* Apply OS, server (OGI) and Database (DB Home) patches from command line
 
 ### Prerequisites
 
@@ -563,13 +563,17 @@ You can apply patches and updates with dbcli command. Our primary database shoul
     >**Note** : If there are OS patches available, you can run the OS update with the following commands:
     >
     >Pre-update check.
-    >````
-    >dbcli update-server -c os -p
-    >````
+    ````
+    <copy>
+    dbcli update-server -c os -p
+    </copy>
+    ````
     >OS update.
-    >````
-    >dbcli update-server -c os
-    >````
+    ````
+    <copy>
+    dbcli update-server -c os
+    </copy>
+    ````
     >Reboot DB System Node.
 
 8. Use the update server command to apply patches to the server components in the DB system. In case of a DB System using Oracle Grid Infrastructure (OGI), this command updates OGI components.
@@ -732,9 +736,3 @@ You can apply patches and updates with dbcli command. Our primary database shoul
 
 - **Author** - Valentin Leonard Tabacaru
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022
-
-## Need help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
