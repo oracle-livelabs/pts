@@ -9,7 +9,7 @@ In this lab, we will customize the environment that will be used to run the rest
 There are three main elements in our environment:
 
 * **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
-* **dbrac** : a two-node DBCS (aka Oracle Base Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
+* **dbrac** : a two-node Database Cloud Service (aka Oracle Base RAC Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
 * **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
 Estimated Lab Time: 30 minutes.
@@ -239,7 +239,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSG ingess rule 6200](./images/task2/nsg-ingress-rule.png " ")
+      ![NSG ingress rule 6200](./images/task2/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
@@ -264,13 +264,13 @@ This lab assumes you have:
   2. Create a database service with standard parameters (no Application Continuity)
 
 
-    * Find out the database unique name from the details page of the database **CONT** in DBCS **dbrac**
+    * Find out the database unique name from the details page of the database **CONT** in Oracle Base Database **dbrac**
 
         Make a note of your Database Unique Name. In should be in the form ***CONT_uvwxyz***.
 
         ![Find database unique name](./images/task3/find-database-unique-name.png " ")
 
-        *In the following commands, you will need to replace the template database name "cont_prim" by the real value of this database unique name.*
+        *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
 
         > **Note:** In most cases one can choose the database unique name when provisioning a database system. However, in our workshop, the value had to be automatically generated and needs to be retrieved.
 
