@@ -30,8 +30,10 @@ This lab assumes you have:
     **Make sure the pool in MyUCPDemo.java is configured to use a single connection**
 
       ```
+      <copy>
       pds.setMinPoolSize(1);
       pds.setMaxPoolSize(1);
+      </copy>
       ```
 
   2. Recompile the application
@@ -58,11 +60,11 @@ This lab assumes you have:
 
   2. Strike RETURN, and the application finishes the first transaction and starts a second one
 
-    ![Show transction 120](./images/task2/show-transction-120.png " ")
+    ![Show transaction 120](./images/task2/show-transction-120.png " ")
 
   3. Strike RETURN two more times to complete more transactions
 
-    ![Show transction 140](./images/task2/show-transction-140.png " ")
+    ![Show transaction 140](./images/task2/show-transction-140.png " ")
 
     We are now in the middle of the 4th transaction.
 
