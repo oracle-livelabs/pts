@@ -1,10 +1,10 @@
-# Capture Oracle Database Changes Introduction
+# Provision development environment
 
 ## Introduction
 
 Before we can start capturing any changes, we need an Oracle Database and a development environment to work on. The fastest way to get an Oracle Database up and running is to provision an Oracle Autonomous Database on Oracle Cloud Infrastructure. In the same way, the easiest way to put your hands on a sandbox with all the development tools necessary for this project, is to provision a Compute Instance using Oracle Cloud Developer Image.
 
-Estimated Lab Time: 60 minutes
+Estimated Time: 60 minutes
 
 ### Objectives
 In this lab, you will:
@@ -28,17 +28,17 @@ In this lab, you will:
     - Region
     - User name
     - Initial password
-    - Compartment 
+    - Compartment
 
 2. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select the Region and Compartment assigned in Workshop Details.
 
-    ![Oracle Console Networking](./images/task1/oracleconsolenetworking.png) 
+    ![Oracle Console Networking](./images/task1/oracleconsolenetworking.png)
 
 3. Click the name of the Virtual Cloud Network (VCN).
 
 4. Under Subnets, click the name of the public subnet.
 
-5. Under Security Lists, click the name of the existing security list. 
+5. Under Security Lists, click the name of the existing security list.
 
 6. Review the Ingress Rules and Egress Rules defined in this security list.
 
@@ -85,8 +85,8 @@ In this lab, you will:
     - Click **Create**
 
     ![Create Compute](./images/task2/createcompute.png)
-       
-6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button). 
+
+6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button).
 On the Instance Details page, copy Public IP Address in your notes.
 
 > Note: On the Instance Details page, copy **Public IP Address** in your notes.
@@ -105,7 +105,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 9. Click Applications > Favorites > Firefox to launch the web browser on the ClientVM Compute Node remote desktop.
 
     ![noVnc Firefox](./images/task2/novncfirefox.png)
-    
+
 10. Navigate to **cloud.oracle.com**, and **login** to Oracle cloud console using your Cloud Account Name, User Name, and Password.
 
 
@@ -144,7 +144,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 2. Provide a password (use the same as for RD connection - DBlearnPTS#21_), and Save File.
 
-3. Click **Applications** > **System Tools** > **Terminal** on the ClientVM Compute Node remote desktop. 
+3. Click **Applications** > **System Tools** > **Terminal** on the ClientVM Compute Node remote desktop.
 
     ![noVnc Terminal](./images/task3/novncterminal.png)
 
@@ -152,7 +152,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 5. Wallet file was downloaded in folder `/home/oracle/Downloads/`. Create a new folder to place wallet files.
 
-    ````
+    ````sh
     <copy>
     mkdir /home/oracle/Wallet_[Your Initials]Dev01
     unzip /home/oracle/Downloads/Wallet_[Your Initials]Dev01.zip -d /home/oracle/Wallet_[Your Initials]Dev01/
@@ -161,18 +161,18 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 6. Edit **sqlnet.ora** file in **Wallet_[Your Initials]Dev01** folder, and set the value of `DIRECTORY` to `${TNS_ADMIN}`.
 
-    ````
+    ````sh
     <copy>
     gedit Wallet_[Your Initials]Dev01/sqlnet.ora
     </copy>
-    
+
     WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="${TNS_ADMIN}")))
     SSL_SERVER_DN_MATCH=yes
     ````
 
 7. Set the `TNS_ADMIN` environment variable to the directory where the unzipped credentials files.
 
-    ````
+    ````sh
     <copy>
     export TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01
     </copy>
@@ -180,7 +180,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 8. Get service names for your instance from **tnsnames.ora** file.
 
-    ````
+    ````sh
     <copy>
     cat /home/oracle/Wallet_[Your Initials]Dev01/tnsnames.ora
     </copy>
@@ -188,7 +188,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 9. Verify the connectivity using SQL*Plus, using the TP service. If the connection works, exit. Replace `[Your Initials]` with your initials.
 
-    ````
+    ````sh
     <copy>
     sqlplus admin/DBlearnPTS#21_@[Your Initials]dev01_tp
     </copy>
@@ -203,7 +203,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 1. Download Oracle Sample Schemas installation package from GitHub.
 
-    ````
+    ````sh
     <copy>
     wget https://github.com/oracle/db-sample-schemas/archive/v19c.zip
     </copy>
@@ -211,7 +211,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 2. Unzip the archive.
 
-    ````
+    ````sh
     <copy>
     unzip v19c.zip
     </copy>
@@ -219,7 +219,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 3. Open the unzipped folder.
 
-    ````
+    ````sh
     <copy>
     cd db-sample-schemas-19c
     </copy>
@@ -227,7 +227,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 4. Run this Perl command to replace `__SUB__CWD__` tag in all scripts with your current working directory, so all embedded paths to match your working directory path.
 
-    ````
+    ````sh
     <copy>
     perl -p -i.bak -e 's#__SUB__CWD__#'$(pwd)'#g' *.sql */*.sql */*.dat
     </copy>
@@ -235,7 +235,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 5. Go back to the parent folder (this should be `/home/oracle`).
 
-    ````
+    ````sh
     <copy>
     cd ..
     </copy>
@@ -243,7 +243,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 6. Create a new folder for logs.
 
-    ````
+    ````sh
     <copy>
     mkdir logs
     </copy>
@@ -251,7 +251,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 7. Connect to the **ATPdev01** ATP service as **admin**. Replace `[Your Initials]` with your initials.
 
-    ````
+    ````sh
     <copy>
     sqlplus admin/DBlearnPTS#21_@[Your Initials]dev01_tp
     </copy>
@@ -259,7 +259,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 8. Run the HR schema installation script. For more information about [Oracle Database Sample Schemas](https://github.com/oracle/db-sample-schemas) installation process, please follow the link. Replace `[Your Initials]` with your initials.
 
-    ````
+    ````sql
     <copy>
     @db-sample-schemas-19c/human_resources/hr_main.sql DBlearnPTS#21_ DATA TEMP DBlearnPTS#21_ /home/oracle/logs/ [Your Initials]dev01_high
     </copy>
@@ -284,7 +284,7 @@ For this simple CICD example, we will capture database changes from the HR sampl
 
 4. Verify HR schema objects. Copy and paste the following query in SQL Developer Worksheet, and click Run Statement ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
     select object_name, object_type from user_objects order by 2,1;
     </copy>
@@ -303,7 +303,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 1. Existing Git client is old, we need to update to a newer version (e.g. 2.28.1).
 
-    ````
+    ````sh
     <copy>
     sudo yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
     </copy>
@@ -311,7 +311,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 2. Remove old Git client.
 
-    ````
+    ````sh
     <copy>
     sudo yum -y remove git
     </copy>
@@ -319,31 +319,31 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 3. Download and unpack new Git client files.
 
-    ````
+    ````sh
     <copy>
     cd /usr/src
-    
+
     sudo wget --no-check-certificate https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.28.1.tar.gz
-    
-    sudo tar xzf git-2.28.1.tar.gz 
+
+    sudo tar xzf git-2.28.1.tar.gz
     </copy>
     ````
 
 4. Perform new Git client installation.
 
-    ````
+    ````sh
     <copy>
     cd git-2.28.1
-    
+
     sudo make prefix=/usr/local/git all
-    
+
     sudo make prefix=/usr/local/git install
     </copy>
     ````
 
 5. Add Git client path to `/etc/profile`.
 
-    ````
+    ````sh
     <copy>
     sudo sh -c 'printf "\nexport PATH=\$PATH:/usr/local/git/bin\n" >> /etc/profile'
     </copy>
@@ -351,7 +351,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 6. Confirm Git client was updated.
 
-    ````
+    ````sh
     <copy>
     cd ~
     export PATH=$PATH:/usr/local/git/bin
@@ -363,7 +363,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 7. Use the Terminal on the Remote Desktop connection as **oracle** user to configure Git client to save your Git user name and email address. Replace `[GitHub username]` with your GutHub user name and `[GitHub email]` with your GitHub email address.
 
-    ````
+    ````sh
     <copy>
     git config --global user.name "[GitHub username]"
     git config --global user.email [GitHub email]
@@ -372,7 +372,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 8. Configure Git client to save credentials for 8 hours.
 
-    ````
+    ````sh
     <copy>
     git config --global credential.helper 'cache --timeout 28800'
     </copy>
@@ -380,7 +380,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 9. Create a new GitHub repository **cicd-ws-rep00**, and clone it on your compute node.
 
-    ````
+    ````sh
     <copy>
     cd ~
     git clone https://github.com/[GitHub username]/cicd-ws-rep00.git
@@ -390,11 +390,11 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 ## Task 9: Install Liquibase
 
-1. Access the website, and find the URL for the latest stable Liquibase release for Linux x64. 
+1. Access the website, and find the URL for the latest stable Liquibase release for Linux x64.
 
 2. Download and unzip Liquibase in oracle's home folder on the development machine.
 
-    ````
+    ````sh
     <copy>
     wget https://github.com/liquibase/liquibase/releases/download/v4.3.2/liquibase-4.3.2.tar.gz
     </copy>
@@ -402,7 +402,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 3. Create a new folder and unpack Liquibase files.
 
-    ````
+    ````sh
     <copy>
     mkdir liquibase4.3.2
     tar -xvf liquibase-4.3.2.tar.gz -C liquibase4.3.2/
@@ -411,7 +411,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 4. Add a symbolic link to Liquibase executable command to oracle's binary files.
 
-    ````
+    ````sh
     <copy>
     mkdir /home/oracle/.local/bin
     ln -s /home/oracle/liquibase4.3.2/liquibase /home/oracle/.local/bin/liquibase
@@ -421,7 +421,7 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 5. Check if Liquibase is running and get version.
 
-    ````
+    ````sh
     <copy>
     liquibase --version
     </copy>
@@ -429,16 +429,16 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
 
 6. Create a properties file in your GitHub repository folder.
 
-    ````
+    ````sh
     <copy>
     cd ~/cicd-ws-rep00
     gedit liquibase.properties
     </copy>
     ````
 
-7. Use the following properties for Liquibase. Replace `[Your Initials]` with your initials. 
+7. Use the following properties for Liquibase. Replace `[Your Initials]` with your initials.
 
-    ````
+    ````sh
     <copy>
     driver : oracle.jdbc.OracleDriver
     classpath : /usr/lib/oracle/19.13/client64/lib/ojdbc8.jar
@@ -457,9 +457,9 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
     > - password - database password
     > - changeLogFile - relative path to your Liquibase master changelog
 
-8. Edit `ojdbc.properties` file to set connection properties. 
+8. Edit `ojdbc.properties` file to set connection properties.
 
-    ````
+    ````sh
     <copy>
     cd ~
     gedit Wallet_[Your Initials]Dev01/ojdbc.properties
@@ -467,25 +467,23 @@ GitHub uses Git version control systems (VCS) to handle the collaboration workfl
     ````
 
 9. We have to make 3 changes:
-    - Comment out the `oracle.net.wallet_location` line. 
-    - Use `TNS_ADMIN` environment variable value in `javax.net.ssl.trustStore` and `javax.net.ssl.keyStore`. 
+    - Comment out the `oracle.net.wallet_location` line.
+    - Use `TNS_ADMIN` environment variable value in `javax.net.ssl.trustStore` and `javax.net.ssl.keyStore`.
     - Set `javax.net.ssl.trustStorePassword` and `javax.net.ssl.keyStorePassword` to the wallet password.
     - You can add all `javax.net.ssl` lines at the end of the file.
 
-    ````
+    ````sh
+    <copy>
     #oracle.net.wallet_location=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=${TNS_ADMIN})))
     javax.net.ssl.trustStore=${TNS_ADMIN}/truststore.jks
     javax.net.ssl.trustStorePassword=DBlearnPTS#21_
     javax.net.ssl.keyStore=${TNS_ADMIN}/keystore.jks
     javax.net.ssl.keyStorePassword=DBlearnPTS#21_
+    </copy>
     ````
 
+    You may now **proceed to the next lab**.
 
 ## Acknowledgements
-* **Author** - Valentin Leonard Tabacaru, PTS
-* **Last Updated By/Date** -  Valentin Leonard Tabacaru, May 2021
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Author** - Valentin Leonard Tabacaru
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, March 2023
