@@ -82,7 +82,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Verify SSH connection from a Linux client. Change the permissions on the private key file you saved from DB System. Change `ssh-key-XXXX-XX-XX` with the private key file you saved on your computer. (Linux only)
 
-    ````
+    ````bash
     <copy>
     chmod 400 Downloads/ssh-key-XXXX-XX-XX.key
     </copy>
@@ -90,7 +90,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. Connect to the DB Node using SSH. In OpenSSH, local port forwarding is configured using the -L option. Use this option to forward any connection to port 5500 on the local machine to port 5500 on your DB Node.  (Linux only)
 
-    ````
+    ````bash
     <copy>
     ssh -C -i Downloads/ssh-key-XXXX-XX-XX.key -L 5500:localhost:5500 opc@<DB Node Public IP Address>
     </copy>
@@ -123,7 +123,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 
-    ````
+    ````bash
     <copy>
     sudo su - oracle
     </copy>
@@ -131,7 +131,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Try to connect to your DB System database using SQL*Plus.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
@@ -139,7 +139,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. List pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -147,7 +147,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. You will see `PDB011` in the list opened in `READ WRITE` mode. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -155,7 +155,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Connect directly to the pluggable database.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
@@ -163,7 +163,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     Or
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
@@ -171,7 +171,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Display the current container name.
 
-    ````
+    ````sql
     <copy>
     show con_name
     </copy>
@@ -179,7 +179,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. List all users in PDB011.
 
-    ````
+    ````sql
     <copy>
     select username from all_users order by 1;
     </copy>
@@ -187,7 +187,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. This pluggable database doesn't have Oracle Sample Schemas. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>

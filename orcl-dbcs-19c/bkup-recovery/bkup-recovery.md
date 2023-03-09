@@ -29,7 +29,7 @@ This lab assumes you have:
 
 1. Connect to the DB System database instance specified by environment variables, if not already connected.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -37,7 +37,7 @@ This lab assumes you have:
 
 2. List all pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -51,7 +51,7 @@ This lab assumes you have:
 
 3. There are three pluggable databases now, one seed PDB (system-supplied template that the CDB can use to create new PDBs) and two user-created PDBs (application data). Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -77,13 +77,13 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the next possible value after your Automatic Backup Ended field - e.g. 10:00 UTC. Click **Restore Database** to confirm.
 
-    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder /opt/oracle/dcs/log/db-host/rman/bkup/<Database unique name>/ for more information.
+    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder `/opt/oracle/dcs/log/db-host/rman/bkup/[Database unique name]/` for more information.
 
 3. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
 4. Connect again to the database instance specified by environment variables.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -91,7 +91,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. List one more time all pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -156,7 +156,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. From your Compute node, connect to the new WS-DBb Database node using SSH (the one you just created from backup).
 
-    ````
+    ````bash
     <copy>
     ssh -C -i id_rsa opc@<DBb Node Private IP Address>
     </copy>
@@ -164,14 +164,14 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 
-    ````
+    ````bash
     <copy>
     sudo su - oracle
     </copy>
     ````
 3. You can connect to the database instance specified by environment variables.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -179,7 +179,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. List all pluggable databases. This database has three pluggable databases, one seed PDB (system-supplied template that the CDB can use to create new PDBs) and two user-created PDBs (application data). Pluggable database PDB012 was created at the moment when you took the Manual Backup you used to create this new database system.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -193,7 +193,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Set current container connection to the pluggable database **PDB012**.
 
-    ````
+    ````sql
     <copy>
     alter session set container=PDB012;
     </copy>
@@ -201,7 +201,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Verify the application data stored in **HR** schema.
 
-    ````
+    ````sql
     <copy>
     set linesize 130
     col TABLE_NAME format a40
@@ -224,7 +224,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. Type **exit** command tree times followed by Enter to close all sessions (SQL*Plus, oracle user, and SSH).
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>

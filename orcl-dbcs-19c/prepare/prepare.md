@@ -26,41 +26,47 @@ This lab assumes you have:
 
 >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
 
-1. Connect to the database instance specified by environment variables.
+1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
-    ````
+2. On DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
+
+3. Wait for Backup In Progress task to finish. Review the backup called **Automatic Backup** in the bottom table called Backups. Make sure it has Active State and a valid Ended timestamp.
+
+4. Connect to the database instance specified by environment variables.
+
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
     ````
 
-2. Unlock **xdb** database user account.
+5. Unlock **xdb** database user account.
 
-    ````
+    ````sql
     <copy>
     alter user xdb account unlock;
     </copy>
     ````
 
-3. Enable Oracle Enterprise Manager Database Express (EM Express) clients to use a single port (called a global port), for the session rather than using a port dedicated to the PDB.
+6. Enable Oracle Enterprise Manager Database Express (EM Express) clients to use a single port (called a global port), for the session rather than using a port dedicated to the PDB.
 
-    ````
+    ````sql
     <copy>
     exec dbms_xdb_config.SetGlobalPortEnabled(TRUE);
     </copy>
     ````
 
-4. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
+7. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
 
     >**Note** : You will receive an alert message in your browser about the security certificate not being valid. For Firefox, click **Advanced** and **Accept the Risk and Continue**. For Chrome, navigate to chrome://flags/#allow-insecure-localhost, and enable **Allow invalid certificates for resources loaded from localhost**.
 
-5. Use the following credentials:
+8. Use the following credentials:
 
     - Username: system
     - Password: Use the strong password written down in your notes.
     - Container Name: CDB$ROOT for the Container Database, or PDB011 for the Pluggable Database. Try both.
 
-6. Explore Enterprise Manager Express console, and see what this tool has to offer.
+9. Explore Enterprise Manager Express console, and see what this tool has to offer.
 
 
 ## Task 2: Create a Pluggable Database
@@ -71,7 +77,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. Connect to your DB System database using SQL*Plus, if not connected already.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -79,7 +85,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. List pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -98,7 +104,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. List again pluggable databases in SQL*Plus to confirm the new pluggable database is there.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -106,7 +112,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. Connect to the new pluggable database.
 
-    ````
+    ````sql
     <copy>
     conn sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
@@ -114,7 +120,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. Display the current container name.
 
-    ````
+    ````sql
     <copy>
     show con_name
     </copy>
@@ -122,7 +128,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 9. List all users in PDB012.
 
-    ````
+    ````sql
     <copy>
     select username from all_users order by 1;
     </copy>
@@ -135,7 +141,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. List all tablespaces in PDB012.
 
-    ````
+    ````sql
     <copy>
     select name from v$tablespace;
     </copy>
@@ -143,7 +149,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. List all datafiles.
 
-    ````
+    ````sql
     <copy>
     select name from v$datafile;
     </copy>
@@ -151,7 +157,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Createa a new tablespace for applications.
 
-    ````
+    ````sql
     <copy>
     CREATE TABLESPACE apps;
     </copy>
@@ -161,7 +167,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. List all tablespaces to confirm the new tablespace was created.
 
-    ````
+    ````sql
     <copy>
     select name from v$tablespace;
     </copy>
@@ -169,7 +175,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. List all datafiles and see the corresponding files.
 
-    ````
+    ````sql
     <copy>
     select name from v$datafile;
     </copy>
@@ -177,7 +183,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -185,7 +191,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. Download Oracle Sample Schemas installation package from GitHub.
 
-    ````
+    ````bash
     <copy>
     wget https://github.com/oracle/db-sample-schemas/archive/v19c.zip
     </copy>
@@ -193,7 +199,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. Unzip the archive.
 
-    ````
+    ````bash
     <copy>
     unzip v19c.zip
     </copy>
@@ -201,7 +207,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 9. Open the unzipped folder.
 
-    ````
+    ````bash
     <copy>
     cd db-sample-schemas-19c
     </copy>
@@ -209,7 +215,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 10. Run this Perl command to replace `__SUB__CWD__` tag in all scripts with your current working directory, so all embedded paths to match your working directory path.
 
-    ````
+    ````bash
     <copy>
     perl -p -i.bak -e 's#__SUB__CWD__#'$(pwd)'#g' *.sql */*.sql */*.dat
     </copy>
@@ -217,7 +223,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 11. Go back to the parent folder (this should be /home/opc).
 
-    ````
+    ````bash
     <copy>
     cd ..
     </copy>
@@ -225,7 +231,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 12. Create a new folder for logs.
 
-    ````
+    ````bash
     <copy>
     mkdir logs
     </copy>
@@ -233,7 +239,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 13. Connect to the **PDB012** pluggable database.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
@@ -241,7 +247,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 14. Run the HR schema installation script. For more information about [Oracle Database Sample Schemas](https://github.com/oracle/db-sample-schemas) installation process, please follow the link. Make sure to replace **Host Domain Name** with the actual value.
 
-    ````
+    ````sql
     <copy>
     @db-sample-schemas-19c/human_resources/hr_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
     </copy>
@@ -251,7 +257,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. Display current user. If all steps were followed, the current user should be **HR**.
 
-    ````
+    ````sql
     <copy>
     show user
     </copy>
@@ -259,7 +265,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Select tables from **HR** schema and their row numbers.
 
-    ````
+    ````sql
     <copy>
     set linesize 130
     col TABLE_NAME for a25
@@ -269,7 +275,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Some SQL*Plus formatting.
 
-    ````
+    ````sql
     <copy>
     col EMPLOYEE_ID heading ID
     col FIRST_NAME for a10
@@ -282,7 +288,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. Select all rows from the **HR.EMPLOYEES** table.
 
-    ````
+    ````sql
     <copy>
     select * from EMPLOYEES;
     </copy>
@@ -290,7 +296,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. If everything is fine, exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -300,7 +306,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. Connect to the **PDB012** pluggable database.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
@@ -308,7 +314,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Run the SH schema installation script. Make sure to replace **Host Domain Name** with the actual value.
 
-    ````
+    ````sql
     <copy>
     @db-sample-schemas-19c/sales_history/sh_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
     </copy>
@@ -316,7 +322,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Display current user. If all steps were followed, the current user should be **SH**.
 
-    ````
+    ````sql
     <copy>
     show user
     </copy>
@@ -324,7 +330,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. Select tables from **SH** schema and their row numbers.
 
-    ````
+    ````sql
     <copy>
     set linesize 130
     col TABLE_NAME for a28
@@ -334,7 +340,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. If everything is fine, exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>

@@ -1,28 +1,28 @@
 {
-    "workshoptitle": "Capture Oracle Database Changes for CI/CD",
+    "workshoptitle": "Capture Oracle Database changes for CI/CD",
     "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
-            "title": "Oracle Cloud Free Tier",
-            "description": "Use your Always Free resources as long as you want with no time constraints—subject only to the capacity limits noted. When your 30-day trial period for the expanded set of services ends, you can continue using Always Free services with no interruption.",
-            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
+            "title": "Introduction",
+            "description": "Introduction to Oracle Database CI/CD.",
+            "filename": "./../../introduction/introduction.md"
         },
         {
-            "title": "Lab 1: Create SSH Keys (optional)",
-            "filename": "https://oracle-livelabs.github.io/common/labs/generate-ssh-key/generate-ssh-keys.md"
+            "title": "Get Started",
+             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login.md"
         },
         {
-            "title": "Lab 2: Development environment preparation",
+            "title": "Lab 1: Provision development environment",
             "description": "Provision Oracle Cloud Infrastructure basic resources to Capture Oracle Database Changes for CI/CD.",
-            "filename": "./../../provision/oci-cicd.md"
+            "filename": "./../../provision/oci-cicd-pts.md"
         },
         {
-            "title": "Lab 3: Use SQLcl to Capture Database Changes with Liquibase",
+            "title": "Lab 2: Capture changes with SQLcl Liquibase",
             "description": "This lab shows how easy it is to capture changes in Oracle Database using Liquibase, from SQLcl command line, and push them to your GitHub repository.",
             "filename": "./../../sqlcl-cicd/sqlcl-cicd.md"
         },
         {
-            "title": "Lab 4: Use SQL Developer to Capture Database Changes with Liquibase",
+            "title": "Lab 3: Capture changes with Liquibase from SQL Developer",
             "description": "This lab shows how easy it is to capture changes in Oracle Database using Liquibase, from SQL Developer worksheet GUI, and push them to your GitHub repository.",
             "filename": "./../../sqldev-cicd/sqldev-cicd.md"
         },

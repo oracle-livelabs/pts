@@ -30,7 +30,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. Connect to your PDB012 pluggable database as SYSDBA using SQL*Plus.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
@@ -38,7 +38,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Display the value of parameter **cpu_count**. Database Service is running currently on 2 CPUs.
 
-    ````
+    ````sql
     <copy>
     show parameter cpu_count
     </copy>
@@ -56,7 +56,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. DB System Status will change to Updating... Wait for Status to become Available (refresh page). Re-connect to your DB Node via SSH, and DB System database as SYSDBA using SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
@@ -64,7 +64,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. Display again the value of parameter **cpu_count**. Database Service is running now on 4 CPUs.
 
-    ````
+    ````sql
     <copy>
     show parameter cpu_count
     </copy>
@@ -76,7 +76,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. Type **exit** command to close SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -95,7 +95,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Check file system disk space usage on the database node, using the **df** command. Flag **-h** is fo *human-readable* output. It uses unit suffixes: Byte, Kilobyte, Megabyte, and so on. Total Storage Size value on DB System Information is the sum of all these filesystems. Write down in your notes the value of **/dev/mapper/DATA_GRP-DATA** filesystem.
 
-    ````
+    ````bash
     <copy>
     df -h
     </copy>
@@ -127,7 +127,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Check again the file system disk space usage, and compare the value of **/dev/mapper/DATA_GRP-DATA** filesystem with the previous one.
 
-    ````
+    ````bash
     <copy>
     df -h
     </copy>
@@ -155,7 +155,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. Use SQL*Plus to connect to your DB System database instance specified by environment variables.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -163,7 +163,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Set required privileges for database monitoring user credentials.
 
-    ````
+    ````sql
     <copy>
     GRANT CREATE PROCEDURE TO dbsnmp;
     GRANT SELECT ANY DICTIONARY, SELECT_CATALOG_ROLE TO dbsnmp;
@@ -179,6 +179,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     - Name: WS_PE
     - Description: Database Management Private Endpoint
+    - Subnet: Public Subnet LLXXXXX-VCN.
 
 4. Click on main menu ≡, then Identity & Security > Vault. Click Create Vault.
 
