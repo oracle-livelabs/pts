@@ -2,15 +2,15 @@
 
 ## Introduction
 
-You can setup the shard database environment using Oracle Resource Manager and Terraform. The terraform script builds the following:
+In this lab you will setup the shard database environment using Oracle Resource Manager and Terraform. The terraform script builds the following:
 
 1. Compute service for Shard Directors (based on the shape that user wants to select).
 2. Database service for Shard and Catalog databases (based on the shape that user wants to select).
 
-Estimated Lab Time: 45 minutes
+Estimated Lab Time: 45 minutes.
 
 ### Objectives
-In this lab, you will:
+
 -   Use Terraform and Resource Manager to setup the shard database environment.
 -   Verify the shard database environment
 
@@ -22,90 +22,90 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [shardstack-marketplace-103-nodomain.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/DK02ZYKxgVDjrB-nP6TUTKdcopOFPKS0BQzI2jzCn9I_vDIgwhkI1SRrDmLqfUXK/n/c4u04/b/livelabsfiles/o/labfiles/shardstack-marketplace-103-nodomain.zip) - Packaged terraform primary database instances creation script.
+- [shardstack-marketplace-103-nodomain.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/mAH8tEFXPeUT--YrjUthbjEyyHv-Q7Hm4eXA_LU32I6TLWuWneQJedYPjTAkm-YP/n/c4u04/b/livelabsfiles/o/shardstack-marketplace-103-nodomain.zip) - Packaged terraform primary database instances creation script.
 
 
 
-## Task 1: Create the Shard Database Stacks
+## **STEP 1:** Create the Shard Database Stacks
 
 1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
-    ![](./images/cloud-homepage.png " ")
+    ![Cloud Homepage](./images/cloud-homepage.png " ")
     
-    ![](./images/resource.png " ")
+    ![Resource](./images/resource.png " ")
     
     
     
-    ![](./images/step1.3-createstackpage.png " ")
+    ![Create Stack Page](./images/step1.3-createstackpage.png " ")
 
-2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`shardstack-nodomain-qs.zip`) that you downloaded. Click **Select** to upload the zip file.
+2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`shardstack-nodomain.zip`) that you downloaded. Click **Select** to upload the zip file.
 
-    ![image-add-stack-file](images/image-add-stack-file.png)
+    ![Stack Infor](images/image-stackinfor.png)
 
     
 
 
 3. Scroll down the screen, you can accept all the default informations and click **Next**.
 
-    ![image-stack-info](images/image-stack-info.png)
+    ![Stack Info 2](images/image-stackinfo2.png)
 
 4. Oracle Sharded Database General Configuration. Enter the Sharded Database Name, for example: **sdb**. Accept all other default values.
 
-    ![image-config-variables](images/image-config-variables.png)
+    ![Configure Variable SDB](images/image-configurevariablesdb.png)
 
 5. Scroll down the screen, in the Shard configuration sector, You can set the shard database shape, number of the primary shards and shard database available storage. Accept the default values.
 
-    ![image-shard-shape](images/image-shard-shape.png)
+    ![Shard DB Shape](images/image-sharddbshape.png)
 
 6. In the Shard Catalog configuration sector, you can set the shard catalog database shape, shard catalog db available storage. Accept the default values.
 
-    ![image-catalog-shape](images/image-catalog-shape.png)
+    ![Catalog DB Shape](images/image-catalogdbshape.png)
 
 7. In the replication sector, you can set the number of the replication factor. If the selected value is 1, then only a single replica set of the primary shard will be created. If the selected value is 2, then both the primary shard replica set and standby shard replica set will be created. In this workshop, we will not use the standby shard, so accept the default value **1**.
 
-    ![image-replication-factor](images/image-replication-factor.png)
+    ![Replication Factor](images/image-replicationfactor.png)
 
 8. In Shard Director Configuration,  you can set the shard director VM shape, and number of the shard directors. Accept the default values.
 
-    ![image-director-shape](images/image-director-shape.png)
+    ![Shard Director Shape](images/image-sharddirectorshape.png)
 
 9. In the Network setting sector, You can choose create new network or use a previously created network. In this workshop, we use create new network, you can select the compartment for VCN and subnet network. Accept all other default values.
 
-    ![image-network-setting](images/image-network-setting.png)
+    ![Network](images/image-network.png)
 
 10. In the ssh configuration, You can choose the ssh public key file which you created before or paste the ssh public key value in it.
 
-    ![image-ssh-public-key](images/image-ssh-public-key.png)
+    ![SSH Public Key](images/image-sshpublickey.png)
 
 11. Click **Next**, you can review you configuration variables.
 
-    ![image-review-config](images/image-review-config.png)
+    ![Review Page](images/image-reviewpage.png)
 
 12. Click **Create**. Your stack has now been created!  
 
-    ![image-stack-created](images/image-stack-created.png)
+    ![Create Page](images/image-createpage.png)
 
-## Task 2: Terraform Apply
+## **STEP 2:** Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Apply**. Let's do that now.
 
 1. At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will create the shard database. This takes about about 30 minutes, please be patient.
 
-    ![image-apply-job](images/image-apply-job.png)
+    ![Apply](images/image-apply.png)
     
-    ![image-click-apply](images/image-click-apply.png)
+    ![Apply Confirm](images/image-applyconfirm.png)
     
-    ![image-job-running](images/image-job-running.png)
+    ![Job Running](images/image-jobrunning.png)
     
-    ![image-job-complete](images/image-job-complete.png)
+    ![Job Finished](images/image-jobfinished.png)
 
     
 
 2. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** for the shard director, shard catalog and shard database. You can also get the sys user password for the catalog database and shard database. 
 
-    ![image-output](images/image-output.png)
+    ![Job Output](images/image-joboutput.png)
 
-3. Write down all the public ip's and sys password for later use. It will be similar to the following. All the pdb name in the catalog and shard database is named `sdbpdb` by default. For example: the sys user password is: `sd_yonN176_uGAE009qa`
+3. Write down all the public ip's and sys password for later use. It will be similar to the following. All the pdb name in the catalog and shard database is named `sdbpdb` by default. For example, the sys user password is: `sd_yonN176_uGAE009qa`
 
     | Public IP       | Hostname | Act as              | PDB name |
     | --------------- | -------- | ------------------- | -------- |
@@ -118,7 +118,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Appl
 
 You now have a fully functional Oracle shard database which uses the system managed shard method. 
 
-## Task 3: Verify the Shard Database
+## **STEP 3:** Verify the Shard Database
 
 1. Login to the shard director host using the public ip address of the director host, switch to oracle user.
 
@@ -324,7 +324,8 @@ You now have a fully functional Oracle shard database which uses the system mana
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management, Jan 2021
-* **Last Updated By/Date** - Minqiao Wang, Jun 2022
+* **Author** - Minqiao Wang, Jan 2021
+* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+
 
 
