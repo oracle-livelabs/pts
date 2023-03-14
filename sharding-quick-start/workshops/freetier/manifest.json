@@ -1,9 +1,8 @@
 {
-    "workshoptitle": "Working with Oracle Sharded Database",
+    "workshoptitle": "Oracle Sharding Quick Start",
     "tutorials": [
         {
             "title": "Introduction",
-            "description": "The Introduction is always second. The title and contents menu title match for the Introduction.",
             "filename": "../../introduction/introduction.md"
         },
         {
