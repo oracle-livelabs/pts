@@ -26,7 +26,7 @@ This lab assumes you have:
 
 >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
 
-1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
+1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
 2. On DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
@@ -62,9 +62,9 @@ This lab assumes you have:
 
 8. Use the following credentials:
 
-    - Username: system
+    - Username: **system**
     - Password: Use the strong password written down in your notes.
-    - Container Name: CDB$ROOT for the Container Database, or PDB011 for the Pluggable Database. Try both.
+    - Container Name: **CDB$ROOT** for the Container Database, or **PDB011** for the Pluggable Database. Try both.
 
 9. Explore Enterprise Manager Express console, and see what this tool has to offer.
 
@@ -91,16 +91,16 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+3. Create a new pluggable database called **PDB012**. Click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
-4. Click the database name link **WSDB** in the bottom table called Databases. Click Pluggable Databases in the left menu at the bottom o the page. Click Create Pluggable Database.
+4. Click the database name link **WSDB** in the bottom table called Databases. Click **Pluggable Databases** in the left menu at the bottom o the page. Click **Create Pluggable Database**.
 
-    - Enter PDB Name: PDB012
-    - Unlock my PDB Admin account
+    - Enter PDB Name: **PDB012**
+    - **Unlock my PDB Admin account**
     - PDB Admin password: Use the strong password written down in your notes.
     - TDE wallet password of database: Use the strong password written down in your notes.
 
-5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click Pluggable Databases in the left menu at the bottom o the page. PDB012 is Available.
+5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click **Pluggable Databases** in the left menu at the bottom o the page. PDB012 is Available.
 
 6. List again pluggable databases in SQL*Plus to confirm the new pluggable database is there.
 
