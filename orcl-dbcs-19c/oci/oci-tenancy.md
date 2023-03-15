@@ -27,7 +27,7 @@ This lab assumes you have:
 
 >**Note** : If your OCI user privileges prevent you from creating Identity Policies, ask your tenancy administrator to create these policies.
 
-1. Click on main menu ≡, then Identity & Security > Identity **Policies**.
+1. Click on main menu **≡**, then **Identity & Security** > Identity **Policies**.
 
 2. Select the Compartment where you want them. Typically, Identity Policies are created in the Tenancy (root) Compartment.
 
@@ -35,7 +35,7 @@ This lab assumes you have:
 
 4. Specify a Name and a Description to help identify and track these policies.
 
-5. In Policy Builder enable Show manual editor.
+5. In Policy Builder enable **Show manual editor**.
 
 6. In the text field, copy-paste these policies, changing the name of the user-group (USER-GROUP), compartment (USER-COMPARTMENT), and region (FRA) with your own values:
 
@@ -73,7 +73,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Click **Sign In**.
 
-4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+4. Click on main menu **≡**, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
 
 5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
 
@@ -88,7 +88,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Destination Port Range: 1521
     - Description: Database connection
 
-8. Click **+Another Ingress Rule**. (Optional. SSH tunnel can be used for EM Express connection). Under Ingress Rule 2:
+8. (Optional) Click **+Another Ingress Rule**. (Optional. SSH tunnel can be used for EM Express connection). Under Ingress Rule 2:
 
     - CIDR Block: 0.0.0.0/0
     - Destination Port Range: 5500
@@ -111,7 +111,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
-1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+1. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default).
     - Name your DB system: **WS-DB**.
@@ -125,7 +125,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 2. Specify the network information.
 
     - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
+    - Client Subnet: **Public Subnet LLXXXXX-SUBNET-PUBLIC**
     - Hostname prefix: **db-host**
 
 3. Click Next.
@@ -170,7 +170,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > Import Key. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
+5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > **Import Key**. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
 
 6. Connect to DB Node Public IP Address port 22. (Windows only)
 

@@ -57,15 +57,15 @@ This lab assumes you have:
     </copy>
     ````
 
-4. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+4. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 5. Click the database name link **WSDB** in the bottom table called Databases.
 
-6. Review the backup called **Automatic Backup** in the bottom table called Backups. Click **Create Backup** button. Call it Manual-Backup, and click **Create Backup** to confirm. The new backup is added to the Backups table, having the State: Creating...
+6. Review the backup called **Automatic Backup** in the bottom table called Backups. Click **Create Backup** button. Call it **Manual-Backup**, and click **Create Backup** to confirm. The new backup is added to the Backups table, having the State: Creating...
 
 7. Access Work Requests table, and click **Create Database Backup**. Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (2). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
-8. At this point you can see the Manual-Backup on Backups table is now Active.
+8. At this point you can see the **Manual-Backup** on Backups table is now Active.
 
 ## Task 2: Restore Database Service from Backup
 
@@ -127,24 +127,24 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Backup retention period: 45 days
     - Backup scheduling (UTC): 12:00AM - 2:00AM
 
-3. Click **Save Changes**. Database lifecycle state changes to Backup In Progress... Wait for Database to become Available. Under Database Information details, review againBackup Retention Period and Backup Schedule fields. New configuration is displayed:
+3. Click **Save Changes**. Database lifecycle state changes to Backup In Progress... Wait for Database to become Available. Under Database Information details, review again Backup Retention Period and Backup Schedule fields. New configuration is displayed:
 
     - Backup Retention Period: 45 Days
     - Backup Schedule: 12:00AM - 2:00AM UTC
 
-4. Access Backups table at the bottom of the page, and next to Manual-Backup click ⋮ > **Create Database**. On the Create Database from Backup dialog, enter the following values:
+4. Access Backups table at the bottom of the page, and next to Manual-Backup click **⋮** > **Create Database**. On the Create Database from Backup dialog, enter the following values:
 
     - Select **Create a new DB system** radio button
     - Name your DB system: WS-DBb
-    - Change Shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
+    - Change Shape: **VM.Standard.E4.Flex** with 1 core OCPU, 16 GB memory
     - Oracle Database software edition: Enterprise Edition Extreme Performance
-    - Choose Storage Management Software: Logical Volume Manager
+    - Choose Storage Management Software: **Logical Volume Manager**
     - Upload SSH key files: Browse and select the public key file saved from the first DB System (ssh-key-XXXX-XX-XX.key.pub).
     - Choose a license type: Bring Your Own License (BYOL)
     - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
-    - Hostname prefix: db-clone
-    - Database name: WSDBB
+    - Client Subnet: **LLXXXXX-SUBNET-PUBLIC Public Subnet**
+    - Hostname prefix: **db-clone**
+    - Database name: **WSDBB**
     - Password: Use the strong password written down in your notes.
     - Enter the source database's TDE wallet or RMAN password: Use the strong password written down in your notes.
 
@@ -236,7 +236,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 ## Task 7: Terminate New Database Service to Release Resources
 
-1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
+1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
 
 2. Click **More Actions** > **Terminate**.
 

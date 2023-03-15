@@ -30,7 +30,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Enable Data Guard for a VM DB System] (youtube:8zyIMjJoRF8)
 
-1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. Add to your notes the Availability Domain you see on the DB System Information page (e.g. IWcS:EU-FRANKFURT-1-AD-1).
 
@@ -40,19 +40,19 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Click **Data Guard Associations** in the lower left menu. Click **Enable Data Guard**. Provide the following details:
 
-    - Display name: WS-DBStb
+    - Display name: **WS-DBStb**
     - Availability domain: AD2 (different from your DB System AD)
-    - Select a shape: VM.Standard.E4.Flex with 1 core OCPU, 16 GB memory
+    - Select a shape: **VM.Standard.E4.Flex** with 1 core OCPU, 16 GB memory
     - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: LLXXXXX-SUBNET-PUBLIC Public Subnet
-    - Hostname prefix: db-hoststb
-    - Data Guard Type: Active Data Guard
-    - Protection mode: Maximum Performance
+    - Client Subnet: **LLXXXXX-SUBNET-PUBLIC Public Subnet**
+    - Hostname prefix: **db-hoststb**
+    - Data Guard Type: **Active Data Guard**
+    - Protection mode: **Maximum Performance**
     - Password: Use the strong password written down in your notes.
 
 6. Click **Enable Data Guard**.
 
-7. Click ≡, then **Oracle Base Database** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
+7. Click **≡**, then **Oracle Base Database** under Oracle Database. Or use the breadcrumbs link **DB Systems**. Click **WS-DBStb** DB System. Status is Provisioning...
 
 8. If you want to see more details, click **Work Requests** in the lower left menu. Check Operation Create Data Guard having status In Progress... Wait until your Standby DB System is Available. On **WS-DBStb** DB System details page, click **Nodes** in the lower left menu, and and copy Public IP Address and Private IP Address in your notes.
 
@@ -85,7 +85,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-4. To run DGMGRL, you must have SYSDBA privileges. Log in as user SYSDG with the SYSDG administrative privilege to perform Data Guard operations. You can use this privilege with either Data Guard Broker or the DGMGRL command-line interface.
+4. To run **DGMGRL**, you must have **SYSDBA** privileges. Log in as user SYSDG with the SYSDG administrative privilege to perform Data Guard operations. You can use this privilege with either Data Guard Broker or the DGMGRL command-line interface.
 
     ````
     <copy>
@@ -251,7 +251,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 ## Task 3: Perform Switchover Operation
 
-1. Click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+1. Click **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 
@@ -403,13 +403,13 @@ Maximum Availability mode provides the highest level of data protection that is 
 - redo has been received at the standby, I/O to the standby redo log has been initiated, and acknowledgement sent back to primary;
 - redo has been received and written to standby redo log at the standby and acknowledgement sent back to primary.
 
-1. Use the cloud console to change the protection mode. Click ≡, then Oracle Base Database under Oracle Database. Click WS-DBStb DB System.
+1. Use the cloud console to change the protection mode. Click **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DBStb** DB System.
 
-2. On the DB System Details page, click the database name link WSDB in the bottom table called Databases. This should have Database Role: Primary under Database information.
+2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases. This should have Database Role: Primary under Database information.
 
-3. Click Data Guard Associations in the lower left menu. Click ⋮ > Edit Data Guard Association.
+3. Click **Data Guard Associations** in the lower left menu. Click **⋮** > **Edit Data Guard Association**.
 
-4. Set Protection mode: Maximum Availability. Observe how Transport type is set to Sync.
+4. Set Protection mode: **Maximum Availability**. Observe how Transport type is set to **Sync**.
 
 5. Type in Database admin password field the strong password written down in your notes. Click **Edit Data Guard** to save changes.
 
@@ -495,7 +495,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 ## Task 6: Stop Redo Apply on Standby
 
-1. It is possible to temporarily stop the Redo Apply on a Physical standby database. To change the state of the standby database to APPLY-OFF, use DGMGRL on the WS-DBStb primary DB System node. Execute the EDIT DATABASE command as shown in the following line.
+1. It is possible to temporarily stop the Redo Apply on a Physical standby database. To change the state of the standby database to APPLY-OFF, use DGMGRL on the **WS-DBStb** primary DB System node. Execute the EDIT DATABASE command as shown in the following line.
 
     ````
     <copy>
@@ -566,7 +566,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 ## Task 7: Test Fast-Start Failover with Maximum Availability
 
-1. On Oracle cloud console, click ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DBStb** DB System.
+1. On Oracle cloud console, click **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DBStb** DB System.
 
 2. On the DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
 

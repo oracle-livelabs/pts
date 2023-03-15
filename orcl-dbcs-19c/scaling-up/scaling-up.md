@@ -26,9 +26,9 @@ This lab assumes you have:
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
-[Change the Shape of a VM DB System] (youtube:CkQu4UOYico)
+[Change the Shape of a VM DB System] (youtube:CkQ4UOYico)
 
-1. Connect to your PDB012 pluggable database as SYSDBA using SQL*Plus.
+1. Connect to your **PDB012** pluggable database as SYSDBA using SQL*Plus.
 
     ````bash
     <copy>
@@ -48,7 +48,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     cpu_count   integer   2
     ````
 
-3. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
+3. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
 
 4. On DB System Details page, click **Change shape** button. Select **Shape series: AMD**, VM.Standard.E4.Flex shape with **Number of OCPUs per node: 2**. Click **Change shape** to confirm.
 
@@ -116,7 +116,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     tmpfs                                1.5G     0  1.5G   0% /run/user/54322
     ````
 
-3. On DB System Details page, click **Scale Storage Up** button. Set Available Data Storage (GB): 512, and click **Update**.
+3. On DB System Details page, click **Scale Storage Up** button. Set **Available Data Storage (GB): 512**, and click **Update**.
 
 4. DB System Status will change to Updating... Wait for Status to become Available.
 
@@ -175,39 +175,40 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-3. Click on main menu ≡, then Observability & Management > Database Management > Administration. Click Private Endpoints in the left side menu. Click Create Private Endpoint.
+3. Click on main menu **≡**, then **Observability & Management** > Database Management > **Administration**. Click **Private Endpoints** in the left side menu. Click **Create Private Endpoint**.
 
     - Name: WS_PE
     - Description: Database Management Private Endpoint
     - Subnet: Public Subnet LLXXXXX-VCN.
 
-4. Click on main menu ≡, then Identity & Security > Vault. Click Create Vault.
+4. Click on main menu **≡**, then **Identity & Security** > **Vault**. Click **Create Vault**.
 
     - Name: WS-Vault
 
-5. When Vault is Active (refresh page), click on it. Under Master Encryption Keys, click Create Key.
+5. When Vault is Active (refresh page), click on it. Under **Master Encryption Keys**, click **Create Key**.
 
     - Protection Mode: Software
     - Name: WS-Key
 
-6. When Master Encryption Key is Enabled (refresh page), click Secrets on the left menu. Click Create Secret.
+6. When Master Encryption Key is Enabled (refresh page), click **Secrets** on the left menu. Click **Create Secret**.
 
     - Name: WS-Secret
     - Description: Database Management Password
     - Encryption Key: WS-Key
     - Secret Contents: Use the strong password written down in your notes.
 
-7. When Secret is Active (refresh page), click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+7. When Secret is Active (refresh page), click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
 8. Click the database name link **WSDB** in the bottom table called Databases.
 
-9. On Database Information page, under Associated Services, see Database Management status Not Enabled. Click Enable.
+9. On Database Information page, under Associated Services, see **Database Management** status Not Enabled. Click **Enable**.
 
     - Database User Name: DBSNMP
+    - Secret: WS-Secret
 
-10. Leave the rest of the fileds with the default values, and click Enable Database Management.
+10. Leave the rest of the fields with the default values, and click **Enable Database Management**.
 
-11. Database Status will change to Updating. Wait for Status to become Available (refresh page). Click Metrics on the left side menu. Now you can see all performance metrics, because Database Management status is Full.
+11. Database Status will change to Updating. Wait for Status to become Available (refresh page). Click **Metrics** on the left side menu. Now you can see all performance metrics, because Database Management status is Full.
 
     You may now **proceed to the next lab**.
 

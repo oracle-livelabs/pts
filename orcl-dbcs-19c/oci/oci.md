@@ -37,7 +37,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Initial password
     - Compartment
 
-2. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+2. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
 
     - Select your compartment (default).
     - Select a shape type: Virtual Machine (default).
@@ -51,7 +51,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 2. Specify the network information.
 
     - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
+    - Client Subnet: Public Subnet **LLXXXXX-SUBNET-PUBLIC**
     - Hostname prefix: **db-host**
 
 3. Click Next.
@@ -96,7 +96,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > Import Key. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
+5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > **Import Key**. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
 
 6. Connect to DB Node Public IP Address port 22. (Windows only)
 
