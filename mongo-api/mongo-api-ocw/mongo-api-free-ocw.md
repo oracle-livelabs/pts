@@ -149,10 +149,9 @@ In this lab, you will:
      ![Microservice Company MongoAPI capability](./images/task1/microservice-mongoapi.png)
 
     > This micro-service has 1 URL. We already had used previously the Oracle one and the Mongo one. In this case we are using a new one /oracle/mongo. Here you have the others URLS too:
-    >
-        - http://[DEVM public-ip address]:5000/oracle/ -> for Oracle Autonomous Database
-        - http://[DEVM public-ip address]:5000/mongo/ -> for MongoDB
-        - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
+    >    - http://[DEVM public-ip address]:5000/oracle/ -> for Oracle Autonomous Database
+    >    - http://[DEVM public-ip address]:5000/mongo/ -> for MongoDB
+    >    - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
 
 10. Go to **cloud shell terminal.** We will **stop mongoapi-app.py**. for doing this, **press Control + C**.
 
@@ -344,11 +343,10 @@ In this lab, you will:
 
     http://[DEVM public-ip address]:5000/oracle/mongo/
 
-     ![Microservice Company MongoAPI capability MongoCollection](./images/task3/microservice-mongoapi-mongocollection.png)
+    ![Microservice Company MongoAPI capability MongoCollection](./images/task3/microservice-mongoapi-mongocollection.png)
 
     > This micro-service has 1 URL. We already had used previously the Oracle one and the Mongo one. In this case we are using a new one / oracle/mongo. Here you have the others URLS too:
-    >
-        - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
+    >    - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
 
 
 10. We can check that the **Two New Companies** (Nice and Ten) are being stored on our **Autonomous JSON Database**, on **MongoCollection** that we created in Task 3 of this Lab. Go to **Database Actions** again and click green **Play** button.

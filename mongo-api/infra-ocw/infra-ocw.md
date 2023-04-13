@@ -116,9 +116,6 @@ In this lab, you will:
         - Subnet: **LL00000-SUBNET-PUBLIC**
 
     - Download the private and public keys: **Save Private Key**, **Save Public Key**
-
-    ![Private & Public Keys](./images/task2/private-public-keys.png)
-
     - Click **Create**
 
     ![Create Compute](./images/task2/create-compute.png)
