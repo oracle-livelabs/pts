@@ -54,7 +54,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ````bash
     <copy>
-    wget -O python-simple-project.zip https://bit.ly/3EekcqE
+    wget -O python-simple-project.zip http://bit.ly/41qLoNq
     </copy>
     ````
 

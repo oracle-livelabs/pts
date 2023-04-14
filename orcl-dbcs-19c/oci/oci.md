@@ -43,15 +43,15 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Select a shape type: Virtual Machine (default).
     - Name your DB system: **WS-DB**.
     - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
-    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
+    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, Storage Volume Performance: **Balanced**.
     - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
     - Choose a license type: Bring Your Own License (BYOL).
 
 2. Specify the network information.
 
-    - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: Public Subnet **LLXXXXX-SUBNET-PUBLIC**
+    - Virtual cloud network: **LLXXXXX-VCN**
+    - Client Subnet: **public subnet-LLXXXXX-VCN**
     - Hostname prefix: **db-host**
 
 3. Click Next.
