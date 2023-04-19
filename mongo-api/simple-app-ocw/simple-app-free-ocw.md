@@ -253,9 +253,9 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     ![kill simple-app](./images/task1/simple-app-kill.png)
 
 
-## Task 2: The Advantage of Apex and SQL Knowledge
+## Task 2: The Advantage of APEX and SQL Knowledge
 
-1. Use the **web browser** tab where Oracle Application Express (Apex) is opened, or open Apex from AJDEV using the browser on your laptop. If you need to **Sign In** again use the following credentials:
+1. Use the **web browser** tab where Oracle Application Express (APEX) is opened, or open Apex from AJDEV using the browser on your laptop. If you need to **Sign In** again use the following credentials:
 
      - Workspace Name: **demo**
     ```
@@ -394,4 +394,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023

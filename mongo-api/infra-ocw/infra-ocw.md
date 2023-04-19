@@ -218,19 +218,17 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![Download Wallet Password](./images/task3/download-wallet-password.png)
 
-12. Click **Save file** and **OK**.
+    You can close this window after the wallet has been downloaded.
 
-    ![Save Wallet](./images/task3/save-wallet.png)
-
-13. To access your compute instance, you will use the **cloud shell**, a small linux terminal embedded in the OCI interface. **Click** on the **shell** icon next to the name of the OCI region, on the top right corner of the page.
+12. To access your compute instance, you will use the **cloud shell**, a small linux terminal embedded in the OCI interface. **Click** on the **shell** icon next to the name of the OCI region, on the top right corner of the page.
 
     ![Cloud Shell](./images/task3/cloud-shell.png)
 
-14. **Drag and drop** the previously saved **private key file** (ssh-key-xxx.key) and **wallet file** (Wallet_XXX0AJD.zip) into the **cloud shell**. Be sure both files have been completed checking the **green flag**.
+13. **Drag and drop** the previously saved **private key file** (ssh-key-xxx.key) and **wallet file** (Wallet_XXX0AJD.zip) into the **cloud shell**. Be sure both files have been completed checking the **green flag**.
 
     ![Cloud Shell Files](./images/task3/cloud-shell-files.png)
 
-15. You can **verify** if the files have been transferred correctly using the following command:
+14. You can **verify** if the files have been transferred correctly using the following command:
 
     ````bash
     <copy>
@@ -240,7 +238,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![Cloud Shell Files](./images/task3/ll.png)
 
-16. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands, replacing XXX0 with your initials and digit:
+15. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands, replacing XXX0 with your initials and digit:
 
     ````bash
     <copy>
@@ -253,7 +251,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     > **Note**: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
 
-17. Now we will stablish an **ssh connections** using the **Public IP.** Replace **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+16. Now we will stablish an **ssh connections** using the **Public IP.** Replace **Public_IP** with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ````bash
     <copy>
@@ -263,7 +261,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![ssh Connection](./images/task3/ssh.png)
 
-18. We will **unzip** the **Wallet** running the following command, replacing XXX0 with your initials and digit:
+17. We will **unzip** the **Wallet** running the following command, replacing XXX0 with your initials and digit:
 
     ````bash
     <copy>
@@ -273,7 +271,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![ssh Connection](./images/task3/unzip-wallet.png)
 
-19. We will **export** the **paths** using the following commands:
+18. We will **export** the **paths** using the following commands:
 
     ````bash
     <copy>
@@ -412,8 +410,6 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 15. **Sign in** as **DEMO** user.
 
-    ![DB Actions sign in](./images/task4/database-actions-sign-in.png)
-
     - Username: **demo**
     ```
     <copy>demo</copy>
@@ -456,4 +452,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023

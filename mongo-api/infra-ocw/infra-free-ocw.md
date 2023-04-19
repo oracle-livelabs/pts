@@ -71,12 +71,12 @@ In this lab, you will:
 
     ![vcn Creation](./images/task1/vcn-creation.png)
 
-7. The Resources have being created on the next page. Click **View Virtual Cloud Network** to access to the VCN.
+7. The Resources have being created on the next page. Click **View VCNic** to access to the VCN.
 
     ![View vcn Page](./images/task1/view-vcn-page.png)
     ![DEVCN Detail](./images/task1/devcn-detail.png)
 
-8. Click **Public Subnet-DEVCN**.
+8. Click **public Subnet-DEVCN**.
 
     ![Public Subnet](./images/task1/public-subnet.png)
 
@@ -180,7 +180,7 @@ In this lab, you will:
     - Networking: Be sure you have the following information. If not, click **Edit/Collapse** to edit the information:
 
         - Virtual cloud network: **DEVCN**
-        - Subnet: **Public Subnet-DEVCN (regional)**
+        - Subnet: **public Subnet-DEVCN (regional)**
 
     ![Networking Compute](./images/task2/networking-compute.png)
 
@@ -195,7 +195,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     ![Compute Provisioning](./images/task2/compute-provisioning.png)
     ![Compute Running](./images/task2/compute-running.png)
 
-> **Note**: On the Instance Details page, copy **Public IP Address** in your notes.
+> **Note**: On the Instance Details page, copy **Public IP address** in your notes.
 
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
@@ -245,7 +245,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![Creation AJD Network](./images/task3/creation-ajson-network-new.png)
 
-    - Click **+ Access Control Rule**
+    - Click **Add access control rule**
 
     - IP notation type: **IP Address**
     - Values: Type your **DEVM-Public-IP**, you just copy it at the end of the previous task.
@@ -267,7 +267,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     ![AJD Provisioning](./images/task3/ajson-provisioning.png)
     ![AJD Available](./images/task3/ajson-available.png)
 
-9. Next to the big green box, click **DB Connection**.
+9. Next to the big green box, click **Database connection**.
 
     ![AJD DB Connection](./images/task3/ajson-db-connection.png)
 
@@ -287,21 +287,20 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     - Click **Download**
 
+    You can close this window after the wallet has been downloaded.
+
     ![Download Wallet Password](./images/task3/download-wallet-password.png)
 
-12. Click **Save file** and **OK**.
 
-    ![Save Wallet](./images/task3/save-wallet.png)
-
-13. To access to our compute instance, we will use the **cloud shell**, a small linux terminal embedded in the OCI interface. **Click** on the **shell** icon next to the name of the OCI region, on the top right corner of the page.
+12. To access to our compute instance, we will use the **cloud shell**, a small linux terminal embedded in the OCI interface. **Click** on the **shell** icon next to the name of the OCI region, on the top right corner of the page.
 
     ![Cloud Shell](./images/task3/cloud-shell.png)
 
-14. **Drag and drop** the previously saved **private key file** (ssh-key-xxx.key) and **wallet file** (Wallet_AJDEV.zip) into the **cloud shell**. Be sure both files have been completed checking the **green flag**.
+13. **Drag and drop** the previously saved **private key file** (ssh-key-xxx.key) and **wallet file** (Wallet_AJDEV.zip) into the **cloud shell**. Be sure both files have been completed checking the **green flag**.
 
     ![Cloud Shell Files](./images/task3/cloud-shell-files.png)
 
-15. You can **verify** if the files have been transferred correctly using the following command:
+14. You can **verify** if the files have been transferred correctly using the following command:
 
     ````bash
     <copy>
@@ -311,7 +310,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![Cloud Shell Files](./images/task3/ll.png)
 
-16. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+15. We will **copy** the files in our **compute machine** in this case in `/home/opc` through the **ssh connections** using the **Public IP**. **Replace** <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ```bash
     <copy>
@@ -329,7 +328,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     > **Note**: If you are asked: `Are you sure you want to continue connecting (yes/no)?`, please type **yes** to continue.
 
-17. Now we will stablish an **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
+16. Now we will stablish an **ssh connections** using the **Public IP.** Replace <Public_IP> with your own one, removing <> too. We copied the Public IP when we provisioned the compute instance few tasks back. Execute the following commands:
 
     ````bash
     <copy>
@@ -339,7 +338,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![ssh Connection](./images/task3/ssh.png)
 
-18. We will **unzip** the **Wallet** running the following commands:
+17. We will **unzip** the **Wallet** running the following commands:
 
     ````bash
     <copy>
@@ -349,7 +348,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![ssh Connection](./images/task3/unzip-wallet.png)
 
-19. We will **export** the **paths** using the following commands:
+18. We will **export** the **paths** using the following commands:
 
     ````bash
     <copy>
@@ -365,7 +364,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 ## Task 4: Prepare Document Store
 
 
-1. On the Oracle Cloud Infrastructure Console, click **Database Actions** next to the big green box. Allow pop-ups from cloud.oracle.com.
+1. On the Oracle Cloud Infrastructure Console, click **Database actions** next to the big green box. Allow pop-ups from cloud.oracle.com.
 
     ![DB Actions](./images/task4/db-actions.png)
 
@@ -417,11 +416,11 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![AJD Dashboard](./images/task4/ajson-dashboard.png)
 
-6. On **Tools tab**, under **Oracle Application Express**, click **Open APEX**.
+6. On **Tool configuration**, under **Oracle APEX**, click **Copy** the Access URL.
 
     ![Apex](./images/task4/apex.png)
 
-7. On **Administration Services** login page, use password for **ADMIN**.
+7. **Copy** the URL on your web browser, on **Administration Services** login page, use password for **ADMIN**.
 
     - Password: **DBlearnPTS#22_**
 
@@ -478,7 +477,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     **Oracle APEX** uses low-code development to let you build data-driven apps quickly without having to learn complex web technologies. This also gives you access to Oracle REST Data Services, that allows developers to readily expose and/or consume RESTful Web Services by defining REST end points.
 
-13. Go again to **Database Actions** section if your browser tab has being closed.
+13. Go again to **Database actions** section if your browser tab has being closed.
 
     ![DB Actions](./images/task4/db-actions.png)
 
@@ -487,8 +486,6 @@ On the Instance Details page, copy Public IP Address in your notes.
     ![DB Actions ADMIN sign out](./images/task4/sign-out-admin.png)
 
 15. **Sign in** as **DEMO** user.
-
-    ![DB Actions sign in](./images/task4/database-actions-sign-in.png)
 
     - Username: **demo**
     ```
@@ -533,4 +530,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023

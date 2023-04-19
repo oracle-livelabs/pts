@@ -31,7 +31,7 @@ In this lab, you will:
 
 ### Prerequisites
 
-* Lab 1, 2  and 3 from this content completed
+* Lab 1 and 2 from this content completed
 * MongoDB Cloud account (or Google account)
 * Deploy Atlas document store on MongoDB Cloud before the workshop (run Lab 3 Task 1)
 
@@ -171,8 +171,6 @@ In this lab, you will:
 
 3. **Sign in** as **DEMO** user.
 
-    ![DB Actions sign in](./images/task2/database-actions-sign-in.png)
-
     - Username: **demo**
     ```
     <copy>demo</copy>
@@ -302,7 +300,7 @@ In this lab, you will:
 
     If you followed the steps correctly, you should see this output in the cloud shell terminal.
 
-    **Your micro-service nsert-mongoapi-app.py is being executed** so we can start inserting the documents.
+    **Your micro-service insert-mongoapi-app.py is being executed** so we can start inserting the documents.
 
 8. **Copy** the following commands to perform **POST request with CURL client**. Make sure you press **Enter** after each one. First and Second POST:
 
@@ -370,4 +368,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023

@@ -59,7 +59,7 @@ In this lab, you will:
 
     ![Oracle Console AJD](./images/task2/compute-list.png)
 
-3. Click **More Actions** > **Terminate**.
+3. ClickTask2 **Terminate**.
 
     ![Oracle Console AJD](./images/task2/compute-terminate.png)
 
@@ -82,13 +82,15 @@ In this lab, you will:
 
     ![Oracle Console AJD](./images/task3/vcn-list.png)
 
-3. Click **Terminate**.
+3. Click **Delete**.
 
     ![Oracle Console AJD](./images/task3/vcn-terminate.png)
 
-4. Wait for Associated Resources list to populate on Terminate Virtual Cloud Network dialog.
+4. Select the **Specific compartments** where the instaltion was done. **Root** was the recommended one and click **Scan**.
 
-5. When all resources are displayed, click **Terminate All** button.
+    ![Oracle Console Networking ](./images/task3/scan-vcn.png)
+
+5. Wait for Associated Resources list to populate on Terminate Virtual Cloud Network dialog. When all resources are displayed, click **Delete All** button. And finally **Close** the window.
 
     ![Oracle Console AJD](./images/task3/terminate-vcn.png)
 
@@ -97,4 +99,4 @@ In this lab, you will:
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023
