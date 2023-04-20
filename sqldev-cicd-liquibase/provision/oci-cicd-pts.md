@@ -32,7 +32,7 @@ In this lab, you will:
 
 2. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select the Region and Compartment assigned in Workshop Details.
 
-    ![Oracle Console Networking](./images/task1/oracleconsolenetworking.png)
+    ![Oracle Console Networking](./images/oracleconsolenetworking.png)
 
 3. Click the name of the Virtual Cloud Network (VCN).
 
@@ -47,15 +47,15 @@ In this lab, you will:
 
 1. Click on the following link to access to the customer image from [Oracle marketplace](https://bit.ly/3CxvsxA).
 
-    ![Marketplace Image](./images/task2/marketplace_image.png)
+    ![Marketplace Image](./images/marketplace_image.png)
 
 2. Click **Get App**.
 
-    ![Marketplace Get App](./images/task2/marketplace_getapp.png)
+    ![Marketplace Get App](./images/marketplace_getapp.png)
 
 3. Select **Commercial Market** and click **Sign in**.
 
-    ![Marketplace Commercial Market](./images/task2/marketplace_commercialmarket.png)
+    ![Marketplace Commercial Market](./images/marketplace_commercialmarket.png)
 
 4. In the next screen be dure that you have the correct information:
 
@@ -65,7 +65,7 @@ In this lab, you will:
     - **Accept** the Oracle standard Terms and Restrictions
     - **Launch Instance**
 
-    ![Marketplace Launch App](./images/task2/marketplace_launchapp.png)
+    ![Marketplace Launch App](./images/marketplace_launchapp.png)
 
 5. Provide the following information:
 
@@ -80,11 +80,11 @@ In this lab, you will:
 
     - Download the private and public keys: **Save Private Key**, **Save Public Key**
 
-    ![Private & Public Keys](./images/task2/privatepublickeys.png)
+    ![Private & Public Keys](./images/privatepublickeys.png)
 
     - Click **Create**
 
-    ![Create Compute](./images/task2/createcompute.png)
+    ![Create Compute](./images/createcompute.png)
 
 6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button).
 On the Instance Details page, copy Public IP Address in your notes.
@@ -95,16 +95,16 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     http://[ClientVM public-ip address]/livelabs/vnc.html?password=LiveLabs.Rocks_99&resize=scale&quality=9&autoconnect=true&reconnect=true
 
-    ![noVnc](./images/task2/novnc.png)
+    ![noVnc](./images/novnc.png)
 
 8. Check if your keyboard works. If you need to select another keyboard layout, click the **On-Off** button in the upper right corner, and **Settings** button. You will find the options under **Region & Language**.
 
-    ![noVnc Settings](./images/task2/novncsettings.png)
-    ![noVnc Region & Language](./images/task2/novncregionlanguage.png)
+    ![noVnc Settings](./images/novncsettings.png)
+    ![noVnc Region & Language](./images/novncregionlanguage.png)
 
 9. Click Applications > Favorites > Firefox to launch the web browser on the ClientVM Compute Node remote desktop.
 
-    ![noVnc Firefox](./images/task2/novncfirefox.png)
+    ![noVnc Firefox](./images/novncfirefox.png)
 
 10. Navigate to **cloud.oracle.com**, and **login** to Oracle cloud console using your Cloud Account Name, User Name, and Password.
 
@@ -140,13 +140,13 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 1. Click **DB Connection**, and download Instance Wallet using **Download Wallet** button.
 
-    ![Download Wallet](./images/task3/downloadwallet.png)
+    ![Download Wallet](./images/downloadwallet.png)
 
 2. Provide a password (use the same as for RD connection - DBlearnPTS#21_), and Save File.
 
 3. Click **Applications** > **System Tools** > **Terminal** on the ClientVM Compute Node remote desktop.
 
-    ![noVnc Terminal](./images/task3/novncterminal.png)
+    ![noVnc Terminal](./images/novncterminal.png)
 
 4. Open **Applications** > **Accessories** > **Text Editor**. Use this editor to replace **[Your Initials]** in the next commands with your initials, before running.
 

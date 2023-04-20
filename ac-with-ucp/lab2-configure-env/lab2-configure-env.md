@@ -59,15 +59,15 @@ This lab assumes you have:
 
         >**Note:** Be sure to select the **region** and **compartment** that have been assigned to you.
 
-        ![Select compartment](./images/task1/select-compartment.png " ")
+        ![Select compartment](./images/select-compartment.png " ")
 
     * Select the VCN
 
-      ![Select VCN](./images/task1/select-vcn.png " ")
+      ![Select VCN](./images/select-vcn.png " ")
 
     * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
 
-      ![Create NSG](./images/task1/create-nsg.png " ")
+      ![Create NSG](./images/create-nsg.png " ")
 
     * Enter a name for the Network Security Group
 
@@ -104,7 +104,7 @@ This lab assumes you have:
 
       * Example
 
-        ![Create NSG example](./images/task1/create-nsg-example.png " ")
+        ![Create NSG example](./images/create-nsg-example.png " ")
 
       * Click **Create**
 
@@ -118,15 +118,15 @@ This lab assumes you have:
 
     * Select database **dbrac**
 
-      ![Select dbrac database](./images/task1/select-dbrac-database.png " ")
+      ![Select dbrac database](./images/select-dbrac-database.png " ")
 
     * Under Network, Click on **Edit**
 
-      ![Add NSG to dbrac](./images/task1/add-nsg-to-dbrac.png " ")
+      ![Add NSG to dbrac](./images/add-nsg-to-dbrac.png " ")
 
     * select NSG-DEMORAC and **Save**
 
-      ![Select NSG](./images/task1/select-nsg.png " ")
+      ![Select NSG](./images/select-nsg.png " ")
 
 
 ## Task 2: Configure the Network for Oracle Notification Services
@@ -136,23 +136,23 @@ This lab assumes you have:
 
     * Click on the Cloud Shell icon from the top right of the OCI console
 
-        ![Cloud Shell icon](./images/task2/cloud-shell-icon.png " ")
+        ![Cloud Shell icon](./images/cloud-shell-icon.png " ")
 
     * From the Cloud Shell menu, click **Upload**
 
-        ![Cloud Shell window](./images/task2/cloud-shell-window.png " ")
+        ![Cloud Shell window](./images/cloud-shell-window.png " ")
 
     * Upload the file containing your private key
 
     * Make sure the mode is set to 400 (**chmod 400 private-key-file**)
 
-        ![Upload Public Key](./images/task2/upload-public-key.png " ")
+        ![Upload Public Key](./images/upload-public-key.png " ")
 
   2. Check that ONS is running on the server
 
     * From the database details page, select **Nodes** under **Resources** to find out the public IPs of the database nodes
 
-      ![DB Nodes IPs](./images/task2/db-nodes-ips.png " ")
+      ![DB Nodes IPs](./images/db-nodes-ips.png " ")
 
     * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
@@ -239,7 +239,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSG ingress rule 6200](./images/task2/nsg-ingress-rule.png " ")
+      ![NSG ingress rule 6200](./images/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
@@ -268,7 +268,7 @@ This lab assumes you have:
 
         Make a note of your Database Unique Name. In should be in the form ***CONT_uvwxyz***.
 
-        ![Find database unique name](./images/task3/find-database-unique-name.png " ")
+        ![Find database unique name](./images/find-database-unique-name.png " ")
 
         *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
 
@@ -425,13 +425,13 @@ This lab assumes you have:
 
     * Using noVNC, connect to the remote desktop of the client machine **demotac** as user **oracle**.
 
-        ![Remote Desktop](./images/task4/remote-desktop.png " ")
+        ![Remote Desktop](./images/remote-desktop.png " ")
 
     * The demo application is installed in **/home/oracle/work/ac**
 
     * The directory structure under **/home/oracle/work/ac** is explained below:
 
-      ![Show Directory Structure](./images/task4/show-directory-structure.png " ")
+      ![Show Directory Structure](./images/show-directory-structure.png " ")
 
 
         ```
@@ -445,7 +445,7 @@ This lab assumes you have:
 
   2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
 
-    ![Access client desktop terminal](./images/task4/client-desktop-terminal.png " ")
+    ![Access client desktop terminal](./images/client-desktop-terminal.png " ")
 
     ````
     [oracle@demotac:~]$ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>

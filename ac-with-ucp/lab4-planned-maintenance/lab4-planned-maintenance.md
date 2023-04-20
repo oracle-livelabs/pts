@@ -46,7 +46,7 @@ This lab assumes you have:
 
   We will start by refreshing the demo schema. Run **ddl_setup.sh** again from a third tab on your terminal window.
 
-  ![Show script ddl_setup.sh](./images/task1/ddl-setup-script.png " ")
+  ![Show script ddl_setup.sh](./images/ddl-setup-script.png " ")
 
 
     ````
@@ -59,7 +59,7 @@ This lab assumes you have:
 
 
 
-  ![Run script ddl_setup.sh](./images/task1/run-ddl-setup-script.png " ")
+  ![Run script ddl_setup.sh](./images/run-ddl-setup-script.png " ")
 
 
 ## Task 2: Observe Connection Balancing And Draining
@@ -72,14 +72,14 @@ This lab assumes you have:
 
     The application creates a connection pool of 10 connections, gets a connection from the pool and starts a first transaction.
 
-    ![Start demo application](./images/task2/start-demo-application.png " ")
+    ![Start demo application](./images/start-demo-application.png " ")
 
 
 2. Observe the pool
 
     From a **second tab** in the terminal session, go to the **sql** directory and examine the pool by running **show_pool.sh**
 
-    ![Show script show_pool.sh](./images/task2/show-pool-script.png " ")
+    ![Show script show_pool.sh](./images/show-pool-script.png " ")
 
       ````
       [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
@@ -87,12 +87,12 @@ This lab assumes you have:
 
     Observe that connections are spread across available nodes.
 
-    ![Run script show_pool.sh](./images/task2/run-show-pool-script.png " ")
+    ![Run script show_pool.sh](./images/run-show-pool-script.png " ")
 
 
 3. Strike RETURN and complete a few more transactions
 
-    ![Show running application](./images/task2/running-application.png " ")
+    ![Show running application](./images/running-application.png " ")
 
 
 4. Prepare to no longer use node1 (ie instance CONT1) and drain existing connections
@@ -134,15 +134,15 @@ This lab assumes you have:
 
 5. Run a couple more transactions and verify that the pool **does not get any errors** and has recreated **all connections to node2**
 
-      ![Show completed transactions](./images/task2/completed-transactions.png " ")
+      ![Show completed transactions](./images/completed-transactions.png " ")
 
-      ![Show script show_pool.sh](./images/task2/show-pool-script-again.png " ")
+      ![Show script show_pool.sh](./images/show-pool-script-again.png " ")
 
         ````
         [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
         ````
 
-      ![Run script show_pool.sh](./images/task2/show-pool-all-node2.png " ")
+      ![Run script show_pool.sh](./images/show-pool-all-node2.png " ")
 
 
     This would allow a system administrator to take node 1 off the cluster for maintenance with no application outage whatsoever...
@@ -171,15 +171,15 @@ This lab assumes you have:
 
 2. Run a couple more transactions and verify the pool is now only using connections to node1
 
-  ![Show completed transactions](./images/task3/completed-transactions.png " ")
+  ![Show completed transactions](./images/completed-transactions.png " ")
 
-  ![Show script show_pool.sh](./images/task3/show-pool-script.png " ")
+  ![Show script show_pool.sh](./images/show-pool-script.png " ")
 
     ````
     [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
     ````
 
-  ![Run script show_pool.sh](./images/task3/show-pool-on-first-node.png " ")
+  ![Run script show_pool.sh](./images/show-pool-on-first-node.png " ")
 
 
 ## Task 4: Re-Balance Connections To Both Nodes
@@ -198,7 +198,7 @@ This lab assumes you have:
       [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
       ````
 
-    ![Show pool has connections to both nodes](./images/task3/show-pool-on-both-nodes.png " ")
+    ![Show pool has connections to both nodes](./images/show-pool-on-both-nodes.png " ")
 
 
 

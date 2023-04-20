@@ -41,7 +41,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![ssh Connection](./images/task1/ssh.png)
+    ![ssh Connection](./images/ssh.png)
 
 2. We will **export** the **paths** and **Access** to python-simple-project folder using the following commands:
 
@@ -55,7 +55,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![Export Paths and Access to Python-simple-project](./images/task1/exports-access.png)
+    ![Export Paths and Access to Python-simple-project](./images/exports-access.png)
 
     > Note: We have run these commands before, if you are not disconnected from cloud shell, you don't have to run them again.
 
@@ -67,7 +67,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![cat mongoapi-app](./images/task1/cat-mongoapi-app.png)
+    ![cat mongoapi-app](./images/cat-mongoapi-app.png)
 
 3. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **SimpleCollection**. We will **run** the following export commands:
 
@@ -87,7 +87,7 @@ In this lab, you will:
 
 4. On the Oracle Cloud Infrastructure Console, click **Database Actions** next to the big green box. Allow pop-ups from cloud.oracle.com.
 
-    ![DB Actions](./images/task1/db-actions.png)
+    ![DB Actions](./images/db-actions.png)
 
     If you need to **Sign in** again remember doing it as admin:
     - User: **admin**
@@ -100,11 +100,11 @@ In this lab, you will:
 
 5. Under the **Related Services** section, click on **Oracle Database API for MongoDB**.
 
-    ![DB Actions - Related Services](./images/task1/database-actions-related-services.png)
+    ![DB Actions - Related Services](./images/database-actions-related-services.png)
 
 6. **Copy** the string: **For newer MongoDB clients and drivers use port 27017 with this connection string**.
 
-    ![DB Actions - Connection String](./images/task1/connection-strings.png)
+    ![DB Actions - Connection String](./images/connection-strings.png)
 
     It should be something like this:
 
@@ -123,7 +123,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![ATP URL String connection](./images/task1/atp-url.png)
+    ![ATP URL String connection](./images/atp-url.png)
 
 8. **After checking if all variables are correct**. **Run** mongoapi-app application using the following command:
 
@@ -133,13 +133,13 @@ In this lab, you will:
     </copy>
     ````
 
-    ![mongoapi-app Execution](./images/task1/mongoapi-app-execution.png)
+    ![mongoapi-app Execution](./images/mongoapi-app-execution.png)
 
 9. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database using MongoAPI capability.
 
     http://[XXX0VM public-ip address]:5000/oracle/mongo/
 
-     ![Microservice Company MongoAPI capability](./images/task1/microservice-mongoapi.png)
+     ![Microservice Company MongoAPI capability](./images/microservice-mongoapi.png)
 
     > This micro-service has 2 URLs. We already had used previously the Oracle one. In this case we are using a new one /oracle/mongo. Here you have all URLs:
     >    - http://[XXX0VM public-ip address]:5000/oracle/ -> for Oracle Autonomous Database
@@ -147,7 +147,7 @@ In this lab, you will:
 
 10. Go to **cloud shell terminal.** We will **stop mongoapi-app.py**. for doing this, **press Control + C**.
 
-    ![stop  mongoapi-app](./images/task1/mongoapi-stopping.png)
+    ![stop  mongoapi-app](./images/mongoapi-stopping.png)
 
 
 ## Task 2: Create a new MongoCollection through Database Actions
@@ -155,11 +155,11 @@ In this lab, you will:
 
 1. On Oracle Cloud Infrastructure Console, click **Database Actions** next to the big green box. Allow pop-ups from cloud.oracle.com.
 
-    ![DB Actions](./images/task2/db-actions.png)
+    ![DB Actions](./images/db-actions.png)
 
 2. **Sign out** as **ADMIN**.
 
-    ![DB Actions ADMIN sign out](./images/task2/sign-out-admin.png)
+    ![DB Actions ADMIN sign out](./images/sign-out-admin.png)
 
 3. **Sign in** as **DEMO** user.
 
@@ -171,36 +171,36 @@ In this lab, you will:
 
     > **Note**: The password specified in this lab guide is just an example. Always use strong passwords.
 
-    ![DB Actions DEMO sign in](./images/task2/sign-in-demo.png)
+    ![DB Actions DEMO sign in](./images/sign-in-demo.png)
 
     You should be connected now as **DEMO** user, check it on the right top corner side of the page.
 
-    ![DB Actions DEMO](./images/task2/database-actions-demo.png)
+    ![DB Actions DEMO](./images/database-actions-demo.png)
 
 4. Click **Development** > **JSON**.
 
-    ![DB Actions JSON](./images/task2/db-actions-json.png)
+    ![DB Actions JSON](./images/db-actions-json.png)
 
 5. We are going to create a New Collection to insert data using MongoDB Compatible functionality. **Click on New Collection button** on the left side of the screen.
 
-    ![New Collection](./images/task2/new-collection-json.png)
+    ![New Collection](./images/new-collection-json.png)
 
 6. Type the name of the new Collection: **MongoCollection**
     ```
     <copy>MongoCollection</copy>
     ```
 
-    ![New MongoCollection JSON](./images/task2/mongo-collection-json.png)
+    ![New MongoCollection JSON](./images/mongo-collection-json.png)
 
 7. You can see the basic fields of a JSON document. **Click MongoDB Compatible** and pay attention of the new `_id` field that has been created on the JSON document. And click **Create**.
 
-    ![New MongoCollection Compatible](./images/task2/mongo-collection-json-compatible.png)
+    ![New MongoCollection Compatible](./images/mongo-collection-json-compatible.png)
 
     > Note: Collections created from SODA do not work with MongoDB API because they don't have this `_id` field created by default, you need to select the **Compatible MongoAPI** check.
 
 8. Now your new **MongoCollection** has been created.
 
-    ![New MongoCollection Created](./images/task2/mongo-collection-created.png)
+    ![New MongoCollection Created](./images/mongo-collection-created.png)
 
 
 ## Task 3: Insert Data in the new MongoCollection using insert-mongoapi-app.py
@@ -212,7 +212,7 @@ In this lab, you will:
     ssh -i <private-key-file-name>.key opc@<Public_IP>
     </copy>
     ````
-    ![ssh Connection](./images/task3/ssh.png)
+    ![ssh Connection](./images/ssh.png)
 
 2. We will **export** the **paths** and **Access** to python-simple-project folder using the following commands:
 
@@ -226,7 +226,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![Export Paths and Access to Python-simple-project](./images/task3/exports-access.png)
+    ![Export Paths and Access to Python-simple-project](./images/exports-access.png)
 
     > Note: We have run these commands before, if you are not disconnected from cloud shell, you don't have to run them again.
 
@@ -238,7 +238,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![cat insert-mongoapi-app](./images/task3/cat-insert-mongoapi-app.png)
+    ![cat insert-mongoapi-app](./images/cat-insert-mongoapi-app.png)
 
 4. For the Oracle Autonomous JSON database connection: We are using **demo** user and the strong **password** that we have recommended. The name of the Oracle Database schema is **demo**. And the Oracle collection is **MongoCollection**. We will **run** the following export commands:
 
@@ -278,7 +278,7 @@ In this lab, you will:
 
     Additionally we are **creating a file, insert-mongoapi-app.pid,** to be capable of killing the python app to keep creating the third application for today’s content.
 
-    ![insert-mongoapi-app Execution](./images/task3/insert-mongoapi-app-execution.png)
+    ![insert-mongoapi-app Execution](./images/insert-mongoapi-app-execution.png)
 
 7. Lets see what **insert-mongoapi-app.py is doing**, use the following command:
 
@@ -288,7 +288,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![insert-mongoapi-app log](./images/task3/insert-mongoapi-app-log.png)
+    ![insert-mongoapi-app log](./images/insert-mongoapi-app-log.png)
 
     If you followed the steps correctly, you should see this output in the cloud shell terminal.
 
@@ -327,20 +327,20 @@ In this lab, you will:
     </copy>
     ````
 
-    ![POST company nine and ten curl](./images/task3/curl-company-nine-ten.png)
+    ![POST company nine and ten curl](./images/curl-company-nine-ten.png)
 
 9. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database using MongoAPI capability.
 
     http://[XXX0VM public-ip address]:5000/oracle/mongo/
 
-    ![Microservice Company MongoAPI capability MongoCollection](./images/task3/microservice-mongoapi-mongocollection.png)
+    ![Microservice Company MongoAPI capability MongoCollection](./images/microservice-mongoapi-mongocollection.png)
 
     > This micro-service has 1 URL. We already had used previosly the Oracle one and the Mongo one. In this case we are using a new one / oracle/mongo. Here you have the others URLS too:
     >    - http://[XXX0VM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
 
 10. We can check that the **Two New Companies** (Nice and Ten) are being stored on our **Autonomous JSON Database**, on **MongoCollection** that we created in Task 3 of this Lab. Go to **Database Actions** again and click green **Play** button.
 
-    ![MongoDB Companies Added Database Actions](./images/task3/database-actions-nine-ten.png)
+    ![MongoDB Companies Added Database Actions](./images/database-actions-nine-ten.png)
 
 11. Go to **cloud shell terminal.** We will **stop insert-mongoapi-app.py** running the following command.
 
@@ -350,7 +350,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![kill insert-mongoapi-app](./images/task3/insert-mongoapi-app-kill.png)
+    ![kill insert-mongoapi-app](./images/insert-mongoapi-app-kill.png)
 
 You may now **proceed to the next lab**.
 

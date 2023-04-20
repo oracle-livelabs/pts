@@ -28,15 +28,15 @@ In this lab, you will:
 
 1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**.
 
-    ![Oracle Console AJD](./images/task1/oracle-console-ajson.png)
+    ![Oracle Console AJD](./images/oracle-console-ajson.png)
 
 2. Click your **AJDEV** Autonomous JSON Database instance.
 
-    ![Oracle Console AJD](./images/task1/ajd-list.png)
+    ![Oracle Console AJD](./images/ajd-list.png)
 
 3. Click **More Actions** > **Terminate**.
 
-    ![Oracle Console AJD](./images/task1/ajd-terminate.png)
+    ![Oracle Console AJD](./images/ajd-terminate.png)
 
 4. To confirm, enter the name of the database that you want to terminate:
 
@@ -46,28 +46,28 @@ In this lab, you will:
 
 5. Click **Terminate Autonomous Database**.
 
-    ![Oracle Console AJD](./images/task1/terminate-ajd.png)
+    ![Oracle Console AJD](./images/terminate-ajd.png)
 
 
 ## Task 2: Terminate the Compute Node for development
 
 1. Click on main menu ≡, then Compute > **Instances**.
 
-    ![Oracle Console AJD](./images/task2/menu-compute-instances.png)
+    ![Oracle Console AJD](./images/menu-compute-instances.png)
 
 2. Click your **DEVM** compute instance.
 
-    ![Oracle Console AJD](./images/task2/compute-list.png)
+    ![Oracle Console AJD](./images/compute-list.png)
 
 3. ClickTask2 **Terminate**.
 
-    ![Oracle Console AJD](./images/task2/compute-terminate.png)
+    ![Oracle Console AJD](./images/compute-terminate.png)
 
 4. Check **Permanently delete the attached boot volume** check-box.
 
 5. Click **Terminate instance** button.
 
-    ![Oracle Console AJD](./images/task2/terminate-instance.png)
+    ![Oracle Console AJD](./images/terminate-instance.png)
 
 
 ## Task 3: Terminate the Virtual Cloud Network (VCN)
@@ -76,23 +76,23 @@ In this lab, you will:
 
     >**Note**: Use **Root** Compartment, oci-tenant(root), to create all resources for this workshop.
 
-    ![Oracle Console Networking](./images/task3/oracle-console-networking.png)
+    ![Oracle Console Networking](./images/oracle-console-networking.png)
 
 2. Click your **DEVCN** Virtual Cloud Network.
 
-    ![Oracle Console AJD](./images/task3/vcn-list.png)
+    ![Oracle Console AJD](./images/vcn-list.png)
 
 3. Click **Delete**.
 
-    ![Oracle Console AJD](./images/task3/vcn-terminate.png)
+    ![Oracle Console AJD](./images/vcn-terminate.png)
 
 4. Select the **Specific compartments** where the instaltion was done. **Root** was the recommended one and click **Scan**.
 
-    ![Oracle Console Networking ](./images/task3/scan-vcn.png)
+    ![Oracle Console Networking ](./images/scan-vcn.png)
 
 5. Wait for Associated Resources list to populate on Terminate Virtual Cloud Network dialog. When all resources are displayed, click **Delete All** button. And finally **Close** the window.
 
-    ![Oracle Console AJD](./images/task3/terminate-vcn.png)
+    ![Oracle Console AJD](./images/terminate-vcn.png)
 
 **Congratulations! Well done!**
 
