@@ -193,7 +193,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ````bash
     <copy>
-    wget https://github.com/oracle/db-sample-schemas/archive/v19c.zip
+    wget https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/J6rZFSP6qxAC3poE69uR3QHnW8a91ZVmM7RzqDfIP64fT_Dti8w0sRMY-JTuW6AH/n/oraclepartnersas/b/WS-files/o/BaseDatabaseWS/db-sample-schemas-19c.zip
     </copy>
     ````
 
@@ -201,7 +201,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ````bash
     <copy>
-    unzip v19c.zip
+    unzip db-sample-schemas-19c.zip
     </copy>
     ````
 
