@@ -56,15 +56,15 @@ This lab assumes you have:
 
     A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
 
-    ![Start transaction 110](./images/start-transaction-110.png " ")
+    ![Start transaction 110](./images/task2/start-transaction-110.png " ")
 
   2. Strike RETURN, and the application finishes the first transaction and starts a second one
 
-    ![Show transaction 120](./images/show-transction-120.png " ")
+    ![Show transaction 120](./images/task2/show-transction-120.png " ")
 
   3. Strike RETURN two more times to complete more transactions
 
-    ![Show transaction 140](./images/show-transction-140.png " ")
+    ![Show transaction 140](./images/task2/show-transction-140.png " ")
 
     We are now in the middle of the 4th transaction.
 
@@ -74,7 +74,7 @@ This lab assumes you have:
     [oracle@demotac:~]$ <copy>cd /home/oracle/work/ac/sql</copy>
     ````
 
-    ![Show script show_data.sh](./images/show-data-script.png " ")
+    ![Show script show_data.sh](./images/task2/show-data-script.png " ")
 
     Execute **show_data.sh**
 
@@ -82,7 +82,7 @@ This lab assumes you have:
       [oracle@demotac:~/work/ac/sql]$ <copy>show_data.sh</copy>
       ````
 
-    ![Run script show_data.sh](./images/run-show-data-script.png " ")
+    ![Run script show_data.sh](./images/task2/run-show-data-script.png " ")
 
   5. One can see three completed transactions for **110**, **120** and **130** and we should be in the middle of the fourth one for **140** (which we do not see since it is not finished and has not yet been committed).
 
@@ -90,29 +90,29 @@ This lab assumes you have:
 
     We can also see the session we have been using by running **show_session.sh** from the same terminal.
 
-    ![Show script show_session.sh](./images/show-session-script.png " ")
+    ![Show script show_session.sh](./images/task2/show-session-script.png " ")
 
       ````
       [oracle@demotac:~/work/ac/sql]$ <copy>show_session.sh</copy>
       ````
 
-    ![Run script show_session.sh](./images/run-show-session-script.png " ")
+    ![Run script show_session.sh](./images/task2/run-show-session-script.png " ")
 
   6. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
 
-    ![Show script kill_session.sh](./images/kill-session-script.png " ")
+    ![Show script kill_session.sh](./images/task2/kill-session-script.png " ")
 
       ````
       [oracle@demotac:~/work/ac/sql]$ <copy>kill_session.sh</copy>
       ````
 
-    ![Run script kill_session.sh](./images/run-kill-session-script.png " ")
+    ![Run script kill_session.sh](./images/task2/run-kill-session-script.png " ")
 
   7. Back to the first terminal window where the application is running, strike RETURN again !
 
     Since our single connection to the database has been broken, the program expectedly receives an error.
 
-    ![Show runtime error](./images/show-runtime-error.png " ")
+    ![Show runtime error](./images/task2/show-runtime-error.png " ")
 
   8. Even if the program manages to reconnect, one can see that a transaction has been lost.
 
@@ -122,7 +122,7 @@ This lab assumes you have:
       [oracle@demotac:~/work/ac/sql]$ <copy>show_data.sh</copy>
       ````
 
-    ![Show missing data](./images/show-missing-data.png " ")
+    ![Show missing data](./images/task2/show-missing-data.png " ")
 
 
 ## Task 3: Observe What Happens **With** Application Continuity
@@ -133,7 +133,7 @@ This lab assumes you have:
 
     We will start by refreshing the demo schema. Interrupt the demo if it is still running (CTRL-C) and run **ddl_setup.sh** again from a third tab on your terminal window.
 
-    ![Show script ddl_setup.sh](./images/ddl-setup-script.png " ")
+    ![Show script ddl_setup.sh](./images/task3/ddl-setup-script.png " ")
 
       ````
       [oracle@demotac:~]$ <copy>cd /home/oracle/work/ac/ddl</copy>
@@ -144,7 +144,7 @@ This lab assumes you have:
       ````
 
 
-    ![Run script ddl_setup.sh](./images/run-ddl-setup-script.png " ")
+    ![Run script ddl_setup.sh](./images/task3/run-ddl-setup-script.png " ")
 
 
   2. Run the demo program with a database service that uses **Application Continuity**
@@ -157,27 +157,27 @@ This lab assumes you have:
 
     A trigger allows to capture the database service that was used to connect when INSERT statements are executed.
 
-    ![Start first transacton 110](./images/start-first-transacton-110.png " ")
+    ![Start first transacton 110](./images/task3/start-first-transacton-110.png " ")
 
   3. Strike RETURN and the application finishes the first transaction and starts a second one
 
-    ![Show second transaction 120](./images/show-second-transaction-120.png " ")
+    ![Show second transaction 120](./images/task3/show-second-transaction-120.png " ")
 
   4. Strike RETURN two more times to complete more transactions
 
-    ![Show fourth transaction in progress](./images/show-fourth-transaction.png " ")
+    ![Show fourth transaction in progress](./images/task3/show-fourth-transaction.png " ")
 
     We are now in the middle of the 4th transaction.
 
   5. From a **second tab** in the terminal session, go to the **sql** directory and examine the content of the transaction table **ACCOUNT**
 
-    ![Show script show_data.sh](./images/show-data-script.png " ")
+    ![Show script show_data.sh](./images/task3/show-data-script.png " ")
 
       ````
       [oracle@demotac:~/work/ac/sql]$ <copy>show_data.sh</copy>
       ````
 
-    ![Run script show_data.sh](./images/run-show-data-script.png " ")
+    ![Run script show_data.sh](./images/task3/run-show-data-script.png " ")
 
   6. One can see three completed transactions for **110**, **120** and **130** and we should be in the middle of the fourth one for **140**.
 
@@ -185,13 +185,13 @@ This lab assumes you have:
 
     We can also see the session we have been using by running **show_sessions.sh** from the same terminal
 
-    ![Show script show_session.sh](./images/show-session-script.png " ")
+    ![Show script show_session.sh](./images/task3/show-session-script.png " ")
 
       ````
       [oracle@demotac:~/work/ac/sql]$ <copy>show_session.sh</copy>
       ````
 
-    ![Run script show_session.sh](./images/run-show-session-script.png " ")
+    ![Run script show_session.sh](./images/task3/run-show-session-script.png " ")
 
   7. Now let's kill that session in the middle of the current transaction to simulate an unplanned outage. Run **kill_session.sh** from the same terminal window
 
@@ -199,7 +199,7 @@ This lab assumes you have:
       [oracle@demotac:~/work/ac/sql]$ <copy>kill_session.sh</copy>
       ````
 
-    ![Run script kill_session.sh](./images/run-kill-session-script.png " ")
+    ![Run script kill_session.sh](./images/task3/run-kill-session-script.png " ")
 
   8. Back to the first terminal window where the application is running, strike RETURN again !
 
@@ -207,13 +207,13 @@ This lab assumes you have:
 
     *In fact, AC has obtained a new connection and replayed the transaction from the beginning (the first INSERT) when an error was detected. An error was detected (but not shown) when trying to execute the second INSERT through a broken connection. This set AC to work...*
 
-    ![Application continues without errors](./images/app-continues-no-errors.png " ")
+    ![Application continues without errors](./images/task3/app-continues-no-errors.png " ")
 
   8. Furthermore one can see that no data has been lost.
 
     You may run a few more transactions from the first window and check from the second window that no transactions are lost (run **show_data.sh** again)
 
-    ![Show no data is lost](./images/no-data-is-lost.png " ")
+    ![Show no data is lost](./images/task3/no-data-is-lost.png " ")
 
 
 **You can now proceed to the next lab…**

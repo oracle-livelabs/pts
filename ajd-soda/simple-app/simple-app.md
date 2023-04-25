@@ -27,27 +27,27 @@ In this lab, you will:
     - Cloud Account Name: oci-tenant
     - **Next**
     
-    ![cloud Account Name](./images/cloud_account_name.png)
+    ![cloud Account Name](./images/task1/cloud_account_name.png)
 
     - User Name: oci-username - email address provided
     - Password: oci-password
     - **Sign In**
 
-    ![User Name & Password](./images/username_password.png)    
+    ![User Name & Password](./images/task1/username_password.png)    
 
 2. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the instructor. 
 
     >**Note**: Use **Root** Compartment, oci-tenant(root), to create all resources for this workshop.
 
-    ![Oracle Console Networking](./images/oracle_console_networking.png)
+    ![Oracle Console Networking](./images/task1/oracle_console_networking.png)
 
 3. Select your Region and Compartment assigned by the instructor. Click **Start VCN Wizard**.
     
-    ![Oracle Console Networking Start Wizard](./images/oracle_console_networking_start_wizard.png)
+    ![Oracle Console Networking Start Wizard](./images/task1/oracle_console_networking_start_wizard.png)
 
 4. Select **Create VCN with Internet Connectivity**. Start **VCN Wizard**.
 
-   ![Create VCN with Internet Connectivity](./images/create_vcn_with_internet_connectivity.png)
+   ![Create VCN with Internet Connectivity](./images/task1/create_vcn_with_internet_connectivity.png)
 
 5. Provide the following information:
 
@@ -55,28 +55,28 @@ In this lab, you will:
     - Compartment: Be sure you have selected the correct one for this workshop purpose. **Root** is the recommended one
     - Click **Next**
 
-    ![vcnName & Compartment](./images/vcn_name_compartment.png)
+    ![vcnName & Compartment](./images/task1/vcn_name_compartment.png)
 
 6. Review the information in the 'Review and Create Page' and Click **Create**.
 
-    ![vcn Creation](./images/vcn_creation.png)
+    ![vcn Creation](./images/task1/vcn_creation.png)
 
 7. The Resources have being created on the next page. Click **View Virtual Cloud Network** to access to the vcn.
 
-    ![View vcn Page](./images/view_vcn_page.png)
-    ![DEVCN Detail](./images/devcn_detail.png)
+    ![View vcn Page](./images/task1/view_vcn_page.png)
+    ![DEVCN Detail](./images/task1/devcn_detail.png)
 
 8. Click **Public Subnet-DEVCN**. 
 
-    ![Public Subnet](./images/public_subnet.png)
+    ![Public Subnet](./images/task1/public_subnet.png)
 
 9. Click **Default Security List for DEVCN**.
     
-    ![Default Security List for DEVCN](./images/default_security_list_for_devcn.png)
+    ![Default Security List for DEVCN](./images/task1/default_security_list_for_devcn.png)
 
 10. Click **Add Ingress Rules**.
 
-    ![Add Ingress Rules](./images/add_ingress_rules.png)
+    ![Add Ingress Rules](./images/task1/add_ingress_rules.png)
 
 11. Provide the following information:
 
@@ -85,7 +85,7 @@ In this lab, you will:
     - Description: Python Flask
     - Click **+ Another Ingress Rule**
 
-    ![Python Flask Rule](./images/python_flask_rule.png)
+    ![Python Flask Rule](./images/task1/python_flask_rule.png)
 
 12. Provide the following information:
 
@@ -94,7 +94,7 @@ In this lab, you will:
     - Description: noVNC
     - Click **+ Another Ingress Rule**
 
-    ![noVNC Rule](./images/novnc_rule.png)
+    ![noVNC Rule](./images/task1/novnc_rule.png)
 
 13. Provide the following information:
 
@@ -103,25 +103,25 @@ In this lab, you will:
     - Description: HTTP
     - Click **Add Ingress Rules**
     
-    ![Port 80 Rule](./images/port80_rule.png)
+    ![Port 80 Rule](./images/task1/port80_rule.png)
 
 14. You can check on the **Detail Page** that the 3 Ingress Rules have beed added.
     
-    ![All Ingress Rules Added](./images/all_ingress_rules_added.png)
+    ![All Ingress Rules Added](./images/task1/all_ingress_rules_added.png)
 
 ## Task 2: Provision Compute Node for development
 
 1. Click on the following link to access to a marketplace image from [Oracle marketplace](https://bit.ly/3CxvsxA).
 
-    ![Marketplace Image](./images/marketplace_image.png)
+    ![Marketplace Image](./images/task2/marketplace_image.png)
 
 2. Click **Get App**.
 
-    ![Marketplace Get App](./images/marketplace_get_app.png)
+    ![Marketplace Get App](./images/task2/marketplace_get_app.png)
 
 3. Select **Commercial Market** and click **Sign in**.
 
-    ![Marketplace Commercial Market](./images/marketplace_commercial_market.png)
+    ![Marketplace Commercial Market](./images/task2/marketplace_commercial_market.png)
 
 4. In the next screen be sure that you have the correct information:
 
@@ -130,7 +130,7 @@ In this lab, you will:
     - **Accept** the Oracle standard Terms and Restrictions
     - **Launch Instance**
 
-    ![Marketplace Launch App](./images/marketplace_launch_app.png)
+    ![Marketplace Launch App](./images/task2/marketplace_launch_app.png)
 
 5. Provide the following information:
 
@@ -140,7 +140,7 @@ In this lab, you will:
         - Image: **MongoDB and Autonomous JSON workshop**
         - Shape: **VM.Standard.E2.1.Micro - Always Free eligible**
     
-    ![Marketplace Compute Instance Creation](./images/marketplace_compute_instance_creation.png)
+    ![Marketplace Compute Instance Creation](./images/task2/marketplace_compute_instance_creation.png)
 
     If you are using your own cloud account, not just a trial, you can see this section different. Just be sure you have all the information as following selected:
 
@@ -150,28 +150,28 @@ In this lab, you will:
         - Image: **MongoDB and Autonomous JSON workshop**
         - Shape: **VM.Standard.E2.1.Micro - Always Free eligible**
     
-    ![Marketplace Compute Instance Creation No Trial](./images/marketplace_compute_instance_creation_no_trial.png)
+    ![Marketplace Compute Instance Creation No Trial](./images/task2/marketplace_compute_instance_creation_no_trial.png)
 
     - Networking: Be sure you have the following information. If not, click **Edit/Collapse** to edit the information:
 
         - Virtual cloud network: **DEVCN**
         - Subnet: **Public Subnet-DEVCN (regional)**
     
-    ![Networking Compute](./images/networking_compute.png)
+    ![Networking Compute](./images/task2/networking_compute.png)
 
     - Download the private and public keys: **Save Private Key**, **Save Public Key**
 
-    ![Private & Public Keys](./images/private_public_keys.png)
+    ![Private & Public Keys](./images/task2/private_public_keys.png)
 
     - Click **Create**
 
-    ![Create Compute](./images/create_compute.png)
+    ![Create Compute](./images/task2/create_compute.png)
        
 6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button). 
 On the Instance Details page, copy Public IP Address in your notes.
 
-    ![Compute Provisioning](./images/compute_provisioning.png)
-    ![Compute Running](./images/compute_running.png)
+    ![Compute Provisioning](./images/task2/compute_provisioning.png)
+    ![Compute Running](./images/task2/compute_running.png)
 
 > Note: On the Instance Details page, copy **Public IP Address** in your notes.
 
@@ -179,20 +179,20 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     http://[DEVM public-ip address]/livelabs/vnc.html?password=LiveLabs.Rocks_99&resize=scale&quality=9&autoconnect=true&reconnect=true
 
-    ![noVnc](./images/novnc.png)
+    ![noVnc](./images/task2/novnc.png)
 
 8. Check if your keyboard works. If you need to select another keyboard layout, click the **On-Off** button in the upper right corner, and **Settings** button. You will find the options under **Region & Language**.
 
-    ![noVnc Settings](./images/novnc_settings.png)
-    ![noVnc Region & Language](./images/novnc_region_language.png)
+    ![noVnc Settings](./images/task2/novnc_settings.png)
+    ![noVnc Region & Language](./images/task2/novnc_region_language.png)
 
 9. Click **Applications** > **Favorites** > **Firefox** to launch the web browser on the DEVM Compute Node remote desktop.
 
-    ![noVnc Firefox](./images/novnc_firefox.png)
+    ![noVnc Firefox](./images/task2/novnc_firefox.png)
     
 10. Navigate to **cloud.oracle.com**, and **login** to Oracle cloud console using your Cloud Account Name, User Name, and Password.
 
-    ![Oracle Cloud Page](./images/oracle_cloud.png)
+    ![Oracle Cloud Page](./images/task2/oracle_cloud.png)
 
 
 ## Task 3: Provision Oracle Autonomous JSON Database (AJD)
@@ -201,15 +201,15 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 1. Open another tab in **Firefox** on remote desktop, and navigate to **bit.ly/SODAjson**. Use this lab guide to copy and paste commands on the DEVM Compute Node remote desktop.
 
-    ![Content NoVNC](./images/content.png)
+    ![Content NoVNC](./images/task3/content.png)
 
 2. Go to the **first Firefox** tab. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**. **Create Autonomous Database**.
 
-    ![Oracle Console AJSON](./images/oracle_console_ajson.png)
+    ![Oracle Console AJSON](./images/task3/oracle_console_ajson.png)
 
 3. Click **Create Autonomous Database**.
 
-    ![Create AJSON](./images/create_ajson.png)
+    ![Create AJSON](./images/task3/create_ajson.png)
 
 4. Provide the following information:
 
@@ -223,7 +223,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     - OCPU count: 1
     - Storage (TB): 1 or 0.02 if you are using a Trial account
 
-    ![Creation AJSON Dashboard](./images/creation_ajson_dashboard.png)
+    ![Creation AJSON Dashboard](./images/task3/creation_ajson_dashboard.png)
 
 5. Under **Create administrator** credentials:
 
@@ -231,36 +231,36 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     > We recomend you to use the password as later on, it will be use for running Python scripts. If you consider changing it, remember that later on, you will need to modify the Python scripts manually.
     
-    ![Creation AJSON Password](./images/creation_ajson_password.png)
+    ![Creation AJSON Password](./images/task3/creation_ajson_password.png)
     
 6. Under **Choose network access**:
 
     - Access Type: Secure access from everywhere
 
-    ![Creation AJSON Network](./images/creation_ajson_network.png)
+    ![Creation AJSON Network](./images/task3/creation_ajson_network.png)
 
 7. Under **Choose a license type**:
     
     - License included
     
-    ![Creation AJSON License](./images/creation_ajson_license.png)
+    ![Creation AJSON License](./images/task3/creation_ajson_license.png)
 
 8. Click **Create Autonomous Database**.
 
-    ![Creation AJSON Create](./images/creation_ajson_create.png)
+    ![Creation AJSON Create](./images/task3/creation_ajson_create.png)
 
 9. Wait for Lifecycle State to become **Available** from Provisioning (click browser Refresh button).
 
-    ![AJSON Provisioning](./images/ajson_provisioning.png)
-    ![AJSON Available](./images/ajson_available.png)
+    ![AJSON Provisioning](./images/task3/ajson_provisioning.png)
+    ![AJSON Available](./images/task3/ajson_available.png)
 
 10. Next to the big green box, click **DB Connection**.
     
-    ![AJSONDBConnection](./images/ajson_db_connection.png)
+    ![AJSONDBConnection](./images/task3/ajson_db_connection.png)
 
 11. Click **Download wallet**.
 
-    ![Download Wallet](./images/download_wallet.png)
+    ![Download Wallet](./images/task3/download_wallet.png)
 
 12. Type the following information:
 
@@ -268,16 +268,16 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Confirm Password: Password: DBlearnPTS#22_
     - Click **Download**
 
-    ![Download Wallet Password](./images/download_wallet_password.png)
+    ![Download Wallet Password](./images/task3/download_wallet_password.png)
 
 13. Click **Save file** and **OK**.
     
-    ![Save Wallet](./images/save_wallet.png)
+    ![Save Wallet](./images/task3/save_wallet.png)
 
 
 14. Click **Applications** > **System Tools** > **Terminal** on the DEVM Compute Node remote desktop. 
 
-    ![noVnc Terminal](./images/novnc_terminal.png)
+    ![noVnc Terminal](./images/task3/novnc_terminal.png)
 
 15. **Run** the following commands. Use **Shift+Ctrl+V** to paste the block in Terminal, and press **Enter** after it.
 
@@ -290,7 +290,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     export PATH=$PATH:/usr/lib/oracle/19.13/client64/bin/
     </copy>
     ````
-    ![Unzip & Export](./images/unzip_export.png)
+    ![Unzip & Export](./images/task3/unzip_export.png)
 
 ## Task 4: Prepare Document Store
 
@@ -298,21 +298,21 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 1. Use the web browser on the DEVM Compute Node remote desktop to access AJDEV instance under Oracle Database > **Autonomous JSON Database**.
 
-    ![AJSON Dashboard](./images/ajson_dashboard.png)
+    ![AJSON Dashboard](./images/task4/ajson_dashboard.png)
 
 2. On **Tools tab**, under **Oracle Application Express**, click **Open APEX**. 
 
-    ![Apex](./images/apex.png)
+    ![Apex](./images/task4/apex.png)
 
 3. On **Administration Services** login page, use password for ADMIN.
 
     - Password: DBlearnPTS#22_
 
-    ![Apex ADMIN](./images/apex_admin.png)
+    ![Apex ADMIN](./images/task4/apex_admin.png)
 
 4. Click **Create Workspace**.
 
-    ![Apex Workspace](./images/apex_workspace.png)
+    ![Apex Workspace](./images/task4/apex_workspace.png)
 
 5. Type the following information:
 
@@ -320,11 +320,11 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Password: DBlearnPTS#22_
     - Workspace Name: DEMO
 
-    ![Apex Workspace DEMO](./images/apex_workspace_demo.png)
+    ![Apex Workspace DEMO](./images/task4/apex_workspace_demo.png)
     
 6. Click **DEMO** in the middle of the page to **Sign in** as **DEMO** user.
  
-    ![Apex Login DEMO](./images/apex_log_in_demo.png)
+    ![Apex Login DEMO](./images/task4/apex_log_in_demo.png)
  
 7. Click **Sign In** Page using the following information:
 
@@ -332,7 +332,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     - Username: demo
     - Pasword: DBlearnPTS#22_
 
-    ![Login DEMO](./images/log_in_demo.png)
+    ![Login DEMO](./images/task4/log_in_demo.png)
 
     **Oracle APEX** uses low-code development to let you build data-driven apps quickly without having to learn complex web technologies. This also gives you access to Oracle REST Data Services, that allows developers to readily expose and/or consume RESTful Web Services by defining REST end points.
 
@@ -340,11 +340,11 @@ On the Instance Details page, copy Public IP Address in your notes.
     - User: admin
     - Password: DBlearnPTS#22_
 
-    ![DB Actions](./images/db_actions.png)
+    ![DB Actions](./images/task4/db_actions.png)
 
 9. Click **Development** > **SQL** (first button).
 
-    ![DB Actions SQL](./images/db_actions_sql.png)
+    ![DB Actions SQL](./images/task4/db_actions_sql.png)
 
 10. Run the following code using **Run Script** button:
 
@@ -364,7 +364,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     </copy>
     ````
 
-    ![Enable Schema Script](./images/enable_schema_script.png)
+    ![Enable Schema Script](./images/task4/enable_schema_script.png)
     
     >**Note** : For all code you run in SQL Developer Web, make sure you receive a success message:
 
@@ -372,7 +372,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     PL/SQL procedure successfully completed.
     ````
     
-    ![PLSQL Successfully completed](./images/plsql_success.png)    
+    ![PLSQL Successfully completed](./images/task4/plsql_success.png)    
 
 11. Grant **SODA_APP** to DEMO user. This role provides privileges to use the SODA APIs, in particular, to create, drop, and list document collections. Use **Run Statement** button to execute this command.
 
@@ -382,22 +382,22 @@ On the Instance Details page, copy Public IP Address in your notes.
     </copy>
     ````
 
-    ![GRANT SODA](./images/grant_soda.png)
+    ![GRANT SODA](./images/task4/grant_soda.png)
 
 12. Click **ADMIN** upper right corner, and **Sign Out**. 
 
-    ![Sign Out](./images/sign_out.png)
+    ![Sign Out](./images/task4/sign_out.png)
 
 13. Click **Sign In**. Login using DEMO user credentials.
 
     - Username: demo
     - Password: DBlearnPTS#22_
     
-    ![Sign In DEMO](./images/sign_in_demo.png)
+    ![Sign In DEMO](./images/task4/sign_in_demo.png)
     
 14. Click **Development** > **JSON**, and follow the tips. This is the interface you will use to manage your JSON collections in this document store.
 
-    ![DB Actions JSON](./images/db_actions_json.png)
+    ![DB Actions JSON](./images/task4/db_actions_json.png)
 
 
 ## Task 5: Develop micro-service with SODA for Python
