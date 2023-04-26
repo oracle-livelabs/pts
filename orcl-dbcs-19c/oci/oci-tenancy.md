@@ -134,7 +134,6 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Database version: 19c (default).
     - PDB name: **PDB011**.
     - Password: Use a strong password and write it down in your notes.
-    - Select workload type: Transaction Processing (default).
     - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
 4. Click **Create DB System**.
