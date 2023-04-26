@@ -24,15 +24,15 @@ In this lab, you will:
 
 1. **Click** on main menu ≡, then Oracle Database > **Autonomous JSON Database**.
 
-    ![Oracle Console AJD](./images/task1/oracle-console-ajson.png)
+    ![Oracle Console AJD](./images/oracle-console-ajson.png)
 
 2. Click your **XXX0AJD** Autonomous JSON Database instance.
 
-    ![Oracle Console AJD](./images/task1/ajd-list.png)
+    ![Oracle Console AJD](./images/ajd-list.png)
 
 3. Click **More Actions** > **Terminate**.
 
-    ![Oracle Console AJD](./images/task1/ajd-terminate.png)
+    ![Oracle Console AJD](./images/ajd-terminate.png)
 
 4. To confirm, enter the name of the database that you want to terminate:
 
@@ -42,31 +42,31 @@ In this lab, you will:
 
 5. Click **Terminate Autonomous Database**.
 
-    ![Oracle Console AJD](./images/task1/terminate-ajd.png)
+    ![Oracle Console AJD](./images/terminate-ajd.png)
 
 ## Task 2: Terminate the Compute Node for development
 
 1. Click on main menu ≡, then Compute > **Instances**.
 
-    ![Oracle Console AJD](./images/task2/menu-compute-instances.png)
+    ![Oracle Console AJD](./images/menu-compute-instances.png)
 
 2. Click your **XXX0VM** compute instance.
 
-    ![Oracle Console AJD](./images/task2/compute-list.png)
+    ![Oracle Console AJD](./images/compute-list.png)
 
 3. Click **More Actions** > **Terminate**.
 
-    ![Oracle Console AJD](./images/task2/compute-terminate.png)
+    ![Oracle Console AJD](./images/compute-terminate.png)
 
 4. Check **Permanently delete the attached boot volume** check-box.
 
 5. Click **Terminate instance** button.
 
-    ![Oracle Console AJD](./images/task2/terminate-instance.png)
+    ![Oracle Console AJD](./images/terminate-instance.png)
 
 **Congratulations! Well done!**
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Valentin Leonard Tabacaru, February 2023
+* **Last Updated By/Date** - Priscila Iruela, April 2023
