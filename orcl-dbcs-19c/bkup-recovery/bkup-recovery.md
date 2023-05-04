@@ -73,40 +73,57 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Restore a BaseDB Database from a Backup] (youtube:deQJ5N9k6eI)
 
-1. Write down the Started and Ended times for backup called **Automatic Backup** in the bottom table called Backups - e.g. Started: 09:38:13 UTC, Ended: 09:56:36 UTC.
-
-2. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the next possible value after your Automatic Backup Ended field - e.g. 10:00 UTC. Click **Restore Database** to confirm.
-
-    >**Note** : If Restore Database Work request fails, use a timestamp 30 minutes after the selected one. You can check the RMAN logs in folder `/opt/oracle/dcs/log/db-host/rman/bkup/[Database unique name]/` for more information.
-
-3. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
-
-4. Connect again to the database instance specified by environment variables.
+1. Connect to the pluggable database PDB012 as HR user.
 
     ````bash
     <copy>
-    sqlplus / as sysdba
+    sqlplus hr/<Strong Password>@db-host:1521/pdb012.$(domainname -d)
     </copy>
     ````
 
-5. List one more time all pluggable databases.
+2. Drop table `EMPLOYEES`.
+
+    ````bash
+    <copy>
+    drop table EMPLOYEES cascade constraints;
+    COMMIT;
+    </copy>
+    ````
+
+3. Write down the Started and Ended times for backup called **Manual Backup** in the bottom table called Backups - e.g. Started: 09:38:13 UTC, Ended: 09:56:36 UTC.
+
+4. Up on Database Details page, click **Restore** button. Set field **Restore to the timestamp** to the previous possible value before your Manual Backup Started field - e.g. 09:30 UTC. Click **Restore Database** to confirm.
+
+5. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
+
+    >**Note** : If Restore Database Work request fails, perform a Restore using **Restore to latest** option. You can check the RMAN logs in folder `/opt/oracle/dcs/log/db-host/rman/bkup/[Database unique name]/` for more information.
+
+6. Connect again to the pluggable database PDB012 as HR user.
+
+    ````bash
+    <copy>
+    sqlplus hr/<Strong Password>@db-host:1521/pdb012.$(domainname -d)
+    </copy>
+    ````
+
+7. List one more time all rows in `EMPLOYEES` table.
 
     ````sql
     <copy>
-    show pdbs
+    set linesize 130
+    col EMPLOYEE_ID heading ID
+    col FIRST_NAME for a10
+    col LAST_NAME for a10
+    col EMAIL for a8
+    col PHONE_NUMBER for a16
+    col COMMISSION_PCT heading PCT
+    select * from EMPLOYEES;
     </copy>
-
-        CON_ID CON_NAME			  OPEN MODE  RESTRICTED
-    ---------- ------------------------------ ---------- ----------
-    	 2 PDB$SEED			  READ ONLY  NO
-    	 3 PDB011			  READ WRITE NO
     ````
 
-6. There are only two pluggable databases now, one seed PDB (system-supplied template that the CDB can use to create new PDBs) and one user-created PDBs (application data). Where did pluggable database PDB012 go? Pluggable database PDB012 was not created at the moment when the Automatic Backup you used to restore this database was taken.
+8. `HR.EMPLOYEES` table was recovered from the manual backup.
 
-    >**Note** : If you created the PDB012 pluggable database before the Automatic Backup was completed, you may see this pluggable database after restore. Verify the sample schemas HR and SH, these schemas may have not been created when Automatic Backup was completed.
-
-7. Type **exit** command tree times followed by Enter to close all sessions (SQL*Plus, oracle user, and SSH).
+9. Type **exit** command tree times followed by Enter to close all sessions (SQL*Plus, oracle user, and SSH).
 
     ````
     <copy>
@@ -177,7 +194,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-4. List all pluggable databases. This database has three pluggable databases, one seed PDB (system-supplied template that the CDB can use to create new PDBs) and two user-created PDBs (application data). Pluggable database PDB012 was created at the moment when you took the Manual Backup you used to create this new database system.
+4. List all pluggable databases. This database has three pluggable databases, one seed PDB (system-supplied template that the CDB can use to create new PDBs) and two user-created PDBs (application data). Pluggable database PDB012 existed when you took the Manual Backup you used to create this new database system.
 
     ````sql
     <copy>
@@ -234,7 +251,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     exit
     ````
 
-## Task 7: Terminate New Database Service to Release Resources
+## Task 5: Terminate New Database Service to Release Resources
 
 1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Databases. Click **WS-DBb** DB System.
 
