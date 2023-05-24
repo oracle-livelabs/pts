@@ -8,7 +8,7 @@ You can easily scale up and down resources for a DB system by using the console,
 
 >**Note** : The total storage attached to an instance will be a sum of available storage, reco storage, and software size. Available storage is selected by the customer, reco storage is automatically calculated based on available storage, and software size is a fixed size Oracle database cost.
 
-Estimated Time: 25 minutes
+Estimated Time: 40 minutes
 
 ### Objectives
 
@@ -16,6 +16,7 @@ In this lab you will:
 * Change Database System Node shape for more CPU resources
 * Scale-up storage volumes for more space
 * Enable Database Management Services
+* Enable Enterprise Manager Express web management tool
 
 ### Prerequisites
 
@@ -209,6 +210,99 @@ Please take a moment to watch the video below to learn how to perform the Databa
 10. Leave the rest of the fields with the default values, and click **Enable Database Management**.
 
 11. Database Status will change to Updating. Wait for Status to become Available (refresh page). Click **Metrics** on the left side menu. Now you can see all performance metrics, because Database Management status is Full.
+
+
+## Task 4: Enterprise Manager Express
+
+1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
+
+2. On DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
+
+3. Wait for Backup In Progress task to finish. Review the backup called **Automatic Backup** in the bottom table called Backups. Make sure it has Active State and a valid Ended timestamp.
+
+4. Connect to the database instance specified by environment variables.
+
+    ````bash
+    <copy>
+    sqlplus / as sysdba
+    </copy>
+    ````
+
+5. Unlock **xdb** database user account.
+
+    ````sql
+    <copy>
+    alter user xdb account unlock;
+    </copy>
+    ````
+
+6. Enable Oracle Enterprise Manager Database Express (EM Express) clients to use a single port (called a global port), for the session rather than using a port dedicated to the PDB.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.SetGlobalPortEnabled(TRUE);
+    </copy>
+    ````
+
+7. Install the default XDB wallet in the default XDB wallet directory
+
+    ````sql
+    <copy>
+    exec dbms_xdb_admin.installdefaultwallet;
+    </copy>
+    ````
+
+8. Disable the encrypted HTTPS port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpsport(0);
+    </copy>
+    ````
+
+9. Enable the HTTP (unencrypted) port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpport(5500);
+    </copy>
+    ````
+
+10. Open the web browser on your computer, and navigate to **http://localhost:5500/em**. It shows a 'Bad Request' error message because EM Express cannot use unencrypted HTTP protocol because of the security risks.
+
+    ![Bad Request](./images/bad-request.png)
+
+11. Disable the HTTP port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpport(0);
+    </copy>
+    ````
+
+12. Set the HTTPS port for Enterprise Manager Express. HTTPS uses TLS (SSL) to encrypt all trafic and is more secure.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpsport(5500);
+    </copy>
+    ````
+
+13. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
+
+    >**Note** : You will receive an alert message in your browser about the security certificate not being valid. For Firefox, click **Advanced** and **Accept the Risk and Continue**. For Chrome, navigate to chrome://flags/#allow-insecure-localhost, and enable **Allow invalid certificates for resources loaded from localhost**.
+
+    ![Potential security risk](./images/potential-security-risk.png)
+
+    ![Connection is not private](./images/connection-not-private.png)
+
+14. Use the following credentials:
+
+    - Username: **system**
+    - Password: Use the strong password written down in your notes.
+    - Container Name: **CDB$ROOT** for the Container Database, or **PDB011** for the Pluggable Database. Try both.
+
+15. Explore Enterprise Manager Express console, and see what this tool has to offer.
 
     You may now **proceed to the next lab**.
 
