@@ -37,7 +37,11 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Initial password
     - Compartment
 
-2. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+2. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database Service**.
+
+3. On the left side, under **Compartment**, click the dropdown list, and **[+]** sign to expand root compartment and sub-compartments until you can select your compartment **LLXXXXX-COMPARTMENT**.
+
+4. Click **Create DB System**.
 
     - Select your compartment (default).
     - Select a shape type: Virtual Machine (default).
@@ -48,13 +52,13 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
     - Choose a license type: Bring Your Own License (BYOL).
 
-2. Specify the network information.
+5. Specify the network information.
 
     - Virtual cloud network: **LLXXXXX-VCN**
     - Client Subnet: **public subnet-LLXXXXX-VCN**
     - Hostname prefix: **db-host**
 
-3. Click Next.
+6. Click Next.
 
     - Database name: **WSDB**
     - Database version: 19c (default).
@@ -62,7 +66,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Password: Use a strong password and write it down in your notes.
     - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
-4. Click **Create DB System**.
+7. Click **Create DB System**.
 
 
 ## Task 2: DB Node SSH Connection

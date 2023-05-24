@@ -56,17 +56,65 @@ This lab assumes you have:
     </copy>
     ````
 
-7. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
+7. Install the default XDB wallet in the default XDB wallet directory
+
+    ````sql
+    <copy>
+    exec dbms_xdb_admin.installdefaultwallet;
+    </copy>
+    ````
+
+8. Disable the encrypted HTTPS port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpsport(0);
+    </copy>
+    ````
+
+9. Enable the HTTP (unencrypted) port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpport(5500);
+    </copy>
+    ````
+
+10. Open the web browser on your computer, and navigate to **http://localhost:5500/em**. It shows a 'Bad Request' error message because EM Express cannot use unencrypted HTTP protocol because of the security risks.
+
+    ![Bad Request](./images/bad-request.png)
+
+11. Disable the HTTP port for Enterprise Manager Express.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpport(0);
+    </copy>
+    ````
+
+12. Set the HTTPS port for Enterprise Manager Express. HTTPS uses TLS (SSL) to encrypt all trafic and is more secure.
+
+    ````sql
+    <copy>
+    exec dbms_xdb_config.sethttpsport(5500);
+    </copy>
+    ````
+
+13. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
 
     >**Note** : You will receive an alert message in your browser about the security certificate not being valid. For Firefox, click **Advanced** and **Accept the Risk and Continue**. For Chrome, navigate to chrome://flags/#allow-insecure-localhost, and enable **Allow invalid certificates for resources loaded from localhost**.
 
-8. Use the following credentials:
+    ![Potential security risk](./images/potential-security-risk.png)
+
+    ![Connection is not private](./images/connection-not-private.png)
+
+14. Use the following credentials:
 
     - Username: **system**
     - Password: Use the strong password written down in your notes.
     - Container Name: **CDB$ROOT** for the Container Database, or **PDB011** for the Pluggable Database. Try both.
 
-9. Explore Enterprise Manager Express console, and see what this tool has to offer.
+15. Explore Enterprise Manager Express console, and see what this tool has to offer.
 
 
 ## Task 2: Create a Pluggable Database

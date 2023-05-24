@@ -37,7 +37,7 @@ This lab assumes you have:
 
 5. In Policy Builder enable **Show manual editor**.
 
-6. In the text field, copy-paste these policies, changing the name of the user-group (USER-GROUP), compartment (USER-COMPARTMENT), and region (FRA) with your own values:
+6. In the text field, copy-paste these policies, changing the name of the user-group (USER-GROUP), compartment (USER-COMPARTMENT), and region (E.g. FRA) with your own values:
 
     ````
     <copy>
@@ -111,7 +111,11 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
-1. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+1. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database Service**.
+
+2. On the left side, under **Compartment**, click the dropdown list, and **[+]** sign to expand root compartment and sub-compartments until you can select your compartment.
+
+3. Click **Create DB System**.
 
     - Select your compartment (default).
     - Name your DB system: **WS-DB**.
@@ -122,13 +126,13 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
     - Choose a license type: Bring Your Own License (BYOL).
 
-2. Specify the network information.
+4. Specify the network information.
 
     - Virtual cloud network: **LLXXXXX-VCN**
     - Client Subnet: **public subnet-LLXXXXX-VCN**
     - Hostname prefix: **db-host**
 
-3. Click Next.
+5. Click Next.
 
     - Database name: **WSDB**
     - Database version: 19c (default).
@@ -136,7 +140,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Password: Use a strong password and write it down in your notes.
     - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
-4. Click **Create DB System**.
+6. Click **Create DB System**.
 
 
 ## Task 4: DB Node SSH Connection

@@ -61,7 +61,7 @@ This lab assumes you have:
 
 5. Click the database name link **WSDB** in the bottom table called Databases.
 
-6. Review the backup called **Automatic Backup** in the bottom table called Backups. Click **Create Backup** button. Call it **Manual-Backup**, and click **Create Backup** to confirm. The new backup is added to the Backups table, having the State: Creating...
+6. Review the backup called **Automatic Backup** in the bottom table called Backups. Click **Create Backup** button. Call it **'Manual-Backup'**, and click **Create Backup** to confirm. The new backup is added to the Backups table, having the State: Creating...
 
 7. Access Work Requests table, and click **Create Database Backup**. Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (2). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
@@ -96,9 +96,10 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Access Work Requests table, and click **Restore Database** having Status: In Progress... Review all Resources: Log Messages (2), Error Messages (0), Associated Resources (1). Wait until this work request is 100% Complete (refresh page). Under Associated Resources, click **WSDB** database name link.
 
+    >**Note** : PDB012 pluggable database may be in MOUNTED state after the restore. In this case, connect to the ROOT$CDB container database as SYSDBA and open it. Run `sqlplus / as sysdba` and `alter pluggable database all open;` via SSH connection.
     >**Note** : If Restore Database Work request fails, perform a Restore using **Restore to latest** option. You can check the RMAN logs in folder `/opt/oracle/dcs/log/db-host/rman/bkup/[Database unique name]/` for more information.
 
-6. Connect again to the pluggable database PDB012 as HR user.
+6. After checking that PDB012 pluggable database is open, connect again as HR user.
 
     ````bash
     <copy>
@@ -106,7 +107,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-7. List one more time all rows in `EMPLOYEES` table.
+7. Select all rows in `EMPLOYEES` table.
 
     ````sql
     <copy>
