@@ -8,12 +8,11 @@ Oracle Database sample schemas are based on a fictitious sample company that sel
 
 This lab explains how to
 
-Estimated Time: 45 minutes
+Estimated Time: 25 minutes
 
 ### Objectives
 
 In this lab you will:
-* Enable Enterprise Manager Express web management tool
 * Create a new Pluggable Database in the existing Root Container
 * Install Oracle Database sample schemas
 
@@ -22,102 +21,10 @@ In this lab you will:
 This lab assumes you have:
 * Provisioned Oracle Base Database Service
 
-## Task 1: Enterprise Manager Express
+
+## Task 1: Create a Pluggable Database
 
 >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
-
-1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System (or click DB System Details in the breadcrumb links).
-
-2. On DB System Details page, click the database name link **WSDB** in the bottom table called Databases.
-
-3. Wait for Backup In Progress task to finish. Review the backup called **Automatic Backup** in the bottom table called Backups. Make sure it has Active State and a valid Ended timestamp.
-
-4. Connect to the database instance specified by environment variables.
-
-    ````bash
-    <copy>
-    sqlplus / as sysdba
-    </copy>
-    ````
-
-5. Unlock **xdb** database user account.
-
-    ````sql
-    <copy>
-    alter user xdb account unlock;
-    </copy>
-    ````
-
-6. Enable Oracle Enterprise Manager Database Express (EM Express) clients to use a single port (called a global port), for the session rather than using a port dedicated to the PDB.
-
-    ````sql
-    <copy>
-    exec dbms_xdb_config.SetGlobalPortEnabled(TRUE);
-    </copy>
-    ````
-
-7. Install the default XDB wallet in the default XDB wallet directory
-
-    ````sql
-    <copy>
-    exec dbms_xdb_admin.installdefaultwallet;
-    </copy>
-    ````
-
-8. Disable the encrypted HTTPS port for Enterprise Manager Express.
-
-    ````sql
-    <copy>
-    exec dbms_xdb_config.sethttpsport(0);
-    </copy>
-    ````
-
-9. Enable the HTTP (unencrypted) port for Enterprise Manager Express.
-
-    ````sql
-    <copy>
-    exec dbms_xdb_config.sethttpport(5500);
-    </copy>
-    ````
-
-10. Open the web browser on your computer, and navigate to **http://localhost:5500/em**. It shows a 'Bad Request' error message because EM Express cannot use unencrypted HTTP protocol because of the security risks.
-
-    ![Bad Request](./images/bad-request.png)
-
-11. Disable the HTTP port for Enterprise Manager Express.
-
-    ````sql
-    <copy>
-    exec dbms_xdb_config.sethttpport(0);
-    </copy>
-    ````
-
-12. Set the HTTPS port for Enterprise Manager Express. HTTPS uses TLS (SSL) to encrypt all trafic and is more secure.
-
-    ````sql
-    <copy>
-    exec dbms_xdb_config.sethttpsport(5500);
-    </copy>
-    ````
-
-13. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
-
-    >**Note** : You will receive an alert message in your browser about the security certificate not being valid. For Firefox, click **Advanced** and **Accept the Risk and Continue**. For Chrome, navigate to chrome://flags/#allow-insecure-localhost, and enable **Allow invalid certificates for resources loaded from localhost**.
-
-    ![Potential security risk](./images/potential-security-risk.png)
-
-    ![Connection is not private](./images/connection-not-private.png)
-
-14. Use the following credentials:
-
-    - Username: **system**
-    - Password: Use the strong password written down in your notes.
-    - Container Name: **CDB$ROOT** for the Container Database, or **PDB011** for the Pluggable Database. Try both.
-
-15. Explore Enterprise Manager Express console, and see what this tool has to offer.
-
-
-## Task 2: Create a Pluggable Database
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
@@ -185,7 +92,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 10. This pluggable database doesn't have Oracle Sample Schemas either.
 
 
-## Task 3: Install HR Sample Schema
+## Task 2: Install HR Sample Schema
 
 1. List all tablespaces in PDB012.
 
@@ -301,7 +208,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-## Task 4: Verify HR Sample Schema
+## Task 3: Verify HR Sample Schema
 
 1. Display current user. If all steps were followed, the current user should be **HR**.
 
@@ -350,7 +257,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-## Task 5: Install SH Sample Schema
+## Task 4: Install SH Sample Schema
 
 1. Connect to the **PDB012** pluggable database.
 
