@@ -2,11 +2,9 @@
 
 ## Introduction
 
-Oracle Enterprise Manager Database Express, also referred to as EM Express, is a web-based tool for managing Oracle Database 19c. Built inside the database server, it offers support for basic administrative tasks.
-
 Oracle Database sample schemas are based on a fictitious sample company that sells goods through various channels. The company operates worldwide to fill orders for products. It has several divisions, each of which is represented by a sample database schema. Schema Human Resources (HR) represents Division Human Resources and tracks information about the company employees and facilities. Schema Sales History (SH) represents Division Sales and tracks business statistics to facilitate business decisions.
 
-This lab explains how to
+This lab explains how to install two of these sample schemas in your database service instance to learn about Oracle Database functionality and try the examples in this workshop.
 
 Estimated Time: 25 minutes
 

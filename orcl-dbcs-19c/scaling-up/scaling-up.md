@@ -8,6 +8,9 @@ You can easily scale up and down resources for a DB system by using the console,
 
 >**Note** : The total storage attached to an instance will be a sum of available storage, reco storage, and software size. Available storage is selected by the customer, reco storage is automatically calculated based on available storage, and software size is a fixed size Oracle database cost.
 
+Database Management service provide a unified console for cloud databases with lifecycle database management capabilities for monitoring, performance management, tuning, and administration. 
+Last bu not least, Oracle Enterprise Manager Database Express, also referred to as EM Express, is a web-based tool for managing Oracle Database 19c. Built inside the database server, it offers support for basic administrative tasks.
+
 Estimated Time: 40 minutes
 
 ### Objectives
