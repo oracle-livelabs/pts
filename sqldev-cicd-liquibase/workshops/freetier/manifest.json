@@ -1,5 +1,6 @@
 {
     "workshoptitle": "Capture Oracle Database Changes for CI/CD",
+    "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
             "title": "Oracle Cloud Free Tier",
@@ -13,7 +14,7 @@
         {
             "title": "Lab 2: Development environment preparation",
             "description": "Provision Oracle Cloud Infrastructure basic resources to Capture Oracle Database Changes for CI/CD.",
-            "filename": "./../../introduction/intro-cicd.md"
+            "filename": "./../../provision/oci-cicd.md"
         },
         {
             "title": "Lab 3: Use SQLcl to Capture Database Changes with Liquibase",

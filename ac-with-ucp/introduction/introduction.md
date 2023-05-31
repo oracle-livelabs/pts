@@ -18,7 +18,7 @@ These features include Fast Connection Failover (FCF), Run-time connection Load 
 
 ### What's in the workshop
 
-This workshop is based on a compute instance (a demo application) connected to a 2-node DBCS RAC.
+This workshop is based on a compute instance (a demo application) connected to a 2-node Database Cloud Service (Oracle Base RAC Database).
 The demo application is a simple Java program using a 21c client. Its code shows how to create and use a Universal Connection Pool to the RAC.
 
 It demonstrates:

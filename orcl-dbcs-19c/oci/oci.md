@@ -37,33 +37,36 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Initial password
     - Compartment
 
-2. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+2. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database Service**.
+
+3. On the left side, under **Compartment**, click the dropdown list, and **[+]** sign to expand root compartment and sub-compartments until you can select your compartment **LLXXXXX-COMPARTMENT**.
+
+4. Click **Create DB System**.
 
     - Select your compartment (default).
     - Select a shape type: Virtual Machine (default).
     - Name your DB system: **WS-DB**.
     - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
-    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
+    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, Storage Volume Performance: **Balanced**.
     - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
     - Choose a license type: Bring Your Own License (BYOL).
 
-2. Specify the network information.
+5. Specify the network information.
 
-    - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
+    - Virtual cloud network: **LLXXXXX-VCN**
+    - Client Subnet: **public subnet-LLXXXXX-VCN**
     - Hostname prefix: **db-host**
 
-3. Click Next.
+6. Click Next.
 
     - Database name: **WSDB**
     - Database version: 19c (default).
     - PDB name: **PDB011**.
     - Password: Use a strong password and write it down in your notes.
-    - Select workload type: Transaction Processing (default).
     - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
-4. Click **Create DB System**.
+7. Click **Create DB System**.
 
 
 ## Task 2: DB Node SSH Connection
@@ -82,7 +85,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Verify SSH connection from a Linux client. Change the permissions on the private key file you saved from DB System. Change `ssh-key-XXXX-XX-XX` with the private key file you saved on your computer. (Linux only)
 
-    ````
+    ````bash
     <copy>
     chmod 400 Downloads/ssh-key-XXXX-XX-XX.key
     </copy>
@@ -90,13 +93,13 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. Connect to the DB Node using SSH. In OpenSSH, local port forwarding is configured using the -L option. Use this option to forward any connection to port 5500 on the local machine to port 5500 on your DB Node.  (Linux only)
 
-    ````
+    ````bash
     <copy>
     ssh -C -i Downloads/ssh-key-XXXX-XX-XX.key -L 5500:localhost:5500 opc@<DB Node Public IP Address>
     </copy>
     ````
 
-5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > Import Key. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
+5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > **Import Key**. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
 
 6. Connect to DB Node Public IP Address port 22. (Windows only)
 
@@ -123,7 +126,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 
-    ````
+    ````bash
     <copy>
     sudo su - oracle
     </copy>
@@ -131,7 +134,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Try to connect to your DB System database using SQL*Plus.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
@@ -139,7 +142,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. List pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -147,7 +150,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. You will see `PDB011` in the list opened in `READ WRITE` mode. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -155,7 +158,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Connect directly to the pluggable database.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
@@ -163,7 +166,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     Or
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
@@ -171,7 +174,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Display the current container name.
 
-    ````
+    ````sql
     <copy>
     show con_name
     </copy>
@@ -179,7 +182,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. List all users in PDB011.
 
-    ````
+    ````sql
     <copy>
     select username from all_users order by 1;
     </copy>
@@ -187,7 +190,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. This pluggable database doesn't have Oracle Sample Schemas. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>

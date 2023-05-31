@@ -30,12 +30,8 @@
             "filename": "../../connect-primary-standby/connect-primary-standby.md"
         },
         {            
-            "title": "Lab 5A: Deploy Active Data Guard with LVM",
+            "title": "Lab 5: Deploy Active Data Guard",
             "filename": "../../deploy-adg-lvm/deploy-adg-lvm.md"
-        },
-        {            
-            "title": "Lab 5B: Deploy Active Data Guard with ASM",
-            "filename": "../../deploy-adg-asm/deploy-adg-asm.md"
         },
         {            
             "title": "Lab 6: Testing with Active Data Guard",

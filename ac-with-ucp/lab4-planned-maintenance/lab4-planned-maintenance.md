@@ -28,9 +28,11 @@ This lab assumes you have:
 1. Edit the java demo application MyUCPDemo.java and make sure the pool is configured to use a 10 connections. For example:
 
     ```
+    <copy>
     pds.setInitialPoolSize(10);
     pds.setMinPoolSize(10);
     pds.setMaxPoolSize(20);
+    </copy>
     ```
 
 2. Recompile the application
@@ -115,6 +117,9 @@ This lab assumes you have:
 
     * Instruct the service to stop on instance CONT1
 
+        *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
+
+
         ````
         [oracle@ruby1 ~]$ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT1</copy>
         ````
@@ -146,6 +151,9 @@ This lab assumes you have:
 ## Task 3: Route Connections To Instance 1 Only
 
 1. We can now do the reverse and move the service to only CONT1
+
+    *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
+
 
     ````
     [oracle@ruby1 ~]$ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT1</copy>

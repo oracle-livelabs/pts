@@ -1,0 +1,38 @@
+{
+    "workshoptitle": "Full Python App Development with Autonomous JSON for MongoDB Developers",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction of the workshop.",
+            "filename": "./../../intro-ocw/intro-ocw.md"
+        },
+        {
+            "title": "Get Started",
+             "filename": "https://oracle-livelabs.github.io/common//labs/cloud-login/cloud-login.md"
+        },
+        {
+            "title": "Lab 1: Infrastructure Configuration",
+            "description": "In this Lab you will create the infrastructure that we will need for this content. VCN, Compute, AJD and Prepare the document store.",
+            "filename": "./../../infra-ocw/infra-free-ocw.md"
+        },
+            {
+            "title": "Lab 2: Python SODA Micro-service with Autonomous Database for JSON",
+            "description": "SODA is a set of NoSQL-style APIs that let you create and store collections of documents (in particular JSON) in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the documents are stored in the database.",
+            "filename": "./../../simple-app-ocw/simple-app-free-ocw.md"
+        },
+        {
+            "title": "Lab 3: Python micro-service with the new MongoAPI capability",
+            "description": "Learn how to use MongoAPI using the micro-service applications that we have created and used in Lab 2 and 3.",
+            "filename": "./../../mongo-api-ocw/mongo-api-free-ocw.md"
+        },
+        {
+            "title": "Lab 4: Clean Up (Optional)",
+            "description": "In this lab we will cleanup the infrastructure that we created in Lab 1 and used to run this workshop.",
+            "filename": "./../../cleanup-ocw/cleanup-free-ocw.md"
+        },
+        {
+            "title": "Oracle CloudWorld 2023 - Get Help",
+            "filename": "https://oracle-livelabs.github.io/common/support/ocwsupportlab/ocwsupportlab.md"
+        }
+    ]
+}
