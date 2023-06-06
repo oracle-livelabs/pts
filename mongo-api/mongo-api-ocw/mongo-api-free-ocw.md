@@ -115,8 +115,10 @@ In this lab, you will:
 
     It should be something like this:
 
-    ````
+    ````html
+    <copy>
     mongodb://[user:password@]<ATP_URL_including_tenancy_id.oraclecloudapp.com>:27017[user]authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
+    </copy>
     ````
 
     We need to copy the URL string after your _`[user:password@]`_ and until _`:27017`_, including _`oraclecloudapps.com`_. It should be something like: _`AAA8EFD9AA64AA4-AJDEV.adb.eu-frankfurt-1.oraclecloudapps.com`_
@@ -346,10 +348,9 @@ In this lab, you will:
     > This micro-service has 1 URL. We already had used previously the Oracle one and the Mongo one. In this case we are using a new one / oracle/mongo. Here you have the others URLS too:
     >    - http://[DEVM public-ip address]:5000/oracle/mongo/ -> for Oracle Autonomous Database using MongoAPI
 
-
 10. We can check that the **Two New Companies** (Nice and Ten) are being stored on our **Autonomous JSON Database**, on **MongoCollection** that we created in Task 3 of this Lab. Go to **Database Actions** again and click green **Play** button.
 
-    ![MongoDB Companies Added Database Actions](./images/ions-nine-ten.png)
+    ![MongoDB Companies Added Database Actions](./images/database-actions-nine-ten.png)
 
 11. Go to **cloud shell terminal.** We will **stop insert-mongoapi-app.py** running the following command.
 
@@ -361,9 +362,7 @@ In this lab, you will:
 
     ![kill insert-mongoapi-app](./images/insert-mongoapi-app-kill.png)
 
-
 You may now **proceed to the next lab**.
-
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director

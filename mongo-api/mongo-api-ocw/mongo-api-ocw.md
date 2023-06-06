@@ -108,8 +108,10 @@ In this lab, you will:
 
     It should be something like this:
 
-    ````
+    ````html
+    <copy>
     mongodb://[user:password@]<ATP_URL_including_tenancy_id.oraclecloudapp.com>:27017[user]authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
+    </copy>
     ````
 
     We need to copy the URL string representing the complete hostname after your _`[user:password@]`_ and until _`:27017`_, including _`oraclecloudapps.com`_. It should be something like: _`AAA8EFD9AA64AA4-XXX0AJD.adb.eu-frankfurt-1.oraclecloudapps.com`_

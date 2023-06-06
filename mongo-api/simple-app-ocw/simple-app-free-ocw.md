@@ -121,9 +121,11 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     > **Note**: If you have change the user name and password to a different value, please run this commands providing the user and password.
 
     ````bash
+    <copy>
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
     export AJSON_SERVICE="ajdev_tp"
+    </copy>
     ````
 
 10. **After checking if all variables are correct**. **Run** simple-app application using the following command:
