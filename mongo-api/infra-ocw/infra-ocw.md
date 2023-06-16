@@ -123,7 +123,7 @@ In this lab, you will:
 6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button).
 On the Instance Details page, copy Public IP Address in your notes.
 
-    > **Note**: The mame of the instances in the screenshots may be different from yours.
+    > **Note**: The name of the instances in the screenshots may be different from yours.
 
     ![Compute Provisioning](./images/compute-provisioning.png)
     ![Compute Running](./images/compute-running.png)
@@ -339,7 +339,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![AJD Dashboard](./images/ajson-dashboard.png)
 
-6. On **Tools tab**, under **Oracle Application Express**, click **Open APEX**.
+6. On **Tool configuration** tab, next to **Oracle APEX**, click **Copy** link, and open this URL in a new tab in your browser.
 
     ![Apex](./images/apex.png)
 
@@ -362,7 +362,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 10. Type the following information:
 
     - Database User: **DEMO**. Use the search menu to find DEMO and select it. You can't type on this field.
-    - Workspace User: **DEMO**
+    - Workspace Name: **DEMO**
     ```
     <copy>DEMO</copy>
     ```
