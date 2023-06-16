@@ -416,7 +416,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![AJD Dashboard](./images/ajson-dashboard.png)
 
-6. On **Tool configuration**, under **Oracle APEX**, click **Copy** the Access URL.
+6. On **Tool configuration** tab, next to **Oracle APEX**, click **Copy** link, and open this URL in a new tab in your browser.
 
     ![Apex](./images/apex.png)
 
@@ -439,7 +439,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 10. Type the following information:
 
     - Database User: **DEMO**. Use the search menu to find DEMO and select it. You can't type on this field.
-    - Workspace User: **DEMO**
+    - Workspace Name: **DEMO**
     ```
     <copy>DEMO</copy>
     ```
