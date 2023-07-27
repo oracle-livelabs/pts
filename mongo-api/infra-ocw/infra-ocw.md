@@ -10,6 +10,9 @@ We will prepare the documents to be capable of accessing to **SODA APIs**, in pa
 
 Estimated Time: 30 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[Infrastructure Configuration](videohub:1_pcbhdbtb)
+
 ### Objectives
 
 In this lab, you will:
