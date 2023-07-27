@@ -304,7 +304,7 @@ In this lab, you will:
             --url http://localhost:5000/oracle/mongo/ \
             --header 'content-type: application/json' \
             --data '{
-        "company":"Company Nine",
+        "company":"Company Five",
         "address": {
             "street": "25 Severo Ochoa",
             "city": "Málaga",
@@ -317,7 +317,7 @@ In this lab, you will:
             --url http://localhost:5000/oracle/mongo/ \
             --header 'content-type: application/json' \
             --data '{
-        "company":"Company Ten",
+        "company":"Company Six",
         "address": {
             "street": "3 Victor Emanouil",
             "city": "Alexandria",
@@ -329,7 +329,7 @@ In this lab, you will:
     </copy>
     ````
 
-    ![POST company nine and ten curl](./images/curl-company-nine-ten.png)
+    ![POST company five and six curl](./images/curl-company-five-six.png)
 
 9. Use the **web browser** on your laptop to navigate to your micro-service to list JSON documents inserted into Oracle Autonomous Database using MongoAPI capability.
 
@@ -342,7 +342,7 @@ In this lab, you will:
 
 10. We can check that the **Two New Companies** (Nice and Ten) are being stored on our **Autonomous JSON Database**, on **MongoCollection** that we created in Task 3 of this Lab. Go to **Database Actions** again and click green **Play** button.
 
-    ![MongoDB Companies Added Database Actions](./images/database-actions-nine-ten.png)
+    ![MongoDB Companies Added Database Actions](./images/database-actions-five-six.png)
 
 11. Go to **cloud shell terminal.** We will **stop insert-mongoapi-app.py** running the following command.
 
