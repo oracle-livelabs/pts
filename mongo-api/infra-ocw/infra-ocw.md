@@ -10,6 +10,9 @@ We will prepare the documents to be capable of accessing to **SODA APIs**, in pa
 
 Estimated Time: 30 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[Infrastructure Configuration](videohub:1_pcbhdbtb)
+
 ### Objectives
 
 In this lab, you will:
@@ -452,4 +455,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, July 2023
