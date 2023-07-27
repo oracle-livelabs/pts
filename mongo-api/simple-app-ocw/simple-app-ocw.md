@@ -10,6 +10,9 @@ SODA is a set of NoSQL-style APIs that let you create and store collections of d
 
 Estimated Time: 30 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[Simple app Content](videohub:1_jruevt6y)
+
 ### Objectives
 
 In this lab, you will:

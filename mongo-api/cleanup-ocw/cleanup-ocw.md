@@ -8,6 +8,9 @@ The main two elements that we will cleanup are the **Autonomous JSON Database** 
 
 Estimated Time: 5 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[Clean up Content](videohub:1_pgtct6n7)
+
 ### Objectives
 
 In this lab, you will:

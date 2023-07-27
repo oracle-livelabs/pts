@@ -21,7 +21,7 @@ To learn more about this capability go to he following content:
 Estimated Time: 20 minutes
 
 Watch the video below for a quick walk-through of the lab.
-[Python micro-service with the new MongoAPI capability](videohub:1_44ff0wv1)
+[MongoApi app Content](videohub:1_8ras98s0)
 
 ### Objectives
 

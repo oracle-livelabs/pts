@@ -11,7 +11,7 @@ SODA is a set of NoSQL-style APIs that let you create and store collections of d
 Estimated Time: 40 minutes
 
 Watch the video below for a quick walk-through of the lab.
-[Python SODA micro-service with Autonomous Database for JSON](videohub:1_2ugpfxe2)
+[Simple app Content](videohub:1_jruevt6y)
 
 ### Objectives
 

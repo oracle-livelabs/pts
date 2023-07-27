@@ -31,6 +31,10 @@
             "filename": "./../../cleanup-ocw/cleanup-free-ocw.md"
         },
         {
+            "title": "Need help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+        },
+        {
             "title": "Oracle CloudWorld 2023 - Get Help",
             "filename": "https://oracle-livelabs.github.io/common/support/ocwsupportlab/ocwsupportlab.md"
         }

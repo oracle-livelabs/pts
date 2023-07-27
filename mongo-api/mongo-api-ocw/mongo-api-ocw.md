@@ -20,6 +20,9 @@ To learn more about this capability go to he following content:
 
 Estimated Time: 20 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[MongoApi app Content](videohub:1_8ras98s0)
+
 ### Objectives
 
 In this lab, you will:
