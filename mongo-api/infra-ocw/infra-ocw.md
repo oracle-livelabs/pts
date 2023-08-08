@@ -156,7 +156,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>XXX0AJD</copy>
     ```
     - Choose a workload type: JSON
-    - Choose a deployment type: Shared Infrastructure
+    - Choose a deployment type: Serverless
     - Choose database version: 19c
     - OCPU count: 1
     - Storage (TB): 1 or 0.02 if you are using a Trial account
@@ -190,7 +190,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 6. Under **Choose a license type**:
 
-    - License included
+    - This Database is provisioned with **License included** license type.
 
     ![Creation AJD License](./images/creation-ajson-license.png)
 
