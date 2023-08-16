@@ -50,6 +50,7 @@ This lab assumes you have:
     Allow group USER-GROUP to manage keys in compartment USER-COMPARTMENT where request.region='FRA'
     Allow group USER-GROUP to manage vaults in compartment USER-COMPARTMENT where request.region='FRA'
     Allow group USER-GROUP to manage secret-family in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to use dbmgmt-managed-databases in compartment USER-COMPARTMENT where request.region='FRA'
     Allow service dpd to read secret-family in compartment USER-COMPARTMENT where request.region='FRA'
     </copy>
     ````
