@@ -7,7 +7,7 @@ This lab will show you how launch Jupyter Notebooks in your NoVNC instance.
 
 Watch the video below for a quick walk through of the lab.
 
-[](youtube:HI9iczwKwJ4)
+[OML4Py Workshop Walk-through](youtube:HI9iczwKwJ4)
 
 ### Objectives
 * Get familiar with the lab Instance
