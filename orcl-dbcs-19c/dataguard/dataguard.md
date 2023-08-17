@@ -393,6 +393,16 @@ Fast-start failover allows the broker to automatically fail over to a previously
       FastStartFailoverTarget = 'WSDB_fra2qq'
     ````
 
+5. Use DGMGRL to disable fast-start failover.
+
+    ````
+    <copy>
+    DISABLE FAST_START FAILOVER;
+    </copy>
+    Enabled in Potential Data Loss Mode.
+    ````
+
+
 ## Task 5: Change Protection Mode
 
 Oracle Data Guard provides three protection modes: maximum availability, maximum performance, and maximum protection.
@@ -413,45 +423,7 @@ Maximum Availability mode provides the highest level of data protection that is 
 
 5. Type in Database admin password field the strong password written down in your notes. Click **Edit Data Guard** to save changes.
 
-6. Optionally, use DGMGRL on the WS-DBStb primary DB System node to disable fast-start failover, and change the protection mode.
-
-    >**Note** : The following steps from this task are optional. You may skip these steps and run the next task.
-
-    ````
-    <copy>
-    DISABLE FAST_START FAILOVER;
-    </copy>
-    Disabled.
-    ````
-
-7. Configure the redo transport service to SYNC on Primary database.
-
-    ````
-    <copy>
-    EDIT DATABASE 'WSDB_fra2qq' SET PROPERTY LogXptMode='SYNC';
-    </copy>
-    Property "logxptmode" updated
-    ````
-
-8. Configure also the redo transport service to SYNC on Physical standby database.
-
-    ````
-    <copy>
-    EDIT DATABASE 'WSDB_fra3hb' SET PROPERTY LogXptMode='SYNC';
-    </copy>
-    Property "logxptmode" updated
-    ````
-
-9. Upgrade the broker configuration to the MAXAVAILABILITY protection mode.
-
-    ````
-    <copy>
-    EDIT CONFIGURATION SET PROTECTION MODE AS MaxAvailability;
-    </copy>
-    Succeeded.
-    ````
-
-10. Display the configuration information. If this command is executed immediately, it will display a warning message. The information was not fully updated, and you need to wait a few seconds to verify the configuration.
+6. Display the configuration information. If this command is executed immediately, it will display a warning message. The information was not fully updated, and you need to wait a few seconds to verify the configuration.
 
     ````
     <copy>
@@ -473,7 +445,7 @@ Maximum Availability mode provides the highest level of data protection that is 
     WARNING   (status updated 54 seconds ago)
     ````
 
-11. After a minute, display again the configuration information. As you can see, the protection mode was updated.
+7. After a minute, display again the configuration information. As you can see, the protection mode was updated.
 
     ````
     <copy>
