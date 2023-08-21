@@ -11,7 +11,8 @@ We will prepare the documents to be capable of accessing to **SODA APIs**, in pa
 Estimated Time: 40 minutes
 
 Watch the video below for a quick walk-through of the lab.
-[Infrastructure Configuration](videohub:1_8a593q4e)
+[Infrastructure Configuration](videohub:1_pcbhdbtb)
+
 
 ### Objectives
 
@@ -220,7 +221,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>AJDEV</copy>
     ```
     - Choose a workload type: JSON
-    - Choose a deployment type: Shared Infrastructure
+    - Choose a deployment type: Serverless
     - Choose database version: 19c
     - OCPU count: 1
     - Storage (TB): 1 or 0.02 if you are using a Trial account
@@ -252,9 +253,9 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![Creation AJD Network](./images/creation-ajson-network-public-ip.png)
 
-6. Under **Choose a license type**:
+6. Under **Choose license and Oracle Datavase editiont**:
 
-    - License included
+    - This Database is provisioned with **License included** license type.
 
     ![Creation AJD License](./images/creation-ajson-license.png)
 
@@ -416,7 +417,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![AJD Dashboard](./images/ajson-dashboard.png)
 
-6. On **Tool configuration**, under **Oracle APEX**, click **Copy** the Access URL.
+6. On **Tool configuration** tab, next to **Oracle APEX**, click **Copy** link, and open this URL in a new tab in your browser.
 
     ![Apex](./images/apex.png)
 
@@ -439,7 +440,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 10. Type the following information:
 
     - Database User: **DEMO**. Use the search menu to find DEMO and select it. You can't type on this field.
-    - Workspace User: **DEMO**
+    - Workspace Name: **DEMO**
     ```
     <copy>DEMO</copy>
     ```
@@ -530,4 +531,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, August 2023

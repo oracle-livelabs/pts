@@ -9,7 +9,7 @@ The main three elements that we will cleanup are the **Autonomous JSON Database*
 Estimated Time: 5 minutes
 
 Watch the video below for a quick walk-through of the lab.
-[Clean Up](videohub:1_m0vdw69z)
+[Clean up Content](videohub:1_pgtct6n7)
 
 ### Objectives
 
@@ -99,4 +99,4 @@ In this lab, you will:
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, August 2023

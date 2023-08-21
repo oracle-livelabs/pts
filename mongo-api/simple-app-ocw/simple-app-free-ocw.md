@@ -11,7 +11,7 @@ SODA is a set of NoSQL-style APIs that let you create and store collections of d
 Estimated Time: 40 minutes
 
 Watch the video below for a quick walk-through of the lab.
-[Python SODA micro-service with Autonomous Database for JSON](videohub:1_2ugpfxe2)
+[Simple app Content](videohub:1_jruevt6y)
 
 ### Objectives
 
@@ -121,9 +121,11 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
     > **Note**: If you have change the user name and password to a different value, please run this commands providing the user and password.
 
     ````bash
+    <copy>
     export AJSON_USER="demo"
     export AJSON_PASSWORD="DBlearnPTS#22_"
     export AJSON_SERVICE="ajdev_tp"
+    </copy>
     ````
 
 10. **After checking if all variables are correct**. **Run** simple-app application using the following command:
@@ -394,4 +396,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, August 2023

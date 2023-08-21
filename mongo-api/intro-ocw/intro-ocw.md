@@ -37,4 +37,4 @@ Here is a video to help with the Oracle Trial Sign Up Process:
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, August 2023

@@ -10,6 +10,9 @@ We will prepare the documents to be capable of accessing to **SODA APIs**, in pa
 
 Estimated Time: 30 minutes
 
+Watch the video below for a quick walk-through of the lab.
+[Infrastructure Configuration](videohub:1_pcbhdbtb)
+
 ### Objectives
 
 In this lab, you will:
@@ -123,7 +126,7 @@ In this lab, you will:
 6. Wait for Compute Instance to finish provisioning, and have status Available (click browser Refresh button).
 On the Instance Details page, copy Public IP Address in your notes.
 
-    > **Note**: The mame of the instances in the screenshots may be different from yours.
+    > **Note**: The name of the instances in the screenshots may be different from yours.
 
     ![Compute Provisioning](./images/compute-provisioning.png)
     ![Compute Running](./images/compute-running.png)
@@ -153,7 +156,7 @@ On the Instance Details page, copy Public IP Address in your notes.
     <copy>XXX0AJD</copy>
     ```
     - Choose a workload type: JSON
-    - Choose a deployment type: Shared Infrastructure
+    - Choose a deployment type: Serverless
     - Choose database version: 19c
     - OCPU count: 1
     - Storage (TB): 1 or 0.02 if you are using a Trial account
@@ -187,7 +190,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
 6. Under **Choose a license type**:
 
-    - License included
+    - This Database is provisioned with **License included** license type.
 
     ![Creation AJD License](./images/creation-ajson-license.png)
 
@@ -339,7 +342,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 
     ![AJD Dashboard](./images/ajson-dashboard.png)
 
-6. On **Tools tab**, under **Oracle Application Express**, click **Open APEX**.
+6. On **Tool configuration** tab, next to **Oracle APEX**, click **Copy** link, and open this URL in a new tab in your browser.
 
     ![Apex](./images/apex.png)
 
@@ -362,7 +365,7 @@ On the Instance Details page, copy Public IP Address in your notes.
 10. Type the following information:
 
     - Database User: **DEMO**. Use the search menu to find DEMO and select it. You can't type on this field.
-    - Workspace User: **DEMO**
+    - Workspace Name: **DEMO**
     ```
     <copy>DEMO</copy>
     ```
@@ -452,4 +455,4 @@ You may now **proceed to the next lab**.
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Database Product Management and Priscila Iruela, Technology Product Strategy Director
 * **Contributors** - Victor Martin Alvarez, Technology Product Strategy Director
-* **Last Updated By/Date** - Priscila Iruela, April 2023
+* **Last Updated By/Date** - Priscila Iruela, August 2023

@@ -8,7 +8,8 @@
         },
         {
             "title": "Get Started",
-             "filename": "https://oracle-livelabs.github.io/common//labs/cloud-login/cloud-login.md"
+            "description": "Prerequisites for LiveLabs (Oracle-owned tenancies). The title of the lab and the Contents Menu title Full Python App Development with Autonomous JSON for MongoDB Developers match for Prerequisite lab. This lab is always first.",
+            "filename": "https://oracle-livelabs.github.io/common//labs/cloud-login/cloud-login.md"
         },
         {
             "title": "Lab 1: Infrastructure Configuration",
@@ -29,6 +30,10 @@
             "title": "Lab 4: Clean Up (Optional)",
             "description": "In this lab we will cleanup the infrastructure that we created in Lab 1 and used to run this workshop.",
             "filename": "./../../cleanup-ocw/cleanup-free-ocw.md"
+        },
+        {
+            "title": "Need help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         },
         {
             "title": "Oracle CloudWorld 2023 - Get Help",
