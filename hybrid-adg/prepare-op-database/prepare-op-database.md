@@ -105,7 +105,7 @@ Oracle MAA best practice recommends using Oracle Transparent Data Encryption (TD
 5. Connect to sqlplus as sysdba, create keystore.
 
      ```
-     [oracle@workshop ~]$ sqlplus / as sysdba
+     [oracle@workshop ~]$ <copy>sqlplus / as sysdba</copy>
      
      SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jan 31 03:26:52 2020
      Version 19.10.0.0.0
@@ -117,7 +117,7 @@ Oracle MAA best practice recommends using Oracle Transparent Data Encryption (TD
      Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
      Version 19.10.0.0.0
      
-     SQL> administer key management create keystore '/u01/app/oracle/admin/ORCL/wallet' identified by "Ora_DB4U";
+     SQL> <copy>administer key management create keystore '/u01/app/oracle/admin/ORCL/wallet' identified by "Ora_DB4U";</copy>
      
      keystore altered.
      
@@ -273,11 +273,11 @@ According to the best practice, you should encrypt all the data files. In this l
 1. Connect to the orclpdb, check the encrypt status of the tablespace.
 
      ```
-     SQL> alter session set container=orclpdb;
+     SQL> <copy>alter session set container=orclpdb;</copy>
      
      Session altered.
      
-     SQL> select tablespace_name, encrypted from dba_tablespaces;
+     SQL> <copy>select tablespace_name, encrypted from dba_tablespaces;</copy>
      
      TABLESPACE_NAME 	       ENC
      ------------------------------ ---
@@ -291,11 +291,11 @@ According to the best practice, you should encrypt all the data files. In this l
 2. Run the command to encrypt the USERS tablespace online, then check the status. You can see the USERS tablespace has already encrypted.
 
      ```
-     SQL> alter tablespace users encryption online encrypt;
+     SQL> <copy>alter tablespace users encryption online encrypt;</copy>
      
      Tablespace altered.
      
-     SQL> select tablespace_name, encrypted from dba_tablespaces;
+     SQL> <copy>select tablespace_name, encrypted from dba_tablespaces;</copy>
      
      TABLESPACE_NAME 	       ENC
      ------------------------------ ---
@@ -323,9 +323,9 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 2. Check the network service banner before encryption.
 
      ```
-     SQL> set linesize 120
-     SQL> col network_service_banner for a85
-     SQL> select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';
+     SQL> <copy>set linesize 120</copy>
+     SQL> <copy>col network_service_banner for a85</copy>
+     SQL> <copy>select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';</copy>
      
      NETWORK_SERVICE_BANNER
      -------------------------------------------------------------------------------------
@@ -334,7 +334,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Encryption service for Linux: Version 19.0.0.0.0 - Production
      Crypto-checksumming service for Linux: Version 19.0.0.0.0 - Production
      
-     SQL> exit
+     SQL> <copy>exit</copy>
      Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
      Version 19.10.0.0.0
      [oracle@primary ~]$
@@ -366,7 +366,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Check the network service banner again, the network encryption is enable now.
 
      ```
-     [oracle@workshop ~]$ sqlplus / as sysdba
+     [oracle@workshop ~]$ <copy>sqlplus / as sysdba</copy>
      
      SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jan 31 03:51:46 2020
      Version 19.10.0.0.0
@@ -378,9 +378,9 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
      Version 19.10.0.0.0
      
-     SQL> set linesize 120
-     SQL> col network_service_banner for a85
-     SQL> select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';
+     SQL> <copy>set linesize 120</copy>
+     SQL> <copy>col network_service_banner for a85</copy>
+     SQL> <copy>select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';</copy>
      
      NETWORK_SERVICE_BANNER
      -------------------------------------------------------------------------------------
@@ -403,7 +403,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 1. Check the achivelog mode, you can find it's disable now.
 
      ```
-     SQL> archive log list
+     SQL> <copy>archive log list</copy>
      Database log mode	       No Archive Mode
      Automatic archival	       Disabled
      Archive destination	       USE_DB_RECOVERY_FILE_DEST
@@ -415,11 +415,11 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 2. Enable the archive mode and flashback on.
 
      ```
-     SQL> shutdown immediate
+     SQL> <copy>shutdown immediate</copy>
      Database closed.
      Database dismounted.
      ORACLE instance shut down.
-     SQL> startup mount
+     SQL> <copy>startup mount</copy>
      ORACLE instance started.
      
      Total System Global Area 6845104048 bytes
@@ -428,19 +428,19 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Database Buffers	 5553258496 bytes
      Redo Buffers		    7626752 bytes
      Database mounted.
-     SQL> alter database archivelog;
+     SQL> <copy>alter database archivelog;</copy>
      
      Database altered.
      
-     SQL> !mkdir -p /u01/app/oracle/fra/ORCL
-     SQL> ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 10G SCOPE=BOTH SID='*';
-     SQL> ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/app/oracle/fra/ORCL' SCOPE=BOTH SID='*';
+     SQL> <copy>!mkdir -p /u01/app/oracle/fra/ORCL</copy>
+     SQL> <copy>ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 10G SCOPE=BOTH SID='*';</copy>
+     SQL> <copy>ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/app/oracle/fra/ORCL' SCOPE=BOTH SID='*';</copy>
      
-     SQL> alter database flashback on;
+     SQL> <copy>alter database flashback on;</copy>
      
      Database altered.
      
-     SQL> alter database open;
+     SQL> <copy>alter database open;</copy>
      
      Database altered.
      
@@ -450,7 +450,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 3. Check the status again, it's enable now.
 
      ```
-     SQL> archive log list
+     SQL> <copy>archive log list</copy>
      Database log mode	       Archive Mode
      Automatic archival	       Enabled
      Archive destination	       USE_DB_RECOVERY_FILE_DEST
@@ -463,7 +463,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Enable force logging.
 
      ```
-     SQL> alter database force logging;
+     SQL> <copy>alter database force logging;</copy>
      
      Database altered.
      
@@ -477,7 +477,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 1. Change the redo log size to 1024M according to the best practice. Check the status of the redo log first.
 
      ```
-     SQL> select group#, bytes, status from v$log;
+     SQL> <copy>select group#, bytes, status from v$log;</copy>
      
          GROUP#	BYTES STATUS
      ---------- ---------- ----------------
@@ -508,7 +508,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Check the status again.
 
      ```
-     SQL> select group#, bytes, status from v$log;
+     SQL> <copy>select group#, bytes, status from v$log;</copy>
      
          GROUP#	BYTES STATUS
      ---------- ---------- ----------------
@@ -527,15 +527,15 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 5. When the first 3 groups status is INACTIVE, you can drop these group now.
 
      ```
-     SQL> alter database drop logfile group 1; 
+     SQL> <copy>alter database drop logfile group 1;</copy> 
      
      Database altered.
      
-     SQL> alter database drop logfile group 2; 
+     SQL> <copy>alter database drop logfile group 2;</copy> 
      
      Database altered.
      
-     SQL> alter database drop logfile group 3; 
+     SQL> <copy>alter database drop logfile group 3;</copy> 
      
      Database altered.
      
@@ -545,23 +545,23 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 6. Create 4 standby log group.
 
      ```
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo01.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo01.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo02.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo02.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo03.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo03.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo04.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo04.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> select group#,thread#,bytes from v$standby_log;
+     SQL> <copy>select group#,thread#,bytes from v$standby_log;</copy>
      
          GROUP#    THREAD#	   BYTES
      ---------- ---------- ----------
@@ -576,30 +576,29 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 
 ## Task 8: Modify the Init Parameters for Best Practice
 
-Modify some init parameters for best practice.
+1.   Modify some init parameters for best practice.
 
-```
-SQL> alter system set STANDBY_FILE_MANAGEMENT=AUTO scope=both;
- 
-System altered.
- 
-SQL> alter system set DB_LOST_WRITE_PROTECT=TYPICAL scope=both;
- 
-System altered.
- 
-SQL> alter system set FAST_START_MTTR_TARGET=300 scope=both;
- 
-System altered.
- 
-SQL> exit;
-```
+     ```
+     SQL> <copy>alter system set STANDBY_FILE_MANAGEMENT=AUTO scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>alter system set DB_LOST_WRITE_PROTECT=TYPICAL scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>alter system set FAST_START_MTTR_TARGET=300 scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>exit;</copy>
+     ```
 
-
+     ​      
 
 You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management
-* **Last Updated By/Date** - Minqiao Wang, October 2020
-
+* **Author** - Minqiao Wang, Oracle China
+* **Last Updated By/Date** - Minqiao Wang, Mar 2023
 

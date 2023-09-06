@@ -1,50 +1,55 @@
 {
-    "workshoptitle": "Oracle Database Cloud Service Workshop",
+    "workshoptitle": "Oracle Base Database Service features",
+    "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
             "title": "Introduction",
-            "description": "Introduction to Oracle Database Cloud Service (DBCS).",
+            "description": "Introduction to Oracle Base Database Service.",
             "filename": "./../../introduction/introduction.md"
         },
         {
-            "title": "Lab 1: Oracle Cloud Infrastructure (OCI)",
-            "description": "Oracle Cloud Infrastructure (OCI).",
+            "title": "Get Started",
+             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs.md"
+        },
+        {
+            "title": "Lab 1: Provision OCI resources",
+            "description": "Oracle Cloud Infrastructure (OCI) resources.",
             "filename": "./../../oci/oci.md"
         },
         {
-            "title": "Lab 2: Application Data Management and Administration",
-            "description": "Application Data Management and Administration.",
+            "title": "Lab 2: Prepare for application data",
+            "description": "Application data management and administration.",
             "filename": "./../../prepare/prepare.md"
         },
         {
-            "title": "Lab 3: Performance, Scalability and Elasticity",
-            "description": "Performance, Scalability and Elasticity.",
+            "title": "Lab 3: Manage database service",
+            "description": "Performance, scalability and elasticity.",
             "filename": "./../../scaling-up/scaling-up.md"
         },
         {
-            "title": "Lab 4: Database Cloud Service Backup and Recovery",
-            "description": "Database Cloud Service Backup and Recovery.",
+            "title": "Lab 4: Back up and recover your data",
+            "description": "Oracle Base Database backup and recovery.",
             "filename": "./../../bkup-recovery/bkup-recovery.md"
         },
         {
-            "title": "Lab 5: Data Guard Physical Standby Database",
-            "description": "Data Guard Physical Standby Database.",
+            "title": "Lab 5: Deploy disaster recovery",
+            "description": "Data Guard physical standby database.",
             "filename": "./../../dataguard/dataguard.md"
         },
         {
-            "title": "Lab 6: Database Cloud Service Patching",
-            "description": "Database Cloud Service Patching.",
+            "title": "Lab 6: Patch and update components",
+            "description": "Oracle Base Database Service patching.",
             "filename": "./../../patching/patching.md"
         },
         {
-            "title": "Lab 7: Oracle Database Command Line Interface (DBCLI)",
+            "title": "Lab 7: Use command line interface",
             "description": "Oracle Database Command Line Interface (DBCLI).",
             "filename": "./../../dbcli/dbcli.md"
         },
         {
-            "title": "Need Help?",
+            "title": "Need help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         }
         
     ]

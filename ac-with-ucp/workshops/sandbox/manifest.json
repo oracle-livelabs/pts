@@ -3,17 +3,18 @@
     "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
         {
-            "title": "Get Started",
-            "description": "Prerequisites for LiveLabs (Oracle-owned tenancies). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
-            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs2.md"
-        },
-        {
             "title": "Introduction",
             "description": "Introduction to the workshop.",
             "filename": "../../introduction/introduction.md"
         },
         {
+            "title": "Get Started",
+            "description": "Prerequisites for LiveLabs (Oracle-owned tenancies). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
+            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs.md"
+        },
+        {
             "title": "Lab 1: Configure the application environment",
+            "type": "sandbox",
             "description": "In this Lab you will configure the network and create RAC services.",
             "filename": "../../lab2-configure-env/lab2-configure-env.md"
         },

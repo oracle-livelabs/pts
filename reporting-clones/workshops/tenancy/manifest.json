@@ -1,0 +1,31 @@
+{
+    "workshoptitle": "Read-only clones for reporting",
+    "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction.",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
+            "title": "Get Started",
+             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login.md"
+        },
+        {
+            "title": "Lab 1: Prepare cloning environments",
+            "description": "Prepare cloning environments on Oracle Cloud Infrastructure.",
+            "filename": "./../../prepare/prepare.md"
+        },
+        {
+            "title": "Lab 2: Deploy cloning configuration",
+            "description": "Deploy cloning configuration on Oracle Base Database service.",
+            "filename": "./../../deploy/deploy.md"
+        },
+        {
+            "title": "Need help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+        }
+        
+    ]
+}

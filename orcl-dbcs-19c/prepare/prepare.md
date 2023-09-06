@@ -1,65 +1,36 @@
-# Application Data Management and Administration
+# Prepare for application data
 
 ## Introduction
 
-Secure Shell (SSH) is a cryptographic network protocol for operating network services securely over the Internet. This access requires the full path to the file that contains the private key associated with the public key used when the DB system was launched.
+Oracle Database sample schemas are based on a fictitious sample company that sells goods through various channels. The company operates worldwide to fill orders for products. It has several divisions, each of which is represented by a sample database schema. Schema Human Resources (HR) represents Division Human Resources and tracks information about the company employees and facilities. Schema Sales History (SH) represents Division Sales and tracks business statistics to facilitate business decisions.
 
-Oracle Enterprise Manager Database Express, also referred to as EM Express, is a web-based tool for managing Oracle Database 19c. Built inside the database server, it offers support for basic administrative tasks.
+This lab explains how to install two of these sample schemas in your database service instance to learn about Oracle Database functionality and try the examples in this workshop.
 
-The multitenant architecture enables an Oracle database to function as a multitenant container database (CDB). A CDB includes zero, one, or many customer-created pluggable databases (PDBs). A PDB is a portable collection of schemas, schema objects, and nonschema objects.
+Estimated Time: 25 minutes
 
-The sample database schemas provide a common platform for examples in each release of the Oracle Database. The sample schemas are a set of interlinked database schemas. The Oracle Database sample schemas are based on a fictitious sample company that sells goods through various channels. The company operates worldwide to fill orders for products. It has several divisions, each of which is represented by a sample database schema. Schema Human Resources (HR) represents Division Human Resources and tracks information about the company employees and facilities. Schema Sales History (SH) represents Division Sales and tracks business statistics to facilitate business decisions.
+### Objectives
 
-This lab explains how to connect to an active DB system with SSH, enable EM Express, create a new PDB in the existing CDB, and install HR sample schema.
+In this lab you will:
+* Create a new Pluggable Database in the existing Root Container
+* Install Oracle Database sample schemas
 
-Estimated Lab Time: 45 minutes
+### Prerequisites
 
-## Task 1: Enterprise Manager Express 
-
-    >**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
-
-1. Connect to the database instance specified by environment variables.
-
-    ````
-    <copy>
-    sqlplus / as sysdba
-    </copy>
-    ````
-
-2. Unlock **xdb** database user account.
-
-    ````
-    <copy>
-    alter user xdb account unlock;
-    </copy>
-    ````
-
-3. Enable Oracle Enterprise Manager Database Express (EM Express) clients to use a single port (called a global port), for the session rather than using a port dedicated to the PDB.
-
-    ````
-    <copy>
-    exec dbms_xdb_config.SetGlobalPortEnabled(TRUE);
-    </copy>
-    ````
-
-4. Open the web browser on your computer, and navigate to **https://localhost:5500/em**.
-
-    >**Note** : You will receive an alert message in your browser about the security certificate not being valid. For Firefox, click **Advanced** and **Accept the Risk and Continue**. For Chrome, navigate to chrome://flags/#allow-insecure-localhost, and enable **Allow invalid certificates for resources loaded from localhost**.
-
-5. Use the following credentials:
-
-    - Username: system
-    - Password: DatabaseCloud#22_
-    - Container Name: CDB$ROOT for the Container Database, or PDB011 for the Pluggable Database. Try both.
-
-6. Explore Enterprise Manager Express console, and see what this tool has to offer.
+This lab assumes you have:
+* Provisioned Oracle Base Database Service
 
 
-## Task 2: Create a Pluggable Database
+## Task 1: Create a Pluggable Database
+
+>**Note** : After provisioning the DB System, Database State will be Backup In Progress... for a few minutes. This task doesn't affect database availability.
+
+Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
+
+[Create PDB in existing DB System] (youtube:TObFL67hjro)
 
 1. Connect to your DB System database using SQL*Plus, if not connected already.
 
-    ````
+    ````bash
     <copy>
     sqlplus / as sysdba
     </copy>
@@ -67,26 +38,26 @@ Estimated Lab Time: 45 minutes
 
 2. List pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
     ````
 
-3. Create a new pluggable database called **PDB012**. Click on main menu ≡, then **Bare Metal, VM, and Exadata** under Oracle Database. Click **WS-DB** DB System.
+3. Create a new pluggable database called **PDB012**. Click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
-4. Click the database name link **WSDB** in the bottom table called Databases. Click Pluggable Databases in the left menu at the bottom o the page. Click Create Pluggable Database.
+4. Click the database name link **WSDB** in the bottom table called Databases. Click **Pluggable Databases** in the left menu at the bottom o the page. Click **Create Pluggable Database**.
 
-    - Enter PDB Name: PDB012
-    - Unlock my PDB Admin account
-    - PDB Admin password: DatabaseCloud#22_
-    - TDE wallet password of database: DatabaseCloud#22_
+    - Enter PDB Name: **PDB012**
+    - **Unlock my PDB Admin account**
+    - PDB Admin password: Use the strong password written down in your notes.
+    - TDE wallet password of database: Use the strong password written down in your notes.
 
-5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click Pluggable Databases in the left menu at the bottom o the page. PDB012 is Available.
+5. Wait until Create Pluggable Database operation is Complete (refresh page). Click on Database Details in the breadcrumb links at the top of the page. Click **Pluggable Databases** in the left menu at the bottom o the page. PDB012 is Available.
 
 6. List again pluggable databases in SQL*Plus to confirm the new pluggable database is there.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -94,15 +65,15 @@ Estimated Lab Time: 45 minutes
 
 7. Connect to the new pluggable database.
 
-    ````
+    ````sql
     <copy>
-    conn sys/DatabaseCloud#22_@db-host:1521/pdb012.<Host Domain Name> as sysdba
+    conn sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
 8. Display the current container name.
 
-    ````
+    ````sql
     <copy>
     show con_name
     </copy>
@@ -110,7 +81,7 @@ Estimated Lab Time: 45 minutes
 
 9. List all users in PDB012.
 
-    ````
+    ````sql
     <copy>
     select username from all_users order by 1;
     </copy>
@@ -119,11 +90,11 @@ Estimated Lab Time: 45 minutes
 10. This pluggable database doesn't have Oracle Sample Schemas either.
 
 
-## Task 3: Install HR Sample Schema
+## Task 2: Install HR Sample Schema
 
 1. List all tablespaces in PDB012.
 
-    ````
+    ````sql
     <copy>
     select name from v$tablespace;
     </copy>
@@ -131,7 +102,7 @@ Estimated Lab Time: 45 minutes
 
 2. List all datafiles.
 
-    ````
+    ````sql
     <copy>
     select name from v$datafile;
     </copy>
@@ -139,7 +110,7 @@ Estimated Lab Time: 45 minutes
 
 3. Createa a new tablespace for applications.
 
-    ````
+    ````sql
     <copy>
     CREATE TABLESPACE apps;
     </copy>
@@ -149,7 +120,7 @@ Estimated Lab Time: 45 minutes
 
 4. List all tablespaces to confirm the new tablespace was created.
 
-    ````
+    ````sql
     <copy>
     select name from v$tablespace;
     </copy>
@@ -157,7 +128,7 @@ Estimated Lab Time: 45 minutes
 
 5. List all datafiles and see the corresponding files.
 
-    ````
+    ````sql
     <copy>
     select name from v$datafile;
     </copy>
@@ -165,7 +136,7 @@ Estimated Lab Time: 45 minutes
 
 6. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -173,23 +144,23 @@ Estimated Lab Time: 45 minutes
 
 7. Download Oracle Sample Schemas installation package from GitHub.
 
-    ````
+    ````bash
     <copy>
-    wget https://github.com/oracle/db-sample-schemas/archive/v19c.zip
+    wget https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/J6rZFSP6qxAC3poE69uR3QHnW8a91ZVmM7RzqDfIP64fT_Dti8w0sRMY-JTuW6AH/n/oraclepartnersas/b/WS-files/o/BaseDatabaseWS/db-sample-schemas-19c.zip
     </copy>
     ````
 
 8. Unzip the archive.
 
-    ````
+    ````bash
     <copy>
-    unzip v19c.zip
+    unzip db-sample-schemas-19c.zip
     </copy>
     ````
 
 9. Open the unzipped folder.
 
-    ````
+    ````bash
     <copy>
     cd db-sample-schemas-19c
     </copy>
@@ -197,7 +168,7 @@ Estimated Lab Time: 45 minutes
 
 10. Run this Perl command to replace `__SUB__CWD__` tag in all scripts with your current working directory, so all embedded paths to match your working directory path.
 
-    ````
+    ````bash
     <copy>
     perl -p -i.bak -e 's#__SUB__CWD__#'$(pwd)'#g' *.sql */*.sql */*.dat
     </copy>
@@ -205,7 +176,7 @@ Estimated Lab Time: 45 minutes
 
 11. Go back to the parent folder (this should be /home/opc).
 
-    ````
+    ````bash
     <copy>
     cd ..
     </copy>
@@ -213,7 +184,7 @@ Estimated Lab Time: 45 minutes
 
 12. Create a new folder for logs.
 
-    ````
+    ````bash
     <copy>
     mkdir logs
     </copy>
@@ -221,25 +192,25 @@ Estimated Lab Time: 45 minutes
 
 13. Connect to the **PDB012** pluggable database.
 
-    ````
+    ````bash
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
 14. Run the HR schema installation script. For more information about [Oracle Database Sample Schemas](https://github.com/oracle/db-sample-schemas) installation process, please follow the link. Make sure to replace **Host Domain Name** with the actual value.
 
-    ````
+    ````sql
     <copy>
-    @db-sample-schemas-19c/human_resources/hr_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/human_resources/hr_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/logs/ db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 
-## Task 4: Verify HR Sample Schema
+## Task 3: Verify HR Sample Schema
 
 1. Display current user. If all steps were followed, the current user should be **HR**.
 
-    ````
+    ````sql
     <copy>
     show user
     </copy>
@@ -247,7 +218,7 @@ Estimated Lab Time: 45 minutes
 
 2. Select tables from **HR** schema and their row numbers.
 
-    ````
+    ````sql
     <copy>
     set linesize 130
     col TABLE_NAME for a25
@@ -257,7 +228,7 @@ Estimated Lab Time: 45 minutes
 
 3. Some SQL*Plus formatting.
 
-    ````
+    ````sql
     <copy>
     col EMPLOYEE_ID heading ID
     col FIRST_NAME for a10
@@ -270,7 +241,7 @@ Estimated Lab Time: 45 minutes
 
 4. Select all rows from the **HR.EMPLOYEES** table.
 
-    ````
+    ````sql
     <copy>
     select * from EMPLOYEES;
     </copy>
@@ -278,33 +249,33 @@ Estimated Lab Time: 45 minutes
 
 5. If everything is fine, exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
     ````
 
-## Task 5: Install SH Sample Schema
+## Task 4: Install SH Sample Schema
 
 1. Connect to the **PDB012** pluggable database.
 
-    ````
+    ````bash
     <copy>
-    sqlplus sys/DatabaseCloud#22_@db-host:1521/pdb012.$(domainname -d) as sysdba
+    sqlplus sys/<Strong Password>@db-host:1521/pdb012.$(domainname -d) as sysdba
     </copy>
     ````
 
 2. Run the SH schema installation script. Make sure to replace **Host Domain Name** with the actual value.
 
-    ````
+    ````sql
     <copy>
-    @db-sample-schemas-19c/sales_history/sh_main.sql DatabaseCloud#22_ USERS TEMP DatabaseCloud#22_ /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
+    @db-sample-schemas-19c/sales_history/sh_main.sql <Strong Password> USERS TEMP <Strong Password> /home/oracle/db-sample-schemas-19c/sales_history/ /home/oracle/logs/ v3 db-host:1521/pdb012.<Host Domain Name>
     </copy>
     ````
 
 3. Display current user. If all steps were followed, the current user should be **SH**.
 
-    ````
+    ````sql
     <copy>
     show user
     </copy>
@@ -312,7 +283,7 @@ Estimated Lab Time: 45 minutes
 
 4. Select tables from **SH** schema and their row numbers.
 
-    ````
+    ````sql
     <copy>
     set linesize 130
     col TABLE_NAME for a28
@@ -322,16 +293,15 @@ Estimated Lab Time: 45 minutes
 
 5. If everything is fine, exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
     ````
 
+    You may now **proceed to the next lab**.
+
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2021
-
-See an issue? Please open up a request [here](https://github.com/oracle/learning-library/issues). Please include the workshop name and lab in your request.
-
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, DB Product Management, December 2022

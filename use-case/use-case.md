@@ -1,4 +1,4 @@
-# Customer Insurance Use Case
+# Understand the dataset
 
 ## Introduction
 
@@ -26,26 +26,27 @@ In this lab, you will:
 ## Task 1: Review the Customer Insurance Data
 
 1. Review the historical customer data.  Note the Buy Insurance column.  
-  ![customer-data-1](./images/customer-data-1.png)
+  ![historical customer data](./images/customer-data-1.png)
 
 2. Note the LTV and LTV\_BIN columns. LTV gives us a numerical score of the life time value of the customer, and LTV\_BIN is just a readable category derived from the score with VERY HIGH, HIGH, MEDIUM, and LOW business value.
 
-  ![customer-data-2](./images/customer-data-2.png)
+  ![LTV and LTV_BIN columns](./images/customer-data-2.png)
 
 Since the data already has the buy insurance and LTV information and the other data, we can use all this information in machine learning to "train" and build a model that can predict new customer outcomes for buy insurance and LTV.
 
 3. Consider the following new customer records with the buy insurance column empty.
 
-  ![customer-data-3](./images/customer-data-3.png)
+  ![new customer records](./images/customer-data-3.png)
 
 4. And with the LTV and LTV_BIN columns empty.
 
-  ![customer-data-4](./images/customer-data-4.png)
+  ![LTV and LTV_BIN columns empty](./images/customer-data-4.png)
 
-In this workshop, you will pass new records to machine learning models to predict whether the customer will buy the insurance and automatically determine the LTV without humans.  Have fun.
+5. In this workshop, you will pass new records to machine learning models to predict whether the customer will buy the insurance and automatically determine the LTV without humans.  Have fun.
 
-You may now [proceed to the next lab](#next).
+    You may now **proceed to the next lab**.
+
 
 ## Acknowledgements
 * **Author** - Valentin Leonard Tabacaru, Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** -  Rajeev Rumale, April 2022
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, February 2023

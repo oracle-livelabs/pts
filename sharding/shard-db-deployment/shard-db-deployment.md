@@ -98,7 +98,7 @@ In this workshop we choose to co-locate the shard director software on the same 
 1. Connect to the catalog host, switch to the **oracle** user.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx<copy>
+    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
     
     [opc@cata ~]$ <copy>sudo su - oracle</copy>
     Last login: Fri Nov 27 06:57:03 UTC 2020

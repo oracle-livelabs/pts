@@ -70,7 +70,7 @@ The standby host has the database software only installed. You need do some Task
 
    
 
-7. Start the listener.
+6. Start the listener.
 
     ```
     [oracle@standby ~]$ <copy>lsnrctl start</copy>
@@ -278,7 +278,7 @@ The standby database can be duplicated from the primary database.
 1. From the standby side, copy the password file from the primary side.
 
     ```
-    [oracle@standby ~]$ <copy>scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/dbs/ orapwORCL $ORACLE_HOME/dbs</copy>
+    [oracle@standby ~]$ <copy>scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/dbs/orapwORCL $ORACLE_HOME/dbs</copy>
     orapwORCL 100% 2048    63.5KB/s   00:00    
     [oracle@standby ~]$
     ```
@@ -299,7 +299,7 @@ The standby database can be duplicated from the primary database.
 
    
 
-2. Edit an init file.
+3. Edit an init file.
 
     ```
     [oracle@standby ~]$ <copy>vi /u01/app/oracle/product/19c/dbhome_1/dbs/initorclstby.ora</copy>
@@ -307,7 +307,7 @@ The standby database can be duplicated from the primary database.
 
    
 
-3. Add the following lines into this file.
+4. Add the following lines into this file.
 
     ```
     <copy>
@@ -318,7 +318,7 @@ The standby database can be duplicated from the primary database.
 
    
 
-4. Start the database in NOMOUNT status using the init parameter file you create in the previous Task .
+5. Login to the database as sysdba.
 
     ```
     [oracle@standby dbs]$ <copy>sqlplus / as sysdba</copy>
@@ -330,6 +330,14 @@ The standby database can be duplicated from the primary database.
     
     Connected to an idle instance.
     
+    SQL> 
+    ```
+    
+    
+    
+5. Start the database in NOMOUNT status using the init parameter file you create in the previous Task .
+
+    ```
     SQL> <copy>startup nomount pfile='/u01/app/oracle/product/19c/dbhome_1/dbs/initorclstby.ora'</copy>
     ORACLE instance started.
     
@@ -338,15 +346,15 @@ The standby database can be duplicated from the primary database.
     Variable Size		  184549376 bytes
     Database Buffers	   50331648 bytes
     Redo Buffers		    7880704 bytes
-    SQL> exit
+    SQL> <copy>exit</copy>
     ```
 
    
 
-5. Connect with RMAN.
+6. Connect with RMAN.
 
     ```
-    [oracle@standby ~]$ <copy>rman target sys/Ora_DB4U@ORCL auxiliary sys/ Ora_DB4U@ORCLSTBY</copy>
+    [oracle@standby ~]$ <copy>rman target sys/Ora_DB4U@ORCL auxiliary sys/Ora_DB4U@ORCLSTBY</copy>
     
     Recovery Manager: Release 19.0.0.0.0 - Production on Fri Nov 6 04:19:38 2020
     Version 19.10.0.0.0
@@ -361,7 +369,7 @@ The standby database can be duplicated from the primary database.
 
    
 
-6. Run the following command in RMAN to duplicate the database.
+7. Run the following command in RMAN to duplicate the database.
 
     ```
     <copy>
@@ -376,12 +384,13 @@ The standby database can be duplicated from the primary database.
     set db_file_name_convert='/ORCL/','/ORCLSTBY/'
     set log_file_name_convert='/ORCL/','/ORCLSTBY/'
     ;
-    }</copy>
+    }
+    </copy>
     ```
 
    
 
-7. The output like the following.
+8. The output like the following.
 
     ```
     RMAN> run {
@@ -579,7 +588,7 @@ The standby database can be duplicated from the primary database.
     RMAN> 
     ```
 
-8. Exit the RMAN.
+9. Exit the RMAN.
 
 
 
@@ -587,20 +596,15 @@ The standby database can be duplicated from the primary database.
 
 ## **Task 5:** Configure Data Guard Broker
 
-1. Copy the following command.
+1. Login to sqlplus as sysdba on the primary and the standy database.
 
     ```
-    <copy>
-    show parameter dg_broker_config_file;
-    show parameter dg_broker_start;
-    alter system set dg_broker_start=true;
-    select pname from v$process where pname like 'DMON%';
-    </copy>
+    <copy>sqlplus / as sysdba</copy>
     ```
 
-   
+ 
 
-2. Run the command as sysdba on the primary and the standby database to enable the data guard broker.
+2. Run the commands to enable the data guard broker.
 
     - From the primary side,
 
@@ -613,12 +617,12 @@ The standby database can be duplicated from the primary database.
      						 /dbhome_1/dbs/dr1ORCL.dat
      dg_broker_config_file2		     string	 /u01/app/oracle/product/19.0.0
      						 /dbhome_1/dbs/dr2ORCL.dat
-     SQL> show parameter dg_broker_start
+     SQL> <copy>show parameter dg_broker_start</copy>
      
      NAME				     TYPE	 VALUE
      ------------------------------------ ----------- ------------------------------
      dg_broker_start 		     boolean	 FALSE
-     SQL> alter system set dg_broker_start=true;
+     SQL> <copy>alter system set dg_broker_start=true;</copy>
      
      System altered.
      
@@ -644,7 +648,7 @@ The standby database can be duplicated from the primary database.
      dg_broker_config_file2		     string	 /u01/app/oracle/product/19.0.0
      						 .0/dbhome_1/dbs/dr2ORCL_nrt1d4
      						 .dat
-     SQL> show parameter dg_broker_start
+     SQL> <copy>show parameter dg_broker_start</copy>
      
      NAME				     TYPE	 VALUE
      ------------------------------------ ----------- ------------------------------
@@ -662,7 +666,7 @@ The standby database can be duplicated from the primary database.
      SQL> 
      ```
 
-3. Register the database via DGMGRL. You can run the DGMGRL command from primary site or standby site.
+3. Login to the Data Guard Broker.
 
     ```
     [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@ORCL</copy>
@@ -674,12 +678,25 @@ The standby database can be duplicated from the primary database.
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
+    DGMGRL> 
+    ```
+
+    
+
+4. Register the database via DGMGRL. You can run the DGMGRL command from primary site or standby site.
+
+    ```
     DGMGRL> <copy>CREATE CONFIGURATION adgconfig AS PRIMARY DATABASE IS ORCL CONNECT IDENTIFIER IS ORCL;</copy>
     Configuration "adgconfig" created with primary database "orcl"
     DGMGRL> <copy>ADD DATABASE ORCLSTBY AS CONNECT IDENTIFIER IS ORCLSTBY MAINTAINED AS PHYSICAL;</copy>
     Database "orclstby" added
     DGMGRL> <copy>ENABLE CONFIGURATION;</copy>
     Enabled.
+    ```
+    
+    Show the Configuration of the Data Guard:
+    
+    ```
     DGMGRL> <copy>SHOW CONFIGURATION;</copy>
     
     Configuration - adgconfig
@@ -703,7 +720,7 @@ You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oct 2020 
-* **Last Updated By/Date** - Minqiao Wang, Oct 2021
+* **Last Updated By/Date** - Minqiao Wang, Feb 2023
 
 
 

@@ -28,15 +28,17 @@ This lab assumes you have:
 1. Edit the java demo application MyUCPDemo.java and make sure the pool is configured to use a 10 connections. For example:
 
     ```
+    <copy>
     pds.setInitialPoolSize(10);
     pds.setMinPoolSize(10);
     pds.setMaxPoolSize(20);
+    </copy>
     ```
 
 2. Recompile the application
 
     ````
-    [oracle@demotac ac]$ <copy>MyCompile.sh MyUCPDemo.java</copy>
+    [oracle@demotac:~/work/ac]$ <copy>MyCompile.sh MyUCPDemo.java</copy>
     ````
 
 
@@ -46,9 +48,16 @@ This lab assumes you have:
 
   ![Show script ddl_setup.sh](./images/task1/ddl-setup-script.png " ")
 
+
     ````
-    [oracle@demotac ddl]$ <copy>ddl_setup.sh</copy>
+    [oracle@demotac:~]$ <copy>cd /home/oracle/work/ac/ddl</copy>
     ````
+
+    ````
+    [oracle@demotac:~/work/ac/ddl]$ <copy>ddl_setup.sh</copy>
+    ````
+
+
 
   ![Run script ddl_setup.sh](./images/task1/run-ddl-setup-script.png " ")
 
@@ -58,7 +67,7 @@ This lab assumes you have:
 1. Run the demo program with a database service that uses **Application Continuity**
 
     ````
-    [oracle@demotac ac]$ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
+    [oracle@demotac:~/work/ac]$ <copy>MyRun.sh MyUCPDemo tacsrv</copy>
     ````
 
     The application creates a connection pool of 10 connections, gets a connection from the pool and starts a first transaction.
@@ -73,7 +82,7 @@ This lab assumes you have:
     ![Show script show_pool.sh](./images/task2/show-pool-script.png " ")
 
       ````
-      [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+      [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
       ````
 
     Observe that connections are spread across available nodes.
@@ -108,14 +117,17 @@ This lab assumes you have:
 
     * Instruct the service to stop on instance CONT1
 
-        ````
-        user@cloudshell:~ $ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT1</copy>
-        ````
+        *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
 
-        The drain_timeout parameter of the service defines the tipme given to in-progtess trabsactions tpo complete.
 
         ````
-        user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT1</copy>
+        ````
+
+        The **drain_timeout** parameter of the service defines the time given to in-progress transactions to complete.
+
+        ````
+        [oracle@ruby1 ~]$ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
         Service tacsrv is running on instance(s) CONT2
         ````
@@ -127,7 +139,7 @@ This lab assumes you have:
       ![Show script show_pool.sh](./images/task2/show-pool-script-again.png " ")
 
         ````
-        [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+        [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
         ````
 
       ![Run script show_pool.sh](./images/task2/show-pool-all-node2.png " ")
@@ -140,16 +152,19 @@ This lab assumes you have:
 
 1. We can now do the reverse and move the service to only CONT1
 
+    *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
+
+
     ````
-    user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT1</copy>
+    [oracle@ruby1 ~]$ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT1</copy>
     ````
 
     ````
-    user@cloudshell:~ $ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT2</copy>
+    [oracle@ruby1 ~]$ <copy>srvctl stop service -db cont_prim -service tacsrv -instance CONT2</copy>
     ````
 
     ````
-    user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
+    [oracle@ruby1 ~]$ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
     Service tacsrv is running on instance(s) CONT1
     ````
@@ -161,7 +176,7 @@ This lab assumes you have:
   ![Show script show_pool.sh](./images/task3/show-pool-script.png " ")
 
     ````
-    [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+    [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
     ````
 
   ![Run script show_pool.sh](./images/task3/show-pool-on-first-node.png " ")
@@ -172,7 +187,7 @@ This lab assumes you have:
 1. Restart the service on both nodes
 
     ````
-    user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT2</copy>
+    [oracle@ruby1 ~]$ <copy>srvctl start service -db cont_prim -service tacsrv -instance CONT2</copy>
 
     Service tacsrv is running on instance(s) CONT1,CONT2
     ````
@@ -180,7 +195,7 @@ This lab assumes you have:
     Observe how the pool reconfigures connections to both nodes by running **show_pool.sh** again
 
       ````
-      [oracle@demotac sql]$ <copy>show_pool.sh</copy>
+      [oracle@demotac:~/work/ac/sql]$ <copy>show_pool.sh</copy>
       ````
 
     ![Show pool has connections to both nodes](./images/task3/show-pool-on-both-nodes.png " ")

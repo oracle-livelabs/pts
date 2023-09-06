@@ -1,9 +1,8 @@
 {
-    "workshoptitle": "Working with Oracle Sharded Database",
+    "workshoptitle": "Oracle Sharding Quick Start",
     "tutorials": [
         {
             "title": "Introduction",
-            "description": "The Introduction is always second. The title and contents menu title match for the Introduction.",
             "filename": "../../introduction/introduction.md"
         },
         {
@@ -27,10 +26,6 @@
         {
             "title": "Lab 4: Data Depend Route",
             "filename": "../../data-depend-route/data-depend-route.md"
-        },
-        {
-            "title": "Lab 5: Scaling the Sharded Database",
-            "filename": "../../shard-db-scaling/shard-db-scaling.md"
         },
         {
             "title": "Need Help?",

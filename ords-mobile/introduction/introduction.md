@@ -1,8 +1,8 @@
-# Develop Mobile Apps with Oracle REST Data Services
+# Introduction to Oracle REST Data Services (ORDS)
 
-## Workshop Overview
+## Workshop overview
 
-This Getting Started guide will get you ready for the Oracle REST Data Services (ORDS) Workshop labs. This workshop and the labs that follow support either Windows clients or Linux clients.
+This Get Started guide will get you ready for the Oracle REST Data Services (ORDS) Workshop labs. This workshop and the labs that follow support either Windows clients or Linux clients.
 
 ![ORDS workflow](./images/ords-workflow.jpg "")
 
@@ -17,7 +17,7 @@ Watch the video below to see how Oracle REST Data Services enables mobile develo
  >**Note** : Oracle Application Express is not a prerequisite for using Oracle REST Data Services.
 If Oracle Application Express is installed and if RESTful services have been configured during the installation, then Oracle REST Data Services supports it, including executing the RESTful services defined in Oracle Application Express.
 
-## Workshop Requirements
+### Workshop requirements
 
 * Access to Oracle Cloud Infrastructure
     * Provided by the instructor for instructor-led workshops
@@ -27,20 +27,14 @@ If Oracle Application Express is installed and if RESTful services have been con
 
 Our focus is to show how Oracle REST Data Services (ORDS) can be leveraged and used out-of-the-box on Oracle Autonomous Database, running on Oracle Cloud Infrastructure. In this workshop, we are not teaching programming skills to develop mobile applications for iOS and Android.
 
-## Agenda
+### Agenda
 
 - **Lab 1 : Provision an Autonomous Database (ADW or ATP)**
 - **Lab 2 : Develop Mobile Apps using Oracle REST Data Services**
 
-Estimated Lab Time: 2 hours
+Estimated Time: 2 hours
 
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, Principal Product Manager, DB Product Management, Sep 2021
-
-## Need Help?
-
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, March 2023

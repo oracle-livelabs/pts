@@ -9,7 +9,7 @@ In this lab, we will customize the environment that will be used to run the rest
 There are three main elements in our environment:
 
 * **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
-* **dbrac** : a two-node **DBCS RAC database** with ASM storage (which should have also been pre-created)
+* **dbrac** : a two-node Database Cloud Service (aka Oracle Base RAC Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
 * **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
 Estimated Lab Time: 30 minutes.
@@ -19,7 +19,12 @@ Estimated Lab Time: 30 minutes.
 
 In this lab, you will:
 
+<if type="tenancy">
 * Complete the network configuration
+</if>
+<if type="sandbox">
+* Review the network configuration
+</if>
 * Configure RAC database services
 * Create a demo schema in the database
 * Compile a demo application
@@ -28,13 +33,25 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle LiveLabs sandbox environment providing the components described above
-* Or an Oracle Cloud Account where you created this environment by following LiveLabs instructions
+
+<if type="tenancy">
+* An Oracle Cloud Account (aka tenancy) where you created this environment by following LiveLabs instructions.
+</if>
+<if type="sandbox">
+* An Oracle LiveLabs sandbox environment providing the components described above.
+</if>
+
 
 
 ## Task 1: Configure the Network for Oracle Net
 
   1. Create a **Network Security Group** rule allowing Oracle Net connectivity
+
+    * It is necessary to **open TCP port 1521** in the VCN to allow the demo application to connect to the database. We can do this by configuring a **Network Security Group Rule** and adding the NSG to the database.
+
+    <if type="sandbox">
+    * *As you are running this workshop in a sandbox environment, the configuration of the Virtual Cloud Network, Network Security Group, and the association between the NSG and the database have been completed automatically. For a better understanding of what was done, follow the instructions in this task without actually creating these components. Changing them will result in errors throughout the workshop.*
+    </if>
 
     * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
@@ -125,9 +142,9 @@ This lab assumes you have:
 
         ![Cloud Shell window](./images/task2/cloud-shell-window.png " ")
 
-    * Upload your private key
+    * Upload the file containing your private key
 
-    * Make sure the mode is set to 400 (chmod 400 <my-pub-key>)
+    * Make sure the mode is set to 400 (**chmod 400 private-key-file**)
 
         ![Upload Public Key](./images/task2/upload-public-key.png " ")
 
@@ -140,7 +157,7 @@ This lab assumes you have:
     * Using Cloud Shell, connect to the first node of the RAC cluster as **opc** and switch to the **oracle** user
 
       ````
-      user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
+      user@cloudshell:~ $ <copy>ssh -i [private-key-file] opc@[node 1 public IP]</copy>
 
       (...)
       Are you sure you want to continue connecting (yes/no)? yes
@@ -185,7 +202,15 @@ This lab assumes you have:
 
   3. Add an ingress rule opening TCP port 6200 to FAN events
 
-    * Retrieve the Network Security Group **NSG-DEMORAC** of the database as in Task1 and **Edit** it
+    * It is necessary to **open TCP port 6200** in the VCN to allow **Fast Application Notification Events** to flow from the cluster database to the client application. We can do this by adding a **Network Security Group Rule** to the database NSG.
+
+    <if type="sandbox">
+    * *As you are running this workshop in a sandbox, this network configuration has already been done automatically, but you should still follow the instructions in this step to review and understand what was done without actually creating the rule to open port 6200.*
+    </if>
+
+    * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
+
+    * Retrieve the Network Security Group **NSG-DEMORAC** of the database under **Resources** and select it.
 
     * Click **Add Rules**
 
@@ -214,7 +239,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSG ingess rule 6200](./images/task2/nsg-ingress-rule.png " ")
+      ![NSG ingress rule 6200](./images/task2/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
@@ -226,7 +251,7 @@ This lab assumes you have:
     * Using Cloud Shell, connect to the first node of the RAC cluster
 
         ````
-        user@cloudshell:~ $ <copy>ssh -i [my-pub-key] opc@[node 1 public IP]</copy>
+        user@cloudshell:~ $ <copy>ssh -i [private-key-file] opc@[node 1 public IP]</copy>
         ````
 
     * Switch to user **oracle**
@@ -239,25 +264,29 @@ This lab assumes you have:
   2. Create a database service with standard parameters (no Application Continuity)
 
 
-    * Find out the database unique name from the details page of the database **CONT** in DBCS **dbrac**
+    * Find out the database unique name from the details page of the database **CONT** in Oracle Base Database **dbrac**
 
-        Replace **cont_prim** by this value in the following commands.
+        Make a note of your Database Unique Name. In should be in the form ***CONT_uvwxyz***.
 
         ![Find database unique name](./images/task3/find-database-unique-name.png " ")
 
-        > **Note:** In the following commands, you need to replace the database name **cont_prim** by its real value.
+        *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
+
+        > **Note:** In most cases one can choose the database unique name when provisioning a database system. However, in our workshop, the value had to be automatically generated and needs to be retrieved.
 
 
     * Create the service **demosrv**:
 
+        Cut and paste the following command in an editor and replace **cont_prim** by the real value of your database unique name before executing the command!
+
         ````
-        user@cloudshell:~ $ <copy>srvctl add service -db cont_prim -service demosrv -preferred CONT1,CONT2 -pdb PDB1 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl add service -db cont_prim -service demosrv -preferred CONT1,CONT2 -pdb PDB1 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
         ````
 
     * Check service configuration:
 
         ````
-        user@cloudshell:~ $ <copy>srvctl config service -db cont_prim -service demosrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl config service -db cont_prim -service demosrv</copy>
 
         Service name: **demosrv**
         Server pool:
@@ -298,11 +327,11 @@ This lab assumes you have:
     * Start the service and check its status
 
         ````
-        user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service demosrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl start service -db cont_prim -service demosrv</copy>
         ````
 
         ````
-        user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service demosrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl status service -db cont_prim -service demosrv</copy>
 
         Service demosrv is running on instance(s) CONT1,CONT2
         ````
@@ -313,7 +342,7 @@ This lab assumes you have:
     * If you need to delete the service and create it again, use the following command:
 
         ````
-        user@cloudshell:~ $ <copy>srvctl remove service -db cont_prim -service demosrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl remove service -db cont_prim -service demosrv</copy>
         ````
 
   3. Create a database service with Application Continuity support
@@ -321,13 +350,13 @@ This lab assumes you have:
     * Create the service **tacsrv**:
 
         ````
-        user@cloudshell:~ $ <copy>srvctl add service -db cont_prim -service tacsrv -pdb PDB1 -preferred CONT1,CONT2 -failover_restore AUTO -commit_outcome TRUE -failovertype AUTO -replay_init_time 600 -retention 86400 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl add service -db cont_prim -service tacsrv -pdb PDB1 -preferred CONT1,CONT2 -failover_restore AUTO -commit_outcome TRUE -failovertype AUTO -replay_init_time 600 -retention 86400 -notification TRUE -drain_timeout 300 -stopoption IMMEDIATE -role PRIMARY</copy>
         ````
 
     * Check service configuration
 
         ````
-        user@cloudshell:~ $ <copy>srvctl config service -db cont_prim -service tacsrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl config service -db cont_prim -service tacsrv</copy>
 
         Service name: **tacsrv**
         Server pool:
@@ -369,11 +398,11 @@ This lab assumes you have:
     * Start the service and check its status
 
         ````
-        user@cloudshell:~ $ <copy>srvctl start service -db cont_prim -service tacsrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl start service -db cont_prim -service tacsrv</copy>
         ````
 
         ````
-        user@cloudshell:~ $ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl status service -db cont_prim -service tacsrv</copy>
 
         Service tacsrv is running on instance(s) CONT1,CONT2
         ````
@@ -384,7 +413,7 @@ This lab assumes you have:
     * If you need to delete the service and create it again, use the following command:
 
         ````
-        user@cloudshell:~ $ <copy>srvctl remove service -db cont_prim -service tacsrv</copy>
+        [oracle@ruby1 ~]$ <copy>srvctl remove service -db cont_prim -service tacsrv</copy>
         ````
 
 
@@ -419,7 +448,7 @@ This lab assumes you have:
     ![Access client desktop terminal](./images/task4/client-desktop-terminal.png " ")
 
     ````
-    user@cloudshell:~ $ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
+    [oracle@demotac:~]$ <copy>cd $HOME/work/ac/ddl ; ls -al</copy>
 
     (...)
     -rw-r--r--. 1 oracle oinstall 1047 Jul 29 09:27 ddl10_user.sql
@@ -430,7 +459,7 @@ This lab assumes you have:
 
   3. Run **ddl_setup.sh** to create the demo schema
 
-    > **Note**: Ignore the error on DROP TABLESPACE if you are running the script for the first time.
+    > **Note**: Ignore the error on DROP commands if you are running the script for the first time.
 
     This script essentially connects to the RAC database and creates a user CONTI in PDB1.
 
@@ -442,7 +471,7 @@ This lab assumes you have:
 
 
     ````
-    user@cloudshell:~ $ <copy>./ddl_setup.sh</copy>
+    [oracle@demotac:~/work/ac/ddl]$ <copy>./ddl_setup.sh</copy>
 
     (...)
     SQL> drop user conti cascade;
@@ -589,13 +618,13 @@ This lab assumes you have:
     * Open a terminal window and change to the ac directory:
 
       ````
-      oracle@demorac: $ <copy>cd /home/oracle/work/ac</copy>
+      [oracle@demotac:~]$ <copy>cd /home/oracle/work/ac</copy>
       ````
 
     * Then run the following command to compile the demo application:
 
       ````
-      oracle@demorac: $ <copy>MyCompile.sh MyUCPDemo.java</copy>
+      [oracle@demotac:~/work/ac]$ <copy>MyCompile.sh MyUCPDemo.java</copy>
       ````
 
 

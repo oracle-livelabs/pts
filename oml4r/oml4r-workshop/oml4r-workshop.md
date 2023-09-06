@@ -597,14 +597,7 @@ row.names(CIL) <- CIL$CUST_ID
 
     ```
     <copy>
-    if (!require("janitor")) install.packages("janitor")
-    library(janitor)
-    CXL <- ore.pull(CUST_INSUR_LTV)
-    class(CXL)
-    nrow(CXL %>% get_dupes(CUST_ID))
-    ??get_dupes
-    nrow(CXL %>% get_dupes(CUST_ID))
-    remove(CXL)
+    duplicated(CUST_INSUR_LTV)
     </copy>
     ```
 
@@ -1033,8 +1026,6 @@ In this task, we build a classification model for LTV\_BIN prediction and then e
 
     ![orefitnb](./images/orefitnb-2b.png "Check Model Details - Figure 2")
 
-    ![orefitnb](./images/orefitnb-2c.png "Check Model Details - Figure 3")
-
 
 6. Generate Predictions for LTV\_BIN
 
@@ -1337,10 +1328,14 @@ structured and image results and be accessed via the R and SQL APIs.
     <copy>
     score.mod <- function(dat, mod){
     data.frame(pred=predict(mod, newdata = dat), LTV=dat$LTV)}
+    </copy>
+    ```
 
 
     Score local data
 
+    ```
+    <copy>
     res <- score.mod(dat=cust_insur_ltv_loc, mod=mod1)
 
 
@@ -1399,9 +1394,13 @@ structured and image results and be accessed via the R and SQL APIs.
 
 
     ore.scriptCreate("scoremod2", score.mod2, overwrite=TRUE)
-
+    </copy>
+    ```
+      
     create a persistent table
 
+    ```
+    <copy>
     ore.create(CIL.test, "CILTEST")
 
 
@@ -1457,4 +1456,4 @@ Consider taking the Oracle Machine Learning with Oracle Autonomous Database Cert
 
 ## Acknowledgements
 * **Authors** - Ravi Sharma, Rajeev Rumale, Milton Wan
-* **Last Updated By/Date** -  Ravi Sharma, August 3, 2022
+* **Last Updated By/Date** -  Ravi Sharma, November 30, 2022
