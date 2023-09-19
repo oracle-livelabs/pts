@@ -18,7 +18,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [db19c-primary-19.16.zip](https://objectstorage.us-phoenix-1.oraclecloud.com/p/gmsABo8m4-WkvzfVQ-KBzdJOl7psqSpZ3HzyZiHrTXBeZJqFke7Luw0GfToN3ox4/n/oraclepartnersas/b/dataguard_op/o/db19c-primary-19.16.zip) - Packaged terraform primary database instance creation script.
+- [db19c-primary-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-19.20.zip) - Packaged terraform primary database instance creation script.
 
 
 ## Task 1: Prepare the Primary Database
@@ -188,5 +188,5 @@ You may proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+* **Last Updated By/Date** - Minqiao Wang, Aug 2023
 
