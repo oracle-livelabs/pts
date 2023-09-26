@@ -163,11 +163,10 @@ Now you will configure the prompt-less ssh for oracle users between on-premise a
     Are you sure you want to continue connecting (yes/no)? yes
     Warning: Permanently added '140.238.18.190' (ECDSA) to the list of known hosts.
     Test success
-    [oracle@dbstby ~]$ 
     ```
-You may proceed to the next lab.
+    You may proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 
