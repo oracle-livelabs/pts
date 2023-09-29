@@ -24,7 +24,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [sdb19c-market-19.14-1.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/u8b0_dUgBARhabj2Be6wGjxasMz8i4Q0WysZVKH8eP53kcqSAGdw5FmA0Pd21VVz/n/c4u04/b/livelabsfiles/o/labfiles/sdb19c-market-19.14-1.zip) - Packaged terraform primary database instances creation script.
+- [sdb19c-market-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb19c-market-19.20.zip) - Packaged terraform primary database instances creation script.
 
 
 
@@ -40,7 +40,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
     ![Click the create stack button.](./images/step1-3-createstackpage.png " ")
 
-2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`sdb19c-market-19.14.zip`) that you downloaded before. Click **Select** to upload the zip file.
+2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`sdb19c-market-19.**.zip`) that you downloaded before. Click **Select** to upload the zip file.
 
     ![Select and upload zip file.](images/selectzipfile.png)
 
