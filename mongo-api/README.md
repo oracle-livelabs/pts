@@ -15,7 +15,7 @@ Run this hands-on workshop to learn how to develop applications faster with open
 
 ## Access the Labs Using Our Web Interface
 
-**[Click here](https://oracle.github.io/learning-library/data-management-library/autonomous-database/developer/ajd-soda/index.html)** to use our easy to navigate HTML format.
+**[Click here](https://oracle-livelabs.github.io/pts/mongo-api/workshops/ocw23-tenancy/index.html)** to use our easy to navigate HTML format.
 
 ## Oracle Cloud Account
 
@@ -32,4 +32,3 @@ Click here to request your trial account: https://cloud.oracle.com/tryit
 
 - [Autonomous JSON Database](https://docs.oracle.com/en/cloud/paas/autonomous-json-database/ajdug/autonomous-json-database.html)
 - [SODA for Python](https://docs.oracle.com/en/database/oracle/simple-oracle-document-access/python/index.html)
-
