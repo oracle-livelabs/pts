@@ -54,10 +54,10 @@ To manually delete the database on the cloud host, run the steps below.
       
       DB_UNIQUE_NAME
       ------------------------------
-      ORCL_nrt1d4
+      ORCL_stby
       ```
 
-4. Copy the following scripts, replace the `ORCL_nrt1d4` with the standby `DB_UNIQUE_NAME` which you got in the previous step.
+4. Copy the following scripts.
 
       ```
       <copy>
@@ -65,7 +65,7 @@ To manually delete the database on the cloud host, run the steps below.
       spool /tmp/files.lst
       select 'rm '||name from v$datafile union all select 'rm '||name from v$tempfile union all select 'rm '||member from v$logfile;
       spool off
-      create pfile='/tmp/ORCL_nrt1d4.pfile' from spfile;
+      create pfile='/tmp/ORCL_stby.pfile' from spfile;
       </copy>
       ```
 
@@ -89,20 +89,20 @@ To manually delete the database on the cloud host, run the steps below.
       SQL> set heading off linesize 999 pagesize 0 feedback off trimspool on
       SQL> spool /tmp/files.lst
       SQL> select 'rm '||name from v$datafile union all select 'rm '||name from v$tempfile union all select 'rm '||member from v$logfile;
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/PDB1/system01.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/PDB1/sysaux01.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/PDB1/undotbs01.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/PDB1/users01.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/temp01.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/pdbseed/temp012020-01-23_14-38-01-789-PM.dbf
-      rm /u02/app/oracle/oradata/ORCL_nrt1d4/PDB1/temp01.dbf
-      rm /u03/app/oracle/oradata/ORCL_nrt1d4/srl_redo01.log
-      rm /u03/app/oracle/oradata/ORCL_nrt1d4/srl_redo02.log
-      rm /u03/app/oracle/oradata/ORCL_nrt1d4/srl_redo03.log
-      rm /u03/app/oracle/oradata/ORCL_nrt1d4/redo04.log
+      rm /u02/app/oracle/oradata/ORCL_stby/PDB1/system01.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/PDB1/sysaux01.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/PDB1/undotbs01.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/PDB1/users01.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/temp01.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/pdbseed/temp012020-01-23_14-38-01-789-PM.dbf
+      rm /u02/app/oracle/oradata/ORCL_stby/PDB1/temp01.dbf
+      rm /u03/app/oracle/oradata/ORCL_stby/srl_redo01.log
+      rm /u03/app/oracle/oradata/ORCL_stby/srl_redo02.log
+      rm /u03/app/oracle/oradata/ORCL_stby/srl_redo03.log
+      rm /u03/app/oracle/oradata/ORCL_stby/redo04.log
       ...
       SQL> spool off
-      SQL> create pfile='/tmp/ORCL_nrt1d4.pfile' from spfile;
+      SQL> create pfile='/tmp/ORCL_stby.pfile' from spfile;
       SQL>  
       ```
 
@@ -158,32 +158,27 @@ As **oracle** user, copy the on-premise database password file to cloud host `$O
 
 ## Task 3: Copying the Wallet File to the Cloud Host 
 
-Make sure that `$ORACLE_HOME/network/admin/sqlnet.ora` contains the following line wallet file location is defined as `ENCRYPTION_WALLET_LOCATION` parameter in sqlnet.ora.
+Check the **wallet_root** parameter value from primary side and standby side.
 
-   - From on-premise side
-
-      ```
-      ENCRYPTION_WALLET_LOCATION =
-         (SOURCE = (METHOD = FILE)
-         (METHOD_DATA =
-            (DIRECTORY = /u01/app/oracle/admin/ORCL/wallet)
-         )
-         )
-      ```
-
-   - From cloud side
+   - From on-premise side, the value is:
 
       ```
-      ENCRYPTION_WALLET_LOCATION=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=/opt/oracle/dcs/commonstore/wallets/ORCL_nrt1d4/tde)))
+      /u01/app/oracle/product/19c/dbhome_1/wallet
       ```
 
-1. Copy the following command, using the on-premise host public ip or hostname.  Change `ORCL_nrt1d4` to the unique name of your standby db.
+   - From cloud side, the value is:
+
+      ```
+      /opt/oracle/dcs/commonstore/wallets/ORCL_stby
+      ```
+
+1. Copy the following command, using the on-premise host public ip or hostname.  
 
       ```
       <copy>
-      scp oracle@primary:/u01/app/oracle/admin/ORCL/wallet/ewallet.p12 /opt/oracle/dcs/commonstore/wallets/ORCL_nrt1d4/tde
-      scp oracle@primary:/u01/app/oracle/admin/ORCL/wallet/cwallet.sso /opt/oracle/dcs/commonstore/wallets/ORCL_nrt1d4/tde
-      chmod 600 /opt/oracle/dcs/commonstore/wallets/ORCL_nrt1d4/tde/*wallet*
+      scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/wallet/tde/ewallet.p12 /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde
+      scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/wallet/tde/cwallet.sso /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde
+      chmod 600 /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde/*wallet*
       </copy>
       ```
 
@@ -192,11 +187,11 @@ Make sure that `$ORACLE_HOME/network/admin/sqlnet.ora` contains the following li
 2. Run this command as **oracle user**, copy the wallet files from on-premise host and change the files mode to 600.
 
       ```
-      [oracle@dbstby ~]$ scp oracle@primary:/u01/app/oracle/admin/ORCL/wallet/ewallet.p12 /opt/oracle/dcs/commonstore/wallets/tde/ORCL_nrt1d4
+      [oracle@dbstby ~]$ scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/wallet/tde/ewallet.p12 /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde
       ewallet.p12                                                                                       100% 5467   153.2KB/s   00:00    
-      [oracle@dbstby ~]$ scp oracle@primary:/u01/app/oracle/admin/ORCL/wallet/cwallet.sso /opt/oracle/dcs/commonstore/wallets/tde/ORCL_nrt1d4
+      [oracle@dbstby ~]$ scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/wallet/tde/cwallet.sso /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde
       cwallet.sso                                                                                       100% 5512   147.4KB/s   00:00    
-      [oracle@dbstby ~]$ chmod 600 /opt/oracle/dcs/commonstore/wallets/tde/ORCL_nrt1d4/*wallet*
+      [oracle@dbstby ~]$ chmod 600 /opt/oracle/dcs/commonstore/wallets/ORCL_stby/tde/*wallet*
       [oracle@dbstby ~]$
       ```
 
@@ -237,17 +232,16 @@ A static listener is needed for initial instantiation of a standby database. The
    - Reload the listener
 
       ```
-      [oracle@workshop ~]$ lsnrctl reload
+      [oracle@primary ~]$ lsnrctl reload
       
       LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-JAN-2020 11:27:23
       
       Copyright (c) 1991, 2019, Oracle.  All rights reserved.
       
       Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=workshop)(PORT=1521)))
-      The command completed successfully
-      [oracle@dbstby ~]$ 
+      The command completed successfully 
       ```
-
+   
 2. From cloud side
 
    - Switch to the **oracle** user, edit listener.ora
@@ -263,12 +257,12 @@ A static listener is needed for initial instantiation of a standby database. The
       SID_LIST_LISTENER=
       (SID_LIST=
          (SID_DESC=
-         (GLOBAL_DBNAME=ORCL_nrt1d4)
+         (GLOBAL_DBNAME=ORCL_stby)
          (ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1)
          (SID_NAME=ORCL)
          )
          (SID_DESC=
-         (GLOBAL_DBNAME=ORCL_nrt1d4_DGMGRL)
+         (GLOBAL_DBNAME=ORCL_stby_DGMGRL)
          (ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1)
          (SID_NAME=ORCL)
          )
@@ -279,7 +273,7 @@ A static listener is needed for initial instantiation of a standby database. The
    - Reload the listener
 
       ```
-      [oracle@dbstby ~]$ <copy>$ORACLE_HOME/bin/lsnrctl reload</copy>
+      [oracle@standby ~]$ <copy>$ORACLE_HOME/bin/lsnrctl reload</copy>
       
       LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-JAN-2020 11:39:12
       
@@ -287,13 +281,12 @@ A static listener is needed for initial instantiation of a standby database. The
       
       Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=LISTENER)))
       The command completed successfully
-      [oracle@dbstby ~]$ 
       ```
-
+   
 3. Mount the Standby database.
 
       ```
-      [oracle@dbstby ~]$ <copy>sqlplus / as sysdba</copy>
+      [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
       
       SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 10:50:18 2020
       Version 19.10.0.0.0
@@ -314,7 +307,7 @@ A static listener is needed for initial instantiation of a standby database. The
       SQL> <copy>exit</copy>
       Disconnected from Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
       Version 19.10.0.0.0
-      [oracle@dbstby ~]$ 
+      [oracle@standby ~]$ 
       ```
 
 
@@ -327,20 +320,20 @@ A static listener is needed for initial instantiation of a standby database. The
       <copy>vi $ORACLE_HOME/network/admin/tnsnames.ora</copy>
       ```
 
-   Add following lines into tnsnames.ora, using the public ip or hostname of the cloud hosts, replace `ORCL_nrt1d4` with your standby db unique name.
+   Add following lines into tnsnames.ora.
 
       ```
-      ORCL_nrt1d4 =
+      ORCL_stby =
       (DESCRIPTION =
          (SDU=65536)
          (RECV_BUF_SIZE=134217728)
          (SEND_BUF_SIZE=134217728)
          (ADDRESS_LIST =
-         (ADDRESS = (PROTOCOL = TCP)(HOST = xxx.xxx.xxx.xxx)(PORT = 1521))
+         (ADDRESS = (PROTOCOL = TCP)(HOST = standby)(PORT = 1521))
          )
          (CONNECT_DATA =
             (SERVER = DEDICATED)
-            (SERVICE_NAME = ORCL_nrt1d4)
+            (SERVICE_NAME = ORCL_stby)
             (UR=A)
          )
       )
@@ -352,19 +345,19 @@ A static listener is needed for initial instantiation of a standby database. The
       <copy>vi $ORACLE_HOME/network/admin/tnsnames.ora</copy>
       ```
 
-   In the `ORCL_NRT1D4`(Standby db unique name) description, delete the domain name of the SERVICE_NAME. Add the ORCL description, using the public ip or hostname of the on-premise hosts.  It's looks like the following.  Replace `ORCL_nrt1d4` with your standby db unique name.
+   In the `ORCL_STBY`(Standby db unique name) description, delete the domain name of the SERVICE_NAME. Add the ORCL description, using the public ip or hostname of the on-premise hosts.  It's looks like the following.
 
    **Note:** The different database domain name will get an error when doing the DML Redirection, in this lab, we don't use database domain name.
 
     ```
     # tnsnames.ora Network Configuration File: /u01/app/oracle/product/19.0.0.0/dbhome_1/network/admin/tnsnames.ora
     # Generated by Oracle configuration tools         
-    ORCL_NRT1D4 =
+    ORCL_STBY =
     (DESCRIPTION =
        (ADDRESS = (PROTOCOL = TCP)(HOST = standby)(PORT = 1521))
        (CONNECT_DATA =
           (SERVER = DEDICATED)
-          (SERVICE_NAME = ORCL_nrt1d4)
+          (SERVICE_NAME = ORCL_stby)
        )
     
     LISTENER_ORCL =
@@ -437,22 +430,22 @@ A static listener is needed for initial instantiation of a standby database. The
 
 The standby database can be created from the active primary database.
 
-1. From Cloud side, switch to **oracle** user, create pdb directory, Replace `ORCL_nrt1d4` with your standby db unique name. If the directory exist, ignore the error
+1. From Cloud side, switch to **oracle** user, create pdb directory. If the directory exist, ignore the error
 
     ```
-    [oracle@dbstby ~]$ <copy>mkdir -p /u02/app/oracle/oradata/ORCL_nrt1d4/pdbseed</copy>
-    mkdir: cannot create directory '/u02/app/oracle/oradata/ORCL_nrt1d4/pdbseed': File exists
-    [oracle@dbstby ~]$ <copy>mkdir -p /u02/app/oracle/oradata/ORCL_nrt1d4/orclpdb</copy>
-    [oracle@dbstby ~]$ <copy>mkdir -p /u03/app/oracle/redo/ORCL_nrt1d4/onlinelog</copy>
+    [oracle@dbstby ~]$ <copy>mkdir -p /u02/app/oracle/oradata/ORCL_stby/pdbseed</copy>
+    mkdir: cannot create directory '/u02/app/oracle/oradata/ORCL_stby/pdbseed': File exists
+    [oracle@dbstby ~]$ <copy>mkdir -p /u02/app/oracle/oradata/ORCL_stby/orclpdb</copy>
+    [oracle@dbstby ~]$ <copy>mkdir -p /u03/app/oracle/redo/ORCL_stby/onlinelog</copy>
     ```
 
-2. Copy the following command, Replace `ORCL_nrt1d4` with your standby db unique name.
+2. Copy the following command.
 
     ```
     <copy>
-    alter system set db_file_name_convert='/u01/app/oracle/oradata/ORCL','/u02/app/oracle/oradata/ORCL_nrt1d4' scope=spfile;
-    alter system set db_create_online_log_dest_1='/u03/app/oracle/redo/ORCL_nrt1d4/onlinelog' scope=spfile;
-    alter system set log_file_name_convert='/u01/app/oracle/oradata/ORCL','/u03/app/oracle/redo/ORCL_nrt1d4/onlinelog' scope=spfile;
+    alter system set db_file_name_convert='/u01/app/oracle/oradata/ORCL','/u02/app/oracle/oradata/ORCL_stby' scope=spfile;
+    alter system set db_create_online_log_dest_1='/u03/app/oracle/redo/ORCL_stby/onlinelog' scope=spfile;
+    alter system set log_file_name_convert='/u01/app/oracle/oradata/ORCL','/u03/app/oracle/redo/ORCL_stby/onlinelog' scope=spfile;
     alter system set db_domain='' scope=spfile;
     </copy>
     ```
@@ -464,11 +457,11 @@ The standby database can be created from the active primary database.
     **Note:** The different database domain name of the on-premise and cloud will cause DML Redirection error, in this lab, we don't use the database domain.
 
     ```
-    SQL> ALTER SYSTEM SET db_file_name_convert='/u01/app/oracle/oradata/ORCL','/u02/app/oracle/oradata/ORCL_nrt1d4' scope=spfile    
+    SQL> ALTER SYSTEM SET db_file_name_convert='/u01/app/oracle/oradata/ORCL','/u02/app/oracle/oradata/ORCL_stby' scope=spfile    
     System altered.
-    SQL> alter system set db_create_online_log_dest_1='/u03/app/oracle/redo/ORCL_nrt1d4/onlinelog' scope=spfile    
+    SQL> alter system set db_create_online_log_dest_1='/u03/app/oracle/redo/ORCL_stby/onlinelog' scope=spfile    
     System altered    
-    SQL> alter system set log_file_name_convert='/u01/app/oracle/oradata/ORCL','/u03/app/oracle/redo/ORCL_nrt1d4/onlinelog' scope=spfile    
+    SQL> alter system set log_file_name_convert='/u01/app/oracle/oradata/ORCL','/u03/app/oracle/redo/ORCL_stby/onlinelog' scope=spfile    
     System altered.
     SQL> alter system set db_domain='' scope=spfile    
     System altered.
@@ -525,8 +518,8 @@ The standby database can be created from the active primary database.
     channel ORA_DISK_1: using network backup set from service ORCL
     channel ORA_DISK_1: restoring control file
     channel ORA_DISK_1: restore complete, elapsed time: 00:00:02
-    output file name=/u02/app/oracle/oradata/ORCL_nrt1d4/control01.ctl
-    output file name=/u03/app/oracle/fast_recovery_area/ORCL_nrt1d4/control02.ctl
+    output file name=/u02/app/oracle/oradata/ORCL_stby/control01.ctl
+    output file name=/u03/app/oracle/fast_recovery_area/ORCL_stby/control02.ctl
     Finished restore at 01-FEB-2    
     RMAN> <copy>alter database mount;</copy    
     released channel: ORA_DISK_1
@@ -559,19 +552,19 @@ The standby database can be created from the active primary database.
     channel ORA_DISK_1: starting datafile backup set restore
     channel ORA_DISK_1: using network backup set from service ORCL
     channel ORA_DISK_1: specifying datafile(s) to restore from backup set
-    channel ORA_DISK_1: restoring datafile 00003 to /u02/app/oracle/oradata/ORCL_nrt1d4/sysaux01.dbf
+    channel ORA_DISK_1: restoring datafile 00003 to /u02/app/oracle/oradata/ORCL_stby/sysaux01.dbf
     channel ORA_DISK_1: restoring section 1 of 1
     channel ORA_DISK_1: restore complete, elapsed time: 00:00:16
     channel ORA_DISK_1: starting datafile backup set restore
     channel ORA_DISK_1: using network backup set from service ORCL
     channel ORA_DISK_1: specifying datafile(s) to restore from backup set
-    channel ORA_DISK_1: restoring datafile 00004 to /u02/app/oracle/oradata/ORCL_nrt1d4/undotbs01.dbf
+    channel ORA_DISK_1: restoring datafile 00004 to /u02/app/oracle/oradata/ORCL_stby/undotbs01.dbf
     channel ORA_DISK_1: restoring section 1 of 1
     channel ORA_DISK_1: restore complete, elapsed time: 00:00:04
     channel ORA_DISK_1: starting datafile backup set restore
     channel ORA_DISK_1: using network backup set from service ORCL
     channel ORA_DISK_1: specifying datafile(s) to restore from backup set
-    channel ORA_DISK_1: restoring datafile 00005 to /u02/app/oracle/oradata/ORCL_nrt1d4/pdbseed/system01.dbf
+    channel ORA_DISK_1: restoring datafile 00005 to /u02/app/oracle/oradata/ORCL_stby/pdbseed/system01.dbf
     ......
     ......
     channel ORA_DISK_1: restoring section 1 of 1
@@ -591,7 +584,7 @@ The standby database can be created from the active primary database.
     RMAN> <copy>exit</copy>
      Recovery Manager complete.
     ```
-      
+    
     Connect to sqlplus as sysdba and mount the database again.
 
     ```
@@ -710,10 +703,10 @@ The standby database can be created from the active primary database.
       NAME				     TYPE	 VALUE
       ------------------------------------ ----------- ------------------------------
       dg_broker_config_file1		     string	 /u01/app/oracle/product/19.0.0
-                        .0/dbhome_1/dbs/dr1ORCL_nrt1d4
+                        .0/dbhome_1/dbs/dr1ORCL_stby
                         .dat
       dg_broker_config_file2		     string	 /u01/app/oracle/product/19.0.0
-                        .0/dbhome_1/dbs/dr2ORCL_nrt1d4
+                        .0/dbhome_1/dbs/dr2ORCL_stby
                         .dat
       SQL> show parameter dg_broker_start
       
@@ -733,7 +726,7 @@ The standby database can be created from the active primary database.
       SQL> 
       ```
 
-3. Register the database via DGMGRL. Replace `ORCL_nrt1d4` with your standby db unique name.
+3. Register the database via DGMGRL.
 
     ```
     [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@ORCL</copy>
@@ -747,8 +740,8 @@ The standby database can be created from the active primary database.
     Connected as SYSDBA.
     DGMGRL> <copy>CREATE CONFIGURATION adgconfig AS PRIMARY DATABASE IS ORCL CONNECT IDENTIFIER IS ORCL;</copy>
     Configuration "adgconfig" created with primary database "orcl"
-    DGMGRL> <copy>ADD DATABASE ORCL_nrt1d4 AS CONNECT IDENTIFIER IS ORCL_nrt1d4 MAINTAINED AS PHYSICAL;</copy>
-    Database "orcl_nrt1d4" added
+    DGMGRL> <copy>ADD DATABASE ORCL_stby AS CONNECT IDENTIFIER IS ORCL_stby MAINTAINED AS PHYSICAL;</copy>
+    Database "orcl_stby" added
     DGMGRL> <copy>enable configuration;</copy>
     Enabled.
     DGMGRL> <copy>SHOW CONFIGURATION;</copy>
@@ -758,7 +751,7 @@ The standby database can be created from the active primary database.
     Protection Mode: MaxPerformance
     Members:
     orcl        - Primary database
-       orcl_nrt1d4 - Physical standby database 
+       orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -774,5 +767,5 @@ You may proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 
