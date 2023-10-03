@@ -18,78 +18,68 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [db19c-primary-19.14.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-19.14.zip) - Packaged terraform primary database instance creation script.
+- [db19c-primary-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-19.20.zip) - Packaged terraform primary database instance creation script.
 
 
 ## Task 1: Prepare the Primary Database
 
 1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
-	![](https://oracle-livelabs.github.io/common/images/console/developer-resmgr-stacks.png " ")
-  
-     ![](./images/step1.3-createstackpage.png " ")
+    ![Resource Manager](images/image-resourcemanager.png)
 
-2. Check the **.ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`db19c-primary-num.zip`) that you downloaded. Click **Select** to upload the zip file.
+    ![Create Stack](./images/step1.3-createstackpage.png)
 
-     ![](images/image-20201030094139692.png)
+2. Check the **.ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`db19c-primary-19.16.zip`) that you downloaded. Click **Select** to upload the zip file.
+
+     ![Stack Infor](./images/image-stackinfor.png)
 
      Accept all the defaults and click **Next**.
 
-3. Accept the default value of the `Instance_Shape`. Paste the content of the public key you create before to the `SSH_PUBLIC_KEY`,  and click **Next**. 
+3. Choose or Accept the default Compartment. Upload the public key file or Paste the content of the public key you create before,  and click **Next**. 
 
-     ![](images/image-20201030094440068.png)
+     ![Required Var](./images/image-requiredvar.png)
 
 ​    
 
 4. Click **Create**.
 
-     ![](images/image-20201030094944273.png)
+     ![Stack Review](./images/image-stackreview.png)
 
 5. Your stack has now been created!  Now to create your environment. *Note: If you get an error about an invalid DNS label, go back to your Display Name, please do not enter ANY special characters or spaces. It will fail.*
 
-     ![](./images/step1.7-stackcreated.png " ")
+     ![Stack Created](./images/step1.7-stackcreated.png)
 
-## Task 2: Terraform Plan (OPTIONAL)
 
-When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional step in this lab.
 
-1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
-
-     ![](./images/terraformactions.png " ")
-     
-     ![](images/image-20201030095622286.png)
-     
-     ![](./images/planjob.png " ")
-     
-     ![](./images/planjob1.png " ")
-
-## Task 3: Terraform Apply
+## Task 2: Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Plan** and **Apply**. Let's do that now.
 
 1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
 
-     ![](./images/applyjob1.png " ")
+     ![Apply Job1](./images/applyjob1.png)
 
-     ![](images/image-20201030095534379.png)
+     ![Apply Confirm](images/image-applyconfirm.png)
 
-     ![](./images/applyjob2.png " ")
+     ![Apply Job2](./images/applyjob2.png)
 
      ![](./images/step3.1-applyjob3.png " ")
 
 2.  Once this job succeeds, you will get an apply complete notification from Terraform. In the end of the apply log,  you can get the **public ip address** of the primary instance. Congratulations, your environment is created! Time to login to your instance to finish the configuration.
 
-     ![](images/image-20201030100144873.png)
+     ![Get Public IP](./images/image-getpublicip.png)
 
-## Task 4: Connect to your Instance
+
+
+## Task 3: Connect to your Instance
 
 ### MAC or Windows CYGWIN Emulator
 
 1.  Open up a terminal (MAC) or cygwin emulator as the opc user.  Enter yes when prompted.
 
-     ````
-     ssh -i ~/.ssh/optionskey opc@<Your Compute Instance Public IP Address>
-     ````
+      ````
+      ssh -i ~/.ssh/optionskey opc@<Your Compute Instance Public IP Address>
+      ````
 
 2. After successfully logging in, proceed to Step 5.
 
@@ -111,7 +101,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 2.  Enter a name for the session and click **Save**.
 
-     ![](./images/putty-setup.png " ")
+     ![Putty Setup](./images/putty-setup.png)
 
 3.  Click **Connection** > **Data** in the left navigation pane and set the Auto-login username to root.
 
@@ -119,7 +109,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 5.  Navigate to the location where you saved your SSH private key file, select the file, and click Open.  NOTE:  You cannot connect while on VPN or in the Oracle office on clear-corporate (choose clear-internet).
 
-     ![](./images/putty-auth.png " ")
+     ![Putty Auth](./images/putty-auth.png)
 
 6.  The file path for the SSH private key file now displays in the Private key file for authentication field.
 
@@ -127,30 +117,30 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 8.  Click Open to begin your session with the instance.
 
-## Task 5: Verify the Database is Up
+## Task 4: Verify the Database is Up
 
 1.  From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
 
-     ````
-     <copy>
-     tail -f /u01/ocidb/buildsingle.log
-     </copy>
-     ````
-     ![](./images/tailOfBuildDBInstanceLog.png " ")
+      ````
+      <copy>
+      tail -f /u01/ocidb/buildsingle.log
+      </copy>
+      ````
+      ![Tail of Build DB](./images/tailOfBuildDBInstanceLog.png)
 
 2.  When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes).
 
-     ![](./images/tailOfBuildDBInstanceLog_finished.png " ")
+      ![Tail of Build DB finished](./images/tailOfBuildDBInstanceLog_finished.png)
 
 3.  Run the following command to verify the database with the SID **ORCL** is up and running.
 
-     ````
-     <copy>
-     ps -ef | grep ORCL
-     </copy>
-     ````
+      ````
+      <copy>
+      ps -ef | grep ORCL
+      </copy>
+      ````
 
-     ![](./images/pseforcl.png " ")
+      ![ps ef orcl](./images/pseforcl.png)
 
 4. Verify the listener is running:
 
@@ -160,19 +150,20 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
      </copy>
      ````
 
-     ![](./images/pseftns.png " ")
+     ![ps ef tns](./images/pseftns.png)
 
 5.  Connect to the Database using SQL*Plus as the **oracle** user.
 
-     ````
-     <copy>
-     sudo su - oracle
-     sqlplus system/Ora_DB4U@localhost:1521/orclpdb
-     </copy>
-     ````
+      ````
+      <copy>
+      sudo su - oracle
+      sqlplus system/Ora_DB4U@localhost:1521/orclpdb
+      </copy>
+      ````
+
+    ![log into DB](./images/image-logintodb.png)
 
 
-     ![](./images/sqlplus_login_orclpdb.png " ")
 
 6.  To leave `sqlplus` you need to use the exit command. Copy and paste the text below into your terminal to exit sqlplus.
 
@@ -196,7 +187,6 @@ You now have a fully functional Oracle Database 19c instance **ORCL** running on
 You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management
-* **Last Updated By/Date** - Minqiao Wang, May 2022
-* **Workshop Expiry Date** - 30 April 2022
+* **Author** - Minqiao Wang, Oracle China
+* **Last Updated By/Date** - Minqiao Wang, Aug 2023
 
