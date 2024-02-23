@@ -42,7 +42,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
     READ WRITE	     PRIMARY	      NO
     
     SQL> 
-
+    ```
 
 
 2. If the flashback is not enabled you need to setup database flashback on, otherwise you won't be able to reinstate the primary after the failover.
@@ -105,7 +105,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
 
       Protection Mode: MaxPerformance
       Members:
-      orcl_nrt1d4 - Primary database
+      orcl_stby - Primary database
         orcl        - Physical standby database 
 
     Fast-Start Failover:  Disabled
@@ -113,33 +113,33 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
     Configuration Status:
     SUCCESS   (status updated 18 seconds ago)
 
-    DGMGRL> <copy>validate database orcl_nrt1d4</copy>
+    DGMGRL> <copy>validate database orcl_stby</copy>
 
       Database Role:    Primary database
 
       Ready for Switchover:  Yes
 
       Managed by Clusterware:
-        orcl_nrt187:  NO             
-        Validating static connect identifier for the primary database orcl_nrt187...
-        The static connect identifier allows for a connection to database "orcl_nrt187".
+        orcl_stby:  NO             
+        Validating static connect identifier for the primary database orcl_stby...
+        The static connect identifier allows for a connection to database "orcl_stby".
 
     DGMGRL> <copy>validate database orcl</copy>
 
       Database Role:     Physical standby database
-      Primary Database:  orcl_nrt1d4
+      Primary Database:  orcl_stby
 
       Ready for Switchover:  Yes
       Ready for Failover:    Yes (Primary Running)
 
       Managed by Clusterware:
-        orcl_nrt1d4:  NO             
+        orcl_stby:  NO             
         orcl       :  NO             
-        Validating static connect identifier for the primary database orcl_nrt1d4...
-        The static connect identifier allows for a connection to database "orcl_nrt1d4".
+        Validating static connect identifier for the primary database orcl_stby...
+        The static connect identifier allows for a connection to database "orcl_stby".
 
       Log Files Cleared:
-        orcl_nrt187 Standby Redo Log Files:  Cleared
+        orcl_stby Standby Redo Log Files:  Cleared
         orcl Online Redo Log Files:          Not Cleared
         orcl Standby Redo Log Files:         Available
 
@@ -159,7 +159,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database (disabled)
+        orcl_stby - Physical standby database (disabled)
           ORA-16661: the standby database needs to be reinstated
     
     Fast-Start Failover:  Disabled
@@ -174,11 +174,11 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
 
 ## Task 3: Reinstate the Previous Primary Database
 
-1. Connect to the cloud side(the previous primary), replace `ORCL_nrt1d4` with your previous primary db unique name. Shutdown the database and startup mount before reinstating. 
+1. Connect to the cloud side(the previous primary). Shutdown the database and startup mount before reinstating. 
 
     ```
-    DGMGRL> <copy>connect sys/Ora_DB4U@orcl_nrt1d4</copy>
-    Connected to "ORCL_nrt1d4"
+    DGMGRL> <copy>connect sys/Ora_DB4U@orcl_stby</copy>
+    Connected to "ORCL_stby"
     Connected as SYSDBA.
     
     DGMGRL> <copy>shutdown immediate</copy>
@@ -188,7 +188,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
     Connected to an idle instance.
     
     DGMGRL> <copy>startup mount</copy>
-    Connected to "ORCL_nrt1d4"
+    Connected to "ORCL_stby"
     ORACLE instance started.
     Database mounted.
     DGMGRL> 
@@ -196,16 +196,16 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
 
 
 
-2. Connect to the new primary side, reinstate the standby database, replace `ORCL_nrt1d4` with your previous primary db unique name.
+2. Connect to the new primary side, reinstate the standby database.
 
     ```
     DGMGRL> <copy>connect sys/Ora_DB4U@orcl</copy>
     Connected to "ORCL"
     Connected as SYSDBA.
     
-    DGMGRL> <copy>reinstate database orcl_nrt1d4</copy>
-    Reinstating database "orcl_nrt1d4", please wait...
-    Reinstatement of database "orcl_nrt1d4" succeeded
+    DGMGRL> <copy>reinstate database orcl_stby</copy>
+    Reinstating database "orcl_stby", please wait...
+    Reinstatement of database "orcl_stby" succeeded
     
     DGMGRL> <copy>show configuration</copy>
     
@@ -214,7 +214,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -227,7 +227,7 @@ In the previous lab, you have done the Data Guard switch over. Now, the current 
 3. Check the status of the new standby database
 
     ```
-    [oracle@dbstby ~]$ <copy>sqlplus / as sysdba</copy>
+    [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Wed Feb 5 05:53:48 2020
     Version 19.10.0.0.0
@@ -252,5 +252,5 @@ Congratulations, you have successfully completed the workshop!
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 

@@ -56,28 +56,27 @@ This lab assumes you have already completed the following:
 
 ## Task 2: Create the DB System
 
-1. Open the navigation menu. Under **Oracle Database**, click **Oracle Base Database(VM, BM)**.
+1. Open the navigation menu. Under **Oracle Database**, click **Oracle Base Database Services**.
 
 2. Click **Create DB System**.
 
 3. On the **Create DB System** page, provide the basic information for the DB system:
 
     - **Select a compartment:** use the compartment which assign to you.
-    - **Name your DB system:** enter a unique name of your DB system
+    - **Name your DB system:** enter a unique name of your DB system, like: **dbstandby**.
     - **Select an availability domain:** The **availability domain** in which the DB system resides.
-    - **Select a shape type:** Choose **Virtual Machine**
-    - **Select a shape:** change the Shape to **VM.Stanard.E4.Flex**, 1core OCPU, 16GB Memory.
-
-    ![create db system](images/image-createdbsystem.png)
+    - **Select a shape:** change the Shape to **VM.Stanard.E4.Flex, 1core OCPU, 16GB Memory**.
+    
+![configure db shape](images/image-20230925155843083.png)
 
    
 
-4. In the **Configure Storage** section, change the storage to the following(we choose the lowest resource because it's a lab):
+4. In the **Configure Storage** section, change the storage to the following(we choose the lowest resource and quick privsion because it's a lab):
 
     - Choose storage management software to **Logical Volume Manager**.
     - Configure storage performance to **Balanced**.
     
-    ![change storage](images/image-changestorage.png)
+    ![configure db storage](images/image-configuredbstorage.png)
     
 4. In the **Configure the DB system** section, specify the following:
 
@@ -86,8 +85,6 @@ This lab assumes you have already completed the following:
     
 
 ![configure db system](images/image-configuredbsystem.png)
-    
-
 
 ​    
 
@@ -95,7 +92,7 @@ This lab assumes you have already completed the following:
 
     ![choose license type](images/image-chooselicensetype.png)
 
-5. Specify the network information, Choose the VCN, public subnet you prepare in previous. Input the **Hostname prefix**.
+5. Specify the network information, Choose the VCN, public subnet you prepare in previous. Input the **Hostname prefix**, like: **standby**.
 
     ![network info](images/image-networkinfo.png)
 
@@ -105,27 +102,31 @@ This lab assumes you have already completed the following:
 
     - **Database name:** **ORCL**, same as the on premise database
 
+    - **Database unique name suffix**: **stby**
+
     - Click **Change Database Image**
 
-       ![database info](images/image-databaseinfo.png)
+       ![set db name](images/image-setdbname.png)
 
     - Turn on the **Display all available versions**, select the Database version: 19.x.0.0, same version as the on premise database
 
-       ![db software image](images/image-dbsoftwareimage.png)
+       ![choose db image](images/image-choosedbimage.png)
 
-    - **PDB name:** orclpdb
+    - **PDB name:** **orclpdb**
 
     - Enter a strong password
-
-    ![db password](images/image-dbpassword.png)
+    
+    - Disable the automatic backups(for lower resources)
+    
+    ![set db password](images/image-setdbpassword.png)
     
     - Accept other default values, Click the **Create DB System**.
     
-6. Wait about 20 minutes. Then the Database is ready.
+9. Wait about 20 minutes. Then the Database is ready.
 
    ![create db finished](images/image-createdbfinished.png)
 
-11. Write down your Database Unique Name ie: `ORCL_nrt1d4`.
+   
 
 8. Click the **Nodes**,  write down the public ip address of the database host node and the Host Domain Name.
 
@@ -137,5 +138,5 @@ You may proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar. 2023
+* **Last Updated By/Date** - Minqiao Wang, Sep. 2023
 

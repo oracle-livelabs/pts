@@ -117,8 +117,6 @@ Estimated time: 5 minutes
 
 ## Task 3: Connect to your ADB with SQL Developer Web
 
-While you can also connect to your autonomous database using local PC desktop tools like Oracle SQL Developer (see this [ADB lab](https://oracle.github.io/learning-library/data-management-library/autonomous-database/shared/adb-advanced-workshop/freetier/?lab=lab-6-using-wallets-for-secure) for an example), you can now conveniently access the browser-based SQL Developer Web directly from your ADW or ATP console.
-
 1.  While in your database **OCI console** from Step 2, click the **Tools** tab.
 
     ![](./images/Tools.png " ")

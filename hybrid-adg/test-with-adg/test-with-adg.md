@@ -1,4 +1,4 @@
-# Testing with Active Data Guard
+# Test with Active Data Guard
 
 ## Introduction
 Now we can run some testing with the ADG including DML redirection and switchover.
@@ -363,7 +363,7 @@ There are several ways to check the lag between the primary and standby.
 
    
 
-7. Check lag using Data Guard Broker. Replace `ORCL_nrt1d4` with your standby database unique name.
+7. Check lag using Data Guard Broker.
 
     ```
     [oracle@dbstby ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
@@ -375,9 +375,9 @@ There are several ways to check the lag between the primary and standby.
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> <copy>show database ORCL_nrt1d4</copy>
+    DGMGRL> <copy>show database ORCL_stby</copy>
     
-    Database - orcl_nrt1d4
+    Database - orcl_stby
     
       Role:               PHYSICAL STANDBY
       Intended State:     APPLY-ON
@@ -409,7 +409,7 @@ Automatic redirection of DML operations to the primary can be configured at the 
 1. From the standby side, connect to orclpdb as **testuser**. Test the DML before and after the DML Redirection is enabled.
 
     ```
-    [oracle@dbstby ~]$ <copy>sqlplus testuser/testuser@dbstby:1521/orclpdb</copy>
+    [oracle@standby ~]$ <copy>sqlplus testuser/testuser@standby:1521/orclpdb</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Sep 5 10:04:04 2020
     Version 19.10.0.0.0
@@ -457,7 +457,7 @@ Automatic redirection of DML operations to the primary can be configured at the 
 
 You may encounter the performance issue when using the DML redirection. This is because each of the DML is issued on a standby database will be passed to the primary database where it is executed. The default Data Guard protection mode is Maximum Performance and the redo transport mode is ASYNC. The session waits until the corresponding changes are shipped to and applied to the standby. In order to improve performance of the DML redirection, you need to switch the redo logfile more frequently on the primary side, or you can change the protection mode to Maximum Availability and the redo transport mode to SYNC - This protection mode provides the highest level of data protection, but it's need the high throughput and low latency network, you can use FastConnect or deploy the Data Guard in different ADs within the same region.
 
-2. From the primary side, connect with Data Guard Broker, check the current protection mode and redo transport mode. Replace the `orcl_nrt1d4` to your standby db unique name.
+2. From the primary side, connect with Data Guard Broker, check the current protection mode and redo transport mode.
 
     ```
     [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
@@ -476,7 +476,7 @@ You may encounter the performance issue when using the DML redirection. This is 
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -484,18 +484,18 @@ You may encounter the performance issue when using the DML redirection. This is 
     SUCCESS   (status updated 20 seconds ago)
     DGMGRL> <copy>show database orcl LogXptMode</copy>
       LogXptMode = 'ASYNC'
-    DGMGRL> <copy>show database orcl_nrt1d4 LogXptMode</copy>
+    DGMGRL> <copy>show database orcl_stby LogXptMode</copy>
       LogXptMode = 'ASYNC'
     ```
 
    
 
-3. Switch the redo transport mode and protection mode. Replace the `orcl_nrt1d4` to your standby db unique name.
+3. Switch the redo transport mode and protection mode. 
 
     ```
     DGMGRL> <copy>EDIT DATABASE orcl SET PROPERTY LogXptMode='SYNC';</copy>
     Property "logxptmode" updated
-    DGMGRL> <copy>EDIT DATABASE orcl_nrt1d4 SET PROPERTY LogXptMode='SYNC';</copy>
+    DGMGRL> <copy>EDIT DATABASE orcl_stby SET PROPERTY LogXptMode='SYNC';</copy>
     Property "logxptmode" updated
     DGMGRL> <copy>EDIT CONFIGURATION SET PROTECTION MODE AS MAXAVAILABILITY;</copy>
     Succeeded.
@@ -506,7 +506,7 @@ You may encounter the performance issue when using the DML redirection. This is 
       Protection Mode: MaxAvailability
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -547,12 +547,12 @@ You may encounter the performance issue when using the DML redirection. This is 
 
    
 
-5. From the primary side, in the Data Guard Broker, switch back the protection mode. Replace the `orcl_nrt1d4` to your standby db unique name.
+5. From the primary side, in the Data Guard Broker, switch back the protection mode. 
 
     ```
     DGMGRL> <copy>EDIT CONFIGURATION SET PROTECTION MODE AS MAXPERFORMANCE;</copy>
     Succeeded.
-    DGMGRL> <copy>EDIT DATABASE orcl_nrt1d4 SET PROPERTY LogXptMode='ASYNC';</copy>
+    DGMGRL> <copy>EDIT DATABASE orcl_stby SET PROPERTY LogXptMode='ASYNC';</copy>
     Property "logxptmode" updated
     DGMGRL> <copy>EDIT DATABASE orcl SET PROPERTY LogXptMode='ASYNC';</copy>
     Property "logxptmode" updated
@@ -563,7 +563,7 @@ You may encounter the performance issue when using the DML redirection. This is 
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -581,7 +581,7 @@ At any time, you can manually execute a Data Guard switchover (planned event) or
 
 Switchovers are always a planned event that guarantees no data is lost. To execute a switchover, perform the following in Data Guard Broker 
 
-1. Connect DGMGRL from on-premise side, validate the standby database to see if Ready For Switchover is Yes. Replace `ORCL_nrt1d4` with your standby db unique name.
+1. Connect DGMGRL from on-premise side, validate the standby database to see if Ready For Switchover is Yes. 
 
     ```
     [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
@@ -593,7 +593,7 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> <copy>validate database ORCL_nrt1d4</copy>
+    DGMGRL> <copy>validate database ORCL_stby</copy>
 
       Database Role:     Physical standby database
       Primary Database:  orcl
@@ -603,27 +603,27 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
 
       Flashback Database Status:
         orcl       :  On
-        orcl_nrt1d4:  Off
+        orcl_stby:  Off
 
       Managed by Clusterware:
         orcl       :  NO             
-        orcl_nrt1d4:  YES            
+        orcl_stby:  YES            
         Validating static connect identifier for the primary database orcl...
         The static connect identifier allows for a connection to database "orcl".
 
     DGMGRL> 
     ```
 
-2. Switch over to cloud standby database, replace `ORCL_nrt1d4` with your standby db unique name.
+2. Switch over to cloud standby database.
 
     ```
-    DGMGRL> <copy>switchover to orcl_nrt1d4</copy>
+    DGMGRL> <copy>switchover to orcl_stby</copy>
     Performing switchover NOW, please wait...
-    Operation requires a connection to database "orcl_nrt1d4"
+    Operation requires a connection to database "orcl_stby"
     Connecting ...
-    Connected to "ORCL_nrt1d4"
+    Connected to "ORCL_stby"
     Connected as SYSDBA.
-    New primary database "orcl_nrt1d4" is opening...
+    New primary database "orcl_stby" is opening...
     Operation requires start up of instance "ORCL" on database "orcl"
     Starting instance "ORCL"...
     Connected to an idle instance.
@@ -632,14 +632,14 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     Database mounted.
     Database opened.
     Connected to "ORCL"
-    Switchover succeeded, new primary is "orcl_nrt1d4"
+    Switchover succeeded, new primary is "orcl_stby"
     DGMGRL> <copy>show configuration</copy>
 
     Configuration - adgconfig
 
       Protection Mode: MaxPerformance
       Members:
-      orcl_nrt1d4 - Primary database
+      orcl_stby - Primary database
         orcl        - Physical standby database 
 
     Fast-Start Failover:  Disabled
@@ -712,7 +712,7 @@ You may proceed to the next lab.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oracle China
-* **Last Updated By/Date** - Minqiao Wang, Mar 2023
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 
     
 

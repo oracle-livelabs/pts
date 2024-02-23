@@ -3,8 +3,6 @@
 ## About this Workshop
 In this workshop you will be using a compute instance in OCI to simulate the on-premise database, which is deployed in one region (For example: Seoul). The standby cloud database is deployed in another region (For example: Tokyo). The primary and the standby database communicate through public internet.
 
-When provisioning Database Cloud Services in OCI, there are 2 options for the storage management. One is **Oracle Grid Infrastructure** which is using ASM to manage the database files. The other is **Logical Volume Manager** which is using the File System to manage the database files. In Lab 3, please choose the right one according to your requirement. When doing Lab 5, choose Lab 5A for LVM or Lab 5B for ASM.
-
 Estimated Workshop Time: 5 hours
 
 ### About ADG
@@ -35,13 +33,11 @@ In this lab, you will:
 
 * An Oracle Cloud Account - Please view this workshop's LiveLabs landing page to see which environments are supported
 
-*Note: If you have a **Free Trial** account, when your Free Trial expires your account will be converted to an **Always Free** account. You will not be able to conduct Free Tier workshops unless the Always Free environment is available. **[Click here for the Free Tier FAQ page.](https://www.oracle.com/cloud/free/faq.html)***
-
 ## Learn More
 - [Oracle Data Guard](https://www.oracle.com/database/technologies/high-availability/dataguard.html)
 - [Oracle Database 19c](https://www.oracle.com/database/)
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management
-* **Last Updated By/Date** - Minqiao Wang, October 2020
+* **Author** - Minqiao Wang
+* **Last Updated By/Date** - Minqiao Wang, Dec 2023
 
