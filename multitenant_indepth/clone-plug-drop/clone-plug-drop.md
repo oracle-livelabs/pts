@@ -42,7 +42,7 @@ Refer to *Lab Environment Setup* for the detailed instructions relevant to your 
     ```
     <copy>
     cd /tmp/
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/agZ9XqafKHNCN3rpIegRlFFFJXe6YRPMqO7uHsO49vnLgm_3o0H_I_XTemvaAEXu/n/natdsecurity/b/labs-files/o/db-multitenant-prelab-init.zip
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/2g3cX7kNo2ZWYQmpul0OZl29ed6SkNy-EPq8JTT90y7IzFcaTOi6qGhEcJ3urMXz/n/c4u02/b/hosted_workshops/o/stacks/db-multitenant-prelab-init.zip
     unzip db-multitenant-prelab-init.zip -d bootstrap
     cd bootstrap; chmod +x *.sh
     sudo ./db19-prelab-init.sh
