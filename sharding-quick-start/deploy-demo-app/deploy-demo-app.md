@@ -43,7 +43,7 @@ This lab assumes you have already completed the following:
 2. Download the `sdb-demo-app-qs.zip`  file. 
 
     ```
-    oracle@cata ~]$ <copy>wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb-demo-app-qs.zip</copy>
+    oracle@cata ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb-demo-app-qs.zip</copy>
     ```
 
    
