@@ -1,4 +1,4 @@
-# Testing with Active Data Guard
+# Test with Active Data Guard
 
 ## Introduction
 Now we can run some testing with the ADG including DML redirection and switchover.
@@ -16,169 +16,183 @@ Estimated Lab Time: 30 minutes
 
 This lab assumes you have already completed the following labs:
 
-- Deploy Active Data Guard with LVM or ASM
+- Deploy Active Data Guard 
 
 ## Task 1: Test Transaction Replication
 
-1. From on-premise side, create a test user in orclpdb, and grant privileges to the user. You need  to check if the pdb is open.
+1. From on-premise side, connect to the orclpdb with SQLPLUS.
 
     ```
-    [oracle@primary ~]$ sqlplus / as sysdba
-
+    [oracle@primary ~]$ <copy>sqlplus / as sysdba</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 06:52:50 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
-
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-
-    SQL> show pdbs
-
+    
+    SQL> <copy>show pdbs</copy>
+    
         CON_ID CON_NAME			  OPEN MODE  RESTRICTED
     ---------- ------------------------------ ---------- ----------
       2 PDB$SEED			  READ ONLY  NO
       3 ORCLPDB			  MOUNTED
-    SQL> alter pluggable database all open;
-
+    SQL> <copy>alter pluggable database all open;</copy>
+    
     Pluggable database altered.
-
-    SQL> alter session set container=orclpdb;
-
+    
+    SQL> <copy>alter session set container=orclpdb;</copy>
+    
     Session altered.
+    
+    SQL>
+    ```
+    
+    Create a test user in orclpdb, and grant privileges to the user. You need  to check if the pdb is open.
 
-    SQL> create user testuser identified by testuser;
-
+    ```
+    SQL> <copy>create user testuser identified by testuser;</copy>
+    
     User created.
-
-    SQL> grant connect,resource to testuser;
-
+    
+    SQL> <copy>grant connect,resource to testuser;</copy>
+    
     Grant succeeded.
-
-    SQL> alter user testuser quota unlimited on users;
-
+    
+    SQL> <copy>alter user testuser quota unlimited on users;</copy>
+    
     User altered.
-
-    SQL> exit;
+    
+    SQL> <copy>exit;</copy>
     ```
 
-2. Connect with testuser, create test table and insert a test record.
+2. Connect with testuser,
 
     ```
-    [oracle@primary ~]$ sqlplus testuser/testuser@primary:1521/orclpdb
-
+    [oracle@primary ~]$ <copy>sqlplus testuser/testuser@primary:1521/orclpdb</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 06:59:56 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
-
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
+    ```
+    
+    
+    
+    Create test table and insert a test record.
 
-    SQL> create table test(a number,b varchar2(20));
-
+    ```
+    SQL> <copy>create table test(a number,b varchar2(20));</copy>
+    
     Table created.
-    SQL> insert into test values(1,'line1');
-
+    SQL> <copy>insert into test values(1,'line1');</copy>
+    
     1 row created.
-
-    SQL> commit;
-
+    
+    SQL> <copy>commit;</copy>
+    
     Commit complete.
-
+    
     SQL>  
     ```
 
-3. From cloud side, open the standby database as read only.
+3. From cloud side, connect database as sysdba.
 
     ```
-    [oracle@dbstby ~]$ sqlplus / as sysdba
-
+    [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 07:04:39 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
-
     Connected to:
     Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
+    
+    ```
+    
+    Open the standby database as read only.
 
-    SQL> select open_mode,database_role from v$database;
-
+    ```
+    SQL> <copy>select open_mode,database_role from v$database;</copy>
+    
     OPEN_MODE	     DATABASE_ROLE
     -------------------- ----------------
     MOUNTED 	     PHYSICAL STANDBY
-
-    SQL> alter database open;
-
+    
+    SQL> <copy>alter database open;</copy>
+    
     Database altered.
-
-    SQL> alter pluggable database orclpdb open;
-
+    
+    SQL> <copy>alter pluggable database orclpdb open;</copy>
+    
     Pluggable database altered.
-
-    SQL> show pdbs
-
+    
+    SQL> <copy>show pdbs</copy>
+    
         CON_ID CON_NAME			  OPEN MODE  RESTRICTED
     ---------- ------------------------------ ---------- ----------
       2 PDB$SEED			  READ ONLY  NO
       3 ORCLPDB			  READ ONLY  NO
       
-    SQL> select open_mode,database_role from v$database;
-
+    SQL> <copy>select open_mode,database_role from v$database;</copy>
+    
     OPEN_MODE	     DATABASE_ROLE
     -------------------- ----------------
     READ ONLY WITH APPLY PHYSICAL STANDBY
-
-    SQL> exit
+    
+    SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-    [oracle@dbstby ~]$ 
     ```
+
     If the `OPEN_MODE` is **READ ONLY**, you can run the following command in sqlplus as sysdba, then check the `open_mode` again, you can see the `OPEN_MODE` is **READ ONLY WITH APPLY** now.
+
     ```
-    SQL> alter database recover managed standby database cancel;
-
+    SQL> <copy>alter database recover managed standby database cancel;</copy>
+    
     Database altered.
-
-    SQL> alter database recover managed standby database using current logfile disconnect;
-
+    
+    SQL> <copy>alter database recover managed standby database using current logfile disconnect;</copy>
+    
     Database altered.
-
-    SQL> select open_mode,database_role from v$database;
-
+    
+    SQL> <copy>select open_mode,database_role from v$database;</copy>
+    
     OPEN_MODE	     DATABASE_ROLE
     -------------------- ----------------
     READ ONLY WITH APPLY PHYSICAL STANDBY
     ```
+
+
 
 4. From cloud side, connect as testuser to orclpdb. Check if the test table and record has replicated to the standby.
 
     ```
-    [oracle@dbstby ~]$ sqlplus testuser/testuser@dbstby:1521/orclpdb
-
+    [oracle@dbstby ~]$ <copy>sqlplus testuser/testuser@dbstby:1521/orclpdb</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 07:09:27 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
+    
     Last Successful login time: Sat Feb 01 2020 06:59:56 +00:00
-
+    
     Connected to:
     Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-
-    SQL> select * from test;
-
+    
+    SQL> <copy>select * from test;</copy>
+    
       A B
     ---------- --------------------
       1 line1
-
+    
     SQL> 
     ```
 
@@ -190,8 +204,8 @@ There are several ways to check the lag between the primary and standby.
 
     ```
     <copy>
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
+    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
+    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
     </copy>
     ```
 
@@ -200,8 +214,8 @@ There are several ways to check the lag between the primary and standby.
 2. From on-premise side, run as **oracle** user, download scripts using the command you copied.
 
     ```
-    [oracle@primary ~]$ wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
-    --2020-10-31 02:48:08--  https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
+    [oracle@primary ~]$ wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
+    --2020-10-31 02:48:08--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
     Resolving objectstorage.us-ashburn-1.oraclecloud.com (objectstorage.us-ashburn-1.oraclecloud.com)... 134.70.31.247, 134.70.27.247, 134.70.35.189
     Connecting to objectstorage.us-ashburn-1.oraclecloud.com (objectstorage.us-ashburn-1.oraclecloud.com)|134.70.31.247|:443... connected.
     HTTP request sent, awaiting response... 200 OK
@@ -212,8 +226,8 @@ There are several ways to check the lag between the primary and standby.
     
     2020-10-31 02:48:09 (10.5 MB/s) - ‘workload.sh’ saved [1442/1442]
     
-    [oracle@primary ~]$ wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
-    --2020-10-31 02:48:29--  https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
+    [oracle@primary ~]$ wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
+    --2020-10-31 02:48:29--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/scn.sql
     Resolving objectstorage.us-ashburn-1.oraclecloud.com (objectstorage.us-ashburn-1.oraclecloud.com)... 134.70.35.189, 134.70.31.247, 134.70.27.247
     Connecting to objectstorage.us-ashburn-1.oraclecloud.com (objectstorage.us-ashburn-1.oraclecloud.com)|134.70.35.189|:443... connected.
     HTTP request sent, awaiting response... 200 OK
@@ -227,13 +241,13 @@ There are several ways to check the lag between the primary and standby.
     [oracle@primary ~]$ 
     ```
     
-   
-   
+
+
 3. Change mode of the `workload.sh` file and run the workload. Ignore the error message of drop table. Keep this window open and running for the next few steps in this lab.
 
     ```
-    [oracle@primary ~]$ chmod a+x workload.sh 
-    [oracle@primary ~]$ . ./workload.sh 
+    [oracle@primary ~]$ <copy>chmod a+x workload.sh</copy> 
+    [oracle@primary ~]$ <copy>. ./workload.sh</copy> 
     
       NOTE:
       To break out of this batch
@@ -289,7 +303,7 @@ There are several ways to check the lag between the primary and standby.
 4. From the standby side, connect as **testuser** to orclpdb,  count the records in the sample table several times. using the standby database hostname or public ip address. Compare the record number with the primary side.
 
     ```
-    [oracle@dbstby ~]$ sqlplus testuser/testuser@dbstby:1521/orclpdb
+    [oracle@standby ~]$ <copy>sqlplus testuser/testuser@standby:1521/orclpdb</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Sep 5 09:41:29 2020
     Version 19.10.0.0.0
@@ -302,7 +316,7 @@ There are several ways to check the lag between the primary and standby.
     Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
     
-    SQL> select count(*) from sale_orders;
+    SQL> <copy>select count(*) from sale_orders;</copy>
     
       COUNT(*)
     ----------
@@ -316,26 +330,26 @@ There are several ways to check the lag between the primary and standby.
 5. From standby site, connect as sysdba. Check the Oracle System Change Number (SCN). Compare it with the primary side.
 
     ```
-    SQL> connect / as sysdba
+    SQL> <copy>connect / as sysdba</copy>
     Connected.
-    SQL> SELECT current_scn FROM v$database;
+    SQL> <copy>SELECT current_scn FROM v$database;</copy>
     
     CURRENT_SCN
     -----------
         2784330
     ```
+
    
-   
-   
+
 6. From standby site, query the `v$dataguard_stats` view to check the lag.
 
     ```
-    SQL> set linesize 120;
-    SQL> column name format a25;
-    SQL> column value format a20;
-    SQL> column time_computed format a20;
-    SQL> column datum_time format a20;
-    SQL> select name, value, time_computed, datum_time from v$dataguard_stats;
+    SQL> <copy>set linesize 120;</copy>
+    SQL> <copy>column name format a25;</copy>
+    SQL> <copy>column value format a20;</copy>
+    SQL> <copy>column time_computed format a20;</copy>
+    SQL> <copy>column datum_time format a20;</copy>
+    SQL> <copy>select name, value, time_computed, datum_time from v$dataguard_stats;</copy>
     
     NAME			                VALUE 	             TIME_COMPUTED	      DATUM_TIME
     ------------------------- -------------------- -------------------- --------------------
@@ -349,10 +363,10 @@ There are several ways to check the lag between the primary and standby.
 
    
 
-7. Check lag using Data Guard Broker. Replace `ORCL_nrt1d4` with your standby database unique name.
+7. Check lag using Data Guard Broker.
 
     ```
-    [oracle@dbstby ~]$ dgmgrl sys/Ora_DB4U@orcl
+    [oracle@dbstby ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
     DGMGRL for Linux: Release 19.0.0.0.0 - Production on Sat Sep 5 07:25:52 2020
     Version 19.10.0.0.0
     
@@ -361,9 +375,9 @@ There are several ways to check the lag between the primary and standby.
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> show database ORCL_nrt1d4
+    DGMGRL> <copy>show database ORCL_stby</copy>
     
-    Database - orcl_nrt1d4
+    Database - orcl_stby
     
       Role:               PHYSICAL STANDBY
       Intended State:     APPLY-ON
@@ -395,60 +409,58 @@ Automatic redirection of DML operations to the primary can be configured at the 
 1. From the standby side, connect to orclpdb as **testuser**. Test the DML before and after the DML Redirection is enabled.
 
     ```
-    [oracle@dbstby ~]$ sqlplus testuser/testuser@dbstby:1521/orclpdb
-
+    [oracle@standby ~]$ <copy>sqlplus testuser/testuser@standby:1521/orclpdb</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Sep 5 10:04:04 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2020, Oracle.  All rights reserved.
-
+    
     Last Successful login time: Sat Sep 05 2020 02:09:45 +00:00
-
+    
     Connected to:
     Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-
-    SQL> set timing on
-    SQL> insert into test values(2,'line2');
+    
+    SQL> <copy>set timing on</copy>
+    SQL> <copy>insert into test values(2,'line2');</copy>
     insert into test values(2,'line2')
     *
     ERROR at line 1:
     ORA-16000: database or pluggable database open for read-only access
-
-
     Elapsed: 00:00:00.58
-    SQL> ALTER SESSION ENABLE ADG_REDIRECT_DML;
-
+    SQL> <copy>ALTER SESSION ENABLE ADG_REDIRECT_DML;</copy>
+    
     Session altered.
-
+    
     Elapsed: 00:00:00.00
-    SQL> insert into test values(2,'line2');
-
+    SQL> <copy>insert into test values(2,'line2');</copy>
+    
     1 row created.
-
+    
     Elapsed: 00:00:26.13
-    SQL> commit;
-
+    SQL> <copy>commit;</copy>
+    
     Commit complete.
-
+    
     Elapsed: 00:00:21.12
-    SQL> select * from test;
-
+    SQL> <copy>select * from test;</copy>
+    
       A B
     ---------- --------------------
       2 line2
       1 line1
-
+    
     Elapsed: 00:00:00.03
     SQL> 
+
+
+You may encounter the performance issue when using the DML redirection. This is because each of the DML is issued on a standby database will be passed to the primary database where it is executed. The default Data Guard protection mode is Maximum Performance and the redo transport mode is ASYNC. The session waits until the corresponding changes are shipped to and applied to the standby. In order to improve performance of the DML redirection, you need to switch the redo logfile more frequently on the primary side, or you can change the protection mode to Maximum Availability and the redo transport mode to SYNC - This protection mode provides the highest level of data protection, but it's need the high throughput and low latency network, you can use FastConnect or deploy the Data Guard in different ADs within the same region.
+
+2. From the primary side, connect with Data Guard Broker, check the current protection mode and redo transport mode.
+
     ```
-
-    You may encounter the performance issue when using the DML redirection. This is because each of the DML is issued on a standby database will be passed to the primary database where it is executed. The default Data Guard protection mode is Maximum Performance and the redo transport mode is ASYNC. The session waits until the corresponding changes are shipped to and applied to the standby. In order to improve performance of the DML redirection, you need to switch the redo logfile more frequently on the primary side, or you can change the protection mode to Maximum Availability and the redo transport mode to SYNC - This protection mode provides the highest level of data protection, but it's need the high throughput and low latency network, you can use FastConnect or deploy the Data Guard in different ADs within the same region.
-
-2. From the primary side, connect with Data Guard Broker, check the current protection mode and redo transport mode. Replace the `orcl_nrt1d4` to your standby db unique name.
-
-    ```
-    [oracle@primary ~]$ dgmgrl sys/Ora_DB4U@orcl
+    [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
     DGMGRL for Linux: Release 19.0.0.0.0 - Production on Sun Sep 6 05:09:28 2020
     Version 19.10.0.0.0
     
@@ -457,44 +469,44 @@ Automatic redirection of DML operations to the primary can be configured at the 
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> show configuration
+    DGMGRL> <copy>show configuration</copy>
     
     Configuration - adgconfig
     
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
     Configuration Status:
     SUCCESS   (status updated 20 seconds ago)
-    DGMGRL> show database orcl LogXptMode
+    DGMGRL> <copy>show database orcl LogXptMode</copy>
       LogXptMode = 'ASYNC'
-    DGMGRL> show database orcl_nrt1d4 LogXptMode
+    DGMGRL> <copy>show database orcl_stby LogXptMode</copy>
       LogXptMode = 'ASYNC'
     ```
 
    
 
-3. Switch the redo transport mode and protection mode. Replace the `orcl_nrt1d4` to your standby db unique name.
+3. Switch the redo transport mode and protection mode. 
 
     ```
-    DGMGRL> EDIT DATABASE orcl SET PROPERTY LogXptMode='SYNC';
+    DGMGRL> <copy>EDIT DATABASE orcl SET PROPERTY LogXptMode='SYNC';</copy>
     Property "logxptmode" updated
-    DGMGRL> EDIT DATABASE orcl_nrt1d4 SET PROPERTY LogXptMode='SYNC';
+    DGMGRL> <copy>EDIT DATABASE orcl_stby SET PROPERTY LogXptMode='SYNC';</copy>
     Property "logxptmode" updated
-    DGMGRL> EDIT CONFIGURATION SET PROTECTION MODE AS MAXAVAILABILITY;
+    DGMGRL> <copy>EDIT CONFIGURATION SET PROTECTION MODE AS MAXAVAILABILITY;</copy>
     Succeeded.
-    DGMGRL> show configuration
+    DGMGRL> <copy>show configuration</copy>
     
     Configuration - adgconfig
     
       Protection Mode: MaxAvailability
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -509,17 +521,17 @@ Automatic redirection of DML operations to the primary can be configured at the 
 4. From the standby side, test the DML redirection again. You can see the performance improved.
 
     ```
-    SQL> insert into test values(3,'line3');
+    SQL> <copy>insert into test values(3,'line3');</copy>
     
     1 row created.
     
     Elapsed: 00:00:00.25
-    SQL> commit;
+    SQL> <copy>commit;</copy>
     
     Commit complete.
     
     Elapsed: 00:00:01.07
-    SQL> select * from test;
+    SQL> <copy>select * from test;</copy>
     
           A B
     ---------- --------------------
@@ -527,7 +539,7 @@ Automatic redirection of DML operations to the primary can be configured at the 
           2 line2
           3 line3
     Elapsed: 00:00:00.03
-    SQL> exit
+    SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
     [oracle@dbstby ~]$ 
@@ -535,23 +547,23 @@ Automatic redirection of DML operations to the primary can be configured at the 
 
    
 
-5. From the primary side, in the Data Guard Broker, switch back the protection mode. Replace the `orcl_nrt1d4` to your standby db unique name.
+5. From the primary side, in the Data Guard Broker, switch back the protection mode. 
 
     ```
-    DGMGRL> EDIT CONFIGURATION SET PROTECTION MODE AS MAXPERFORMANCE;
+    DGMGRL> <copy>EDIT CONFIGURATION SET PROTECTION MODE AS MAXPERFORMANCE;</copy>
     Succeeded.
-    DGMGRL> EDIT DATABASE orcl_nrt1d4 SET PROPERTY LogXptMode='ASYNC';
+    DGMGRL> <copy>EDIT DATABASE orcl_stby SET PROPERTY LogXptMode='ASYNC';</copy>
     Property "logxptmode" updated
-    DGMGRL> EDIT DATABASE orcl SET PROPERTY LogXptMode='ASYNC';
+    DGMGRL> <copy>EDIT DATABASE orcl SET PROPERTY LogXptMode='ASYNC';</copy>
     Property "logxptmode" updated
-    DGMGRL> show configuration
+    DGMGRL> <copy>show configuration</copy>
     
     Configuration - adgconfig
     
       Protection Mode: MaxPerformance
       Members:
       orcl        - Primary database
-        orcl_nrt1d4 - Physical standby database 
+        orcl_stby - Physical standby database 
     
     Fast-Start Failover:  Disabled
     
@@ -569,10 +581,10 @@ At any time, you can manually execute a Data Guard switchover (planned event) or
 
 Switchovers are always a planned event that guarantees no data is lost. To execute a switchover, perform the following in Data Guard Broker 
 
-1. Connect DGMGRL from on-premise side, validate the standby database to see if Ready For Switchover is Yes. Replace `ORCL_nrt1d4` with your standby db unique name.
+1. Connect DGMGRL from on-premise side, validate the standby database to see if Ready For Switchover is Yes. 
 
     ```
-    [oracle@primary ~]$ dgmgrl sys/Ora_DB4U@orcl
+    [oracle@primary ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
     DGMGRL for Linux: Release 19.0.0.0.0 - Production on Sat Feb 1 07:21:55 2020
     Version 19.10.0.0.0
 
@@ -581,7 +593,7 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     Welcome to DGMGRL, type "help" for information.
     Connected to "ORCL"
     Connected as SYSDBA.
-    DGMGRL> validate database ORCL_nrt1d4
+    DGMGRL> <copy>validate database ORCL_stby</copy>
 
       Database Role:     Physical standby database
       Primary Database:  orcl
@@ -591,27 +603,27 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
 
       Flashback Database Status:
         orcl       :  On
-        orcl_nrt1d4:  Off
+        orcl_stby:  Off
 
       Managed by Clusterware:
         orcl       :  NO             
-        orcl_nrt1d4:  YES            
+        orcl_stby:  YES            
         Validating static connect identifier for the primary database orcl...
         The static connect identifier allows for a connection to database "orcl".
 
     DGMGRL> 
     ```
 
-2. Switch over to cloud standby database, replace `ORCL_nrt1d4` with your standby db unique name.
+2. Switch over to cloud standby database.
 
     ```
-    DGMGRL> switchover to orcl_nrt1d4
+    DGMGRL> <copy>switchover to orcl_stby</copy>
     Performing switchover NOW, please wait...
-    Operation requires a connection to database "orcl_nrt1d4"
+    Operation requires a connection to database "orcl_stby"
     Connecting ...
-    Connected to "ORCL_nrt1d4"
+    Connected to "ORCL_stby"
     Connected as SYSDBA.
-    New primary database "orcl_nrt1d4" is opening...
+    New primary database "orcl_stby" is opening...
     Operation requires start up of instance "ORCL" on database "orcl"
     Starting instance "ORCL"...
     Connected to an idle instance.
@@ -620,14 +632,14 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     Database mounted.
     Database opened.
     Connected to "ORCL"
-    Switchover succeeded, new primary is "orcl_nrt1d4"
-    DGMGRL> show configuration
+    Switchover succeeded, new primary is "orcl_stby"
+    DGMGRL> <copy>show configuration</copy>
 
     Configuration - adgconfig
 
       Protection Mode: MaxPerformance
       Members:
-      orcl_nrt1d4 - Primary database
+      orcl_stby - Primary database
         orcl        - Physical standby database 
 
     Fast-Start Failover:  Disabled
@@ -641,68 +653,66 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
 3. Check from on-premise side. You can see the previous primary side becomes the new standby side.
 
     ```
-    [oracle@primary ~]$ sqlplus / as sysdba
-
+    [oracle@primary ~]$ <copy>sqlplus / as sysdba</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 10:16:54 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
-
     Connected to:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-
-    SQL> show pdbs
-
+    
+    SQL> <copy>show pdbs</copy>
+    
         CON_ID CON_NAME			  OPEN MODE  RESTRICTED
     ---------- ------------------------------ ---------- ----------
       2 PDB$SEED			  READ ONLY  NO
       3 ORCLPDB			  READ ONLY  NO
-    SQL> select open_mode,database_role from v$database;
-
+    SQL> <copy>select open_mode,database_role from v$database;</copy>
+    
     OPEN_MODE	     DATABASE_ROLE
     -------------------- ----------------
     READ ONLY WITH APPLY PHYSICAL STANDBY
-
+    
     SQL> 
-    ```
+
+
 
 4. Check from cloud side. You can see it's becomes the new primary side.
 
     ```
-    [oracle@dbstby ~]$ sqlplus / as sysdba
-
+    [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
+    
     SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 1 10:20:06 2020
     Version 19.10.0.0.0
-
+    
     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-
-
     Connected to:
     Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.10.0.0.0
-
-    SQL> show pdbs
-
+    
+    SQL> <copy>show pdbs</copy>
+    
         CON_ID CON_NAME			  OPEN MODE  RESTRICTED
     ---------- ------------------------------ ---------- ----------
       2 PDB$SEED			  READ ONLY  NO
       3 ORCLPDB			  READ WRITE NO
-    SQL> select open_mode,database_role from v$database;
-
+    SQL> <copy>select open_mode,database_role from v$database;</copy>
+    
     OPEN_MODE	     DATABASE_ROLE
     -------------------- ----------------
     READ WRITE	     PRIMARY
-
+    
     SQL> 
     ```
+
 
 You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management
-* **Last Updated By/Date** - Minqiao Wang, Nov 2020
-* **Workshop Expiry Date** - Nov 30, 2021
+* **Author** - Minqiao Wang, Oracle China
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 
+    
 
