@@ -8,7 +8,7 @@ In this lab, we will customize the environment that will be used to run the rest
 
 There are three main elements in our environment:
 
-* **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
+* **VCN-DEMORAC** (or another automatically generated name if you run in a sandbox environment): a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
 * **dbrac** : a two-node Database Cloud Service (aka Oracle Base RAC Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
 * **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
@@ -23,7 +23,7 @@ In this lab, you will:
 * Complete the network configuration
 </if>
 <if type="sandbox">
-* Review the network configuration
+* Understand important points in the network configuration
 </if>
 * Configure RAC database services
 * Create a demo schema in the database
@@ -45,13 +45,13 @@ This lab assumes you have:
 
 ## Task 1: Configure the Network for Oracle Net
 
+<if type="sandbox">
+As you are running in a sandbox environment, you should skip this task. Security restrictions in sandbox environments do not allow the creation of Network Security Groups. However, all required ports are open for the workshop to work. You can read the instructions in this task to better understand which ports need to be open and for which purpose.
+</if>
+
   1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
     * It is necessary to **open TCP port 1521** in the VCN to allow the demo application to connect to the database. We can do this by configuring a **Network Security Group Rule** and adding the NSG to the database.
-
-    <if type="sandbox">
-    * *As you are running this workshop in a sandbox environment, the configuration of the Virtual Cloud Network, Network Security Group, and the association between the NSG and the database have been completed automatically. For a better understanding of what was done, follow the instructions in this task without actually creating these components. Changing them will result in errors throughout the workshop.*
-    </if>
 
     * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
 
@@ -205,7 +205,7 @@ This lab assumes you have:
     * It is necessary to **open TCP port 6200** in the VCN to allow **Fast Application Notification Events** to flow from the cluster database to the client application. We can do this by adding a **Network Security Group Rule** to the database NSG.
 
     <if type="sandbox">
-    * *As you are running this workshop in a sandbox, this network configuration has already been done automatically, but you should still follow the instructions in this step to review and understand what was done without actually creating the rule to open port 6200.*
+    * *As you are running this workshop in a sandbox, you should skip this step. The port is open by an automatically created Security List. You can read the instructions in this step to review and understand what normally needs to be done manually to open port 6200.*
     </if>
 
     * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
@@ -423,6 +423,12 @@ This lab assumes you have:
   1. Understand the demo application directory structure
 
 
+  <if type="sandbox">
+  * As you are running this workshop in a sandbox environment, you will have to change the connect strings in SQL and Java files.
+    ***.dnsdemorac.vcndemorac*** will have to be replaced by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID. (2 lower case l followed by reservation number.)
+  </if>
+
+
     * Using noVNC, connect to the remote desktop of the client machine **demotac** as user **oracle**.
 
         ![Remote Desktop](./images/task4/remote-desktop.png " ")
@@ -441,7 +447,9 @@ This lab assumes you have:
         ac/sql       : SQL scripts to be used in next labs
         ```
 
-
+    <if type="sandbox">
+    * As you are running this workshop in a sandbox environment, you should change the connect strings in SQL and Java files before running them. Replace ***.dnsdemorac.vcndemorac*** by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID.
+    </if>
 
   2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
 
@@ -611,6 +619,18 @@ This lab assumes you have:
   3. Update the value of **strScan**
 
     * Verify the value of strScan and change it in MyCUPDemo.java if necessary.
+
+    <if type="sandbox">
+    * As you are running this workshop in a sandbox environment, you should change the connect string in the application code. Replace ***.dnsdemorac.vcndemorac*** by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID. Note the two lower case l.
+    For instance:
+
+    ```
+    //String strScan = "ruby-scan.dnsdemorac.vcndemorac.oraclevcn.com";
+    String strScan = "ruby-scan.pub.ll12345vcn.oraclevcn.com";
+    //String strService = strAlias + ".dnsdemorac.vcndemorac.oraclevcn.com";
+    String strService = strAlias + ".pub.ll12345vcn.oraclevcn.com";
+    ```
+    </if>
 
 
   4. Compile the demo application
