@@ -111,4 +111,4 @@ Click on the link below to download the Resource Manager zip files you need to b
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, September,15th 2022
+* **Last Updated By/Date** - François Pons, March 2024
