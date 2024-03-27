@@ -46,7 +46,7 @@ This lab assumes you have:
 ## Task 1: Configure the Network for Oracle Net
 
 <if type="sandbox">
-As you are running in a sandbox environment, you should skip this task. Security restrictions in sandbox environments do not allow the creation of Network Security Groups. However, all required ports are open for the workshop to work. You can read the instructions in this task to better understand which ports need to be open and for which purpose.
+***As you are running in a sandbox environment, you should skip this task and go directly to Task 2. Security restrictions in sandbox environments do not allow the creation of Network Security Groups. However, all required ports are open for the workshop to work. You can read the instructions in this task to better understand which ports need to be open and for which purpose.***
 </if>
 
   1. Create a **Network Security Group** rule allowing Oracle Net connectivity
@@ -133,6 +133,14 @@ As you are running in a sandbox environment, you should skip this task. Security
 
 
   1. Connect to Cloud shell from the details page of database **dbrac**
+
+    * From the Oracle Cloud web console, go to **Oracle Database**
+
+      ![OCI console menu database](https://oracle-livelabs.github.io/common/images/console/database-basedb.png " ")
+
+    * Select database **dbrac**
+
+      ![Select dbrac database](./images/task1/select-dbrac-database.png " ")
 
     * Click on the Cloud Shell icon from the top right of the OCI console
 
@@ -424,8 +432,12 @@ As you are running in a sandbox environment, you should skip this task. Security
 
 
   <if type="sandbox">
-  * As you are running this workshop in a sandbox environment, you will have to change the connect strings in SQL and Java files.
-    ***.dnsdemorac.vcndemorac*** will have to be replaced by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID. (2 lower case l followed by reservation number.)
+  * ***As you are running this workshop in a sandbox environment, you will have to change the connect strings in SQL and Java files.
+    **.dnsdemorac.vcndemorac** will have to be replaced by **.pub.ll12345vcn** where **12345** is your LiveLab reservation ID. (Note the two lower case **L** followed by reservation number.)
+    The following command may help you to make this change in all the files of the current folder and its subfolders:***
+    ````
+    <copy>grep -lir dnsdemorac.vcndemorac | xargs -i@ sed -i 's/dnsdemorac.vcndemorac/pub.ll12345vcn/g' @</copy>
+    ````
   </if>
 
 
@@ -621,8 +633,8 @@ As you are running in a sandbox environment, you should skip this task. Security
     * Verify the value of strScan and change it in MyCUPDemo.java if necessary.
 
     <if type="sandbox">
-    * As you are running this workshop in a sandbox environment, you should change the connect string in the application code. Replace ***.dnsdemorac.vcndemorac*** by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID. Note the two lower case l.
-    For instance:
+    * ***As you are running this workshop in a sandbox environment, you should change the connect string in the application code. Replace **.dnsdemorac.vcndemorac** by **.pub.ll12345vcn** where **12345** is your LiveLab reservation ID. Note the two lower case L.
+    For instance:***
 
     ```
     //String strScan = "ruby-scan.dnsdemorac.vcndemorac.oraclevcn.com";
