@@ -33,8 +33,8 @@ The labs in this workshop focus on the following:
 
 ## Learn More
 
-* [About Oracle Database 23ai](https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/index.html)
-* [Oracle AI Vector Search](https://docs.oracle.com/en/database/oracle/machine-learning/oml-notebooks/)
+* [About Oracle Database 23ai](https://docs.oracle.com/en/database/oracle/oracle-database/)
+* [Oracle AI Vector Search](https://www.oracle.com/news/announcement/ocw-integrated-vector-database-augments-generative-ai-2023-09-19/)
 
 You may now [proceed to the next lab](#next).
 

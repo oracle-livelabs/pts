@@ -379,9 +379,8 @@ You may now [proceed to the next lab](#next).
 
 **More information on Oracle Database 23ai and Oracle AI Vector Search**
 
-For more information, visit [Algorithm Settings: Neural Network](https://docs.oracle.com/en/database/oracle/oracle-database/21/arpls/DBMS_DATA_MINING.html#GUID-7793F608-2719-45EA-87F9-6F246BA800D4) documentation.
-
-To understand this model, visit the [Neural Network](https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/neural-network.html#GUID-27FE0680-91A9-4F44-B69C-134E3D3BEEC8) page in OML user guide.
+* [About Oracle Database 23ai](https://docs.oracle.com/en/database/oracle/oracle-database/)
+* [Oracle AI Vector Search](https://www.oracle.com/news/announcement/ocw-integrated-vector-database-augments-generative-ai-2023-09-19/)
 
 
 ## Acknowledgements
