@@ -40,7 +40,7 @@ In this lab, you will:
 * Task 3: Look for closest Vectors using alternative Vector distance functions.
 * Task 4: Using shorthand syntax to look for closest Vectors.
 
-### Prerequisites 
+### Prerequisites
 
 This lab assumes you have:
 * An Oracle account
@@ -50,13 +50,13 @@ This lab assumes you have:
 
 ## Task 1: Setup a table with sample Vectors
 
-This lab will create a new table called VT3, however we will be building the VT3 table using the table created in the previous lab that we called VT2. The table will contain Vectors that map to different shapes, colors and sizes as illustrated in the following graphic *(figure 1)* below: 
+This lab will create a new table called VT3, however we will be building the VT3 table using the table created in the previous lab that we called VT2. The table will contain Vectors that map to different shapes, colors and sizes as illustrated in the following graphic *(figure 1)* below:
 
 
  ![Vector Graph 1](images/lab5task00g.png)
 Figure 1.
 
-1. Create a table to store the Vectors 
+1. Create a table to store the Vectors
 
     ```
       <copy>DROP TABLE IF EXISTS vt3 ;
@@ -66,7 +66,7 @@ Figure 1.
       SELECT * FROM vt3 ORDER BY 1; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 5 Task 1](images/lab5task101.png)
 
@@ -96,7 +96,7 @@ Figure 1.
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 5 Task 2 Step 1](images/lab5task201.png)
 
@@ -114,7 +114,7 @@ Figure 1.
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 2 Step 2](images/lab5task202.png)
 
@@ -131,7 +131,7 @@ Figure 1.
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 5 Task 2 Step 3](images/lab5task203.png)
 
@@ -149,7 +149,7 @@ Figure 1.
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 2 Step 4](images/lab5task204.png)
 
@@ -179,7 +179,7 @@ Other variations of distance functions include:
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
   ![Lab 5 Task 3 Step 1](images/lab5task301.png)
 
@@ -197,7 +197,7 @@ Other variations of distance functions include:
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 3 Step 2](images/lab5task302.png)
 
@@ -214,7 +214,7 @@ Other variations of distance functions include:
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 3 Step 3](images/lab5task303.png)
 
@@ -230,7 +230,7 @@ Other variations of distance functions include:
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 3 Step 4](images/lab5task304.png)
 
@@ -256,11 +256,11 @@ It is also possible to use shorthand syntax to call a specific Vector distance f
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 4 Step 1](images/lab5task401.png)
 
-  
+
 
 2. Look for the 4 closest vectors to (16,4) using **<=>** as the vector distance function.
 
@@ -271,11 +271,11 @@ It is also possible to use shorthand syntax to call a specific Vector distance f
     ```
       <copy>SELECT id, vsize, shape, color
       FROM   vt3
-      ORDER  BY vector('[16, 4]') <=> v 
+      ORDER  BY vector('[16, 4]') <=> v
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 4 Step 2](images/lab5task402.png)
 
@@ -289,11 +289,11 @@ It is also possible to use shorthand syntax to call a specific Vector distance f
     ```
       <copy>SELECT id, vsize, shape, color
       FROM   vt3
-      ORDER  BY vector('[16, 4]') <#> v 
+      ORDER  BY vector('[16, 4]') <#> v
       FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 5 Task 4 Step 3](images/lab5task403.png)
 
@@ -307,13 +307,13 @@ You have also seen how it is possible to call the Vector distance function using
 In addition to supporting different Vector Distance functions: Cosine Similarity, Dot Product, Euclidean, Manhattan Distance and Hamming Distance; Oracle gives you four approaches to search for the nearest Vector distance when using Euclidean as the distance function: Euclidean, Euclidean Squared, L2\_Distance and Shorthand.
 
 The vector\_distance(v1, v2, distance\_function) is the most general purpose syntax for Vector distances.
- 
+
 There is no right or wrong syntax for vector distances. There is also no difference in performance between the different vector distance syntaxes. You should use the syntax that you are most comfortable with.
- 
+
 
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
+* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 

@@ -4,7 +4,7 @@
 
 As we've already seen, the vector_distance() function orders results by distance. It is also possible to add additional predicates to the SQL WHERE clause to filter the results of a Similarity Search. Being able to add relational filters and table joins is a very powerful feature.
 
-In this lab we see how Vector_Distance() can be used in combination with other SQL WHERE predicates. 
+In this lab we see how Vector_Distance() can be used in combination with other SQL WHERE predicates.
 
 
 ------------
@@ -16,7 +16,7 @@ Estimated Time: 15 minutes
 
 In this lab, you will:
 * Task 1: Setup a table with Vectors to be used in this lab.  
-* Task 2: Look for closest Vectors to a given Vector using relational filters. 
+* Task 2: Look for closest Vectors to a given Vector using relational filters.
 
 This lab assumes you have:
 * An Oracle account
@@ -26,13 +26,13 @@ This lab assumes you have:
 
 ## Task 1: Setup a table with sample Vectors
 
-In this lab we will create a new table called VT2, however we will be building the VT2 table using the table created in the previous lab called VT1. The first step in this Lab is to create a table with Vectors to map different shapes, colors and sizes as illustrated in the following graphic *(figure 1)* below: 
+In this lab we will create a new table called VT2, however we will be building the VT2 table using the table created in the previous lab called VT1. The first step in this Lab is to create a table with Vectors to map different shapes, colors and sizes as illustrated in the following graphic *(figure 1)* below:
 
 
 ![Vector Graph Figure 1](images/lab4task00g.png)
 Figure 1.
 
-1. Create a table to store the Vectors 
+1. Create a table to store the Vectors
 
     ```
       <copy>DROP TABLE IF EXISTS vt2 ;
@@ -47,7 +47,7 @@ Figure 1.
        DESC vt2;  </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 4 Task 1 Step 1](images/lab4task101.png)
 
@@ -105,7 +105,7 @@ Figure 1.
        COMMIT; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 1 - Sizes](images/lab4task102a.png)
  ![Lab 4 Task 1 - Shapes](images/lab4task102b.png)
@@ -114,17 +114,17 @@ Figure 1.
 3. Confirm the updates have been correctly applied to table vt2.
 
     ```
-       <copy>SELECT id, vsize, shape, color, v 
+       <copy>SELECT id, vsize, shape, color, v
        FROM   vt2
        ORDER  BY id; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 1 Step 3](images/lab4task103.png)
 
 
-4. Display a summarized breakdown of the different Shapes, Sizes and Colors for the table vt2. 
+4. Display a summarized breakdown of the different Shapes, Sizes and Colors for the table vt2.
 
     ```
        <copy>SELECT vsize, count(vsize)
@@ -141,7 +141,7 @@ Figure 1.
     ```
 
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 1 Step 4](images/lab4task104.png)
 
@@ -153,15 +153,15 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
 
 
      The intent of this query is to retrieve the following Vectors from the graph *(figure 2)* below. You should also notice that the query will artificially return the IDs from a cluster.  :
-    
-    
+
+
  ![Lab 4 Figure 2](images/lab4task201g.png)
     Figure 2.
-   
+
     Enter the following Query:
 
     ```
-       <copy>SELECT id, vsize, shape, color, 
+       <copy>SELECT id, vsize, shape, color,
               to_number(vector_distance(vector('[16, 3]'), v)) distance
        FROM   vt2
        WHERE  id > 30 AND id < 40
@@ -169,7 +169,7 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 2 Step 1](images/lab4task201.png)
 
@@ -180,11 +180,11 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
 
     ![Lab 4 Figure 3](images/lab4task202g.png)
     Figure 3.
-   
+
     Enter the following Query:
 
     ```
-       <copy>SELECT id, vsize, shape, color, 
+       <copy>SELECT id, vsize, shape, color,
               to_number(vector_distance(vector('[16, 3]'), v)) distance
        FROM   vt2
        WHERE  id > 30 AND id < 40
@@ -194,7 +194,7 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
     ```
 
 
-    You should see: 
+    You should see:
 
     ![Lab 4 Task 2 Step 2](images/lab4task202.png)
 
@@ -218,7 +218,7 @@ Figure 3.
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 2 Step 3](images/lab4task203.png)
 
@@ -243,7 +243,7 @@ Figure 3.
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 4 Task 2](images/lab4task204.png)
 
@@ -269,7 +269,7 @@ Figure 3.
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 4 Task 2](images/lab4task205.png)
 
@@ -277,7 +277,7 @@ Figure 3.
 6. Look for the ten closest Vectors to (6,8) filtered by Color, Shape and Size.
 
     Once again we do not care about the actual distance, instead we care about the IDs of the Vectors with the least (or closest) distance to (6,8) that are Small Red Ovals.
-   
+
     You will also notice that this query only returns 4 Vectors as there are only 4 Small Red Ovals in the graph.
 
     The intent of this query is to retrieve the following Vectors from the graph *(figure 6)* below:
@@ -297,14 +297,14 @@ Figure 3.
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
  ![Lab 4 Task 2](images/lab4task206.png)
 
 7. Look for the ten closest Vectors to (6,8) filtered by Color, Shape and Size as well as having an ID greater than 10.
 
     Once again we do not care about the actual distance, instead we care about the IDs of the Vectors with the least (or closest) distance to (6,8) that are Small Red Ovals with an ID higher than 10.
-   
+
     You will also notice that this query only returns 3 Vectors as there are only 3 Small Red Ovals in the graph with ID higher than 10.
 
     The intent of this query is to retrieve the following Vectors from the graph *(figure 6)* below:
@@ -325,7 +325,7 @@ Figure 3.
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
-    You should see: 
+    You should see:
 
     ![Lab 4 Task 2 Step 7](images/lab4task207.png)
 
@@ -343,7 +343,7 @@ By using *SQL WHERE* clauses, you can further filter the results of a similarity
 
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
+* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 
