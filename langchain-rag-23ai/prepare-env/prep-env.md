@@ -17,7 +17,7 @@ In this lab, you will:
 
 ## Task 1: Retrieve the Compartment OCID
 
-1. On LiveLabs before launching remote desktop, you should have copied the Compartment OCID and save it.
+1. On LiveLabs before launching remote desktop, you should have copied the Compartment OCID and saved it.
 
  ![LiveLabs launch lab](images/lllaunchlab.png)
 
