@@ -252,11 +252,11 @@ Some examples of the number of dimensions for vector embeddings:
 - Cohere Embed-English-Light-v2.0 = 1024 dimensions
 - Cohere Embed-Multilingual-v2.0  = 768 dimensions
 - open-source all-MiniLM-L6-v2    = 384 dimensions
-
 1. Let's start by seeing how easy it is to create a table with a fixed number and number-format Vector.
 
 
     ```
+
       <copy>CREATE TABLE IF NOT EXISTS t4
                     ( v   VECTOR(3, FLOAT32) );
 
@@ -425,8 +425,8 @@ All three of the statements will throw the following Oracle error message:
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
+* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
