@@ -313,9 +313,10 @@ There is no right or wrong syntax for vector distances. There is also no differe
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
+* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
+
 
 ## Acknowledgements
 * **Author** - Doug Hood, Consulting Member of Technical Staff
