@@ -66,6 +66,8 @@ Let's import the libraries.
 
  ![Run code in Jupyter](images/selectcodecellrun.png) 
 
+ You may get a warning message as shown above. You can ignore this and click **Run** to proceed.
+
 ```python
 # Import libraries and modules
 
@@ -251,10 +253,10 @@ Note: Embedding models are used to vectorize data. To learn more about embedding
 
 **Choose an LLM to generate your response** 
 
-You have 3 choices in this lab. Choose only one, but you can go back and choose a different one to see its response. Just go back to the LLM cell and run it. Note: For OpenAI, you need to get an API key from openai.com.
+You have 3 choices in this lab. Choose only one, but you can go back and choose a different one to see its response. Just go back to the LLM cell and run it. Note: For OpenAI, you CANNOT run this in the LiveLabs environment.  This sample code is for informational purposes so you can run this example in your own environment.
 
 * Choice 1 - OCI GenAI LLM with meta.llama-2.70b-chat
-* Choice 2 - OpenAI ChatGPT 3.5 (Requires OpenAI API key)
+* Choice 2 - OpenAI ChatGPT 3.5 (CANNOT run in this LiveLabs environment)
 * Choice 3 - OCI GenAI LLM with Cohere Command
 
 Note: To learn more about using other LLMs and accessing LLMs with secure API keys, see the LiveLabs on LLMs for Oracle AI Vector Search.
@@ -384,5 +386,5 @@ You may now [proceed to the next lab](#next).
 
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan, Doug Hood, Rajeev Rumale
+* **Authors** - Vijay Balebail, Milton Wan, Douglas Hood, Rajeev Rumale
 * **Last Updated By/Date** - Milton Wan, April 2024

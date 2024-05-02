@@ -17,17 +17,21 @@ In this lab, you will:
 
 ## Task 1: Retrieve the Compartment OCID
 
-1. On LiveLabs before launching remote desktop, copy the Compartment OCID and save it, then Launch Remote Desktop.
+1. On LiveLabs before launching remote desktop, you should have copied the Compartment OCID and save it.
 
  ![LiveLabs launch lab](images/lllaunchlab.png)
 
-2. Once your noVNC session has started open the **.env** file from the terminal with vi editor in the /home/oracle/AIdemo directory.
+2. Once your noVNC session has started copy your OCID to the noVNC Clipboard.
+   
+  ![LiveLabs launch lab](images/copyocid.png) 
+
+3. Open the **.env** file from the terminal with vi editor in the /home/oracle/AIdemo directory.
 
  ![vi editor](images/vienvpwd.png)
 
 3. In vi editor, position the cursor right after the variable COMPARTMENT_OCID=
 
-4. Hit **ESC** key in vi and type the **i** key to go to insert mode.  Insert the OCID you copied to the variable COMPARTMENT_OCID.  If there is already a value there, remove it and add yours as shown.
+4. Hit **ESC** key in vi and type the **i** key to go to edit mode.  Delete the existing key if there is one.  Insert the OCID you copied to the Clipboard to COMPARTMENT_OCID=.  
 
 5. Hit **ESC** key again, and type **:wq** to save the .env file.
 
