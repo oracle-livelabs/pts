@@ -1,4 +1,4 @@
-# 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain
+# AI Vector Search - 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain
 
 ## About this Workshop
 

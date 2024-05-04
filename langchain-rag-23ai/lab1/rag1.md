@@ -28,9 +28,11 @@ In this lab, you will:
 
 ## Task 1: Launch Jupyter Lab Notebook
 
-1. From the Activities menu, open a terminal window
+1. From the Activities menu, open a terminal window.
 
-2. From the terminal OS prompt type: jupyter notebook.
+ ![Open terminal](images/browser.png)
+
+2. From the terminal OS prompt type the following:
 
 ```
     $ cd /home/oracle/AIdemo
@@ -40,13 +42,10 @@ In this lab, you will:
  ![Run Jupyter](images/runjupyter.png)
 
 
-1. Open the saved notebook RAG_with_Oracle23ai_gold1.ipynb. You can double click the file or right-click and select **Open**.
+1. Open the notebook **RAG_with_Oracle23ai_gold1.ipynb**. You can double click or right-click and select **Open**.
    
- ![Open RAG notebook](images/openragwithoracle23ai.png)
+![Open RAG notebook](images/openragwithoracle23ai.png)
 
- The window with the Python code for the RAG application should look like this. 
-
- ![RAG notebook opened](images/cellwithcode.png)
 
 If you want to enlarge the window and have larger fonts, you can zoom in with the browser.
 
@@ -64,9 +63,11 @@ Let's import the libraries.
 
 1. Select the code snippet and click **Run** in Jupyter. A blue line indicates the cell is selected.
 
- ![Run code in Jupyter](images/selectcodecellrun.png) 
+ ![Select code in Jupyter](images/selectcell.png) 
 
- You may get a warning message as shown above. You can ignore this and click **Run** to proceed.
+ You may get a warning message as shown below. You can ignore this and click **Run** to proceed.
+
+ ![ignore warning](images/ignorewarning1.png) 
 
 ```python
 # Import libraries and modules
@@ -253,7 +254,8 @@ Note: Embedding models are used to vectorize data. To learn more about embedding
 
 **Choose an LLM to generate your response** 
 
-You have 3 choices in this lab. Choose only one, but you can go back and choose a different one to see its response. Just go back to the LLM cell and run it. Note: For OpenAI, you CANNOT run this in the LiveLabs environment.  This sample code is for informational purposes so you can run this example in your own environment.
+You have 3 choices in this lab. Choose only one, but you can go back and choose a different one to see its response. Just go back to the LLM cell and run it. 
+Note: For OpenAI, you **CANNOT** run this in the LiveLabs environment.  This sample code is for informational purposes so you can run this example in your own environment.
 
 * Choice 1 - OCI GenAI LLM with meta.llama-2.70b-chat
 * Choice 2 - OpenAI ChatGPT 3.5 (CANNOT run in this LiveLabs environment)
