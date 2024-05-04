@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain",
+  "workshoptitle": "AI Vector Search - 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain",
   "help": "livelabs-help-db_us@oracle.com",
   "variables": ["../../variables/variables.json",
       "../../variables/variables-in-another-file.json"],
@@ -13,11 +13,6 @@
         "title": "Setup the environment",
         "description": "Verify Setup of compute instance",
         "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
-      },
-      {
-      "title": "Pre-Lab: Lab Preparation",
-      "description": "Set the OCID in environment variable to access OCI GenAI service.",
-      "filename": "../../prepare-env/prep-env.md"
       },
       {
       "title": "Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and Langchain",
