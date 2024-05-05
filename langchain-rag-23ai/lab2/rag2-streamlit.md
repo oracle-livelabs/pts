@@ -34,19 +34,17 @@ Your application will now be running.  Simply follow the UI, load a PDF document
 
 ![Streamlit UI](images/streamlitocigenai.png)
 
-A few suggestions for the questions are listed below. You can copy and paste into the question field.
+A few suggestions for the questions are listed below. 
 
-For the Oracle Database 23ai documentation:
-- What are the new features in Oracle Database 23ai
-- Tell me more about Oracle AI Vector Search
+For the Oracle Database 23c documentation:
+- What are the new features in Oracle Database 23c
+- Tell me more about new enhancement to SQL
+- Tell me more about JSON Relational Duality
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results
 - What did Larry say in the Oracle Fiscal Year 2024 Quarter 2 financial results
 
-LLMs are multi-lingual, for the Korean version of Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
-- Oracle 2024년 2분기 재무 결과 요약
-- Larry는 Oracle 회계연도 2024년 2분기 재무 결과에서 무엇을 말했나요?
 
 **Code for Streamlit application**
 

@@ -28,7 +28,7 @@ In this lab, you will:
 
 ## Task 1: Launch Jupyter Lab Notebook
 
-1. From the Activities menu, open a terminal window.
+1. From the Activities menu, open a terminal window if it is not already opened.
 
  ![Open terminal](images/browser.png)
 
