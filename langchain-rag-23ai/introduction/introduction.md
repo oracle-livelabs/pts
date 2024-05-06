@@ -30,14 +30,16 @@ The labs in this workshop focus on the following:
 
 - An Oracle LiveLabs Account
 
-
 ## Learn More
 
+See below for more information on Oracle Database 23ai and Oracle AI Vector Search
+
 * [About Oracle Database 23ai](https://docs.oracle.com/en/database/oracle/oracle-database/)
-* [Oracle AI Vector Search](https://www.oracle.com/news/announcement/ocw-integrated-vector-database-augments-generative-ai-2023-09-19/)
+* [Oracle AI Vector Search](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
+
 
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Authors** - Milton Wan, Vijay Balebail
+* **Authors** - Milton Wan, Vijay Balebail, Douglas Hood
 * **Last Updated By/Date** -  Milton Wan, April 2024

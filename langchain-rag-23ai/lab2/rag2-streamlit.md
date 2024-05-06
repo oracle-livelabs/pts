@@ -6,7 +6,7 @@ Estimated Time: 5 min
 
 ### Objectives
 
-In this lab you will run the application with a UI using Streamlit, load a PDF document, and ask a question in the prompt.  This is the same RAG application as the previous lab but demonstrates use of a user interface where you can select a PDF document to load.
+In this lab you will run the RAG application interactively using the Streamlit user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
 
 ### Prerequisites
 
@@ -26,24 +26,35 @@ In this lab you will run the application with a UI using Streamlit, load a PDF d
     $ streamlit run genai.py
     ```
 
-3. Launch a browser from this same virtual environment, or open a tab with existing browser.  To launch a browser click on the Activities menu and select Firefox or Chrome.
+3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
 
 4. Enter **localhost:8501** for the URL in the browser.
    
-Your application will now be running.  Simply follow the UI, load a PDF document, and ask a question of the document.  The LLM will answer the question and respond with context from the document.  This application follows the same 7 essential RAG steps from the previous lab.
+Your application will now be running.  Simply follow the UI.
+
+5. Click on the **Browse files** button and load a PDF document.
+
+After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
 
 ![Streamlit UI](images/streamlitocigenai.png)
 
-A few suggestions for the questions are listed below. 
+A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
 
-For the Oracle Database 23c documentation:
-- What are the new features in Oracle Database 23c
+6. Type a question.
+
+The LLM will answer the question and respond with context stored in Oracle Database 23ai.  
+
+**Suggestions**
+ For the Oracle Database 23ai documentation:
+- What are the new features in Oracle Database 23ai
+- Tell me more about AI Vector Search
 - Tell me more about new enhancement to SQL
 - Tell me more about JSON Relational Duality
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results
 - What did Larry say in the Oracle Fiscal Year 2024 Quarter 2 financial results
+
 
 
 **Code for Streamlit application**
@@ -56,8 +67,13 @@ Now check out the application code using the Streamlit UI. From a terminal windo
     $ more genai.py
 ```
 
-Note the additional libraries and **st** objects for Streamlit.
+Note the additional imported libraries and **st** objects for Streamlit.
 But essentially the code is the same 7 steps for building a RAG application with Oracle AI Vector Search and LangChain.
+
+### Conclusion
+
+By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+
 
 **Completed. Thanks for running the lab.**
 
