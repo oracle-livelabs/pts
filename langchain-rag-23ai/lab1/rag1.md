@@ -197,7 +197,7 @@ We print the first chunk for your feedback.  You can also change the chunk size 
 ```
 **RAG Step 4 - Set up Oracle AI Vector Search and insert the embedding vectors**
 
-The embedding model used in this lab is **all-MiniLM-L6-v2** from HuggingFace.  **Docs** will point to the text chunks.  The connection string to the database is in the object **conn23c**.  The table to store the vectors and metadata are in **MY_DEMOOCI**.  We use **MAX_INNER_PRODUCT** as the algorithm for the nearest neighbor search.
+The embedding model used in this lab is **all-MiniLM-L6-v2** from HuggingFace.  **Docs** will point to the text chunks.  The connection string to the database is in the object **conn23c**.  The table to store the vectors and metadata are in **MY_DEMO4**.  We use **DOT_PRODUCT** as the algorithm for the nearest neighbor search.
 Note: Embedding models are used to vectorize data. To learn more about embedding models, see the LiveLabs on Oracle AI Vector Search.
 
 8. Click **Run** to execute the code.
@@ -209,9 +209,9 @@ Note: Embedding models are used to vectorize data. To learn more about embedding
       model_4db = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
       # Configure the vector store with the model, table name, and using the indicated distance strategy for the similarity search and vectorize the chunks
-      #knowledge_base = OracleVS.from_documents(docs, model_4db, client=conn23c, table_name="MY_DEMO4", distance_strategy="DistanceStrategy.DOT_PRODUCT")
-      s1time = time.time()     
-      knowledge_base = OracleVS.from_documents(docs, model_4db, client=conn23c, table_name="MY_DEMOOCI", distance_strategy="DistanceStrategy.MAX_INNER_PRODUCT")
+      s1time = time.time()
+      knowledge_base = OracleVS.from_documents(docs, model_4db, client=conn23c, table_name="MY_DEMO4", distance_strategy="DistanceStrategy.DOT_PRODUCT")     
+      #knowledge_base = OracleVS.from_documents(docs, model_4db, client=conn23c, table_name="MY_DEMOOCI", distance_strategy="DistanceStrategy.MAX_INNER_PRODUCT")
       s2time =  time.time()      
       print( f"Vectorizing and inserting chunks duration: {round(s2time - s1time, 1)} sec.")
 
