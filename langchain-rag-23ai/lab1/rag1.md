@@ -161,11 +161,11 @@ The document in our use case is in PDF format. We are loading a PDF document and
     # RAG Step 2 - Transform the document to text
 
     if pdf is not None:
-      print("Transforming your document to text, this may take a few seconds")
+      print("Transforming the PDF document to text...")
     text=""
     for page in pdf.pages:
         text += page.extract_text()
-    print("The PDF document has been transformed to text")
+    print("You have transformed the PDF document to text format")
         
 ```
 
