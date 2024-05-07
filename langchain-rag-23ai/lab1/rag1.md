@@ -32,17 +32,14 @@ In this lab, you will:
 
  ![Open terminal](images/browser.png)
 
-2. From the terminal OS prompt type the following:
+2. From the terminal OS prompt type the following to launch jupyter notebook:
 
 ```
     $ cd /home/oracle/AIdemo
     $ jupyter notebook
 ```
 
- ![Run Jupyter](images/runjupyter.png)
-
-
-1. Open the notebook **"RAG_with_Oracle23ai_gold1.ipynb"**. You can double click or right-click and select **Open**.
+3. Open the notebook **RAG\_with_Oracle23ai_gold1.ipynb**. You can double click or right-click and select **Open**.
    
 ![Open RAG notebook](images/openragwithoracle23ai.png)
 
@@ -110,7 +107,7 @@ def chunks_to_docs_wrapper(row: dict) -> Document:
 print("Successfully defined metadata wrapper")
 ```
 
-1. This code loads the environment variables and connects to Oracle Database 23ai with the credentials and connection string.    Select the code snippet and click **Run**.
+3. This code loads the environment variables and connects to Oracle Database 23ai with the credentials and connection string.    Select the code snippet and click **Run**.
 
 ```python
 # Load environment variables
@@ -322,7 +319,7 @@ Note: To learn more about using other LLMs and accessing LLMs with secure API ke
 
 ```
 
-1.    The code below builds the prompt template to include both the question and the context, and instantiates the knowledge base class to use the retriever to retrieve context from Oracle Database 23ai. Click **Run** to execute the code.
+13.    The code below builds the prompt template to include both the question and the context, and instantiates the knowledge base class to use the retriever to retrieve context from Oracle Database 23ai. Click **Run** to execute the code.
 
 ```python
 # Set up the template for the questions and context, and instantiate the database retriever object
@@ -336,7 +333,7 @@ Note: To learn more about using other LLMs and accessing LLMs with secure API ke
 
 This is the key part of the RAG application.  It is the LangChain pipeline that chains all the components together to produce an LLM response with context.  The chain will embed the question as a vector.  This vector will be used to search for other vectors that are similar.  The top similar vectors will be returned as text chunks (context).  Together the question and the context will form the prompt to the LLM for processing.  And ultimately generating the response.  A detailed explanation of the chain follows the code.
 
-1.  The code defines the RAG chain process and invokes the chain.  Click **Run** to execute the code.
+14.  The code defines the RAG chain process and invokes the chain.  Click **Run** to execute the code.
 
 ```python
         # RAG Steps 6 and 7 Chain the entire process together, retrieve the context, construct the prompt with the question and context, and pass to LLM for the response
