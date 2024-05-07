@@ -40,11 +40,12 @@ After a few seconds the PDF document will be loaded, transformed to text, chunke
 
 A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
 
-6. Type a question.
+6. Type a question and hit return.
 
-The LLM will answer the question and respond with context stored in Oracle Database 23ai.  
+In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.  
 
 **Suggestions**
+
  For the Oracle Database 23ai documentation:
 - What are the new features in Oracle Database 23ai
 - Tell me more about AI Vector Search
