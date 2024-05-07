@@ -39,7 +39,7 @@ In this lab, you will:
     $ jupyter notebook
 ```
 
-3. Open the notebook **RAG\_with_Oracle23ai_gold1.ipynb**. You can double click or right-click and select **Open**.
+3. Open the notebook **RAG\_with\_Oracle23ai\_gold1.ipynb**. You can double click or right-click and select **Open**.
    
 ![Open RAG notebook](images/openragwithoracle23ai.png)
 
