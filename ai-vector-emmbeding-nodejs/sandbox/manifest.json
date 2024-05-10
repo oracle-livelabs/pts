@@ -20,7 +20,6 @@
             "filename": "../../labs/labs.md",
             "type": {
                     "Cohere" : "Cohere",
-                    "OpenAI" : "OpenAI",
                     "SentenceTransformers" : "SentenceTransformers"
                     }
         }
