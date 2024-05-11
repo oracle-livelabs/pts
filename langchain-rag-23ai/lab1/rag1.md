@@ -376,10 +376,15 @@ Click **Run** to execute the congrats code.
         print("Congratulations! You've completed your RAG application with AI Vector Search in Oracle Database 23ai using LangChain")
 ```
 
+### Conclusion
+
+By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+
 
 You may now [proceed to the next lab](#next).
 
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan, Douglas Hood, Rajeev Rumale
-* **Last Updated By/Date** - Milton Wan, April 2024
+* **Authors** - Vijay Balebail, Milton Wan
+* **Contributors** - Douglas Hood, Rajeev Rumale
+* **Last Updated By/Date** -  Milton Wan, May 2024
