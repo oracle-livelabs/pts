@@ -1348,6 +1348,6 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 * [www.sbert.net](https://www.sbert.net/) 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager, Zackary Rice, Software Developer
-* **Contributors** - Sean Stacey, Outbound Product Manager
+* **Author** - Zackary Rice, Software Developer
+* **Contributors** - Sean Stacey, Outbound Product Manager, Doug Hood, Product Manager
 * **Last Updated By/Date** - Zackary Rice, April 2024
