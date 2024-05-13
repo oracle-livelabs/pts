@@ -170,9 +170,7 @@ There are many different embedding models. At the time of this lab creation:
 In this workshop you will have an opportunity to use the following vector embedding models from:
 
 * Lab 1. Cohere
-* Lab 2. OpenAI
-* Lab 3. Sentence Transformers from Hugging Face
-* Lab 4. FastEmbed 
+* Lab 2. Sentence Transformers from Hugging Face
 
  
  
@@ -182,7 +180,6 @@ In this workshop you will have an opportunity to use the following vector embedd
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
-* [OpenAI embedding models](https://openai.com/blog/new-embedding-models-and-api-updates)
 * [Cohere embedding models](https://txt.cohere.com/introducing-embed-v3/)
 * [ONNX runtime information](https://onnxruntime.ai/)
 * [Information on Xenova Transformer.js](https://huggingface.co/docs/transformers.js/en/index)

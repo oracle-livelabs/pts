@@ -22,8 +22,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
   1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Cohere embedding model libraries that we just installed.
 
-   While logged into your Operating System as the Oracle user, create a file called *vectorizetableCohere.js* and paste the following contents into the file.
-
+   The file *vectorizetableCohere.js* is already on your machine. Below is the contents of the file.
 
     ```
       <copy>
@@ -170,7 +169,7 @@ In this lab, you will see the following Vector operations using nodejs:
       </copy>
     ```
 
-2. now you are ready to run the *vectorizetableCohere.js* nodejs program. This can be done by performing the following-  
+2. now you are ready to run the *vectorizetableCohere.js* nodejs program. This can be done by performing the following:  
 
     ```
       <copy>
@@ -178,7 +177,7 @@ In this lab, you will see the following Vector operations using nodejs:
       </copy>
     ```
 
-    When the program finishes running, you should see something similar to the following-
+    When the program finishes running, you should see something similar to the following:
 
     ![Lab 1 Task 2 Step 3](images/nodejscohere03.png =60%x*)
 
@@ -205,7 +204,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see:
 
-    ![Lab 1 Task 2 Step 4](images/nodejscohere04.png)
+    ![Lab 1 Task 2 Step 4](images/nodejscohere04.png =60%x*)
 
 
     3.c. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
@@ -233,7 +232,7 @@ In this lab, you will see the following Vector operations using nodejs:
   So far we have vectorized the data in the *MY\_DATA* table using the OCI generative ai Cohere embedding model, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to OCI generative ai to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a nodejs program to do this.
 
 
-   While logged into your Operating System as the Oracle user, create a file called *similaritysearchCohere.js* and paste the following contents into the file.
+   The file *similaritysearchCohere.js* is already on your machine. Below is the contents of the file.
 
     ```
       <copy>
@@ -457,7 +456,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see the following:
 
-    ![Lab 1 Task 3 Step 2](images/nodejscohere06.png)
+    ![Lab 1 Task 3 Step 2](images/nodejscohere06.png =60%x*)
 
     The first thing you should notice is that the embedding model: "embed-english-light-v3.0" being used in the similarity search matches the embedding model that we used to Vectorize the data in the MY\_DATA table. You will also notice:
 
@@ -471,7 +470,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see something similar to:
 
-    ![Lab 1 Task 3 Step 3](images/nodejscohere07.png)
+    ![Lab 1 Task 3 Step 3](images/nodejscohere07.png =60%x*)
 
     It's possible that your times will be different to ours, as the time includes the network roundtrip REST call. With that being the case, we can see that the first operation is to vectorize our phrase, in this case "cars", and that it took 0.194 seconds.
 
@@ -486,7 +485,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see something similar to:
 
-    ![Lab 1 Task 3 Step 4](images/nodejscohere07a.png)
+    ![Lab 1 Task 3 Step 4](images/nodejscohere07a.png =60%x*)
 
     This time, the output does not appear to have the same level of accuracy as "cats and mice" are often used in the same context, there is some correlation between the two animals. But finding a similarity between cats and oranges could be considered a stretch.
 
@@ -498,7 +497,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see something similar to:
 
-    ![Lab 1 Task 3 Step 5](images/nodejscohere08.png)
+    ![Lab 1 Task 3 Step 5](images/nodejscohere08.png =60%x*)
 
     In both cases the query phrases we enter are not actually in the data set themselves, but the connection or correlation is apparent. It is important to understand that the search is not an exact or substring search for what is in the result set. Instead the results are looking for similar data based on the text being vectorized.
     **or**
@@ -509,7 +508,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
    You should see something similar to:
 
-   ![Lab 1 Task 3 Step 6](images/nodejscohere09.png)
+   ![Lab 1 Task 3 Step 6](images/nodejscohere09.png =60%x*)
 
     This phrase directs our similarity search to information related to New York City - and you should notice that we do not see "Buffalo" this time. But you may also notice that we see four of the five boroughs: "Bronx" , "Brooklyn", "Manhattan" and "Queens". But we see "Harlem" and not "Staten Island". Harlem is a neighborhood in New York City and not a borough.
 
@@ -520,7 +519,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
    You should see something similar to:
 
-   ![Lab 1 Task 3 Step 7](images/nodejscohere10.png)
+   ![Lab 1 Task 3 Step 7](images/nodejscohere10.pngs=60%x*)
 
 
     The word "Bombay" does not appear in our data set, but the results related to Mumbai are correct because "Bombay" is the former name for "Mumbai", and as such there is a strong correlation between the two names for the same geographic location.
@@ -531,7 +530,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     Enter the phrase "random stuff" - you should see:
 
-   ![Lab 1 Task 3 Step 7](images/nodejscohere11.png)
+   ![Lab 1 Task 3 Step 7](images/nodejscohere11.png =60%x*)
 
     The first thing you may notice is that this takes slightly longer, but just as you may have anticipated, there is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
@@ -550,17 +549,17 @@ In this lab, you will see the following Vector operations using nodejs:
 
     We are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
 
-   ![Lab 1 Task 4 Step 1b](images/nodejscohere13.png)
+   ![Lab 1 Task 4 Step 1b](images/nodejscohere13.png =60%x*)
 
     The SQL statement returns the text from the INFO column in the MY\_DATA table.
 
-   ![Lab 1 Task 4 Step 1c](images/nodejscohere13a.png)
+   ![Lab 1 Task 4 Step 1c](images/nodejscohere13a.png =60%x*)
 
     The SQL statement calls the vector_distance function to perform a similarity comparison of the vectorized value for the input string (:1) with the vector that we stored in column V. This example performs a COSINE Similarity Search. We are only returning the first 5 rows (:2) which can be controlled using the TopK parameter. The key word APPROX informs the Oracle optimizer to use a Vector Index if it is deemed to be beneficial.  
 
     Below the SQL block we can see the parameter for setting the embedding model to be used by the program:
 
-   ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png)
+   ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png =60%x*)
 
     This is where we can choose the embedding model. As mentioned earlier, we have been using the *embed-english-light-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
 
@@ -568,7 +567,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     Your modified program should look like this:
 
-   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png)
+   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png =60%x*)
 
 2. So now we're ready to rerun our program:
 
@@ -582,7 +581,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     However, this time, when we run the program we see the following error displayed:
 
-   ![Lab 1 Task 4 Step 2](images/nodejscohere18.png)
+   ![Lab 1 Task 4 Step 2](images/nodejscohere18.png =60%x*)
 
 
     This is because, as we mentioned earlier, you cannot perform similarity search operations using different embedding models. In other words, in order for us to use the *embedding-english-v3.0* model, we will need to go back and re-vectorize the data in the MY\_DATA table so that it too uses the same embedding model.
@@ -591,7 +590,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     The program should look like this:
 
-   ![Lab 1 Task 4 Step 2](images/nodejscohere16.png)
+   ![Lab 1 Task 4 Step 2](images/nodejscohere16.png =60%x*)
 
 3. We will also need to rerun the Vectorize program to change the embedding model for our terms-  
 
@@ -619,15 +618,15 @@ In this lab, you will see the following Vector operations using nodejs:
 
     When prompted to enter a phrase to query - enter "cats"
 
-    You should see something similar to the following-
+    You should see something similar to the following:
 
-   ![Lab 1 Task 4 Step 4](images/nodejscohere20.png)
+   ![Lab 1 Task 4 Step 4](images/nodejscohere20.png =60%x*)
 
    This time your output will be different. The first result returned is "Cats do not care." which is more accurate than when we previously ran this query (you may recall the first entry was "Oranges are orange" when we used the *embed-english-light-v3.0* model). The last entry in the results "Wolves are hairy." is still not quite accurate but one could argue that there is a better correlation as they are both animals.   
 
 5. Also when we re-run the query for "Borough" we see "Staten Island" this time, but we don't see "Queens" so we get a different set of results,  but it's still not exactly right...
 
-   ![Lab 1 Task 4 Step 5](images/nodejscohere21.png)
+   ![Lab 1 Task 4 Step 5](images/nodejscohere21.png =60%x*)
 
 
    Feel free to try some other queries including repeating some of the previous examples we entered with the light embedding model for your own comparison.
@@ -685,7 +684,8 @@ In this lab, you will perform the following tasks:
 
   **NOTE:** We have already installed the sentence transformers available from hugging face locally on your system. 
 
-  While logged into your Operating System as the Oracle user, create a file called *vectorizeTableHFTransformers.js* and paste the following contents into the file.
+  The file *vectorizeTableHFTransformers.js*  is already on your machine. Below is the contents of the file.
+  
 
     ```
       <copy>
@@ -838,7 +838,7 @@ In this lab, you will perform the following tasks:
 
     You should see the following:
 
-    ![Lab 3 Task 2 Step 2a](images/nodejstfr02a.png)
+    ![Lab 3 Task 2 Step 2a](images/nodejstfr02a.png =60%x*)
 
     Once the program has completed you will see the following:
 
@@ -872,7 +872,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 2 Step 3A](images/nodejstfr03.png)
+    ![Lab 3 Task 2 Step 3A](images/nodejstfr03.png =60%x*)
 
 
     3.c. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
@@ -886,7 +886,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 2 Step 3B](images/nodejstfr04.png)
+    ![Lab 3 Task 2 Step 3B](images/nodejstfr04.png =60%x*)
 
 
     ```
@@ -898,7 +898,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 2 Step 3C](images/nodejstfr05.png)
+    ![Lab 3 Task 2 Step 3C](images/nodejstfr05.png =60%x*)
 
 
 ## Task 2: Understanding the Vector Embedding processing
@@ -918,20 +918,20 @@ In this lab, you will perform the following tasks:
 
     We also have a large number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.       
 
-    ![Lab 3 Task 3 Step 1a](images/nodejstfr06.png)
+    ![Lab 3 Task 3 Step 1a](images/nodejstfr06.png =60%x*)
 
     The next set of code is where we assign the embedding model we have chosen (un-commented line) to use.  
 
-    ![Lab 3 Task 3 Step 1b](images/nodejstfr07.png)
+    ![Lab 3 Task 3 Step 1b](images/nodejstfr07.png =60%x*)
 
     If we scroll a little further down we can see the SQL code that is being called to populate the vectorized data into the MY\_DATA table. The first block of SQL code creates a cursor for the rows we wish to update and the second block performs the update operation.
 
-    ![Lab 3 Task 3 Step 1c](images/nodejstfr08a.png)
-    ![Lab 3 Task 3 Step 1c](images/nodejstfr08b.png)
+    ![Lab 3 Task 3 Step 1c](images/nodejstfr08a.png =60%x*)
+    ![Lab 3 Task 3 Step 1c](images/nodejstfr08b.png =60%x*)
 
 ## Task 3: Perform Similarity Search with Sentence Transformers
 
-1. While logged into your Operating System as the Oracle user, create a file called *similaritySearchHFTransformers.js* and paste the following contents into the file.
+1. The file *similaritySearchHFTransformers.js*  is already on your machine. Below is the contents of the file.
 
     ```
       <copy>
@@ -1180,15 +1180,13 @@ In this lab, you will perform the following tasks:
       </copy>
     ```
 
-    The first time you run this program you will see  *"model.safetensors:"* gets downloaded.
-
     **NOTE:** The embedding model being used is displayed when we run the program. It is important to make sure that the embedding model you use matches the embedding model you chose when you vectorized the data - in this instance we vectorized our data with *"all-MiniLM-L6-v2"*, and our search is using the same model, so we are good to go. A mismatch will lead to an error and even worse a false positive - in the sense that no error will be displayed but the wrong results will be displayed.
 
     For our first example let's try the word "cars". This is the same phrase we have tested using the Cohere and OpenAI models, so if you have used those embedding models, you know what to expect, and the results should be similar.
 
     Enter Phrase: **cars**
 
-    ![Lab 3 Task 4 Step 1b](images/nodejstfr09.png)
+    ![Lab 3 Task 4 Step 1b](images/nodejstfr09.png =60%x*)
 
     In our situation it took half a second to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere and OpenAI models as we do not need to perform the roundtrip REST calls over the internet.
 
@@ -1199,7 +1197,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 4 Step 2](images/nodejstfr10.png)
+    ![Lab 3 Task 4 Step 2](images/nodejstfr10.png =60%x*)
 
     The first thing you may notice is that the operation runs even faster now as we have already performed our database connection and authorization and the Sentence Transformers libraries are already loaded into memory too.
 
@@ -1209,7 +1207,7 @@ In this lab, you will perform the following tasks:
 
     Enter phrase: **animals**
 
-    ![Lab 3 Task 4 Step 3](images/nodejstfr11.png)
+    ![Lab 3 Task 4 Step 3](images/nodejstfr11.png =60%x*)
 
 
 5. Let's try two queries related to New York...
@@ -1222,7 +1220,7 @@ In this lab, you will perform the following tasks:
 
     This time you should see the following:
 
-    ![Lab 3 Task 4 Step 4](images/nodejstfr12.png)
+    ![Lab 3 Task 4 Step 4](images/nodejstfr12.png =60%x*)
 
     This time we see results that are accurate. For "NY", the model returns the names of places located in the state of "New York". The second search for the term "boroughs" is 100% accurate using the Sentence Transformers embedding model.
 
@@ -1232,7 +1230,7 @@ In this lab, you will perform the following tasks:
 
     This time we see the following:
 
-    ![Lab 3 Task 4 Step 5](images/nodejstfr13.png)
+    ![Lab 3 Task 4 Step 5](images/nodejstfr13.png =60%x*)
 
     The results we see when using the Sentence Transformers embedding model have nothing to do with "New Zealand", though they are geographic locations, so one could argue there is a minor correlation here.
 
@@ -1271,11 +1269,11 @@ In this lab, you will perform the following tasks:
 
     Your programs will look like this **BEFORE** making your modification-
 
-    ![Lab 3 Task 5 Step 1](images/nodejstfr14.png)
+    ![Lab 3 Task 5 Step 1](images/nodejstfr14.png =60%x*)
 
     Your programs will look like this **AFTER** making your modification-
 
-    ![Lab 3 Task 5 Step 1](images/nodejstfr15.png)
+    ![Lab 3 Task 5 Step 1](images/nodejstfr15.png =60%x*)
 
 
 
@@ -1290,7 +1288,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 5 Step 2](images/nodejstfr16.png)
+    ![Lab 3 Task 5 Step 2](images/nodejstfr16.png =60%x*)
 
     **NOTE:** Verify that the program is using the new embedding model.
 
@@ -1309,7 +1307,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 5 Step 3](images/nodejstfr17.png)
+    ![Lab 3 Task 5 Step 3](images/nodejstfr17.png =60%x*)
 
 
 4. So now let's take a look at how the new model fares when we try our phrase "cats" and this time we'll also try German "katze" and Spanish "gato" as well to see what happens...    
@@ -1322,7 +1320,7 @@ In this lab, you will perform the following tasks:
 
     You should see:
 
-    ![Lab 3 Task 5 Step 4](images/nodejstfr18.png)
+    ![Lab 3 Task 5 Step 4](images/nodejstfr18.png =60%x*)
 
     Once again the embedding model is fairly accurate for the first two responses for all 3 languages. But after that the results are mixed. In the English version the results are at least within the animals grouping, but the German and Spanish results are a bit more random. Once again underscoring subtle nuances between differnt embedding models.
 ## Appendix: Installing hugging face sentence transformers on your own machine
@@ -1350,6 +1348,6 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 * [www.sbert.net](https://www.sbert.net/) 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager
-* **Contributors** - Zackary Rice, Software Developer
+* **Author** - Doug Hood, Product Manager, Zackary Rice, Software Developer
+* **Contributors** - Sean Stacey, Outbound Product Manager
 * **Last Updated By/Date** - Zackary Rice, April 2024
