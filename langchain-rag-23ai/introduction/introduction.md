@@ -1,4 +1,4 @@
-# 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain
+# AI Vector Search - 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain
 
 ## About this Workshop
 
@@ -13,7 +13,7 @@ And that’s where RAG comes in.  RAG allows important context to be included wi
 
 In this workshop, you will build a simple, yet powerful RAG application using Oracle AI Vector Search and the LangChain framework that can be used as a blueprint for many use cases.  A vector store will be needed to store the relevant context and Oracle Database 23ai is ideal for this.
 
-Estimated Time:  0 hours 15 min
+Estimated Time:  15 min
 
 ### **About Oracle AI Vector Search**
 
@@ -30,14 +30,18 @@ The labs in this workshop focus on the following:
 
 - An Oracle LiveLabs Account
 
-
 ## Learn More
 
-* [About Oracle Database 23ai](https://docs.oracle.com/en/database/oracle/oracle-database/)
-* [Oracle AI Vector Search](https://www.oracle.com/news/announcement/ocw-integrated-vector-database-augments-generative-ai-2023-09-19/)
+See below for more information on Oracle Database 23ai and Oracle AI Vector Search
+
+* [Oracle Database 23ai Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/)
+* [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [Oracle AI Vector Search Blog](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
+
 
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Authors** - Milton Wan, Vijay Balebail
-* **Last Updated By/Date** -  Milton Wan, April 2024
+* **Authors** - Vijay Balebail, Milton Wan
+* **Contributors** - Douglas Hood, Rajeev Rumale
+* **Last Updated By/Date** -  Milton Wan, May 2024
