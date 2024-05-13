@@ -20,9 +20,9 @@ In this lab, you will see the following Vector operations using nodejs:
 
 ## Task 1: Vectorizing a table with Cohere embedding
 
-1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Cohere embedding model libraries that we just installed.
+  1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Cohere embedding model libraries that we just installed.
 
-  While logged into your Operating System as the Oracle user, create a file called *vectorizetableCohere.js* and paste the following contents into the file.
+   While logged into your Operating System as the Oracle user, create a file called *vectorizetableCohere.js* and paste the following contents into the file.
 
 
     ```
@@ -228,12 +228,12 @@ In this lab, you will see the following Vector operations using nodejs:
 
 ## Task 2: Perform Similarity Search using Cohere
 
-In this lab we will see how to perform a similarity search with the OCI Cohere embedding models in nodejs.
+1. In this lab we will see how to perform a similarity search with the OCI Cohere embedding models in nodejs.
 
-So far we have vectorized the data in the *MY\_DATA* table using the OCI generative ai Cohere embedding model, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to OCI generative ai to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors in the database. We will create a nodejs program to do this.
+  So far we have vectorized the data in the *MY\_DATA* table using the OCI generative ai Cohere embedding model, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to OCI generative ai to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a nodejs program to do this.
 
 
-1. While logged into your Operating System as the Oracle user, create a file called *similaritysearchCohere.js* and paste the following contents into the file.
+   While logged into your Operating System as the Oracle user, create a file called *similaritysearchCohere.js* and paste the following contents into the file.
 
     ```
       <copy>
@@ -540,11 +540,11 @@ So far we have vectorized the data in the *MY\_DATA* table using the OCI generat
 
 ## Task 3: Changing embedding models
 
-So far, for the sake of simplicity and speed, we have been using the "embed-english-light-v3.0" or English Light v3.0 embedding model from Cohere. In the next step we will switch the embedding model to see how it impacts our similarity search results.
+   1. So far, for the sake of simplicity and speed, we have been using the "embed-english-light-v3.0" or English Light v3.0 embedding model from Cohere. In the next step we will switch the embedding model to see how it impacts our similarity search results.
 
-We will continue to use Cohere, so the modifications required are minor.
+   We will continue to use Cohere, so the modifications required are minor.
 
-1. In order to do this we will need to edit the nodejs program: *similaritysearchCohere.js*.
+   In order to do this we will need to edit the nodejs program: *similaritysearchCohere.js*.
 
     Before we get started with making our changes, we should take a few moments to understand what the program is doing.
 
@@ -681,11 +681,11 @@ In this lab, you will perform the following tasks:
 
 ## Task 1: Vectorizing a table with Sentence Transformers embedding
 
-We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a nodejs program to vectorize our phrases using the Sentence Transformers embedding model packages. 
+  1. We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a nodejs program to vectorize our phrases using the Sentence Transformers embedding model packages. 
 
-**NOTE:** We have already installed the sentence transformers available from hugging face locally on your system. 
+  **NOTE:** We have already installed the sentence transformers available from hugging face locally on your system. 
 
-1. While logged into your Operating System as the Oracle user, create a file called *vectorizeTableHFTransformers.js* and paste the following contents into the file.
+  While logged into your Operating System as the Oracle user, create a file called *vectorizeTableHFTransformers.js* and paste the following contents into the file.
 
     ```
       <copy>
@@ -903,9 +903,9 @@ We're now ready to vectorize our data using the hugging face sentence transforme
 
 ## Task 2: Understanding the Vector Embedding processing
 
-Before proceeding any further, lets take a look at the code of the Nodejs program we just ran. This will help us understand how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table nodejs programs we have run in this workshop, the basic logic flow is very similar for the most part.
+  1. Before proceeding any further, lets take a look at the code of the Nodejs program we just ran. This will help us understand how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table nodejs programs we have run in this workshop, the basic logic flow is very similar for the most part.
 
-1. Open the file with your favorite editor. You can use *vi* or *view* to view the contents of the file. We will not be making any changes to the program-
+   Open the file with your favorite editor. You can use *vi* or *view* to view the contents of the file. We will not be making any changes to the program-
 
     ```
       <copy>
@@ -1238,16 +1238,19 @@ Before proceeding any further, lets take a look at the code of the Nodejs progra
 
 ## Task 4: Changing embedding models
 
-Just as we have done with the embedding models from other vendors, let's experiment with changing the Sentence Transformer embedding model.
+  1. Just as we have done with the embedding models from other vendors, let's experiment with changing the Sentence Transformer embedding model.
 
-In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"intfloat/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
+  In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"intfloat/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
 
-To switch embedding models you will need to comment out the line:
-*embedding\_model = "sentence-transformers/all-MiniLM-L6-v2"*
-and uncomment the line:
-*embedding\_model = "intfloat/multilingual-e5-large"*.
+  To switch embedding models you will need to comment out the line:
+    
+    *embedding\_model = "sentence-transformers/all-MiniLM-L6-v2"*
 
-1. To make this switch we will need to change the embedding model in both the programs:
+  and uncomment the line:
+    
+    *embedding\_model = "intfloat/multilingual-e5-large"*.
+
+   To make this switch we will need to change the embedding model in both the programs:
 
     - *vectorizeTableHFTransformers.js*
 
@@ -1257,7 +1260,7 @@ and uncomment the line:
       </copy>
     ```
 
-    - *similaritySearchHFTransformers.js *
+    - *similaritySearchHFTransformers.js*
 
     ```
       <copy>
