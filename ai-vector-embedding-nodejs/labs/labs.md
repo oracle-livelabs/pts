@@ -2,7 +2,7 @@
 
 <if type="Cohere">
 
-# Lab 1: Using Cohere Vector Embedding Models
+# Using Cohere Vector Embedding Models
 ## Introduction
 
 In this lab we will learn how to use the OCI generative ai Cohere embedding models with Oracle Vectors.
@@ -18,21 +18,11 @@ In this lab, you will see the following Vector operations using nodejs:
 * Task 2: Perform Similarity Search using Cohere
 * Task 3: Changing embedding models
 
-
-
-### Prerequisites
-
-This lab assumes you have:
-* An Oracle account
-* An Oracle Database 23.4 preinstalled
-
-*This is the "fold" - below items are collapsed by default*
-
 ## Task 1: Vectorizing a table with Cohere embedding
 
 1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Cohere embedding model libraries that we just installed.
 
-While logged into your Operating System as the Oracle user, create a file called *vectorizetableCohere.js* and paste the following contents into the file.
+  While logged into your Operating System as the Oracle user, create a file called *vectorizetableCohere.js* and paste the following contents into the file.
 
 
     ```
@@ -190,21 +180,21 @@ While logged into your Operating System as the Oracle user, create a file called
 
     When the program finishes running, you should see something similar to the following-
 
-    ![Lab 1 Task 2 Step 3](images/nodejscohere03.png)
+    ![Lab 1 Task 2 Step 3](images/nodejscohere03.png =60%x*)
 
-To summarize what we've just done, the *vectorizeTableCohere.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the "factoid" for each of the 150 rows. We are then storing the vectorized data as a vector in the column called: V. You will also notice that we used the *embed-english-light-v3.0* embedding model for this operation. In other words an English speaking embedding model, and it's version 3.0 of the light model.
+  To summarize what we've just done, the *vectorizeTableCohere.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the "factoid" for each of the 150 rows. We are then storing the vectorized data as a vector in the column called: V. You will also notice that we used the *embed-english-light-v3.0* embedding model for this operation. In other words an English speaking embedding model, and it's version 3.0 of the light model.
+  
+  3. Before we move onto performing Similarity Searches using OCI generative ai Cohere embedding models, we should take a look in the the Oracle database to see the updates made to the *MY\_DATA* table.
+  
+      3.a. Connect to your Oracle database as the user: **vector** with password: **vector**
 
-5. Before we move onto performing Similarity Searches using OCI generative ai Cohere embedding models, we should take a look in the the Oracle database to see the updates made to the *MY\_DATA* table.
+      ```
+        <copy>
+        sqlplus vector/vector@localhost/freepdb1
+        </copy>
+      ```
 
-    6.a Connect to your Oracle database as the user: **vector** with password: **vector**
-
-    ```
-      <copy>
-      sqlplus vector/vector@orclpdb1
-      </copy>
-    ```
-
-    6.b We can now query the *MY\_DATA* table to verify that all 150 rows have been updated.
+    3.b. We can now query the *MY\_DATA* table to verify that all 150 rows have been updated.
 
     ```
       <copy>
@@ -218,7 +208,7 @@ To summarize what we've just done, the *vectorizeTableCohere.js* program connect
     ![Lab 1 Task 2 Step 4](images/nodejscohere04.png)
 
 
-    6.c We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
+    3.c. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
 
     ```
       <copy>
@@ -228,7 +218,7 @@ To summarize what we've just done, the *vectorizeTableCohere.js* program connect
 
     You should see something similar to this-
 
-    ![Lab 1 Task 2 Step 6a](images/nodejscohere05.png)
+    ![Lab 1 Task 2 Step 6a](images/nodejscohere05.png =60%x*)
 
 
     This is the semantic representation of the data stored in the corresponding row of the INFO column.
@@ -558,16 +548,7 @@ We will continue to use Cohere, so the modifications required are minor.
 
     Before we get started with making our changes, we should take a few moments to understand what the program is doing.
 
-    If we scroll down past the comments in the file we will see:
-
-   ![Lab 1 Task 4 Step 1a](images/nodejscohere12.png)
-
-    Below the comment section of the program you will notice that we require (I STILL NEED THE CORRECT LINKS)
-
-    - oracledb - the nodejs Driver for OracleDatabase.
-    - cohere - the Cohere Client library for accessing Cohere.
-
-    Next we are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
+    We are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
 
    ![Lab 1 Task 4 Step 1b](images/nodejscohere13.png)
 
@@ -577,11 +558,9 @@ We will continue to use Cohere, so the modifications required are minor.
 
     The SQL statement calls the vector_distance function to perform a similarity comparison of the vectorized value for the input string (:1) with the vector that we stored in column V. This example performs a COSINE Similarity Search. We are only returning the first 5 rows (:2) which can be controlled using the TopK parameter. The key word APPROX informs the Oracle optimizer to use a Vector Index if it is deemed to be beneficial.  
 
-
     Below the SQL block we can see the parameter for setting the embedding model to be used by the program:
 
    ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png)
-
 
     This is where we can choose the embedding model. As mentioned earlier, we have been using the *embed-english-light-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
 
@@ -627,7 +606,7 @@ We will continue to use Cohere, so the modifications required are minor.
 
     Your should see the following:
 
-   ![Lab 1 Task 4 Step 3](images/nodejscohere19.png)
+   ![Lab 1 Task 4 Step 3](images/nodejscohere19.png =60%x*)
 
 
 4. We're now ready to reun the Similarity Search program once again-
@@ -670,7 +649,10 @@ We will continue to use Cohere, so the modifications required are minor.
 In this lab you have seen how easy it is to use Cohere with Nodejs and Oracle Vectors and Similarity Search. You are ready to move onto the next lab.
 </if>
 
-# Lab 2: Using Sentence Transformers and Nodejs with Oracle AI Vector Search
+
+<if type="SentenceTransformers">
+
+# Using Sentence Transformers and Nodejs with Oracle AI Vector Search
 
 ## Introduction
 
@@ -696,19 +678,10 @@ In this lab, you will perform the following tasks:
 * Task 4: Changing embedding models
 
 
-### Prerequisites
-
-This lab assumes you have:
-* An Oracle account
-* An Oracle Database 23.4 preinstalled
-* Your workshop environment is configured (Completed Lab 0)
-
-*This is the "fold" - below items are collapsed by default*
-
 
 ## Task 1: Vectorizing a table with Sentence Transformers embedding
 
-We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a nodejs program to vectorize our phrases using the Sentence Transformers embedding model packages.
+We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a nodejs program to vectorize our phrases using the Sentence Transformers embedding model packages. 
 
 **NOTE:** We have already installed the sentence transformers available from hugging face locally on your system. 
 
@@ -771,35 +744,11 @@ We're now ready to vectorize our data using the hugging face sentence transforme
         // oracledb.initOracleClient(); // enable Thick mode
 
         /** Select/Set your Embedding model here */
-        // const embeddingModel = 'Xenova/all-mpnet-base-v2';
-        // const embeddingModel = 'Xenova/paraphrase-MiniLM-L6-v2';
-        // const embeddingModel = 'Xenova/paraphrase-MiniLM-L3-v2';
-        // const embeddingModel = 'Xenova/nli-mpnet-base-v2';
-        // const embeddingModel = 'Xenova/multi-qa-MiniLM-L6-cos-v1';
-        // const embeddingModel = 'Xenova/multi-qa-mpnet-base-dot-v1';
-        // const embeddingModel = 'Xenova/multi-qa-mpnet-base-cos-v1';
-        // const embeddingModel = 'Xenova/multilingual-e5-small';
-        // const embeddingModel = 'Xenova/multilingual-e5-base';
         // const embeddingModel = 'Xenova/multilingual-e5-large';
-        // const embeddingModel = 'Xenova/e5-small-v2';
-        // const embeddingModel = 'Xenova/e5-base-v2';
-        // const embeddingModel = 'Xenova/e5-large-v2';
-        // const embeddingModel = 'Xenova/UAE-Large-V1';
-        // const embeddingModel = 'Xenova/gte-base';
-        // const embeddingModel = 'Xenova/gte-large';
-        // const embeddingModel = 'Xenova/sentence_bert';
-        // const embeddingModel = 'Xenova/sentence-camembert-large';
-        // const embeddingModel = 'Xenova/french-camembert-postag-model';
+        const embeddingModel = 'Xenova/all-MiniLM-L6-v2';
 
-           const embeddingModel = 'Xenova/all-MiniLM-L6-v2';
-        // const embeddingModel = 'Xenova/all-MiniLM-L12-v2';
-        // const embeddingModel = 'Xenova/bge-large-en-v1.5';
-        // const embeddingModel = 'Xenova/bge-small-en-v1.5';
-        // const embeddingModel = 'Xenova/bge-base-en-v1.5';
-        // const embeddingModel = 'Xenova/bge-m3';
-        // const embeddingModel = 'Xenova/nomic-embed-text-v1';
-        // const embeddingModel = 'Xenova/jina-embeddings-v2-base-en';
-        // const embeddingModel = 'Xenova/jina-embeddings-v2-small-en';
+        // Re-ranking models
+        const reRankModel = 'Xenova/bge-reranker-base';
         // const embeddingModel = 'Xenova/text-embedding-ada-002';
 
         console.log('Using embedding model ' + embeddingModel);
@@ -887,15 +836,13 @@ We're now ready to vectorize our data using the hugging face sentence transforme
       </copy>
     ```
 
-    **NOTE:** The first time you run this program you will notice that it downloads a series of dependencies.
-
     You should see the following:
 
     ![Lab 3 Task 2 Step 2a](images/nodejstfr02a.png)
 
     Once the program has completed you will see the following:
 
-    ![Lab 3 Task 2 Step 2b](images/nodejstfr02b.png)
+    ![Lab 3 Task 2 Step 2b](images/nodejstfr02b.png =60%x*)
 
     If you have previously run this process with Cohere or OpenAI, the first thing you will notice is that this operation runs significantly faster. This can be attributed to the fact that we do not have to go over the internet to perform the task.
 
@@ -906,16 +853,16 @@ We're now ready to vectorize our data using the hugging face sentence transforme
 
 3. We can now query the MY\_DATA table in the Oracle database to verify that our data has been updated too:
 
-    i. Connect to Oracle database as the user: *vector* and password *vector*
+    3.a. Connect to Oracle database as the user: *vector* and password *vector*
 
     ```
       <copy>
-      sqlplus vector/vector@orclpdb1
+      sqlplus vector/vector@localhost/freepdb1
       </copy>
     ```
 
 
-    ii. We can now query the MY\_DATA table to verify that all 150 rows have been updated.
+    3.b. We can now query the MY\_DATA table to verify that all 150 rows have been updated.
 
     ```
       <copy>
@@ -928,7 +875,7 @@ We're now ready to vectorize our data using the hugging face sentence transforme
     ![Lab 3 Task 2 Step 3A](images/nodejstfr03.png)
 
 
-    iii. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
+    3.c. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
 
     ```
       <copy>
@@ -1060,35 +1007,8 @@ Before proceeding any further, lets take a look at the code of the Nodejs progra
         let reRank = false;
 
         /** Select/Set your Embedding model here */
-        // const embeddingModel = 'Xenova/all-mpnet-base-v2';
-        // const embeddingModel = 'Xenova/paraphrase-MiniLM-L6-v2';
-        // const embeddingModel = 'Xenova/paraphrase-MiniLM-L3-v2';
-        // const embeddingModel = 'Xenova/nli-mpnet-base-v2';
-        // const embeddingModel = 'Xenova/multi-qa-MiniLM-L6-cos-v1';
-        // const embeddingModel = 'Xenova/multi-qa-mpnet-base-dot-v1';
-        // const embeddingModel = 'Xenova/multi-qa-mpnet-base-cos-v1';
-        // const embeddingModel = 'Xenova/multilingual-e5-small';
-        // const embeddingModel = 'Xenova/multilingual-e5-base';
         // const embeddingModel = 'Xenova/multilingual-e5-large';
-        // const embeddingModel = 'Xenova/e5-small-v2';
-        // const embeddingModel = 'Xenova/e5-base-v2';
-        // const embeddingModel = 'Xenova/e5-large-v2';
-        // const embeddingModel = 'Xenova/UAE-Large-V1';
-        // const embeddingModel = 'Xenova/bge-m3';
-        // const embeddingModel = 'Xenova/nomic-embed-text-v1';
-        // const embeddingModel = 'Xenova/gte-base';
-        // const embeddingModel = 'Xenova/gte-large';
-        // const embeddingModel = 'Xenova/sentence_bert';
-        // const embeddingModel = 'Xenova/sentence-camembert-large';
-        // const embeddingModel = 'Xenova/french-camembert-postag-model';
-
         const embeddingModel = 'Xenova/all-MiniLM-L6-v2';
-        // const embeddingModel = 'Xenova/all-MiniLM-L12-v2';
-        // const embeddingModel = 'Xenova/bge-large-en-v1.5';
-        // const embeddingModel = 'Xenova/bge-small-en-v1.5';
-        // const embeddingModel = 'Xenova/bge-base-en-v1.5';
-        // const embeddingModel = 'Xenova/jina-embeddings-v2-base-en';
-        // const embeddingModel = 'Xenova/jina-embeddings-v2-small-en';
 
         // Re-ranking models
         const reRankModel = 'Xenova/bge-reranker-base';
@@ -1250,7 +1170,7 @@ Before proceeding any further, lets take a look at the code of the Nodejs progra
       </copy>
     ```
 
-Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Sentence Transformers.
+   Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Sentence Transformers.
 
 2. You can do this by-
 
@@ -1423,10 +1343,8 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Cohere website: cohere.com](https://cohere.com)
-* [OpenAI.com](https://openai.com) 
 * [huggingface.co/sentence-transformers](https://huggingface.co/sentence-transformers)
 * [www.sbert.net](https://www.sbert.net/) 
-* [arxiv.org/abs/1908.10084](https://arxiv.org/abs/1908.10084) 
 
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager
