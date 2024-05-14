@@ -44,6 +44,7 @@ There are many different types of vector embedding models.
  ![Introduction Part 1 Image 4](images/intro104.png =60%x*)
  Figure 4.
 
+
 **Cohere** makes embedding models and Large Language Models (LLMs) including embed-v3.
 * These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
 * You need to pay to use Cohere embedding models.
@@ -55,6 +56,11 @@ There are many different types of vector embedding models.
 * Hugging Face has many open source vector embedding models.
 * These embedding models can be accessed via REST APIs, or local SDKs [Nodejs].
 * The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Nodejs libraries. Xenova is a different type of embedding model on Hugging Face.
+
+**Xenova** uses the ONNX Runtime for executing embedding models from Hugging Face. Xenova has converted popular Python **Transformer** and **Sentence Transformer** embedding models into [ONNX formatted](https://onnx.ai/) files.
+* The ONNX fomatted files can be executed in the [ONNX Runtime](https://onnxruntime.ai/) via APIs.
+* Open Neural Network Exchange (ONNX) is an open format for representing machine learning models. 
+* The Xenova [Transformer.js](https://huggingface.co/docs/transformers.js/en/index) library is a JavaScript wrapper to the JavaScript API to the ONNX Runtime which is made to look similar to the Python Transformer library.
 
 
  ![Introduction Part 1 Image 5](images/intro105.png " ")
