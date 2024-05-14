@@ -125,8 +125,6 @@ One way to compare embedding models is quality vs performance vs popularity
 Figure 9. Comparison of Quality vs Performance vs Polularity of Embedding Models
 
 
-**Need an updated version of this picture with the relevant embedding models !!!** 
-
 ## Getting Started with this Workshop 
 
 **Create vector table and load sample data**
@@ -156,15 +154,21 @@ There are many different embedding models. At the time of this lab creation:
 * The *data* and *query vectors* should use the same embedding model (otherwise you will get garbage results)
 
 In this workshop you will have an opportunity to use the following vector embedding models from:
+* Cohere
+* Sentence Transformers from Hugging Face
 
-* Lab 1. Cohere
-* Lab 2. Sentence Transformers from Hugging Face
+This Lab utilizes tabs to switch between learning about the embedding models:
+
+![Introduction Part 4  Image 3](images/tabs.png =60%x*)
+
+To switch between learning about Cohere and Hugging Face embedding models click on the appropiate tab. 
+
 
  
  
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
+* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
@@ -176,4 +180,4 @@ In this workshop you will have an opportunity to use the following vector embedd
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager
 * **Contributors** -  Sean Stacey, Outbound Product Manager, Zackary Rice, Software Developer
-* **Last Updated By/Date** - Sean Stacey, April 2024
+* **Last Updated By/Date** - Zackary Rice, May 2024
