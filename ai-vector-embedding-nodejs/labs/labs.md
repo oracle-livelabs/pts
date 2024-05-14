@@ -5,7 +5,8 @@
 # Using Cohere Vector Embedding Models
 ## Introduction
 
-In this lab we will learn how to use the OCI generative ai Cohere embedding models with Oracle Vectors.
+In this lab we will learn how to use the Oracle OCI generative AI Cohere embedding models with Oracle Vectors. To connect to the generative AI services we will install the oci-common and oci-sdk libraries. For the purpose of this lab these libraries have already been installed on your virtual instance. 
+
 
 ------------
 Estimated Time: 25 minutes
@@ -20,9 +21,9 @@ In this lab, you will see the following Vector operations using nodejs:
 
 ## Task 1: Vectorizing a table with Cohere embedding
 
-  1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Cohere embedding model libraries that we just installed.
+  1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Oracle OCI generative AI Cohere services.
 
-   The file *vectorizeTableCohere.js* is already on your machine. Below is the contents of the file.
+   The file *vectorizeTableCohere.js* is already on virtual instance. Below is the contents of the file.
 
     ```
       <copy>
@@ -95,9 +96,8 @@ In this lab, you will see the following Vector operations using nodejs:
 
         console.log('Using embedding model ' + embeddingModel);
 
-
+        // creates authentication for oci
         try {
-
           const client = new sdk.generativeaiinference.GenerativeAiInferenceClient({
             authenticationDetailsProvider: provider
           });
@@ -183,7 +183,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
   To summarize what we've just done, the *vectorizeTableCohere.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the "factoid" for each of the 150 rows. We are then storing the vectorized data as a vector in the column called: V. You will also notice that we used the *embed-english-light-v3.0* embedding model for this operation. In other words an English speaking embedding model, and it's version 3.0 of the light model.
   
-  3. Before we move onto performing Similarity Searches using OCI generative ai Cohere embedding models, we should take a look in the the Oracle database to see the updates made to the *MY\_DATA* table.
+  3. Before we move onto performing Similarity Searches using Oracle OCI generative AI Cohere embedding models, we should take a look in the the Oracle database to see the updates made to the *MY\_DATA* table.
   
       3.a. Connect to your Oracle database as the user: **vector** with password: **vector**
 
@@ -227,9 +227,9 @@ In this lab, you will see the following Vector operations using nodejs:
 
 ## Task 2: Perform Similarity Search using Cohere
 
-1. In this lab we will see how to perform a similarity search with the OCI Cohere embedding models in nodejs.
+1. In this lab we will see how to perform a similarity search with the Oracle OCI generative AI Cohere embedding models in nodejs.
 
-  So far we have vectorized the data in the *MY\_DATA* table using the OCI generative ai Cohere embedding model, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to OCI generative ai to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a nodejs program to do this.
+  So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI generative AI Cohere embedding models, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to Oracle OCI generative AI Cohere embedding models to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a nodejs program to do this.
 
 
    The file *similaritysearchCohere.js* is already on your machine. Below is the contents of the file.
@@ -519,7 +519,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
    You should see something similar to:
 
-   ![Lab 1 Task 3 Step 7](images/nodejscohere10.pngs.png=60%x*)
+   ![Lab 1 Task 3 Step 7](images/nodejscohere10.png=60%x*)
 
 
     The word "Bombay" does not appear in our data set, but the results related to Mumbai are correct because "Bombay" is the former name for "Mumbai", and as such there is a strong correlation between the two names for the same geographic location.
@@ -530,7 +530,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     Enter the phrase "random stuff" - you should see:
 
-   ![Lab 1 Task 3 Step 7](images/nodejscohere11.png.png=60%x*)
+   ![Lab 1 Task 3 Step 7](images/nodejscohere11.png=60%x*)
 
     The first thing you may notice is that this takes slightly longer, but just as you may have anticipated, there is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
@@ -567,7 +567,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     Your modified program should look like this:
 
-   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png.png=60%x*)
+   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png=60%x*)
 
 2. So now we're ready to rerun our program:
 
@@ -1348,6 +1348,6 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 * [www.sbert.net](https://www.sbert.net/) 
 
 ## Acknowledgements
-* **Author** - Zackary Rice, Software Developer
-* **Contributors** - Sean Stacey, Outbound Product Manager, Doug Hood, Product Manager
+* **Author** - Doug Hood, Product Manager, Zackary Rice, Software Developer
+* **Contributors** - Sean Stacey, Outbound Product Manager
 * **Last Updated By/Date** - Zackary Rice, April 2024
