@@ -208,7 +208,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     You should see:
 
-    ![Lab 1 Task 2 Step 4](images/nodejscohere04.png =60%x*)
+    ![Lab 1 Task 2 Step 4](images/nodejstfr03.png =60%x*)
 
 
     3.c. We can also query the vector column: V in the MY\_DATA table to see what the vectors and dimensions look like.
@@ -1310,6 +1310,13 @@ In this lab, you will perform the following tasks:
 
 3. We're now ready to try out our new model. As a baseline let's start with the term "cars".  But this time, we'll also perform the similarity search in Spanish "coche", French "voiture" and even a Spanish dialect "carros". What is interesting, is that while the phrases returned are all accurately related to the search phrase "cars", they are not identical phrases returned per language, nor are they in the same sequence.
 
+    ```
+      <copy>
+      node similaritySearchHFTransformers.js
+      </copy>
+    ```
+
+
     Enter Phrase: **cars**
 
     Enter Phrase: **coche**
@@ -1363,4 +1370,4 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager, Zackary Rice, Software Developer
 * **Contributors** - Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Zackary Rice, April 2024
+* **Last Updated By/Date** - Zackary Rice, May 2024
