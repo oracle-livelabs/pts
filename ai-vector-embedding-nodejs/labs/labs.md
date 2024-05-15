@@ -14,16 +14,16 @@ Estimated Time: 25 minutes
 ### Objectives
 
 
-In this lab, you will see the following Vector operations using nodejs:
+In this lab, you will see the following Vector operations using node.js:
 * Task 1: Vectorizing a table with Cohere embedding
 * Task 2: Perform Similarity Search using Cohere
 * Task 3: Changing embedding models
 
 ## Task 1: Vectorizing a table with Cohere embedding
 
-  1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a nodejs program to vectorize our phrases using the Oracle OCI generative AI Cohere services.
+  1. The first step is to vectorize the contents of our table using an embedding model by Cohere. To do this, you will need to create a node.js program to vectorize our phrases using the Oracle OCI generative AI Cohere services.
 
-   The file *vectorizeTableCohere.js* is already on virtual instance. Below is the contents of the file.
+   The program *vectorizeTableCohere.js* is already on the LiveLab VM. Below are the contents of the file.
 
 
     ```
@@ -171,7 +171,7 @@ In this lab, you will see the following Vector operations using nodejs:
     ```
 
 
-2. now you are ready to run the *vectorizeTableCohere.js* nodejs program. This can be done by performing the following:  
+2. now you are ready to run the *vectorizeTableCohere.js* node.js program. This can be done by performing the following:  
 
 
     ```
@@ -224,7 +224,7 @@ In this lab, you will see the following Vector operations using nodejs:
     ![Lab 1 Task 2 Step 6a](images/nodejscohere05.png =60%x*)
 
 
-    This is the semantic representation of the data stored in the corresponding row of the INFO column.
+    These numbers encode the semantic representation of the data stored in the corresponding row of the INFO column.
 
     Now that we have vectorized the data in our table and confirmed the updates, we are ready to move onto the next task which is performing Similarity Searches using our Vectors.
 
@@ -232,13 +232,12 @@ In this lab, you will see the following Vector operations using nodejs:
 ## Task 2: Perform Similarity Search using Cohere
 
 
-1. In this lab we will see how to perform a similarity search with the Oracle OCI generative AI Cohere embedding models in nodejs.
+1. In this lab we will see how to perform a similarity search with the Oracle OCI generative AI Cohere embedding models in node.js.
 
-  So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI generative AI Cohere embedding models, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to Oracle OCI generative AI Cohere embedding models to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a nodejs program to do this.
+  So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI generative AI Cohere embedding models, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to Oracle OCI generative AI Cohere embedding models to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a node.js program to do this.
 
 
-
-   The file *similaritysearchCohere.js* is already on your machine. Below is the contents of the file.
+   The program *similaritysearchCohere.js* is already on the LiveLab VM. Below are the contents of the file.
 
     ```
       <copy>
@@ -326,14 +325,14 @@ In this lab, you will see the following Vector operations using nodejs:
         console.log("The LLM model is cohere.command from OCI GenAI Service");
 
         /** Select/Set your Embedding model here */
-        const embeddingModel = 'cohere.embed-english-light-v3.0';
+            const embeddingModel = 'cohere.embed-english-light-v3.0';
         //  const embeddingModel =   "cohere.embed-english-v3.0";
         //  const embeddingModel = 'cohere.embed-multilingual-light-v3.0';
         //  const embeddingModel = 'cohere.embed-multilingual-v3.0';
 
         /** Cohere re-ranking models */
         //  const rerankModel = 'rerank-english-v2.0';
-        //  const rerankModel = 'rerank-multilingual-v2.0';
+        //  const rerankModel = 'rerank-multilingual-v2.0';embedTextDetails
 
         console.log('Using embedding model ' + embeddingModel);
 
@@ -452,7 +451,7 @@ In this lab, you will see the following Vector operations using nodejs:
     ```
 
 
-2. Save the file and run it with *Nodejs18* as follows:
+2. Save the file and run it with *Node.js* as follows:
 
     ```
       <copy>
@@ -469,7 +468,7 @@ In this lab, you will see the following Vector operations using nodejs:
     - We are using the reranker with rerank-english-v2.0
     - We are only looking at the TopK 5 - or closest 5 results
     - We are connecting to the OCI generative ai services to use the Cohere embedding models 
-    - We and connecting to the Oracle database with the oracledb nodejs library
+    - We and connecting to the Oracle database with the oracledb node.js library
 
 
 3. For our first example we will enter the word "cars" at the prompt.  
@@ -482,7 +481,11 @@ In this lab, you will see the following Vector operations using nodejs:
 
     - Next we can see that the similarity search took 0.002 seconds (or 2 milliseconds) to locate 5 related entries to the word "cars".
 
-    - The 5 rows returned are the 5 *most semantically* similar to our phrase *cars* from our sample data in the MY\_DATA table.
+    - The 5 rows returned have the minimum vector distance  to our vectorized phrase cars from our sample data in the MY_DATA table.
+
+    - The vectors with the minimum vector distance tend to have the closest semantic meaning
+
+    - ie the closet vectors tend to be based on the most similar data
 
     - The results themselves look like a "good" result as all 5 of the factoids are on-point with the phrase "cars".  
 
@@ -497,7 +500,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
     The whole point about Similarity Search is that it is not necessarily exactly correct, it is the best match given the available data using the given embedding model. The embedding model is trained using information available from the internet and other publicly sourced information.
 
-    Perhaps the term "orange" is associated with the colour of cats? But it would be pure speculation to jump to a conclusion on what drove the embedding model to make this correlation.  
+    Perhaps the term "orange" is associated with the color of cats? eg Garfield or Tabby cats. But it would be pure speculation to jump to a conclusion on what drove the embedding model to make this correlation.  
 
 5. We can also try other search phrases for example "fruit", or even "NY".
 
@@ -540,7 +543,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
    ![Lab 1 Task 3 Step 7](images/nodejscohere11.png =60%x*)
 
-    The first thing you may notice is that this takes slightly longer, but just as you may have anticipated, there is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
+    There is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
     This also introduces another topic. What about changing the Embedding Model?  We'll take a look at that next...  
 
@@ -551,7 +554,7 @@ In this lab, you will see the following Vector operations using nodejs:
 
    We will continue to use Cohere, so the modifications required are minor.
 
-   In order to do this we will need to edit the nodejs program: *similaritysearchCohere.js*.
+   In order to do this we will need to edit the node.js program: *similaritysearchCohere.js*.
 
     Before we get started with making our changes, we should take a few moments to understand what the program is doing.
 
@@ -657,14 +660,14 @@ In this lab, you will see the following Vector operations using nodejs:
 ## Summary
 
 
-In this lab you have seen how easy it is to use Cohere with Nodejs and Oracle Vectors and Similarity Search.
+In this lab you have seen how easy it is to use Cohere with Node.js and Oracle Vectors and Similarity Search.
 
 </if>
 
 
 <if type="SentenceTransformers">
 
-# Using Sentence Transformers and Nodejs with Oracle AI Vector Search
+# Using Sentence Transformers and Node.js with Oracle AI Vector Search
 
 ## Introduction
 
@@ -672,7 +675,7 @@ In this lab we will be using open source embedding models from Hugging Face so t
 
 So they're free, local and fast ...plus there are over 500 sentence transformer models to choose from.
 
-*SentenceTransformers* is an open source Nodejs framework for modern sentence, text and image embeddings. Sentence Transformers make creating embeddings for text or images simple. Simple text based sentence transformers tend to have the same template where the only variable is the embedding model.
+*SentenceTransformers* is an open source Node.js framework for modern sentence, text and image embeddings. Sentence Transformers make creating embeddings for text or images simple. Simple text based sentence transformers tend to have the same template where the only variable is the embedding model.
 
 
 See [https://www.sbert.net/](https://www.sbert.net/) and [https://arxiv.org/abs/1908.10084](https://arxiv.org/abs/1908.10084) for more details about Sentence Transformers.
@@ -693,11 +696,11 @@ In this lab, you will perform the following tasks:
 
 ## Task 1: Vectorizing a table with Sentence Transformers embedding
 
-  1. We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a nodejs program to vectorize our phrases using the Sentence Transformers embedding model packages. 
+  1. We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a node.js program to vectorize our phrases using the Sentence Transformers embedding model packages. 
 
-  **NOTE:** We have already installed the sentence transformers available from hugging face locally on your system. 
+  **NOTE:** We have already installed the sentence transformers available from hugging face on the LiveLab VM. 
 
-  The file *vectorizeTableHFTransformers.js*  is already on your machine. Below is the contents of the file.
+  The program *vectorizeTableHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
   
 
     ```
@@ -857,7 +860,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 2 Step 2b](images/nodejstfr02b.png =60%x*)
 
-    If you have previously run this process with Cohere or OpenAI, the first thing you will notice is that this operation runs significantly faster. This can be attributed to the fact that we do not have to go over the internet to perform the task.
+    If you have previously run this process with Cohere, the first thing you will notice is that this operation runs significantly faster. This can be attributed to the fact that we do not have to go over the internet to perform the task.
 
     You may have also noticed that we used the *all-MiniLM-L6-v2* embedding model. This is a very popular embedding model with millions of monthly downloads. It's popularity is due to the fact that it tends to be a good trade-off when comparing accuracy and performance.
 
@@ -916,7 +919,7 @@ In this lab, you will perform the following tasks:
 
 ## Task 2: Understanding the Vector Embedding processing
 
-  1. Before proceeding any further, lets take a look at the code of the Nodejs program we just ran. This will help us understand how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table nodejs programs we have run in this workshop, the basic logic flow is very similar for the most part.
+  1. Before proceeding any further, lets take a look at the code of the Node.js program we just ran. This will help us understand how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table node.js programs we have run in this workshop, the basic logic flow is very similar for the most part.
 
    Open the file with your favorite editor. You can use *vi* or *view* to view the contents of the file. We will not be making any changes to the program-
 
@@ -927,7 +930,7 @@ In this lab, you will perform the following tasks:
     ```
 
 
-    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere or OpenAI you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the SentenceTransformer package from Hugging Face.
+    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the SentenceTransformer package from Hugging Face.
 
     We also have a large number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.       
 
@@ -944,7 +947,7 @@ In this lab, you will perform the following tasks:
 
 ## Task 3: Perform Similarity Search with Sentence Transformers
 
-1. The file *similaritySearchHFTransformers.js*  is already on your machine. Below is the contents of the file.
+1. The program *similaritySearchHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
 
     ```
       <copy>
@@ -1195,13 +1198,13 @@ In this lab, you will perform the following tasks:
 
     **NOTE:** The embedding model being used is displayed when we run the program. It is important to make sure that the embedding model you use matches the embedding model you chose when you vectorized the data - in this instance we vectorized our data with *"all-MiniLM-L6-v2"*, and our search is using the same model, so we are good to go. A mismatch will lead to an error and even worse a false positive - in the sense that no error will be displayed but the wrong results will be displayed.
 
-    For our first example let's try the word "cars". This is the same phrase we have tested using the Cohere and OpenAI models, so if you have used those embedding models, you know what to expect, and the results should be similar.
+    For our first example let's try the word "cars". This is the same phrase we have tested using the Cohere models, so if you have used those embedding models, you know what to expect, and the results should be similar.
 
     Enter Phrase: **cars**
 
     ![Lab 3 Task 4 Step 1b](images/nodejstfr09.png =60%x*)
 
-    In our situation it took half a second to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere and OpenAI models as we do not need to perform the roundtrip REST calls over the internet.
+    In our situation it took half a second to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere models as we do not need to perform the roundtrip REST calls over the internet.
 
 
 3. Next let's try the phrase "cats" and see what is returned.

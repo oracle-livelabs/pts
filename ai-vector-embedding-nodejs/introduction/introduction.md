@@ -27,10 +27,10 @@ Popular implementations of the transformer architecture are:
 * Sentence Transformers [Node library]
 * Transformers.js [JavaScript library which looks like the Node Transformers library]
 
-You can also write your own transformer library in your favorite environment:
-* Pytorch [Python, C++ or Java]
-* TensorFlow [Python, C++ or Java]
-* C, C++, Go, Rust, etc
+If you are an expert, then you can create your own embedding models.
+We want to set realistic expectations.
+Using embedding models is easy.
+Creating embedding models is rocket science – we should not pretend otherwise.
 
 Most popular Machine Learning frameworks can also use the ONNX format to convert models between frameworks. The ONNX Runtime can execute embedding models built in other frameworks.
 
@@ -57,7 +57,7 @@ There are many different types of vector embedding models.
 * These embedding models can be accessed via REST APIs, or local SDKs [Nodejs].
 * The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Nodejs libraries. Xenova is a different type of embedding model on Hugging Face.
 
-**Xenova** uses the ONNX Runtime for executing embedding models from Hugging Face. Xenova has converted popular Python **Transformer** and **Sentence Transformer** embedding models into [ONNX formatted](https://onnx.ai/) files.
+**Xenova** wrappers to the ONNX Runtime [ONNX formatted](https://onnx.ai/) files.
 * The ONNX fomatted files can be executed in the [ONNX Runtime](https://onnxruntime.ai/) via APIs.
 * Open Neural Network Exchange (ONNX) is an open format for representing machine learning models. 
 * The Xenova [Transformer.js](https://huggingface.co/docs/transformers.js/en/index) library is a JavaScript wrapper to the JavaScript API to the ONNX Runtime which is made to look similar to the Python Transformer library.
@@ -126,9 +126,6 @@ One way to compare embedding models is quality vs performance vs popularity
 * The X-axis represents performance in terms of vectors created per second
 * The Y-axis represents quality in terms on MTEB average score [out of 100]
 * The size of the data point represents the popularity in terms of monthly downloads
- 
-![Introduction Part 4 Image 1](images/intro401.png =60%x*)
-Figure 9. Comparison of Quality vs Performance vs Polularity of Embedding Models
 
 
 ## Getting Started with this Workshop 
