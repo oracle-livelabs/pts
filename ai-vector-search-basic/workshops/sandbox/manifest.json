@@ -1,0 +1,48 @@
+{
+    "workshoptitle": "Oracle AI Vector Search",
+    "help": "livelabs-help-db_us@oracle.com",
+    "variables": ["../../variables/variables.json",
+        "../../variables/variables-in-another-file.json"],
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "The Introduction to AI Vector Search.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+        "title": "Get Started",
+        "description": "Check and Verify Sandbox Connection information and test connectivity.",
+        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        },
+        {
+            "title": "Lab 1: Vector DDL, DML and Queries",
+            "description": "Using with AI Vector Search Query, DML and DDL",
+            "filename": "../../lab1/vector_quries.md"
+        },
+        {
+            "title": "Lab 2: Vector Distance",
+            "description": "Understanding Vector Distance functions",
+            "filename": "../../lab2/vector_distance.md"
+        },
+        {
+            "title": "Lab 3: Similarity Search",
+            "description": "Understanding Similarity Search",
+            "filename": "../../lab3/similarity_search.md"
+        },
+        {
+            "title": "Lab 4: Attribute Filtering",
+            "description": "Understanding Vector Distance Function",
+            "filename": "../../lab4/attribute_filtering.md"
+        },
+        {
+            "title": "Lab 5: Other Distance Functions",
+            "description": "Understanding Other Distance Functions",
+            "filename": "../../lab5/other_distance_functions.md"
+        },
+        {
+            "title": "Lab 6: Other Vector Functions",
+            "description": "Understanding Other Vector Functions",
+            "filename": "../../lab6/other_vector_functions.md"
+        }
+    ]
+}

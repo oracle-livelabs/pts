@@ -1,0 +1,34 @@
+{
+    "workshoptitle": "Oracle AI Vector emmbeding with LLMS using Python",
+    "help": "livelabs-help-db_us@oracle.com",
+    "variables": ["../../variables/variables.json",
+        "../../variables/variables-in-another-file.json"],
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "The Introduction to AI Vector Search.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+        "title": "Get Started",
+        "description": "Check and Verify Sandbox Connection information and test connectivity.",
+        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        },
+        {
+            "title": "Lab 0:  Set up Workshop environment",
+            "description": "Set up VM environment for runnint the Workshop",
+            "filename": "../../lab0-setup/python_setup.md"
+        },
+        {
+            "title": "Lab 1:  Oracle AI Vector emmbeding with LLMS using Python",
+            "description": "Using Cohere and Python to perform operations with Oracle Vectors",
+            "filename": "../../lab1-tabs/tabs.md",
+            "type": {
+                  "Cohere" : "Cohere",
+                  "OpenAI" : "OpenAI",
+                  "SentenceTransformers" : "SentenceTransformers",
+                  "FastEmbed" : "FastEmbed"
+                  }
+        }
+    ]
+}
