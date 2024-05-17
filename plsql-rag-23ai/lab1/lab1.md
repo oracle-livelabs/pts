@@ -126,7 +126,7 @@ In this lab, you will:
 
     ```
 
-## Task 2: Understanding DBMS\_VECTOR\_CHAIN package.
+## Task 2: Understanding `DBMS_VECTOR_CHAIN` package.
 
 
 **1 - Load the document**
