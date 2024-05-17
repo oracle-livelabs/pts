@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab introduces you to the Vector\_distance function.
+This lab introduces you to the VECTOR\_DISTANCE function.
 
 - Vector\_distance() is the most important vector SQL function, as it enables similarity search.
 - This exercise covers the concepts and syntax that you need to know to begin working with similarity search.
