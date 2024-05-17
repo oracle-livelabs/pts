@@ -147,7 +147,7 @@ In this lab, you will see the following Vector operations using node.js:
             // Record the array and key
             binds.push([float32VecArray, row[0]]);
               function wait() {}
-              setTimeout(wait, .485);
+              setTimeout(wait, .5);
           }
 
           // Do an update to add or replace the vector values
@@ -225,6 +225,15 @@ In this lab, you will see the following Vector operations using node.js:
 
 
     These numbers encode the semantic representation of the data stored in the corresponding row of the INFO column.
+    
+    Now lets exit sqlplus with the following command: 
+    
+    ```
+      <copy>
+      exit;
+      </copy>
+    ```
+
 
     Now that we have vectorized the data in our table and confirmed the updates, we are ready to move onto the next task which is performing Similarity Searches using our Vectors.
 
@@ -468,7 +477,7 @@ In this lab, you will see the following Vector operations using node.js:
     - We are using the reranker with rerank-english-v2.0
     - We are only looking at the TopK 5 - or closest 5 results
     - We are connecting to the OCI generative ai services to use the Cohere embedding models 
-    - We and connecting to the Oracle database with the oracledb node.js library
+    - We are connecting to the Oracle database with the oracledb node.js library
 
 
 3. For our first example we will enter the word "cars" at the prompt.  
@@ -581,6 +590,13 @@ In this lab, you will see the following Vector operations using node.js:
 
    ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png =60%x*)
 
+   To modify your program you can use the command:
+    ```
+      <copy>
+      vi similaritySearchCohere.js
+      </copy>
+    ```  
+
 2. So now we're ready to rerun our program:
 
     ```
@@ -605,6 +621,13 @@ In this lab, you will see the following Vector operations using node.js:
     The program should look like this:
 
    ![Lab 1 Task 4 Step 2](images/nodejscohere16.png =60%x*)
+
+    To modify your program you can use the command:
+    ```
+      <copy>
+      vi vectorizeTableCohere.js
+      </copy>
+    ```  
 
 3. We will also need to rerun the Vectorize program to change the embedding model for our terms-  
 
@@ -667,7 +690,7 @@ In this lab you have seen how easy it is to use Cohere with Node.js and Oracle V
 
 <if type="SentenceTransformers">
 
-# Using Sentence Transformers and Node.js with Oracle AI Vector Search
+# Using Sentence Transformers.js and Node.js with Oracle AI Vector Search
 
 ## Introduction
 
@@ -675,10 +698,10 @@ In this lab we will be using open source embedding models from Hugging Face so t
 
 So they're free, local and fast ...plus there are over 500 sentence transformer models to choose from.
 
-*SentenceTransformers* is an open source Node.js framework for modern sentence, text and image embeddings. Sentence Transformers make creating embeddings for text or images simple. Simple text based sentence transformers tend to have the same template where the only variable is the embedding model.
+*SentenceTransformers.js* is designed to be functionally equivalent to Hugging Face’s transformers python library, meaning you can run the same pretrained models using a very similar API.  Transformers.js uses ONNX Runtime to run models in Node.js or in a browser.
 
 
-See [https://www.sbert.net/](https://www.sbert.net/) and [https://arxiv.org/abs/1908.10084](https://arxiv.org/abs/1908.10084) for more details about Sentence Transformers.
+See https://huggingface.co/docs/transformers.js/en/index for more details about Transformers.js
 
 
 ------------
@@ -687,18 +710,18 @@ Estimated Time: 20 minutes
 ### Objectives
 
 In this lab, you will perform the following tasks:
-* Task 1: Vectorizing a table with Sentence Transformers embedding
+* Task 1: Vectorizing a table with Sentence Transformers.js embedding
 * Task 2: Understanding the Vector Embedding processing
-* Task 3: Perform Similarity Search with Sentence Transformers
+* Task 3: Perform Similarity Search with Sentence Transformers.js
 * Task 4: Changing embedding models
 
 
 
-## Task 1: Vectorizing a table with Sentence Transformers embedding
+## Task 1: Vectorizing a table with Sentence Transformers.js embedding
 
-  1. We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a node.js program to vectorize our phrases using the Sentence Transformers embedding model packages. 
+  1. We're now ready to vectorize our data using Transformers.js. To do this you will need to create a node.js program to vectorize our phrases using the Transformers.js embedding model packages. 
 
-  **NOTE:** We have already installed the sentence transformers available from hugging face on the LiveLab VM. 
+  **NOTE:** We have already installed the Transformers.js available from hugging face on the LiveLab VM. 
 
   The program *vectorizeTableHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
   
@@ -864,7 +887,7 @@ In this lab, you will perform the following tasks:
 
     You may have also noticed that we used the *all-MiniLM-L6-v2* embedding model. This is a very popular embedding model with millions of monthly downloads. It's popularity is due to the fact that it tends to be a good trade-off when comparing accuracy and performance.
 
-    To summarize what we've just done, the *vectorizeTableHFTransformers.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the "factoid" for each of the 150 rows. We then store the vectorized data as a vector in the V column.
+    To summarize what we've just done, the *vectorizeTableHFTransformers.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the data in the INFO column for each of the 150 rows.
 
 
 3. We can now query the MY\_DATA table in the Oracle database to verify that our data has been updated too:
@@ -916,6 +939,14 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 2 Step 3C](images/nodejstfr05.png =60%x*)
 
+    Now lets exit sqlplus with the following command: 
+    
+    ```
+      <copy>
+      exit;
+      </copy>
+    ```
+
 
 ## Task 2: Understanding the Vector Embedding processing
 
@@ -930,8 +961,8 @@ In this lab, you will perform the following tasks:
     ```
 
 
-    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the SentenceTransformer package from Hugging Face.
-
+    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the @xenova/transformers.
+    
     We also have a large number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.       
 
     ![Lab 3 Task 3 Step 1a](images/nodejstfr06.png =60%x*)
@@ -945,7 +976,7 @@ In this lab, you will perform the following tasks:
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08a.png =60%x*)
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08b.png =60%x*)
 
-## Task 3: Perform Similarity Search with Sentence Transformers
+## Task 3: Perform Similarity Search with Sentence Transformers.js
 
 1. The program *similaritySearchHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
 
@@ -1186,7 +1217,7 @@ In this lab, you will perform the following tasks:
       </copy>
     ```
 
-   Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Sentence Transformers.
+   Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Transformers.js.
 
 2. You can do this by-
 
@@ -1215,7 +1246,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 2](images/nodejstfr10.png =60%x*)
 
-    The first thing you may notice is that the operation runs even faster now as we have already performed our database connection and authorization and the Sentence Transformers libraries are already loaded into memory too.
+    The first thing you may notice is that the operation runs even faster now as we have already performed our database connection and authorization and the Transformers.js libraries are already loaded into memory too.
 
     Looking at the query output, not all the results are directly related to our search term: "cats", but one could argue that there is a minor correlation as all 5 rows are animal associations and not fruit. So not bad considering our relatively small number of 150 entries.
 
@@ -1238,7 +1269,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 4](images/nodejstfr12.png =60%x*)
 
-    This time we see results that are accurate. For "NY", the model returns the names of places located in the state of "New York". The second search for the term "boroughs" is 100% accurate using the Sentence Transformers embedding model.
+    This time we see results that are accurate. For "NY", the model returns the names of places located in the state of "New York". The second search for the term "boroughs" is 100% accurate using the Transformers.js embedding model.
 
 6. Another interesting query to test our results are for the phrase "New Zealand".
 
@@ -1248,21 +1279,21 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 5](images/nodejstfr13.png =60%x*)
 
-    The results we see when using the Sentence Transformers embedding model have nothing to do with "New Zealand", though they are geographic locations, so one could argue there is a minor correlation here.
+    The results we see when using the Transformers.js embedding model have nothing to do with "New Zealand", though they are geographic locations, so one could argue there is a minor correlation here.
 
 ## Task 4: Changing embedding models
 
   1. Just as we have done with the embedding models from other vendors, let's experiment with changing the Sentence Transformer embedding model.
 
-  In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"intfloat/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
+  In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"Xenova/all-MiniLM-L6-v2"* to *"Xenova/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
 
   To switch embedding models you will need to comment out the line:
     
-    *embedding\_model = "sentence-transformers/all-MiniLM-L6-v2"*
+    *embedding\_model = *"Xenova/all-MiniLM-L6-v2"*
 
   and uncomment the line:
     
-    *embedding\_model = "intfloat/multilingual-e5-large"*.
+    *embedding\_model = "Xenova/multilingual-e5-large"*.
 
    To make this switch we will need to change the embedding model in both the programs:
 
@@ -1346,9 +1377,9 @@ In this lab, you will perform the following tasks:
     ![Lab 3 Task 5 Step 4](images/nodejstfr18.png =60%x*)
 
     Once again the embedding model is fairly accurate for the first two responses for all 3 languages. But after that the results are mixed. In the English version the results are at least within the animals grouping, but the German and Spanish results are a bit more random. Once again underscoring subtle nuances between differnt embedding models.
-## Appendix: Installing hugging face sentence transformers on your own machine
+## Appendix: Installing Xenova Transformers.js on your own machine
 
-1. To install the *sentence-transformers* packages from hugging face with *npm* (package installer for node). While logged in as the oracle Linux user, run the following *npm* command:
+1. To install the *Xenova/transformers.js* packages with *npm* (package installer for node). While logged in as the oracle Linux user, run the following *npm* command:
 
     ```
       <copy>

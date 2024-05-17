@@ -22,15 +22,11 @@ This LiveLab will focus on embedding models for *text*. Embedding models are usu
 
 Almost all vector embedding models are based on the transformer architecture as it is the current state of the art.
 
-Popular implementations of the transformer architecture are:
-* Transformers [Node library]
-* Sentence Transformers [Node library]
+* Transformers [Python library]
+* Sentence Transformers [Python library]
 * Transformers.js [JavaScript library which looks like the Node Transformers library]
 
 If you are an expert, then you can create your own embedding models.
-We want to set realistic expectations.
-Using embedding models is easy.
-Creating embedding models is rocket science – we should not pretend otherwise.
 
 Most popular Machine Learning frameworks can also use the ONNX format to convert models between frameworks. The ONNX Runtime can execute embedding models built in other frameworks.
 
