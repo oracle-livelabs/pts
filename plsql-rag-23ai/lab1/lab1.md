@@ -363,10 +363,10 @@ Lets summarize the steps we did so far.
       <tbody>
       <tr>
         <td>
-          You have successfuly loaded a pdf file into my\_books. 
+          You have successfuly loaded a pdf file into my_books. 
         </td>
         <td>
-          DBMS\_LOB.GETLENGTH(to\_blob(bfilename('VEC\_DUMP', 'Release\_notes.pdf')))
+          DBMS_LOB.GETLENGTH(to_blob(bfilename('VEC_DUMP', 'Release_notes.pdf')))
         </td>
       </tr>
       <tr>
@@ -374,15 +374,15 @@ Lets summarize the steps we did so far.
           Then you have opened the pdf and extract the text
         </td>
         <td>
-          DBMS\_VECTOR\_CHAIN.UTL\_TO\_TEXT(dt.file\_content))
+          DBMS_VECTOR_CHAIN.UTL_TO_TEXT(dt.file_content))
         </td>
       </tr>
       <tr>
         <td>
-          next the text is broken up into text\_chunks.
+          next the text is broken up into text_chunks.
         </td>
         <td>
-          DBMS\_VECTOR\_CHAIN.UTL\_TO\_CHUNKS
+          DBMS_VECTOR_CHAIN.UTL_TO_CHUNKS
         </td>
       </tr>
           <tr>
@@ -390,12 +390,12 @@ Lets summarize the steps we did so far.
           next creating vector embeddings for each of the text chunks
         </td>
         <td>
-          DBMS\_VECTOR\_CHAIN.UTL\_TO\_EMBEDDING
+          DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING
         </td>
       </tr>
       <tr>
         <td>
-          finally inserted text\_chunk, vectors into vector\_store
+          finally inserted text_chunk, vectors into vector_store
         </td>
         <td>
           INSERT AS SELECT..
@@ -454,7 +454,11 @@ When presented with text chunk select from the vector search result and a user q
 
 In the code below we are emmbeding the user question, doing a vector seach in vector store for selecting relevant text chunks using vector distance function.  we then send the select chunks to Oracle GenAI which provides an repsonse. 
 
-For connecting to LLM we have pre-created login credintials using DBMS_VECTOE.CREATE_CREDENTIAL.  The syntax of establising connection with Oracle GenAI can be checked in the documentation here.
+For connecting to LLM we have pre-created login credintials using DBMS_VECTOE.CREATE_CREDENTIAL.  The syntax of establising connection with Oracle GenAI can be checked in the documentation. 
+
+The below code is creating a function that does the vector search using VECTOR\_DISTANCE function. And send the resulting text chunks to OCI GenAI LLM service to get answers.  
+
+We will use this function in next step to genrate the response.
 
 
 1. Select the cell and click **Run**.
@@ -479,7 +483,7 @@ For connecting to LLM we have pre-created login credintials using DBMS_VECTOE.CR
       search_query := 'SELECT EMBED_DATA from VECTOR_STORE where doc_id ='||doc_id||' ORDER BY vector_distance(EMBED_VECTOR, :user_question_vec, COSINE)'||
       ' FETCH   FIRST 10 ROWS ONLY ' ;
       OPEN message_cursor FOR search_query USING user_question_vec;
-      --select embed_data from vector_store where doc_id=7;
+
       -- Initialize messages CLOB
       messages := '';
 
@@ -533,15 +537,191 @@ For connecting to LLM we have pre-created login credintials using DBMS_VECTOE.CR
     cursor.execute(procedure_query)
     ```
 
+2.  Select the doc id on which to query
 
-## Summary
+   In the function  `generate_text_response_gen`  we pass the doc_id to restrict the chucks a related to a individual doucment we load.  This improves the acquracy of the vector_search of the question.
+
+    ```
+    %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
+    my_books a, (select doc_id ,count(*)  count, round(avg(length(embed_data))) avg_text_chunk_size, max(length(embed_data)) max_chunk_size from vector_store group by  doc_id) b 
+    where a.id = b.doc_id
+    ```
+3. Generate LLM response
+
+    Generate the response using the query below. This call function `generate_text_response_gen` and passed the `doc_id` from previous step
+
+    ```
+    %%sql
+    select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
+    ```
 
 
+    Observer the output.  Retry by replacing the question and see how the output change
+    
+    We successfully performed the vector search, sent the relevant chunks to the LLM along with the question and got the answer. 
+
+    We things we learned in this lab how to create a complete RAG solution using PLSQL.  The tabel below list the Vector funcation we used for operation.
+
+    <table>
+      <thead>
+        <tr>
+          <th style={{ width: "200px" }}>
+            Description
+          </th>
+          <th>
+            Function
+          </th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr>
+          <td>
+            Emmbeding the user question  
+          </td>
+          <td>
+            VECTOR_EMBEDDING(tinybert_model USING user_question as data)   
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Do vector search on question and pdf chucks embedings
+          </td>
+          <td>
+            VECTOR_DISTANCE(EMBED_VECTOR, :user_question_vec, COSINE)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Pass the result chucks and the user question to the LLM 
+          </td>
+          <td>
+            DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params_genai))
+          </td>
+        </tr>          
+        </tbody>
+    </table>
+
+    **HURRAY!!!  we just completed the LAB1**
+        
+    We saw the complete implementation of RAG using PLSQL.
+
+
+## Task 7: Preparation for LAB2
+
+In the LAB 2 we will run a python application which uses the funcation and code we just learned in previous steps.    
+
+In addition to the above code for the python application we have the follow additional code. 
+
+a. Create a procedue `insert_my_table_row` to insert PDF file in MY\_BOOKS table and returns the doc\_id
+
+b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the PDF and stores it in VECTOR\_STORE table.
+
+1. Create a procedue `insert_my_table_row`
+
+    ```
+    cursor = conn23ai.cursor()
+    procedure_query = """
+    create or replace PROCEDURE insert_my_table_row(
+        p_file_name IN my_books.file_name%TYPE,
+        p_file_size IN my_books.file_size%TYPE,
+        p_file_type IN my_books.file_type%TYPE,
+        p_file_content IN my_books.file_content%TYPE,
+        p_new_id OUT number
+    )
+    IS
+        v_count NUMBER;
+        v_id    number;
+        new_id  number ;
+    BEGIN
+        -- Check if the combination of a and b already exists
+        BEGIN
+        SELECT id INTO new_id FROM MY_BOOKS WHERE file_name = p_file_name AND file_size = p_file_size;
+        EXCEPTION WHEN NO_DATA_FOUND THEN
+        INSERT INTO MY_BOOKS (file_name, file_size, file_type, file_content)
+            VALUES (p_file_name, p_file_size, p_file_type, p_file_content)
+            RETURNING id into new_id;
+        END;
+        p_new_id := new_id;
+        dbms_output.put_line(new_id);
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            -- Exception handling here, for example, a rollback or a custom error message
+                DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+            --RAISE;
+    END insert_my_table_row;
+    """
+
+    # Execute the procedure creation query
+    cursor.execute(procedure_query)
+
+
+    ```
+
+2.  Create a trigger `trg_mybooks_vector_store_compound`
+
+    ```
+    cursor = conn23ai.cursor()
+    create_trigger = """
+    CREATE OR REPLACE TRIGGER trg_mybooks_vector_store_compound
+    FOR INSERT ON my_books
+    COMPOUND TRIGGER
+
+        TYPE t_id_tab IS TABLE OF my_books.id%TYPE INDEX BY PLS_INTEGER;
+        v_ids t_id_tab;
+
+        AFTER EACH ROW IS
+        BEGIN
+            v_ids(v_ids.COUNT + 1) := :NEW.id;
+        END AFTER EACH ROW;
+
+        AFTER STATEMENT IS
+        BEGIN
+            FOR i IN 1 .. v_ids.COUNT LOOP
+                INSERT INTO vector_store (doc_id, embed_id, embed_data, embed_vector)
+                SELECT dt.id AS doc_id, 
+                      et.embed_id, 
+                      et.embed_data, 
+                      to_vector(et.embed_vector) AS embed_vector
+                FROM my_books dt
+                CROSS JOIN TABLE(
+                    dbms_vector_chain.utl_to_embeddings(
+                        dbms_vector_chain.utl_to_chunks(
+                            dbms_vector_chain.utl_to_text(dt.file_content), 
+                            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
+                        ),
+                        json('{"provider":"database", "model":"tinybert_model"}')
+                    )
+                )  t
+                CROSS JOIN JSON_TABLE(
+                    t.column_value, 
+                    '$[*]' COLUMNS (
+                        embed_id NUMBER PATH '$.embed_id',
+                        embed_data VARCHAR2(4000) PATH '$.embed_data',
+                        embed_vector CLOB PATH '$.embed_vector'
+                    )
+                ) AS et
+                WHERE dt.id = v_ids(i);
+            END LOOP;
+        END AFTER STATEMENT;
+
+    END trg_mybooks_vector_store_compound;
+    """
+    # Execute the trigger creation
+    cursor.execute(create_trigger)
+
+    ```
+
+
+
+
+
+Run the both the steps and proceed to lab 2
 
 
 You may now [proceed to the next lab](#next).
 
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan, Douglas Hood, Rajeev Rumale
-* **Last Updated By/Date** - Milton Wan, May 2024
+* **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
+* **Last Updated By/Date** - Vijay Balebail, May 2024
