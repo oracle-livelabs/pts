@@ -1,0 +1,27 @@
+{
+    "workshoptitle": "Oracle AI Vector Search",
+    "help": "livelabs-help-db_us@oracle.com",
+    "variables": ["../../variables/variables.json",
+        "../../variables/variables-in-another-file.json"],
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "The Introduction to AI Vector Search.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+        "title": "Get Started",
+        "description": "Check and Verify Sandbox Connection information and test connectivity.",
+        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        },
+        {
+            "title": "Labs:  Use Oracle AI Vector Search and Python to perfrom AI Vector Search operations",
+            "description": "Use Python to perform operations with Oracle AI Vectors ",
+            "filename": "../../labs/labs.md",
+            "type": {
+                    "SentenceTransformers" : "SentenceTransformers",
+                    "Cohere" : "Cohere"
+                    }
+        }
+    ]
+}
