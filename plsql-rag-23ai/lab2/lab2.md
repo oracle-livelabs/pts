@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-# Lab 2: Run the same RAG Application interactively
-========
 # Lab 2: Run the same RAG Application interactively with a User Interface
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 ## Introduction
 
@@ -10,22 +6,14 @@ Estimated Time: 5 min
 
 ### Objectives
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-In this lab you will run the RAG application interactively using a simple user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
-========
 In this lab you will run the RAG application interactively using a user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 ### Prerequisites
 
 * VM environment running Oracle Database 23ai
 
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-## Task 1: Run application
-========
 ## Task 1: Run the application
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 1.  From the terminal, go to directory 
 
@@ -68,14 +56,10 @@ For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results
 - What did Larry say in the Oracle Fiscal Year 2024 Quarter 2 financial results
 
-**Code for the application**
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-========
 
 **Code for UI application**
 
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 Now check out the application code using the UI. From a terminal window type:
 
 
@@ -89,18 +73,11 @@ But essentially the code is the same 7 steps for building a RAG application with
 
 ### Conclusion
 
-In Lab 2 you ran a RAG application with a UI using the same 7 steps for RAG and Oracle AI Vector Search.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
-
 By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 
 
 **Completed. Thanks for running the lab.**
 
 ## Acknowledgements
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-* **Authors** - Vijay Balebail, Milton Wan 
-* **Contributors** - Rajeev Rumale
-========
 * **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 * **Last Updated By/Date** -  Milton Wan, May 2024
