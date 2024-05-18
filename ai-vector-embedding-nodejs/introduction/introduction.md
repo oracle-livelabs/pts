@@ -1,4 +1,4 @@
-# AI Vector Search - Using Embedding Models with Python
+# AI Vector Search - Using Embedding Models with Node
 
 ## Introduction
 
@@ -23,15 +23,15 @@ This LiveLab will focus on embedding models for *text*. Embedding models are usu
 Almost all vector embedding models are based on the transformer architecture as it is the current state of the art.
 
 Popular implementations of the transformer architecture are:
-* Transformers [Python library]
-* Sentence Transformers [Python library]
-* Transformers.js [JavaScript library which looks like the Python Transformers library]
+* Transformers [Node library]
+* Sentence Transformers [Node library]
+* Transformers.js [JavaScript library which looks like the Node Transformers library]
 
-If you are an expert, then you can create your own embedding models. 
-But it is important to set realistic expectations.
-* Using embedding models is easy.
-* Creating embedding models is rocket science – we should not pretend otherwise.
- 
+If you are an expert, then you can create your own embedding models.
+We want to set realistic expectations.
+Using embedding models is easy.
+Creating embedding models is rocket science – we should not pretend otherwise.
+
 Most popular Machine Learning frameworks can also use the ONNX format to convert models between frameworks. The ONNX Runtime can execute embedding models built in other frameworks.
 
 ![Introduction Part 1 Image 3](images/intro103.png =60%x*)
@@ -44,12 +44,6 @@ There are many different types of vector embedding models.
  ![Introduction Part 1 Image 4](images/intro104.png =60%x*)
  Figure 4.
 
-**OpenAI** makes embedding models and Large Language Models (LLMs) including ChatGPT.
-* These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
-* You need to pay to use OpenAI embedding models. 
-* An API key: **OPENAI\_API\_KEY** is required to use the OpenAI embedding models.
-
-[Find more information on OpenAI embedding models including how to setup and manage the OPENAI\_API\_KEY](https://openai.com/blog/new-embedding-models-and-api-updates)
 
 **Cohere** makes embedding models and Large Language Models (LLMs) including embed-v3.
 * These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
@@ -60,13 +54,14 @@ There are many different types of vector embedding models.
 
 **Hugging Face** is a repository for thousands of open source machine learning models.
 * Hugging Face has many open source vector embedding models.
-* These embedding models can be accessed via REST APIs, or local SDKs [Python].
-* The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Python libraries. 
+* These embedding models can be accessed via REST APIs, or local SDKs [Nodejs].
+* The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Nodejs libraries. Xenova is a different type of embedding model on Hugging Face.
 
-**Xenova** uses the ONNX Runtime for executing embedding models from Hugging Face. Xenova has converted popular Python **Transformer** and **Sentence Transformer** embedding models into [ONNX formatted](https://onnx.ai/) files.
+**Xenova** wrappers to the ONNX Runtime [ONNX formatted](https://onnx.ai/) files.
 * The ONNX fomatted files can be executed in the [ONNX Runtime](https://onnxruntime.ai/) via APIs.
 * Open Neural Network Exchange (ONNX) is an open format for representing machine learning models. 
 * The Xenova [Transformer.js](https://huggingface.co/docs/transformers.js/en/index) library is a JavaScript wrapper to the JavaScript API to the ONNX Runtime which is made to look similar to the Python Transformer library.
+
 
  ![Introduction Part 1 Image 5](images/intro105.png " ")
  Figure 5.
@@ -127,15 +122,17 @@ There is no correct answer to this question as it depends on many factors:
 * Do you need a good blend of quality and performance
 * Do you choose to use embedding model Y because it was recommended to you
 
+One way to compare embedding models is quality vs performance vs popularity
+* The X-axis represents performance in terms of vectors created per second
+* The Y-axis represents quality in terms on MTEB average score [out of 100]
+* The size of the data point represents the popularity in terms of monthly downloads
 
 
-**Need an updated version of this picture with the relevant embedding models !!!** 
-
-# Getting Started with this Workshop 
+## Getting Started with this Workshop 
 
 **Create vector table and load sample data**
 
-For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a python program and should take a around a second to run.
+For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a Node program and should take a around a second to run.
 
 The table will be the basis for all vectorize operations in the labs, and you will use various embedding models, all on the same table.
 
@@ -151,7 +148,6 @@ For the labs to work, we will be using the following pattern:
 
 
 There are many different embedding models. At the time of this lab creation:
-* OpenAI has *3* recent models used in the sample code
 * Cohere has *4* recent models used in the sample code
 * Hugging Face has many. The sample code uses *25* models
 
@@ -161,21 +157,24 @@ There are many different embedding models. At the time of this lab creation:
 * The *data* and *query vectors* should use the same embedding model (otherwise you will get garbage results)
 
 In this workshop you will have an opportunity to use the following vector embedding models from:
+* Cohere
+* Sentence Transformers from Hugging Face
 
-* Lab 1. Cohere
-* Lab 2. OpenAI
-* Lab 3. Sentence Transformers from Hugging Face
-* Lab 4. FastEmbed 
+This Lab utilizes tabs to switch between learning about the embedding models:
+
+![Introduction Part 4  Image 3](images/tabs.png =60%x*)
+
+To switch between learning about Cohere and Hugging Face embedding models click on the appropiate tab. 
+
 
  
  
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
+* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
-* [OpenAI embedding models](https://openai.com/blog/new-embedding-models-and-api-updates)
 * [Cohere embedding models](https://txt.cohere.com/introducing-embed-v3/)
 * [ONNX runtime information](https://onnxruntime.ai/)
 * [Information on Xenova Transformer.js](https://huggingface.co/docs/transformers.js/en/index)
@@ -183,5 +182,5 @@ In this workshop you will have an opportunity to use the following vector embedd
 
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager
-* **Contributors** -  Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Sean Stacey, April 2024
+* **Contributors** -  Sean Stacey, Outbound Product Manager, Zackary Rice, Software Developer
+* **Last Updated By/Date** - Zackary Rice, May 2024
