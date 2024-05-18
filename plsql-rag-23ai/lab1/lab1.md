@@ -36,7 +36,7 @@ In this lab, you will:
 
     ```
         $ cd /home/oracle/AIdemo
-        $ jupyter lab  --ip 0.0.0.0 --port 8888 --NotebookApp.token='' --NotebookApp.password=''
+        $ jupyter lab 
     ```
 
 3. Open the notebook **RAGLAB1.ipynb**. You can double click or right-click and select **Open**.
