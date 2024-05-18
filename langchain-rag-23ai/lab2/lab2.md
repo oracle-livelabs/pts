@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
 # Lab 2: Run the same RAG Application interactively
-========
-# Lab 2: Run the same RAG Application interactively with a User Interface
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 ## Introduction
 
@@ -10,22 +6,14 @@ Estimated Time: 5 min
 
 ### Objectives
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
 In this lab you will run the RAG application interactively using a simple user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
-========
-In this lab you will run the RAG application interactively using a user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 ### Prerequisites
 
 * VM environment running Oracle Database 23ai
 
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
 ## Task 1: Run application
-========
-## Task 1: Run the application
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 
 1.  From the terminal, go to directory 
 
@@ -35,7 +23,7 @@ In this lab you will run the RAG application interactively using a user interfac
 
 2.  Run the RAG application
     ```
-    $ genai_run genai_plsql.py
+    $ streamlit run genai.py
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
@@ -70,18 +58,12 @@ For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 
 **Code for the application**
 
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
-========
-
-**Code for UI application**
-
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 Now check out the application code using the UI. From a terminal window type:
 
 
 ```
     $ cd /home/oracle/AIdemo
-    $ more genai_plsql.py
+    $ more genai.py
 ```
 
 Note the additional imported libraries and **st** objects for Streamlit.
@@ -97,10 +79,6 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 **Completed. Thanks for running the lab.**
 
 ## Acknowledgements
-<<<<<<<< HEAD:langchain-rag-23ai/lab2/lab2.md
 * **Authors** - Vijay Balebail, Milton Wan 
 * **Contributors** - Rajeev Rumale
-========
-* **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
->>>>>>>> upstream/main:plsql-rag-23ai/lab2/lab2.md
 * **Last Updated By/Date** -  Milton Wan, May 2024
