@@ -71,7 +71,7 @@ Now check out the application code using the UI. From a terminal window type:
 ```
 
 Note the additional imported libraries and **st** objects.
-But essentially the code is the same 7 steps for building a RAG application with Oracle AI Vector Search and LangChain.
+But essentially the code is the same as LAB 1 for building a RAG application with Oracle AI Vector Search and PLSQL.
 
 ### Conclusion
 
