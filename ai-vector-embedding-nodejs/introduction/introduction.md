@@ -22,15 +22,11 @@ This LiveLab will focus on embedding models for *text*. Embedding models are usu
 
 Almost all vector embedding models are based on the transformer architecture as it is the current state of the art.
 
-Popular implementations of the transformer architecture are:
-* Transformers [Node library]
-* Sentence Transformers [Node library]
+* Transformers [Python library]
+* Sentence Transformers [Python library]
 * Transformers.js [JavaScript library which looks like the Node Transformers library]
 
 If you are an expert, then you can create your own embedding models.
-We want to set realistic expectations.
-Using embedding models is easy.
-Creating embedding models is rocket science – we should not pretend otherwise.
 
 Most popular Machine Learning frameworks can also use the ONNX format to convert models between frameworks. The ONNX Runtime can execute embedding models built in other frameworks.
 
@@ -75,7 +71,7 @@ The quality of vector embedding models can vary widely. You want high quality em
 
 You need some independent / objective way to measure the quality of embedding models.
 
-The most common ways to do this is via the *MTEB Leaderboard*. The Massive Text Embedding Benchmark (MTEB) has 8 embedding tasks, 58 datasets and 112 languages. The simplest way to use the MTEB benchmark results is to use the average (56 datasets) score. This average is out of 100 where a higher number is better. Embedding models with a higher average MTEB score tend to have better quality than embedding models with lower average MTEB scores.
+The most common ways to do this is via the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard). The Massive Text Embedding Benchmark (MTEB) has 8 embedding tasks, 58 datasets and 112 languages. The simplest way to use the MTEB benchmark results is to use the average (56 datasets) score. This average is out of 100 where a higher number is better. Embedding models with a higher average MTEB score tend to have better quality than embedding models with lower average MTEB scores.
 
 * The leaders of the MTEB average scores can change every week as new or improved embedding models become available.
 * This strong competition is a good thing for customers as you tend to get better quality embedding models over time.
@@ -104,7 +100,7 @@ When you do a similarity search or do a RAG query, you also need to care about t
 * You need to create a query vector for the input data
 * You will need to search for the closest vectors, usually via an vector index
 
-Embedding models which have a large number of dimensions (eg > 1024) tend to have the best quality, but slowest performance. Embedding models which have the smallest dimensions (eg 384) tend to be the fastest, but also tend to have lower quality.
+Embedding models which have a large number of dimensions (eg > 1024) tend to have the best quality, but slowest performance. Embedding models which have the smallest dimensions (eg 128) tend to be the fastest, but also tend to have lower quality.
 
  ![Introduction Part 3 Image 2](images/intro302.png =60%x*)
  Figure 8. Size vs Performance of Embedding Models
@@ -122,7 +118,7 @@ There is no correct answer to this question as it depends on many factors:
 * Do you need a good blend of quality and performance
 * Do you choose to use embedding model Y because it was recommended to you
 
-One way to compare embedding models is quality vs performance vs popularity
+One way to compare embedding models is to create a chart of quality vs performance vs popularity
 * The X-axis represents performance in terms of vectors created per second
 * The Y-axis represents quality in terms on MTEB average score [out of 100]
 * The size of the data point represents the popularity in terms of monthly downloads
@@ -158,11 +154,11 @@ There are many different embedding models. At the time of this lab creation:
 
 In this workshop you will have an opportunity to use the following vector embedding models from:
 * Cohere
-* Sentence Transformers from Hugging Face
+* Transformers.js from Hugging Face
 
 This Lab utilizes tabs to switch between learning about the embedding models:
 
-![Introduction Part 4  Image 3](images/tabs.png =60%x*)
+![Introduction Part 4  Image 3](images/tabs2.png =60%x*)
 
 To switch between learning about Cohere and Hugging Face embedding models click on the appropiate tab. 
 
@@ -171,13 +167,10 @@ To switch between learning about Cohere and Hugging Face embedding models click 
  
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
-* [Oracle Documentation](http://docs.oracle.com)
-* [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
-* [Cohere embedding models](https://txt.cohere.com/introducing-embed-v3/)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [transformers.js](https://www.npmjs.com/package/@xenova/transformers)
+* [www.sbert.net](https://www.sbert.net/) 
 * [ONNX runtime information](https://onnxruntime.ai/)
-* [Information on Xenova Transformer.js](https://huggingface.co/docs/transformers.js/en/index)
 
 
 ## Acknowledgements

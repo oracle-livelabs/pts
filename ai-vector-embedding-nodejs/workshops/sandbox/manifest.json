@@ -19,8 +19,8 @@
             "description": "Use Cohere and Nodejs to perform operations with Oracle Vectors",
             "filename": "../../labs/labs.md",
             "type": {
-                    "Cohere" : "Cohere",
-                    "SentenceTransformers" : "SentenceTransformers"
+                    "SentenceTransformers" : "Transformers.js",
+                    "Cohere" : "Cohere"
                     }
         }
     ]
