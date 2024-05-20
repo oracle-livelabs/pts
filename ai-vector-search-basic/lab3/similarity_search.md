@@ -81,8 +81,7 @@ Figure 2.
     ```
       <copy>SELECT id
       FROM   vt1
-      ORDER  BY  vector_distance
-                      vector('[5, 0]'), v, EUCLIDEAN)
+      ORDER  BY  vector_distance(vector('[5, 0]'), v, EUCLIDEAN)
       FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
