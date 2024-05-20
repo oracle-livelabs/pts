@@ -15,7 +15,7 @@ A typical RAG application design has 7 steps and requires a vector store.  Oracl
 
 Estimated Time: 10 min
 
-To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai FREE edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
+To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai Free edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
 
 ### Objectives
 
@@ -94,7 +94,7 @@ In this lab, you will:
 
     ```
 
-6. This code will create a table named *MY\_BOOKS* in the VECTOR schema. We will use table to load the original PDF file as a BLOB. Select the code snippet and click **Run**.
+6. This code will create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Select the code snippet and click **Run**.
 
     ``` 
     %%sql
@@ -141,7 +141,7 @@ In this lab, you will:
 
     ```
 
-2. Commit the inserted records.  Select the cell and click **Run**.
+2. Commit the inserted rows.  Select the cell and click **Run**.
 
     ```
     %%sql commit
@@ -149,7 +149,7 @@ In this lab, you will:
 
 **2 - Transform the document to text**
 
-3. Use package  **dbms\_vector\_chain.utl\_to\_text** to read file from BLOB as text. The following statement shows the output with first 2000 chars from the PDF.  Click **Run** to execute the code.
+3. Use package **DBMS_VECTOR_CHAIN.utl_to_text** to convert the BLOB column to plain text.  The following statement shows the output of the first 2000 chars from the PDF.
 
     ``` 
     %%sql
@@ -158,13 +158,13 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package **dbms\_vector\_chain.utl\_to_chunks** to convert the long text from a file into multiple text chunks and show the first 4 chunks. Click **Run** to execute the code.
+4. Use package DBMS_VECTOR_CHAIN.utl_to_chunks to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
     SELECT ct.* from 
     my_books dt, 
-    dbms_vector_chain.utl\_to_chunks(dbms_vector\_chain.utl\_to_text(dt.file\_content)) ct where rownum < 4
+    dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) ct where rownum < 4
     ```
 
     The output has the following columns:
@@ -191,7 +191,7 @@ FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(
 ```
 
 
-**Tune the text chunk size for improving result and accuracy**
+**Tune the text chunk size for improved results and accuracy.**
 
 6. We can tweak the chunk size parameter, in this example we are setting MAX words per text chunk to 300.  This averages to a text chunk size of 1600 characters.  The below SQL will show the first 4 records.
 
@@ -217,12 +217,12 @@ FROM
 
 ONNX, which stands for Open Neural Network Exchange, is an open-source format designed to represent deep learning models. It aims to provide interoperability between different deep learning frameworks, allowing models trained in one framework to be used in another without the need for extensive conversion or retraining.
 
+Using ONNX models in Oracle Database 23ai to create vectors can be more secure, scalable and convenient than creating vectors outside the database. Currently the vector_embedding SQL function is significantly slower than creating vectors outside of the database with local embedding models.
 
-Loading ONNX models into databases for embedding can help in improving security, efficiency, scalability, offline embedding, performance, and better versioning and management of the embedding models.
 
 **Load two ONNX models into the database**
 
-1. Oracle AI Vector Search supports ONNX compliant models for vector embedding and search. Load two ONNX models into the database. The models are kept in the directory **VEC\_DUMP**.
+1. Oracle AI Vector Search supports ONNX compliant models for vector embedding and search. Load two ONNX models into the database. The models are loaded from the **VEC\_DUMP** directory and stored in the SGA. The models are loaded into the SGA and persisted.
 
     ```
     # Create a cursor
@@ -240,8 +240,7 @@ Loading ONNX models into databases for embedding can help in improving security,
     print ("Load the models for embedding and vector search");
 
     ```
-Note: Oracle Database 23ai supports using APIs to embedding models on the internet; however, we can also load models directly into the database for offline embedding.
-
+ 
 
 2. To verify the model exists in database run the following statement.
 
@@ -251,7 +250,7 @@ Note: Oracle Database 23ai supports using APIs to embedding models on the intern
     ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models 
     ```
 **Demonstrate and compare vector embedding using different models**
-3. Create vector embedding for text chunk using Tinybert model, and observe the text chunk and vectors.
+3. Create vector embeddings for text chunks using the Tinybert model, and observe the text chunks and vectors.
 
     ```
     %%sql 
@@ -276,7 +275,8 @@ Note: Oracle Database 23ai supports using APIs to embedding models on the intern
                 ) AS et where rownum < 2
     ```
 
-    Now by just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms. Tinybert\_model has about 360 dimentions and all-mini-l6-v2 has over 1500 dimentions for the same text chunk.
+    Now by just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+
 
 4. Create vector embedding for text chunk using All\_MINILM\_L6V2MODEL model, and observe the text chunk and vectors.
 
@@ -363,10 +363,10 @@ Lets summarize the steps we did so far.
       <tbody>
       <tr>
         <td>
-          You have successfuly loaded a pdf file into my_books. 
+          You have successfully loaded a PDF file into table my_books
         </td>
         <td>
-          DBMS_LOB.GETLENGTH(to_blob(bfilename('VEC_DUMP', 'Release_notes.pdf')))
+          to_blob(bfilename(‘VEC_DUMP’, ‘Release Notes.pdf’))
         </td>
       </tr>
       <tr>
@@ -412,18 +412,18 @@ The next task is to search for the relevant text chunks based on user queries.
 
 The traditional text search operates directly on textual data using lexical and syntactic analysis, vector search represents data as numerical vectors and compares them based on similarity measures. Vector search tends to offer more advanced semantic understanding and scalability, making it suitable for a wide range of modern applications.
 
-The result of the vector search depends on the number dimension in the vector and the embedding model in used.
+The quality of vector a search result tend to depend on the embedding model being used.  Embedding models with more dimensions tend to provide better quality vectors.
 
-In order to search the relevant text chunks we have to create a embedding of the user question with the same fromat as the embedding of data stored in database.
+In order to search the relevant text chunks we have to create a vector from the user question.
 
 **1 - Vectorize the user question.**
 
-Observe that the question is converted to a vector using the same model as the embedding model for the PDF document. We had created embedding using Tinybert model hence we use the same to create embedding of the question. We can use VECTOR\_EMBEDDING function to convert text to embedding.
+You need to convert the question/query into a vector.  You must use the same vector embedding model to create the query vector else the similarity search will not work.  You must use the VECTOR_EMBEDDING SQL function to create the query vector.
 
 1. Select the cell and click **Run**.
 
     ```
-    %sql select to_vector(vector_embedding(tinybert_model USING 'What is the result of the release version ' as data)) as embedding  
+    %sql select vector_embedding(tinybert_model USING ‘What is the result of the release version’ as data) as embedding
     ```
 
 **2 - Perform the vector search on the question using Cosine distance function.**
@@ -434,23 +434,26 @@ In this step we are selecting the text chunks that has relevant information for 
 
     ```
     %%sql
-    WITH a AS (
-        SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING  'list some limitations ' AS data)) AS embed
-        FROM DUAL)
-        SELECT embed_id,  EMBED_DATA
-        FROM VECTOR_STORE, a
-        ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, a.embed, COSINE)
-        FETCH APPROX  FIRST  4  ROWS ONLY 
+    WITH query_vector AS (
+                    SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
+      SELECT embed_id, embed_data
+      FROM VECTOR_STORE, query_vector
+      ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
+      FETCH APPROX FIRST 4 ROWS ONLY
+
     ```
 
 ## Task 6: Generating output using LLM.
 
 ### **Send the text chunks from the vector search with the user question to the LLM and generate the response.**
 
- In this lab we are using the Oracle Gen AI LLM service.   The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality
+In this lab we are using the Oracle Gen AI LLM service.   The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality.
+
+
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The following PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
+
 
 *Note: The generation process involves synthesizing information, considering linguistic nuances, and producing a coherent answer. The model's output reflects its comprehension of the input context and its ability to generate contextually relevant responses, demonstrating the power of AI in natural language understanding and generation tasks.*
-
 
 In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function.  We then send the text chunks to OCI GenAI to provide the response. 
 
@@ -535,7 +538,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 2.  Select the doc id on which to query
 
 
-   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks a related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
+   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
 
 
     ```
@@ -558,7 +561,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
     
     We successfully performed the vector search, sent the relevant chunks to the LLM along with the question and got the answer. 
 
-    We learned in this lab how to create a complete RAG solution using PLSQL.  The table below lists the vector functions we used.
+    In this lab we learned how to create a complete RAG solution using PLSQL.  The table below lists the vector functions we used.
 
     <table>
       <thead>
@@ -599,7 +602,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
         </tbody>
     </table>
 
-    **HURRAY!!!  we just completed LAB 1, a complete implementation of RAG using PLSQL**
+    **HURRAY!!!  We just completed LAB 1, a complete implementation of RAG using PLSQL**
         
 
 
