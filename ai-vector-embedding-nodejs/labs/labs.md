@@ -592,7 +592,7 @@ In this lab you have seen how easy it is to use Cohere with Node.js and Oracle V
 
 <if type="SentenceTransformers">
 
-# Using Sentence Transformers.js and Node.js with Oracle AI Vector Search
+# Using Transformers.js and Node.js with Oracle AI Vector Search
 
 ## Introduction
 
