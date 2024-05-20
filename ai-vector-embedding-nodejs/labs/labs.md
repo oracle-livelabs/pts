@@ -878,7 +878,7 @@ In this lab, you will perform the following tasks:
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08a.png =60%x*)
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08b.png =60%x*)
 
-## Task 3: Perform Similarity Search with Sentence Transformers.js
+## Task 3: Perform Similarity Search with Transformers.js
 
 1. The program *similaritySearchHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
 
