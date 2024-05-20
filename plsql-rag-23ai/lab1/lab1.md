@@ -36,7 +36,7 @@ In this lab, you will:
 
     ```
         $ cd /home/oracle/AIdemo
-        $ jupyter lab  --ip 0.0.0.0 --port 8888 --NotebookApp.token='' --NotebookApp.password=''
+        $ jupyter lab 
     ```
 
 3. Open the notebook **RAGLAB1.ipynb**. You can double click or right-click and select **Open**.
@@ -539,7 +539,7 @@ We will use this function in next step to genrate the response.
 
 2.  Select the doc id on which to query
 
-   In the function  `generate_text_response_gen`  we pass the doc_id to restrict the chucks a related to a individual doucment we load.  This improves the acquracy of the vector_search of the question.
+   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks a related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
 
     ```
     %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
@@ -554,7 +554,6 @@ We will use this function in next step to genrate the response.
     %%sql
     select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
     ```
-
 
     Observer the output.  Retry by replacing the question and see how the output change
     
