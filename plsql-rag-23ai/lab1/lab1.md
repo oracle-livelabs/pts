@@ -534,7 +534,9 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
 2.  Select the doc id on which to query
 
-   In the function  `generate\_text\_response\_gen`  we pass the doc\_id to restrict the chunks related to the document we loaded.  This improves the accuracy of the vector_search of the question.
+
+   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks a related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
+
 
     ```
     %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
@@ -549,6 +551,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
     %%sql
     select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
     ```
+
 
     Observe the output.  Retry by replacing the question and see how the output changes.
 
