@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "AI Vector Search - Building a RAG application with Oracle AI Vector Search and PLSQL",
+  "workshoptitle": "AI Vector Search - Complete RAG application with Oracle AI Vector Search and PLSQL",
   "help": "livelabs-help-db_us@oracle.com",
   "variables": ["../../variables/variables.json",
       "../../variables/variables-in-another-file.json"],
