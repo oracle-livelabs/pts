@@ -1,12 +1,10 @@
-
-
 <if type="Cohere">
 
 # Using Cohere Vector Embedding Models
 ## Introduction
 
 
-In this lab we will learn how to use the Oracle OCI generative AI Cohere embedding models with Oracle Vectors. To connect to the generative AI services we will install the oci-common and oci-sdk libraries. For the purpose of this lab these libraries have already been installed on your virtual instance. 
+In this lab we will learn how to use the Oracle OCI generative AI Cohere embedding models with Oracle Vectors. To connect to the generative AI services we will install the oci-common and oci-sdk libraries. For the purpose of this lab these libraries have already been installed on your LiveLab VM.
 
 ------------
 Estimated Time: 25 minutes
@@ -560,13 +558,13 @@ In this lab, you will see the following Vector operations using node.js:
 
     The SQL statement returns the text from the INFO column in the MY\_DATA table.
 
-   ![Lab 1 Task 4 Step 1c](images/nodejscohere13a.png =60%x*)
+   ![Lab 1 Task 4 Step 1c](images/nodejscohere13b.png =60%x*)
 
     The SQL statement calls the vector_distance function to perform a similarity comparison of the vectorized value for the input string (:1) with the vector that we stored in column V. This example performs a COSINE Similarity Search. We are only returning the first 5 rows (:2) which can be controlled using the TopK parameter. The key word APPROX informs the Oracle optimizer to use a Vector Index if it is deemed to be beneficial.  
 
     Below the SQL block we can see the parameter for setting the embedding model to be used by the program:
 
-   ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png =60%x*)
+   ![Lab 1 Task 4 Step 1d](images/nodejscohere16.png =60%x*)
 
     This is where we can choose the embedding model. we have been using the *embed-english-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
 
@@ -623,7 +621,7 @@ In this lab, you will perform the following tasks:
 
   1. We're now ready to vectorize our data using Transformers.js. To do this you will need to create a node.js program to vectorize our phrases using the Transformers.js embedding model packages. 
 
-  **NOTE:** We have already installed the Transformers.js available from hugging face on the LiveLab VM. 
+  **NOTE:** We have already installed the Transformers.js library available from hugging face on the LiveLab VM.
 
   The program *vectorizeTableHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
   
@@ -1137,7 +1135,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 1b](images/nodejstfr09.png =60%x*)
 
-    In our situation it took half a second to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere models as we do not need to perform the roundtrip REST calls over the internet.
+    In our situation it took about 8 milliseconds to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere models as we do not need to perform the roundtrip REST calls over the internet.
 
 
 3. Next let's try the phrase "cats" and see what is returned.
@@ -1296,11 +1294,8 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 </if>
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
-* [Oracle Documentation](http://docs.oracle.com)
-* [Cohere website: cohere.com](https://cohere.com)
-* [huggingface.co/sentence-transformers](https://huggingface.co/sentence-transformers)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [transformers.js](https://www.npmjs.com/package/@xenova/transformers)
 * [www.sbert.net](https://www.sbert.net/) 
 
 ## Acknowledgements
