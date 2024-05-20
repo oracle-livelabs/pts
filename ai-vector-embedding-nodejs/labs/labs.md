@@ -231,7 +231,6 @@ In this lab, you will see the following Vector operations using node.js:
       </copy>
     ```
 
-
     Now that we have vectorized the data in our table and confirmed the updates, we are ready to move onto the next task which is performing Similarity Searches using our Vectors.
 
 
@@ -241,7 +240,6 @@ In this lab, you will see the following Vector operations using node.js:
 1. In this lab we will see how to perform a similarity search with the Oracle OCI generative AI Cohere embedding models in node.js.
 
   So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI generative AI Cohere embedding models, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to Oracle OCI generative AI Cohere embedding models to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a node.js program to do this.
-
 
    The program *similaritysearchCohere.js* is already on the LiveLab VM. Below are the contents of the file.
 
@@ -477,6 +475,7 @@ In this lab, you will see the following Vector operations using node.js:
     - We are connecting to the Oracle database with the oracledb node.js library
 
 
+
 3. For our first example we will enter the word "cars" at the prompt.  
 
     You should see something similar to:
@@ -549,7 +548,6 @@ In this lab, you will see the following Vector operations using node.js:
 
     There is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
-
 9.  we should take a few moments to understand what the program is doing.
 
     We are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
@@ -590,6 +588,7 @@ In this lab you have seen how easy it is to use Cohere with Node.js and Oracle V
 
 <if type="SentenceTransformers">
 
+
 # Using Transformers.js and Node.js with Oracle AI Vector Search
 
 ## Introduction
@@ -598,7 +597,9 @@ In this lab we will be using open source embedding models from Hugging Face so t
 
 So they're free, local and fast ...plus there are over 500 sentence transformer models to choose from.
 
+
 *SentenceTransformers.js* is designed to be functionally equivalent to Hugging Face’s transformers python library, meaning you can run the same pretrained models using a very similar API.  Transformers.js uses ONNX Runtime to run models in Node.js or in a browser.
+
 
 
 See https://huggingface.co/docs/transformers.js/en/index for more details about Transformers.js
@@ -618,6 +619,7 @@ In this lab, you will perform the following tasks:
 
 
 ## Task 1: Vectorizing a table with Sentence Transformers.js embedding
+
 
   1. We're now ready to vectorize our data using Transformers.js. To do this you will need to create a node.js program to vectorize our phrases using the Transformers.js embedding model packages. 
 
@@ -861,8 +863,9 @@ In this lab, you will perform the following tasks:
     ```
 
 
+
     The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the @xenova/transformers.
-    
+
     We also have a large number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.       
 
     ![Lab 3 Task 3 Step 1a](images/nodejstfr06.png =60%x*)
