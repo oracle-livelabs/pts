@@ -17,7 +17,6 @@ Estimated Time: 25 minutes
 In this lab, you will see the following Vector operations using node.js:
 * Task 1: Vectorizing a table with Cohere embedding
 * Task 2: Perform Similarity Search using Cohere
-* Task 3: Changing embedding models
 
 ## Task 1: Vectorizing a table with Cohere embedding
 
@@ -540,8 +539,6 @@ In this lab, you will see the following Vector operations using node.js:
 
    ![Lab 1 Task 3 Step 7](images/nodejscohere10.png =60%x*)
 
-
-
     The word "Bombay" does not appear in our data set, but the results related to Mumbai are correct because "Bombay" is the former name for "Mumbai", and as such there is a strong correlation between the two names for the same geographic location.
 
     Remember, similarity search works on the basis of the trained data from which the embedding models use. Trained embedding models use text sourced from the internet and it is very likely that there is information that includes both the names "Bombay" and "Mumbai" in relation to the same place.
@@ -554,18 +551,8 @@ In this lab, you will see the following Vector operations using node.js:
 
     There is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
-    This also introduces another topic. What about changing the Embedding Model?  We'll take a look at that next...  
 
-
-## Task 3: Changing embedding models
-
-   1. So far, for the sake of simplicity and speed, we have been using the "embed-english-light-v3.0" or English Light v3.0 embedding model from Cohere. In the next step we will switch the embedding model to see how it impacts our similarity search results.
-
-   We will continue to use Cohere, so the modifications required are minor.
-
-   In order to do this we will need to edit the node.js program: *similaritysearchCohere.js*.
-
-    Before we get started with making our changes, we should take a few moments to understand what the program is doing.
+9.  we should take a few moments to understand what the program is doing.
 
     We are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
 
@@ -581,92 +568,7 @@ In this lab, you will see the following Vector operations using node.js:
 
    ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png =60%x*)
 
-    This is where we can choose the embedding model. As mentioned earlier, we have been using the *embed-english-light-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
-
-    **We can switch to the "non-light" version by commenting out the line where we with *"embed-english-light-v3.0"* and uncommenting the line for "embed-english-v3.0".**
-
-
-    Your modified program should look like this:
-
-   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png =60%x*)
-
-   To modify your program you can use the command:
-    ```
-      <copy>
-      vi similaritySearchCohere.js
-      </copy>
-    ```  
-
-2. So now we're ready to rerun our program:
-
-    ```
-      <copy>
-      node similaritySearchCohere.js
-      </copy>
-    ```
-
-    When prompted for a query string, enter the term "cats".
-
-    However, this time, when we run the program we see the following error displayed:
-
-   ![Lab 1 Task 4 Step 2](images/nodejscohere18.png =60%x*)
-
-
-    This is because, as we mentioned earlier, you cannot perform similarity search operations using different embedding models. In other words, in order for us to use the *embedding-english-v3.0* model, we will need to go back and re-vectorize the data in the MY\_DATA table so that it too uses the same embedding model.
-
-
-    In order to make this change we will need to revisit the *vectorizeTableCohere.js* program and make the same code change to comment out the line for assigning the *"embed-english-light-v3.0"* and uncommenting the line for *"embed-english-v3.0"*.
-
-
-    The program should look like this:
-
-   ![Lab 1 Task 4 Step 2](images/nodejscohere16.png =60%x*)
-
-    To modify your program you can use the command:
-    ```
-      <copy>
-      vi vectorizeTableCohere.js
-      </copy>
-    ```  
-
-3. We will also need to rerun the Vectorize program to change the embedding model for our terms-  
-
-
-    ```
-      <copy>
-      node vectorizeTableCohere.js
-      </copy>
-    ```
-
-    This time the vectorize operation will take slightly longer to run as the new model is more complex. For comparison embed-english-light-v3.0 has 384 dimensions and embed-english-v3.0 has 1024 dimensions.
-
-    Your should see the following:
-
-   ![Lab 1 Task 4 Step 3](images/nodejscohere19.png =60%x*)
-
-
-4. We're now ready to reun the Similarity Search program once again-
-
-    ```
-      <copy>
-      node similaritySearchCohere.js
-      </copy>
-    ```
-
-    When prompted to enter a phrase to query - enter "cats"
-
-    You should see something similar to the following:
-
-   ![Lab 1 Task 4 Step 4](images/nodejscohere20.png =60%x*)
-
-   This time your output will be different. The first result returned is "Cats do not care." which is more accurate than when we previously ran this query (you may recall the first entry was "Oranges are orange" when we used the *embed-english-light-v3.0* model). The last entry in the results "Wolves are hairy." is still not quite accurate but one could argue that there is a better correlation as they are both animals.   
-
-5. Also when we re-run the query for "Borough" we see "Staten Island" this time, but we don't see "Queens" so we get a different set of results,  but it's still not exactly right...
-
-   ![Lab 1 Task 4 Step 5](images/nodejscohere21.png =60%x*)
-
-
-   Feel free to try some other queries including repeating some of the previous examples we entered with the light embedding model for your own comparison.
+    This is where we can choose the embedding model. we have been using the *embed-english-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
 
 ## Appendix: Installing OCI generative ai packages on your own machine
 
@@ -1372,7 +1274,7 @@ In this lab, you will perform the following tasks:
 
     Enter Phrase: **gato**
 
-    You should see:
+    You should see:             
 
     ![Lab 3 Task 5 Step 4](images/nodejstfr18.png =60%x*)
 
