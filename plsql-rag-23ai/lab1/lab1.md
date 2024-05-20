@@ -714,7 +714,16 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
     ```
 
 
+• In the next LAB, python-oracle DB code is only focused on calling the package routines in the 23ai database.
 
+• This means that these packages could then easily be called from any programming language, eg.,
+
+    * JDBC
+    * C# with OPD.NET
+    * python-oracledb
+    * node-oracledb
+    * OCI, OCCI, ODBC, Pro*C or Pro*COBOL
+    * Go, Rust, PHP, Ruby etc
 
 
 You may now [proceed to the next lab](#next).
