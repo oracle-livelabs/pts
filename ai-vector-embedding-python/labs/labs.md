@@ -2814,26 +2814,12 @@ As mentioned in the Introduction, the FastEmbed library is available from Huggin
 * [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
 * [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
 * [Oracle Documentation](http://docs.oracle.com)
-* [Cohere website: cohere.com](https://cohere.com)
-
-
-## Acknowledgements
-* **Author** - Doug Hood, Product Manager
-* **Contributors** - Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Rajeev Rumale, May 2024
-
-
-## Learn More
-
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
-* [Oracle Documentation](http://docs.oracle.com)
 * [Cohere: Embedding models](https://cohere.com)
 * [Hugging Face: Sentence Transformers](https://huggingface.co/sentence-transformers)
 * [www.sbert.net](https://www.sbert.net/) 
 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager
-* **Contributors** - Sean Stacey, Outbound Product Manager
+* **Author** - Doug Hood, Product Manager, Sean Stacey, Outbound Product Manager
+* **Contributors** - Rajeev Rumale, Principal Outbound Product Manager
 * **Last Updated By/Date** - Rajeev Rumale, May 2024
