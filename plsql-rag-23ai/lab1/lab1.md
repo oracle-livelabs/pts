@@ -51,8 +51,9 @@ In this lab, you will:
     In the current environment all the required libraries and modules have already been installed for this RAG application. We are going to use the **oracledb** python driver which is the latest driver release for the 23ai database.  We no longer need the **cx\_oracle** driver.
 
 
-    *`from dotenv import load\_dotenv`* statement will load environment variables from .env file on the current directory.  This will have the connection and authentication information.
-    *`%load\_ext sql`* is used to run sql statements from Jupyter notebook,  it is the part of the Jupyter magic SQL extension.
+    *`from dotenv import load_dotenv`* statement will load environment variables from .env file on the current directory.  This will have the connection and authentication information.
+
+    *`%load_ext sql`* is used to run sql statements from Jupyter notebook,  it is the part of the Jupyter magic SQL extension.
 
 
     Let's import the libraries.
@@ -132,7 +133,7 @@ In this lab, you will:
 **1 - Load the document**
 
 
-1. Using the below code we will load the file into the table **MY\_BOOKS**. The document in our use case is in PDF format.  The file 'Release\_notes.pdf' is already present on the OS, and directory  **VEC\_DUMP** has been precreated to point to '/home/orcle/'.  Select the code snippet and click **Run**.
+1. Using the below code we will load the file into the table **MY\_BOOKS**. The document in our use case is in PDF format.  The file 'Release\_notes.pdf' is already present on the OS, and directory  **VEC\_DUMP** has been precreated to point to '/home/oracle/'.  Select the code snippet and click **Run**.
 
     ```
     %%sql 
@@ -149,7 +150,7 @@ In this lab, you will:
 
 **2 - Transform the document to text**
 
-3. Use package **DBMS_VECTOR_CHAIN.utl_to_text** to convert the BLOB column to plain text.  The following statement shows the output of the first 2000 chars from the PDF.
+3. Use package **DBMS\_VECTOR\_CHAIN.utl\_to\_text** to convert the BLOB column to plain text.  The following statement shows the output of the first 2000 chars from the PDF.
 
     ``` 
     %%sql
@@ -158,7 +159,7 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package DBMS_VECTOR_CHAIN.utl_to_chunks to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
+4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
@@ -168,6 +169,7 @@ In this lab, you will:
     ```
 
     The output has the following columns:
+
     • chunk\_id specifies the chunk ID for each chunk
 
     • chunk\_offset specifies the original position of each chunk in the source document, relative to the start of document which has a position of 1
@@ -180,37 +182,37 @@ In this lab, you will:
 
 5. JSON\_VALUE is function in Oracle database for string manipulation of JSON datatype.  We will convert single JSON column into multiple columns.  Click **Run** to execute the code.
 
-``` 
-%%sql
-SELECT 
- JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
- JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
- JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
- SUBSTR( REPLACE (REPLACE(TRIM( JSON_VALUE(C.column_value, '$.chunk_data')),'  ',' ') , CHR(10), ''), 1, 2000) AS chunk_txt 
-FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) C where rownum < 4
-```
+    ``` 
+    %%sql
+    SELECT 
+    JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
+    JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
+    JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
+    SUBSTR( REPLACE (REPLACE(TRIM( JSON_VALUE(C.column_value, '$.chunk_data')),'  ',' ') , CHR(10), ''), 1, 2000) AS chunk_txt 
+    FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) C where rownum < 4
+    ```
 
 
 **Tune the text chunk size for improved results and accuracy.**
 
 6. We can tweak the chunk size parameter, in this example we are setting MAX words per text chunk to 300.  This averages to a text chunk size of 1600 characters.  The below SQL will show the first 4 records.
 
-``` 
-%%sql
+    ``` 
+    %%sql
 
-SELECT 
-    JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
-    JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
-    JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
-    JSON_VALUE(C.column_value, '$.chunk_data') AS chunk_txt
-FROM 
-    my_books dt, 
-    dbms_vector_chain.utl_to_chunks(
-        dbms_vector_chain.utl_to_text(dt.file_content),
-        JSON('{"by":"words","max":"300","overlap":"0","split":"recursively","language":"american","normalize":"all"}')
-    ) C where rownum <= 4
+    SELECT 
+        JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
+        JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
+        JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
+        JSON_VALUE(C.column_value, '$.chunk_data') AS chunk_txt
+    FROM 
+        my_books dt, 
+        dbms_vector_chain.utl_to_chunks(
+            dbms_vector_chain.utl_to_text(dt.file_content),
+            JSON('{"by":"words","max":"300","overlap":"0","split":"recursively","language":"american","normalize":"all"}')
+        ) C where rownum <= 4
 
-```
+    ```
 
 ## Task 3: Get familiar with creating vector embeddings
 
@@ -428,20 +430,20 @@ You need to convert the question/query into a vector.  You must use the same vec
 
 **2 - Perform the vector search on the question using Cosine distance function.**
 
-We use the VECTOR\_DISTANCE function to do the similarity search. The shorter the vector distance the more relevant the corresponding text chuck will be for the question. The VECTOR\_DISTANCE function supports various algorithms, COSINE, DOT, MANHATTAN, and HAMMING.  COSINE is the default algorithm used when not specified.
+1. We use the VECTOR\_DISTANCE function to do the similarity search. The shorter the vector distance the more relevant the corresponding text chuck will be for the question. The VECTOR\_DISTANCE function supports various algorithms, COSINE, DOT, MANHATTAN, and HAMMING.  COSINE is the default algorithm used when not specified.
 
 In this step we are selecting the text chunks that has relevant information for the user question based on vector search.  We are using COSINE algorithm for vector distance computation. Select the cell and click **Run**.
 
-    ```
-    %%sql
-    WITH query_vector AS (
-                    SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
-      SELECT embed_id, embed_data
-      FROM VECTOR_STORE, query_vector
-      ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
-      FETCH APPROX FIRST 4 ROWS ONLY
+  ```
+  %%sql
+  WITH query_vector AS (
+              SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
+  SELECT embed_id, embed_data
+  FROM VECTOR_STORE, query_vector
+  ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
+  FETCH APPROX FIRST 4 ROWS ONLY
 
-    ```
+  ```
 
 ## Task 6: Generating output using LLM.
 
