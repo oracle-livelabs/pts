@@ -834,7 +834,7 @@ You will notice there is a significant number of embedding models to choose from
 The next block lets us choose a re-rank model. You will notice there are rerank models for different languages too. 
 
 NOTE: This does not enable or disable re-ranking. This simply chooses the  re-rank model to be used if *rerank* = 1. 
-
+        
 ```
 # English re-rankers
 rerank_model = "cross-encoder/ms-marco-TinyBERT-L-2-v2"
