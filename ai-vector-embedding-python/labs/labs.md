@@ -315,7 +315,7 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
 
 ## Task 2: Vectorizing a table with Sentence Transformers embedding
 
-Now that we have our MY\_DATA table created, we are ready to commence with generating embeddings for (or vectorizing) our data using the hugging face sentence transformers. To do this we will create a python program to vectorize our phrases using the Sentence Transformers embedding model packages that we just installed.
+Now that we have our MY\_DATA table created, we are ready to commence with generating embeddings for (or vectorizing) our data using the hugging face sentence transformers. To do this we will create a Python program to vectorize our phrases using the Sentence Transformers embedding model packages that we just installed.
 
 1. While logged into your Operating System as the Oracle user, create a file called *vectorize\_table\_SentenceTransformers.py* and paste the following contents into the file.
 
@@ -449,7 +449,7 @@ Now that we have our MY\_DATA table created, we are ready to commence with gener
       </copy>
     ```
 
-    **NOTE:** If this is the first time you are running this program you will notice that it downloads a series of dependencies.
+    **NOTE:** In a typical deployment, when running this program for the first time, you will likely see a series of dependencies being downloaded. However in our Oracle LiveLabs configuration, you should not see this happen. However there may be a pause or delay when you run the program for the first time. 
 
     You should see the following:
 
@@ -519,7 +519,7 @@ Now that we have our MY\_DATA table created, we are ready to commence with gener
 
 ## Task 3: Understanding the Vector Embedding process
 
-Before proceeding any further, lets take a look at the code of the Python program we just ran. This will help with understanding how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table python programs in this workshop, the basic logic flow is very similar for the most part.
+Before proceeding any further, lets take a look at the code of the Python program we just ran. This will help with understanding how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table Python programs in this workshop, the basic logic flow is very similar for the most part.
 
 1. Open the file with your favorite editor. You can use *vi* or *view* to view the contents of the file. We will not be making any changes to the program at this point-
 
@@ -530,7 +530,7 @@ Before proceeding any further, lets take a look at the code of the Python progra
     ```
 
 
-    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing python programs for other embedding models other vendors you will notice that this program logic is very similar. 
+    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing Python programs for other embedding models other vendors you will notice that this program logic is very similar. 
     
     The program calls the *oracledb* library to load the Python Oracle driver. This time however we are importing the *SentenceTransformer* package from *Hugging Face*.
 
@@ -559,7 +559,7 @@ It's time to have some fun!
 
 In this task we will take a look at how to perform similarity search in the Oracle Database with the Sentence Transformer embedding models from python.
 
-Now that our data has been vectorized, we are ready to try performing similarity searches using Sentence Transformers. To do this using Python, we will create a python program to call Sentence Transformers to vectorize a search phrase that can then be used to search against the vectors stored in column V. We then return the phrases or factoids from the INFO column associated with the corresponding ID column, this is all done using similarity search. 
+Now that our data has been vectorized, we are ready to try performing similarity searches using Sentence Transformers. To do this using Python, we will create a Python program to call Sentence Transformers to vectorize a search phrase that can then be used to search against the vectors stored in column V. We then return the phrases or factoids from the INFO column associated with the corresponding ID column, this is all done using similarity search. 
 
 Even though the data in our table has been vectorized we will still need to generate a vector using python, this is because the search phrase needs to also be a vector using the same embedding model as the data. The search phrase is entered on the fly, vectorized, and then used to search against the vectors stored in our MY\_DATA table in the database. 
 
@@ -831,23 +831,22 @@ You will notice there is a significant number of embedding models to choose from
       #embedding_model = "stsb-xlm-r-multilingual"
     ```
       
-The next block lets us choose a re-rank model. You will notice there are re-rank models for different languages too. 
+The next block lets us choose a re-rank model. You will notice there are rerank models for different languages too. 
 
 NOTE: This does not enable or disable re-ranking. This simply chooses the  re-rank model to be used if *rerank* = 1. 
 
     ```
-      # English re-rankers
-      rerank_model = "cross-encoder/ms-marco-TinyBERT-L-2-v2"
-      #rerank_model = "cross-encoder/ms-marco-MiniLM-L-2-v2"
-      #rerank_model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-      #rerank_model = "cross-encoder/ms-marco-MiniLM-L-12-v2"
-      #rerank_model = "BAAI/bge-reranker-base"
-      #rerank_model = "BAAI/bge-reranker-large"
-  
-      # Multi-lingual re-rankers
-      #rerank_model = "jeffwan/mmarco-mMiniLMv2-L12-H384-v1"
-      #rerank_model = "cross-encoder/msmarco-MiniLM-L6-en-de-v1"
-  
+    # English re-rankers
+    rerank_model = "cross-encoder/ms-marco-TinyBERT-L-2-v2"
+    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-2-v2"
+    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-12-v2"
+    #rerank_model = "BAAI/bge-reranker-base"
+    #rerank_model = "BAAI/bge-reranker-large"
+
+    # Multi-lingual re-rankers
+    #rerank_model = "jeffwan/mmarco-mMiniLMv2-L12-H384-v1"
+    #rerank_model = "cross-encoder/msmarco-MiniLM-L6-en-de-v1"
     ```
 
 Once this is configured, we connect to the database, retrieve an input string (or phrase) from the prompt. We then generate a vector of that phrase using the specified embedding model. and run the SQL operation to perform a similarity search in the Oracle database using that vector. The results of the corresponding INFO column are then returned. The number of results returned is controlled by the top-K variable.   
@@ -940,7 +939,7 @@ So far, for the sake of simplicity and speed, we have been using the "all-MiniLM
 
 We will continue to use Sentence Transformers from Hugging Face, so the modifications required are minor.
 
-In order to do this we will need to edit the python program: similarity\_search\_SentenceTransformers.py. 
+In order to do this we will need to edit the Python program: similarity\_search\_SentenceTransformers.py. 
 In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"intfloat/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
 
 To switch embedding models you will need to comment out the line:
@@ -1374,7 +1373,7 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
 
 ## Task 2: Vectorizing a table with Oracle OCI GenAI Cohere embedding
 
-1. The first step is to vectorize the contents of our table using an embedding model provided by Cohere. To do this, we will create a python program to vectorize our phrases using an embedding model from the Oracle OCI Generative AI service.
+1. The first step is to vectorize the contents of our table using an embedding model provided by Cohere. To do this, we will create a Python program to vectorize our phrases using an embedding model from the Oracle OCI Generative AI service.
 
 While logged into your Operating System as the Oracle user, create a file called *vectorize\_table\_Cohere.py* and paste the following contents into the file.
 
@@ -1582,7 +1581,7 @@ To summarize what we've just done, the *vectorize\_table\_Cohere.py* program con
 
 In this lab we will see how to perform a similarity search with the Oracle OCI GenAI Cohere embedding models using python.
 
-So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI GenAI Cohere embedding model, we can now start performing Similarity Searches using the Vectors stored in column "V" in the table. Even though the data in our table has been vectorized we will still need to perform a "vectorize" operation, as the search phrase needs to also be vectorized using the same embedding model. The search phrase is entered on the fly, vectorized, and then used to search against the vectors stored in our MY\_DATA table in the database. We will create a python program to do this.
+So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI GenAI Cohere embedding model, we can now start performing Similarity Searches using the Vectors stored in column "V" in the table. Even though the data in our table has been vectorized we will still need to perform a "vectorize" operation, as the search phrase needs to also be vectorized using the same embedding model. The search phrase is entered on the fly, vectorized, and then used to search against the vectors stored in our MY\_DATA table in the database. We will create a Python program to do this.
 
 
 1. While logged into your Operating System as the Oracle user, create a file called *similarity\_search\_Cohere.py* and paste the following contents into the file.
@@ -1751,11 +1750,12 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
     The first thing you should notice is that the embedding model: "cohere.embed-english-v3.0" is being used. The similarity search must use the same embedding model as the vectors stored in the MY\_DATA table. You will also notice:
 
     - We are only looking at the TopK 5 - or nearest 5 results
-    - We are connecting to the Oracle database with the *oracledb* python library
+    - We are connecting to the Oracle database with the *oracledb* Python library
     - We are using "float" embeddings. As opposed to "Int8"
 
+3. For our first example let's try the phrase "cars and see what is returned.
 
-3. For our first example we will enter the word "cars" at the prompt.  
+    Enter phrase **cars**   
 
     You should see something similar to:
 
@@ -1772,6 +1772,8 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 4. Next we can type in the word "cats"
 
+    Enter phrase **cats**
+
     You should see something similar to:
 
     ![Lab 2 Task 3 Step 4](images/python020304.png)
@@ -1782,6 +1784,10 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 
 5. We can also try other search phrases for example "NY", or even "fruit".
+
+    Enter phrase **fruit**
+
+    Enter prhse **NY**
 
     You should see something similar to:
 
@@ -1794,6 +1800,8 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 6. Next we can search for the term "Boroughs".
 
+   Enter prhse **Boroughs**
+    
    You should see something similar to:
 
    ![Lab 2 Task 3 Step 6](images/python020306.png)
@@ -1806,6 +1814,8 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 7. For another experiment, we can enter the word "Bombay". 
 
+   Enter prhse **Bombay**
+    
    You should see something similar to:
 
    ![Lab 2 Task 3 Step 7](images/python020307.png)
@@ -1834,11 +1844,11 @@ Hopefully you have seen how easy it is to use Oracle OCI GenAI Cohere with Pytho
 
 ## Introduction
 
-In this lab we will be using FastEmbed.  FastEmbed uses the Hugging Face vector embedding models, which are usually sentence transformers *(Sentence Transformers are covered in a separate lab)* . But instead of using the python runtime to execute the embedding models, FastEmbed uses the open source project: *ONNX-runtime* which is then called from our python programs.
+In this lab we will be using FastEmbed.  FastEmbed uses the Hugging Face vector embedding models, which are usually sentence transformers *(Sentence Transformers are covered in a separate lab)* . But instead of using the Python runtime to execute the embedding models, FastEmbed uses the open source project: *ONNX-runtime* which is then called from our Python programs.
 
 ONNX is a common file format that can be used to convert between different machine learning models, the ONNX-runtime is a C++ library which allows you to run models in the ONNX file format.
 
-So for this lab we will take open source embedding models and transform them to the ONNX file format so we can then use the ONNX runtime. The model is using FastEmbed, so essentially, it's using a wrapper to a wrapper to the python apis. This is not only done for convenience, but also so that it's less work for the end-user, because the embedding models are ready to go.
+So for this lab we will take open source embedding models and transform them to the ONNX file format so we can then use the ONNX runtime. The model is using FastEmbed, so essentially, it's using a wrapper to a wrapper to the Python apis. This is not only done for convenience, but also so that it's less work for the end-user, because the embedding models are ready to go.
 
 Also, just as with Sentence Transformers, FastEmbed uses the the vector embedding models from Hugging Face, so not only are they open source and therefore free to use, they can be installed locally. This means they can be accessed by making a function call to a local library, rather than a REST call over a network.
 
@@ -2148,7 +2158,7 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
 
 ## Task 2: Vectorizing a table with FastEmbed
 
-We're now ready to vectorize our data using fastEmbed. To do this you will need to create a python program to vectorize our phrases using the FastEmbed packages that we just installed.
+We're now ready to vectorize our data using fastEmbed. To do this you will need to create a Python program to vectorize our phrases using the FastEmbed packages that we just installed.
 
 1. While logged into your Operating System as the Oracle user, create a file called *vectorize\_table\_FastEmbed.py* and paste the following contents into the file.
 
@@ -2274,7 +2284,7 @@ We're now ready to vectorize our data using fastEmbed. To do this you will need 
       </copy>
     ```
 
-    **NOTE:** The first time you run this program you may notice that it downloads a series of dependencies.
+    **NOTE:** The first time you run this program you may notice that it downloads a series of dependencies. The files have already been downloaded in our Oracle LiveLab environment so you should not see these download operations. 
 
     You should see the following:
 
@@ -2284,7 +2294,7 @@ We're now ready to vectorize our data using fastEmbed. To do this you will need 
 
     ![Lab 3 Task 2 Step 2b](images/python030202b.png)
 
-    You will notice that this is a relatively fast operation. In our case it ran in under a second. You should also see that it used the *"FastEmbed sentence-transformers/all-MiniLM-L6-v2"* embedding model. This is the same embedding model we use in our Setence Transformers lab but it has been converted to the ONNX format and is also using the ONNX runtime. The ONNX runtime has the ability to optimize existing models as well as use a C++ runtime (vs python runtime from pytorch) so net effect is that it is typically faster.
+    You will notice that this is a relatively fast operation. In our case it ran in under a second. You should also see that it used the *"FastEmbed sentence-transformers/all-MiniLM-L6-v2"* embedding model. This is the same embedding model we use in our Setence Transformers lab but it has been converted to the ONNX format and is also using the ONNX runtime. The ONNX runtime has the ability to optimize existing models as well as use a C++ runtime (vs Python runtime from PyTorch) so net effect is that it is typically faster.
 
     To summarize what we've just done, the *vectorize\_table\_FastEmbed.py* program connects to the Oracle database, retrieves the text from the INFO column of the *MY\_DATA* table, and generates a vector for the INFO column in each of the 150 rows. We then store the vectorized data as a vector in the V column.
 
@@ -2300,9 +2310,9 @@ Before proceeding any further, lets take a look at the code of the Python progra
       </copy>
     ```
 
-    The first thing you may notice is that the program has just over 100 lines of code. If you've looked at the code for the vectorizing python programs for other Embedding models you will see that this program logic is very similar.
+    The first thing you may notice is that the program has just over 100 lines of code. If you've looked at the code for the vectorizing Python programs for other Embedding models you will see that this program logic is very similar.
 
-2. After you scroll past the comments section of the program you will notice that we are importing the os, sys, array and time python modules. We are using these modules to performing basic operations in the program.  
+2. After you scroll past the comments section of the program you will notice that we are importing the os, sys, array and time Python modules. We are using these modules to performing basic operations in the program.  
 
     We are also importing-
     - **oracledb** - the Python Driver for OracleDatabase. https://oracle.github.io/python-oracledb/
@@ -2398,7 +2408,7 @@ You can now exit from SQL*Plus.
 
 It's time to have some fun!
 
-So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed embedding. We can now start performing Similarity Searches using the Vectors in our table. Even though the table has been vectorized we will still need to connect to use FastEmbed to vectorize our search phrase using the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors in the database. We will create a python program to do this.
+So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed embedding. We can now start performing Similarity Searches using the Vectors in our table. Even though the table has been vectorized we will still need to connect to use FastEmbed to vectorize our search phrase using the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors in the database. We will create a Python program to do this.
 
 1. While logged into your Operating System as the Oracle user, create a file called *similarity\_search\_FastEmbed.py* and paste the following contents into the file.
 
@@ -2811,22 +2821,8 @@ As mentioned in the Introduction, the FastEmbed library is available from Huggin
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
-* [Oracle Documentation](http://docs.oracle.com)
-* [Cohere website: cohere.com](https://cohere.com)
-
-
-## Acknowledgements
-* **Author** - Doug Hood, Product Manager
-* **Contributors** - Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Rajeev Rumale, May 2024
-
-
-## Learn More
-
-* [Oracle Database 23ai Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
+* [Oracle Database 23ai Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/23/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Cohere: Embedding models](https://cohere.com)
 * [Hugging Face: Sentence Transformers](https://huggingface.co/sentence-transformers)
@@ -2834,6 +2830,6 @@ As mentioned in the Introduction, the FastEmbed library is available from Huggin
 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager
-* **Contributors** - Sean Stacey, Outbound Product Manager
+* **Author** - Doug Hood, Product Manager,  Sean Stacey, Outbound Product Manager
+* **Contributors** - Rajeev Rumale, Principal Outbound Product Manager
 * **Last Updated By/Date** - Rajeev Rumale, May 2024
