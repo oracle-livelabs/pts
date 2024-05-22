@@ -761,93 +761,93 @@ Before we run the program, let's take a moment to review what our program does.
 
 The first block of code loads modules needed for the basic operation of the program. Next, we import the *oracledb* library to load the Python Oracle driver. 
 
-    ```
-      import os
-      import sys
-      import array
-      import time
-      
-      import oracledb
-      from sentence_transformers import SentenceTransformer
-      from sentence_transformers import CrossEncoder
-    ```
+```
+    import os
+    import sys
+    import array
+    import time
+    
+    import oracledb
+    from sentence_transformers import SentenceTransformer
+    from sentence_transformers import CrossEncoder
+```
 
 Next we are passing our Oracle Username, Password and connectstring to connect to the Oracle database.
 
 
-    ```
+```
 
-      un = os.getenv("PYTHON_USERNAME")
-      pw = os.getenv("PYTHON_PASSWORD")
-      cs = os.getenv("PYTHON_CONNECTSTRING")
-    ```
+    un = os.getenv("PYTHON_USERNAME")
+    pw = os.getenv("PYTHON_PASSWORD")
+    cs = os.getenv("PYTHON_CONNECTSTRING")
+```
 
 The next setting controls the number of rows or results we want to return. and then whether we would like to use Re-ranking to control the order of the results being returned. As documented in the code, there are trade-offs in using a re-rank. There are also different re-rank models available too.
 
-    ```
-     
-      # topK is how many rows to return
-      topK = 5
-      
-      # Re-ranking is about potentially improving the order of the resultset
-      # Re-ranking is significantly slower than doing similarity search
-      # Re-ranking is optional
-      rerank = 0
-    ```
+```
+    
+    # topK is how many rows to return
+    topK = 5
+    
+    # Re-ranking is about potentially improving the order of the resultset
+    # Re-ranking is significantly slower than doing similarity search
+    # Re-ranking is optional
+    rerank = 0
+```
       
 The SQL statement that is used to perform the Vector similarity search is parsed to the SQL variable.   
 
-    ```
-      sql = """select info
-           from my_data
-           order by vector_distance(v, :1, COSINE)
-           fetch first :2 rows only"""
-    ```
+```
+    sql = """select info
+        from my_data
+        order by vector_distance(v, :1, COSINE)
+        fetch first :2 rows only"""
+```
 
 The next block of code is where we assign the embedding model (un-commented line) to use.
 
 You will notice there is a significant number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.
 
-    ```
-      # English embedding models
-      embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
-      #embedding_model = "sentence-transformers/all-MiniLM-L12-v2"
-      #embedding_model = "sentence-transformers/paraphrase-MiniLM-L3-v2"
-      #embedding_model = "sentence-transformers/all-mpnet-base-v2"
-      #embedding_model = "sentence-transformers/all-distilroberta-v1"
-      #embedding_model = "BAAI/bge-small-en-v1.5"
-      #embedding_model = "BAAI/bge-base-en-v1.5"
-      #embedding_model = "sentence-transformers/average_word_embeddings_glove.6B.300d"
-      #embedding_model = "sentence-transformers/average_word_embeddings_komninos"
-      #embedding_model = "nomic-ai/nomic-embed-text-v1"
-      
-      # Multi-lingual embedding models
-      #embedding_model = "BAAI/bge-m3"
-      #embedding_model = "intfloat/multilingual-e5-large"
-      #embedding_model = "intfloat/multilingual-e5-base"
-      #embedding_model = "intfloat/multilingual-e5-small"
-      #embedding_model = "paraphrase-multilingual-mpnet-base-v2"
-      #embedding_model = "distiluse-base-multilingual-cased-v2"
-      #embedding_model = "stsb-xlm-r-multilingual"
-    ```
+```
+    # English embedding models
+    embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
+    #embedding_model = "sentence-transformers/all-MiniLM-L12-v2"
+    #embedding_model = "sentence-transformers/paraphrase-MiniLM-L3-v2"
+    #embedding_model = "sentence-transformers/all-mpnet-base-v2"
+    #embedding_model = "sentence-transformers/all-distilroberta-v1"
+    #embedding_model = "BAAI/bge-small-en-v1.5"
+    #embedding_model = "BAAI/bge-base-en-v1.5"
+    #embedding_model = "sentence-transformers/average_word_embeddings_glove.6B.300d"
+    #embedding_model = "sentence-transformers/average_word_embeddings_komninos"
+    #embedding_model = "nomic-ai/nomic-embed-text-v1"
+    
+    # Multi-lingual embedding models
+    #embedding_model = "BAAI/bge-m3"
+    #embedding_model = "intfloat/multilingual-e5-large"
+    #embedding_model = "intfloat/multilingual-e5-base"
+    #embedding_model = "intfloat/multilingual-e5-small"
+    #embedding_model = "paraphrase-multilingual-mpnet-base-v2"
+    #embedding_model = "distiluse-base-multilingual-cased-v2"
+    #embedding_model = "stsb-xlm-r-multilingual"
+```
       
 The next block lets us choose a re-rank model. You will notice there are rerank models for different languages too. 
 
 NOTE: This does not enable or disable re-ranking. This simply chooses the  re-rank model to be used if *rerank* = 1. 
+        
+```
+# English re-rankers
+rerank_model = "cross-encoder/ms-marco-TinyBERT-L-2-v2"
+#rerank_model = "cross-encoder/ms-marco-MiniLM-L-2-v2"
+#rerank_model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+#rerank_model = "cross-encoder/ms-marco-MiniLM-L-12-v2"
+#rerank_model = "BAAI/bge-reranker-base"
+#rerank_model = "BAAI/bge-reranker-large"
 
-    ```
-    # English re-rankers
-    rerank_model = "cross-encoder/ms-marco-TinyBERT-L-2-v2"
-    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-2-v2"
-    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-    #rerank_model = "cross-encoder/ms-marco-MiniLM-L-12-v2"
-    #rerank_model = "BAAI/bge-reranker-base"
-    #rerank_model = "BAAI/bge-reranker-large"
-
-    # Multi-lingual re-rankers
-    #rerank_model = "jeffwan/mmarco-mMiniLMv2-L12-H384-v1"
-    #rerank_model = "cross-encoder/msmarco-MiniLM-L6-en-de-v1"
-    ```
+# Multi-lingual re-rankers
+#rerank_model = "jeffwan/mmarco-mMiniLMv2-L12-H384-v1"
+#rerank_model = "cross-encoder/msmarco-MiniLM-L6-en-de-v1"
+```
 
 Once this is configured, we connect to the database, retrieve an input string (or phrase) from the prompt. We then generate a vector of that phrase using the specified embedding model. and run the SQL operation to perform a similarity search in the Oracle database using that vector. The results of the corresponding INFO column are then returned. The number of results returned is controlled by the top-K variable.   
 
