@@ -15,7 +15,7 @@ A typical RAG application design has 7 steps and requires a vector store.  Oracl
 
 Estimated Time: 10 min
 
-To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai FREE edition installed along with SQLPlus, SQL Developer and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
+To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai Free edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
 
 ### Objectives
 
@@ -36,7 +36,7 @@ In this lab, you will:
 
     ```
         $ cd /home/oracle/AIdemo
-        $ jupyter lab  --ip 0.0.0.0 --port 8888 --NotebookApp.token='' --NotebookApp.password=''
+        $ jupyter lab
     ```
 
 3. Open the notebook **RAGLAB1.ipynb**. You can double click or right-click and select **Open**.
@@ -51,7 +51,8 @@ In this lab, you will:
     In the current environment all the required libraries and modules have already been installed for this RAG application. We are going to use the **oracledb** python driver which is the latest driver release for the 23ai database.  We no longer need the **cx\_oracle** driver.
 
 
-    *`from dotenv import load_dotenv`* statement will load environment variables from .env file on the current directory,  this will have the connection and authentication information.
+    *`from dotenv import load_dotenv`* statement will load environment variables from .env file on the current directory.  This will have the connection and authentication information.
+
     *`%load_ext sql`* is used to run sql statements from Jupyter notebook,  it is the part of the Jupyter magic SQL extension.
 
 
@@ -67,7 +68,7 @@ In this lab, you will:
     import oracledb
     import sys
     import os
-    from dotenv import load_dotenva
+    from dotenv import load_dotenv
     %load_ext sql
 
     ```
@@ -94,7 +95,7 @@ In this lab, you will:
 
     ```
 
-6. This code will create a table named *MY\_BOOKS* in the VECTOR schema. We will use table to load the orginial PDF file as a BLOB. Select the code snippet and click **Run**.
+6. This code will create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Select the code snippet and click **Run**.
 
     ``` 
     %%sql
@@ -132,7 +133,7 @@ In this lab, you will:
 **1 - Load the document**
 
 
-1. Using the below code we will load the file into the table **MY\_BOOKS**. The document in our use case is in PDF format.  The file 'Release\_notes.pdf' is already present on the OS, and directory  **VEC\_DUMP** has been precreated to point to '/home/orcle/'.  Select the code snippet and click **Run**.
+1. Using the below code we will load the file into the table **MY\_BOOKS**. The document in our use case is in PDF format.  The file 'Release\_notes.pdf' is already present on the OS, and directory  **VEC\_DUMP** has been precreated to point to '/home/oracle/'.  Select the code snippet and click **Run**.
 
     ```
     %%sql 
@@ -141,7 +142,7 @@ In this lab, you will:
 
     ```
 
-2. Commit the inserted records.  Select the cell and click **Run**.
+2. Commit the inserted rows.  Select the cell and click **Run**.
 
     ```
     %%sql commit
@@ -149,7 +150,7 @@ In this lab, you will:
 
 **2 - Transform the document to text**
 
-3. Use package  **dbms\_vector\_chain.utl\_to\_text** to read file from BLOB as text. The follow statement show the output with first 2000 chars from the PDF.  Click **Run** to execute the code.
+3. Use package **DBMS\_VECTOR\_CHAIN.utl\_to\_text** to convert the BLOB column to plain text.  The following statement shows the output of the first 2000 chars from the PDF.
 
     ``` 
     %%sql
@@ -158,16 +159,17 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package **dbms\_vector\_chain.utl\_to_chunks** to convert the long text from file into multiple text chucks and show the first 4 chunks. Click **Run** to execute the code.
+4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
     SELECT ct.* from 
     my_books dt, 
-    dbms_vector_chain.utl\_to_chunks(dbms_vector\_chain.utl\_to_text(dt.file\_content)) ct where rownum < 4
+    dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) ct where rownum < 4
     ```
 
     The output has the following columns:
+
     • chunk\_id specifies the chunk ID for each chunk
 
     • chunk\_offset specifies the original position of each chunk in the source document, relative to the start of document which has a position of 1
@@ -180,49 +182,49 @@ In this lab, you will:
 
 5. JSON\_VALUE is function in Oracle database for string manipulation of JSON datatype.  We will convert single JSON column into multiple columns.  Click **Run** to execute the code.
 
-``` 
-%%sql
-SELECT 
- JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
- JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
- JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
- SUBSTR( REPLACE (REPLACE(TRIM( JSON_VALUE(C.column_value, '$.chunk_data')),'  ',' ') , CHR(10), ''), 1, 2000) AS chunk_txt 
-FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) C where rownum < 4
-```
-
-
-**Tune the text chunk size for improving result and accuracy**
-
-6. We can tweak the chunk size parameter, in this example we are setting MAX words per text chunk to 300.  This averages to a text chunck size of 1600 characters.  The below SQL will show the first 4 records.
-
-``` 
-%%sql
-
-SELECT 
+    ``` 
+    %%sql
+    SELECT 
     JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
     JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
     JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
-    JSON_VALUE(C.column_value, '$.chunk_data') AS chunk_txt
-FROM 
-    my_books dt, 
-    dbms_vector_chain.utl_to_chunks(
-        dbms_vector_chain.utl_to_text(dt.file_content),
-        JSON('{"by":"words","max":"300","overlap":"0","split":"recursively","language":"american","normalize":"all"}')
-    ) C where rownum <= 4
+    SUBSTR( REPLACE (REPLACE(TRIM( JSON_VALUE(C.column_value, '$.chunk_data')),'  ',' ') , CHR(10), ''), 1, 2000) AS chunk_txt 
+    FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) C where rownum < 4
+    ```
 
-```
+
+**Tune the text chunk size for improved results and accuracy.**
+
+6. We can tweak the chunk size parameter, in this example we are setting MAX words per text chunk to 300.  This averages to a text chunk size of 1600 characters.  The below SQL will show the first 4 records.
+
+    ``` 
+    %%sql
+
+    SELECT 
+        JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
+        JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
+        JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
+        JSON_VALUE(C.column_value, '$.chunk_data') AS chunk_txt
+    FROM 
+        my_books dt, 
+        dbms_vector_chain.utl_to_chunks(
+            dbms_vector_chain.utl_to_text(dt.file_content),
+            JSON('{"by":"words","max":"300","overlap":"0","split":"recursively","language":"american","normalize":"all"}')
+        ) C where rownum <= 4
+
+    ```
 
 ## Task 3: Get familiar with creating vector embeddings
 
 
 ONNX, which stands for Open Neural Network Exchange, is an open-source format designed to represent deep learning models. It aims to provide interoperability between different deep learning frameworks, allowing models trained in one framework to be used in another without the need for extensive conversion or retraining.
 
+Using ONNX models in Oracle Database 23ai to create vectors can be more secure, scalable and convenient than creating vectors outside the database. Currently the vector_embedding SQL function is significantly slower than creating vectors outside of the database with local embedding models.
 
-Loading ONNX models into databases for embedding can help in improving security, efficiency, scalability, offline embedding, performance, and better versioning and management of the embedding models.
 
 **Load two ONNX models into the database**
 
-1. Oracle AI Vector Search supports ONNX compliant models for vector embedding and search. Load two ONNX models into the database. The models are kept in the directory **VEC\_DUMP**.
+1. Oracle AI Vector Search supports ONNX compliant models for vector embedding and search. Load two ONNX models into the database. The models are loaded from the **VEC\_DUMP** directory and stored in the SGA. The models are loaded into the SGA and persisted.
 
     ```
     # Create a cursor
@@ -240,8 +242,7 @@ Loading ONNX models into databases for embedding can help in improving security,
     print ("Load the models for embedding and vector search");
 
     ```
-Note: Oracle Database 23ai supports using APIs to embedding models on the internet; however, we can also load models directly into the database for offline embedding.
-
+ 
 
 2. To verify the model exists in database run the following statement.
 
@@ -251,7 +252,7 @@ Note: Oracle Database 23ai supports using APIs to embedding models on the intern
     ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models 
     ```
 **Demonstrate and compare vector embedding using different models**
-3. Create vector embedding for text chunk using Tinybert model, and observe the text chunk and vectors.
+3. Create vector embeddings for text chunks using the Tinybert model, and observe the text chunks and vectors.
 
     ```
     %%sql 
@@ -276,7 +277,8 @@ Note: Oracle Database 23ai supports using APIs to embedding models on the intern
                 ) AS et where rownum < 2
     ```
 
-    Now by just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms. Tinybert\_model has about 360 dimentions and all-mini-l6-v2 has over 1500 dimentions for the same text chunk.
+    Now by just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+
 
 4. Create vector embedding for text chunk using All\_MINILM\_L6V2MODEL model, and observe the text chunk and vectors.
 
@@ -306,9 +308,9 @@ Note: Oracle Database 23ai supports using APIs to embedding models on the intern
 
 ## Task 4: Creating vector embedding using PLSQL packages and storing in vector store
 
-In the below SQL statement we are storing DOC\_ID from MY\_BOOKS table and its corresponding text chunks and vector embedding in the columns embed\_data & embed\_vector of table vector\_store.  The statement converts to text chunks and chunks to vector embeddings in a single insert statement.
+In the below SQL statement we are storing DOC\_ID from MY\_BOOKS table and its corresponding text chunks and vector embedding in the columns embed\_data & embed\_vector of table vector\_store.  The statement converts the document to text chunks and chunks to vector embeddings in a single insert statement.
 
-Note that we are using the local ONNX model for embedding, this ensures no data is sent outside the database which is more secure and faster to create emmbedding as there are no API calls across internet.
+Note that we are using the local ONNX model for embedding, this ensures no data is sent outside the database which is more secure and faster to create embedding as there are no API calls across internet.
 
 **1 - Create the vector embedding** 
 
@@ -363,10 +365,10 @@ Lets summarize the steps we did so far.
       <tbody>
       <tr>
         <td>
-          You have successfuly loaded a pdf file into my_books. 
+          You have successfully loaded a PDF file into table my_books
         </td>
         <td>
-          DBMS_LOB.GETLENGTH(to_blob(bfilename('VEC_DUMP', 'Release_notes.pdf')))
+          to_blob(bfilename(‘VEC_DUMP’, ‘Release Notes.pdf’))
         </td>
       </tr>
       <tr>
@@ -406,60 +408,58 @@ Lets summarize the steps we did so far.
 
 
 This completes the process of loading the PDF file, converting it into text and creating chunks and embeddings.
-The next task is to search for the relevant text chuncks based on user queries. 
+The next task is to search for the relevant text chunks based on user queries. 
 
 ## Task 5: Vectorize the question and perform vector Search
 
 The traditional text search operates directly on textual data using lexical and syntactic analysis, vector search represents data as numerical vectors and compares them based on similarity measures. Vector search tends to offer more advanced semantic understanding and scalability, making it suitable for a wide range of modern applications.
 
-The result of the vector search depends on the number dimension in the vector and the embedding model in used.
+The quality of vector a search result tend to depend on the embedding model being used.  Embedding models with more dimensions tend to provide better quality vectors.
 
-In order to search the relevant text chuncks we have to create a embedding of the user question with the same fromat as the embedding of data stored in database.
+In order to search the relevant text chunks we have to create a vector from the user question.
 
 **1 - Vectorize the user question.**
 
-Observe that the question is converted to a vector using the same model as the embedding model for the PDF document. We had created embedding using Tinybert model hence we use the same to create embedding of the question. We can use VECTOR\_EMBEDDING function to convert text to embedding.
+You need to convert the question/query into a vector.  You must use the same vector embedding model to create the query vector else the similarity search will not work.  You must use the VECTOR_EMBEDDING SQL function to create the query vector.
 
 1. Select the cell and click **Run**.
 
     ```
-    %sql select to_vector(vector_embedding(tinybert_model USING 'What is the result of the release version ' as data)) as embedding  
+    %sql select vector_embedding(tinybert_model USING ‘What is the result of the release version’ as data) as embedding
     ```
 
 **2 - Perform the vector search on the question using Cosine distance function.**
 
-We use the VECTOR\_DISTANCE function to do the similarity search. The shorter the vector distance the more relevant the corresponding text chuck will be for the question. The VECTOR\_DISTANCE function supports various algorithms, COSINE, DOT, MANHATTAN, and HAMMING.  COSINE is the default algorithm used when not specified.
+1. We use the VECTOR\_DISTANCE function to do the similarity search. The shorter the vector distance the more relevant the corresponding text chuck will be for the question. The VECTOR\_DISTANCE function supports various algorithms, COSINE, DOT, MANHATTAN, and HAMMING.  COSINE is the default algorithm used when not specified.
 
 In this step we are selecting the text chunks that has relevant information for the user question based on vector search.  We are using COSINE algorithm for vector distance computation. Select the cell and click **Run**.
 
-    ```
-    %%sql
-    WITH a AS (
-        SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING  'list some limitations ' AS data)) AS embed
-        FROM DUAL)
-        SELECT embed_id,  EMBED_DATA
-        FROM VECTOR_STORE, a
-        ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, a.embed, COSINE)
-        FETCH APPROX  FIRST  4  ROWS ONLY 
-    ```
+  ```
+  %%sql
+  WITH query_vector AS (
+              SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
+  SELECT embed_id, embed_data
+  FROM VECTOR_STORE, query_vector
+  ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
+  FETCH APPROX FIRST 4 ROWS ONLY
+
+  ```
 
 ## Task 6: Generating output using LLM.
 
-### **Send the text chunks from the vector search with the user question to the LLM and generate response.**
+### **Send the text chunks from the vector search with the user question to the LLM and generate the response.**
 
-When presented with text chunk select from the vector search result and a user question, an LLM service delves into contextual understanding, with a primary emphasis on the user's question. In this lab we are using the Oracle Gen AI LLM service.   LLM involves processing both the user inquiry and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question framework and the framework of the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality
+In this lab we are using the Oracle Gen AI LLM service.   The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality.
+
+
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The following PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
+
 
 *Note: The generation process involves synthesizing information, considering linguistic nuances, and producing a coherent answer. The model's output reflects its comprehension of the input context and its ability to generate contextually relevant responses, demonstrating the power of AI in natural language understanding and generation tasks.*
 
+In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function.  We then send the text chunks to OCI GenAI to provide the response. 
 
-In the code below we are emmbeding the user question, doing a vector seach in vector store for selecting relevant text chunks using vector distance function.  we then send the select chunks to Oracle GenAI which provides an repsonse. 
-
-For connecting to LLM we have pre-created login credintials using DBMS_VECTOE.CREATE_CREDENTIAL.  The syntax of establising connection with Oracle GenAI can be checked in the documentation. 
-
-The below code is creating a function that does the vector search using VECTOR\_DISTANCE function. And send the resulting text chunks to OCI GenAI LLM service to get answers.  
-
-We will use this function in next step to genrate the response.
-
+For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL.  The syntax of establishing the connection with OCI GenAI can be found in the documentation. 
 
 1. Select the cell and click **Run**.
 
@@ -539,7 +539,9 @@ We will use this function in next step to genrate the response.
 
 2.  Select the doc id on which to query
 
-   In the function  `generate_text_response_gen`  we pass the doc_id to restrict the chucks a related to a individual doucment we load.  This improves the acquracy of the vector_search of the question.
+
+   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
+
 
     ```
     %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
@@ -548,7 +550,7 @@ We will use this function in next step to genrate the response.
     ```
 3. Generate LLM response
 
-    Generate the response using the query below. This call function `generate_text_response_gen` and passed the `doc_id` from previous step
+    Generate the response using the query below. This calls function `generate_text_response_gen` and passes the `doc_id` from previous step
 
     ```
     %%sql
@@ -556,11 +558,12 @@ We will use this function in next step to genrate the response.
     ```
 
 
-    Observer the output.  Retry by replacing the question and see how the output change
+    Observe the output.  Retry by replacing the question and see how the output changes.
+
     
     We successfully performed the vector search, sent the relevant chunks to the LLM along with the question and got the answer. 
 
-    We things we learned in this lab how to create a complete RAG solution using PLSQL.  The tabel below list the Vector funcation we used for operation.
+    In this lab we learned how to create a complete RAG solution using PLSQL.  The table below lists the vector functions we used.
 
     <table>
       <thead>
@@ -576,7 +579,7 @@ We will use this function in next step to genrate the response.
         <tbody>
         <tr>
           <td>
-            Emmbeding the user question  
+            Embedding the user question  
           </td>
           <td>
             VECTOR_EMBEDDING(tinybert_model USING user_question as data)   
@@ -584,7 +587,7 @@ We will use this function in next step to genrate the response.
         </tr>
         <tr>
           <td>
-            Do vector search on question and pdf chucks embedings
+            Do vector search on question against text chunk embeddings
           </td>
           <td>
             VECTOR_DISTANCE(EMBED_VECTOR, :user_question_vec, COSINE)
@@ -592,7 +595,7 @@ We will use this function in next step to genrate the response.
         </tr>
         <tr>
           <td>
-            Pass the result chucks and the user question to the LLM 
+            Pass the result chunks and the user question to the LLM 
           </td>
           <td>
             DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params_genai))
@@ -601,22 +604,22 @@ We will use this function in next step to genrate the response.
         </tbody>
     </table>
 
-    **HURRAY!!!  we just completed the LAB1**
+    **HURRAY!!!  We just completed LAB 1, a complete implementation of RAG using PLSQL**
         
-    We saw the complete implementation of RAG using PLSQL.
 
 
-## Task 7: Preparation for LAB2
 
-In the LAB 2 we will run a python application which uses the funcation and code we just learned in previous steps.    
+## Task 7: Preparation for LAB 2
 
-In addition to the above code for the python application we have the follow additional code. 
+In LAB 2 we will run a Python application which uses the functions and code we just learned in the previous steps.    
 
-a. Create a procedue `insert_my_table_row` to insert PDF file in MY\_BOOKS table and returns the doc\_id
+To prepare for LAB 2, run the following:
 
-b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the PDF and stores it in VECTOR\_STORE table.
+a. Create a procedure `insert_my_table_row` to insert the PDF file into the MY\_BOOKS table and return the doc\_id
 
-1. Create a procedue `insert_my_table_row`
+b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the PDF and store it in the VECTOR\_STORE table.
+
+1. Create a procedure `insert_my_table_row`
 
     ```
     cursor = conn23ai.cursor()
@@ -713,10 +716,16 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
     ```
 
 
+• In the next LAB, python-oracle DB code is only focused on calling the package routines in the 23ai database.
 
+• This means that these packages could then easily be called from any programming language, eg.,
 
-
-Run the both the steps and proceed to lab 2
+    * JDBC
+    * C# with OPD.NET
+    * python-oracledb
+    * node-oracledb
+    * OCI, OCCI, ODBC, Pro*C or Pro*COBOL
+    * Go, Rust, PHP, Ruby etc
 
 
 You may now [proceed to the next lab](#next).

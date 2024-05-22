@@ -1,12 +1,10 @@
-
-
 <if type="Cohere">
 
 # Using Cohere Vector Embedding Models
 ## Introduction
 
 
-In this lab we will learn how to use the Oracle OCI generative AI Cohere embedding models with Oracle Vectors. To connect to the generative AI services we will install the oci-common and oci-sdk libraries. For the purpose of this lab these libraries have already been installed on your virtual instance. 
+In this lab we will learn how to use the Oracle OCI generative AI Cohere embedding models with Oracle Vectors. To connect to the generative AI services we will install the oci-common and oci-sdk libraries. For the purpose of this lab these libraries have already been installed on your LiveLab VM.
 
 ------------
 Estimated Time: 25 minutes
@@ -17,7 +15,6 @@ Estimated Time: 25 minutes
 In this lab, you will see the following Vector operations using node.js:
 * Task 1: Vectorizing a table with Cohere embedding
 * Task 2: Perform Similarity Search using Cohere
-* Task 3: Changing embedding models
 
 ## Task 1: Vectorizing a table with Cohere embedding
 
@@ -147,7 +144,7 @@ In this lab, you will see the following Vector operations using node.js:
             // Record the array and key
             binds.push([float32VecArray, row[0]]);
               function wait() {}
-              setTimeout(wait, .485);
+              setTimeout(wait, .5);
           }
 
           // Do an update to add or replace the vector values
@@ -225,6 +222,14 @@ In this lab, you will see the following Vector operations using node.js:
 
 
     These numbers encode the semantic representation of the data stored in the corresponding row of the INFO column.
+    
+    Now lets exit sqlplus with the following command: 
+    
+    ```
+      <copy>
+      exit;
+      </copy>
+    ```
 
     Now that we have vectorized the data in our table and confirmed the updates, we are ready to move onto the next task which is performing Similarity Searches using our Vectors.
 
@@ -235,7 +240,6 @@ In this lab, you will see the following Vector operations using node.js:
 1. In this lab we will see how to perform a similarity search with the Oracle OCI generative AI Cohere embedding models in node.js.
 
   So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI generative AI Cohere embedding models, we can now start performing Similarity Searches using the Vectors in our table. Even though the data in our table has been vectorized we will still need to connect to Oracle OCI generative AI Cohere embedding models to vectorize our search phrase with the same embedding model. The search phrase is entered on the fly, vectorized and then used to search against the vectors   in the database. We will create a node.js program to do this.
-
 
    The program *similaritysearchCohere.js* is already on the LiveLab VM. Below are the contents of the file.
 
@@ -468,7 +472,8 @@ In this lab, you will see the following Vector operations using node.js:
     - We are using the reranker with rerank-english-v2.0
     - We are only looking at the TopK 5 - or closest 5 results
     - We are connecting to the OCI generative ai services to use the Cohere embedding models 
-    - We and connecting to the Oracle database with the oracledb node.js library
+    - We are connecting to the Oracle database with the oracledb node.js library
+
 
 
 3. For our first example we will enter the word "cars" at the prompt.  
@@ -531,8 +536,6 @@ In this lab, you will see the following Vector operations using node.js:
 
    ![Lab 1 Task 3 Step 7](images/nodejscohere10.png =60%x*)
 
-
-
     The word "Bombay" does not appear in our data set, but the results related to Mumbai are correct because "Bombay" is the former name for "Mumbai", and as such there is a strong correlation between the two names for the same geographic location.
 
     Remember, similarity search works on the basis of the trained data from which the embedding models use. Trained embedding models use text sourced from the internet and it is very likely that there is information that includes both the names "Bombay" and "Mumbai" in relation to the same place.
@@ -545,18 +548,7 @@ In this lab, you will see the following Vector operations using node.js:
 
     There is little or no correlation between the terms returned and the phrase we entered. This is also likely influenced by the small data-set or number of rows in the MY\_DATA table.
 
-    This also introduces another topic. What about changing the Embedding Model?  We'll take a look at that next...  
-
-
-## Task 3: Changing embedding models
-
-   1. So far, for the sake of simplicity and speed, we have been using the "embed-english-light-v3.0" or English Light v3.0 embedding model from Cohere. In the next step we will switch the embedding model to see how it impacts our similarity search results.
-
-   We will continue to use Cohere, so the modifications required are minor.
-
-   In order to do this we will need to edit the node.js program: *similaritysearchCohere.js*.
-
-    Before we get started with making our changes, we should take a few moments to understand what the program is doing.
+9.  we should take a few moments to understand what the program is doing.
 
     We are passing the Oracle database Username and Password along with the database connect-string. We then set the number of rows to return (topK) along with whether or not to use  Re-ranking.
 
@@ -564,86 +556,15 @@ In this lab, you will see the following Vector operations using node.js:
 
     The SQL statement returns the text from the INFO column in the MY\_DATA table.
 
-   ![Lab 1 Task 4 Step 1c](images/nodejscohere13a.png =60%x*)
+   ![Lab 1 Task 4 Step 1c](images/nodejscohere13b.png =60%x*)
 
     The SQL statement calls the vector_distance function to perform a similarity comparison of the vectorized value for the input string (:1) with the vector that we stored in column V. This example performs a COSINE Similarity Search. We are only returning the first 5 rows (:2) which can be controlled using the TopK parameter. The key word APPROX informs the Oracle optimizer to use a Vector Index if it is deemed to be beneficial.  
 
     Below the SQL block we can see the parameter for setting the embedding model to be used by the program:
 
-   ![Lab 1 Task 4 Step 1d](images/nodejscohere14.png =60%x*)
+   ![Lab 1 Task 4 Step 1d](images/nodejscohere16.png =60%x*)
 
-    This is where we can choose the embedding model. As mentioned earlier, we have been using the *embed-english-light-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
-
-    **We can switch to the "non-light" version by commenting out the line where we with *"embed-english-light-v3.0"* and uncommenting the line for "embed-english-v3.0".**
-
-
-    Your modified program should look like this:
-
-   ![Lab 1 Task 4 Step 1e](images/nodejscohere16.png =60%x*)
-
-2. So now we're ready to rerun our program:
-
-    ```
-      <copy>
-      node similaritySearchCohere.js
-      </copy>
-    ```
-
-    When prompted for a query string, enter the term "cats".
-
-    However, this time, when we run the program we see the following error displayed:
-
-   ![Lab 1 Task 4 Step 2](images/nodejscohere18.png =60%x*)
-
-
-    This is because, as we mentioned earlier, you cannot perform similarity search operations using different embedding models. In other words, in order for us to use the *embedding-english-v3.0* model, we will need to go back and re-vectorize the data in the MY\_DATA table so that it too uses the same embedding model.
-
-
-    In order to make this change we will need to revisit the *vectorizeTableCohere.js* program and make the same code change to comment out the line for assigning the *"embed-english-light-v3.0"* and uncommenting the line for *"embed-english-v3.0"*.
-
-
-    The program should look like this:
-
-   ![Lab 1 Task 4 Step 2](images/nodejscohere16.png =60%x*)
-
-3. We will also need to rerun the Vectorize program to change the embedding model for our terms-  
-
-
-    ```
-      <copy>
-      node vectorizeTableCohere.js
-      </copy>
-    ```
-
-    This time the vectorize operation will take slightly longer to run as the new model is more complex. For comparison embed-english-light-v3.0 has 384 dimensions and embed-english-v3.0 has 1024 dimensions.
-
-    Your should see the following:
-
-   ![Lab 1 Task 4 Step 3](images/nodejscohere19.png =60%x*)
-
-
-4. We're now ready to reun the Similarity Search program once again-
-
-    ```
-      <copy>
-      node similaritySearchCohere.js
-      </copy>
-    ```
-
-    When prompted to enter a phrase to query - enter "cats"
-
-    You should see something similar to the following:
-
-   ![Lab 1 Task 4 Step 4](images/nodejscohere20.png =60%x*)
-
-   This time your output will be different. The first result returned is "Cats do not care." which is more accurate than when we previously ran this query (you may recall the first entry was "Oranges are orange" when we used the *embed-english-light-v3.0* model). The last entry in the results "Wolves are hairy." is still not quite accurate but one could argue that there is a better correlation as they are both animals.   
-
-5. Also when we re-run the query for "Borough" we see "Staten Island" this time, but we don't see "Queens" so we get a different set of results,  but it's still not exactly right...
-
-   ![Lab 1 Task 4 Step 5](images/nodejscohere21.png =60%x*)
-
-
-   Feel free to try some other queries including repeating some of the previous examples we entered with the light embedding model for your own comparison.
+    This is where we can choose the embedding model. we have been using the *embed-english-v3.0* - both to vectorize our data when we populated the MY\_DATA table, as well as when we performed our similarity searches.
 
 ## Appendix: Installing OCI generative ai packages on your own machine
 
@@ -667,7 +588,8 @@ In this lab you have seen how easy it is to use Cohere with Node.js and Oracle V
 
 <if type="SentenceTransformers">
 
-# Using Sentence Transformers and Node.js with Oracle AI Vector Search
+
+# Using Transformers.js and Node.js with Oracle AI Vector Search
 
 ## Introduction
 
@@ -675,10 +597,12 @@ In this lab we will be using open source embedding models from Hugging Face so t
 
 So they're free, local and fast ...plus there are over 500 sentence transformer models to choose from.
 
-*SentenceTransformers* is an open source Node.js framework for modern sentence, text and image embeddings. Sentence Transformers make creating embeddings for text or images simple. Simple text based sentence transformers tend to have the same template where the only variable is the embedding model.
+
+*SentenceTransformers.js* is designed to be functionally equivalent to Hugging Face’s transformers python library, meaning you can run the same pretrained models using a very similar API.  Transformers.js uses ONNX Runtime to run models in Node.js or in a browser.
 
 
-See [https://www.sbert.net/](https://www.sbert.net/) and [https://arxiv.org/abs/1908.10084](https://arxiv.org/abs/1908.10084) for more details about Sentence Transformers.
+
+See https://huggingface.co/docs/transformers.js/en/index for more details about Transformers.js
 
 
 ------------
@@ -687,18 +611,19 @@ Estimated Time: 20 minutes
 ### Objectives
 
 In this lab, you will perform the following tasks:
-* Task 1: Vectorizing a table with Sentence Transformers embedding
+* Task 1: Vectorizing a table with Sentence Transformers.js embedding
 * Task 2: Understanding the Vector Embedding processing
-* Task 3: Perform Similarity Search with Sentence Transformers
+* Task 3: Perform Similarity Search with Sentence Transformers.js
 * Task 4: Changing embedding models
 
 
 
-## Task 1: Vectorizing a table with Sentence Transformers embedding
+## Task 1: Vectorizing a table with Sentence Transformers.js embedding
 
-  1. We're now ready to vectorize our data using the hugging face sentence transformers. To do this you will need to create a node.js program to vectorize our phrases using the Sentence Transformers embedding model packages. 
 
-  **NOTE:** We have already installed the sentence transformers available from hugging face on the LiveLab VM. 
+  1. We're now ready to vectorize our data using Transformers.js. To do this you will need to create a node.js program to vectorize our phrases using the Transformers.js embedding model packages. 
+
+  **NOTE:** We have already installed the Transformers.js library available from hugging face on the LiveLab VM.
 
   The program *vectorizeTableHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
   
@@ -864,7 +789,7 @@ In this lab, you will perform the following tasks:
 
     You may have also noticed that we used the *all-MiniLM-L6-v2* embedding model. This is a very popular embedding model with millions of monthly downloads. It's popularity is due to the fact that it tends to be a good trade-off when comparing accuracy and performance.
 
-    To summarize what we've just done, the *vectorizeTableHFTransformers.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the "factoid" for each of the 150 rows. We then store the vectorized data as a vector in the V column.
+    To summarize what we've just done, the *vectorizeTableHFTransformers.js* program connects to the Oracle database, retrieves the text from the INFO column of the MY\_DATA table, and vectorizes the data in the INFO column for each of the 150 rows.
 
 
 3. We can now query the MY\_DATA table in the Oracle database to verify that our data has been updated too:
@@ -916,6 +841,14 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 2 Step 3C](images/nodejstfr05.png =60%x*)
 
+    Now lets exit sqlplus with the following command: 
+    
+    ```
+      <copy>
+      exit;
+      </copy>
+    ```
+
 
 ## Task 2: Understanding the Vector Embedding processing
 
@@ -930,7 +863,8 @@ In this lab, you will perform the following tasks:
     ```
 
 
-    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the SentenceTransformer package from Hugging Face.
+
+    The first thing you should notice is that the program has just over 100 lines of code. If you've inspected the vectorizing node programs for Cohere you will see that this program logic is very similar. It calls the *oracledb* library to load the Node Oracle driver. This time however we are importing the @xenova/transformers.
 
     We also have a large number of embedding models to choose from. As we've aready noted, we opted to use the "all-MiniLM-L6-v2" embedding model due to it's popularity.       
 
@@ -945,7 +879,7 @@ In this lab, you will perform the following tasks:
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08a.png =60%x*)
     ![Lab 3 Task 3 Step 1c](images/nodejstfr08b.png =60%x*)
 
-## Task 3: Perform Similarity Search with Sentence Transformers
+## Task 3: Perform Similarity Search with Transformers.js
 
 1. The program *similaritySearchHFTransformers.js* is already on the LiveLab VM. Below are the contents of the file.
 
@@ -1186,7 +1120,7 @@ In this lab, you will perform the following tasks:
       </copy>
     ```
 
-   Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Sentence Transformers.
+   Now that we've vectorized our data and created the similarity search file, we are ready to try performing a similarity search using the Transformers.js.
 
 2. You can do this by-
 
@@ -1204,7 +1138,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 1b](images/nodejstfr09.png =60%x*)
 
-    In our situation it took half a second to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere models as we do not need to perform the roundtrip REST calls over the internet.
+    In our situation it took about 8 milliseconds to vectorize the query and about 2 milliseconds to perform the query. This is extremely fast when we compare it to the Cohere models as we do not need to perform the roundtrip REST calls over the internet.
 
 
 3. Next let's try the phrase "cats" and see what is returned.
@@ -1215,7 +1149,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 2](images/nodejstfr10.png =60%x*)
 
-    The first thing you may notice is that the operation runs even faster now as we have already performed our database connection and authorization and the Sentence Transformers libraries are already loaded into memory too.
+    The first thing you may notice is that the operation runs even faster now as we have already performed our database connection and authorization and the Transformers.js libraries are already loaded into memory too.
 
     Looking at the query output, not all the results are directly related to our search term: "cats", but one could argue that there is a minor correlation as all 5 rows are animal associations and not fruit. So not bad considering our relatively small number of 150 entries.
 
@@ -1238,7 +1172,7 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 4](images/nodejstfr12.png =60%x*)
 
-    This time we see results that are accurate. For "NY", the model returns the names of places located in the state of "New York". The second search for the term "boroughs" is 100% accurate using the Sentence Transformers embedding model.
+    This time we see results that are accurate. For "NY", the model returns the names of places located in the state of "New York". The second search for the term "boroughs" is 100% accurate using the Transformers.js embedding model.
 
 6. Another interesting query to test our results are for the phrase "New Zealand".
 
@@ -1248,21 +1182,21 @@ In this lab, you will perform the following tasks:
 
     ![Lab 3 Task 4 Step 5](images/nodejstfr13.png =60%x*)
 
-    The results we see when using the Sentence Transformers embedding model have nothing to do with "New Zealand", though they are geographic locations, so one could argue there is a minor correlation here.
+    The results we see when using the Transformers.js embedding model have nothing to do with "New Zealand", though they are geographic locations, so one could argue there is a minor correlation here.
 
 ## Task 4: Changing embedding models
 
   1. Just as we have done with the embedding models from other vendors, let's experiment with changing the Sentence Transformer embedding model.
 
-  In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"intfloat/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
+  In this instance we will see what happens when we use a multilingual embedding model. We will switch from *"Xenova/all-MiniLM-L6-v2"* to *"Xenova/multilingual-e5-large"*. This embedding model not only supports English, but also other languages including: German, Spanish, Japanese, Russian, Thai, etc
 
   To switch embedding models you will need to comment out the line:
     
-    *embedding\_model = "sentence-transformers/all-MiniLM-L6-v2"*
+    *embedding\_model = *"Xenova/all-MiniLM-L6-v2"*
 
   and uncomment the line:
     
-    *embedding\_model = "intfloat/multilingual-e5-large"*.
+    *embedding\_model = "Xenova/multilingual-e5-large"*.
 
    To make this switch we will need to change the embedding model in both the programs:
 
@@ -1341,14 +1275,14 @@ In this lab, you will perform the following tasks:
 
     Enter Phrase: **gato**
 
-    You should see:
+    You should see:             
 
     ![Lab 3 Task 5 Step 4](images/nodejstfr18.png =60%x*)
 
     Once again the embedding model is fairly accurate for the first two responses for all 3 languages. But after that the results are mixed. In the English version the results are at least within the animals grouping, but the German and Spanish results are a bit more random. Once again underscoring subtle nuances between differnt embedding models.
-## Appendix: Installing hugging face sentence transformers on your own machine
+## Appendix: Installing Xenova Transformers.js on your own machine
 
-1. To install the *sentence-transformers* packages from hugging face with *npm* (package installer for node). While logged in as the oracle Linux user, run the following *npm* command:
+1. To install the *Xenova/transformers.js* packages with *npm* (package installer for node). While logged in as the oracle Linux user, run the following *npm* command:
 
     ```
       <copy>
@@ -1363,11 +1297,8 @@ In these labs you have seen how easy it is to use Oracle Vectors and Similarity 
 </if>
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
-* [Oracle Documentation](http://docs.oracle.com)
-* [Cohere website: cohere.com](https://cohere.com)
-* [huggingface.co/sentence-transformers](https://huggingface.co/sentence-transformers)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [transformers.js](https://www.npmjs.com/package/@xenova/transformers)
 * [www.sbert.net](https://www.sbert.net/) 
 
 ## Acknowledgements
