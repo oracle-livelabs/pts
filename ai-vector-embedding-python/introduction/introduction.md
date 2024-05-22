@@ -44,13 +44,6 @@ There are many different types of vector embedding models.
  ![Introduction Part 1 Image 4](images/intro104.png =60%x*)
  Figure 4.
 
-**OpenAI** makes embedding models and Large Language Models (LLMs) including ChatGPT.
-* These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
-* You need to pay to use OpenAI embedding models. 
-* An API key: **OPENAI\_API\_KEY** is required to use the OpenAI embedding models.
-
-[Find more information on OpenAI embedding models including how to setup and manage the OPENAI\_API\_KEY](https://openai.com/blog/new-embedding-models-and-api-updates)
-
 **Cohere** makes embedding models and Large Language Models (LLMs) including embed-v3.
 * These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
 * You need to pay to use Cohere embedding models.
@@ -70,6 +63,15 @@ There are many different types of vector embedding models.
 
  ![Introduction Part 1 Image 5](images/intro105.png " ")
  Figure 5.
+
+**OpenAI** makes embedding models and Large Language Models (LLMs) including ChatGPT.
+* These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
+* You need to pay to use OpenAI embedding models. 
+* An API key: **OPENAI\_API\_KEY** is required to use the OpenAI embedding models.
+
+**NOTE: At this point in time, this workshop does not include a lab for using OpenAI with Oracle AI Vector Search.**
+
+[Find more information on OpenAI embedding models including how to setup and manage the OPENAI\_API\_KEY](https://openai.com/blog/new-embedding-models-and-api-updates)
 
 
 ## 2. Embedding Model Quality 
@@ -103,7 +105,7 @@ If you have millions or billions of data items to vectorize, the rate at which y
 
  ![Introduction Part 3 Image 1](images/intro301.png =60%x*)
 
- Figure 7.
+ Figure 7. Fetch size vs Embedding size vs Commit size.
 
 When you do a similarity search or do a RAG query, you also need to care about the latency of those operations:
 * You need to create a query vector for the input data
@@ -135,13 +137,13 @@ There is no correct answer to this question as it depends on many factors:
 
 **Create vector table and load sample data**
 
-For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a python program and should take a around a second to run.
+For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a Python program and should take a around a second to run.
 
 The table will be the basis for all vectorize operations in the labs, and you will use various embedding models, all on the same table.
 
 For the labs to work, we will be using the following pattern:
 * Choose a vector embedding model
-* Vectorize your data using that embedding model
+* Generate Vectors \(or "Vectorize"\) your data using that embedding model
     * This updates/overwrites any existing vectors (or NULL values)
 * Do similarity search using the same embedding model
 
@@ -156,23 +158,21 @@ There are many different embedding models. At the time of this lab creation:
 * Hugging Face has many. The sample code uses *25* models
 
 **NOTE:** You *MUST* use the same embedding model to *vectorize the data* as when you *create a query vector*. The whole point of doing similarity search is to find the closest *data vectors* to the *query vector*. For this to work, you need to compare like to like:
-* The vectors should have the same number of dimensions (else you will get a runtime error)
+* The vectors should have the same number of dimensions (otherwise you will get a runtime error)
 * The vectors should have the same number format
 * The *data* and *query vectors* should use the same embedding model (otherwise you will get garbage results)
 
 In this workshop you will have an opportunity to use the following vector embedding models from:
 
-* Lab 1. Cohere
-* Lab 2. OpenAI
-* Lab 3. Sentence Transformers from Hugging Face
-* Lab 4. FastEmbed 
+* Lab 1. Sentence Transformers from Hugging Face
+* Lab 2. Cohere
+* Lab 3. FastEmbed 
 
- 
  
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
+* [Oracle Database 23ai Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/23/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
 * [OpenAI embedding models](https://openai.com/blog/new-embedding-models-and-api-updates)
@@ -182,6 +182,6 @@ In this workshop you will have an opportunity to use the following vector embedd
 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager
+* **Author** - Doug Hood, Product Manager, 
 * **Contributors** -  Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Sean Stacey, April 2024
+* **Last Updated By/Date** - Sean Stacey, May 2024
