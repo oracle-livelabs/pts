@@ -453,5 +453,5 @@ Similarity searches will tend to get data from one or more clusters depending on
 
 ## Acknowledgements
 * **Authors** - Doug Hood, Consulting Member of Technical Staff
-* **Contributors** - Sean Stacey
-* **Last Updated By/Date** - Sean Stacey, November 2023
+* **Contributors** - Sean Stacey, Robert Mackowiak
+* **Last Updated By/Date** - Robert Mackowiak, May 2024

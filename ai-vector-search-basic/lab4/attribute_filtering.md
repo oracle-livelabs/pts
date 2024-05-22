@@ -35,8 +35,8 @@ Figure 1.
 1. Create a table to store the Vectors
 
     ```
-      <copy>DROP TABLE IF EXISTS vt2 ;
-
+      <copy>DROP TABLE IF EXISTS vt2;
+      
       CREATE TABLE vt2 AS SELECT * FROM vt1;
 
       ALTER TABLE vt2 ADD (vsize varchar2(16),
@@ -162,10 +162,10 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
 
     ```
        <copy>SELECT id, vsize, shape, color,
-              to_number(vector_distance(vector('[16, 3]'), v)) distance
+              to_number(vector_distance(vector('[16, 3]'), v, EUCLIDEAN)) distance
        FROM   vt2
        WHERE  id > 30 AND id < 40
-       ORDER  BY vector_distance(vector('[16, 3]'), v)
+       ORDER  BY vector_distance(vector('[16, 3]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -185,11 +185,11 @@ Once you have confirmed that the base table vt2 matches the graph in *Figure 1* 
 
     ```
        <copy>SELECT id, vsize, shape, color,
-              to_number(vector_distance(vector('[16, 3]'), v)) distance
+              to_number(vector_distance(vector('[16, 3]'), v, EUCLIDEAN)) distance
        FROM   vt2
        WHERE  id > 30 AND id < 40
        AND    shape = 'Oval'
-       ORDER  BY vector_distance(vector('[16, 3]'), v)
+       ORDER  BY vector_distance(vector('[16, 3]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -214,7 +214,7 @@ Figure 3.
     ```
       <copy>SELECT id, vsize, shape, color
       FROM   vt2
-      ORDER  BY vector_distance(vector('[6, 8]'), v)
+      ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -239,7 +239,7 @@ Figure 3.
       <copy>SELECT id, vsize, shape, color
       FROM   vt2
       WHERE  color = 'Red'
-      ORDER  BY vector_distance(vector('[6, 8]'), v)
+      ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -265,7 +265,7 @@ Figure 3.
       FROM   vt2
       WHERE  color = 'Red'
       AND    shape = 'Oval'
-      ORDER  BY vector_distance(vector('[6, 8]'), v)
+      ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -293,7 +293,7 @@ Figure 3.
       WHERE  color = 'Red'
       AND    shape = 'Oval'
       AND    vsize  = 'Small'
-      ORDER  BY vector_distance(vector('[6, 8]'), v)
+      ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -321,7 +321,7 @@ Figure 3.
       AND    shape = 'Oval'
       AND    vsize  = 'Small'
       AND    id    > 10
-      ORDER  BY vector_distance(vector('[6, 8]'), v)
+      ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
       FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -350,5 +350,5 @@ By using *SQL WHERE* clauses, you can further filter the results of a similarity
 
 ## Acknowledgements
 * **Author** - Doug Hood, Consulting Member of Technical Staff
-* **Contributors** - Sean Stacey
-* **Last Updated By/Date** - <Sean Stacey, November 2023>
+* **Contributors** - Sean Stacey, Robert Mackowiak
+* **Last Updated By/Date** - Robert Mackowiak, May 2024
