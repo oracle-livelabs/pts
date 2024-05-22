@@ -57,6 +57,8 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
 
 1. While logged into your Operating System as the Oracle user, create a file called *create\_schema.py* and paste the following contents into the file.
 
+   **NOTE: The *create\_schema.py file may already exist in your lab environment. If so, you're good to go, but it's not a bad idea to take a look at what the program is doing and ouchthe sample data we will be using for the workshop.**  
+
     ```
       <copy>
       # -----------------------------------------------------------------------------
@@ -516,7 +518,8 @@ Now that we have our MY\_DATA table created, we are ready to commence with gener
 
     ![Lab 1 Task 2 Step 3C](images/python010203c.png)
 
-
+You can now exit from SQL*Plus.
+    
 ## Task 3: Understanding the Vector Embedding process
 
 Before proceeding any further, lets take a look at the code of the Python program we just ran. This will help with understanding how this process is being performed. You will notice that this program looks very similar to the other vectorize\_table Python programs in this workshop, the basic logic flow is very similar for the most part.
@@ -548,10 +551,15 @@ Before proceeding any further, lets take a look at the code of the Python progra
 
     ![Lab 1 Task 3 Step 1c](images/python010301c.png)
 
-    If you chose to use *vi* or *view* to see your file, you can close the file using vi command- **:q!** now and move on to the next task.
+    If you chose to use *vi* or *view* to see your file, you can close the file using the vi command- **:q!** now and move on to the next task.
 
-    ![Lab 1 Task 3 Step 1d](images/python010301d.png)
-
+    press \[esc\] then- 
+    ```
+      <copy>
+      :q!
+      </copy>
+    ```
+    
 
 ## Task 4: Perform Similarity Search with Sentence Transformers
 
@@ -1114,6 +1122,9 @@ Our first step will be to create a table that we'll name: *MY\_DATA* to use for 
 As the focus of this workshop is for Python programmers, we will use a Python program to create our table.
 
 1. While logged into your Operating System as the Oracle user, create a file called *create\_schema.py* and paste the following contents into the file.
+
+   **NOTE: The *create\_schema.py file may already exist in your lab environment. If so you're good to go, but it's not a bad idea to take a look at what the program is doing and the sample data we will be using for the workshop.**  
+
 
     ```
       <copy>
@@ -1787,7 +1798,7 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
     Enter phrase **fruit**
 
-    Enter prhse **NY**
+    Enter phrase **NY**
 
     You should see something similar to:
 
@@ -1800,7 +1811,7 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 6. Next we can search for the term "Boroughs".
 
-   Enter prhse **Boroughs**
+   Enter phrase **Boroughs**
     
    You should see something similar to:
 
@@ -1814,7 +1825,7 @@ So far we have vectorized the data in the *MY\_DATA* table using the Oracle OCI 
 
 7. For another experiment, we can enter the word "Bombay". 
 
-   Enter prhse **Bombay**
+   Enter phrase **Bombay**
     
    You should see something similar to:
 
@@ -1896,6 +1907,9 @@ Our first step will be to create a table that we'll name: *MY\_DATA* to use for 
 As the focus of this workshop is for Python programmers, we will use a Python program to create our table.
 
 1. While logged into your Operating System as the Oracle user, create a file called *create\_schema.py* and paste the following contents into the file.
+
+   **NOTE: The *create\_schema.py file may already exist in your lab environment. If so, you're good to go, but it's not a bad idea to take a look at what the program is doing and the sample data we will be using for the workshop.**  
+
 
     ```
       <copy>
@@ -2142,7 +2156,7 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
       </copy>
     ```
 
-    **NOTE:** There are no issues with running this program multiple times. However it will reset any data that may have been added to the table, including an vectors that you may have generated.
+    **NOTE:** There are no issues with running this program multiple times. However it will reset any data that may have been added to the table, including any vectors that you may have generated.
 
     You should see the following:
 
@@ -2158,7 +2172,7 @@ As the focus of this workshop is for Python programmers, we will use a Python pr
 
 ## Task 2: Vectorizing a table with FastEmbed
 
-We're now ready to vectorize our data using fastEmbed. To do this you will need to create a Python program to vectorize our phrases using the FastEmbed packages that we just installed.
+We're now ready to generate vectors four our data using fastEmbed. To do this you will need to create a Python program to vectorize our phrases using the FastEmbed packages that are pre-installed.
 
 1. While logged into your Operating System as the Oracle user, create a file called *vectorize\_table\_FastEmbed.py* and paste the following contents into the file.
 
@@ -2284,7 +2298,7 @@ We're now ready to vectorize our data using fastEmbed. To do this you will need 
       </copy>
     ```
 
-    **NOTE:** The first time you run this program you may notice that it downloads a series of dependencies. The files have already been downloaded in our Oracle LiveLab environment so you should not see these download operations. 
+    **NOTE:** The first time you run this program you may notice series of dependencies get downloaded. The files have already been downloaded in our Oracle LiveLab environment so you should not see these download operations. 
 
     You should see the following:
 
@@ -2310,7 +2324,7 @@ Before proceeding any further, lets take a look at the code of the Python progra
       </copy>
     ```
 
-    The first thing you may notice is that the program has just over 100 lines of code. If you've looked at the code for the vectorizing Python programs for other Embedding models you will see that this program logic is very similar.
+    The first thing you may notice is that the program has just over 100 lines of code. If you've looked at the Python code for vectorizing using other Embedding models you will see that this program logic is very similar.
 
 2. After you scroll past the comments section of the program you will notice that we are importing the os, sys, array and time Python modules. We are using these modules to performing basic operations in the program.  
 
@@ -2338,9 +2352,7 @@ Before proceeding any further, lets take a look at the code of the Python progra
 
     You can now close the program file.
 
-    If you chose to use *vi* or *view* to see your file, you can close the file using vi command- **:q!** now and move on to the next task.
-
-    ![Lab 3 Task 3 Step 2C](images/python030302c.png)
+    If you chose to use *vi* or *view* to see your file, you can close the file using vi command- \[esc\] and **:q!** now and move on to the next task.
 
 
 To summarize what the program does, it connects to the database, and then uses a sql cursor to loop through the table. For each row returned, a vector for the "INFO" column is generated and then stored in the "V" column.
@@ -2460,7 +2472,7 @@ So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed em
       # Re-ranking is about potentially improving the order of the resultset
       # Re-ranking is significantly slower than doing similarity search
       # Re-ranking is optional
-      rerank = 1
+      rerank = 0
       
       # English embedding models
       embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
@@ -2608,7 +2620,7 @@ So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed em
       </copy>
     ```
 
-    If this is the first time you are running FastEmbed then you may see the following. If you do not see any libraries downloaded, there is nothing to worry about. 
+    If this is the first time you are running FastEmbed, you may see the following. If you do not see any libraries downloaded, there is nothing to worry about. 
 
     ![Lab 3 Task 5 Step 2](images/python030502.png)
 
@@ -2617,7 +2629,7 @@ So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed em
 
     Enter Phrase: **cars**
 
-    You will see the following:
+    You may see the following:
 
     ![Lab 3 Task 5 Step 3A](images/python030503a.png)
 
@@ -2707,6 +2719,7 @@ So far we have vectorized the data in the *MY\_DATA* table using an FastEmbed em
 
 
     This result is interesting as it successfully locates three vectors that are related to New Zealand, but two of the results (third ad fourth) are completely un-related. It is difficult to understand how the distance is closer to than the fifth phrase which is about "Kiwis". This term looks like it may be a good candidate to try a different embedding model (we will revisit this in Task 6).  
+
 Feel free to try out some of your own terms to see what results you can get from the program.       
 
 ## Task 6: Changing embedding models
@@ -2777,7 +2790,7 @@ This time we will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"BA
     ![Lab 3 Task 6 Step 3](images/python030603.png)
 
 
-    You should notice that although the results are different when we compare this to our previous embedding model, the similarity search results are 100% accurate, however the time is noticeably slower than when we used the sentence transformers embedding model. It is important to note that when choosing an embedding model, they each come with their own set of trade-offs with regards to performance and accuracy characteristics. A good rule of thumb is to focus on the accuracy and then to performance.
+    You should notice that although the results are different when we compare this to our previous embedding model, the similarity search results are 100% accurate, however the time is significantly different to when we used the sentence transformers embedding model. It is important to keep this in mind when choosing an embedding model, they each come with their own set of trade-offs with regards to performance and accuracy characteristics. A good rule of thumb is to focus on the accuracy and then to performance.
 
 4. Let's try revisiting our phrase "New Zealand"
 
@@ -2797,11 +2810,11 @@ This time we will switch from *"sentence-transformers/all-MiniLM-L6-v2"* to *"BA
 
 Congratulations you've completed the lab!
 
-Hopefully you have seen how easy it is to use FastEmbed with Python and Oracle Vectors and Similarity Search. You are ready to try another lab.
+Hopefully you have seen how easy it is to use FastEmbed with Python and Oracle Vectors for Similarity Search operations. You are ready to try another lab.
 
 ## APPENDIX 1: Installing FastEmbed packages in your system
 
-As mentioned in the Introduction, the FastEmbed library is available from Hugging Face and is installed and run locally on your system. So unlike other embedding models where you install a "small" software library to connect to a remotely hosted model, this installs a "larger" set of software packages from Hugging Face that include the embedding models themselves to run on your local machine. Hence you will need to ensure your system has sufficient spare disk capacity to install the models. 
+As mentioned in the Introduction, the FastEmbed library is available from Hugging Face and is installed and run locally on your system. So unlike other embedding models where you install a "small" software library to connect to a remotely hosted model, this installs a "larger" set of software packages from Hugging Face that include the embedding models themselves to run on your local machine. Hence you will need to ensure your system has sufficient spare disk capacity to install the required models. 
 
 1. Use pip to install the *fastembed* packages. While logged in as the oracle Linux user, run the following *pip* command:
 
@@ -2832,4 +2845,4 @@ As mentioned in the Introduction, the FastEmbed library is available from Huggin
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager,  Sean Stacey, Outbound Product Manager
 * **Contributors** - Rajeev Rumale, Principal Outbound Product Manager
-* **Last Updated By/Date** - Rajeev Rumale, May 2024
+* **Last Updated By/Date** - Sean Stacey, May 2024
