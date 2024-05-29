@@ -234,6 +234,30 @@ The first file is `Config.java`. This class manages the configurable values for 
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples;
 
 import java.io.IOException;
@@ -326,6 +350,31 @@ Next java file shall be the `Model.java`. This defines a 'Model' interface for m
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
+
 package oracle.jdbc.vector.examples;
 
 /**
@@ -368,6 +417,30 @@ Below is the `Schema.java` file.
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples;
 
 import oracle.jdbc.OracleType;
@@ -984,6 +1057,30 @@ Below is the `SimilaritySearch.java` code
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples;
 
 import oracle.jdbc.OracleType;
@@ -1185,8 +1282,33 @@ The first file within the Cohere folder, shall be **CohereModel.java**. This cod
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples.cohere;
 
+// Import necessary OCI and Java utility classes
 import com.oracle.bmc.ClientConfiguration;
 import com.oracle.bmc.ConfigFileReader;
 import com.oracle.bmc.auth.AuthenticationDetailsProvider;
@@ -1205,79 +1327,93 @@ import java.util.stream.Collectors;
 
 /**
  * A model which is accessed through the OCI Generative AI Service.
+ * This class implements the Model interface, providing a specific implementation embedding text using OCI's services.
  */
 public class CohereModel implements Model {
-    private GenerativeAiInferenceClient generativeAiInferenceClient;
-
+    // Singleton instance of the model
     public static final Model INSTANCE = new CohereModel();
+    private final AuthenticationDetailsProvider authentication;
 
+    // Constructor for the CohereModel class
     public CohereModel() {
         try {
-            // Set up the client configuration
-            ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                    .readTimeoutMillis(240000)
-                    .build();
-
-            // Authenticate using the OCI configuration file
-            AuthenticationDetailsProvider provider = new ConfigFileAuthenticationDetailsProvider(
+            // Initialize the authentication provider using OCI configuration file
+            authentication = new ConfigFileAuthenticationDetailsProvider(
                 ConfigFileReader.parse(Config.get("OCI_CONFIG_LOCATION"), Config.get("OCI_CONFIG_PROFILE"))
             );
-
-            generativeAiInferenceClient = new GenerativeAiInferenceClient(provider, clientConfiguration);
-            generativeAiInferenceClient.setEndpoint(Config.get("OCI_ENDPOINT"));
         } catch (Exception e) {
+            // Handle exceptions during initialization
             throw new RuntimeException("Failed to initialize the OCI Generative AI client", e);
         }
     }
 
+    // Method to create and configure GenerativeAiInferenceClient
+    private GenerativeAiInferenceClient createClient() {
+        // Set up the client configuration with a custom read timeout
+        ClientConfiguration clientConfiguration = ClientConfiguration.builder()
+            .readTimeoutMillis(240000) // sets the read timeout to 240 seconds
+            .build();
+        // Create a client instance for generative AI inference with the configured provider and client configuration
+        GenerativeAiInferenceClient generativeAiInferenceClient = new GenerativeAiInferenceClient(authentication, clientConfiguration);
+        // Set the endpoint for the client
+        generativeAiInferenceClient.setEndpoint(Config.get("OCI_ENDPOINT"));
+        return generativeAiInferenceClient;
+    }
+
     @Override
     public float[][] embed(String[] texts) {
-        List<String> inputs = Arrays.asList(texts);
-        float[][] embeddings = new float[inputs.size()][];
+        // Use try-with-resources to ensure the client is closed after use
+        try (GenerativeAiInferenceClient client = createClient()) {
+            List<String> inputs = Arrays.asList(texts);
+            float[][] embeddings = new float[inputs.size()][];
 
-        // Process in batches of up to 96 items
-        int batchSize = 96;
-        for (int start = 0; start < inputs.size(); start += batchSize) {
-            int end = Math.min(inputs.size(), start + batchSize);
-            List<String> batchInputs = inputs.subList(start, end);
-            
-            EmbedTextDetails embedTextDetails = EmbedTextDetails.builder()
+            // Process in batches of up to 96 items
+            int batchSize = 96;
+            for (int start = 0; start < inputs.size(); start += batchSize) {
+                int end = Math.min(inputs.size(), start + batchSize);
+                List<String> batchInputs = inputs.subList(start, end);
+
+                // Create EmbedTextDetails for the current batch
+                EmbedTextDetails embedTextDetails = EmbedTextDetails.builder()
                     .servingMode(OnDemandServingMode.builder().modelId("cohere.embed-english-v3.0").build())
                     .compartmentId(Config.get("OCI_COMPARTMENT_ID"))
                     .inputs(batchInputs)
                     .build();
 
-            EmbedTextRequest request = EmbedTextRequest.builder()
+                // Create the EmbedTextRequest for the current batch
+                EmbedTextRequest request = EmbedTextRequest.builder()
                     .embedTextDetails(embedTextDetails)
                     .build();
 
-            EmbedTextResponse response = generativeAiInferenceClient.embedText(request);
-            float[][] batchEmbeddings = parseResponse(response);
-            
-            // Combine batch embeddings into the main array
-            System.arraycopy(batchEmbeddings, 0, embeddings, start, batchEmbeddings.length);
-        }
+                // Get the response for the current batch
+                EmbedTextResponse response = client.embedText(request);
+                float[][] batchEmbeddings = parseResponse(response);
 
-        return embeddings;
+                // Combine batch embeddings into the main array
+                System.arraycopy(batchEmbeddings, 0, embeddings, start, batchEmbeddings.length);
+            }
+            return embeddings;
+        }
     }
 
+    // Method to parse the EmbedTextResponse and convert it to a float[][] array
     private float[][] parseResponse(EmbedTextResponse response) {
+        // Extract embeddings from the response
         List<List<Float>> embeddingsList = response.getEmbedTextResult().getEmbeddings();
         float[][] embeddings = new float[embeddingsList.size()][];
         for (int i = 0; i < embeddingsList.size(); i++) {
             List<Float> embeddingList = embeddingsList.get(i);
             embeddings[i] = new float[embeddingList.size()];
-
+            // Convert each list of Float to a float array
             for (int j = 0; j < embeddingList.size(); j++) {
-               embeddings[i][j] = embeddingList.get(j);
+                embeddings[i][j] = embeddingList.get(j);
             }
-          }
-        // Placeholder for the response parsing logic
-        // This should convert the response to the required float[][] format
-        // Assume response parsing is implemented correctly here
+        }
+        // Return the parsed embeddings
         return embeddings;
     }
 }
+
 </copy>
 ```
 
@@ -1287,6 +1423,30 @@ This will run an interactive similarity search using Oracle Database and the Coh
 
  ```
  <copy>
+ /**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
  package oracle.jdbc.vector.examples.cohere;
 
 import oracle.jdbc.vector.examples.SimilaritySearch;
@@ -1374,6 +1534,30 @@ This implementation uses the community maintained Java client for OpenAI: <"http
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples.openai;
 
 import com.theokanning.openai.OpenAiHttpException;
@@ -1462,6 +1646,30 @@ This code defines an **`OpenAiSimilaritySearch`** class that performs an interac
 
 ```
 <copy>
+/**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
+
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
+
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 package oracle.jdbc.vector.examples.openai;
 
 import oracle.jdbc.vector.examples.SimilaritySearch;
@@ -1559,6 +1767,30 @@ In this lab we will see how to perform a similarity search with the Cohere embed
 
     ```
     <copy>
+        /**-----------------------------------------------------------------------------
+    Copyright (c) 2023, Oracle and/or its affiliates.
+
+    This software is dual-licensed to you under the Universal Permissive License
+    (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+    2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+    either license.
+
+    If you elect to accept the software under the Apache License, Version 2.0,
+    the following applies:
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -----------------------------------------------------------------------------
+    */
     package oracle.jdbc.vector.examples.cohere;
 
     import oracle.jdbc.vector.examples.SimilaritySearch;
@@ -1588,99 +1820,140 @@ In this lab we will see how to perform a similarity search with the Cohere embed
 
     ```
     <copy>
-      package oracle.jdbc.vector.examples.cohere;
+      /**-----------------------------------------------------------------------------
+ Copyright (c) 2023, Oracle and/or its affiliates.
 
-      import com.oracle.bmc.ClientConfiguration;
-      import com.oracle.bmc.ConfigFileReader;
-      import com.oracle.bmc.auth.AuthenticationDetailsProvider;
-      import com.oracle.bmc.auth.ConfigFileAuthenticationDetailsProvider;
-      import com.oracle.bmc.generativeaiinference.GenerativeAiInferenceClient;
-      import com.oracle.bmc.generativeaiinference.model.EmbedTextDetails;
-      import com.oracle.bmc.generativeaiinference.model.OnDemandServingMode;
-      import com.oracle.bmc.generativeaiinference.requests.EmbedTextRequest;
-      import com.oracle.bmc.generativeaiinference.responses.EmbedTextResponse;
-      import oracle.jdbc.vector.examples.Config;
-      import oracle.jdbc.vector.examples.Model;
+ This software is dual-licensed to you under the Universal Permissive License
+ (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+ 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose
+ either license.
 
-      import java.util.Arrays;
-      import java.util.List;
-      import java.util.stream.Collectors;
+ If you elect to accept the software under the Apache License, Version 2.0,
+ the following applies:
 
-      /**
-      * A model which is accessed through the OCI Generative AI Service.
-      */
-      public class CohereModel implements Model {
-          private GenerativeAiInferenceClient generativeAiInferenceClient;
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-          public static final Model INSTANCE = new CohereModel();
+    https://www.apache.org/licenses/LICENSE-2.0
 
-          public CohereModel() {
-              try {
-                  // Set up the client configuration
-                  ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                          .readTimeoutMillis(240000)
-                          .build();
+  Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -----------------------------------------------------------------------------
+*/
 
-                  // Authenticate using the OCI configuration file
-                  AuthenticationDetailsProvider provider = new ConfigFileAuthenticationDetailsProvider(
-                      ConfigFileReader.parse(Config.get("OCI_CONFIG_LOCATION"), Config.get("OCI_CONFIG_PROFILE"))
-                  );
+package oracle.jdbc.vector.examples.cohere;
 
-                  generativeAiInferenceClient = new GenerativeAiInferenceClient(provider, clientConfiguration);
-                  generativeAiInferenceClient.setEndpoint(Config.get("OCI_ENDPOINT"));
-              } catch (Exception e) {
-                  throw new RuntimeException("Failed to initialize the OCI Generative AI client", e);
-              }
+//import necessary OCI and Java utility classes
+import com.oracle.bmc.ClientConfiguration;
+import com.oracle.bmc.ConfigFileReader;
+import com.oracle.bmc.auth.AuthenticationDetailsProvider;
+import com.oracle.bmc.auth.ConfigFileAuthenticationDetailsProvider;
+import com.oracle.bmc.generativeaiinference.GenerativeAiInferenceClient;
+import com.oracle.bmc.generativeaiinference.model.EmbedTextDetails;
+import com.oracle.bmc.generativeaiinference.model.OnDemandServingMode;
+import com.oracle.bmc.generativeaiinference.requests.EmbedTextRequest;
+import com.oracle.bmc.generativeaiinference.responses.EmbedTextResponse;
+import oracle.jdbc.vector.examples.Config;
+import oracle.jdbc.vector.examples.Model;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * A model which is accessed through the OCI Generative AI Service.
+ * This class implements the Model interface, providing a specific implementation embedding text using OCI's services.
+ */
+public class CohereModel implements Model {
+    //Singleton instance of the model
+    public static final Model INSTANCE = new CohereModel();
+    private final AuthenticationDetailsProvider authentication;
+
+    //Constructor for the CohereModel class
+    public CohereModel() {
+        try {
+              //Initialize the authentication provider using OCI configuration file
+             authentication = new ConfigFileAuthenticationDetailsProvider(
+                ConfigFileReader.parse(Config.get("OCI_CONFIG_LOCATION"), Config.get("OCI_CONFIG_PROFILE"))
+            );
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to initialize the OCI Generative AI client", e);
+        }
+    }
+
+    //Method to create and configure GenerativeAiinferenceClient
+    private GenerativeAiInferenceClient createClient(){
+        // Set up the client configuration with a custom read timeout
+            ClientConfiguration clientConfiguration = ClientConfiguration.builder()
+                    .readTimeoutMillis(240000) //sets the read timeout to 240 seconds
+                    .build();
+        // Create a client instance for generative Ai inference with the configured provider and client configuration
+        GenerativeAiInferenceClient generativeAiInferenceClient = new GenerativeAiInferenceClient(authentication, clientConfiguration);    
+         
+        generativeAiInferenceClient.setEndpoint(Config.get("OCI_ENDPOINT"));
+        return generativeAiInferenceClient;
+    }
+
+    @Override
+    public float[][] embed(String[] texts) {
+        //use try-with-response to ensure the client is closed after use
+        try (GenerativeAiInferenceClient client = createClient()) {
+            List<String> inputs = Arrays.asList(texts);
+            float[][] embeddings = new float[inputs.size()][];
+
+            // Process in batches of up to 96 items
+            int batchSize = 96;
+            for (int start = 0; start < inputs.size(); start += batchSize) {
+                int end = Math.min(inputs.size(), start + batchSize);
+                List<String> batchInputs = inputs.subList(start, end);
+                System.out.print(start);
+                
+                //Create EmbedTextDetails for the current batch
+                EmbedTextDetails embedTextDetails = EmbedTextDetails.builder()
+                        .servingMode(OnDemandServingMode.builder().modelId("cohere.embed-english-v3.0").build())
+                        .compartmentId(Config.get("OCI_COMPARTMENT_ID"))
+                        .inputs(batchInputs)
+                        .build();
+
+                //Create the EmbedTextRequest for the current batch
+                EmbedTextRequest request = EmbedTextRequest.builder()
+                        .embedTextDetails(embedTextDetails)
+                        .build();
+
+                // Get the response for the current batch
+                EmbedTextResponse response = client.embedText(request);
+                float[][] batchEmbeddings = parseResponse(response);
+                
+                // Combine batch embeddings into the main array
+                System.arraycopy(batchEmbeddings, 0, embeddings, start, batchEmbeddings.length);
+            }
+            return embeddings;
+        }
+    }
+
+    //method to parse the EmbedTextResponse and convert it to a float[][] array
+    private float[][] parseResponse(EmbedTextResponse response) {
+        List<List<Float>> embeddingsList = response.getEmbedTextResult().getEmbeddings();
+        float[][] embeddings = new float[embeddingsList.size()][];
+        for (int i = 0; i < embeddingsList.size(); i++) {
+            List<Float> embeddingList = embeddingsList.get(i);
+            embeddings[i] = new float[embeddingList.size()];
+          
+            for (int j = 0; j < embeddingList.size(); j++) {
+               embeddings[i][j] = embeddingList.get(j);    
+            }
           }
-
-          @Override
-          public float[][] embed(String[] texts) {
-              List<String> inputs = Arrays.asList(texts);
-              float[][] embeddings = new float[inputs.size()][];
-
-              // Process in batches of up to 96 items
-              int batchSize = 96;
-              for (int start = 0; start < inputs.size(); start += batchSize) {
-                  int end = Math.min(inputs.size(), start + batchSize);
-                  List<String> batchInputs = inputs.subList(start, end);
-
-                  EmbedTextDetails embedTextDetails = EmbedTextDetails.builder()
-                          .servingMode(OnDemandServingMode.builder().modelId("cohere.embed-english-v3.0").build())
-                          .compartmentId(Config.get("OCI_COMPARTMENT_ID"))
-                          .inputs(batchInputs)
-                          .build();
-
-                  EmbedTextRequest request = EmbedTextRequest.builder()
-                          .embedTextDetails(embedTextDetails)
-                          .build();
-
-                  EmbedTextResponse response = generativeAiInferenceClient.embedText(request);
-                  float[][] batchEmbeddings = parseResponse(response);
-
-                  // Combine batch embeddings into the main array
-                  System.arraycopy(batchEmbeddings, 0, embeddings, start, batchEmbeddings.length);
-              }
-
-              return embeddings;
-          }
-
-          private float[][] parseResponse(EmbedTextResponse response) {
-              List<List<Float>> embeddingsList = response.getEmbedTextResult().getEmbeddings();
-              float[][] embeddings = new float[embeddingsList.size()][];
-              for (int i = 0; i < embeddingsList.size(); i++) {
-                  List<Float> embeddingList = embeddingsList.get(i);
-                  embeddings[i] = new float[embeddingList.size()];
-
-                  for (int j = 0; j < embeddingList.size(); j++) {
-                    embeddings[i][j] = embeddingList.get(j);
-                  }
-                }
-              // Placeholder for the response parsing logic
-              // This should convert the response to the required float[][] format
-              // Assume response parsing is implemented correctly here
-              return embeddings;
-          }
-      }
+        // Placeholder for the response parsing logic
+        // This should convert the response to the required float[][] format
+        // Assume response parsing is implemented correctly here
+        return embeddings;
+    }
+}
     </copy>
     ```
 
