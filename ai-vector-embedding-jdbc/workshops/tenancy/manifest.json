@@ -1,5 +1,5 @@
 {
-    "workshoptitle": "Perform Ai Vector Search on Oracle Database 23c utilizing JDBC.",
+    "workshoptitle": "Perform Ai Vector Search on Oracle Database 23ai utilizing JDBC.",
     "include": {"ojdbc-vector-examples-cohere":"../../lab_2_cohere/files/ojdbc-vector-examples-cohere",
                 "ojdbc-vector-examples-openai":"../../lab_3_openai/files/ojdbc-vector-examples-openai",
                 "ojdbc-vector-examples-common":"../../ojdbc-vector-examples-common",
@@ -12,11 +12,15 @@
             "filename": "../../introduction/introduction.md"
         },
         {
+            "title": "Understanding the common Java Code",
+            "description": "Let's review the code which shall be used during the lab and it's placement.",
+            "filename": "../../common/common.md"
+        },
+        {
             "title": "Labs: Use Oracle AI Vector Search and JDBC to perform AI Vector Search Operations",
             "description": "Use Java to perform operations with Oracle Ai Vectors",
             "filename": "../../labs/labs.md",
             "type": {
-                    "Creation" : "Common Java Code",
                     "Cohere" : "Cohere Through OCI GenAi",
                     "OpenAi" : "OpenAi"
                     }
