@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab you will learn how to use Oracle Vector datatypes with external embedding models. You will see how to perform binds and defines using hard-coded vectors. 
+In this lab you will learn how to use Oracle Vector datatypes with external embedding models. You will see how to perform binds and defines using hard-coded vectors.  
 
 
 ## 1. Vector Embedding Models
