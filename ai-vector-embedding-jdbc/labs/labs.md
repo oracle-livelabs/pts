@@ -494,6 +494,7 @@ You have seen how easy it is to use Oracle OCI Generative AI Cohere with JDBC an
 </if>
 
 <if type="OpenAi">
+
 # Lab 3: Using OpenAI Vector Embedding Models With JDBC
 
 ### **This module CANNOT run in The Live Labs platform and is for informational purposes only. This sample code is provided so that a student can run this example in their own environment.**
