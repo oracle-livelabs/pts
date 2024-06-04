@@ -457,8 +457,13 @@ We will continue to use Cohere embedding through OCI Generative AI Service, so t
 
      Save and exit the nano editor.
 
+<<<<<<< HEAD
 3. Return to the root folder ai-vector-search-oracle-jdbc-examples-main. Once there run the mvn clean install since we made changes to the files.
     Run mvn clean install since we made configuration changes.
+=======
+3. Return to the root folder ai-vector-search-oracle-jdbc-examples-main. Once there run the mvn clean install -o since we made changes to the files. 
+    Run mvn clean install -o since we made configuration changes.
+>>>>>>> 4c6bfba (changes to desktop folder)
       ```
         <copy>
         mvn clean install
