@@ -1,10 +1,5 @@
 {
     "workshoptitle": "Perform Ai Vector Search on Oracle Database 23ai utilizing JDBC.",
-    "include": {"ojdbc-vector-examples-cohere":"../../lab_2_cohere/files/ojdbc-vector-examples-cohere",
-                "ojdbc-vector-examples-openai":"../../lab_3_openai/files/ojdbc-vector-examples-openai",
-                "ojdbc-vector-examples-common":"../../ojdbc-vector-examples-common",
-                "pom.xml":"../../pom.xml",
-                "example-config.properties":"../../example-config.properties"},
     "tutorials": [
         {
             "title": "Introduction",
