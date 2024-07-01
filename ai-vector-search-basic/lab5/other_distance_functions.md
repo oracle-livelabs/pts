@@ -3,7 +3,7 @@
 
 ## Introduction
 
-So far we have used the default distance function vector\_distance() which uses the **Euclidean Squared** Vector distance function.
+So far we have used the distance function vector\_distance() with the **Euclidean Squared** Vector distance function.
 
 With Oracle AI Vector Search you can also use other types of distance functions:
  - Cosine Similarity
@@ -21,7 +21,7 @@ The Vector embedding model will determine the number of dimensions and sometimes
  - Cohere embed-multilingual-v2.0  =  768 Dimensions
  - OpenAI text-embedding-ada-002   = 1536 Dimensions and recommends Cosine Similarity for the distance function
 
-By default, vector\_distance() uses Euclidean as the distance function, but it is also possible to explicitly choose the distance function to use in vector distance using the following approach:
+The  vector\_distance() function uses Cosine Similarity as the default distance function.  But it is possible to explicitly choose the distance function using the following approach:
  -   vector\_distance(v1, v2, EUCLIDEAN);
  -   vector\_distance(v1, v2, COSINE);
  -   vector\_distance(v1, v2, DOT);
@@ -320,5 +320,5 @@ There is no right or wrong syntax for vector distances. There is also no differe
 
 ## Acknowledgements
 * **Author** - Doug Hood, Consulting Member of Technical Staff
-* **Contributors** - Sean Stacey
-* **Last Updated By/Date** - Sean Stacey, November 2023
+* **Contributors** - Sean Stacey, Robert Mackowiak  
+* **Last Updated By/Date** - Robert Mackowiak, May 2024

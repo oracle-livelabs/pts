@@ -227,4 +227,4 @@ The vector\_distance() SQL function
 ## Acknowledgements
 * **Author** - Doug Hood, Consulting Member of Technical Staff
 * **Contributors** - Robert Mackowiak
-* **Last Updated By/Date** - Robert Mackowiak, November 2023
+* **Last Updated By/Date** - Robert Mackowiak, May 2024

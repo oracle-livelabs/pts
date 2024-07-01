@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab you will learn how to use Oracle Vector datatypes with external embedding models. You will see how to perform binds and defines using hard-coded vectors.
+In this lab you will learn how to use Oracle Vector datatypes with external embedding models. You will see how to perform binds and defines using hard-coded vectors. 
 
 
 ## 1. Vector Embedding Models
@@ -11,7 +11,7 @@ In this lab you will learn how to use Oracle Vector datatypes with external embe
 An embedding model is a neural network which is used to create vectors which represent text, images, audio or videos.
 
  ![Introduction Part 1 Image 1](images/intro101.png =60%x*)
- Figure 1.
+ Figure 1. 
 
 
 This LiveLab will focus on embedding models for *text*. Embedding models are usually pre-trained on data from the internet.  
@@ -27,11 +27,11 @@ Popular implementations of the transformer architecture are:
 * Sentence Transformers [Python library]
 * Transformers.js [JavaScript library which looks like the Python Transformers library]
 
-You can also write your own transformer library in your favorite environment:
-* Pytorch [Python, C++ or Java]
-* TensorFlow [Python, C++ or Java]
-* C, C++, Go, Rust, etc
-
+If you are an expert, then you can create your own embedding models. 
+But it is important to set realistic expectations.
+* Using embedding models is easy.
+* Creating embedding models is rocket science – we should not pretend otherwise.
+ 
 Most popular Machine Learning frameworks can also use the ONNX format to convert models between frameworks. The ONNX Runtime can execute embedding models built in other frameworks.
 
 ![Introduction Part 1 Image 3](images/intro103.png =60%x*)
@@ -42,14 +42,7 @@ Figure 3. ONNX Interoperability
 There are many different types of vector embedding models.
 
  ![Introduction Part 1 Image 4](images/intro104.png =60%x*)
- Figure 4. Some popular embeddings models
-
-**OpenAI** makes embedding models and Large Language Models (LLMs) including ChatGPT.
-* These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
-* You need to pay to use OpenAI embedding models.
-* An API key: **OPENAI\_API\_KEY** is required to use the OpenAI embedding models.
-
-[Find more information on OpenAI embedding models including how to setup and manage the OPENAI\_API\_KEY](https://openai.com/blog/new-embedding-models-and-api-updates)
+ Figure 4.
 
 **Cohere** makes embedding models and Large Language Models (LLMs) including embed-v3.
 * These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
@@ -61,18 +54,27 @@ There are many different types of vector embedding models.
 **Hugging Face** is a repository for thousands of open source machine learning models.
 * Hugging Face has many open source vector embedding models.
 * These embedding models can be accessed via REST APIs, or local SDKs [Python].
-* The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Python libraries. Xenova is a different type of embedding model on Hugging Face.
+* The **Transformers** and **Sentence Transformers** are very popular embedding models which use local Python libraries. 
 
 **Xenova** uses the ONNX Runtime for executing embedding models from Hugging Face. Xenova has converted popular Python **Transformer** and **Sentence Transformer** embedding models into [ONNX formatted](https://onnx.ai/) files.
 * The ONNX fomatted files can be executed in the [ONNX Runtime](https://onnxruntime.ai/) via APIs.
-* Open Neural Network Exchange (ONNX) is an open format for representing machine learning models.
+* Open Neural Network Exchange (ONNX) is an open format for representing machine learning models. 
 * The Xenova [Transformer.js](https://huggingface.co/docs/transformers.js/en/index) library is a JavaScript wrapper to the JavaScript API to the ONNX Runtime which is made to look similar to the Python Transformer library.
 
  ![Introduction Part 1 Image 5](images/intro105.png " ")
  Figure 5.
 
+**OpenAI** makes embedding models and Large Language Models (LLMs) including ChatGPT.
+* These embedding models are accessed via REST API calls or SDKs [eg Node.js and Python].
+* You need to pay to use OpenAI embedding models. 
+* An API key: **OPENAI\_API\_KEY** is required to use the OpenAI embedding models.
 
-## 2. Embedding Model Quality
+**NOTE: At this point in time, this workshop does not include a lab for using OpenAI with Oracle AI Vector Search.**
+
+[Find more information on OpenAI embedding models including how to setup and manage the OPENAI\_API\_KEY](https://openai.com/blog/new-embedding-models-and-api-updates)
+
+
+## 2. Embedding Model Quality 
 
 **Embedding Model Quality**
 
@@ -88,7 +90,7 @@ The most common ways to do this is via the *MTEB Leaderboard*. The Massive Text 
  ![Introduction Part 2 Image 1](images/intro201.png =60%x*)
 *Image by: Thomas Wolter [Pixabay - Hobbyfotograf und Hobbybildbearbeiter aus Berlin](https://pixabay.com/photos/women-running-race-racing-athletes-655353/)*
 
-Figure 6: Finding the best quality embedding model is like a never-ending relay race. Existing embedding models can be replaced by newer versions and new teams can enter the race at any time.
+Figure 6: Finding the best quality embedding model is like a never-ending relay race. Existing embedding models can be replaced by newer versions and new teams can enter the race at any time. 
 
 
 
@@ -103,7 +105,7 @@ If you have millions or billions of data items to vectorize, the rate at which y
 
  ![Introduction Part 3 Image 1](images/intro301.png =60%x*)
 
- Figure 7.
+ Figure 7. Fetch size vs Embedding size vs Commit size.
 
 When you do a similarity search or do a RAG query, you also need to care about the latency of those operations:
 * You need to create a query vector for the input data
@@ -127,28 +129,21 @@ There is no correct answer to this question as it depends on many factors:
 * Do you need a good blend of quality and performance
 * Do you choose to use embedding model Y because it was recommended to you
 
-One way to compare embedding models is quality vs performance vs popularity
-* The X-axis represents performance in terms of vectors created per second
-* The Y-axis represents quality in terms on MTEB average score [out of 100]
-* The size of the data point represents the popularity in terms of monthly downloads
-
-![Introduction Part 4 Image 1](images/intro401.png =60%x*)
-Figure 9. Comparison of Quality vs Performance vs Polularity of Embedding Models
 
 
 **Need an updated version of this picture with the relevant embedding models !!!** 
 
-# Getting Started with this Workshop
+# Getting Started with this Workshop 
 
 **Create vector table and load sample data**
 
-For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a python program and should take a around a second to run.
+For this workshop you will start by creating a table (**my\_data**) and populating it with 150 rows of data. The whole operation will be done by running a Python program and should take a around a second to run.
 
 The table will be the basis for all vectorize operations in the labs, and you will use various embedding models, all on the same table.
 
 For the labs to work, we will be using the following pattern:
 * Choose a vector embedding model
-* Vectorize your data using that embedding model
+* Generate Vectors \(or "Vectorize"\) your data using that embedding model
     * This updates/overwrites any existing vectors (or NULL values)
 * Do similarity search using the same embedding model
 
@@ -163,23 +158,21 @@ There are many different embedding models. At the time of this lab creation:
 * Hugging Face has many. The sample code uses *25* models
 
 **NOTE:** You *MUST* use the same embedding model to *vectorize the data* as when you *create a query vector*. The whole point of doing similarity search is to find the closest *data vectors* to the *query vector*. For this to work, you need to compare like to like:
-* The vectors should have the same number of dimensions (else you will get a runtime error)
+* The vectors should have the same number of dimensions (otherwise you will get a runtime error)
 * The vectors should have the same number format
 * The *data* and *query vectors* should use the same embedding model (otherwise you will get garbage results)
 
 In this workshop you will have an opportunity to use the following vector embedding models from:
 
-* Lab 1. Cohere
-* Lab 2. OpenAI
-* Lab 3. Sentence Transformers from Hugging Face
-* Lab 4. FastEmbed
+* Lab 1. Sentence Transformers from Hugging Face
+* Lab 2. Cohere
+* Lab 3. FastEmbed 
 
- 
  
 ## Learn More
 
-* [Oracle Database 23c Release Notes](../docs/release_notes.pdf)
-* [Oracle AI Vector Search Users Guide](../docs/oracle-ai-vector-search-users-guide_latest.pdf)
+* [Oracle Database 23ai Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/23/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 * [Google Transformers Whitepaper - Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)
 * [OpenAI embedding models](https://openai.com/blog/new-embedding-models-and-api-updates)
@@ -189,6 +182,6 @@ In this workshop you will have an opportunity to use the following vector embedd
 
 
 ## Acknowledgements
-* **Author** - Doug Hood, Product Manager
+* **Author** - Doug Hood, Product Manager, 
 * **Contributors** -  Sean Stacey, Outbound Product Manager
-* **Last Updated By/Date** - Sean Stacey, April 2024
+* **Last Updated By/Date** - Sean Stacey, May 2024

@@ -81,8 +81,7 @@ Figure 2.
     ```
       <copy>SELECT id
       FROM   vt1
-      ORDER  BY  vector_distance(
-                      vector('[5, 0]'), v)
+      ORDER  BY  vector_distance(vector('[5, 0]'), v, EUCLIDEAN)
       FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -105,7 +104,7 @@ Figure 2.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY  vector_distance(vector('[3, 0]'), v)
+       ORDER  BY  vector_distance(vector('[3, 0]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -125,7 +124,7 @@ Figure 3.
     ```
       <copy>SELECT id
       FROM   vt1
-      ORDER  BY  vector_distance(vector('[7, 0]'), v)
+      ORDER  BY  vector_distance(vector('[7, 0]'), v, EUCLIDEAN)
       FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -145,7 +144,7 @@ Figure 4.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY  vector_distance(vector('[10, 7]'), v)
+       ORDER  BY  vector_distance(vector('[10, 7]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -165,7 +164,7 @@ Figure 5.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY  vector_distance(vector('[3, 9]'), v)
+       ORDER  BY  vector_distance(vector('[3, 9]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -186,7 +185,7 @@ Figure 6.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY  vector_distance(vector('[0, 0]'),  v)
+       ORDER  BY  vector_distance(vector('[0, 0]'),  v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -207,7 +206,7 @@ Figure 7.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY  vector_distance(vector('[5, 5]'), v)
+       ORDER  BY  vector_distance(vector('[5, 5]'), v, EUCLIDEAN)
        FETCH FIRST 5 ROWS ONLY; </copy>
     ```
 
@@ -228,7 +227,7 @@ Figure 7.
     ```
         <copy>SELECT id
         FROM   vt1
-        ORDER  BY vector_distance(vector('[3.1, 6.9]'), v)
+        ORDER  BY vector_distance(vector('[3.1, 6.9]'), v, EUCLIDEAN)
         FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
@@ -248,7 +247,7 @@ Figure 7.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[20, 1]'), v)
+       ORDER  BY vector_distance(vector('[20, 1]'), v, EUCLIDEAN)
        FETCH FIRST 10 ROWS ONLY; </copy>
     ```
 
@@ -323,7 +322,7 @@ This example has five clusters of Vectors. So we will add four more clusters of 
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[16, 4]'), v)
+       ORDER  BY vector_distance(vector('[16, 4]'), v, EUCLIDEAN)
        FETCH FIRST 3 ROWS ONLY; </copy>
     ```
 
@@ -345,7 +344,7 @@ This example has five clusters of Vectors. So we will add four more clusters of 
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[7, -5]'), v)
+       ORDER  BY vector_distance(vector('[7, -5]'), v, EUCLIDEAN)
        FETCH FIRST 5 ROWS ONLY; </copy>
     ```
 
@@ -365,7 +364,7 @@ Figure 13.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[6, 10]'), v)
+       ORDER  BY vector_distance(vector('[6, 10]'), v, EUCLIDEAN)
        FETCH FIRST 5 ROWS ONLY; </copy>
     ```
 
@@ -386,7 +385,7 @@ Figure 13.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[-1, 6]'), v)
+       ORDER  BY vector_distance(vector('[-1, 6]'), v, EUCLIDEAN)
        FETCH FIRST 5 ROWS ONLY; </copy>
     ```
 
@@ -408,7 +407,7 @@ Figure 13.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[6, 8]'), v)
+       ORDER  BY vector_distance(vector('[6, 8]'), v, EUCLIDEAN)
        FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
@@ -428,7 +427,7 @@ Figure 13.
     ```
        <copy>SELECT id
        FROM   vt1
-       ORDER  BY vector_distance(vector('[2.5, 8.5]'), v)
+       ORDER  BY vector_distance(vector('[2.5, 8.5]'), v, EUCLIDEAN)
        FETCH FIRST 4 ROWS ONLY; </copy>
     ```
 
@@ -454,5 +453,5 @@ Similarity searches will tend to get data from one or more clusters depending on
 
 ## Acknowledgements
 * **Authors** - Doug Hood, Consulting Member of Technical Staff
-* **Contributors** - Sean Stacey
-* **Last Updated By/Date** - Sean Stacey, November 2023
+* **Contributors** - Sean Stacey, Robert Mackowiak
+* **Last Updated By/Date** - Robert Mackowiak, May 2024

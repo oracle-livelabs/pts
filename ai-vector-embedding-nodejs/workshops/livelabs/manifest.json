@@ -20,7 +20,7 @@
             "filename": "../../labs/labs.md",
             "type": {
                     "Cohere" : "Cohere",
-                    "SentenceTransformers" : "SentenceTransformers"
+                    "SentenceTransformers" : "Transformers.js"
                     }
         }
     ]
