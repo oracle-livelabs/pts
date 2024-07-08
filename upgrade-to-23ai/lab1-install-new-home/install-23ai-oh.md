@@ -304,7 +304,8 @@ Because upgrades and plugging in new PDBs will take space in certain tablespaces
 5. You can now exit SQL*Plus to make a final change on the operating system.
 
     ```text
-    SQL> <copy>exit>
+    SQL> <copy>exit</copy>
+    
     Disconnected from Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production
     Version 23.5.0.24.06
     ```
