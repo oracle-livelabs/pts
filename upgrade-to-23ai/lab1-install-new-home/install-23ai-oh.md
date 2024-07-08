@@ -31,9 +31,9 @@ In this lab, you will
 
 An easy way to make sure all system parameters are correct in a Linux environment is to use the preinstall rpm package. For non-Linux environments, please check the manual for the appropriate environment values. We have already downloaded the preinstall rpm in the environment, so you can simply install it.
 
-4. Run the installer to start the database software install
+4. Run the installer to start the database software install. The user executing the command should be then 'oracle' user.
 
-    ```
+    ```text
     $ <copy>sudo dnf -y localinstall /source/oracle-database-preinstall-23ai-1.0-1.4.el8.x86_64.rpm </copy>
 
     Last metadata expiration check: 0:45:18 ago on Tue 18 Jun 2024 07:31:10 AM GMT.
@@ -73,20 +73,20 @@ Installing:
 
 1. First, we need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
 
-    ```
+    ```text
     $ <copy>mkdir -p /u01/oracle/product/23/dbhome</copy>
     ```
 
 2. We can now use this new location to unzip our software.
 
-    ```
+    ```text
     $ <copy>cd /u01/oracle/product/23/dbhome</copy>
     ```
 
-    ```
+    ```text
     $ <copy>unzip /source/240612_dbhome.zip</copy>
     ```
-    ```
+    ```text
     ...
       python/bin/python      -> python3
       python/bin/python3     -> python3.12
@@ -119,10 +119,10 @@ We will not install any patches during this workshop; therefore, we can continue
 
  1. Execute the following commands in your terminal window as oracle user:
 
-    ```
+    ```text
     $ <copy>cd /u01/oracle/product/23/dbhome</copy>
     ```
-    ```
+    ```text
     $ <copy>./runInstaller &</copy>
     ```
 
@@ -137,8 +137,8 @@ We will not install any patches during this workshop; therefore, we can continue
     The desktop-class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used. 
 
     For the Oracle provided Workshop environment, we will use the Desktop class.
-
-    Make sure to check and change the following values in the various fields:
+    
+4. Make sure to check and change the following values in the various fields:
 
     - Oracle Base
         - /u01/oracle (no changes)
@@ -163,17 +163,18 @@ We will not install any patches during this workshop; therefore, we can continue
 
     - After you have entered the correct values, please press the `NEXT` button to continue.
 
-5. The following screen should be visible:
-
-    ![Oracle Universal Installer root script screen](./images/oui-3.png)
-
-    Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
+5.  Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
 
     - Check the option to execute the configuration scripts automatically
         - Select the 'Use sudo' radio button
         - Change the command to execute to `/usr/bin/sudo`
         - Enter *any* password in the Password field.
             - Please note the screen will display an error if you do not supply a (random) Password
+
+ The following screen should be visible:
+
+    ![Oracle Universal Installer root script screen](./images/oui-3.png)
+    
     - Click the 'Next' button to continue.
 
  6. The system will now start checking the prerequisites for the 23ai installation.
@@ -214,14 +215,14 @@ We will not install any patches during this workshop; therefore, we can continue
 
 1. Please execute the following commands as `oracle` user to login to the database:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     
     ORACLE_SID = [oracle] ? <copy>DB23AI</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
     
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
 
     SQL*Plus: Release 23.0.0.0.0 - Production on Wed Jun 19 06:30:10 2024
@@ -237,25 +238,25 @@ We will not install any patches during this workshop; therefore, we can continue
     
 2. Change the parameters for the memory setting to a lower value:
 
-    ```
+    ```text
     SQL> <copy>alter system set sga_max_size=3G scope=spfile;</copy>
 
     System altered.
     ```
-    ```
+    ```text
     SQL> <copy>alter system set sga_target=3G scope=spfile;</copy>
 
     System altered.
     ```
 3. Shutdown and startup the database to get the parameters into effect:
 
-    ```
+    ```text
     SQL> <copy>shutdown immediate</copy>
     Database closed.
     Database dismounted.
     ORACLE instance shut down.
     ```
-    ```
+    ```text
     SQL> <copy>startup</copy>
     ORACLE instance started.
 
@@ -268,27 +269,33 @@ We will not install any patches during this workshop; therefore, we can continue
     Database opened.
     ```
 
-4. We can now exit SQLPlus:
+### Increase the size of tablespaces
 
-    ```
-    SQL> <copy>exit</copy>
-    ```
+Because upgrades and plugging in new PDBs will take space in certain tablespaces, the tablespaces will grown. Growing tablespaces takes time so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
 
+1. Increase the SYSAUX, SYSTEM, and UNDOTBS for the CDB:
+
+    ```text
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/sysaux01.dbf' resize 1500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/sysaux01.dbf' AUTOEXTEND ON
+       NEXT 100M MAXSIZE UNLIMITED;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/system01.dbf' resize 1500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/system01.dbf' AUTOEXTEND ON
+       NEXT 100M MAXSIZE UNLIMITED;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/undotbs01.dbf' resize 500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/undotbs01.dbf' AUTOEXTEND ON
+       NEXT 100M MAXSIZE UNLIMITED;
+    ```
+    
+2. You can now
+    
 ### Make your 23ai database startup using dbstart ###
 
-5. If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
+If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
 
-    ```
-    $ <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
-    ```
-
-## Task 4: 
-
-ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/sysaux01.dbf' resize 1500M;		ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/sysaux01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
-ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/system01.dbf' resize 1500M;		ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/system01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
-ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/undotbs01.dbf' resize 500M;		ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/undotbs01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
-ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/PDB23AI01/sysaux01.dbf' resize 500M;		ALTER DATABASE DATAFILE '/u01/oradata/DB23AI/PDB23AI01/sysaux01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
-
+ ```text
+ $ <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
+ ```
 
 You may now proceed to the next lab.
 
