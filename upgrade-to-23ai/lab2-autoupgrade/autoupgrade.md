@@ -23,18 +23,18 @@ When in doubt or need to start the databases, use the following steps:
 
 1. Please log in as **oracle** user and execute the following command:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
 2. Please enter the SID of the 23ai database that you have created in the first lab. In this example, the SID is **`DB23AI`**
 
-    ```
+    ```text
     ORACLE_SID = [oracle] ? <copy>DB23AI</copy>
     The Oracle base has been set to /u01/oracle
     ```
 3. Now execute the `dbstart` command to start all databases listed in the `/etc/oratab` file:
 
-    ```
+    ```text
     $ <copy>dbstart $ORACLE_HOME</copy>
 
     Processing Database instance "AAA": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
@@ -48,7 +48,7 @@ When in doubt or need to start the databases, use the following steps:
 
 In this lab we will migrate 3 databases from 19c to 23ai. Below is the setup of the three databases:
 
-<style> table {font-family: arial, sans-serif;        font-size: 11px;        border-collapse: collapse; } td, th { border: 1px solid #dddddd;          text-align: left;          padding: 8px; } tr:nth-child(even) { background-color: #dddddd; }</style>
+<style> table {font-family: arial, sans-serif; font-size: 14px; border-collapse: collapse;} td, th { border: 1px solid #dddddd; text-align: left;          padding: 8px; } tr:nth-child(even) { background-color: #dddddd; }</style>
 
 <table>
 <tr> <th>Name</th>   <th>Type</th>   <th>PDB(s)</th><th>Scenario</th>
@@ -58,15 +58,15 @@ In this lab we will migrate 3 databases from 19c to 23ai. Below is the setup of 
 </tr></table>
 
 ## Task 1: Prepare Source databases ##
-We will use the preinstalled 19c databases for this exercise. Autoupgrade supports upgrading 19c and 21c databases to 23ai so we could have used an 21c database as well.
+We will use the preinstalled 19c databases for this exercise. Autoupgrade supports upgrading 19c and 21c databases to 23ai, so we could have used a 21c database as well.
 
 ### Open all Pluggable databases in container database BBB ###
 
-The autoupgrade and other scripts will only upgrade a pluggable database when it is open. First step is to make sure that in our CDBs BBB and CCC the pluggable database(s) are in open state. We do not have to do this for the AAA database as this database is a non-CDB environment and has been started by the dbstart script.
+The autoupgrade and other scripts will only upgrade a pluggable database when it is open. The first step is to make sure that in our CDBs BBB and CCC, the pluggable database(s) are in the open state. We do not have to do this for the AAA database as this database is a non-CDB environment and has been started by the dbstart script.
 
 1. Set the environment variable to database BBB and open all pluggable databases:
  
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
     ```
@@ -75,13 +75,13 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     ```
 2. Login as sysdba
     
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
     ```
 
 3. First check if the PDBs are already open using the following command:
     
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
     
         CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -95,7 +95,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
 4.  If the BBB01 PDB is in MOUNT mode, execute the following commands:
     
-    ```
+    ```text
     SQL> <copy>alter pluggable database all open;</copy>
 
     Pluggable database altered.
@@ -103,7 +103,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
     You can now check again to see if it worked:
 
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
 
         CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -114,7 +114,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     
 5.  You can now exit SQL*Plus
 
-    ```
+    ```text
     SQL> <copy>exit</copy>
     
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
@@ -123,7 +123,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
 6. Do the same for the CCC database that we will use during this lab. Set the environment variable to database BBB and open all pluggable databases:
  
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
     ```
@@ -132,13 +132,13 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     ```
 7. Login as sysdba
     
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
     ```
 
 8. First check if the PDBs are already open using the following command:
     
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
     
         CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -152,7 +152,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
 9.  If the CCC01 PDB is in MOUNT mode, execute the following commands:
     
-    ```
+    ```text
     SQL> <copy>alter pluggable database all open;</copy>
 
     Pluggable database altered.
@@ -160,7 +160,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
     You can now check again to see if it worked:
 
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
 
         CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -171,7 +171,7 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
 10. You can now exit SQLPlus and continue on the operating system:
 
-     ```
+    ```text
     SQL> <copy>exit</copy>
     
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
@@ -187,7 +187,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 1. First, we will create a directory on the operating system where we can store Autoupgrade related files (and log files):
 
-    ```
+    ```text
     $  <copy>mkdir -p /u01/autoupgrade</copy>
     ```
     ```
@@ -195,15 +195,15 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     ```
     In a regular environment, you would now download the latest version of the autoupgrade tool. In this environment, the latest version is in the /source directory. Copy this latest version to the /u01/autoupgrade directory:
     
-    ```
-    $ <copy>cp /source/autoupgrade* /u01/autoupgrade/autoupgrade.jar
+    ```text
+    $ <copy>cp /source/autoupgrade* /u01/autoupgrade/autoupgrade.jar</copy>
     ```
 
 ### Create the Auto Upgrade Config file for database AAA ###
 
 2. Now we can create a new configuration file for the Auto Upgrade tool. In this example, the "vi" tool is used. If you are not familiar with "vi", feel free to exchange the command with "gedit":
 
-    ```
+    ```text
     $ <copy>vi autoupgrade.cfg</copy>
     ```
 
@@ -211,7 +211,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     Make sure to paste the following lines to the new file:
     
-    ```
+    ```text
     <copy>global.autoupg_log_dir=/u01/autoupgrade/log
     global.log_dir=/u01/autoupgrade/log
     global.restoration=no
@@ -231,7 +231,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     For this scenario, we will upgrade both the CDB and the PDBs from 19c to 23ai. This will take longer because first the CDB needs to be upgraded before the PDBs can be upgraded (in parallel). Add the following parameters to the autoupgrade.cfg file:
     
-    ```
+    ```text
     <copy>
     bbb.dbname=BBB
     bbb.sid=BBB
@@ -240,13 +240,13 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     </copy>
     ```
     
-    In this list of parameters for database BBB we are not specifying a target CDB. As a result, the autoupgrade tool will upgrade both the CDB and the PDBs.
+    In this list of parameters for database BBB, we do not specify a target CDB. As a result, the auto-upgrade tool will upgrade both the CDB and the PDBs.
     
 4. Add the parameters for the database CCC
 
     In this scenario, we want autoupgrade to unplug the database from the 19c database, plug it into the existing DB23AI CDB and upgrade it. For this, add the following lines to the autoupgrade.cfg file:
     
-    ```
+    ```text
     <copy>
     ccc.sid=CCC
     ccc.pdbs=CCC01
@@ -262,17 +262,17 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 3. We can now launch the Auto upgrade tool. First, make sure you have the 23ai environment variables setup as we have copied the latest version of the autoupgrade tool in this Oracle Home:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
-    ```
+    ```text
     ORACLE_SID = [ORCL] ? <copy>DB23AI</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
 4. Execute the tool by executing the following command:
 
-    ```
+    ```text
     $ <copy>$ORACLE_HOME/jdk/bin/java -jar /u01/autoupgrade/autoupgrade.jar -config autoupgrade.cfg -mode analyze -noconsole</copy>
 
     AutoUpgrade 24.4.240426 launched with default internal options
@@ -302,13 +302,13 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     In the output the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
     
-    ```
+    ```text
     $ <copy>google-chrome /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html &</copy>
     ```
     
     If you are working from a non-graphical environment, the same information is available in the log file indicated.
     
-    After you have checked that there are no issues, close the Chrome browser to continue,
+    After you have checked that there are no issues, close the Chrome browser to continue. Please note that the order in which the databases are listed in the configuration file does not have to match the order of the databases in the output files or in the job number that is assigned.
     
 6. Checking the individual pre-upgrade check logfiles
 
@@ -320,7 +320,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 6. To continue with the full upgrade of the database(s) in the config file, run the same command but this time with the 'mode=deploy' option.
 
-    ```
+    ```text
     $ <copy>java -jar /u01/autoupgrade/autoupgrade.jar -config autoupgrade.cfg -mode deploy</copy>
 
     AutoUpgrade 24.4.240426 launched with default internal options
@@ -335,7 +335,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
 7. The tool will now upgrade the requested databases in the background. You can request the status by executing the 'lsj' command:
 
-    ```
+    ```text
     upg> <copy>lsj</copy>
 
     +----+-------+----------+---------+-------+----------+--------+--------------------+
@@ -352,10 +352,10 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
 8. To show which commands can be used, use the `help` command:
 
-   ```
-   $ <copy>help</copy>
+    ```text
+    $ <copy>help</copy>
    
-       exit                            // To close and exit
+    exit                            // To close and exit
     help                            // Displays help
     lsj [<option>] [-a <number>]    // list jobs by status up to n elements.
     	-f                Filter by finished jobs.
@@ -389,7 +389,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 9. To get the overall status of the running jobs, you can use the `status` command. It will show the status of all upgrades that are currently running and refresh the screen every 15 seconds:
 
-    ```
+    ```text
     upg> <copy>status -a 15</copy>
 
     Config
@@ -425,7 +425,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
     First press \<ENTER\> to exit the refreshing status command. Then execute the following command to see detailed status for job number 103:
     
-    ```
+    ```text
     $ <copy>status -job 103</copy>
     
     Details
@@ -466,9 +466,11 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 	    +--------+---------+
     ```
 
-10. If you want to look at the output of the individual stages, you can check the location indicated in the 'Stage Logs'. An example of the contents is below:
+10. If you want to look at the output of the individual stages, you can check the location indicated in the 'Stage Logs'. To view the contents, open a new terminal window as closing the current upgrade prompt will stop all upgrade activity.
 
-    ```
+    An example of the contents is below:
+
+    ```text
     $ <copy>ls -l /u01/autoupgrade/log/AAA/103/dbupgrade</copy>
     
     total 74860
@@ -484,7 +486,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     In the status page of autoupgrade, you will therefore see that some progress is higher after a while than others:
     
-    ```
+    ```text
    	+---+---------------------------------------------------------+
 	|Job|                                                 Progress|
 	+---+---------------------------------------------------------+
@@ -496,7 +498,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
     After a while (about 30 minutes) you might even see `Job 104 completed` on the screen, which is reflected in the progress bar overview under the status command like this:
     
-    ```
+    ```text
     +---+----------------------------------------------------------+
 	|Job|                                                  Progress|
 	+---+----------------------------------------------------------+
@@ -509,7 +511,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     After about 45 minutes, job 103 will be finished. Job 105 will take the longest.
     **The whole upgrade using the options chosen in this lab takes about 90 minutes**
     
-    <style> table {font-family: arial, sans-serif;        font-size: 11px;        border-collapse: collapse; } td, th { border: 1px solid #dddddd;          text-align: left;          padding: 8px; } tr:nth-child(even) { background-color: #dddddd; }</style>
+    <style> table {font-family: arial, sans-serif;        font-size: 14px;        border-collapse: collapse; } td, th { border: 1px solid #dddddd;          text-align: left;          padding: 8px; } tr:nth-child(even) { background-color: #dddddd; }</style>
 
 <table>
 <tr> <th>Name</th>   <th>Type</th>    <th>PDB(s)</th><th>Scenario</th><th>Average Upgrade Time</th></tr>
@@ -540,20 +542,18 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     All databases (CDBs and PDBs) are now upgraded to 23ai.
 
-===== OLD ======
-
 ## Task 3: Check target databases ##
 
 1. To check your target DB23AI database, you can execute the following:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
     ```
     ORACLE_SID = [DB23AI] ? <copy>DB23AI</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 23.0.0.0.0 - Production on Fri Jun 21 14:22:17 2024
@@ -568,7 +568,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     ```
     The 23ai database was already running. More interesting are the PDBs that are now active in the CDB:
     
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
 
     CON_ID CON_NAME       OPEN MODE RESTRICTED
@@ -578,13 +578,13 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 	      4 CCC01        READ WRITE  NO
 	      5 AAA          READ WRITE  NO
     ```
-    For database AAA, we plugged a non-CDB into the DB23AI CDB so this database is displayed as AAA for its CON_NAME (=PDB name). The scenario for database CCC was that we would unplug the CCC01 Pluggable database and plug it into the DB23AI CDB. In the overview you can see that both database are plugged in and that there are no restrictions. Basically, the upgrade was a succes.
+    For database AAA, we plugged a non-CDB into the DB23AI CDB so this database is displayed as AAA for its CON_NAME (=PDB name). The scenario for database CCC was that we would unplug the CCC01 Pluggable database and plug it into the DB23AI CDB. In the overview, you can see that both databases are plugged in and that there are no restrictions. Basically, the upgrade was a success.
     
 2. We can now check the database scenario (BBB) where we upgraded both the CDB and its PDBs to the new version:
 
     First, exit SQL*Plus:
     
-    ```
+    ```text
     SQL> <copy>exit</copy>
     
     Disconnected from Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production
@@ -593,14 +593,14 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
     We can change the SID to database BBB:
     
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
     ```
     ORACLE_SID = [DB23AI] ? <copy>BBB</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
     
     SQL*Plus: Release 23.0.0.0.0 - Production on Fri Jun 21 14:22:17 2024
@@ -616,7 +616,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
     Check the version of the database by querying the `v$instance` view:
 
-    ```
+    ```text
     SQL> <copy>select version from v$instance;</copy>
 
     VERSION
@@ -626,7 +626,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     
     Show the pluggable databases running in the CDB:
     
-    ```
+    ```text
     SQL> <copy>show pdbs</copy>
 
     CON_ID CON_NAME   OPEN MODE   RESTRICTED
@@ -636,7 +636,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     ```
     
 
-    The autoupgrade tool was successful. If you want, you can check the log files for details regarding this upgrade.
+    The auto-upgrade tool was successful. You can check the log files for details regarding this upgrade.
 
 You may now **proceed to the next lab**.
 
