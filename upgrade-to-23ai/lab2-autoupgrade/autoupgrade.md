@@ -303,7 +303,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     In the output the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
     
     ```text
-    $ <copy>google-chrome /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html &</copy>
+    $ <copy>chrome /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html</copy>
     ```
     
     If you are working from a non-graphical environment, the same information is available in the log file indicated.
