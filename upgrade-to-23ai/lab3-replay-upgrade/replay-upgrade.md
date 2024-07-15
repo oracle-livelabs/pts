@@ -15,26 +15,26 @@
 ### Prerequisites ###
 
 - You have access to the Upgrade to the Upgrade to 23ai Livelab image
-- A new 23ai database has been created in this image
+- A new 23ai database has been created in this image (from Lab 1)
 - All databases in the image are running
 
-When in doubt or need to start the databases using the following steps:
+When in doubt or need to start the databases use the following steps:
 
 1. Please log in as **oracle** user and execute the following command:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
 
 2. Please enter the SID of the 23ai database that you have created in the first lab. In this example, the SID is **`DB23AI`**
 
-    ```
+    ```text
     ORACLE_SID = [oracle] ? <copy>DB23AI</copy>
     The Oracle base has been set to /u01/oracle
     ```
 3. Now execute the `dbstart` command to start all databases listed in the `/etc/oratab` file:
 
-    ```
+    ```text
     $ <copy>dbstart $ORACLE_HOME</copy>
 
     Processing Database instance "BBB": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
@@ -52,19 +52,19 @@ When in doubt or need to start the databases using the following steps:
 
 1. Set the environment to the correct ORACLE\_HOME and ORACLE\_SID:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
     Enter the database 19c SID when requested:
 
-    ```
+    ```text
     ORACLE_SID = [oracle] ? <copy>RRR</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
 2. Now we can log in as sysdba and check the status of the database.
 
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
 
     SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 25 13:15:50 2024
@@ -79,8 +79,8 @@ When in doubt or need to start the databases using the following steps:
     
 3. Check the status of the PDB called RRR01 in this container database
 
-    ```
-    SQL> show pdbs
+    ```text
+    SQL> <copy>show pdbs</copy>
 
     CON_ID CON_NAME     OPEN MODE  RESTRICTED
     ------ ------------ ---------- -----------
@@ -89,14 +89,14 @@ When in doubt or need to start the databases using the following steps:
     ```
 
     >	If the state of the RRR01 Pluggable Database is not *MOUNTED* then shutdown the PDB using the following command:
-    
-    ```
+    >
+    ```text
     SQL> <copy>alter pluggable database RRR01 close;</copy>
     
-    Pluggable database altered.
+    >Pluggable database altered.
     ```
     
-    In the database RRR we have 1 pluggable database RRR01 that we can upgrade to 23ai.
+    In the database RRR, we have 1 pluggable database, RRR01 in MOUNTED state, that we can upgrade to 23ai.
 
 ## Task 2: Unplugging the source pluggable database ##
 
@@ -108,15 +108,15 @@ When in doubt or need to start the databases using the following steps:
 
     Execute the following command to unplug the PDB and write a .xml descriptor file to a filesystem location.
 
-    ```
+    ```text
     SQL> <copy>alter pluggable database RRR01 unplug into '/u01/RRR01.xml';</copy>
 
     Pluggable database altered.
     ```
 
-2. We will now disconnect from the source database so we can continue with the import of the PDB.
+2. We will now disconnect from the source database so we can continue importing the PDB.
 
-    ```
+    ```text
     SQL> <copy>exit</copy>
 
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
@@ -127,20 +127,20 @@ Version 19.21.0.0.0
 
 1. First, we need to change the environment settings to the 23aienvironment:
 
-    ```
+    ```text
     $ <copy>. oraenv</copy>
     ```
 
     Please enter the SID of the 19c database when asked:
 
-    ```
+    ```text
     ORACLE_SID = [RRR] ? <copy>DB23AI</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
 2. We can now login with SQL*Plus as sysdba to execute the import of the PDB:
 
-    ```
+    ```text
     $ <copy>sqlplus / as sysdba</copy>
 
     SQL*Plus: Release 23.0.0.0.0 - Production on Tue Jun 25 13:28:05 2024
@@ -154,9 +154,9 @@ Version 19.21.0.0.0
     Version 23.5.0.24.06
     ```
 
-3. After connecting as sysdba to the target database, we can plug in the PDB. As part of the plug-in process, we can also move (or copy) the data files if needed. In our example, we want the database files to move from the old 18c datafiles location to the new 19c datafile location:
+3. After connecting as sysdba to the target database, we can plug in the PDB. As part of the plug-in process, we can also move (or copy) the data files if needed. In our example, we want the database files to move from the old 19c datafiles location to the new 23ai datafile location:
 
-    ```
+    ```text
     SQL> <copy>create pluggable database RRR01 using '/u01/RRR01.xml'
          move
          file_name_convert = ('/RRR/','/DB23AI/');</copy>
@@ -168,44 +168,37 @@ Version 19.21.0.0.0
 
 4. Check that our data files are stored in the 19c datafile location:
 
-    ```
+    ```text
     SQL> <copy>select name from v$datafile
          where name like '%RRR01%';</copy>
 
     NAME
     -------------------------------------------
-    /u01/oradata/DB19C/PDB18C01/system01.dbf
-    /u01/oradata/DB19C/PDB18C01/sysaux01.dbf
-    /u01/oradata/DB19C/PDB18C01/undotbs01.dbf
-    /u01/oradata/DB19C/PDB18C01/users01.dbf
+    /u01/oradata/DB23AI/RRR01/system01.dbf
+    /u01/oradata/DB23AI/RRR01/sysaux01.dbf
+    /u01/oradata/DB23AI/RRR01/undotbs01.dbf
+    /u01/oradata/DB23AI/RRR01/users01.dbf
     ```
 
 ## Task 4: Open the imported Pluggable Database for Replay Upgrade##
 
- By opening the 19c PDB in a 23ai CDB, the system will recognize that an upgrade is needed. Instead of opening the pluggable database right away, the system will open de PDB in Upgrade mode automatically and will start to execute the SQL statements to upgrade the database.
+ By opening the 19c PDB in a 23ai CDB, the system will recognize that an upgrade is needed. Instead of opening the pluggable database right away, the system will open the PDB in Upgrade mode automatically and start executing the SQL statements to upgrade the database.
  
- Be aware that the open command will seem to hang until the upgrade has been completed. Depending on the layout of the database, this could take a while.
+ Be aware that the open command will seem to hang until the upgrade has been completed. Depending on the layout of the database, this could take a while. In our example database, it usually takes about 15 minutes.
 
 1. To upgrade the PDB, simply open it in read-write mode:
 
-    ```
+    ```text
     SQL> <copy>alter pluggable database RRR01 open;</copy>
     ```
     
-    This command will seem to hang for about 15 minutes. After this time, you will see the regular result when opening a pluggable database:
+    This command will seem to hang for about 15 minutes. 
     
-    ```
-    Pluggable database altered.
-    ```
-2. While the upgrade is running, you can open another (terminal) session and check the progress of the upgrade in the alert log of the database:
+2. While the upgrade is running, you can open another (terminal) session and check the progress of the upgrade in the alert log of the database. Please note that the first messages will only appear about 6 minutes after the alter command has been started:
 
-    ```
+    ```text
     $ <copy>tail -f /u01/oracle/diag/rdbms/db23ai/DB23AI/trace/alert_DB23AI.log</copy>
-    ```
     
-    For example, you will see that several components are upgraded:
-    
-    ```
     ...
     RRR01(6):SERVER ACTION=UPGRADE id=: Upgraded from 19.21.0.0.0 to 23.5.0.24.06 Container=RRR01 Id=6
     RRR01(6):SERVER COMPONENT id=DBRESTART: timestamp=2024-06-25 13:48:15 Container=RRR01 Id=6
@@ -216,10 +209,31 @@ Version 19.21.0.0.0
     RRR01(6):SERVER COMPONENT id=CATUPPST: timestamp=2024-06-25 13:48:28 Container=RRR01 Id=6
     ...
     ```
+3. When the upgrade has finished, you will see the regular result when opening a pluggable database:
     
-3. When the upgrade has finished, you can check if there are any issues with the pluggable database:
+    ```text
+    Pluggable database altered.
+    ```
+    
+4. In order to synchronise the CDB with the PDB and to make sure everything starts properly after a reboot, stop and start the new Pluggable Database:
 
-   ```
+    ```text
+    SQL> <copy>alter pluggable database RRR01 close;</copy>
+    
+    Pluggable database altered.
+    ```
+    
+    and 
+    
+    ```text
+    SQL> <copy>alter pluggable database RRR01 open;</copy>
+    
+    Pluggable database altered.
+    ```
+        
+5. We can now check if there are any plugin issues for this new pluggable database:
+
+   ```text
    SQL> <copy>select name, cause, message           
         from PDB_PLUG_IN_VIOLATIONS                                                                      
         where status <> 'RESOLVED'
@@ -228,15 +242,15 @@ Version 19.21.0.0.0
     no rows selected
    ```
 
-4. If no errors occur, we can also check for any invalid objects in the database:
+6. We can also check for any invalid objects in the database:
 
-    ```
+    ```text
     SQL> <copy>alter session set container=RRR01;</copy>
 
     Session altered.
     ```
 
-    ```
+    ```text
     SQL> <copy>select COUNT(*) FROM obj$ WHERE status IN (4, 5, 6);</copy>
 
       COUNT(*)
@@ -246,7 +260,7 @@ Version 19.21.0.0.0
 
 7. If there are any invalid objects, you can recompile them using the `utlrp.sql` script:
 
-    ```
+    ```text
     SQL> <copy>@$ORACLE_HOME/rdbms/admin/utlrp.sql</copy>
 
     Session altered.
@@ -281,11 +295,12 @@ Version 19.21.0.0.0
     ---------------------------
                               1
     ```
-8. Due to bug 33523831 a new procedure with underlying tables was introduced as a temporary measure to solve and issue with object IDs. The issue has been solved in 23ai so although this procedure is not needed, it will not be removed using the current scripts. Please discard the single invalid object called SYS.OBJNUM_REUSE_HOLES in your upgraded PDB.
+    
+    Due to bug 33523831, a new procedure with underlying tables was introduced as a temporary measure to solve an issue with object IDs. The issue has been solved in 23ai so although this procedure is not needed, it will not be removed using the current scripts. Please discard this single invalid object called SYS.OBJNUM_REUSE_HOLES in your upgraded PDB.
    
 Your database is now migrated to a new $ORACLE_HOME and upgraded.
 
-This is the end of the workshop. Do not forget to check the outcome of the Autoupgrade lab (if you have started it).
+This is the end of this lab, you may now continue to the next lab. Do not forget to check the outcome of the Autoupgrade lab (if you had it running while doing this lab).
 
 ## Acknowledgements ##
 
