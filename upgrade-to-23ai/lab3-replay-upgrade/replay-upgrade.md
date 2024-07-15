@@ -233,14 +233,14 @@ Version 19.21.0.0.0
         
 5. We can now check if there are any plugin issues for this new pluggable database:
 
-   ```text
-   SQL> <copy>select name, cause, message           
-        from PDB_PLUG_IN_VIOLATIONS                                                                      
-        where status <> 'RESOLVED'
-        and con_id = (select con_id from dba_pdbs where PDB_NAME='RRR01');</copy>
+    ```text
+    SQL> <copy>select name, cause, message           
+         from PDB_PLUG_IN_VIOLATIONS                                                                      
+         where status <> 'RESOLVED'
+         and con_id = (select con_id from dba_pdbs where PDB_NAME='RRR01');</copy>
 
     no rows selected
-   ```
+    ```
 
 6. We can also check for any invalid objects in the database:
 
@@ -296,9 +296,9 @@ Version 19.21.0.0.0
                               1
     ```
     
-    Due to bug 33523831, a new procedure with underlying tables was introduced as a temporary measure to solve an issue with object IDs. The issue has been solved in 23ai so although this procedure is not needed, it will not be removed using the current scripts. Please discard this single invalid object called SYS.OBJNUM_REUSE_HOLES in your upgraded PDB.
+    Due to bug 33523831, a new procedure with underlying tables was introduced as a temporary measure to solve an issue with object IDs. The issue has been solved in 23ai so although this procedure is not needed, it will not be removed using the current scripts. Please discard this single invalid object called SYS.OBJNUM\_REUSE\_HOLES in your upgraded PDB.
    
-Your database is now migrated to a new $ORACLE_HOME and upgraded.
+    Your database is now migrated to a new $ORACLE_HOME and upgraded.
 
 This is the end of this lab, you may now continue to the next lab. Do not forget to check the outcome of the Autoupgrade lab (if you had it running while doing this lab).
 
