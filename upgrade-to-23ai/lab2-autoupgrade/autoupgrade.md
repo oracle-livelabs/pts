@@ -509,19 +509,8 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
     ```
     
     After about 45 minutes, job 103 will be finished. Job 105 will take the longest.
-    **The whole upgrade using the options chosen in this lab takes about 90 minutes**
+    **The whole upgrade using the options chosen in this lab takes about 90 minutes.** You can continue with other labs or let the instructor know you are waiting for the upgrade to finish.
     
-    <style> table {font-family: arial, sans-serif;        font-size: 14px;        border-collapse: collapse; } td, th { border: 1px solid #dddddd;          text-align: left;          padding: 8px; } tr:nth-child(even) { background-color: #dddddd; }</style>
-
-<table>
-<tr> <th>Name</th>   <th>Type</th>    <th>PDB(s)</th><th>Scenario</th><th>Average Upgrade Time</th></tr>
-<tr> <td>AAA</td>    <td>non-CDB</td><td>n/a</td>   <td>non-CDB to PDB in 23ai home</td>
-</tr><tr><td>BBB</td><td>CDB</td>    <td>BBB01</td> <td>Upgrade CDB + PDB</td>
-</tr><tr><td>CCC</td><td>CDB</td>    <td>CCC01</td> <td>Unplug from teh 19c CDB, plug into existing 23ai and upgrade</td>
-</tr></table>
-
-    You can continue with other labs or let the instructor know you are waiting for the upgrade to finish.
-
 11.    After a while, you will see that the upgrade has finished:
 
 

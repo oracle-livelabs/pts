@@ -85,8 +85,7 @@ Installing:
 
     ```text
     $ <copy>unzip /source/240612_dbhome.zip</copy>
-    ```
-    ```text
+    
     ...
       python/bin/python      -> python3
       python/bin/python3     -> python3.12
