@@ -47,7 +47,6 @@ When in doubt or need to start the databases use the following steps:
     ```text
     $ <copy>dbstart $ORACLE_HOME</copy>
 
-    dbstart $ORACLE_HOME
     Processing Database instance "BBB": log file /u01/oracle/product/23/dbhome/rdbms/log/startup.log
     Processing Database instance "CCC": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
     Processing Database instance "RRR": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
