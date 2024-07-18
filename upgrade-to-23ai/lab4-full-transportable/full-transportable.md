@@ -130,8 +130,8 @@ The migration described in this lab requires a directory object for Datapump (fo
 
     ```text
     SQL> <copy>create public database link SOURCEDB
-        connect to system identified by Welcome_123
-        using '//localhost:1521/TTT';</copy>
+         connect to system identified by Welcome_123
+         using '//localhost:1521/TTT';</copy>
 
     Database link created.
     ```
@@ -261,9 +261,9 @@ The migration described in this lab requires a directory object for Datapump (fo
     $ <copy>cp /u01/oradata/TTT/users01.dbf /u01/oradata/DB23AI/TTT01</copy>
     ```
 
-Now, we can import the database metadata and data (already copied and ready in the data files for the tablespace USERS in the new location) by executing a Datapump command. The Datapump import will be run through the database link you created earlier, so there is no need for a file-based export or a dump file.
+    Now, we can import the database metadata and data (already copied and ready in the data files for the tablespace USERS in the new location) by executing a Datapump command. The Datapump import will be run through the database link you created earlier, so there is no need for a file-based export or a dump file.
 
-Data Pump will take care of everything (currently except XDB and AWR) you need from the system tablespaces and move views, synonyms, triggers, etc., over to the target database (in our case: TTT01). Data Pump can do this beginning from Oracle 11.2.0.3 on the source side but will require an Oracle 12c or higher database as a target. Data Pump will work cross-platform as well but might need RMAN to convert the files from big to little-endian or vice-versa.
+    Data Pump will take care of everything (currently except XDB and AWR) you need from the system tablespaces and move views, synonyms, triggers, etc., over to the target database (in our case: TTT01). Data Pump can do this beginning from Oracle 11.2.0.3 on the source side but will require an Oracle 12c or higher database as a target. Data Pump will work cross-platform as well but might need RMAN to convert the files from big to little-endian or vice-versa.
 
 2. First, we change our environment parameters back to 23ai:
 
@@ -327,7 +327,6 @@ The Data Pump process should have migrated the most crucial user in the database
     Version 23.5.0.24.06
 
     Copyright (c) 1982, 2024, Oracle.  All rights reserved.
-
 
     Connected to:
     Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production
