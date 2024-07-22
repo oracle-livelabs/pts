@@ -1,0 +1,47 @@
+{
+  "workshoptitle": "RAG Vector with Apex on ADB", 
+  "help": ["blake.hendricks@oracle.com"],
+  "tutorials": [
+      { 
+        "title": "Introduction",
+        "description": "Introduction to Vector Apex App",
+        "filename": "../../introduction/introduction.md"
+      }, 
+      {
+        "title": "Getting Started", 
+        "description": "This is the prerequisites for customers using Free Trial and Paid tenancies, and Always Free accounts (if applicable). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
+        "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md" 
+      }, 
+      {
+        "title": "Lab 1: Prepare Setup", 
+        "description": "", 
+        "filename": "../../setup/setup.md",
+        "type": "apex-vector"
+      }, 
+      { 
+          "title": "Lab 2: Download ONNX ",
+          "description": ".",
+          "filename": "../../download/download.md"
+      },
+      {
+          "title": "Lab 3: Setup Apex Service",
+          "description": "",
+          "filename": "../../apex/apex.md"
+      }, 
+      {
+          "title": "Lab 4: Edit Apex Application",
+          "description": ".",
+          "filename": "../../apex-app/apex-app.md" 
+      },
+      {
+        "title": "Lab 5: Ask Question",
+        "description": "",
+        "filename": "../../ask/ask.md" 
+    },  
+      { 
+          "title": "Need Help?",
+          "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+          "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+      } 
+  ]
+}
