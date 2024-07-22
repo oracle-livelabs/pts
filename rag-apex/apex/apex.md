@@ -19,10 +19,10 @@ By following this guide, you will:
 
 1. Go to your ADB instance you created.
 2. Click on **Database Actions** and select **View All Database Actions**.
-![alt text](images/databaseactions.png)
+![alt text](/images/databaseactions.png)
 1. Click on the **Development** tab.
 2. Click **APEX** on the left-hand side.
-![alt text](images/dbactionsapex.png)
+![alt text](/images/dbactionsapex.png)
 1. Click **Create Workspace** and type in your password you created with the ADB instance.
 ![alt text](images/dbactionscreateworkspace.png)
 ![alt text](images/dbactionspassword.png)
