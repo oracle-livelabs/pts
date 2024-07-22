@@ -24,17 +24,22 @@
           "filename": "../../download/download.md"
       },
       {
-          "title": "Lab 3: Setup Apex Service",
+        "title": "Lab 3: Set up Vector Tables",
+        "description": "",
+        "filename": "../../tables/tables.md"
+    }, 
+      {
+          "title": "Lab 4: Setup Apex Service",
           "description": "",
           "filename": "../../apex/apex.md"
       }, 
       {
-          "title": "Lab 4: Edit Apex Application",
+          "title": "Lab 5: Edit Apex Application",
           "description": ".",
           "filename": "../../apex-app/apex-app.md" 
       },
       {
-        "title": "Lab 5: Ask Question",
+        "title": "Lab 6: Ask Question",
         "description": "",
         "filename": "../../ask/ask.md" 
     },  
