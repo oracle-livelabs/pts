@@ -27,7 +27,7 @@ In this lab, you will
 
  We have already downloaded the software for you in this workshop. You need to adhere to the Oracle license restrictions when using this software. For training purposes when using this Hands-On Lab, the Oracle Technology Network license will apply. All required software is available in the `/source` directory in your image.
 
-### Install the 19c pre-install RPM on the system ###
+### Install the 23ai pre-install RPM on the system ###
 
 An easy way to make sure all system parameters are correct in a Linux environment is to use the preinstall rpm package. For non-Linux environments, please check the manual for the appropriate environment values. We have already downloaded the preinstall rpm in the environment, so you can simply install it.
 
