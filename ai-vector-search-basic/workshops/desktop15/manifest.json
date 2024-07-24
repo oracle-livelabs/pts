@@ -8,7 +8,12 @@
             "filename": "../../introduction/introduction.md"
         },
         {
-        "title": "Get Started with noVNC Remote Desktop",
+            "title": "Get Started",
+            "description": "Check and Verify Sandbox Connection information and test connectivity.",
+            "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        },
+        {
+        "title": "Get familiar with noVNC Remote Desktop",
         "description": "Using noVNC Remote Desktop",
         "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
         },
