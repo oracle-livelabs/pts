@@ -25,9 +25,6 @@ By following this guide, you will:
 2. Sign into the application with your credentials.
 
 
-### 
-![alt text](images/admin.png)
-
 ### Step 2: Load Document to Object Store
 
 1. Click on the blue "Upload File" button.
@@ -41,12 +38,44 @@ Open the Apex Page Designer and select Page 12.
 As soon as we load our document this PLSQL Procedure is triggered to ensure the process is complete. In this image we our using a few of our credentials and passing our file to the storage. 
 ![alt text](images/object.png)
 
+``` sql
+DECLARE
+  l_url         VARCHAR2(1000);
+  l_length      NUMBER;
+  l_response    CLOB;    
+  failed_upload EXCEPTION;
+BEGIN
+  FOR lr_files in (SELECT * FROM apex_application_temp_files WHERE name = :P12_FILE) 
+  LOOP
+    --l_url := :G_OCI_BASE_URL || '/o/' || apex_util.url_encode(lr_files.filename);
+    l_url := :BUCKET_PAR || apex_util.url_encode(lr_files.filename);
+    apex_web_service.g_request_headers(1).name := 'Content-Type';
+    apex_web_service.g_request_headers(1).value := lr_files.mime_type;
+    l_response := apex_web_service.make_rest_request(p_url                  => l_url,
+                                                     p_http_method          => 'PUT',
+                                                     p_body_blob            => lr_files.blob_content,
+                                                     p_credential_static_id => :G_OCI_CREDENTIALS);
+
+
+    IF apex_web_service.g_status_code != 200 then
+      RAISE failed_upload;
+    END IF;
+  END LOOP;
+END;
+```
 
 Let's take a look at what PLSQL procedure is storing the file into the table that is being vectorized. 
 
 Click on Apex The Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage. 
 We store the file in a table called "My_Books" within our database. The chunking and embedding triggers are done within the procedure.
 ![alt text](images/admin.png)
+```sql
+INSERT INTO ADMIN.MY_BOOKS
+(FILE_NAME, file_type,FILE_CONTENT,FILE_SIZE)
+SELECT filename, mime_type,blob_content, dbms_lob.getlength(blob_content)
+FROM apex_application_temp_files
+WHERE name = :P12_FILE;
+```
 
 ### Step 3: Select Document from Drop-Down Menu
 
