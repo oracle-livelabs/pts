@@ -236,7 +236,6 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
 2.  Select the doc id on which to query
 
-
    In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
 
 

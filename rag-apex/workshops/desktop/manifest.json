@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "RAG Vector with Apex on ADB", 
+  "workshoptitle": "AI Vector Search - RAG with APEX and Autonomous Database", 
   "help": ["blake.hendricks@oracle.com"],
   "tutorials": [
       { 
