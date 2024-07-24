@@ -24,11 +24,29 @@ By following this guide, you will:
    ![Run Application](images/run.png)
 2. Sign into the application with your credentials.
 
+
+### 
+![alt text](images/admin.png)
+
 ### Step 2: Load Document to Object Store
 
 1. Click on the blue "Upload File" button.
 2. Select the file you want to upload from your computer.
    This will upload it to the object storage.
+
+Let's take a look at what PLSQL procedure is storing the document into our object storage.
+
+Open the Apex Page Designer and select Page 12. 
+
+As soon as we load our document this PLSQL Procedure is triggered to ensure the process is complete. In this image we our using a few of our credentials and passing our file to the storage. 
+![alt text](images/object.png)
+
+
+Let's take a look at what PLSQL procedure is storing the file into the table that is being vectorized. 
+
+Click on Apex The Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage. 
+We store the file in a table called "My_Books" within our database. The chunking and embedding triggers are done within the procedure.
+![alt text](images/admin.png)
 
 ### Step 3: Select Document from Drop-Down Menu
 
@@ -46,11 +64,9 @@ By following this guide, you will:
 
 1. After sending your question, you can view the results of the answer in the chat box.
 
-### Step 7: Show PL/SQL Call
-
-1. We can see the PL/SQL call in the APEX Page Designer on page 3.
+2. We can see the PL/SQL call in the APEX Page Designer on page 3.
    ![Page Designer](images/pagedesign.png)
-2. On the right-hand side, we can view the call that is made to generate the response.
+3. On the right-hand side, we can view the call that is made to generate the response.
    ![PL/SQL Call](images/plsql.png)
 
 ### PL/SQL Code
