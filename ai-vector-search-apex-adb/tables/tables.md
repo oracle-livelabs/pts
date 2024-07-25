@@ -12,6 +12,7 @@ In this lab, you will:
 * Create the vector table in Oracle Autonomous Database 23ai
 * Create a procedure to store the document chunks
 * Create a trigger to embed the vectors
+* Create a function to return similar chunks and generate LLM response
 
 ### Prerequisites
 
@@ -19,8 +20,8 @@ In this lab, you will:
 
 ## Task 1: Create tables to store the document, chunks, and vectors
 
-1. From your Autonomous Database console select Database Actions | SQL
-2. Select the schema user vector
+1. From your Autonomous Database console select Database Actions SQL worksheet or use SQLDeveloper
+2. Select the schema admin
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
 
     ``` 
@@ -146,7 +147,7 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
 
     ```
 
-## Task 6: Generating output using LLM.
+## Task 3: Create function to generate output using LLM
 
 ### **Send the text chunks from the vector search with the user question to the LLM and generate the response.**
 
@@ -156,15 +157,18 @@ LLM prompt engineering enables you to craft input queries or instructions to cre
 
 In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function.  We then send the text chunks to OCI GenAI to provide the response. 
 
-For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL.  The syntax of establishing the connection with OCI GenAI can be found in the documentation. 
+For connecting and authenticating to OCI GenAI we have pre-created login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL in the previous lab. 
 
-1. Select the cell and click **Run**.
+1. Create the function from SQLDeveloper or from the ADB console using the Database Actions SQL Worksheet.
 
     ```
-    # Create a cursor
-    cursor = conn23ai.cursor()
-    procedure_query = """
-    create or replace FUNCTION generate_text_response_gen(user_question VARCHAR2, doc_id number) RETURN CLOB IS
+  
+    create or replace FUNCTION generate_text_response2 (
+      user_question VARCHAR2, 
+      doc_id number,
+      topn number
+    ) RETURN CLOB IS
+
       messages CLOB;
       params_genai CLOB;
       output CLOB;
@@ -175,24 +179,31 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
     BEGIN
 
       --vectorize the user_question
+
       select to_vector(vector_embedding(tinybert_model USING user_question as data)) as embedding  into  user_question_vec ;
+
       -- Open the cursor using the provided query string
+
       search_query := 'SELECT EMBED_DATA from VECTOR_STORE where doc_id ='||doc_id||' ORDER BY vector_distance(EMBED_VECTOR, :user_question_vec, COSINE)'||
-      ' FETCH   FIRST 10 ROWS ONLY ' ;
+      ' FETCH   FIRST :topn ROWS ONLY ' ;
       OPEN message_cursor FOR search_query USING user_question_vec;
 
       -- Initialize messages CLOB
       messages := '';
 
       -- Loop through cursor results and construct messages
+
       LOOP
         FETCH message_cursor INTO message_line;
         EXIT WHEN message_cursor%NOTFOUND;
 
         -- Append message line to messages CLOB
+
         messages := messages || '{"message": "' || message_line || '"},' || CHR(10);
       END LOOP;
+
         -- Finally pass the user question
+
         messages := messages || '{"Qusetion": "' || user_question  || '"},' || CHR(10);
       -- Close the cursor
       CLOSE message_cursor;
@@ -202,6 +213,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
       -- Construct params JSON
       -- In order to use the ocigenai provider below we have precreated the credentials
+      
       params_genai := '
     {
       "provider":"ocigenai",
@@ -230,34 +242,16 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
     END;
     """
 
-    # Execute the procedure creation query
-    cursor.execute(procedure_query)
     ```
 
 2.  Select the doc id on which to query
 
-   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
 
-
-    ```
-    %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
-    my_books a, (select doc_id ,count(*)  count, round(avg(length(embed_data))) avg_text_chunk_size, max(length(embed_data)) max_chunk_size from vector_store group by  doc_id) b 
-    where a.id = b.doc_id
-    ```
-3. Generate LLM response
-
-    Generate the response using the query below. This calls function `generate_text_response_gen` and passes the `doc_id` from previous step
-
-    ```
-    %%sql
-    select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
-    ```
-
-    Observe the output.  Retry by replacing the question and see how the output changes.
+   In the function  `generate_text_response2`,  we pass the doc\_id to select the chunks related to a PDF doucment we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF.
 
     We successfully performed the vector search, sent the relevant chunks to the LLM along with the question and got the answer. 
 
-    In this lab we learned how to create a complete RAG solution using PLSQL.  The table below lists the vector functions we used.
+    In this lab we learned how a RAG solution using PLSQL works.  The table below lists the vector functions we used.
 
     <table>
       <thead>
@@ -298,9 +292,8 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
         </tbody>
     </table>
 
-    **HURRAY!!!  We just completed LAB 1, a complete implementation of RAG using PLSQL**
 
-• In the next LAB, the APEX code is only focused on calling the package routines in the 23ai database.
+• In the next LAB, the APEX code will be calling the package functions here.
 
 • This means that these packages could then easily be called from any programming language, eg.,
 

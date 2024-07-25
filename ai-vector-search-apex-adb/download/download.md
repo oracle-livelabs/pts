@@ -1,10 +1,8 @@
-# Download Files from Oracle Object Storage into Oracle Autonomous Database Using DBMS_CLOUD.GET_OBJECTS
+# Download Embedding Model from Oracle Object Storage into Oracle Autonomous Database
 
 ## Introduction
 
-In the world of cloud computing, managing and transferring data efficiently is crucial. Oracle provides a robust ecosystem for data management with its Oracle Object Storage and Oracle Autonomous Database (ADB). One of the most powerful features available is the ability to download files directly from Oracle Object Storage into Oracle ADB using the DBMS_CLOUD.GET_OBJECTS procedure.
-
-This blog post will guide you through the steps to accomplish this task, ensuring a smooth and efficient data transfer process.
+In this lab you will download the embedding model from Oracle Object Storage to Autonomous Database. The embedding model is used to vectorize the source data. Oracle provides data management with the Oracle Object Storage and Oracle Autonomous Database (ADB). One of the features available is the ability to download files directly from Oracle Object Storage into Oracle ADB using the DBMS_CLOUD.GET_OBJECTS procedure.
 
 ## Objectives
 
@@ -12,9 +10,10 @@ By following this guide, you will:
 
 - Create a credential object in Oracle ADB for accessing Oracle Object Storage.
 - Grant necessary privileges to use DBMS_CLOUD procedures.
-- Download files from Oracle Object Storage into Oracle ADB using DBMS_CLOUD.GET_OBJECTS.
-- Verify the downloaded files in Oracle ADB.
-- Upload ONNX files into the database using DBMS_VECTOR.LOAD_ONNX_MODEL.
+- Download the ONNX compliant embedding model from Oracle Object Storage into Oracle ADB using DBMS_CLOUD.GET_OBJECTS.
+- Verify the downloaded model in Oracle ADB.
+- Load the ONNX model into the database using DBMS_VECTOR.LOAD_ONNX_MODEL.
+- Create credential using DBMS_VECTOR to access OCI GenAI service
 
 ## Prerequisites
 
@@ -32,10 +31,10 @@ Before we dive into the procedure, make sure you have the following:
 First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage. Please set up your [secret keys](https://medium.com/@bhenndricks/secure-access-to-oracle-buckets-in-object-storage-a-step-by-step-guide-32f3242f35e2) 
 
 
-Next head back to your ADW overview page we just created, and select Database Actions and then SQL. This will open up an editor for us to perform statements.
+Next head back to your ADB overview page we just created, and select Database Actions and then SQL. This will open up an editor for us to perform statements.
 ![alt text](images/sqldev.png)
 
-Go ahead and copy this statement and follow the instructions to replace the necessary credentials we have created.
+Copy this statement and follow the instructions to replace the necessary credentials we have created.
 
 ```sql
 BEGIN
@@ -60,9 +59,9 @@ GRANT EXECUTE ON DBMS_CLOUD TO <your_database_user>;
 
 Replace `<your_database_user>` with your actual database user.
 
-### 3. Download Files Using DBMS_CLOUD.GET_OBJECTS
+### 3. Download ONNX embedding models Using DBMS_CLOUD.GET_OBJECTS
 
-Now, use the DBMS_CLOUD.GET_OBJECTS procedure to download files from your Oracle Object Storage bucket into Oracle ADB.
+Now, use the DBMS_CLOUD.GET_OBJECTS procedure to download the ONNX embedding model files from your Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
 ```sql
 BEGIN
@@ -83,15 +82,15 @@ Replace the placeholders as follows:
 - `<file>`: The name of the file in your Object Storage bucket.
 - `<file_name_in_adb>`: The name you want to give the file in Oracle ADB.
 
-For example, if your object URI is https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/my_file.csv, and you want to store it in ADB as my_file.csv, the command will look like this:
+For example, if your object URI is https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/model.onnx, and you want to download it to ADB, the command will look like this:
 
 ```sql
 BEGIN
   DBMS_CLOUD.GET_OBJECTS(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/my_file.csv',
+    object_uri => 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/model.onnx',
     directory_name => 'DATA_PUMP_DIR',
-    file_name => 'my_file.csv'
+    file_name => 'model.onnx'
   );
 END;
 /
@@ -107,9 +106,9 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('DATA_PUMP_DIR'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
-### 5. Upload ONNX Files into the Database
+### 5. Load the ONNX Files into the Database
 
-Once the ONNX files are downloaded and verified, you can upload them into the database using DBMS_VECTOR.LOAD_ONNX_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.
+Once the ONNX files are downloaded and verified, you can load them into the database using DBMS_VECTOR.LOAD_ONNX_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
 
 ```sql
 BEGIN
@@ -129,9 +128,43 @@ BEGIN
 END;
 /
 ```
+This code loads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT_MODEL and ALL_MINILM_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
 
-This code uploads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT_MODEL and ALL_MINILM_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
+By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+
+To verify the model exists in database run the following statement.
+
+```sql
+    SELECT MODEL_NAME, MINING_FUNCTION,
+    ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models 
+    
+```
+
+### 6. Create the credentials for ADB to access OCI GenAI service
+
+Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI). The GenAI service provides access to several LLMs that you can pick from.  To enable ADB to access these services, authentication is required. 
+
+1. From ADB Database Actions SQL Worksheet, enter the PLSQL procedure and replace the following with your ocid and key information you got from the previous lab.  Then click run to set the ADB credential to access the OCI GenAI service.
+
+```
+declare
+  jo json_object_t;
+begin
+  dbms_vector.drop_credential('GENAI_CRED');
+  jo := json_object_t();
+  jo.put('user_ocid','ocid1.user.oc1..aabbalbbaa1112233aabb...');
+  jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaalbbbb1112233aaaab...');
+  jo.put('compartment_ocid','ocid1.compartment.oc1..ababalabab1112233ababa...');
+  jo.put('private_key','AAAaaaBBB11112222333...AAA111AAABBB222aaa1a...');
+  jo.put('fingerprint','01:1a:a1:aa:12:a1:12:1a:ab:12:01:ab:...');
+  dbms_vector.create_credential(
+    credential_name   => 'GENAI_CRED',
+    params            => json(jo.to_string));
+end;
+/
+
+```
 
 ## Conclusion
 
-Downloading files from Oracle Object Storage into Oracle Autonomous Database using DBMS_CLOUD.GET_OBJECTS is a straightforward process. By following the steps outlined in this guide, you can efficiently manage your data transfers within the Oracle Cloud ecosystem. Once your files are downloaded, you can further extend their utility by uploading ONNX models into your database, enabling advanced data processing and machine learning tasks.
+Downloading files from Oracle Object Storage into Oracle Autonomous Database using DBMS_CLOUD.GET_OBJECTS is a straightforward process. Once your files are downloaded, you can upload the files, in this case the ONNX models, into Autonomous Database to embed the source data to vectors.

@@ -35,7 +35,7 @@ Let's take a look at what PLSQL procedure is storing the document into our objec
 
 Open the Apex Page Designer and select Page 12. 
 
-As soon as we load our document this PLSQL Procedure is triggered to ensure the process is complete. In this image we our using a few of our credentials and passing our file to the storage. 
+As soon as we load our document this PLSQL procedure is called to put the document in the object storage. In this image we are using our credentials and putting our file to the object storage. 
 ![alt text](images/object.png)
 
 ``` sql
@@ -64,10 +64,11 @@ BEGIN
 END;
 ```
 
-Let's take a look at what PLSQL procedure is storing the file into the table that is being vectorized. 
+Let's take a look at the PLSQL code for storing the file into the database table.  
 
-Click on Apex The Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage. 
-We store the file in a table called "My_Books" within our database. The chunking and embedding triggers are done within the procedure.
+Click on Apex Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage. 
+We store the file in a table called "My_Books" within our database. As files are stored, a trigger converts the file to text, chunks the text, and creates vector embeddings for the chunks.
+
 ![alt text](images/admin.png)
 ```sql
 INSERT INTO ADMIN.MY_BOOKS
@@ -116,14 +117,14 @@ BEGIN
 END;
 ```
 
-Explanation of PL/SQL Code:
+Explanation of PL/SQL code:
 
-DECLARE: This section is used to declare the variable result_clob, which will hold the CLOB data type result.
+DECLARE: This section is used to declare the variable result_clob, which will hold the response from the LLM.
+
 BEGIN: Marks the beginning of the executable part of the PL/SQL block.
-result_clob := admin.generate_text_response2(,,7);: Calls the generate_text_response2 function from the admin package. It passes three parameters:
-1. :P3_QUESTION: The question entered by the user. 
-2. :P3_ID: The ID of the document selected by the user.
-3. 7: A static parameter
-:= CASE WHEN
-IS NULL THEN NULL ELSE result_clob END;: Assigns the result of the function to the page item :P3_ANSWER. If the question is null, the answer will also be null; otherwise, it assigns the result of the function call.
-END: Marks the end of the PL/SQL block.
+result_clob := admin.generate_text_response2(:P3_QUESTION,:P3_ID,7) calls the generate_text_response2 function. It passes three parameters:
+1. :P3_QUESTION - The question entered by the user. 
+2. :P3_ID - The ID of the document selected by the user.
+3. :7 - A static parameter to return the top 7 chunks
+
+Finally assign the result of the function to the Apex page item :P3_ANSWER. If the question is null, the answer will also be null; otherwise, it assigns the result of the function call.
