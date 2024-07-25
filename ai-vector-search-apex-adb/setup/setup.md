@@ -38,8 +38,12 @@ With these objectives in mind, you will be well-equipped to manage and utilize O
 
 ### Step 2: Create the Group and ProdObjectManagementPolicies Policy
 
-1. Click the hamburger icon (≡), select Identity, and click Groups.
-2. Click Create Group.
+1. Click the hamburger icon (≡), select Identity
+![alt text](images/identity.png)
+Click Domain, Create a Domain. Fill out the information and confirm changes. 
+![alt text](images/domaindetails.png)
+2. After you create the domain, click on it. Click Create Group.
+![alt text](images/groups.png)
 3. Enter the following information in the corresponding fields:
     1. **Name**: ProdObjectManagers
     2. **Description**: Users who can manage objects in compartment PROD
