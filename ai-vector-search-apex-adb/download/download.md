@@ -34,20 +34,18 @@ First, create a credential object in your Oracle Autonomous Database that will s
 Next head back to your ADB overview page we just created, and select Database Actions and then SQL. This will open up an editor for us to perform statements.
 ![alt text](images/sqldev.png)
 
-Copy this statement and follow the instructions to replace the necessary credentials we have created.
+Copy this statement and replace with your user and password for Oracle Cloud.
 
 ```sql
 BEGIN
   DBMS_CLOUD.CREATE_CREDENTIAL(
     credential_name => 'OBJ_STORE_CRED',
-    username => '<your_object_storage_access_key>',
-    password => '<your_object_storage_secret_key>'
+    username => '<your_oci_user_name>',
+    password => '<your_oci_passwordy>'
   );
 END;
 /
 ```
-
-Replace `<your_object_storage_access_key>` and `<your_object_storage_secret_key>` with your actual Oracle Object Storage access key and secret key.
 
 ### 2. Grant Necessary Privileges
 
@@ -64,11 +62,16 @@ Replace `<your_database_user>` with your actual database user.
 Now, use the DBMS_CLOUD.GET_OBJECTS procedure to download the ONNX embedding model files from your Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
 ```sql
+CREATE DIRECTORY staging AS 'stage';
+```
+
+Make sure your url looks similar to this
+```sql
 BEGIN
-  DBMS_CLOUD.GET_OBJECTS(
+  DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.<region>.oraclecloud.com/n/<namespace>/b/<bucket>/o/<file>',
-    directory_name => 'DATA_PUMP_DIR',
+    object_uri => 'https://cloud.oracle.com/object-storage/buckets/<yourtenancy>/<your bucket name>/objects?region=<us-phoenix-1>',
+    directory_name => 'staging',
     file_name => '<file_name_in_adb>'
   );
 END;
@@ -82,15 +85,15 @@ Replace the placeholders as follows:
 - `<file>`: The name of the file in your Object Storage bucket.
 - `<file_name_in_adb>`: The name you want to give the file in Oracle ADB.
 
-For example, if your object URI is https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/model.onnx, and you want to download it to ADB, the command will look like this:
+For example, if your object URI is 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/HP5q2dfCzDstMprLYpR5x0LbhJb_SyxGNgHj985fd8GELKb9j2aLcEwUUpKmV7zW/n/oraclepartnersas/b/onnx/o/tinybert.onnx', and you want to download it to ADB, the command will look like this:
 
 ```sql
 BEGIN
-  DBMS_CLOUD.GET_OBJECTS(
+  DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/my_namespace/b/my_bucket/o/model.onnx',
-    directory_name => 'DATA_PUMP_DIR',
-    file_name => 'model.onnx'
+    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/HP5q2dfCzDstMprLYpR5x0LbhJb_SyxGNgHj985fd8GELKb9j2aLcEwUUpKmV7zW/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
+    directory_name => 'staging',
+    file_name => 'tinybert.onnx'
   );
 END;
 /
@@ -101,7 +104,7 @@ END;
 After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
 
 ```sql
-SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('DATA_PUMP_DIR'));
+SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 ```
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
@@ -113,14 +116,14 @@ Once the ONNX files are downloaded and verified, you can load them into the data
 ```sql
 BEGIN
   DBMS_VECTOR.LOAD_ONNX_MODEL(
-    'DATA_PUMP_DIR',
+    'staging',
     'tinybert.onnx',
     'TINYBERT_MODEL',
     json('{"function":"embedding","embeddingOutput":"embedding","input":{"input":["DATA"]}}')
   );
 
   DBMS_VECTOR.LOAD_ONNX_MODEL(
-    'DATA_PUMP_DIR',
+    'staging',
     'all-MiniLM-L6-v2.onnx',
     'ALL_MINILM_L6V2MODEL',
     json('{"function":"embedding","input":{"input":["DATA"]}}')
@@ -136,7 +139,7 @@ To verify the model exists in database run the following statement.
 
 ```sql
     SELECT MODEL_NAME, MINING_FUNCTION,
-    ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models 
+    ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models; 
     
 ```
 
