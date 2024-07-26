@@ -153,7 +153,6 @@ Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI).
 declare
   jo json_object_t;
 begin
-  dbms_vector.drop_credential('GENAI_CRED');
   jo := json_object_t();
   jo.put('user_ocid','ocid1.user.oc1..aabbalbbaa1112233aabb...');
   jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaalbbbb1112233aaaab...');

@@ -28,6 +28,7 @@ By following this guide, you will:
     - **OCI Public Key Fingerprint**
 4. Click to confirm the changes.
 ![alt text](images/editociaccessconfig.png)
+5. Next you want to go ahead and open up Workspace utilities. Click on Remote Servers, add a remote server, insert your oci object storage pre auth url we copied earlier into the endpoint url when creating this remote server. 
 
 ### Step 2: Set Up REST Data Sources
 
@@ -49,7 +50,7 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 ![alt text](/images/urlpathprefix.png)
 4. Open the same editing page again, copy the static identifier, and paste it into the name of this REST data source. The name should reflect what the static identifier has. Click **Save Changes**.
 5. The rest of the URL: `/b/apex_file_storage/o/` will be used to plug into the URL path prefix underneath the base URL.
-6. Ensure the URL format cuts off at the tenancy point.
+6. Ensure the URL format cuts off at the tenancy point. Make sure to change the remote server to the server we just created. You want to do this for all three rest data sources as well. 
 7. Repeat the same steps for the other two sources `list_buckets` and `list_objects_in_bucket`.
 8. Save changes.
 
