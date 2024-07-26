@@ -70,7 +70,7 @@ Make sure your url looks similar to this
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://cloud.oracle.com/object-storage/buckets/<yourtenancy>/<your bucket name>/objects?region=<us-phoenix-1>',
+    object_uri => 'https://cloud.oracle.com/object-storage/buckets/yourtenancy/your_bucket_name/objects?region=us-phoenix-1',
     directory_name => 'staging',
     file_name => '<file_name_in_adb>'
   );
