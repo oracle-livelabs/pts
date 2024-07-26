@@ -167,6 +167,7 @@ end;
 
 ```
 
+
 ## Conclusion
 
 Downloading files from Oracle Object Storage into Oracle Autonomous Database using DBMS_CLOUD.GET_OBJECTS is a straightforward process. Once your files are downloaded, you can upload the files, in this case the ONNX models, into Autonomous Database to embed the source data to vectors.

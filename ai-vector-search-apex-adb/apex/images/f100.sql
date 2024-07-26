@@ -39,7 +39,7 @@ prompt APPLICATION 100 - Vector Apex
 -- Application Export:
 --   Application:     100
 --   Name:            Vector Apex
---   Date and Time:   15:15 Monday July 1, 2024
+--   Date and Time:   16:15 Friday July 26, 2024
 --   Exported By:     VECTOR
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -149,7 +149,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_string_06=>'BUCKET_PAR'
 ,p_substitution_value_06=>'https://oraclepartnersas.objectstorage.us-phoenix-1.oci.customer-oci.com/p/DS2cONQtSj6rW46Fs9ZXmMn5sZKeQ3J0uJlC2Cz8t-Rs2ec9gN6T1wBTXcrP9wcM/n/oraclepartnersas/b/apex_file_storage/o/'
 ,p_last_updated_by=>'VECTOR'
-,p_last_upd_yyyymmddhh24miss=>'20240619080932'
+,p_last_upd_yyyymmddhh24miss=>'20240726161231'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_print_server_type=>'INSTANCE'
@@ -182,18 +182,6 @@ wwv_flow_imp_shared.create_user_interface(
 );
 end;
 /
-prompt --workspace/credentials/apex_oci_storage_credential
-begin
-wwv_imp_workspace.create_credential(
- p_id=>wwv_flow_imp.id(15475984724463744)
-,p_name=>'APEX OCI STORAGE CREDENTIAL'
-,p_static_id=>'APEX_OCI_STORAGE_CREDENTIAL'
-,p_authentication_type=>'OCI'
-,p_namespace=>'ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77cd45int7tt7fo27tuejsfqbybzrq'
-,p_prompt_on_install=>true
-);
-end;
-/
 prompt --workspace/credentials/oci_api_access
 begin
 wwv_imp_workspace.create_credential(
@@ -203,22 +191,6 @@ wwv_imp_workspace.create_credential(
 ,p_authentication_type=>'OCI'
 ,p_namespace=>'ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77cd45int7tt7fo27tuejsfqbybzrq'
 ,p_prompt_on_install=>true
-);
-end;
-/
-prompt --workspace/remote_servers/oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u
-begin
-wwv_imp_workspace.create_remote_server(
- p_id=>wwv_flow_imp.id(15495658104837321)
-,p_name=>'oraclepartnersas-objectstorage-us-phoenix-1-oci-customer-oci-com-p-gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz-nba8inbjdh2uwoia1-4f0u'
-,p_static_id=>'oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'
-,p_base_url=>nvl(wwv_flow_application_install.get_remote_server_base_url('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'),'https://oraclepartnersas.objectstorage.us-phoenix-1.oci.customer-oci.com/p/gwR2qNSfLW0HNzL0y_lLZLTMUw1XEAJolHlEA6oPZ-NBa8INBjdh2UWOia1-4F0u/')
-,p_https_host=>nvl(wwv_flow_application_install.get_remote_server_https_host('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'),'')
-,p_server_type=>'WEB_SERVICE'
-,p_ords_timezone=>nvl(wwv_flow_application_install.get_remote_server_ords_tz('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'),'')
-,p_remote_sql_default_schema=>nvl(wwv_flow_application_install.get_remote_server_default_db('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'),'')
-,p_mysql_sql_modes=>nvl(wwv_flow_application_install.get_remote_server_sql_mode('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_gwr2qnsflw0hnzl0y_llzltmuw1xeajolhlea6opz_nba8inbjdh2uwoia1_4f0u'),'')
-,p_prompt_on_install=>false
 );
 end;
 /
@@ -238,128 +210,19 @@ wwv_imp_workspace.create_remote_server(
 );
 end;
 /
-prompt --workspace/remote_servers/oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm
+prompt --workspace/remote_servers/remote_server
 begin
 wwv_imp_workspace.create_remote_server(
  p_id=>wwv_flow_imp.id(23479565215423496)
-,p_name=>'oraclepartnersas-objectstorage-us-phoenix-1-oci-customer-oci-com-p-ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t-rs2ec9gn6t1wbtxcrp9wcm'
-,p_static_id=>'oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'
-,p_base_url=>nvl(wwv_flow_application_install.get_remote_server_base_url('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'),'https://oraclepartnersas.objectstorage.us-phoenix-1.oci.customer-oci.com/p/DS2cONQtSj6rW46Fs9ZXmMn5sZKeQ3J0uJlC2Cz8t-Rs2ec9gN6T1wBTXcrP9wcM/')
-,p_https_host=>nvl(wwv_flow_application_install.get_remote_server_https_host('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'),'')
+,p_name=>'remote server'
+,p_static_id=>'remote_server'
+,p_base_url=>nvl(wwv_flow_application_install.get_remote_server_base_url('remote_server'),'https://oraclepartnersas.objectstorage.us-phoenix-1.oci.customer-oci.com/p/DS2cONQtSj6rW46Fs9ZXmMn5sZKeQ3J0uJlC2Cz8t-Rs2ec9gN6T1wBTXcrP9wcM/')
+,p_https_host=>nvl(wwv_flow_application_install.get_remote_server_https_host('remote_server'),'')
 ,p_server_type=>'WEB_SERVICE'
-,p_ords_timezone=>nvl(wwv_flow_application_install.get_remote_server_ords_tz('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'),'')
-,p_remote_sql_default_schema=>nvl(wwv_flow_application_install.get_remote_server_default_db('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'),'')
-,p_mysql_sql_modes=>nvl(wwv_flow_application_install.get_remote_server_sql_mode('oraclepartnersas_objectstorage_us_phoenix_1_oci_customer_oci_com_p_ds2conqtsj6rw46fs9zxmmn5szkeq3j0ujlc2cz8t_rs2ec9gn6t1wbtxcrp9wcm'),'')
+,p_ords_timezone=>nvl(wwv_flow_application_install.get_remote_server_ords_tz('remote_server'),'')
+,p_remote_sql_default_schema=>nvl(wwv_flow_application_install.get_remote_server_default_db('remote_server'),'')
+,p_mysql_sql_modes=>nvl(wwv_flow_application_install.get_remote_server_sql_mode('remote_server'),'')
 ,p_prompt_on_install=>false
-);
-end;
-/
-prompt --application/shared_components/data_profiles/bucket
-begin
-wwv_flow_imp_shared.create_data_profile(
- p_id=>wwv_flow_imp.id(23112880097945086)
-,p_name=>'Bucket'
-,p_format=>'JSON'
-,p_row_selector=>'objects'
-,p_use_raw_json_selectors=>false
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23113065791945086)
-,p_data_profile_id=>wwv_flow_imp.id(23112880097945086)
-,p_name=>'NAME'
-,p_sequence=>1
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'name'
-);
-end;
-/
-prompt --application/shared_components/data_profiles/bucket_v2
-begin
-wwv_flow_imp_shared.create_data_profile(
- p_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'Bucket v2'
-,p_format=>'JSON'
-,p_row_selector=>'objects'
-,p_use_raw_json_selectors=>false
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23119618952983577)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'MD5'
-,p_sequence=>1
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'md5'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23119913053983577)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'ETAG'
-,p_sequence=>2
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'etag'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23120193803983578)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'NAME'
-,p_sequence=>3
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'name'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23120556487983578)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'SIZE_'
-,p_sequence=>4
-,p_column_type=>'DATA'
-,p_data_type=>'NUMBER'
-,p_has_time_zone=>false
-,p_selector=>'size'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23120818225983578)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'STORAGETIER'
-,p_sequence=>5
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'storageTier'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23121137521983578)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'TIMECREATED'
-,p_sequence=>6
-,p_column_type=>'DATA'
-,p_data_type=>'TIMESTAMP WITH TIME ZONE'
-,p_format_mask=>'YYYY"-"MM"-"DD"T"HH24":"MI:SS.FF9TZR'
-,p_has_time_zone=>true
-,p_selector=>'timeCreated'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(23121461319983578)
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_name=>'TIMEMODIFIED'
-,p_sequence=>7
-,p_column_type=>'DATA'
-,p_data_type=>'TIMESTAMP WITH TIME ZONE'
-,p_format_mask=>'YYYY"-"MM"-"DD"T"HH24":"MI:SS.FF9TZR'
-,p_has_time_zone=>true
-,p_selector=>'timeModified'
 );
 end;
 /
@@ -439,61 +302,6 @@ wwv_flow_imp_shared.create_data_profile_col(
 );
 end;
 /
-prompt --application/shared_components/data_profiles/list_objects_sync
-begin
-wwv_flow_imp_shared.create_data_profile(
- p_id=>wwv_flow_imp.id(30893986226404786)
-,p_name=>'list_objects_sync'
-,p_format=>'JSON'
-,p_has_header_row=>false
-,p_row_selector=>'objects'
-,p_use_raw_json_selectors=>false
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(30894095967404793)
-,p_data_profile_id=>wwv_flow_imp.id(30893986226404786)
-,p_name=>'MD5'
-,p_sequence=>1
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'md5'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(30894471118404794)
-,p_data_profile_id=>wwv_flow_imp.id(30893986226404786)
-,p_name=>'NAME'
-,p_sequence=>2
-,p_column_type=>'DATA'
-,p_data_type=>'VARCHAR2'
-,p_max_length=>32767
-,p_has_time_zone=>false
-,p_selector=>'name'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(30894730416404794)
-,p_data_profile_id=>wwv_flow_imp.id(30893986226404786)
-,p_name=>'SIZE_'
-,p_sequence=>3
-,p_column_type=>'DATA'
-,p_data_type=>'NUMBER'
-,p_has_time_zone=>false
-,p_selector=>'size'
-);
-wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(30895082635404795)
-,p_data_profile_id=>wwv_flow_imp.id(30893986226404786)
-,p_name=>'TIMECREATED'
-,p_sequence=>4
-,p_column_type=>'DATA'
-,p_data_type=>'TIMESTAMP WITH TIME ZONE'
-,p_format_mask=>'YYYY"-"MM"-"DD"T"HH24":"MI:SS.FF9TZR'
-,p_has_time_zone=>true
-,p_selector=>'timeCreated'
-);
-end;
-/
 prompt --application/shared_components/data_profiles/bucketv3
 begin
 wwv_flow_imp_shared.create_data_profile(
@@ -513,62 +321,6 @@ wwv_flow_imp_shared.create_data_profile_col(
 ,p_max_length=>32767
 ,p_has_time_zone=>false
 ,p_selector=>'name'
-);
-end;
-/
-prompt --application/shared_components/web_sources/bucket
-begin
-wwv_flow_imp_shared.create_web_source_module(
- p_id=>wwv_flow_imp.id(23113314949945087)
-,p_name=>'Bucket'
-,p_static_id=>'bucket'
-,p_web_source_type=>'NATIVE_OCI'
-,p_data_profile_id=>wwv_flow_imp.id(23112880097945086)
-,p_remote_server_id=>wwv_flow_imp.id(15495658104837321)
-,p_url_path_prefix=>'/n/oraclepartnersas/b/vector/o/'
-,p_credential_id=>wwv_flow_imp.id(15475984724463744)
-);
-wwv_flow_imp_shared.create_web_source_operation(
- p_id=>wwv_flow_imp.id(23113543513945087)
-,p_web_src_module_id=>wwv_flow_imp.id(23113314949945087)
-,p_operation=>'GET'
-,p_database_operation=>'FETCH_COLLECTION'
-,p_url_pattern=>'.'
-,p_force_error_for_http_404=>false
-,p_allow_fetch_all_rows=>false
-);
-end;
-/
-prompt --application/shared_components/web_sources/bucket_v2
-begin
-wwv_flow_imp_shared.create_web_source_module(
- p_id=>wwv_flow_imp.id(23121773096983579)
-,p_name=>'Bucket v2'
-,p_static_id=>'bucket_v2'
-,p_web_source_type=>'NATIVE_OCI'
-,p_data_profile_id=>wwv_flow_imp.id(23119473716983577)
-,p_remote_server_id=>wwv_flow_imp.id(15495658104837321)
-,p_url_path_prefix=>'n/oraclepartnersas/b/vector/o/'
-,p_credential_id=>wwv_flow_imp.id(15475984724463744)
-);
-wwv_flow_imp_shared.create_web_source_param(
- p_id=>wwv_flow_imp.id(23122386347983579)
-,p_web_src_module_id=>wwv_flow_imp.id(23121773096983579)
-,p_name=>'fields'
-,p_param_type=>'QUERY_STRING'
-,p_data_type=>'VARCHAR2'
-,p_is_required=>false
-,p_value=>'name,size,eTag,timeCreated,md5,timeModified,storageTier,archivalState'
-,p_is_static=>true
-);
-wwv_flow_imp_shared.create_web_source_operation(
- p_id=>wwv_flow_imp.id(23121889884983579)
-,p_web_src_module_id=>wwv_flow_imp.id(23121773096983579)
-,p_operation=>'GET'
-,p_database_operation=>'FETCH_COLLECTION'
-,p_url_pattern=>'.'
-,p_force_error_for_http_404=>false
-,p_allow_fetch_all_rows=>false
 );
 end;
 /
@@ -639,49 +391,6 @@ wwv_flow_imp_shared.create_web_source_param(
 wwv_flow_imp_shared.create_web_source_operation(
  p_id=>wwv_flow_imp.id(28907502676968277)
 ,p_web_src_module_id=>wwv_flow_imp.id(28907302103968276)
-,p_operation=>'GET'
-,p_database_operation=>'FETCH_COLLECTION'
-,p_url_pattern=>'.'
-,p_force_error_for_http_404=>false
-,p_allow_fetch_all_rows=>false
-);
-end;
-/
-prompt --application/shared_components/web_sources/list_objects_sync
-begin
-wwv_flow_imp_shared.create_web_source_module(
- p_id=>wwv_flow_imp.id(30895375224404796)
-,p_name=>'list_objects_sync'
-,p_static_id=>'list_objects_sync'
-,p_web_source_type=>'NATIVE_OCI'
-,p_data_profile_id=>wwv_flow_imp.id(30893986226404786)
-,p_remote_server_id=>wwv_flow_imp.id(21286711866833644)
-,p_url_path_prefix=>'n/oraclepartnersas/b/apex_file_storage/o/'
-,p_credential_id=>wwv_flow_imp.id(21281955171465126)
-,p_sync_max_http_requests=>1000
-);
-wwv_flow_imp_shared.create_web_source_param(
- p_id=>wwv_flow_imp.id(30895949923404809)
-,p_web_src_module_id=>wwv_flow_imp.id(30895375224404796)
-,p_name=>'bucket_name'
-,p_param_type=>'URL_PATTERN'
-,p_data_type=>'VARCHAR2'
-,p_is_required=>false
-,p_value=>'apex_file_storage'
-);
-wwv_flow_imp_shared.create_web_source_param(
- p_id=>wwv_flow_imp.id(30896312145404810)
-,p_web_src_module_id=>wwv_flow_imp.id(30895375224404796)
-,p_name=>'fields'
-,p_param_type=>'QUERY_STRING'
-,p_data_type=>'VARCHAR2'
-,p_is_required=>false
-,p_value=>'name,size,timeCreated,md5'
-,p_is_static=>true
-);
-wwv_flow_imp_shared.create_web_source_operation(
- p_id=>wwv_flow_imp.id(30895493094404804)
-,p_web_src_module_id=>wwv_flow_imp.id(30895375224404796)
 ,p_operation=>'GET'
 ,p_database_operation=>'FETCH_COLLECTION'
 ,p_url_pattern=>'.'

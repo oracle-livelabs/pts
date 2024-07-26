@@ -28,7 +28,13 @@ By following this guide, you will:
     - **OCI Public Key Fingerprint**
 4. Click to confirm the changes.
 ![alt text](images/editociaccessconfig.png)
-5. Next you want to go ahead and open up Workspace utilities. Click on Remote Servers, add a remote server, insert your oci object storage pre auth url we copied earlier into the endpoint url when creating this remote server. 
+
+
+### Step 1.2 Set Up Remote Server
+
+1. Open Workspace Utilities in the Apex Application.
+2. Click On Remote Servers
+3. Click on the "remote server" and edit the base url to reflect your Object storage preauth url. 
 
 ### Step 2: Set Up REST Data Sources
 
@@ -48,12 +54,12 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 2. Edit the remote server and plug in the pre-authenticated request URL.
 3. Grab the pre-authenticated request URL from your bucket and plug it into the box where it says endpoint URL. Ensure it is in the format `https://objectstorage.us-ashburn-1.oraclecloud.com/p/-j_vl5Rra_FHPSt1Qx6lVjOdguVRDOjRdqZI/n/oraclepartnersas`. Make sure the URL cuts off at the point where it mentions your tenancy (e.g., `oraclepartnersas`). Click **Save Changes**.
 ![alt text](/images/urlpathprefix.png)
-4. Open the same editing page again, copy the static identifier, and paste it into the name of this REST data source. The name should reflect what the static identifier has. Click **Save Changes**.
+4.  Click **Save Changes**.
 5. The rest of the URL: `/b/apex_file_storage/o/` will be used to plug into the URL path prefix underneath the base URL.
 6. Ensure the URL format cuts off at the tenancy point. Make sure to change the remote server to the server we just created. You want to do this for all three rest data sources as well. 
 7. Repeat the same steps for the other two sources `list_buckets` and `list_objects_in_bucket`.
 8. Save changes.
-
+Make sure you 
 #### For `list_buckets`:
 
 1. Edit the `list_buckets` REST data source.
@@ -77,6 +83,17 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 3. Edit the value for `BUCKET_PAR` to replace the existing value with the PAR endpoint from your bucket.
 4. Click **Apply Changes**.
 ![alt text](images/editbucketpar.png)
+
+Go Back to your ADB that we just created. Open up the SQL Developer under Database actions. Copy and paste this statement. Make sure you replace your wksp_(plug in your workspace name from apex) tag with the respective workspace name you designated for this apex app earlier
+
+```sql
+GRANT ALL ON MY_BOOKS TO WKSP_AIDEMO;
+```
+
+```SQL
+GRANT EXECUTE ON GENERATE_TEXT_RESPONSE2 TO WKSP_AIDEMO;
+```
+
 
 ## Conclusion
 
