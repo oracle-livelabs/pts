@@ -93,8 +93,9 @@ GRANT ALL ON MY_BOOKS TO WKSP_AIDEMO;
 ```SQL
 GRANT EXECUTE ON GENERATE_TEXT_RESPONSE2 TO WKSP_AIDEMO;
 ```
-
-
+```SQL
+SQL> EXEC DBMS_CLOUD.CREATE_CREDENTIAL('OPENAI_CRED', 'OPENAI', '<your api token>');
+```
 ## Conclusion
 
 By completing these steps, you have successfully set up your APEX application, configured the necessary web credentials, set up REST data sources, and updated the application definition. This ensures that your application is fully integrated with Oracle Cloud Infrastructure and ready for further development and deployment.
