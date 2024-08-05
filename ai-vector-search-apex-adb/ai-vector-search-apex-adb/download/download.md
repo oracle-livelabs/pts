@@ -26,13 +26,12 @@ Before we dive into the procedure, make sure you have the following:
 
 ## Task 1: Create Credential Object in Oracle ADB
 
-First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage. Please set up your [secret keys](https://medium.com/@bhenndricks/secure-access-to-oracle-buckets-in-object-storage-a-step-by-step-guide-32f3242f35e2) 
-
+1. First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage. 
 
 Next head back to your ADB console, and select Database Actions and then SQL. Log in as ADMIN. This will open up an editor for us to perform statements.
 ![alt text](images/sqldev.png)
 
-Copy this statement and replace with your user and password for Oracle Cloud.
+Copy this statement and replace with your username and password for Oracle Cloud.
 
 ```sql
 <copy>
@@ -40,12 +39,13 @@ BEGIN
   DBMS_CLOUD.CREATE_CREDENTIAL(
     credential_name => 'OBJ_STORE_CRED',
     username => '<your_oci_user_name>',
-    password => '<your_oci_passwordy>'
+    password => '<your_oci_password>'
   );
 END;
 /
 </copy>
 ```
+2. Create your API key.  Go to your OCI user profile and on the resources on the left, create API key.  Save your private key, and copy and save your OCID, and fingerprint for later.
 
 ## Task 2: Grant Necessary Privileges
 
@@ -74,7 +74,9 @@ Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI).
 
 ## OCI GenAI Service
 
-For OCI GenAI Service, run the following procedure. Important Note: Put the private key all on a single line.
+For OCI GenAI Service, run the following procedure. 
+Important Note: Open your private key and copy the private key all onto a single line.
+
 ```sql
 <copy>
 declare
@@ -92,6 +94,23 @@ begin
 end;
 /
 </copy>
+```
+For example:
+```
+declare
+ jo json_object_t;
+begin
+ jo := json_object_t();
+ jo.put('user_ocid','ocid1.user.oc1..aaaaaaaawfpzqgzsrvb4mh6hcld2hrckadyae5y...cvza');
+ jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77...zrq');
+ jo.put('compartment_ocid','ocid1.compartment.oc1..aaaaaaaaqdp7dblf6tb3gpzbuknvgfgkedtio...yfa');
+ jo.put('private_key','MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCP1QXxJxzVj4SXozdfrfIr...A4Iw=');
+ jo.put('fingerprint','e3:e5:ab:61:99:51:29:1f:60:2a:ad...5b:a5');
+ dbms_vector.create_credential(
+ credential_name => 'GENAI_CRED',
+ params => json(jo.to_string));
+end;
+/
 ```
 
 ## OpenAI
@@ -115,7 +134,7 @@ end;
 
 ## Task 4: Download ONNX embedding models Using DBMS\_CLOUD.GET\_OBJECTS
 
-Now log in as `<your_database_user>`, use the DBMS\_CLOUD.GET\_OBJECTS procedure to download the ONNX embedding model files from your Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
+Now log in as VECTOR or `<your_database_user>`, use the DBMS\_CLOUD.GET\_OBJECTS procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
 Run to create the staging directory.
 
@@ -125,12 +144,14 @@ CREATE DIRECTORY staging AS 'stage';
 </copy>
 ```
 
+Run to get the onnx models.
+
 ```sql
 <copy>
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.<region>.oraclecloud.com/n/<namespace>/b/<bucket>/o/<file>',
+    object_uri => '<URL to Pre-authenticated Requests>',
     directory_name => 'staging',
     file_name => '<file_name_in_adb>'
   );
@@ -139,14 +160,21 @@ END;
 </copy>
 ```
 
-For example, if your object URI is 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/HP5q2dfCzDstMprLYpR5x0LbhJb_SyxGNgHj985fd8GELKb9j2aLcEwUUpKmV7zW/n/oraclepartnersas/b/onnx/o/tinybert.onnx', and you want to download it to ADB, the command will look like this:
+URL to all-MiniLM-L6-v2.onnx is:
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
+
+URL to tinybert.onnx is:
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx
+
+
+For example, to get tinybert.onnx and download it to ADB, the command will look like this:
 
 ```sql
 <copy>
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/HP5q2dfCzDstMprLYpR5x0LbhJb_SyxGNgHj985fd8GELKb9j2aLcEwUUpKmV7zW/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
+    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
