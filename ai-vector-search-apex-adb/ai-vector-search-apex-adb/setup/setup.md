@@ -33,6 +33,24 @@ By completing this lab, you will achieve the following objectives:
 6. Save the compartment OCID for later use.
    ![compartment save](/images/compartmentsave.png)
 
+### Task 2: Create the Group and Policy
+ m
+1. Click the hamburger icon (≡), select Identity, and click Groups.
+2. Click Create Group.
+3. Enter the following information in the corresponding fields:
+    1. **Name**: ProdObjectManagers
+    2. **Description**: Users who can manage objects in compartment PROD
+4. Add the users that you want to the group as well you should see it listed in the configuration box.
+5. Click Create to complete the process.
+
+6. Create the ProdObjectManagementPolicies policy in the root compartment:
+7. Click the hamburger icon (≡), Click Identity & Security, and then click Policies.
+   ![Policies](/images/oci.png)
+8. Enter the following information in the corresponding fields:
+    - **Name**: ProdObjectManagementPolicies
+    - **Description**: Policies for users to manage objects in compartment PROD
+    - **Policy Versioning**: Keep Policy Current
+
 The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets. 
 
 9. Add the following statements to allow the respective policy actions:
@@ -41,7 +59,7 @@ The members of the ProdObjectManagers group will require the ability to list the
 10. Click Create to complete the process.
     ![Policies](/images/policyconfiguration.png)
 
-### Task 2: Create policy to enable access to OCI GenAI
+### Task 3: Create policy to enable access to OCI GenAI
 
 Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI). The GenAI service provides access to several LLMs that you can pick from.
 
@@ -60,7 +78,7 @@ Description: Public Gen AI Policy
 
 Compartment: select your own compartment
 
-Policy: allow user to manage generative-ai-family in compartment \<your compartment>
+Policy: allow any-user to manage generative-ai-family in compartment \<your compartment>
 
 3. Click Create.
 
@@ -68,14 +86,14 @@ Policy: allow user to manage generative-ai-family in compartment \<your compartm
 
 Note: This policy allows any database in the specified compartment to access OCI Generative AI service. In a production environment, ensure your policy's scope is minimally inclusive.
 
-### Task 3: Save User OCID and Create API Keys 
+### Task 4: Save User OCID and Create API Keys 
 
 1. Click the profile icon in the top right of your OCI page, and click My Profile.
     ![Users](/images/userprofile.png)
 2. Save the user OCID for later use.
     ![alt text](/images/ocidsave.png)
 
-### Task 4: Create OCI API Key
+### Task 5: Create OCI API Key
 
 1. Select API KEYS under the resources section and add api key.
     ![alt text](images/addapikey.png)
@@ -87,7 +105,7 @@ Note: This policy allows any database in the specified compartment to access OCI
 5. Go ahead and close the tab after you have saved the contents. 
 
 
-### Task 5: Grab Your Parent Tenancy OCID
+### Task 6: Grab Your Parent Tenancy OCID
 
 1. Type tenancies in the OCI search bar, click the result, and then the tenancy name.
 ![alt text](images/tenancysearch.png)
@@ -95,7 +113,7 @@ Note: This policy allows any database in the specified compartment to access OCI
 ![alt text](images/copytenancyid.png)
 
 
-### Task 6: Create a Bucket
+### Task 7: Create a Bucket
 
 In Oracle Object Storage, a bucket is a container for storing objects. To access a bucket through the Oracle Cloud Infrastructure REST APIs, complete the following identity management tasks using the Oracle Cloud Infrastructure console and an account that has administrative rights within the tenancy (the root compartment).
 
@@ -112,7 +130,7 @@ In Oracle Object Storage, a bucket is a container for storing objects. To access
 1. Click Create Bucket to complete the process.
 2. To prepare for the successful creation and discovery of the WSM data profile later, upload a dummy file to the `apex_file_storage` bucket now using the Oracle Cloud Infrastructure console.
 
-### Task 7: Create a Pre-Authenticated Request (PAR)
+### Task 8: Create a Pre-Authenticated Request (PAR)
 
 1. Click Create Pre-Auth Request on the resources section from the newly created bucket.
 ![alt text](images/createpreauth.png)
