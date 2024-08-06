@@ -45,6 +45,7 @@ END;
 /
 </copy>
 ```
+
 2. Create your API key.  Go to your OCI user profile and on the resources on the left, create API key.  Save your private key, and copy and save your OCID, and fingerprint for later.
 
 ## Task 2: Grant Necessary Privileges
