@@ -45,7 +45,6 @@ END;
 /
 </copy>
 ```
-
 2. Create your API key.  Go to your OCI user profile and on the resources on the left, create API key.  Save your private key, and copy and save your OCID, and fingerprint for later.
 
 ## Task 2: Grant Necessary Privileges
@@ -152,7 +151,7 @@ Run to get the onnx models.
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => '<URL to Pre-authenticated Requests>',
+    object_uri => '<URL to onnx model>',
     directory_name => 'staging',
     file_name => '<file_name_in_adb>'
   );
@@ -162,10 +161,10 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
 
 URL to tinybert.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/tinybert.onnx
 
 
 For example, to get tinybert.onnx and download it to ADB, the command will look like this:
@@ -175,7 +174,7 @@ For example, to get tinybert.onnx and download it to ADB, the command will look 
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
+    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
