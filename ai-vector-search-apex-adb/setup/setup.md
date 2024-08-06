@@ -60,7 +60,11 @@ Description: Public Gen AI Policy
 
 Compartment: select your own compartment
 
+```
+<copy>
 Policy: allow user to manage generative-ai-family in compartment \<your compartment>
+</copy>
+```
 
 3. Click Create.
 
