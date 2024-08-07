@@ -45,7 +45,6 @@ END;
 /
 </copy>
 ```
-2. Create your API key.  Go to your OCI user profile and on the resources on the left, create API key.  Save your private key, and copy and save your OCID, and fingerprint for later.
 
 ## Task 2: Grant Necessary Privileges
 
@@ -64,18 +63,13 @@ GRANT CREATE ANY DIRECTORY TO VECTOR;
 </copy>
 ```
 
-## Task 3: Create the credentials for ADB to access the LLM service
+## Task 3: Option 1 - Create the credential for ADB to access OCI GenAI Service
 
-To enable ADB to access an LLM service, API authentication is required. 
+### OCI GenAI Service
+The OCI GenAI service provides access to several LLMs including Cohere and Llama.  
+API authentication is required. 
 
-1. From ADB Database Actions SQL Worksheet, as ADMIN user enter and run the SQL below and replace the following with your ocid and key information you got from the previous lab. 
-
-Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI). The GenAI service provides access to several LLMs that you can pick from.  
-
-## OCI GenAI Service
-
-For OCI GenAI Service, run the following procedure. 
-Important Note: Open your private key and copy the private key all onto a single line.
+1. From ADB Database Actions SQL Worksheet, as ADMIN user enter and run the SQL below and replace the following with your ocid and key information you got from the previous lab. Important Note: Open your private key and copy the private key all onto a single line.
 
 ```sql
 <copy>
@@ -113,7 +107,9 @@ end;
 /
 ```
 
-## OpenAI
+## Task 3: Option 2 - Create the credential for ADB to access OpenAI
+
+### OpenAI
 
 For OpenAI, run the following procedure:
 ```sql
@@ -161,10 +157,11 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
+
 
 URL to tinybert.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/tinybert.onnx
+https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx
 
 
 For example, to get tinybert.onnx and download it to ADB, the command will look like this:
@@ -174,7 +171,7 @@ For example, to get tinybert.onnx and download it to ADB, the command will look 
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
+    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
