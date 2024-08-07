@@ -2,24 +2,36 @@
 
 ## Introduction
 
-Welcome to Lab 1, before we begin the AI RAG steps we will guide you through the steps needed for APEX to access Oracle Object Storage. The lab focuses on two main areas: Identity Setup and Bucket Setup. By the end of this lab, you will have a functional compartment and policies for managing your cloud resources, as well as a properly configured bucket for storing and managing your objects in OCI.
+Welcome to Lab 1. This workshop demonstrates how to set up Oracle Cloud Infrastructure (OCI) resources to enable Oracle APEX to access Oracle Object Storage. The lab focuses on two main areas: Identity Setup and Bucket Setup. By the end of this lab, you will have a functional compartment and policies for managing your cloud resources, as well as a properly configured bucket for storing and managing your objects in OCI.
 
 In the Identity Setup section, you will learn how to create compartments, manage policies, and set up users with the necessary permissions to interact with OCI resources. Following this, the Bucket Setup section will walk you through the process of creating and configuring a storage bucket, essential for managing data and objects in your cloud environment.
 
-Estimated Time: 10 minutes
+**Estimated Time:** 10 minutes
 
 ## Objectives
 
 By completing this lab, you will achieve the following objectives:
 
-- Create and configure a new compartment for managing resources in OCI.
-- Establish policies to control access and permissions within the compartment.
-- Set up a user specifically for API key management and interaction.
-- Configure API keys for secure access and operations.
-- Obtain necessary OCIDs for compartments, users, and tenancies.
-- Create and configure a storage bucket in OCI.
-- Generate a Pre-Authenticated Request (PAR) for secure bucket access.
+- **Create and configure a new compartment** for managing resources in OCI.
+  - This involves setting up a logical grouping for your resources to enhance management and organization.
+  
+- **Establish policies** to control access and permissions within the compartment.
+  - You will define and implement policies to manage who can access and perform actions on your OCI resources.
 
+- **Set up a user specifically for API key management and interaction.**
+  - This step ensures that there is a dedicated user with appropriate permissions for managing and using API keys securely.
+
+- **Configure API keys for secure access and operations.**
+  - You will generate and set up API keys to enable secure programmatic access to your OCI resources.
+
+- **Obtain necessary OCIDs** for compartments, users, and tenancies.
+  - OCIDs (Oracle Cloud Identifiers) are essential for uniquely identifying your resources in OCI.
+
+- **Create and configure a storage bucket in OCI.**
+  - This section guides you through setting up a storage bucket, a crucial component for storing and managing data in your cloud environment.
+
+- **Generate a Pre-Authenticated Request (PAR) for secure bucket access.**
+  - You will create a PAR to enable secure and temporary access to your storage bucket without requiring further authentication.
 
 ### Task 1: Create an OCI Compartment
 
