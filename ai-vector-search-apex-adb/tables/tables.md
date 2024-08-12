@@ -313,7 +313,7 @@ BEGIN
     {
       "provider":"ocigenai",
       "credential_name": "GENAI_CRED",
-      "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
+      "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/generateText",
       "model": "cohere.command",
       "inferenceRequest": {
         "maxTokens": 2000,
