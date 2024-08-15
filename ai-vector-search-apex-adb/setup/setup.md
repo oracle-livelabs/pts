@@ -36,11 +36,18 @@ By completing this lab, you will achieve the following objectives:
 ### Task 1: Create an OCI Compartment
 
 1. Click the hamburger icon (≡) at the top left corner of the page.
+
 2. Click Identity & Security. Hover over Identity and click the Compartment submenu item.
+![alt text](images/15-identity-compartments.png)
+
 3. Click Create Compartment.
+![alt text](images/16-create-compartment.png)
+
 4. Enter the following information in the corresponding fields or use your own names:
     - **Name**: PROD
     - **Description**: Compartment for PROD assets
+ ![alt text](images/17-create-compartment2.png)
+
 5. Click Create to complete the process.
 6. Save the compartment OCID for later use.
    ![compartment save](/images/compartmentsave.png)

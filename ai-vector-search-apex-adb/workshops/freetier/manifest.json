@@ -24,20 +24,21 @@
           "filename": "../../download/download.md"
       }, 
       {
-          "title": "Lab 3: Setup APEX Service",
+        "title": "Lab 3: Create the Vector tables",
+        "description": "Create the vector table and compile the RAG procedures and functions.",
+        "filename": "../../tables/tables.md"
+      }, 
+      {
+          "title": "Lab 4: Setup APEX Service",
           "description": "Set up the APEX service and import the pre-created RAG application.",
           "filename": "../../apex/apex.md"
       }, 
       {
-          "title": "Lab 4: Edit APEX Application",
+          "title": "Lab 5: Edit APEX Application",
           "description": "Configure the application to access the object storage.",
           "filename": "../../apex-app/apex-app.md"
       }, 
-      {
-        "title": "Lab 5: Create the Vector tables",
-        "description": "Create the vector table and compile the RAG procedures and functions.",
-        "filename": "../../tables/tables.md"
-      }, 
+
       {
         "title": "Lab 6: Run the RAG application",
         "description": "Run the RAG application.",

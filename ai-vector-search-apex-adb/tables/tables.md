@@ -20,8 +20,9 @@ In this lab, you will:
 
 ## Task 1: Create tables to store the document, chunks, and vectors
 
-1. From your Autonomous Database console select Database Actions SQL worksheet or use SQLDeveloper.
-2. Log as VECTOR user.
+1. From your Autonomous Database console select Database Actions SQL worksheet
+![alt text](images/sqlworksheet.png)
+2. Login as VECTOR user.
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
 
     ``` 

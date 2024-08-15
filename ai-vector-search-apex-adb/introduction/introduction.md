@@ -16,7 +16,6 @@ By the end of this lab, users will be able to:
 
 ### Prerequisites
 
-- An Oracle LiveLabs Account
 - An Oracle Cloud Account
 
 ## Application Description

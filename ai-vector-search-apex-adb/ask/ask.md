@@ -27,8 +27,12 @@ By following this guide, you will:
 ## Task 2: Load Document to Object Store
 
 1. Click on the blue "Upload File" button.
+![alt text](images/apex1.png)
 2. Select the file you want to upload from your computer.
+
    This will upload it to the object storage.
+![alt text](images/apex2.png)
+
 
 Let's take a look at what PLSQL procedure is storing the document into our object storage.
 
@@ -80,6 +84,7 @@ WHERE name = :P12_FILE;
 ## Task 3: Select Document from Drop-Down Menu
 
 1. Select the item you just uploaded from the drop-down menu.
+![alt text](images/apex3.png)
 
 2. You can view the document you just uploaded by selecting the preview check box.
 
@@ -88,6 +93,7 @@ WHERE name = :P12_FILE;
 1. After selecting the document, you can go ahead and type a question about the document and hit return.
 
 After sending your question, you can view the results of the answer in the chat box.
+![alt text](images/apex4.png) 
 
 We can see the PL/SQL call in the APEX Page Designer on page 3.
    ![Page Designer](images/pagedesign.png)

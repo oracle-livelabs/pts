@@ -22,9 +22,65 @@ Before we dive into the procedure, make sure you have the following:
 1. **Oracle Cloud Account**: You need an active Oracle Cloud account with access to Oracle Object Storage and Oracle Autonomous Database.
 2. **Object Storage Bucket**: Create a bucket in Oracle Object Storage and upload the files you want to download into Oracle ADB.
 3. **Credentials**: Ensure you have the necessary credentials (access key and secret key) to access Oracle Object Storage.
-4. **Oracle Autonomous Database 23ai**: Make sure you have an [Oracle Autonomous Database 23ai](https://medium.com/@bhenndricks/how-to-create-an-oracle-autonomous-database-c12d9a05096c) instance running.
+4. **Oracle Autonomous Database 23ai**: Make sure you have an Oracle Autonomous Database 23ai
 
-## Task 1: Create Credential Object in Oracle ADB
+## Task 1: Login to Oracle Cloud ##
+
+1. From your browser login into Oracle Cloud
+
+
+## Task 2: Provision ADW ##
+
+   Provision the Autonomous Data Warehouse Databasewith the steps below.
+
+1. Select your assigned Region from the upper right of the OCI console.
+
+2. From the hamburger menu (top left side), select Autonomous Transaction Processing.
+![alt text](images/createadw4.png)
+
+3.  Select your Compartment. You may have to drill in (click “+”) to see your compartment.
+
+4. Select Workload Type Data Warehouse.
+
+5. Click Create Autonomous Database.
+  ![alt text](images/createadw1.png)
+
+
+6. Choose your compartment.
+
+7. Enter any unique name (maybe your name) for your display and database name.
+   The display name is used in the  Console UI to identify your database.
+  ![alt text](images/createadw2.png)
+
+8. Ensure Warehouse workload type is selected.
+
+9. Select **Serverless** for deployment type.
+
+10. Choose database version 23ai.
+
+11. Configure the database with **2 cores and 1 TB storage**.
+
+12. Check Auto scaling.
+
+13. Enter a password. The username is always ADMIN. (Note: remember your password)
+
+14. Select Allow secure access from everywhere for this workshop.  
+    As a best practice when you deploy your own application, you should select network access to be from Virtual cloud network.  
+  ![alt text](images/createadw3.png)
+
+
+15. Select BYOL license type.
+
+16. Click Create Autonomous Database.
+    ![](./images/provision-atp-7.png)
+
+    Your console will show that ATP is provisioning. This will take about 2 or 3 minutes to complete.
+
+    You can check the status of the provisioning in the Work Request.
+
+
+
+## Task 3: Create Credential Object in Oracle ADB
 
 1. First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage. 
 
@@ -46,7 +102,7 @@ END;
 </copy>
 ```
 
-## Task 2: Grant Necessary Privileges
+## Task 4: Grant Necessary Privileges
 
 From ADMIN user, run the following to ensure your database user has the necessary privileges to use DBMS packages. We are using the user VECTOR when creating the schema objects.  If you use a different user, be sure to use the correct schema user during table creation in the subsequent lab.
 
@@ -64,7 +120,7 @@ GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
 </copy>
 ```
 
-## Task 3: Option 1 - Create the credential for ADB to access OCI GenAI Service
+## Task 5: Option 1 - Create the credential for ADB to access OCI GenAI Service
 
 ### OCI GenAI Service
 The OCI GenAI service provides access to several LLMs including Cohere and Llama.  
@@ -110,7 +166,7 @@ end;
 /
 ```
 
-## Task 3: Option 2 - Create the credential for ADB to access OpenAI
+## Task 6: Option 2 - Create the credential for ADB to access OpenAI
 
 ### OpenAI
 
@@ -131,9 +187,9 @@ end;
 </copy>
 ```
 
-## Task 4: Download ONNX embedding models Using DBMS\_CLOUD.GET\_OBJECTS
+## Task 7: Download ONNX embedding models Using `DBMS\_CLOUD.GET\_OBJECTS`
 
-Now log in as VECTOR or `<your_database_user>`, use the DBMS\_CLOUD.GET\_OBJECTS procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
+Now log in as VECTOR or `<your_database_user>`, use the `DBMS\_CLOUD.GET\_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
 Run to create the staging directory.
 
@@ -183,7 +239,7 @@ END;
 </copy>
 ```
 
-## Task 5: Verify the File in Oracle ADB
+## Task 8: Verify the File in Oracle ADB
 
 After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
 
@@ -195,7 +251,7 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
-## Task 6 Load the ONNX Files into the Database
+## Task 9: Load the ONNX Files into the Database
 
 Once the ONNX files are downloaded and verified, you can load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
 
