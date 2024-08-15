@@ -4,6 +4,10 @@
 
 In this lab you will download the embedding model from Oracle Object Storage to Autonomous Database. The embedding model is used to vectorize the source data. Oracle provides data management with the Oracle Object Storage and Oracle Autonomous Database (ADB). One of the features available is the ability to download files directly from Oracle Object Storage into Oracle ADB using the DBMS\_CLOUD.GET\_OBJECTS procedure.
 
+Estimated Time: 20 minutes
+
+
+
 ## Objectives
 
 By following this guide, you will:
@@ -24,12 +28,12 @@ Before we dive into the procedure, make sure you have the following:
 3. **Credentials**: Ensure you have the necessary credentials (access key and secret key) to access Oracle Object Storage.
 4. **Oracle Autonomous Database 23ai**: Make sure you have an Oracle Autonomous Database 23ai
 
-## Task 1: Login to Oracle Cloud ##
+## Task 1: Login to Oracle Cloud 
 
 1. From your browser login into Oracle Cloud
 
 
-## Task 2: Provision ADW ##
+## Task 2: Provision ADW 
 
    Provision the Autonomous Data Warehouse Databasewith the steps below.
 
@@ -288,7 +292,7 @@ To verify the model exists in database run the following statement.
 </copy>
 ```
 
-## Conclusion
+## Summary
 
 In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle Autonomous Database with DBMS\_VECTOR.LOAD\_ONNX\_MODEL. 
 

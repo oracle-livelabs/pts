@@ -144,6 +144,11 @@ In Oracle Object Storage, a bucket is a container for storing objects. To access
 4. Click Create and save the pre-auth request URL in a document for later use.
 ![alt text](images/copypreauth.png)
 
+
+## Summary
+
+You now know how to generate credentials using OCI console. 
+
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements

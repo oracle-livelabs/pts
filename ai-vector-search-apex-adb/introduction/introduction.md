@@ -1,8 +1,10 @@
 # Introduction
 
-## Lab Overview
+## About this Workshop
 
 The scope of this workshop is to create a Generative AI RAG application using Oracle APEX with AI Vector Search in Oracle Autonomous Database. The workshop uses Oracle Object Storage as the knowledge base repository to store documents.  Customers can use the Oracle Object Storage to securely store confidential business information.
+
+Estimated Time: 60 minutes
 
 ## Objectives
 

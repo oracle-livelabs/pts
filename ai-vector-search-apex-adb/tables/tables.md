@@ -394,6 +394,8 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
     * OCI, OCCI, ODBC, Pro*C or Pro*COBOL
     * Go, Rust, PHP, Ruby etc
 
+## Summary
+You now know how to create the database vector tables with sql worksheet in ADB using OCI console. 
 
 You may now [proceed to the next lab](#next).
 
