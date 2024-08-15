@@ -26,12 +26,11 @@ Before we dive into the procedure, make sure you have the following:
 3. **Credentials**: Ensure you have the necessary credentials (access key and secret key) to access Oracle Object Storage.
 4. **Oracle Autonomous Database 23ai**: Make sure you have an Oracle Autonomous Database 23ai
 
-## Task 1: Login to Oracle Cloud 
+## Task 1: Login to Oracle Cloud
 
 1. From your browser login into Oracle Cloud
 
-
-## Task 2: Provision ADW 
+## Task 2: Provision ADW
 
    Provision the Autonomous Data Warehouse Databasewith the steps below.
 
@@ -40,13 +39,12 @@ Before we dive into the procedure, make sure you have the following:
 2. From the hamburger menu (top left side), select Autonomous Transaction Processing.
 ![alt text](images/createadw4.png)
 
-3.  Select your Compartment. You may have to drill in (click “+”) to see your compartment.
+3. Select your Compartment. You may have to drill in (click “+”) to see your compartment.
 
 4. Select Workload Type Data Warehouse.
 
 5. Click Create Autonomous Database.
   ![alt text](images/createadw1.png)
-
 
 6. Choose your compartment.
 
@@ -70,7 +68,6 @@ Before we dive into the procedure, make sure you have the following:
     As a best practice when you deploy your own application, you should select network access to be from Virtual cloud network.  
   ![alt text](images/createadw3.png)
 
-
 15. Select BYOL license type.
 
 16. Click Create Autonomous Database.
@@ -80,11 +77,9 @@ Before we dive into the procedure, make sure you have the following:
 
     You can check the status of the provisioning in the Work Request.
 
-
-
 ## Task 3: Create Credential Object in Oracle ADB
 
-1. First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage. 
+1. First, create a credential object in your Oracle Autonomous Database that will store your Object Storage credentials. This is required for authenticating with Oracle Object Storage.
 
 Next head back to your ADB console, and select Database Actions and then SQL. Log in as ADMIN. This will open up an editor for us to perform statements.
 ![alt text](images/sqldev.png)
@@ -125,8 +120,9 @@ GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
 ## Task 5: Option 1 - Create the credential for ADB to access OCI GenAI Service
 
 ### OCI GenAI Service
+
 The OCI GenAI service provides access to several LLMs including Cohere and Llama.  
-API authentication is required. 
+API authentication is required.
 
 1. From ADB Database Actions SQL Worksheet or SQL Developer, login as VECTOR user and copy and run the SQL below and replace the following with your ocid and key information you got from the previous lab.
 
@@ -150,7 +146,9 @@ end;
 /
 </copy>
 ```
+
 For example:
+
 ```
 declare
  jo json_object_t;
@@ -173,6 +171,7 @@ end;
 ### OpenAI
 
 For OpenAI, run the following procedure:
+
 ```sql
 <copy>
 
@@ -218,12 +217,10 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx
-
+<https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx>
 
 URL to tinybert.onnx is:
-https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx
-
+<https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx>
 
 For example, to get tinybert.onnx and download it to ADB, the command will look like this:
 
@@ -277,6 +274,7 @@ END;
 /
 </copy>
 ```
+
 This code loads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT\_MODEL and ALL\_MINILM\_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
 
 By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
@@ -292,11 +290,11 @@ To verify the model exists in database run the following statement.
 
 ## Summary
 
-In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle Autonomous Database with DBMS\_VECTOR.LOAD\_ONNX\_MODEL. 
+In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle Autonomous Database with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
 
 You may now [proceed to the next lab](#next).
 
-
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
 * **Last Updated By/Date** -  July 2024

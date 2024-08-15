@@ -17,14 +17,12 @@ By following this guide, you will:
 * Display the results of the question.
 * View the PL/SQL call in the APEX Page Designer.
 
-
 ## Task 1: Launch Application
 
 1. On the application home page, click on the application we uploaded and then select "Run Application".
    ![Application Home](images/vector.png)
    ![Run Application](images/run.png)
 2. Sign into the application with your credentials.
-
 
 ## Task 2: Load Document to Object Store
 
@@ -35,12 +33,11 @@ By following this guide, you will:
    This will upload it to the object storage.
 ![alt text](images/apex2.png)
 
-
 Let's take a look at what PLSQL procedure is storing the document into our object storage.
 
-Open the Apex Page Designer and select Page 12. 
+Open the Apex Page Designer and select Page 12.
 
-As soon as we load our document this PLSQL procedure is called to put the document in the object storage. In this image we are using our credentials and putting our file to the object storage. 
+As soon as we load our document this PLSQL procedure is called to put the document in the object storage. In this image we are using our credentials and putting our file to the object storage.
 ![alt text](images/object.png)
 
 ``` sql
@@ -71,10 +68,11 @@ END;
 
 Let's take a look at the PLSQL code for storing the file into the database table.  
 
-Click on Apex Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage. 
+Click on Apex Processes Icon and select the Processes tab followed by Store in Local DB. On the right hand side you can view the window for the code. This is where the procedure stores the file to a table that you uploaded to object storage.
 We store the file in a table called "My_Books" within our database. As files are stored, a trigger converts the file to text, chunks the text, and creates vector embeddings for the chunks.
 
 ![alt text](images/admin.png)
+
 ```sql
 INSERT INTO ADMIN.MY_BOOKS
 (FILE_NAME, file_type,FILE_CONTENT,FILE_SIZE)
@@ -95,7 +93,7 @@ WHERE name = :P12_FILE;
 1. After selecting the document, you can go ahead and type a question about the document and hit return.
 
 After sending your question, you can view the results of the answer in the chat box.
-![alt text](images/apex4.png) 
+![alt text](images/apex4.png)
 
 We can see the PL/SQL call in the APEX Page Designer on page 3.
    ![Page Designer](images/pagedesign.png)
@@ -120,13 +118,14 @@ BEGIN
 END;
 ```
 
-### Explanation of PL/SQL code:
+### Explanation of PL/SQL code
 
 DECLARE: This section is used to declare the variable result_clob, which will hold the response from the LLM.
 
 BEGIN: Marks the beginning of the executable part of the PL/SQL block.
 result_clob := admin.generate_text_response2(:P3_QUESTION,:P3_ID,7) calls the generate_text_response2 function. It passes three parameters:
-1. :P3_QUESTION - The question entered by the user. 
+
+1. :P3_QUESTION - The question entered by the user.
 2. :P3_ID - The ID of the document selected by the user.
 3. :7 - A static parameter to return the top 7 chunks.
 
@@ -136,7 +135,7 @@ Finally assign the result of the function to the APEX page item :P3_ANSWER. If t
 
 In this workshop we showcased an AI RAG application using Oracle APEX, Oracle Autonomous Database 23ai with AI Vector Search, and the Oracle Cloud Object Storage.  These products and services are important building blocks for many AI solutions.
 
-
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks
 * **Last Updated By/Date** -  July 2024

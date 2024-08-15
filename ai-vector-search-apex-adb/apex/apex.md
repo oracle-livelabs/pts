@@ -6,7 +6,6 @@ In this lab we will setup an Oracle APEX (Application Express) service with Orac
 
 Estimated Time: 10 minutes
 
-
 ## Objectives
 
 By following this guide, you will:
@@ -33,7 +32,6 @@ By following this guide, you will:
 8. Enter your desired values for the workspace name, username, and password. Click **Create Workspace**.
 ![alt text](images/dbactionscredentials.png)
 
-
 ### Task 2: Log In to Your APEX Instance
 
 1. Head back to the Autonomous Database you created.
@@ -42,9 +40,9 @@ By following this guide, you will:
 3. Click **Launch APEX**.
 ![alt text](images/dbactionlaunchapex.png)
 4. Enter the credentials you created with your workspace:
-   - **Workspace Name**: Enter your workspace name.
-   - **Username**: Your user you created for the workspace.
-   - **Password**: The password you created in the workspace for that user.
+   * **Workspace Name**: Enter your workspace name.
+   * **Username**: Your user you created for the workspace.
+   * **Password**: The password you created in the workspace for that user.
 5. Click on **App Builder** located on the left of the dashboard.
 ![alt text](images/dbactionsappbuilder.png)
 6. Select **Import** and upload the [SQL file](images/f100.sql) we obtained to access the pre-configured application. 
@@ -58,5 +56,6 @@ In this lab you created the Oracle APEX service and created a workspace. We impo
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks, Milton Wan
 * **Last Updated By/Date** -  July 2024

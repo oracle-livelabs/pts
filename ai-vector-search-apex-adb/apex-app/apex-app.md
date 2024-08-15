@@ -14,7 +14,6 @@ By following this guide, you will:
 * Set up REST data sources to connect with OCI.
 * Update application definitions and substitutions for proper configuration.
 
-
 ### Task 1: Insert OCI Credentials in APEX
 
 1. Go to the APEX application, click **App Builder**, and then **Workspace Utilities**.
@@ -23,10 +22,10 @@ By following this guide, you will:
 ![alt text](images/editwebcredentials.png)
 ![alt text](images/editociaccess.png)
 3. Replace the following with the credentials saved earlier:
-    - **OCI User ID**
-    - **OCI Private Key** (remove the -----BEGIN RSA PRIVATE KEY----- and -----END RSA PRIVATE KEY----- lines)
-    - **OCI Tenancy ID**
-    - **OCI Public Key Fingerprint**
+    * **OCI User ID**
+    * **OCI Private Key** (remove the -----BEGIN RSA PRIVATE KEY----- and -----END RSA PRIVATE KEY----- lines)
+    * **OCI Tenancy ID**
+    * **OCI Public Key Fingerprint**
 4. Click apply changes.
 ![alt text](images/editociaccessconfig.png)
 
@@ -41,7 +40,7 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 3. Edit each REST data source (`Bucket V3`, `list_buckets`, `list_objects_in_bucket`) as follows:
 ![alt text](images/editrestdatasources.png)
 
-#### For `Bucket V3`:
+#### For `Bucket V3`
 
 1. Open the `Bucket V3` REST data source, and click the pencil icon to edit the remote server.
 ![alt text](images/editremoteserver.png)
@@ -54,14 +53,14 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 7. Repeat the same steps for the other two sources `list_buckets` and `list_objects_in_bucket`.
 8. Save changes.
 
-#### For `list_buckets`:
+#### For `list_buckets`
 
 1. Edit the `list_buckets` REST data source.
 2. Click on the parameters section and update the `compartmentid` with your PROD compartment ID.
 ![alt text](images/listbucketsparameters.png)
 3. Save changes.
 
-#### For `list_objects_in_bucket`:
+#### For `list_objects_in_bucket`
 
 1. Edit the `list_objects_in_bucket` REST data source.
 2. Click on the parameters section and update the `bucket_name` value to reflect the name of the bucket you created earlier.
@@ -85,5 +84,6 @@ By completing these steps, you have successfully set up your APEX application, c
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks, Milton Wan
 * **Last Updated By/Date** -  July 2024

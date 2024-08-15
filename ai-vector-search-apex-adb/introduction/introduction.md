@@ -9,6 +9,7 @@ Estimated Time: 60 minutes
 ## Objectives
 
 By the end of this lab, users will be able to:
+
 * Set up APEX to access the Oracle Object Storage
 * Set up Autonomous Database to access the Oracle Object Storage for importing the embedding model
 * Import and configure APEX and run the RAG sample application
@@ -18,7 +19,7 @@ By the end of this lab, users will be able to:
 
 ### Prerequisites
 
-- An Oracle Cloud Account
+* An Oracle Cloud Account
 
 ## Application Description
 
@@ -34,9 +35,9 @@ In this Oracle Live Labs workshop, participants will develop an advanced APEX ap
 
 ## Benefits
 
-- **AI Vector Management**: Streamlined process for storing, vectorizing, and querying documents.
-- **Increased Efficiency**: Faster data retrieval and insights without manual intervention.
-- **Secure Storage**: Documents are stored securely within Oracle's robust cloud infrastructure.
+* **AI Vector Management**: Streamlined process for storing, vectorizing, and querying documents.
+* **Increased Efficiency**: Faster data retrieval and insights without manual intervention.
+* **Secure Storage**: Documents are stored securely within Oracle's robust cloud infrastructure.
 
 This lab provides a hands-on experience with Oracle's cutting-edge cloud technologies, enabling users to easily build and deploy advanced AI data-driven applications.
 
@@ -51,5 +52,6 @@ See below for more information on Oracle Database 23ai and Oracle AI Vector Sear
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
 * **Last Updated By/Date** -  July 2024
