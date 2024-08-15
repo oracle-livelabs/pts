@@ -9,6 +9,7 @@ Estimated Time: 10 minutes
 ### Objectives
 
 In this lab, you will:
+
 * Create the vector table in Oracle Autonomous Database 23ai
 * Create a procedure to store the document
 * Create a trigger to embed the vectors
@@ -25,7 +26,7 @@ In this lab, you will:
 2. Login as VECTOR user.
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
 
-    ``` 
+    ```
     <copy>
     CREATE TABLE IF NOT EXISTS "VECTOR"."MY_BOOKS"
         ( 
@@ -42,10 +43,10 @@ In this lab, you will:
 
 4. Create a table named *VECTOR\_STORE* in the VECTOR schema. This is used to store the corresponding text chunks and embeddings in a column of vector datatype. Copy the code snippet and click **Run**.
 
-    ``` 
+    ```
     <copy>
     CREATE TABLE IF NOT EXISTS VECTOR.VECTOR_STORE
-      (	"DOC_ID" NUMBER(*,0) NOT NULL ENABLE, 
+      ( "DOC_ID" NUMBER(*,0) NOT NULL ENABLE, 
       "EMBED_ID" NUMBER, 
       "EMBED_DATA" VARCHAR2(4000 BYTE), 
       "EMBED_VECTOR" VECTOR,
@@ -54,7 +55,7 @@ In this lab, you will:
     </copy>
     ```
 
-## Task 2: Create database procedure and trigger 
+## Task 2: Create database procedure and trigger
 
 In this task you will:
 
@@ -62,7 +63,7 @@ Create a procedure `insert_my_table_row` to insert the PDF, Word, or TXT file in
 
 Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the PDF and store it in the VECTOR\_STORE table.
 
-1. From the Database Actions SQL Worksheet create and run the procedure `insert_my_table_row` 
+1. From the Database Actions SQL Worksheet create and run the procedure `insert_my_table_row`
 
     ```
     <copy>
@@ -99,7 +100,7 @@ Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the
     </copy>
     ```
 
-2.  Create the trigger `trg_mybooks_vector_store_compound`
+2. Create the trigger `trg_mybooks_vector_store_compound`
 
     ```
     <copy>
@@ -154,13 +155,14 @@ Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai.
 
-In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response. 
+In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 
 Compile the function `generate_text_response2` below.  It is called from APEX.
 
 ### OpenAI
+
 For connecting and authenticating to OpenAI you must have created the login credentials with an OpenAI API key using DBMS\_VECTOR.CREATE\_CREDENTIAL in the previous lab. Note: If you receive an HTTP response error ensure you have enough credits to use OpenAI.
 
 ```sql
@@ -247,13 +249,14 @@ END;
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai.
 
-In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response. 
+In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 
 Compile the function `generate_text_response2` below.  It is called from APEX.
 
-### OCI GenAI 
+### OCI GenAI
+
 For connecting and authenticating to OCI GenAI you must have created the login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL in the previous lab.
 
 ```sql
@@ -360,7 +363,7 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
             Embedding the user question  
           </td>
           <td>
-            VECTOR_EMBEDDING(tinybert_model USING user_question as data)   
+            VECTOR_EMBEDDING(tinybert_model USING user_question as data)
           </td>
         </tr>
         <tr>
@@ -373,15 +376,14 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
         </tr>
         <tr>
           <td>
-            Pass the result chunks and the user question to the LLM 
+            Pass the result chunks and the user question to the LLM
           </td>
           <td>
             DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params_genai))
           </td>
-        </tr>          
+        </tr>
         </tbody>
 </table>
-
 
 • In the next LAB, the APEX code will be calling the package functions here.
 
@@ -395,11 +397,12 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
     * Go, Rust, PHP, Ruby etc
 
 ## Summary
-You now know how to create the database vector tables with sql worksheet in ADB using OCI console. 
+
+You now know how to create the database vector tables with sql worksheet in ADB using OCI console.
 
 You may now [proceed to the next lab](#next).
 
-
 ## Acknowledgements
+
 * **Authors** - Vijay Balebail, Milton Wan, Blake Hendricks
 * **Last Updated By/Date** - Milton Wan, July 2024
