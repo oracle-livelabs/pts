@@ -147,7 +147,7 @@ In Oracle Object Storage, a bucket is a container for storing objects. To access
 
 ## Summary
 
-You now know how to generate credentials using OCI console. 
+You now know how to setup OCI Resources using OCI console. 
 
 You may now [proceed to the next lab](#next).
 
