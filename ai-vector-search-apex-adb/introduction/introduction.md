@@ -20,7 +20,7 @@ By the end of this lab, users will be able to:
 
 ## Application Description
 
-The APEX application developed in this workshop is a Retrieval Augmented Generation (RAG) app utilizing the ONNX framework and AI Vector capabilities in Oracle Autonomous Database 23ai. This app enables the secure storage of documents in Oracle Object Storage, where they can be vectorized in Autonomous Database and used for the RAG application. Users can ask questions about any uploaded document, facilitating secure data insight and responses on customer documents stored in the Oracle Object Storage.
+In this Oracle Live Labs workshop, participants will develop an advanced APEX application that integrates the Retrieval Augmented Generation (RAG) model with Oracle's cutting-edge AI and database technologies. Utilizing the ONNX framework and AI Vector capabilities within Oracle Autonomous Database 23AI, this application revolutionizes document management by enabling secure storage, vectorization, and advanced querying of documents stored in Oracle Cloud Object Storage. Users will interact with the application to ask complex questions, receiving precise, context-aware responses based on the vectorized contents of the documents they want to interact with. This workshop provides a deep dive into Oracle’s AI-driven capabilities, equipping participants with the skills to build next-generation applications that merge AI with enterprise data management for enhanced efficiency, security, and insight.
 
 ![alt text](images/ai-vector-search-apex-adb.png)
 
