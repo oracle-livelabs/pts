@@ -4,7 +4,7 @@
 
 A typical RAG application requires a vector store.  Oracle Autonomous Database 23ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.  `DBMS_VECTOR_CHAIN` package is used in this lab.  To get a better understanding of the RAG steps and the use of Oracle AI Vector Search `DBMS_VECTOR_CHAIN` package, see the PLSQL RAG LiveLabs.
 
-Estimated Time: 20 min
+Estimated Time: 10 minutes
 
 ### Objectives
 

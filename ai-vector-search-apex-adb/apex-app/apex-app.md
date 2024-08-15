@@ -4,13 +4,15 @@
 
 Set up the APEX application to interact with Oracle Cloud Infrastructure (OCI) data sources. This lab will walk you through the process of setting up web credentials, configuring REST data sources, and updating application definitions.
 
+Estimated Time: 10 minutes
+
 ## Objectives
 
 By following this guide, you will:
 
-- Insert OCI credentials.
-- Set up REST data sources to connect with OCI.
-- Update application definitions and substitutions for proper configuration.
+* Insert OCI credentials.
+* Set up REST data sources to connect with OCI.
+* Update application definitions and substitutions for proper configuration.
 
 
 ### Task 1: Insert OCI Credentials in APEX

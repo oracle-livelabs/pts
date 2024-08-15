@@ -4,14 +4,17 @@
 
 In this lab we will setup an Oracle APEX (Application Express) service with Oracle Autonomous Database for web application development. APEX provides a powerful and user-friendly platform to build scalable, secure, and highly functional web applications. This guide will walk you through the process of setting up an APEX service, creating a workspace, and preparing for application deployment.
 
+Estimated Time: 10 minutes
+
+
 ## Objectives
 
 By following this guide, you will:
 
-- Set up an Oracle APEX service on your ADB instance.
-- Create a new APEX workspace and schema.
-- Login to your APEX instance.
-- Import and configure a pre-built application in APEX.
+* Set up an Oracle APEX service on your ADB instance.
+* Create a new APEX workspace and schema.
+* Login to your APEX instance.
+* Import and configure a pre-built application in APEX.
 
 ### Task 1: Set Up Oracle APEX Service
 

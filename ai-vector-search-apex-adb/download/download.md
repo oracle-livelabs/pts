@@ -4,20 +4,18 @@
 
 In this lab you will download the embedding model from Oracle Object Storage to Autonomous Database. The embedding model is used to vectorize the source data. Oracle provides data management with the Oracle Object Storage and Oracle Autonomous Database (ADB). One of the features available is the ability to download files directly from Oracle Object Storage into Oracle ADB using the DBMS\_CLOUD.GET\_OBJECTS procedure.
 
-Estimated Time: 20 minutes
-
-
+Estimated Time: 10 minutes
 
 ## Objectives
 
 By following this guide, you will:
 
-- Create a credential object in Oracle ADB for accessing Oracle Object Storage.
-- Grant necessary privileges to use DBMS\_CLOUD procedures.
-- Download the ONNX compliant embedding model from Oracle Object Storage into Oracle ADB using DBMS\_CLOUD.GET\_OBJECTS.
-- Verify the downloaded model in Oracle ADB.
-- Load the ONNX model into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
-- Create credential using DBMS\_VECTOR to access OCI GenAI service
+* Create a credential object in Oracle ADB for accessing Oracle Object Storage.
+* Grant necessary privileges to use DBMS\_CLOUD procedures.
+* Download the ONNX compliant embedding model from Oracle Object Storage into Oracle ADB using DBMS\_CLOUD.GET\_OBJECTS.
+* Verify the downloaded model in Oracle ADB.
+* Load the ONNX model into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
+* Create credential using DBMS\_VECTOR to access OCI GenAI service
 
 ## Prerequisites
 

@@ -6,18 +6,16 @@ In this lab, we will load a document and ask a question about it. This process i
 
 Estimated Time: 10 minutes
 
-
-
 ## Objectives
 
 By following this guide, you will:
 
-- Launch the application and sign in.
-- Load a document to Oracle Object Storage.
-- Select and preview the document.
-- Ask a question about the document.
-- Display the results of the question.
-- View the PL/SQL call in the APEX Page Designer.
+* Launch the application and sign in.
+* Load a document to Oracle Object Storage.
+* Select and preview the document.
+* Ask a question about the document.
+* Display the results of the question.
+* View the PL/SQL call in the APEX Page Designer.
 
 
 ## Task 1: Launch Application
