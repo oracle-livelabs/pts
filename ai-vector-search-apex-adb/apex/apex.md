@@ -4,14 +4,16 @@
 
 In this lab we will setup an Oracle APEX (Application Express) service with Oracle Autonomous Database for web application development. APEX provides a powerful and user-friendly platform to build scalable, secure, and highly functional web applications. This guide will walk you through the process of setting up an APEX service, creating a workspace, and preparing for application deployment.
 
+Estimated Time: 10 minutes
+
 ## Objectives
 
 By following this guide, you will:
 
-- Set up an Oracle APEX service on your ADB instance.
-- Create a new APEX workspace and schema.
-- Login to your APEX instance.
-- Import and configure a pre-built application in APEX.
+* Set up an Oracle APEX service on your ADB instance.
+* Create a new APEX workspace and schema.
+* Login to your APEX instance.
+* Import and configure a pre-built application in APEX.
 
 ### Task 1: Set Up Oracle APEX Service
 
@@ -30,7 +32,6 @@ By following this guide, you will:
 8. Enter your desired values for the workspace name, username, and password. Click **Create Workspace**.
 ![alt text](images/dbactionscredentials.png)
 
-
 ### Task 2: Log In to Your APEX Instance
 
 1. Head back to the Autonomous Database you created.
@@ -39,9 +40,9 @@ By following this guide, you will:
 3. Click **Launch APEX**.
 ![alt text](images/dbactionlaunchapex.png)
 4. Enter the credentials you created with your workspace:
-   - **Workspace Name**: Enter your workspace name.
-   - **Username**: Your user you created for the workspace.
-   - **Password**: The password you created in the workspace for that user.
+   * **Workspace Name**: Enter your workspace name.
+   * **Username**: Your user you created for the workspace.
+   * **Password**: The password you created in the workspace for that user.
 5. Click on **App Builder** located on the left of the dashboard.
 ![alt text](images/dbactionsappbuilder.png)
 6. Select **Import** and upload the [SQL file](images/f100.sql) we obtained to access the pre-configured application. 
@@ -55,5 +56,6 @@ In this lab you created the Oracle APEX service and created a workspace. We impo
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
+
 * **Authors** - Blake Hendricks, Milton Wan
 * **Last Updated By/Date** -  July 2024
