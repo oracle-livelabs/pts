@@ -1,7 +1,7 @@
 # Prepare Setup
 
 ## Introduction
-This lab will show you how to download the Oracle Resource Manager (ORM) stack zip file needed to setup the resource needed to run this workshop. This workshop requires a compute instance running the *Oracle Database 19c on LiveLabs* Marketplace image and a Virtual Cloud Network (VCN).
+This lab will show you how to download the Oracle Resource Manager (ORM) stack zip file needed to setup the resource needed to run this workshop. This workshop requires a compute instance running the *Oracle Database 23ai on LiveLabs* Marketplace image and a Virtual Cloud Network (VCN).
 
 *Estimated Lab Time:* 10 minutes
 
@@ -48,4 +48,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 * **Author** - Rene Fontcha, LiveLabs Platform Lead, NA Technology
 * **Contributors** - Meghana Banka
-* **Last Updated By/Date** - Rene Fontcha, LiveLabs Platform Lead, NA Technology, October 2021
+* **Last Updated By/Date** - Rajeev Rumale, Database Product Management, August 2024
