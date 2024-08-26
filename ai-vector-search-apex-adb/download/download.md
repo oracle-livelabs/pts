@@ -71,7 +71,6 @@ Before we dive into the procedure, make sure you have the following:
 15. Select BYOL license type.
 
 16. Click Create Autonomous Database.
-    ![](./images/provision-atp-7.png)
 
     Your console will show that ATP is provisioning. This will take about 2 or 3 minutes to complete.
 

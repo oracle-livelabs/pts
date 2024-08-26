@@ -50,7 +50,7 @@ By completing this lab, you will achieve the following objectives:
 
 5. Click Create to complete the process.
 6. Save the compartment OCID for later use.
-   ![compartment save](/images/compartmentsave.png)
+![alt text](images/compartmentsave.png)
 
   The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
 
@@ -58,7 +58,7 @@ By completing this lab, you will achieve the following objectives:
     * Allow group ProdObjectManagers to read buckets in compartment PROD
     * Allow group ProdObjectManagers to manage objects in compartment PROD
 8. Click Create to complete the process.
-    ![Policies](/images/policyconfiguration.png)
+![alt text](images/policyconfiguration.png)
 
 ### Task 2: Create policy to enable access to OCI GenAI
 
@@ -94,9 +94,9 @@ Note: This policy allows any database in the specified compartment to access OCI
 ### Task 3: Save User OCID and Create API Keys
 
 1. Click the profile icon in the top right of your OCI page, and click My Profile.
-    ![Users](/images/userprofile.png)
+  ![alt text](images/userprofile.png)
 2. Save the user OCID for later use.
-    ![alt text](/images/ocidsave.png)
+![alt text](images/ocidsave.png)
 
 ### Task 4: Create OCI API Key
 
