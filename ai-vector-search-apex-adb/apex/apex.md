@@ -57,5 +57,6 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 
-* **Authors** - Blake Hendricks, Milton Wan
+* **Authors** - Blake Hendricks, Monoj Sundar, Vijay Balebail,  Milton Wan
+* **Contributors** - Rajeev Rumale
 * **Last Updated By/Date** -  July 2024
