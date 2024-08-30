@@ -165,7 +165,7 @@ end;
 /
 ```
 
-## Task 6: Option 2 - Create the credential for ADB to access OpenAI
+## Task 5: Option 2 - Create the credential for ADB to access OpenAI
 
 ### OpenAI
 
@@ -187,7 +187,7 @@ end;
 </copy>
 ```
 
-## Task 7: Download ONNX embedding models Using `DBMS_CLOUD.GET_OBJECTS`
+## Task 6: Download ONNX embedding models Using `DBMS_CLOUD.GET_OBJECTS`
 
 Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
@@ -237,7 +237,7 @@ END;
 </copy>
 ```
 
-## Task 8: Verify the File in Oracle ADB
+## Task 7: Verify the File in Oracle ADB
 
 After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
 

@@ -123,7 +123,7 @@ END;
 DECLARE: This section is used to declare the variable result_clob, which will hold the response from the LLM.
 
 BEGIN: Marks the beginning of the executable part of the PL/SQL block.
-result_clob := admin.generate_text_response2(:P3_QUESTION,:P3_ID,7) calls the generate_text_response2 function. It passes three parameters:
+result\_clob := admin.generate\_text\_response2(:P3\_QUESTION,:P3\_ID,7) calls the generate\_text\_response2 function. It passes three parameters:
 
 1. :P3_QUESTION - The question entered by the user.
 2. :P3_ID - The ID of the document selected by the user.
