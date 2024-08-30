@@ -53,6 +53,14 @@ By completing this lab, you will achieve the following objectives:
 ![alt text](images/compartmentsave.png)
 
 
+  The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
+
+7. Add the following statements to allow the respective policy actions:
+    * Allow group ProdObjectManagers to read buckets in compartment PROD
+    * Allow group ProdObjectManagers to manage objects in compartment PROD
+8. Click Create to complete the process.
+    ![Policies](/images/policyconfiguration.png)
+
 
 ## Task 2: Create policy to enable access to OCI GenAI
 
@@ -85,7 +93,9 @@ Compartment: select your own compartment
 
 Note: This policy allows any database in the specified compartment to access OCI Generative AI service. In a production environment, ensure your policy's scope is minimally inclusive.
 
+
 ## Task 3: Save User OCID and Create API Keys
+
 
 1. Click the profile icon in the top right of your OCI page, and click My Profile.
   ![alt text](images/userprofile.png)
@@ -110,7 +120,9 @@ Note: This policy allows any database in the specified compartment to access OCI
 2. Copy the tenancy OCID and save it in a separate document for later use.
     ![alt text](images/copytenancyid.png)
 
+
 ## Task 6: Create a Bucket
+
 
 In Oracle Object Storage, a bucket is a container for storing objects. To access a bucket through the Oracle Cloud Infrastructure REST APIs, complete the following identity management tasks using the Oracle Cloud Infrastructure console and an account that has administrative rights within the tenancy (the root compartment).
 

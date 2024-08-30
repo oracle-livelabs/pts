@@ -123,6 +123,7 @@ END;
 DECLARE: This section is used to declare the variable result_clob, which will hold the response from the LLM.
 
 BEGIN: Marks the beginning of the executable part of the PL/SQL block.
+
 result\_clob := admin.generate\_text\_response2(:P3\_QUESTION,:P3\_ID,7) calls the generate\_text\_response2 function. It passes three parameters:
 
 1. :P3_QUESTION - The question entered by the user.
@@ -133,7 +134,9 @@ Finally assign the result of the function to the APEX page item :P3_ANSWER. If t
 
 ## Summary
 
+
 In this workshop we showcased an AI RAG application using Oracle APEX, Oracle Autonomous Database 23ai with AI Vector Search, and the Oracle Cloud Object Storage. These products and services are important building blocks for many AI solutions.
+
 
 ## Acknowledgements
 

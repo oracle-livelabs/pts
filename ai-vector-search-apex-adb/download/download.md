@@ -72,7 +72,8 @@ Before we dive into the procedure, make sure you have the following:
 
 16. Click Create Autonomous Database.
 
-    Your console will show that ATP is provisioning. This will take about 2 or 3 minutes to complete.
+
+    Your console will show that ADW is provisioning. This will take about 2 or 3 minutes to complete.
 
     You can check the status of the provisioning in the Work Request.
 
@@ -165,7 +166,9 @@ end;
 /
 ```
 
+
 ## Task 5: Option 2 - Create the credential for ADB to access OpenAI
+
 
 ### OpenAI
 
@@ -187,9 +190,11 @@ end;
 </copy>
 ```
 
+
 ## Task 6: Download ONNX embedding models Using `DBMS_CLOUD.GET_OBJECTS`
 
 Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
+
 
 Run to create the staging directory.
 
@@ -237,7 +242,9 @@ END;
 </copy>
 ```
 
+
 ## Task 7: Verify the File in Oracle ADB
+
 
 After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
 

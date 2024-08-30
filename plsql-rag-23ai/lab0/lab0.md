@@ -4,6 +4,8 @@
 
 In this lab you will setup access from ADB to OCI GenAI service.
 
+Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI). The OCI GenAI service provides access to several LLMs that you can pick from.  To enable client applications to access these services, authentication is required. This is accomplished through public and private api keys. The public key is created in the user cloud account, while the corresponding private key is stored on the server where the application runs. 
+
 *Estimated Lab Time*: 10 minutes
 
 ### Objectives:
@@ -11,10 +13,6 @@ In this lab you will setup access from ADB to OCI GenAI service.
 
 ### Prerequisites:
 * You need an Oracle Cloud tenancy and the ability to grant privileges to groups
-
-
-## **Introduction** 
-Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI). The OCI GenAI service provides access to several LLMs that you can pick from.  To enable client applications to access these services, authentication is required. This is accomplished through public and private api keys. The public key is created in the user cloud account, while the corresponding private key is stored on the server where the application runs. 
 
 ## **Task 1:** Get your credential information to access OCI APIs
 ### Fingerprint and private key
@@ -39,7 +37,7 @@ Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI).
 
   ![](images/add-api-key-dialog2.png " ")
 
-1. Click the **Add** button in the **Add API Key** dialog. The *Configuration File Preview* dialog opens. Follow the instructions in the **Note** to copy the contents of the text box into a file.
+6. Click the **Add** button in the **Add API Key** dialog. The *Configuration File Preview* dialog opens. Follow the instructions in the **Note** to copy the contents of the text box into a file.
    
   ![](images/api-configfilepreview.png " ")
 
@@ -88,30 +86,30 @@ Note: This policy allows any database in the specified compartment to access OCI
 2. Change directory to /home/oracle/AIdemo
 3. Using an editor such as vi, edit and replace the credential information below with your information in the file create_credential.sql:
    
-   user\_ocid
-   tenancy\_ocid
-   compartment_ocid
-   private\_key - Important Note: Put the private key all on a single line.
-   fingerprint
+   * user\_ocid
+   * tenancy\_ocid
+   * compartment_ocid
+   * private\_key - *(Important Note: Put the private key all on a single line.)*
+   * fingerprint
 
-```
-<copy>
-declare
-  jo json_object_t;
-begin
-  jo := json_object_t();
-  jo.put('user_ocid','ocid1.user.oc1..aabbalbbaa1112233aabb...');
-  jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaalbbbb1112233aaaab...');
-  jo.put('compartment_ocid','ocid1.compartment.oc1..ababalabab1112233ababa...');
-  jo.put('private_key','AAAaaaBBB11112222333...AAA111AAABBB222aaa1a...');
-  jo.put('fingerprint','01:1a:a1:aa:12:a1:12:1a:ab:12:01:ab:...');
-  dbms_vector.create_credential(
-    credential_name   => 'GENAI_CRED',
-    params            => json(jo.to_string));
-end;
-/
-</copy>
-```
+    ```
+    <copy>
+    declare
+      jo json_object_t;
+    begin
+      jo := json_object_t();
+      jo.put('user_ocid','ocid1.user.oc1..aabbalbbaa1112233aabb...');
+      jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaalbbbb1112233aaaab...');
+      jo.put('compartment_ocid','ocid1.compartment.oc1..ababalabab1112233ababa...');
+      jo.put('private_key','AAAaaaBBB11112222333...AAA111AAABBB222aaa1a...');
+      jo.put('fingerprint','01:1a:a1:aa:12:a1:12:1a:ab:12:01:ab:...');
+      dbms_vector.create_credential(
+        credential_name   => 'GENAI_CRED',
+        params            => json(jo.to_string));
+    end;
+    /
+    </copy>
+    ```
 4. Go to /home/oracle/AIdemo
 5. sqlplus vector/vector@freepdb1
 6. SQL> @dropcred.sql
