@@ -14,7 +14,7 @@
 
 ### Prerequisites ###
 
-- You have access to the Upgrade to the Upgrade to 23ai Livelab image
+- You have access to the "Upgrade to 23ai" Livelab image
 - A new 23ai database has been created in this image (from Lab 1)
 - All databases in the image are running
 
@@ -166,7 +166,7 @@ Version 19.21.0.0.0
 
     The `move` clause means that SQL*Plus will move all relevant files to the new location. Using the `file_name_convert`, you can determine what the new location should be.
 
-4. Check that our data files are stored in the 19c datafile location:
+4. Check that our data files are stored in the 23ai datafile location:
 
     ```text
     SQL> <copy>select name from v$datafile

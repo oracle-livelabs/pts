@@ -21,7 +21,7 @@ Estimated time: 75 minutes (please note you can run other labs in this training 
 
 When in doubt or need to start the databases, use the following steps:
 
-1. Please log in as **oracle** user and execute the following command:
+1. Please log in as the **`oracle`** user and execute the following command:
 
     ```text
     $ <copy>. oraenv</copy>
@@ -54,7 +54,7 @@ In this lab we will migrate 3 databases from 19c to 23ai. Below is the setup of 
 <tr> <th>Name</th>   <th>Type</th>   <th>PDB(s)</th><th>Scenario</th>
 </tr><tr><td>AAA</td><td>non-CDB</td><td>n/a</td>   <td>non-CDB to PDB in 23ai home</td>
 </tr><tr><td>BBB</td><td>CDB</td>    <td>BBB01</td> <td>Upgrade CDB + PDB</td>
-</tr><tr><td>CCC</td><td>CDB</td>    <td>CCC01</td> <td>Unplug from teh 19c CDB, plug into existing 23ai and upgrade</td>
+</tr><tr><td>CCC</td><td>CDB</td>    <td>CCC01</td> <td>Unplug from the 19c CDB, plug into existing 23ai and upgrade</td>
 </tr></table>
 
 ## Task 1: Prepare Source databases ##
@@ -179,13 +179,13 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     ```
 
 ## Task 2: The Autoupgrade tool ##
-The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous versions (<= 18.4) will need a separate download and set-up from MyOracle Support under note 2485457.1. In this example we will put 3 different upgrade scenarios in a single configuration file but you can also use autoupgrade for 1 or many more migrations at the same time.
+The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous versions (<= 18.4) will need a separate download and set-up from MyOracle Support under note 2485457.1. In this example we will put 3 different upgrade scenarios in a single configuration file but you can also use autoupgrade for one or many more migrations at the same time.
 
 
 ### Prepare the environment for autoupgrade ###
 
 
-1. First, we will create a directory on the operating system where we can store Autoupgrade related files (and log files):
+1. First, we will create a directory on the operating system where we can store Autoupgrade-related files (and log files):
 
     ```text
     $  <copy>mkdir -p /u01/autoupgrade</copy>
@@ -260,7 +260,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 ### Launch the Auto Upgrade tool pre-check phase ###
 
-3. We can now launch the Auto upgrade tool. First, make sure you have the 23ai environment variables setup as we have copied the latest version of the autoupgrade tool in this Oracle Home:
+3. We can now launch the Auto upgrade tool. First, make sure you have the 23ai environment variables set:
 
     ```text
     $ <copy>. oraenv</copy>
@@ -300,7 +300,7 @@ The Auto Upgrade tool is part of the 23ai Oracle Home distribution. Previous ver
 
 5. Check the overall status of the jobs
 
-    In the output the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
+    In the output of the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
     
     ```text
     $ <copy>chrome /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html</copy>

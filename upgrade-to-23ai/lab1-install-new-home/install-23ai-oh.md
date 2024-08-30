@@ -23,7 +23,7 @@ In this lab, you will
 
 ## Task 1: prepare 23ai software and operating system ##
 
- Before we can upgrade to Oracle 23ai, we need to have the Oracle software installed. Outside of this training environment, you should download the production software base release from [https://eDelivery.oracle.com](https://eDelivery.oracle.com "eDelivery.oracle.com"). In a production environment, please also download the patches required and apply them before you create or upgrade any instances. The DBA can download patches to patch the base 23ai version (23.5.0) from [https://support.oracle.com](https://support.oracle.com).
+ Before we can upgrade to Oracle 23ai, we need to have the Oracle software installed. Outside of this training environment, you should download the production software base release from [https://eDelivery.oracle.com](https://eDelivery.oracle.com "eDelivery.oracle.com"). In a production environment, please also download the patches required and apply them before you create or upgrade any instances. The DBA can download patches to patch the base 23ai version (23.6.0) from [https://support.oracle.com](https://support.oracle.com).
 
  We have already downloaded the software for you in this workshop. You need to adhere to the Oracle license restrictions when using this software. For training purposes when using this Hands-On Lab, the Oracle Technology Network license will apply. All required software is available in the `/source` directory in your image.
 
@@ -31,7 +31,7 @@ In this lab, you will
 
 An easy way to make sure all system parameters are correct in a Linux environment is to use the preinstall rpm package. For non-Linux environments, please check the manual for the appropriate environment values. We have already downloaded the preinstall rpm in the environment, so you can simply install it.
 
-1. Run the installer to start the database software install. The user executing the command should be then 'oracle' user.
+1. Run the installer to start the database software installation. The user executing the command should be then 'oracle' user.
 
     ```text
     $ <copy>sudo dnf -y localinstall /source/oracle-database-preinstall-23ai-1.0-1.4.el8.x86_64.rpm </copy>
@@ -84,7 +84,7 @@ Installing:
     ```
 
     ```text
-    $ <copy>unzip /source/240612_dbhome.zip</copy>
+    $ <copy>unzip /source/240612_db_home.zip</copy>
     
     ...
       python/bin/python      -> python3
@@ -108,7 +108,7 @@ Installing:
 We will not install any patches during this workshop; therefore, we can continue to prepare the operating system environment.
 
 
-## Task 2: run OUI and create new 23ai database ##
+## Task 2: run OUI and create a new 23ai database ##
 
  Before using the unzipped Oracle software, we need to run the Oracle Universal Installer (OUI) to register the software to the Oracle Inventory on the system and do mandatory (relinking) steps for this OS. This can either be done in a GUI mode or in a character mode (for systems that do not have access to a graphical interface). In this lab, we will run the OUI in GUI mode for learning purposes.
 
@@ -133,9 +133,9 @@ We will not install any patches during this workshop; therefore, we can continue
 
 2. In the next screen, choose 'Desktop class' and press `NEXT`
 
-    The desktop-class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used. 
+    The desktop class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than those displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used. 
 
-    For the Oracle provided Workshop environment, we will use the Desktop class.
+    For the Oracle-provided Workshop environment, we will use the Desktop class.
     
 3. Make sure to check and change the following values in the various fields:
 
@@ -153,8 +153,6 @@ We will not install any patches during this workshop; therefore, we can continue
         - DB23AI **(change this value)**
     - Password
         - Welcome_123 **(change this value)**
-    - Create as Container database
-        - Checked (no changes)
     - Pluggable database name
         - PDB23AI01 **(change this value)**
 
@@ -270,7 +268,7 @@ We will not install any patches during this workshop; therefore, we can continue
 
 ### Increase the size of tablespaces
 
-Because upgrades and plugging in new PDBs will take space in certain tablespaces, the tablespaces will grown. Growing tablespaces takes time so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
+Because upgrades and plugging in new PDBs will take up more space in certain tablespaces, they will grow. Growing tablespaces takes time, so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
 
 4. Increase the SYSAUX, SYSTEM, and UNDOTBS for the CDB:
 
@@ -300,7 +298,7 @@ Because upgrades and plugging in new PDBs will take space in certain tablespaces
     Database altered.
     ```
     
-5. You can now exit SQL*Plus to make a final change on the operating system.
+5. You can now exit SQL*Plus to make a final change to the operating system.
 
     ```text
     SQL> <copy>exit</copy>
@@ -319,4 +317,4 @@ You may now proceed to the next lab.
 
 ## Acknowledgements ##
 
-- **Author** - Robert Pastijn, Database Product Management, PTS EMEA - July 2024
+- **Author** - Robert Pastijn, Database Product Management, PTS EMEA - August 2024
