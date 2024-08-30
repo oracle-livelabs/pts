@@ -133,7 +133,7 @@ Finally assign the result of the function to the APEX page item :P3_ANSWER. If t
 
 ## Summary
 
-In this workshop we showcased an AI RAG application using Oracle APEX, Oracle Autonomous Database 23ai with AI Vector Search, and the Oracle Cloud Object Storage.  These products and services are important building blocks for many AI solutions.
+In this workshop we showcased an AI RAG application using Oracle APEX, Oracle Autonomous Database 23ai with AI Vector Search, and the Oracle Cloud Object Storage. These products and services are important building blocks for many AI solutions.
 
 ## Acknowledgements
 
