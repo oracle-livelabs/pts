@@ -1,30 +1,37 @@
 {
   "workshoptitle": "AI Vector Search - 7 Easy Steps to Building a RAG application with Oracle AI Vector Search and LangChain",
   "help": "livelabs-help-db_us@oracle.com",
-  "variables": ["../../variables/variables.json",
-      "../../variables/variables-in-another-file.json"],
+  "variables": [
+    "../../variables/variables.json",
+    "../../variables/variables-in-another-file.json"
+  ],
   "tutorials": [
-      {
+    {
+      "title": "Get Started",
+      "description": "Prerequisites for LiveLabs (Oracle-owned tenancies). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
+      "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs-novnc.md"
+    },
+    {
       "title": "Introduction",
       "description": "Introduction to RAG in GenAI",
       "filename": "../../introduction/introduction.md"
-      },
-      {
-        "title": "Setup the environment",
-        "description": "Verify Setup of compute instance",
-        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
-      },
-      {
+    },
+    {
+      "title": "Get Started with noVNC Remote Desktop",
+      "description": "Using noVNC Remote Desktop",
+      "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
+    },
+    {
       "title": "Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and Langchain",
       "description": "Hands-on lab for building and running the RAG Application.",
       "filename": "../../lab1/lab1.md"
-      },
-      {
-        "title": "Lab 2: Run the same RAG application interactively with a UI",
-        "description": "Run the UI RAG Application.",
-        "filename": "../../lab2/lab2.md"
-      },  
-      {
+    },
+    {
+      "title": "Lab 2: Run the same RAG application interactively with a UI",
+      "description": "Run the UI RAG Application.",
+      "filename": "../../lab2/lab2.md"
+    },
+    {
       "title": "Need Help?",
       "description": "Solutions to Common Problems and Directions for Receiving Live Help",
       "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"

@@ -8,9 +8,9 @@
             "filename": "../../introduction/introduction.md"
         },
         {
-        "title": "Get Started with noVNC Remote Desktop",
-        "description": "Using noVNC Remote Desktop",
-        "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
+            "title": "Get Started with noVNC Remote Desktop",
+            "description": "Using noVNC Remote Desktop",
+            "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
         },
         {
             "title": "Lab 1: Vector DDL, DML and Queries",
@@ -41,6 +41,11 @@
             "title": "Lab 6: Other Vector Functions",
             "description": "Understanding Other Vector Functions",
             "filename": "../../lab6/other_vector_functions.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         }
     ]
 }
