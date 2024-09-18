@@ -1,0 +1,831 @@
+# Create Sample Schema
+
+## Introduction
+
+In this lab you will create a sample schema. You will create a sharded table family `Customers->Orders->LineItems` sharded by `CustId`, and a duplicate table `Products`.
+
+Estimated Lab Time: 30 minutes.
+
+### Objectives
+
+In this lab, you will perform the following steps:
+- Create the schema user, tablespace set, sharded tables and duplicated tables
+- Verify that the DDLs have been propagated to all the shards
+- Insert data into the sharded table
+
+### Prerequisites
+
+This lab assumes you have already completed the following:
+- Deploy the RAFT Sharded Database
+
+
+## Task 1: Create Sample Schema
+
+1. Login to the gsm host using the public ip address.
+
+    ```
+    $ <copy>ssh -i labkey opc@<gsmhost_public_ip></copy>
+    Last login: Sun Nov 29 01:26:28 2020 from 59.66.120.23
+    -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+    
+    [opc@gsmhost ~]$
+    ```
+    
+    Switch to oracle user.
+    
+    ```
+    [opc@gsmhost ~]$ <copy>sudo su - oracle</copy>
+    Last login: Sat Aug 10 23:59:23 GMT 2024 on pts/0
+    [oracle@gsmhost ~]$ 
+    ```
+
+   
+
+2. Download the SQL scripts `create-sample-schema.sql`.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/create-sample-schema.sql</copy>
+    ```
+
+   
+
+3. View the sql scripts file. This scirpt will create a sample schema `app_schema`, then create a sharded table family `Customers->Orders->LineItems` sharded by `CustId`, and a duplicate table `Products`. Make sure the connect string is correct.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>cat create-sample-schema.sql</copy>
+    set echo on 
+    set termout on
+    set time on
+    spool /home/oracle/create_sample_schema.lst
+    REM
+    REM Connect to the Shard Catalog and Create Schema
+    REM
+    connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba
+    REM alter session set container=catapdb;
+    alter session enable shard ddl;
+    create user app_schema identified by App_Schema_Pass_123;
+    grant connect, resource, alter session to app_schema;
+    grant execute on dbms_crypto to app_schema;
+    grant create table, create procedure, create tablespace, create materialized view to app_schema;
+    grant unlimited tablespace to app_schema;
+    grant select_catalog_role to app_schema;
+    grant all privileges to app_schema;
+    grant gsmadmin_role to app_schema;
+    grant dba to app_schema;
+    
+    
+    REM
+    REM Create a tablespace set for SHARDED tables
+    REM
+    CREATE TABLESPACE SET  TSP_SET_1 using template (datafile size 100m autoextend on next 10M maxsize unlimited extent management  local segment space management auto );
+    
+    REM
+    REM Create a tablespace for DUPLICATED tables
+    REM
+    CREATE TABLESPACE products_tsp datafile size 100m autoextend on next 10M maxsize unlimited extent management local uniform size 1m; 
+     
+    REM
+    REM Create Sharded and Duplicated tables
+    REM
+    connect app_schema/App_Schema_Pass_123@catahost:1521/catapdb
+    alter session enable shard ddl;
+    REM
+    REM Create a Sharded table for Customers  (Root table)
+    REM
+    CREATE SHARDED TABLE Customers
+    (
+      CustId      VARCHAR2(60) NOT NULL,
+      FirstName   VARCHAR2(60),
+      LastName    VARCHAR2(60),
+      Class       VARCHAR2(10),
+      Geo         VARCHAR2(8),
+      CustProfile VARCHAR2(4000),
+      Passwd      RAW(60),
+      CONSTRAINT pk_customers PRIMARY KEY (CustId),
+      CONSTRAINT json_customers CHECK (CustProfile IS JSON)
+    ) TABLESPACE SET TSP_SET_1
+    PARTITION BY CONSISTENT HASH (CustId) PARTITIONS AUTO;
+    
+    REM
+    REM Create a Sharded table for Orders
+    REM
+    CREATE SHARDED TABLE Orders
+    (
+      OrderId     INTEGER NOT NULL,
+      CustId      VARCHAR2(60) NOT NULL,
+      OrderDate   TIMESTAMP NOT NULL,
+      SumTotal    NUMBER(19,4),
+      Status      CHAR(4),
+      constraint  pk_orders primary key (CustId, OrderId),
+      constraint  fk_orders_parent foreign key (CustId) 
+        references Customers on delete cascade
+    ) partition by reference (fk_orders_parent);
+    
+    REM
+    REM Create the sequence used for the OrderId column
+    REM
+    CREATE SEQUENCE Orders_Seq;
+    
+    REM
+    REM Create a Sharded table for LineItems
+    REM
+    CREATE SHARDED TABLE LineItems
+    (
+      OrderId     INTEGER NOT NULL,
+      CustId      VARCHAR2(60) NOT NULL,
+      ProductId   INTEGER NOT NULL,
+      Price       NUMBER(19,4),
+      Qty         NUMBER,
+      constraint  pk_items primary key (CustId, OrderId, ProductId),
+      constraint  fk_items_parent foreign key (CustId, OrderId)
+        references Orders on delete cascade
+    ) partition by reference (fk_items_parent);
+    
+    REM
+    REM Create Duplicated table for Products
+    REM
+    CREATE DUPLICATED TABLE Products
+    (
+      ProductId  INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+      Name       VARCHAR2(128),
+      DescrUri   VARCHAR2(128),
+      LastPrice  NUMBER(19,4)
+    ) TABLESPACE products_tsp;
+    
+    REM
+    REM Create functions for Password creation and checking – used by the REM demo loader application
+    REM
+    
+    CREATE OR REPLACE FUNCTION PasswCreate(PASSW IN RAW)
+      RETURN RAW
+    IS
+      Salt RAW(8);
+    BEGIN
+      Salt := DBMS_CRYPTO.RANDOMBYTES(8);
+      RETURN UTL_RAW.CONCAT(Salt, DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(Salt, PASSW), DBMS_CRYPTO.HASH_SH256));
+    END;
+    /
+    
+    CREATE OR REPLACE FUNCTION PasswCheck(PASSW IN RAW, PHASH IN RAW)
+      RETURN INTEGER IS
+    BEGIN
+      RETURN UTL_RAW.COMPARE(
+          DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(UTL_RAW.SUBSTR(PHASH, 1, 8), PASSW), DBMS_CRYPTO.HASH_SH256),
+          UTL_RAW.SUBSTR(PHASH, 9));
+    END;
+    /
+    
+    REM
+    REM
+    select table_name from user_tables;
+    REM
+    REM
+    spool off
+    ```
+
+   
+
+4. Connect to SQLPLUS.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>sqlplus /nolog</copy>
+    
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sun Aug 11 00:13:46 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+    
+    SQL> 
+    ```
+
+   
+
+5. Run the sql script.
+
+    ```
+    SQL> <copy>@create-sample-schema.sql</copy>
+    ```
+    
+    The output like the following
+    
+    ```
+    SQL> set termout on
+    SQL> set time on
+    00:16:11 SQL> spool /home/oracle/create_sample_schema.lst
+    00:16:11 SQL> REM
+    00:16:11 SQL> REM Connect to the Shard Catalog and Create Schema
+    00:16:11 SQL> REM
+    00:16:11 SQL> connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba
+    Connected.
+    00:16:11 SQL> REM alter session set container=catapdb;
+    00:16:11 SQL> alter session enable shard ddl;
+    
+    Session altered.
+    
+    00:16:11 SQL> create user app_schema identified by App_Schema_Pass_123;
+    
+    User created.
+    
+    00:16:11 SQL> grant connect, resource, alter session to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant execute on dbms_crypto to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant create table, create procedure, create tablespace, create materialized view to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant unlimited tablespace to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant select_catalog_role to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant all privileges to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant gsmadmin_role to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> grant dba to app_schema;
+    
+    Grant succeeded.
+    
+    00:16:11 SQL> 
+    00:16:11 SQL> 
+    00:16:11 SQL> REM
+    00:16:11 SQL> REM Create a tablespace set for SHARDED tables
+    00:16:11 SQL> REM
+    00:16:11 SQL> CREATE TABLESPACE SET  TSP_SET_1 using template (datafile size 100m autoextend on next 10M maxsize unlimited extent managementlocal segment space management auto );
+    
+    Tablespace created.
+    
+    00:16:11 SQL> 
+    00:16:11 SQL> REM
+    00:16:11 SQL> REM Create a tablespace for DUPLICATED tables
+    00:16:11 SQL> REM
+    00:16:11 SQL> CREATE TABLESPACE products_tsp datafile size 100m autoextend on next 10M maxsize unlimited extent management local uniform size 1m;
+    
+    Tablespace created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create Sharded and Duplicated tables
+    00:16:12 SQL> REM
+    00:16:12 SQL> connect app_schema/App_Schema_Pass_123@catahost:1521/catapdb
+    Connected.
+    00:16:12 SQL> alter session enable shard ddl;
+    
+    Session altered.
+    
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create a Sharded table for Customers	(Root table)
+    00:16:12 SQL> REM
+    00:16:12 SQL> CREATE SHARDED TABLE Customers
+    00:16:12   2  (
+    00:16:12   3  	CustId	    VARCHAR2(60) NOT NULL,
+    00:16:12   4  	FirstName   VARCHAR2(60),
+    00:16:12   5  	LastName    VARCHAR2(60),
+    00:16:12   6  	Class	    VARCHAR2(10),
+    00:16:12   7  	Geo	    VARCHAR2(8),
+    00:16:12   8  	CustProfile VARCHAR2(4000),
+    00:16:12   9  	Passwd	    RAW(60),
+    00:16:12  10  	CONSTRAINT pk_customers PRIMARY KEY (CustId),
+    00:16:12  11  	CONSTRAINT json_customers CHECK (CustProfile IS JSON)
+    00:16:12  12  ) TABLESPACE SET TSP_SET_1
+    00:16:12  13  PARTITION BY CONSISTENT HASH (CustId) PARTITIONS AUTO;
+    
+    Table created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create a Sharded table for Orders
+    00:16:12 SQL> REM
+    00:16:12 SQL> CREATE SHARDED TABLE Orders
+    00:16:12   2  (
+    00:16:12   3  	OrderId     INTEGER NOT NULL,
+    00:16:12   4  	CustId	    VARCHAR2(60) NOT NULL,
+    00:16:12   5  	OrderDate   TIMESTAMP NOT NULL,
+    00:16:12   6  	SumTotal    NUMBER(19,4),
+    00:16:12   7  	Status	    CHAR(4),
+    00:16:12   8  	constraint  pk_orders primary key (CustId, OrderId),
+    00:16:12   9  	constraint  fk_orders_parent foreign key (CustId)
+    00:16:12  10  	  references Customers on delete cascade
+    00:16:12  11  ) partition by reference (fk_orders_parent);
+    
+    Table created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create the sequence used for the OrderId column
+    00:16:12 SQL> REM
+    00:16:12 SQL> CREATE SEQUENCE Orders_Seq;
+    
+    Sequence created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create a Sharded table for LineItems
+    00:16:12 SQL> REM
+    00:16:12 SQL> CREATE SHARDED TABLE LineItems
+    00:16:12   2  (
+    00:16:12   3  	OrderId     INTEGER NOT NULL,
+    00:16:12   4  	CustId	    VARCHAR2(60) NOT NULL,
+    00:16:12   5  	ProductId   INTEGER NOT NULL,
+    00:16:12   6  	Price	    NUMBER(19,4),
+    00:16:12   7  	Qty	    NUMBER,
+    00:16:12   8  	constraint  pk_items primary key (CustId, OrderId, ProductId),
+    00:16:12   9  	constraint  fk_items_parent foreign key (CustId, OrderId)
+    00:16:12  10  	  references Orders on delete cascade
+    00:16:12  11  ) partition by reference (fk_items_parent);
+    
+    Table created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create Duplicated table for Products
+    00:16:12 SQL> REM
+    00:16:12 SQL> CREATE DUPLICATED TABLE Products
+    00:16:12   2  (
+    00:16:12   3  	ProductId  INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    00:16:12   4  	Name	   VARCHAR2(128),
+    00:16:12   5  	DescrUri   VARCHAR2(128),
+    00:16:12   6  	LastPrice  NUMBER(19,4)
+    00:16:12   7  ) TABLESPACE products_tsp;
+    
+    Table created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM Create functions for Password creation and checking – used by the REM demo loader application
+    00:16:12 SQL> REM
+    00:16:12 SQL> 
+    00:16:12 SQL> CREATE OR REPLACE FUNCTION PasswCreate(PASSW IN RAW)
+    00:16:12   2  	RETURN RAW
+    00:16:12   3  IS
+    00:16:12   4  	Salt RAW(8);
+    00:16:12   5  BEGIN
+    00:16:12   6  	Salt := DBMS_CRYPTO.RANDOMBYTES(8);
+    00:16:12   7  	RETURN UTL_RAW.CONCAT(Salt, DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(Salt, PASSW), DBMS_CRYPTO.HASH_SH256));
+    00:16:12   8  END;
+    00:16:12   9  /
+    
+    Function created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> CREATE OR REPLACE FUNCTION PasswCheck(PASSW IN RAW, PHASH IN RAW)
+    00:16:12   2  	RETURN INTEGER IS
+    00:16:12   3  BEGIN
+    00:16:12   4  	RETURN UTL_RAW.COMPARE(
+    00:16:12   5  	    DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(UTL_RAW.SUBSTR(PHASH, 1, 8), PASSW), DBMS_CRYPTO.HASH_SH256),
+    00:16:12   6  	    UTL_RAW.SUBSTR(PHASH, 9));
+    00:16:12   7  END;
+    00:16:12   8  /
+    
+    Function created.
+    
+    00:16:12 SQL> 
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM
+    00:16:12 SQL> select table_name from user_tables;
+    
+    TABLE_NAME
+    --------------------------------------------------------------------------------
+    CUSTOMERS
+    ORDERS
+    LINEITEMS
+    PRODUCTS
+    MLOG$_PRODUCTS
+    
+    00:16:12 SQL> REM
+    00:16:12 SQL> REM
+    00:16:12 SQL> spool off
+    ```
+
+   
+
+6. The shard sample demo schema is created. Exit the sqlplus.
+
+    ```
+    SQL> <copy>exit</copy>
+    Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    [oracle@gsmhost ~]$ 
+    ```
+
+   
+
+## Task 2: Verify the Shard App Schema
+
+1. In the gsm host work with **oracle** user, run GDSCTL command.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>gdsctl</copy>
+    GDSCTL: Version 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sun Aug 11 00:20:37 GMT 2024
+    
+    Copyright (c) 2011, 2024, Oracle.  All rights reserved.
+    
+    Welcome to GDSCTL, type "help" for information.
+    
+    Current GSM is set to SHARDDIRECTOR1
+    GDSCTL> 
+    ```
+
+   
+
+2. Run the following commands to observe that there are no failures during the creation of tablespaces.
+
+    ```
+    GDSCTL> <copy>show ddl</copy>
+    Catalog connection is established
+    id      DDL Text                                 Failed shards 
+    --      --------                                 ------------- 
+    9       grant dba to app_schema                                
+    10      CREATE TABLESPACE SET  TSP_SET_1 usin...               
+    11      CREATE TABLESPACE products_tsp datafi...               
+    12      CREATE SHARDED TABLE Customers (   Cu...               
+    13      CREATE SHARDED TABLE Orders (   Order...               
+    14      CREATE SEQUENCE Orders_Seq                             
+    15      CREATE SHARDED TABLE LineItems (   Or...               
+    16      CREATE DUPLICATED TABLE Products (   ...               
+    17      CREATE OR REPLACE FUNCTION PasswCreat...               
+    18      CREATE OR REPLACE FUNCTION PasswCheck...  
+    ```
+
+   
+
+3. Run the config commands as shown below for each of the shards(`sdb1_workshop_shard1, sdb2_workshop_shard2, sdb3_workshop_shard3`) and verify if there are any DDL error. 
+
+    ```
+    GDSCTL> <copy>config shard -shard sdb1_workshop_shard1</copy>
+    
+    Name: sdb1_workshop_shard1
+    Shard Group: shardspaceora_regionora
+    Status: Ok
+    State: Deployed
+    Region: regionora
+    Connection string: shardhost1:1521/shard1:dedicated
+    SCAN address: 
+    ONS remote port: 0
+    Disk Threshold, ms: 20
+    CPU Threshold, %: 75
+    Version: 23.0.0.0
+    Failed DDL: 
+    DDL Error: ---
+    Management error: 
+    Failed DDL id: 
+    Availability: ONLINE
+    Rack: 
+    
+    
+    Supported services
+    ------------------------
+    Name                                                            Preferred Status    
+    ----                                                            --------- ------    
+    oltp_ro_svc                                                     Yes       Enabled   
+    oltp_rw_svc                                                     Yes       Enabled 
+    ```
+
+   
+
+4. Exit GDSCTL.
+
+    ```
+    GDSCTL> <copy>exit</copy>
+    [oracle@gsmhost ~]$ 
+    ```
+
+   
+
+6. Connect to the shard1 database.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>sqlplus sys/WelcomePTS_2024#@shardhost1:1521/shard1 as sysdba</copy>
+    
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sun Aug 11 00:27:19 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+    
+    
+    Connected to:
+    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    
+    SQL> 
+    ```
+
+   
+
+7. Check the created tablespace set. There are 18 tablespaces set for chunks.
+
+    ```
+    SQL> <copy>select TABLESPACE_NAME, BYTES/1024/1024 MB from sys.dba_data_files order by tablespace_name;</copy>
+    
+    TABLESPACE_NAME 		       MB
+    ------------------------------ ----------
+    C001TSP_SET_1			      100
+    C002TSP_SET_1			      100
+    C003TSP_SET_1			      100
+    C004TSP_SET_1			      100
+    C005TSP_SET_1			      100
+    C006TSP_SET_1			      100
+    C007TSP_SET_1			      100
+    C008TSP_SET_1			      100
+    C009TSP_SET_1			      100
+    C00ATSP_SET_1			      100
+    C00BTSP_SET_1			      100
+    
+    TABLESPACE_NAME 		       MB
+    ------------------------------ ----------
+    C00CTSP_SET_1			      100
+    C00DTSP_SET_1			      100
+    C00ETSP_SET_1			      100
+    C00FTSP_SET_1			      100
+    C00GTSP_SET_1			      100
+    C00HTSP_SET_1			      100
+    C00ITSP_SET_1			      100
+    PRODUCTS_TSP			      100
+    SYSAUX				      490
+    SYSTEM				      290
+    TSP_SET_1			      100
+    
+    TABLESPACE_NAME 		       MB
+    ------------------------------ ----------
+    UNDOTBS1			      100
+    USERS					5
+    
+    24 rows selected.
+    ```
+
+   
+
+8. Verify that the chunks and chunk tablespaces are created. Each sharded table have 18 partitions.
+
+    ```
+    SQL> <copy>set linesize 140</copy>
+    SQL> <copy>column table_name format a20</copy>
+    SQL> <copy>column tablespace_name format a20</copy>
+    SQL> <copy>column partition_name format a20</copy>
+    SQL> <copy>select table_name, partition_name, tablespace_name from dba_tab_partitions where tablespace_name like 'C%TSP_SET_1' order by tablespace_name;</copy>
+    
+    TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
+    -------------------- -------------------- --------------------
+    LINEITEMS	     CUSTOMERS_P1	  C001TSP_SET_1
+    ORDERS		     CUSTOMERS_P1	  C001TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P1	  C001TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P2	  C002TSP_SET_1
+    ORDERS		     CUSTOMERS_P2	  C002TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P2	  C002TSP_SET_1
+    ORDERS		     CUSTOMERS_P3	  C003TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P3	  C003TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P3	  C003TSP_SET_1
+    ORDERS		     CUSTOMERS_P4	  C004TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P4	  C004TSP_SET_1
+    
+    TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
+    -------------------- -------------------- --------------------
+    LINEITEMS	     CUSTOMERS_P4	  C004TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P5	  C005TSP_SET_1
+    ORDERS		     CUSTOMERS_P5	  C005TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P5	  C005TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P6	  C006TSP_SET_1
+    ORDERS		     CUSTOMERS_P6	  C006TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P6	  C006TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P7	  C007TSP_SET_1
+    ORDERS		     CUSTOMERS_P7	  C007TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P7	  C007TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P8	  C008TSP_SET_1
+    
+    TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
+    -------------------- -------------------- --------------------
+    ORDERS		     CUSTOMERS_P8	  C008TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P8	  C008TSP_SET_1
+    ORDERS		     CUSTOMERS_P9	  C009TSP_SET_1
+    LINEITEMS	     CUSTOMERS_P9	  C009TSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P9	  C009TSP_SET_1
+    ORDERS		     CUSTOMERS_P10	  C00ATSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P10	  C00ATSP_SET_1
+    LINEITEMS	     CUSTOMERS_P10	  C00ATSP_SET_1
+    LINEITEMS	     CUSTOMERS_P11	  C00BTSP_SET_1
+    ORDERS		     CUSTOMERS_P11	  C00BTSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P11	  C00BTSP_SET_1
+    
+    TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
+    -------------------- -------------------- --------------------
+    CUSTOMERS	     CUSTOMERS_P12	  C00CTSP_SET_1
+    ORDERS		     CUSTOMERS_P12	  C00CTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P12	  C00CTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P13	  C00DTSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P13	  C00DTSP_SET_1
+    ORDERS		     CUSTOMERS_P13	  C00DTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P14	  C00ETSP_SET_1
+    ORDERS		     CUSTOMERS_P14	  C00ETSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P14	  C00ETSP_SET_1
+    LINEITEMS	     CUSTOMERS_P15	  C00FTSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P15	  C00FTSP_SET_1
+    
+    TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
+    -------------------- -------------------- --------------------
+    ORDERS		     CUSTOMERS_P15	  C00FTSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P16	  C00GTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P16	  C00GTSP_SET_1
+    ORDERS		     CUSTOMERS_P16	  C00GTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P17	  C00HTSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P17	  C00HTSP_SET_1
+    ORDERS		     CUSTOMERS_P17	  C00HTSP_SET_1
+    LINEITEMS	     CUSTOMERS_P18	  C00ITSP_SET_1
+    ORDERS		     CUSTOMERS_P18	  C00ITSP_SET_1
+    CUSTOMERS	     CUSTOMERS_P18	  C00ITSP_SET_1
+    
+    54 rows selected.
+    ```
+
+​      
+
+10. Connect to the catalog database using your own sys user password..
+
+    ```
+    SQL> <copy>connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba</copy>
+    Connected.
+    SQL> 
+    ```
+
+    
+
+11.  Query the `gsmadmin_internal.chunk_loc` table to observe that the chunks replicated in the three shard.
+
+     ```
+     SQL> <copy>column shard format a40</copy>
+     SQL> <copy>select a.name Shard,count( b.chunk_number) Number_of_Chunks from gsmadmin_internal.database a, gsmadmin_internal.chunk_loc b where a.database_num=b.database_num group by a.name;</copy>
+     
+     SHARD					 NUMBER_OF_CHUNKS
+     ---------------------------------------- ----------------
+     sdb1_workshop_shard1				       18
+     sdb2_workshop_shard2				       18
+     sdb3_workshop_shard3				       18
+     ```
+
+
+
+
+## Task 3: Insert Data Into Sharded Table
+
+1.   Connect to the gsm host and switch to **oracle** user
+
+     ```
+     $ <copy>ssh -i labkey opc@<gsmhost_public_ip></copy>
+     Last login: Sun Nov 29 01:26:28 2020 from 59.66.120.23
+     -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+     
+     [opc@gsmhost ~]$ <copy>sudo su - oracle</copy>
+     Last login: Sat Aug 10 23:59:23 GMT 2024 on pts/0
+     [oracle@gsmhost ~]$
+     ```
+
+     
+
+2.   Connect the sharded database using the default GDS$CATALOG service
+
+     ```
+     [oracle@gsmhost ~]$ <copy>sqlplus app_schema/App_Schema_Pass_123@gsmhost:1522/GDS\$CATALOG.oradbcloud</copy>
+     
+     SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Aug 17 05:11:51 2024
+     Version 23.5.0.24.07
+     
+     Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+     
+     Last Successful login time: Sat Aug 17 2024 05:10:59 +00:00
+     
+     Connected to:
+     Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+     Version 23.5.0.24.07
+     
+     SQL> 
+     ```
+
+     
+
+3.   Run the following script to insert 1000 records into customers table.
+
+     ```
+     SQL> <copy>begin
+     for i in 1 .. 1000 loop
+      insert into customers values(i, 'Firstname', 'Lastname','Gold',NULL,NULL,NULL);
+     end loop;
+     end;
+     /</copy>  2    3    4    5    6  
+     
+     PL/SQL procedure successfully completed.
+     ```
+
+     
+
+4.   Commit
+
+     ```
+     SQL> <copy>commit;</copy>
+     
+     Commit complete.
+     ```
+
+     
+
+5.   Check the records in the table.
+
+     ```
+     SQL> <copy>select count(*) from customers;</copy>
+     
+       COUNT(*)
+     ----------
+           1000
+     ```
+
+     
+
+6.   Connect to each of the shard database, check the records in each of the shard.
+
+     ```
+     SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost1:1521/shard1</copy>
+     Connected.
+     SQL> select count(*) from customers;
+     
+       COUNT(*)
+     ----------
+            339
+     
+     SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost2:1521/shard2</copy>
+     Connected.
+     SQL> select count(*) from customers;
+     
+       COUNT(*)
+     ----------
+            335
+     
+     SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost3:1521/shard3</copy>
+     Connected.
+     SQL> select count(*) from customers;
+     
+       COUNT(*)
+     ----------
+            326
+     ```
+
+7.   You can connect to the shard database with a sharding key
+
+     ```
+     SQL> <copy>connect app_schema/App_Schema_Pass_123@'(description=(address=(protocol=tcp)(host=gsmhost)(port=1522))(connect_data=(service_name=oltp_rw_svc.orasdb.oradbcloud)(SHARDING_KEY=1)))'</copy>
+     Connected.
+     ```
+
+     
+
+8.   Show current connected shard DB.
+
+     ```
+     SQL> <copy>select db_unique_name from v$database;</copy>
+     
+     DB_UNIQUE_NAME
+     ------------------------------
+     sdb1_workshop
+     ```
+
+     
+
+9.   Try to connect with another sharding key
+
+     ```
+     SQL> <copy>connect app_schema/App_Schema_Pass_123@'(description=(address=(protocol=tcp)(host=gsmhost)(port=1522))(connect_data=(service_name=oltp_rw_svc.orasdb.oradbcloud)(SHARDING_KEY=1000)))'</copy>
+     Connected.
+     ```
+
+     
+
+10.   Show current connected shard DB
+
+      ```
+      SQL> <copy>select db_unique_name from v$database;</copy>
+      
+      DB_UNIQUE_NAME
+      ------------------------------
+      sdb2_workshop
+      ```
+
+      
+
+11.   Exit from SQLPlus.
+
+
+
+You may now proceed to the next lab.
+
+## Acknowledgements
+* **Author** - Minqiao Wang, Aug 2024
+* **Last Updated By/Date** -
