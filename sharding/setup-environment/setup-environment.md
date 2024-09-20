@@ -166,7 +166,11 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
 You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, Aug 2024
-* **Contributors** -  
-* **Workshop Expiry Date** - 
+* **Author** - Minqiao Wang, Oracle SE
+
+* **Contributor** - Satyabrata Mishra, Database Product Management
+
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024  
+
+    
 

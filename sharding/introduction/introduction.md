@@ -76,6 +76,8 @@ In order to do this workshop, you need
 
 ## Acknowledgements
 
-* **Author** - Minqiao Wang, Aug 2024
-* **Contributors** -  
-* **Workshop Expiry Date** - 
+* **Author** - Minqiao Wang, Oracle China
+
+* **Contributor** - Satyabrata Mishra, Database Product Management
+
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024  

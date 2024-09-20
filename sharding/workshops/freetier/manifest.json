@@ -21,11 +21,15 @@
             "filename": "../../deploy-raft-replication/deploy-raft-replication.md"
         },
         {
-            "title": "Lab 3: Create Sample Schema",
+            "title": "Lab 3: Setup a Non Shard Application",
+            "filename": "../../setup-nonshard-app/setup-nonshard-app.md"
+        },
+        {
+            "title": "Lab 4: Create Sample Schema with Sharded Tables",
             "filename": "../../create-sample-schema/create-sample-schema.md"
         },
         {
-            "title": "Lab 4: Explore the RAFT Replication Features",
+            "title": "Lab 5: Explore the RAFT Replication Features",
             "filename": "../../explore-raft-replication/explore-raft-replication.md"
         },
         {

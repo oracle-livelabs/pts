@@ -226,7 +226,7 @@ This lab assumes you have already completed the following:
      
      
      
-10.   Click **Enter** when finish. Then switch to **root** user and run the scripts
+10.   Click **Enter** when finish. Exit to **opc** user first, then switch to **root** user and run the scripts
 
       ```
       [root@gsmhost ~]# <copy>/u01/app/oraInventory/orainstRoot.sh</copy>
@@ -915,5 +915,6 @@ You may now proceed to the next lab.
 
 ## Acknowledgements
 
-* **Author** - Minqiao Wang, Aug 2024 
-* **Last Updated By/Date** - 
+* **Author** - Minqiao Wang, Oracle SE
+* **Contributor** - Satyabrata Mishra, Database Product Management
+* **Last Updated By/Date** - Sep 2024 

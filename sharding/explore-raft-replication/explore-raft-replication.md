@@ -21,7 +21,7 @@ This lab assumes you have already completed the following:
 - Globally Distributed Database Deployment
 - Create Demo Sample Schema
 
-## **Task 1:** Explore RAFT Replication Configure
+## Task 1: Explore RAFT Replication Configure
 
 1.   Log into gsmhost , switch to **oracle** user
 
@@ -161,7 +161,7 @@ This lab assumes you have already completed the following:
 
      
 
-## RAFT Replication Failover
+## Task 2: RAFT Replication Failover
 
 1.   Open antoher terminal, from gsmhost **opc** user, connec to the shardhost1
 
@@ -347,7 +347,7 @@ This lab assumes you have already completed the following:
 
 
 
-## Manager the RAFT Replication RU
+## Task3: Manager the RAFT Replication RU
 
 1.   From GDSCTL, check current RU Leaders
 
@@ -513,7 +513,8 @@ This lab assumes you have already completed the following:
 
      ## Acknowledgements
 
-     * **Author** - Minqiao Wang, Aug 2024 
-     * **Last Updated By/Date** - 
+     * **Author** - Minqiao Wang, Oracle China 
+     * **Contributor** - Satyabrata Mishra, Database Product Management
+     * **Last Updated By/Date** - Minqiao Wang, Sep 2024  
 
      
