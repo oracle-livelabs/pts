@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Sharding infrastructure </title>
+    <meta name="description" content="">
+    <meta name="author" content="Ilya Taranov">
+
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="bootstrap-theme.css">
+
+    <script src="jquery-2.1.4.js"></script>
+    <script src="masonry.pkgd.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="Chart.js"></script>
+    <script src="Chart.HorizontalBar.js"></script>
+    <script src="DatabaseWidgets.js"></script>
+    <script src="setup.js"></script>
+
+    <style>
+        body { background: #ECF0F0; }
+
+        #container {
+            background: #ECF0F0;
+            padding: 30px;
+            margin-bottom: 20px;
+            clear: both;
+        }
+
+        .centered { margin: 0 auto; }
+
+        .box p {
+            margin: 3px;
+            padding: 7px;
+            font-size: 12px;
+        }
+
+        .box h3 {
+            margin: 3px;
+            padding: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #DDD;
+        }
+
+        .box h3 img {
+            height: 20px;
+            width:  20px;
+            vertical-align: -20%;
+            margin-right: 5px;
+        }
+
+        .box {
+            margin : 5px 5px 0 0;
+            padding: 3px;
+            background: #FFF;
+            border: 1px solid #DDD;
+            font-size: 11px;
+            line-height: 1.4em;
+            float: left;
+        }
+
+        .db p {
+            font-family: monospace;
+        }
+
+        .db .good {
+            font-weight: bold;
+            color: green;
+        }
+
+        .db .chunks {
+            line-height: 2em;
+        }
+
+        .box .nodata {
+            color:silver;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .db .chunk {
+            font-weight: bold;
+            background-color: #F5DEB3;
+            border: 1px solid #555;
+            padding: 2px;
+
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        .db .ro {
+            background-color: #F08080;
+        }
+
+        .forchart
+        {
+            margin: 3px;
+            padding: 7px;
+        }
+
+        div.color-marker
+        {
+            display: inline-block;
+            width : 18px;
+            height: 18px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        .col1 { width: 280px; }
+        .col2 { width: 580px; }
+        .col3 { width: 880px; }
+        .col4 { width: 1180px; }
+
+        div.anyTable
+        {
+            padding: 7px 17px 7px 27px;
+        }
+
+        div.anyTable table
+        {
+            width: 1100px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        div.anyTable table .val { text-align: right; }
+    </style>
+</head>
+
+<body>
+<div id="container">
+    <!--div class="box col1">
+        <h3>Global Sharding Status</h3>
+        <p class="nodata">No data</p>
+    </div-->
+
+    <div class="box col2">
+        <h3>App Services Workload (User Calls per Second)</h3>
+        <div class="forchart"><canvas id="chart-ucps" width="530" height="200" ></canvas></div>
+    </div>
+
+    <div class="box col2">
+        <h3>Sessions per Shard</h3>
+        <div class="forchart"><canvas id="chart-sessions" width="530" height="220"></canvas></div>
+    </div>
+
+    <div class="box col4">
+        <h3>Order Row Number per Global Partition</h3>
+        <div class="forchart"><canvas id="chart-data" width="1130" height="120"></canvas></div>
+    </div>
+
+    <div class="box col4">
+        <h3>Last Inserted Orders</h3>
+        <div class="anyTable" id="lastOrders">
+            <div id="some-orders"><p class="nodata">No data</p></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    setup = new DatabaseSetup();
+
+    function createDbContainer(containerName) {
+        var div = $("<div class='box col1 db' id='{}'></div>".format(containerName));
+        $("#container").prepend(div).masonry('prepended', div);
+        return $("#" + containerName);
+    }
+
+    databaseSeries    = new DatabaseSeries(createDbContainer);
+    partitionData     = new PartitionData();
+
+    metricChartUcps   = new MetricChart    (databaseSeries, "#chart-ucps", 'ucps');
+    statChartSessions = new SeriesItemChart(databaseSeries, "#chart-sessions", "sessions", "Sessions");
+    partitionChart    = new DataItemChart  (partitionData,  "#chart-data", "partitionDistribution");
+
+    $(function(){
+        $('#container').masonry({
+            itemSelector: '.box',
+            columnWidth: 300
+        });
+    });
+
+    function serverUpdate(data)
+    {
+        window.databaseSeries.update(data);
+
+        window.metricChartUcps.update();
+        window.statChartSessions.update();
+
+        if ("partitions" in data)
+        {
+            partitionData.update(data['partitions']);
+            partitionChart.update();
+            partitionData.updated();
+        }
+
+        window.databaseSeries.updated();
+
+        if ("lastOrders" in data)
+        {
+            UpdateTable(data['lastOrders'], '#lastOrders', ['nrm', 'id', 'nrm', 'dat', 'val']);
+        }
+    }
+
+    function updateData()
+    {
+        setTimeout(updateData, 7000);
+
+        $.ajax({ url : window.setup.url, dataType:"json" })
+            .done(function(data) { serverUpdate(data); });
+    }
+
+    setTimeout(updateData, 200);
+
+</script>
+</body>
+</html>

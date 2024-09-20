@@ -1,4 +1,4 @@
-# Create Sample Schema
+# Create Sample Schema with Sharded Tables
 
 ## Introduction
 
@@ -12,6 +12,7 @@ In this lab, you will perform the following steps:
 - Create the schema user, tablespace set, sharded tables and duplicated tables
 - Verify that the DDLs have been propagated to all the shards
 - Insert data into the sharded table
+- Import dump file into the sharded tables.
 
 ### Prerequisites
 
@@ -681,7 +682,7 @@ This lab assumes you have already completed the following:
 1.   Connect to the gsm host and switch to **oracle** user
 
      ```
-     $ <copy>ssh -i labkey opc@<gsmhost_public_ip></copy>
+     $ <copy>ssh -i <ssh_private_key> opc@<gsmhost_public_ip></copy>
      Last login: Sun Nov 29 01:26:28 2020 from 59.66.120.23
      -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
      
@@ -822,10 +823,208 @@ This lab assumes you have already completed the following:
 
 11.   Exit from SQLPlus.
 
+      
 
+## Task 4: Import Dump File to the Sharded Tables
+
+Now, we will load data into globally distributed database using the dump file which created in the previous lab. 
+
+The duplicated tables reside in the catalog database, they are always loaded into the shard catalog database using any of available data loading utilities, or plain SQL. 
+
+![image-import-duplicate-table](images/image-import-duplicate-table.png)
+
+When loading a sharded table, each database shard accommodates a distinct subset of the data set, so the data in each table must be split (partitioned) across shards during the load. You can use the Oracle Data Pump utility to load the data across database shards in subsets. Data from the source database can be exported into a Data Pump dump file. Then Data Pump import can be run on each shard concurrently by using the same dump file.
+
+![image-import-sharded-table](images/image-import-sharded-table.png)
+
+Loading the data directly into the database shards is much faster, because each shard is loaded separately. The Data Pump Import detects that you are importing into a shard and only load rows that belong to that shard.  
+
+1. From gsmhost **opc** user, connec to the catalog host.
+
+    ```
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@catahost</copy>
+    Last login: Fri Sep 20 05:50:21 2024 from 10.0.0.20
+    [opc@catahost ~]$
+    ```
+
+    
+
+2. Switch to **oracle** user
+
+    ```
+    [opc@catahost ~]$ <copy>sudo su - oracle</copy>
+    Last login: Fri Sep 20 06:17:26 UTC 2024
+    [oracle@catahost ~]$ 
+    ```
+
+    
+
+3. Use SQLPLUS, connect to the catalog pdb with `app_schema` user.
+
+    ```
+    [oracle@catahost ~]$ <copy>sqlplus app_schema/App_Schema_Pass_123@catahost:1521/catapdb</copy>
+    
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:29:59 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+    
+    Last Successful login time: Fri Sep 20 2024 06:29:18 +00:00
+    
+    Connected to:
+    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    
+    SQL> 
+    ```
+
+    
+
+4. Create a data pump directory. When shard ddl enabled, it will be created in catalog db and each of the sharded db. Exit the SQLPLUS.
+
+    ```
+    SQL> <copy>alter session enable shard ddl;</copy>
+    
+    Session altered.
+    
+    SQL> <copy>create directory demo_pump_dir as '/home/oracle';</copy>
+    
+    Directory created.
+    
+    SQL> <copy>exit</copy>
+    Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    [oracle@catahost ~]$ 
+    ```
+
+    
+
+5. From the catalog host, run the following command to import the public table data.
+
+    ```
+    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@catahost:1521/catapdb directory=demo_pump_dir \
+          dumpfile=original.dmp logfile=imp.log \
+          tables=Products \
+          content=DATA_ONLY</copy>
+    ```
+
+    
+
+6. The result screen like the following.
+
+    ```
+    Import: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:32:02 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
+    
+    Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@catahost:1521/catapdb directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Products content=DATA_ONLY 
+    Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+    . . imported "APP_SCHEMA"."PRODUCTS"                      27.4 KB     480 rows
+    Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
+    Job "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully completed at Fri Sep 20 06:32:14 2024 elapsed 0 00:00:08
+    ```
+
+    
+
+7. Run the following command to import data into the shard1 tables.
+
+    ```
+    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost1:1521/shard1 directory=demo_pump_dir \
+          dumpfile=original.dmp logfile=imp.log \
+          tables=Customers, Orders, LineItems \
+          content=DATA_ONLY</copy>
+    ```
+
+    
+
+8. The result likes the following. You may notes the only part of the rows are imported into the sharded tables.
+
+    ```
+    Import: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:34:00 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
+    
+    Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@shardhost1:1521/shard1 directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Customers, Orders, LineItems content=DATA_ONLY 
+    Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+    . . imported "APP_SCHEMA"."CUSTOMERS"                      6.6 MB   29481 rows
+    . . imported "APP_SCHEMA"."ORDERS"                         2.3 MB   45611 rows
+    . . imported "APP_SCHEMA"."LINEITEMS"                      3.2 MB   80891 rows
+    Job "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully completed at Fri Sep 20 06:34:41 2024 elapsed 0 00:00:37
+    ```
+
+    
+
+9. Run the following command to load data into shard2 tables.
+
+    ```
+    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost2:1521/shard2 directory=demo_pump_dir \
+          dumpfile=original.dmp logfile=imp.log \
+          tables=Customers, Orders, LineItems \
+          content=DATA_ONLY</copy>
+    ```
+
+    
+
+10. The result like the following.
+
+    ```
+    Import: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:41:13 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
+    
+    Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@shardhost2:1521/shard2 directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Customers, Orders, LineItems content=DATA_ONLY 
+    Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+    . . imported "APP_SCHEMA"."CUSTOMERS"                      6.6 MB   29481 rows
+    . . imported "APP_SCHEMA"."ORDERS"                         2.3 MB   45611 rows
+    . . imported "APP_SCHEMA"."LINEITEMS"                      3.2 MB   80891 rows
+    Job "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully completed at Fri Sep 20 06:41:55 2024 elapsed 0 00:00:38
+    ```
+
+    
+
+11. Run the following command to load data into shard3 tables.
+
+    ```
+    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost3:1521/shard3 directory=demo_pump_dir \
+          dumpfile=original.dmp logfile=imp.log \
+          tables=Customers, Orders, LineItems \
+          content=DATA_ONLY</copy>
+    ```
+
+    
+
+12. The result like the following.
+
+    ```
+    Import: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:44:28 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
+    
+    Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@shardhost3:1521/shard3 directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Customers, Orders, LineItems content=DATA_ONLY 
+    Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+    . . imported "APP_SCHEMA"."CUSTOMERS"                      6.6 MB   29481 rows
+    . . imported "APP_SCHEMA"."ORDERS"                         2.3 MB   45611 rows
+    . . imported "APP_SCHEMA"."LINEITEMS"                      3.2 MB   80891 rows
+    Job "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully completed at Fri Sep 20 06:45:10 2024 elapsed 0 00:00:38
+    ```
+
+13. Exit to the gsm host.
 
 You may now proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, Aug 2024
-* **Last Updated By/Date** -
+* **Author** - Minqiao Wang, Oracle SE
+* **Contributor** - Satyabrata Mishra, Database Product Management
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024
