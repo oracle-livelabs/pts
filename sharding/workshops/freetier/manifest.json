@@ -25,7 +25,7 @@
             "filename": "../../setup-nonshard-app/setup-nonshard-app.md"
         },
         {
-            "title": "Lab 4: Create Sample Schema with Sharded Tables",
+            "title": "Lab 4: Migrate the Application to Globally Distributed Database",
             "filename": "../../create-sample-schema/create-sample-schema.md"
         },
         {

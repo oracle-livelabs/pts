@@ -22,7 +22,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [gdd-raft-23ai-v4.zip](https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-environment/gdd-raft-23ai-v4.zip) - Packaged terraform resources creation script.
+- [gdd-raft-23ai-v5.zip](https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-environment/gdd-raft-23ai-v5.zip) - Packaged terraform resources creation script.
 
 
 
@@ -85,7 +85,7 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
 
 2. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** for the GSM host instance. 
 
-    (If you encouter with error message like:
+    If you encouter with error message like:
 
     ```
     Error Message: work request did not succeed, workId: ocid1.coreservicesworkrequest.oc1.ap-seoul-1.abu...hmltq, entity: database, action: CREATED. Message: Create DB System operation failed. Refer to work request ID fe65f...t1f when opening a Service Request at My Oracle Support.
@@ -93,6 +93,14 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
     Resource OCID: ocid1.dbsystem.oc1.ap-seoul-1.anu...twbq
     
     Suggestion: Please retry or contact support for help with service: Database Db System
+    ```
+
+    or
+
+    ```
+    Error: 400-InvalidParameter, Cannot access Object Storage using the subnet with the following OCID: ocid1.subnet.oc1.ap-seoul-1.aaa...xfa. Review your VCN configuration. If you need further assistance, contact Oracle Support.
+    
+    Suggestion: Please update the parameter(s) in the Terraform config as per error message Cannot access Object Storage using the subnet with the following OCID: ocid1.subnet.oc1.ap-seoul-1.aaa...xfa. Review your VCN configuration. If you need further assistance, contact Oracle Support.
     ```
 
     In this situation, some base databases have been provisioned, others with error. You can click **Apply** again in the stack details page to provision the rest resources).
@@ -103,15 +111,15 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
 
 3. Write down the gsmhost public ip address. It's will be used in the next Tasks.
 
-4. Now, you have gotten the lab resources like the following (**Note:** the DB Unique Name may different if you input the different suffix name when creating the stack).
+4. Now, you have gotten the lab resources like the following (**Note:** the DB Unique Name may different if you input the different suffix name when creating the stack).  The shardhost0 is used for catalog database.
 
-    | Host       | Private IP | DB Name | DB Unique Name   | PDB Name |
-    | ---------- | ---------- | ------- | ---------------- | -------- |
-    | catahost   | 10.0.0.10  | catalog | catalog_workshop | catapdb  |
-    | shardhost1 | 10.0.0.11  | sdb1    | sdb1_workshop    | shard1   |
-    | shardhost2 | 10.0.0.12  | sdb2    | sdb2_workshop    | shard2   |
-    | shardhost3 | 10.0.0.13  | sdb3    | sdb3_workshop    | shard3   |
-    | gsmhost    | 10.0.0.20  |         |                  |          |
+    | Host       | Private IP | DB Name | DB Unique Name | PDB Name |
+    | ---------- | ---------- | ------- | -------------- | -------- |
+    | shardhost0 | 10.0.0.10  | sdb0    | sdb0_workshop  | shard0   |
+    | shardhost1 | 10.0.0.11  | sdb1    | sdb1_workshop  | shard1   |
+    | shardhost2 | 10.0.0.12  | sdb2    | sdb2_workshop  | shard2   |
+    | shardhost3 | 10.0.0.13  | sdb3    | sdb3_workshop  | shard3   |
+    | gsmhost    | 10.0.0.20  |         |                |          |
 
     The `db_domain` is `subnet1.primaryvcn.oraclevcn.com`. The default password for database dba is `WelcomePTS_2024# `.
 
@@ -122,7 +130,7 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
 1.  Open up a terminal (MAC) or cygwin emulator connect the gsmhost instance as the opc user.  Enter yes when prompted.
 
     ````
-    ssh -i ~/.ssh/optionskey opc@<Your GSM host Public IP Address>
+    ssh -i <ssh_private_key> opc@<Your GSM host Public IP Address>
     ````
 
     The output like this:
