@@ -117,6 +117,25 @@ GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
 </copy>
 ```
 
+Last, but not least, we need to create an ACL for making sure that package DBMS_VECTOR_CHAIN (which does a direct callout to internet from PL/SQL without going through APEX webservices packages) works as intended. You can run this as admin:
+
+```sql
+<copy>
+BEGIN
+
+    DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+        host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open
+        ace => xs$ace_type(privilege_list => xs$name_list('connect'),
+                           principal_name => 'specific_user_or_role', -- Restrict to a specific user or role
+                           principal_type => xs_acl.ptype_db)
+    );
+
+END;
+
+/
+</copy>
+```
+
 ## Task 5: Option 1 - Create the credential for ADB to access OCI GenAI Service
 
 ### OCI GenAI Service
