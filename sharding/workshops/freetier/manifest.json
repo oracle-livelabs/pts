@@ -1,5 +1,5 @@
 {
-    "workshoptitle": "Oracle Sharded Database",
+    "workshoptitle": "Oracle Globally Distributed Database with RAFT",
     "tutorials": [
         {
             "title": "Introduction",
@@ -12,29 +12,25 @@
             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
         },
         {
-            "title": "Lab 1: Setup the Environment",
+            "title": "Lab 1: Set up the Lab Environment",
             "description": "Labs that follow the introduction are numbered, starting with Lab 1",
             "filename": "../../setup-environment/setup-environment.md"
         },
         {
-            "title": "Lab 2: Deployment the Sharded Database",
-            "filename": "../../shard-db-deployment/shard-db-deployment.md"
+            "title": "Lab 2: Deployment the RAFT replication Sharded Database",
+            "filename": "../../deploy-raft-replication/deploy-raft-replication.md"
         },
         {
-            "title": "Lab 3: Setup a Non-Shard Database Application",
+            "title": "Lab 3: Setup a Non Shard Application",
             "filename": "../../setup-nonshard-app/setup-nonshard-app.md"
         },
         {
-            "title": "Lab 4: Migrate to Sharded Database",
-            "filename": "../../migrate-to-sdb/migrate-to-sdb.md"
+            "title": "Lab 4: Migrate the Application to Globally Distributed Database",
+            "filename": "../../create-sample-schema/create-sample-schema.md"
         },
         {
-            "title": "Lab 5: Database Request Rout to Shard",
-            "filename": "../../db-request-rout/db-request-rout.md"
-        },
-        {
-            "title": "Lab 6: Sharded Database Elastic Scaling",
-            "filename": "../../elastic-scaling/elastic-scaling.md"
+            "title": "Lab 5: Explore the RAFT Replication Features",
+            "filename": "../../explore-raft-replication/explore-raft-replication.md"
         },
         {
             "title": "Need Help?",

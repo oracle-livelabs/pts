@@ -3,57 +3,58 @@
 
 ## About this Workshop
 
-In this workshop you will learn how to deploy Oracle Sharding, work with the sharded database and scale the sharded database. You will also learn how to migrate an application from a non-shard database to a sharded database.
+In this workshop you will learn how to deploy Oracle Globally Distributed Database with RAFT replication. You will also deploy an application base on the RAFT with high availability. 
 
 Estimated Lab Time: 4 hours.
 
-### About Oracle Sharding
+### About Oracle Globally Distributed Database
 
-Oracle Sharding is a scalability and availability feature for custom-designed OLTP applications that enables distribution and replication of data across a pool of discrete Oracle databases that share no hardware or software. The pool of databases is presented to the application as a single logical database. Applications elastically scale (data, transactions and users) to any level, on any platform, simply by adding additional databases (shards) to the pool. Scaling up to 1000 shards is supported in the first release.
-
-Oracle Sharding provides superior run-time performance and simpler life-cycle management compared to home-grown deployments that use a similar approach to scalability. It also provides the advantages of an enterprise DBMS, including: relational schema, SQL, and other programmatic interfaces, support for complex data types, online schema changes, multi-core scalability, advanced security, compression, high-availability, ACID properties, consistent reads, developer agility with JSON, and much more. 
-
-When deploying a sharded configuration, there are two different `GDSCTL` commands, `ADD SHARD` and `CREATE SHARD`, that can be used to add a shard.
-
-Before you start to configure the sharding topology, decide which shard creation method to use because this decision affects some of the configuration steps. In this workshop, We will use the multitenant database for the shard database, so only the `ADD SHARD` command is supported. 
-
-The differences between the `ADD SHARD` and `CREATE SHARD` methods are explained where necessary in the configuration instructions.
-
-- **ADD SHARD Method**
-
-    The `GDSCTL ADD SHARD` command can be used to add a shard to an Oracle Sharding configuration. When using this command, you are responsible for creating the Oracle databases that will become shards during deployment. You can use whatever method you want to create the databases as long as the databases meet the prerequisites for inclusion in an Oracle Sharding configuration.
-
-    Some of the benefits of using the `ADD SHARD` method include:
-
-    - You have complete control over the process used to create the databases.
-    - It is straightforward to customize database parameters, naming, and storage locations.
-    - Both PDB and non-CDB shards are supported.
-    - There is less Oracle software to configure on the shard hosts.
-    - There is much less complexity in the deployment process because the shard databases are created before you run any `GDSCTL` commands.
+Oracle Globally Distributed Database disperses segments of a data set across many databases (shards) onto different computers—on-premises or in the cloud. It enables globally distributed, linearly scalable, multimodel databases. It requires no specialized hardware or software. Oracle Globally Distributed Database does all this while rendering the strong consistency, full power of SQL, support for structured and unstructured data, and the Oracle Database ecosystem. It meets data sovereignty requirements and supports applications that require low latency and high availability.
 
 
 
-- **CREATE SHARD Method**
+## About RAFT Replication
 
-    The `GDSCTL CREATE SHARD` command can be used to create a shard in an Oracle Sharding configuration. With `CREATE SHARD`, the shard catalog leverages the Oracle Remote Scheduler Agent to run the Database Configuration Assistant (DBCA) remotely on each shard host to create a database for you. This method does not support PDBs, so any shard databases added must be non-CDBs.
+RAFT Replication enables rapid failover within seconds and zero data loss during node or data center outages, facilitating an Active-Active-Active symmetric distributed database architecture that enhances availability, simplifies management, and optimizes resource utilization globally.
 
-    Some of the benefits of using the `CREATE SHARD` method include:
+**Replication Unit**
 
-    - It is easier to create shard databases for non-database administrators.
-    - It provides a standard way to provision a new database, when no standard is in current practice.
-    - Any database created with `CREATE SHARD` is automatically configured correctly for Oracle Sharding without the need to run SQL statements against the database or otherwise adjust database parameters.
-    - You can create standby databases automatically.
+When Raft replication is enabled, a sharded database contains multiple **replication units**. A replication unit (RU) is a set of chunks that have the same replication topology. Each RU has three replicas placed on different shards. The Raft consensus protocol is used to maintain consistency between the replicas in case of failures, network partitioning, message loss, or delay.
+
+Each shard contains replicas from multiple RUs. Some of these replicas are leaders and some are followers. Raft replication tries to maintain a balanced distribution of leaders and followers across shards. By default each shard is a leader for two RUs and is a follower for four other RUs. This makes all shards active and provides optimal utilization of hardware resources.
+
+In Oracle Globally Distributed Database, an RU is a set of chunks, as shown in the image below.
+
+![image-20240813110326679](images/image-20240813110326679.png)
 
 
+
+**Raft Group**
+
+Each replication unit contains exactly one chunk set and has a **leader** and a set of **followers**, and these members form a *raft group*. The leader and its followers for a replication unit contain replicas of the same chunk set in different shards as shown below. A shard can be the leader for some replication units and a follower for other replication units.
+
+All DMLs for a particular subset of data are executed in the leader first, and then are replicated to its followers.
+
+![image-20240813110443600](images/image-20240813110443600.png)
+
+
+
+**Replication Factor**
+
+The **replication factor** (RF) determines the number of participants in a Raft group. This number includes the leader and its followers.
+
+The RU needs a majority of replicas available for write.
+
+-   RF = 3: tolerates one replica failure
+-   RF = 5: tolerates two replica failures
+
+In Oracle Globally Distributed Database , the replication factor is specified for the entire sharded database, that is all replication units in the database have the same RF. The number of followers is limited to two, thus the replication factor is three.
 
 ### Objectives
 
 In this workshop, you will
 
-- Deploy a shard database with two shards using system managed sharding.
-- Migrate application to the shard database
-- Working with the shard database.
-- Extent the shard database with the third shard.
+- Deploy a Globally Distributed Database with RAFT replication.
 
 
 
@@ -67,7 +68,7 @@ In order to do this workshop, you need
 
 ## Learn More
 
-- [Oracle Sharded Database](https://docs.oracle.com/en/database/oracle/oracle-database/19/shard/sharding-deployment.html)
+- [Oracle Globally Distributed Database](https://docs.oracle.com/en/database/oracle/oracle-database/23/shard/raft-replication.html)
 
 
 
@@ -75,6 +76,8 @@ In order to do this workshop, you need
 
 ## Acknowledgements
 
-* **Author** - Minqiao Wang, DB Product Management, Dec 2020 
-* **Last Updated By/Date** - Minqiao Wang, Jun 2021
+* **Author** - Minqiao Wang, Oracle China
 
+* **Contributor** - Satyabrata Mishra, Database Product Management
+
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024  
