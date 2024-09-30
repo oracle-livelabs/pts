@@ -2,15 +2,9 @@
 
 ## Introduction
 
-In this lab, you will setup a non-sharded database application. You will migrate the schema and data to the sharded database in the next lab. The demo java application is designed for sharded database, but also can work with the non-sharded database with a little modified. In order to save the resource, we will use a PDB in the shard3 host to simulate a non-sharded instance.
+In this lab, you will setup a non-sharded database application. You will migrate the schema and data to the globally distributed database in the next lab.  We will create a PDB in the shardhost3 to simulate a non-sharded instance.
 
 Estimated Lab Time: 30 minutes.
-
-<!--Watch the video below for a quick walk through of the lab.
-[](youtube:bUC2KXUW21E)-->
-
-Watch the video below for a quick walk-through of the lab.
-[Setup a Non-Sharded Application](videohub:1_z2psr30b)
 
 ### Objectives
 
@@ -27,57 +21,73 @@ In this lab, you will perform the following steps:
 
 This lab assumes you have already completed the following:
 
-- Access the Workshop Environment 
+- Setup the Workshop Environment 
 
 
 
 ## Task 1: Create a Non-Shard Service
 
-1. Connect to the shard3 host, switch to the oracle user.
+1. Connect to gsm host using **opc** user.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx</copy>
-    Last login: Mon Nov 30 11:24:36 2020 from 59.66.120.23
-    -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-    
-    [opc@shd3 ~]$ <copy>sudo su - oracle</copy>
-    Last login: Mon Nov 30 11:27:34 GMT 2020 on pts/0
-    [oracle@shd3 ~]$ 
+    $ <copy>ssh -i <ssh_private_key> opc@<gsmhost_public_ip></copy>
     ```
 
    
 
+2. Copy the ssh private key to the shardhost3.
+
+    ```
+    [opc@gsmhost ~]$ <copy>scp -i <ssh_private_key> <ssh_private_key> opc@shardhost3:~</copy>
+    ```
+    
+    
+    
+2. Connect to the shardhost3.
+
+    ```
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost3</copy>
+    Last login: Fri Sep 20 04:59:46 2024 from 10.0.0.20
+    [opc@shardhost3 ~]$ 
+    ```
+    
+    
+    
+2. Switch to the **oracle** user
+
+    ```
+    [opc@shardhost3 ~]$ <copy>sudo su - oracle</copy>
+    Last login: Fri Sep 20 05:00:24 UTC 2024
+    [oracle@shardhost3 ~]$ 
+    ```
+    
+    
+    
 2. Connect to the database as sysdba.
 
     ```
-    [oracle@shd3 ~]$ <copy>sqlplus / as sysdba</copy>
+    [oracle@shardhost3 ~]$ <copy>sqlplus / as sysdba</copy>
     
-    SQL*Plus: Release 19.0.0.0.0 - Production on Fri Dec 4 11:32:41 2020
-    Version 19.14.0.0.0
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 05:01:02 2024
+    Version 23.5.0.24.07
     
-    Copyright (c) 1982, 2020, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
     
     
     Connected to:
-    Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.14.0.0.0
+    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
     
     SQL> 
     ```
 
    
 
-3. Create a new pdb name nspdb.
+3. Create a new pdb name **nspdb**.
 
     ```
-    SQL> <copy>CREATE PLUGGABLE DATABASE nspdb ADMIN USER admin IDENTIFIED BY Ora_DB4U 
-      DEFAULT TABLESPACE users DATAFILE '/u01/app/oracle/oradata/SHD3/nspdb/users01.dbf' 
-      SIZE 10G AUTOEXTEND ON 
-      FILE_NAME_CONVERT = ('/pdbseed/', '/nspdb/');</copy>  2    3    4  
-    
+    SQL> <copy>CREATE PLUGGABLE DATABASE nspdb ADMIN USER admin IDENTIFIED BY WelcomePTS_2024#;</copy>   
     Pluggable database created.
-    
-    SQL>
     ```
 
    
@@ -88,8 +98,6 @@ This lab assumes you have already completed the following:
     SQL> <copy>alter pluggable database nspdb open;</copy>
     
     Pluggable database altered.
-    
-    SQL>
     ```
 
    
@@ -100,13 +108,11 @@ This lab assumes you have already completed the following:
     SQL> <copy>alter session set container = nspdb;</copy>
     
     Session altered.
-    
-    SQL>
     ```
 
    
 
-6. Create a service named `GDS$CATALOG.ORADBCLOUD` and start it in order to run the demo application correctly.  (The demo application is designed for sharded database, it's need connect to the shard catalog. The service name is hard code in the demo application).
+6. Create a service named `GDS$CATALOG.ORADBCLOUD` and start it in order to run the demo application correctly.  (The service name is hard code in the demo application.)
 
     ```
     SQL> <copy>BEGIN
@@ -137,9 +143,9 @@ This lab assumes you have already completed the following:
 
     ```
     SQL> <copy>exit</copy>
-    Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.14.0.0.0
-    [oracle@shd3 ~]$ 
+    Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    [oracle@shardhost3 ~]$ 
     ```
 
 
@@ -147,27 +153,10 @@ This lab assumes you have already completed the following:
 
 ## Task 2: Create the Demo Schema
 
-1. Still in the shard3 host with oracle user. Download the SQL script `nonshard-app-schema.sql`.
+1. Still in the shardhost3 with **oracle** user. Download the SQL script `nonshard-app-schema.sql`.
 
     ```
-    [oracle@shd3 ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/nonshard-app-schema.sql</copy>
-    --2020-12-06 10:45:06--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/nonshard-app-schema.sql
-    Resolving github.com (github.com)... 140.82.112.3
-    Connecting to github.com (github.com)|140.82.112.3|:443... connected.
-    HTTP request sent, awaiting response... 302 Found
-    Location: https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/nonshard-app-schema.sql [following]
-    --2020-12-06 10:45:08--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/nonshard-app-schema.sql
-    Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.76.133
-    Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.76.133|:443... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 2938 (2.9K) [text/plain]
-    Saving to: ‘nonshard-app-schema.sql’
-    
-    100%[======================================>] 2,938       --.-K/s   in 0s      
-    
-    2020-12-06 10:45:08 (15.2 MB/s) - ‘nonshard-app-schema.sql’ saved [2938/2938]
-    
-    [oracle@shd3 ~]$ 
+    [oracle@shardhost3 ~]$ <copy>wget https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-nonshard-app/nonshard-app-schema.sql</copy>
     ```
 
    
@@ -175,7 +164,7 @@ This lab assumes you have already completed the following:
 2. Review the content in the sql scripts file.
 
     ```
-    [oracle@shd3 ~]$ <copy>cat nonshard-app-schema.sql</copy> 
+    [oracle@shardhost3 ~]$ <copy>cat nonshard-app-schema.sql</copy>
     set echo on 
     set termout on
     set time on
@@ -213,7 +202,7 @@ This lab assumes you have already completed the following:
       Passwd      RAW(60),
       CONSTRAINT pk_customers PRIMARY KEY (CustId),
       CONSTRAINT json_customers CHECK (CustProfile IS JSON)
-    ) TABLESPACE USERS
+    ) 
     PARTITION BY HASH (CustId) PARTITIONS 12;
     
     REM
@@ -229,7 +218,7 @@ This lab assumes you have already completed the following:
       constraint  pk_orders primary key (CustId, OrderId),
       constraint  fk_orders_parent foreign key (CustId) 
         references Customers on delete cascade
-    ) TABLESPACE USERS
+    ) 
     partition by reference (fk_orders_parent);
     
     REM
@@ -250,7 +239,7 @@ This lab assumes you have already completed the following:
       constraint  pk_items primary key (CustId, OrderId, ProductId),
       constraint  fk_items_parent foreign key (CustId, OrderId)
         references Orders on delete cascade
-    ) TABLESPACE USERS
+    ) 
     partition by reference (fk_items_parent);
     
     REM
@@ -262,7 +251,7 @@ This lab assumes you have already completed the following:
       Name       VARCHAR2(128),
       DescrUri   VARCHAR2(128),
       LastPrice  NUMBER(19,4)
-    ) TABLESPACE USERS;
+    ) ;
     
     REM
     REM Create functions for Password creation and checking – used by the REM demo loader application
@@ -293,21 +282,19 @@ This lab assumes you have already completed the following:
     REM
     REM
     spool off
+    ```
     
-    [oracle@shd3 ~]$ 
-   ```
-
    
 
 3. Use SQLPLUS to run this sql scripts.
 
     ```
-    [oracle@shd3 ~]$ <copy>sqlplus /nolog</copy>
+    [oracle@shardhost3 ~]$ <copy>sqlplus /nolog</copy>
     
-    SQL*Plus: Release 19.0.0.0.0 - Production on Sat Dec 5 01:44:19 2020
-    Version 19.14.0.0.0
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Sep 21 05:29:30 2024
+    Version 23.5.0.24.07
     
-    Copyright (c) 1982, 2020, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
     
     SQL> <copy>@nonshard-app-schema.sql</copy>
     ```
@@ -317,120 +304,169 @@ This lab assumes you have already completed the following:
 4. The result screen like the following:
 
     ```
+    SQL> set termout on
+    SQL> set time on
+    02:59:24 SQL> spool /home/oracle/nonshard_app_schema.lst
+    02:59:24 SQL> REM
+    02:59:24 SQL> REM Connect to the pdb and Create Schema
+    02:59:24 SQL> REM
+    02:59:24 SQL> connect / as sysdba
     Connected.
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create for Customers
-    02:37:45 SQL> REM
-    02:37:45 SQL> CREATE TABLE Customers
-    02:37:45   2  (
-    02:37:45   3  	CustId	    VARCHAR2(60) NOT NULL,
-    02:37:45   4  	FirstName   VARCHAR2(60),
-    02:37:45   5  	LastName    VARCHAR2(60),
-    02:37:45   6  	Class	    VARCHAR2(10),
-    02:37:45   7  	Geo	    VARCHAR2(8),
-    02:37:45   8  	CustProfile VARCHAR2(4000),
-    02:37:45   9  	Passwd	    RAW(60),
-    02:37:45  10  	CONSTRAINT pk_customers PRIMARY KEY (CustId),
-    02:37:45  11  	CONSTRAINT json_customers CHECK (CustProfile IS JSON)
-    02:37:45  12  ) TABLESPACE USERS
-    02:37:45  13  PARTITION BY HASH (CustId) PARTITIONS 12;
+    02:59:24 SQL> alter session set container=nspdb;
+    
+    Session altered.
+    
+    02:59:24 SQL> create user app_schema identified by app_schema;
+    
+    User created.
+    
+    02:59:24 SQL> grant connect, resource, alter session to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant execute on dbms_crypto to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant create table, create procedure, create tablespace, create materialized view to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant unlimited tablespace to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant select_catalog_role to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant all privileges to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> grant dba to app_schema;
+    
+    Grant succeeded.
+    
+    02:59:24 SQL> 
+    02:59:24 SQL> REM
+    02:59:24 SQL> REM Create tables
+    02:59:24 SQL> REM
+    02:59:24 SQL> connect app_schema/app_schema@localhost:1521/nspdb
+    Connected.
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create for Customers
+    02:59:25 SQL> REM
+    02:59:25 SQL> CREATE TABLE Customers
+    02:59:25   2  (
+    02:59:25   3  	CustId	    VARCHAR2(60) NOT NULL,
+    02:59:25   4  	FirstName   VARCHAR2(60),
+    02:59:25   5  	LastName    VARCHAR2(60),
+    02:59:25   6  	Class	    VARCHAR2(10),
+    02:59:25   7  	Geo	    VARCHAR2(8),
+    02:59:25   8  	CustProfile VARCHAR2(4000),
+    02:59:25   9  	Passwd	    RAW(60),
+    02:59:25  10  	CONSTRAINT pk_customers PRIMARY KEY (CustId),
+    02:59:25  11  	CONSTRAINT json_customers CHECK (CustProfile IS JSON)
+    02:59:25  12  )
+    02:59:25  13  PARTITION BY HASH (CustId) PARTITIONS 12;
     
     Table created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create table for Orders
-    02:37:45 SQL> REM
-    02:37:45 SQL> CREATE TABLE Orders
-    02:37:45   2  (
-    02:37:45   3  	OrderId     INTEGER NOT NULL,
-    02:37:45   4  	CustId	    VARCHAR2(60) NOT NULL,
-    02:37:45   5  	OrderDate   TIMESTAMP NOT NULL,
-    02:37:45   6  	SumTotal    NUMBER(19,4),
-    02:37:45   7  	Status	    CHAR(4),
-    02:37:45   8  	constraint  pk_orders primary key (CustId, OrderId),
-    02:37:45   9  	constraint  fk_orders_parent foreign key (CustId)
-    02:37:45  10  	  references Customers on delete cascade
-    02:37:45  11  ) TABLESPACE USERS
-    02:37:45  12  partition by reference (fk_orders_parent);
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create table for Orders
+    02:59:25 SQL> REM
+    02:59:25 SQL> CREATE TABLE Orders
+    02:59:25   2  (
+    02:59:25   3  	OrderId     INTEGER NOT NULL,
+    02:59:25   4  	CustId	    VARCHAR2(60) NOT NULL,
+    02:59:25   5  	OrderDate   TIMESTAMP NOT NULL,
+    02:59:25   6  	SumTotal    NUMBER(19,4),
+    02:59:25   7  	Status	    CHAR(4),
+    02:59:25   8  	constraint  pk_orders primary key (CustId, OrderId),
+    02:59:25   9  	constraint  fk_orders_parent foreign key (CustId)
+    02:59:25  10  	  references Customers on delete cascade
+    02:59:25  11  )
+    02:59:25  12  partition by reference (fk_orders_parent);
     
     Table created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create the sequence used for the OrderId column
-    02:37:45 SQL> REM
-    02:37:45 SQL> CREATE SEQUENCE Orders_Seq;
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create the sequence used for the OrderId column
+    02:59:25 SQL> REM
+    02:59:25 SQL> CREATE SEQUENCE Orders_Seq;
     
     Sequence created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create table for LineItems
-    02:37:45 SQL> REM
-    02:37:45 SQL> CREATE TABLE LineItems
-    02:37:45   2  (
-    02:37:45   3  	OrderId     INTEGER NOT NULL,
-    02:37:45   4  	CustId	    VARCHAR2(60) NOT NULL,
-    02:37:45   5  	ProductId   INTEGER NOT NULL,
-    02:37:45   6  	Price	    NUMBER(19,4),
-    02:37:45   7  	Qty	    NUMBER,
-    02:37:45   8  	constraint  pk_items primary key (CustId, OrderId, ProductId),
-    02:37:45   9  	constraint  fk_items_parent foreign key (CustId, OrderId)
-    02:37:45  10  	  references Orders on delete cascade
-    02:37:45  11  ) TABLESPACE USERS
-    02:37:45  12  partition by reference (fk_items_parent);
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create table for LineItems
+    02:59:25 SQL> REM
+    02:59:25 SQL> CREATE TABLE LineItems
+    02:59:25   2  (
+    02:59:25   3  	OrderId     INTEGER NOT NULL,
+    02:59:25   4  	CustId	    VARCHAR2(60) NOT NULL,
+    02:59:25   5  	ProductId   INTEGER NOT NULL,
+    02:59:25   6  	Price	    NUMBER(19,4),
+    02:59:25   7  	Qty	    NUMBER,
+    02:59:25   8  	constraint  pk_items primary key (CustId, OrderId, ProductId),
+    02:59:25   9  	constraint  fk_items_parent foreign key (CustId, OrderId)
+    02:59:25  10  	  references Orders on delete cascade
+    02:59:25  11  )
+    02:59:25  12  partition by reference (fk_items_parent);
     
     Table created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create table for Products
-    02:37:45 SQL> REM
-    02:37:45 SQL> CREATE TABLE Products
-    02:37:45   2  (
-    02:37:45   3  	ProductId  INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-    02:37:45   4  	Name	   VARCHAR2(128),
-    02:37:45   5  	DescrUri   VARCHAR2(128),
-    02:37:45   6  	LastPrice  NUMBER(19,4)
-    02:37:45   7  ) TABLESPACE USERS;
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create table for Products
+    02:59:25 SQL> REM
+    02:59:25 SQL> CREATE TABLE Products
+    02:59:25   2  (
+    02:59:25   3  	ProductId  INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    02:59:25   4  	Name	   VARCHAR2(128),
+    02:59:25   5  	DescrUri   VARCHAR2(128),
+    02:59:25   6  	LastPrice  NUMBER(19,4)
+    02:59:25   7  ) ;
     
     Table created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM Create functions for Password creation and checking – used by the REM demo loader application
-    02:37:45 SQL> REM
-    02:37:45 SQL> 
-    02:37:45 SQL> CREATE OR REPLACE FUNCTION PasswCreate(PASSW IN RAW)
-    02:37:45   2  	RETURN RAW
-    02:37:45   3  IS
-    02:37:45   4  	Salt RAW(8);
-    02:37:45   5  BEGIN
-    02:37:45   6  	Salt := DBMS_CRYPTO.RANDOMBYTES(8);
-    02:37:45   7  	RETURN UTL_RAW.CONCAT(Salt, DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(Salt, PASSW), DBMS_CRYPTO.HASH_SH256));
-    02:37:45   8  END;
-    02:37:45   9  /
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM Create functions for Password creation and checking – used by the REM demo loader application
+    02:59:25 SQL> REM
+    02:59:25 SQL> 
+    02:59:25 SQL> CREATE OR REPLACE FUNCTION PasswCreate(PASSW IN RAW)
+    02:59:25   2  	RETURN RAW
+    02:59:25   3  IS
+    02:59:25   4  	Salt RAW(8);
+    02:59:25   5  BEGIN
+    02:59:25   6  	Salt := DBMS_CRYPTO.RANDOMBYTES(8);
+    02:59:25   7  	RETURN UTL_RAW.CONCAT(Salt, DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(Salt, PASSW), DBMS_CRYPTO.HASH_SH256));
+    02:59:25   8  END;
+    02:59:25   9  /
     
     Function created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> CREATE OR REPLACE FUNCTION PasswCheck(PASSW IN RAW, PHASH IN RAW)
-    02:37:45   2  	RETURN INTEGER IS
-    02:37:45   3  BEGIN
-    02:37:45   4  	RETURN UTL_RAW.COMPARE(
-    02:37:45   5  	    DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(UTL_RAW.SUBSTR(PHASH, 1, 8), PASSW), DBMS_CRYPTO.HASH_SH256),
-    02:37:45   6  	    UTL_RAW.SUBSTR(PHASH, 9));
-    02:37:45   7  END;
-    02:37:45   8  /
+    02:59:25 SQL> 
+    02:59:25 SQL> CREATE OR REPLACE FUNCTION PasswCheck(PASSW IN RAW, PHASH IN RAW)
+    02:59:25   2  	RETURN INTEGER IS
+    02:59:25   3  BEGIN
+    02:59:25   4  	RETURN UTL_RAW.COMPARE(
+    02:59:25   5  	    DBMS_CRYPTO.HASH(UTL_RAW.CONCAT(UTL_RAW.SUBSTR(PHASH, 1, 8), PASSW), DBMS_CRYPTO.HASH_SH256),
+    02:59:25   6  	    UTL_RAW.SUBSTR(PHASH, 9));
+    02:59:25   7  END;
+    02:59:25   8  /
     
     Function created.
     
-    02:37:45 SQL> 
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM
-    02:37:45 SQL> select table_name from user_tables;
+    02:59:25 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM
+    02:59:25 SQL> select table_name from user_tables;
     
     TABLE_NAME
     --------------------------------------------------------------------------------
@@ -439,26 +475,25 @@ This lab assumes you have already completed the following:
     LINEITEMS
     PRODUCTS
     
-    02:37:45 SQL> REM
-    02:37:45 SQL> REM
-    02:37:45 SQL> spool off
-    02:37:45 SQL> 
+    02:59:25 SQL> REM
+    02:59:25 SQL> REM
+    02:59:25 SQL> spool off
     ```
 
    
 
-5. The single instance demo schema is created. Exit the sqlplus. and Exit the Shard3 host.
+5. The single instance demo schema is created. Exit to the gsmhost.
 
     ```
-    02:37:45 SQL> <copy>exit</copy>
-    Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.14.0.0.0
-    [oracle@shd3 ~]$ <copy>exit</copy>
+    05:06:43 SQL> <copy>exit</copy>
+    Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    [oracle@shardhost3 ~]$ <copy>exit</copy>
     logout
-    [opc@shd3 ~]$ <copy>exit</copy>
+    [opc@shardhost3 ~]$ <copy>exit</copy>
     logout
-    Connection to 152.67.196.227 closed.
-    $ 
+    Connection to shardhost3 closed.
+    [opc@gsmhost ~]$ 
     ```
 
 
@@ -466,15 +501,12 @@ This lab assumes you have already completed the following:
 
 ## Task 3: Setup and Run the Demo Application
 
-1. Connect to the catalog host, switch to the oracle user.
+1. From the gsm host, switch to the oracle user.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
-    Last login: Fri Dec  4 06:48:49 2020 from 202.45.129.206
-    -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-    [opc@cata ~]$ <copy>sudo su - oracle</copy>
-    Last login: Fri Dec  4 06:48:55 GMT 2020 on pts/0
-    [oracle@cata ~]$ 
+    [opc@gsmhost ~]$ <copy>sudo su - oracle</copy>
+    Last login: Thu Sep 19 23:21:41 GMT 2024 on pts/0
+    [oracle@gsmhost ~]$ 
     ```
 
    
@@ -482,24 +514,7 @@ This lab assumes you have already completed the following:
 2. Download the `sdb_demo_app.zip`  file.
 
     ```
-    [oracle@cata ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/sdb_demo_app.zip</copy>
-    --2020-12-06 10:50:35--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/sdb_demo_app.zip
-    Resolving github.com (github.com)... 140.82.113.3
-    Connecting to github.com (github.com)|140.82.113.3|:443... connected.
-    HTTP request sent, awaiting response... 302 Found
-    Location: https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/sdb_demo_app.zip [following]
-    --2020-12-06 10:50:37--  https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/Oracle%20Sharding/sdb_demo_app.zip
-    Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.88.133
-    Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.88.133|:443... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 5897406 (5.6M) [application/zip]
-    Saving to: ‘sdb_demo_app.zip’
-    
-    100%[===============================================================>] 5,897,406   6.92MB/s   in 0.8s   
-    
-    2020-12-06 10:50:38 (6.92 MB/s) - ‘sdb_demo_app.zip’ saved [5897406/5897406]
-    
-    [oracle@cata ~]$ 
+    [oracle@gsmhost ~]$ <copy>wget https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-nonshard-app/sdb_demo_app.zip</copy>
     ```
 
    
@@ -507,165 +522,7 @@ This lab assumes you have already completed the following:
 3. Unzip the file. This will create `sdb_demo_app` directory under the `/home/oracle`.
 
     ```
-    [oracle@cata ~]$ <copy>unzip sdb_demo_app.zip</copy>
-    Archive:  sdb_demo_app.zip
-       creating: sdb_demo_app/
-      inflating: sdb_demo_app/demo.properties  
-      inflating: __MACOSX/sdb_demo_app/._demo.properties  
-      inflating: sdb_demo_app/logging.properties  
-      inflating: __MACOSX/sdb_demo_app/._logging.properties  
-      inflating: sdb_demo_app/README _SDB_Demo_Application.pdf  
-      inflating: __MACOSX/sdb_demo_app/._README _SDB_Demo_Application.pdf  
-      inflating: sdb_demo_app/.DS_Store  
-      inflating: __MACOSX/sdb_demo_app/._.DS_Store  
-      inflating: sdb_demo_app/monitor.logging.properties  
-      inflating: __MACOSX/sdb_demo_app/._monitor.logging.properties  
-      inflating: sdb_demo_app/generate_properties.sh  
-      inflating: __MACOSX/sdb_demo_app/._generate_properties.sh  
-      inflating: sdb_demo_app/build.xml  
-      inflating: __MACOSX/sdb_demo_app/._build.xml  
-       creating: sdb_demo_app/web/
-      inflating: sdb_demo_app/run.sh     
-      inflating: __MACOSX/sdb_demo_app/._run.sh  
-      inflating: sdb_demo_app/monitor-install.sh  
-      inflating: __MACOSX/sdb_demo_app/._monitor-install.sh  
-      inflating: sdb_demo_app/fill.sh    
-      inflating: __MACOSX/sdb_demo_app/._fill.sh  
-       creating: sdb_demo_app/lib/
-      inflating: sdb_demo_app/demo.logging.properties  
-      inflating: __MACOSX/sdb_demo_app/._demo.logging.properties  
-      inflating: sdb_demo_app/monitor.sh  
-      inflating: __MACOSX/sdb_demo_app/._monitor.sh  
-       creating: sdb_demo_app/build/
-       creating: sdb_demo_app/data/
-       creating: sdb_demo_app/src/
-       creating: sdb_demo_app/sql/
-      inflating: sdb_demo_app/web/bootstrap.min.css  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap.min.css  
-      inflating: sdb_demo_app/web/npm.js  
-      inflating: __MACOSX/sdb_demo_app/web/._npm.js  
-      inflating: sdb_demo_app/web/Chart.js  
-      inflating: __MACOSX/sdb_demo_app/web/._Chart.js  
-      inflating: sdb_demo_app/web/bootstrap.css  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap.css  
-      inflating: sdb_demo_app/web/DatabaseWidgets.js  
-      inflating: __MACOSX/sdb_demo_app/web/._DatabaseWidgets.js  
-      inflating: sdb_demo_app/web/jquery-2.1.4.js  
-      inflating: __MACOSX/sdb_demo_app/web/._jquery-2.1.4.js  
-      inflating: sdb_demo_app/web/Chart.HorizontalBar.js  
-      inflating: __MACOSX/sdb_demo_app/web/._Chart.HorizontalBar.js  
-      inflating: sdb_demo_app/web/bootstrap.js  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap.js  
-      inflating: sdb_demo_app/web/masonry.pkgd.js  
-      inflating: __MACOSX/sdb_demo_app/web/._masonry.pkgd.js  
-      inflating: sdb_demo_app/web/bootstrap.min.js  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap.min.js  
-      inflating: sdb_demo_app/web/dash.html  
-      inflating: __MACOSX/sdb_demo_app/web/._dash.html  
-      inflating: sdb_demo_app/web/bootstrap-theme.css  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap-theme.css  
-      inflating: sdb_demo_app/web/db.svg  
-      inflating: __MACOSX/sdb_demo_app/web/._db.svg  
-      inflating: sdb_demo_app/web/bootstrap-theme.min.css  
-      inflating: __MACOSX/sdb_demo_app/web/._bootstrap-theme.min.css  
-      inflating: sdb_demo_app/lib/ojdbc8.jar  
-      inflating: __MACOSX/sdb_demo_app/lib/._ojdbc8.jar  
-      inflating: sdb_demo_app/lib/ons.jar  
-      inflating: __MACOSX/sdb_demo_app/lib/._ons.jar  
-      inflating: sdb_demo_app/lib/ucp.jar  
-      inflating: __MACOSX/sdb_demo_app/lib/._ucp.jar  
-      inflating: sdb_demo_app/build/demo.jar  
-      inflating: __MACOSX/sdb_demo_app/build/._demo.jar  
-      inflating: sdb_demo_app/data/streets.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._streets.txt  
-      inflating: sdb_demo_app/data/first-m.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._first-m.txt  
-      inflating: sdb_demo_app/data/us-places.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._us-places.txt  
-      inflating: sdb_demo_app/data/first-f.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._first-f.txt  
-      inflating: sdb_demo_app/data/parts.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._parts.txt  
-      inflating: sdb_demo_app/data/last.txt  
-      inflating: __MACOSX/sdb_demo_app/data/._last.txt  
-      inflating: sdb_demo_app/src/.DS_Store  
-      inflating: __MACOSX/sdb_demo_app/src/._.DS_Store  
-       creating: sdb_demo_app/src/oracle/
-      inflating: sdb_demo_app/sql/app_schema_auto.sql  
-      inflating: sdb_demo_app/sql/demo_app_ext.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._demo_app_ext.sql  
-      inflating: sdb_demo_app/sql/catalog_monitor.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._catalog_monitor.sql  
-      inflating: sdb_demo_app/sql/app_schema_user.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._app_schema_user.sql  
-      inflating: sdb_demo_app/sql/global_views.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._global_views.sql  
-      inflating: sdb_demo_app/sql/shard_helpers.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._shard_helpers.sql  
-      inflating: sdb_demo_app/sql/global_views.header.sql  
-      inflating: __MACOSX/sdb_demo_app/sql/._global_views.header.sql  
-       creating: sdb_demo_app/src/oracle/demo/
-      inflating: sdb_demo_app/src/oracle/ArgParser.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._ArgParser.java  
-       creating: sdb_demo_app/src/oracle/monitor/
-      inflating: sdb_demo_app/src/oracle/.DS_Store  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._.DS_Store  
-      inflating: sdb_demo_app/src/oracle/RandomGenerator.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._RandomGenerator.java  
-      inflating: sdb_demo_app/src/oracle/Utils.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._Utils.java  
-      inflating: sdb_demo_app/src/oracle/SmartLogFormatter.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._SmartLogFormatter.java  
-      inflating: sdb_demo_app/src/oracle/JsonSerializer.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/._JsonSerializer.java  
-      inflating: sdb_demo_app/src/oracle/demo/InfiniteGeneratingQueue.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._InfiniteGeneratingQueue.java  
-      inflating: sdb_demo_app/src/oracle/demo/.DS_Store  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._.DS_Store  
-      inflating: sdb_demo_app/src/oracle/demo/Application.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Application.java  
-      inflating: sdb_demo_app/src/oracle/demo/CustomerGenerator.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._CustomerGenerator.java  
-      inflating: sdb_demo_app/src/oracle/demo/Product.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Product.java  
-      inflating: sdb_demo_app/src/oracle/demo/Customer.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Customer.java  
-      inflating: sdb_demo_app/src/oracle/demo/Statistics.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Statistics.java  
-      inflating: sdb_demo_app/src/oracle/demo/Test.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Test.java  
-      inflating: sdb_demo_app/src/oracle/demo/ApplicationException.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._ApplicationException.java  
-      inflating: sdb_demo_app/src/oracle/demo/InstallSchema.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._InstallSchema.java  
-      inflating: sdb_demo_app/src/oracle/demo/Actor.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Actor.java  
-      inflating: sdb_demo_app/src/oracle/demo/Main.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Main.java  
-       creating: sdb_demo_app/src/oracle/demo/actions/
-      inflating: sdb_demo_app/src/oracle/demo/FillProducts.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._FillProducts.java  
-      inflating: sdb_demo_app/src/oracle/demo/Session.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/._Session.java  
-      inflating: sdb_demo_app/src/oracle/monitor/Install.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/monitor/._Install.java  
-      inflating: sdb_demo_app/src/oracle/monitor/Main.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/monitor/._Main.java  
-      inflating: sdb_demo_app/src/oracle/monitor/FileHandler.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/monitor/._FileHandler.java  
-      inflating: sdb_demo_app/src/oracle/monitor/DatabaseMonitor.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/monitor/._DatabaseMonitor.java  
-      inflating: sdb_demo_app/src/oracle/demo/actions/CreateOrder.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/actions/._CreateOrder.java  
-      inflating: sdb_demo_app/src/oracle/demo/actions/CustomerAction.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/actions/._CustomerAction.java  
-      inflating: sdb_demo_app/src/oracle/demo/actions/OrderLookup.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/actions/._OrderLookup.java  
-      inflating: sdb_demo_app/src/oracle/demo/actions/GenerateReport.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/actions/._GenerateReport.java  
-      inflating: sdb_demo_app/src/oracle/demo/actions/AddProducts.java  
-      inflating: __MACOSX/sdb_demo_app/src/oracle/demo/actions/._AddProducts.java  
-    [oracle@cata ~]$ 
+    [oracle@gsmhost ~]$ <copy>unzip sdb_demo_app.zip</copy>
     ```
 
    
@@ -673,8 +530,8 @@ This lab assumes you have already completed the following:
 4. Change to the `sdb_demo_app/sql` directory.
 
     ```
-    [oracle@cata ~]$ <copy>cd sdb_demo_app/sql</copy>
-    [oracle@cata sql]$
+    [oracle@gsmhost ~]$ <copy>cd sdb_demo_app/sql</copy>
+    [oracle@gsmhost sql]$ 
     ```
 
    
@@ -682,29 +539,27 @@ This lab assumes you have already completed the following:
 5. View the content of the `nonshard_demo_app_ext.sql`. Make sure the connect string is correct to the non-sharded instance pdb.
 
     ```
-    [oracle@cata sql]$ <copy>cat nonshard_demo_app_ext.sql</copy> 
+    [oracle@gsmhost sql]$ <copy>cat nonshard_demo_app_ext.sql</copy> 
     -- Create catalog monitor packages
-    connect sys/Ora_DB4U@shd3:1521/nspdb as sysdba;
+    connect sys/WelcomePTS_2024#@shardhost3:1521/nspdb as sysdba;
+    
     @catalog_monitor.sql
     
-    connect app_schema/app_schema@shd3:1521/nspdb;
+    connect app_schema/app_schema@shardhost3:1521/nspdb;
     
-    alter session enable shard ddl;
     
     CREATE OR REPLACE VIEW SAMPLE_ORDERS AS
       SELECT OrderId, CustId, OrderDate, SumTotal FROM
         (SELECT * FROM ORDERS ORDER BY OrderId DESC)
           WHERE ROWNUM < 10;
     
-    alter session disable shard ddl;
     
     -- Allow a special query for dbaview
-    connect sys/Ora_DB4U@shd3:1521/nspdb as sysdba;
+    connect sys/WelcomePTS_2024#@shardhost3:1521/nspdb as sysdba;
     
     -- For demo app purposes
     grant shard_monitor_role, gsmadmin_role to app_schema;
     
-    alter session enable shard ddl;
     
     create user dbmonuser identified by TEZiPP4MsLLL;
     grant connect, alter session, shard_monitor_role, gsmadmin_role to dbmonuser;
@@ -712,11 +567,9 @@ This lab assumes you have already completed the following:
     grant all privileges on app_schema.products to dbmonuser;
     grant read on app_schema.sample_orders to dbmonuser;
     
-    alter session disable shard ddl;
     -- End workaround
     
     exec dbms_global_views.create_any_view('SAMPLE_ORDERS', 'APP_SCHEMA.SAMPLE_ORDERS', 'GLOBAL_SAMPLE_ORDERS', 0, 1);
-    [oracle@cata sql]$ 
     ```
 
    
@@ -724,12 +577,12 @@ This lab assumes you have already completed the following:
 6. Using SQLPLUS to run the script.
 
     ```
-    [oracle@cata sql]$ <copy>sqlplus /nolog</copy>
+    [oracle@gsmhost sql]$ <copy>sqlplus /nolog</copy>
     
-    SQL*Plus: Release 19.0.0.0.0 - Production on Fri Dec 4 12:23:11 2020
-    Version 19.14.0.0.0
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 04:42:49 2024
+    Version 23.5.0.24.07
     
-    Copyright (c) 1982, 2020, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
     
     SQL> <copy>@nonshard_demo_app_ext.sql</copy>
     ```
@@ -742,6 +595,7 @@ This lab assumes you have already completed the following:
     Connected.
     ERROR:
     ORA-02521: attempted to enable shard DDL in a non-shard database
+    Help: https://docs.oracle.com/error-help/db/ora-02521/
     
     
     
@@ -812,14 +666,7 @@ This lab assumes you have already completed the following:
     
     PL/SQL procedure successfully completed.
     
-    
-    PL/SQL procedure successfully completed.
-    
     Connected.
-    ERROR:
-    ORA-02521: attempted to enable shard DDL in a non-shard database
-    
-    
     
     View created.
     
@@ -832,6 +679,7 @@ This lab assumes you have already completed the following:
     
     ERROR:
     ORA-02521: attempted to enable shard DDL in a non-shard database
+    Help: https://docs.oracle.com/error-help/db/ora-02521/
     
     
     
@@ -851,8 +699,6 @@ This lab assumes you have already completed the following:
     
     
     PL/SQL procedure successfully completed.
-    
-    SQL> 
     ```
 
    
@@ -860,8 +706,8 @@ This lab assumes you have already completed the following:
 8. Exit the sqlplus. Then change directory to the `sdb_demo_app`.
 
     ```
-    [oracle@cata sql]$ <copy>cd ~/sdb_demo_app</copy>
-    [oracle@cata sdb_demo_app]$ 
+    [oracle@gsmhost sql]$ <copy>cd ~/sdb_demo_app</copy>
+    [oracle@gsmhost sdb_demo_app]$ 
     ```
 
    
@@ -869,9 +715,9 @@ This lab assumes you have already completed the following:
 9. Review the `nonsharddemo.properties` file content. Make sure the `connect_string` and service name  is correct.
 
     ```
-    [oracle@cata sdb_demo_app]$ <copy>cat nonsharddemo.properties</copy> 
+    [oracle@gsmhost sdb_demo_app]$ <copy>cat nonsharddemo.properties</copy> 
     name=demo
-    connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=shd3)(PORT=1521)(PROTOCOL=tcp)))
+    connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=shardhost3)(PORT=1521)(PROTOCOL=tcp)))
     monitor.user=dbmonuser
     monitor.pass=TEZiPP4MsLLL
     app.service.write=nspdb
@@ -879,8 +725,6 @@ This lab assumes you have already completed the following:
     app.user=app_schema
     app.pass=app_schema
     app.threads=7
-    
-    [oracle@cata sdb_demo_app]$
     ```
 
    
@@ -896,118 +740,128 @@ This lab assumes you have already completed the following:
 11. The result likes the following.
 
     ```
-    Performing initial fill of the products table...
-    Syncing shards...
      RO Queries | RW Queries | RO Failed  | RW Failed  | APS 
-              0            0            0            0            1
-            176            1            0            0           55
-           1604          244            0            0          485
-           3441          545            0            0          624
-           5684          910            0            0          763
-           7949         1253            0            0          769
-          10301         1614            0            0          801
-          12416         2001            0            0          718
-          14631         2400            0            0          743
-          17073         2764            0            0          831
-          19470         3179            0            0          816
-          22016         3575            0            0          870
-          24515         3937            0            0          851
-          27001         4284            0            0          848
-          29488         4671            0            0          858
-          31894         5085            0            0          811
-          34461         5552            0            0          884
-          37305         6030            0            0          965
-          40308         6541            0            0         1031
-          43059         7012            0            0          948
+              0            0            0            0            2
+             82            0            0            0           24
+            280           42            0            0           69
+           4561          701            0            0         1439
+          10162         1644            0            0         1899
+          16393         2640            0            0         2116
+          22619         3686            0            0         2104
+          29035         4762            0            0         2179
+          35508         5803            0            0         2199
+          41834         6866            0            0         2170
+          48704         7889            0            0         2366
+          55126         8968            0            0         2191
+          61378        10032            0            0         2131
+          67119        10993            0            0         1965
+          73903        12069            0            0         2335
+          80310        13113            0            0         2200
+          86965        14113            0            0         2313
+          93728        15165            0            0         2326
+         100194        16247            0            0         2241
+         106178        17211            0            0         2087
     ```
     
     
     
-12. Wait the application run several minutes and press `Ctrl-C` to exit the application. Remember the values of the APS(transaction per second).
+12. Wait the application run several minutes and press `Ctrl-C` to exit the application. 
 
     ```
-    RO Queries | RW Queries | RO Failed  | RW Failed  | APS 
-         242175        42520            0            0         1139
-         244596        42913            0            0          988
-         246916        43353            0            0          934
-         249190        43789            0            0          902
-         251554        44191            0            0          961
-         253981        44597            0            0          997
-         256287        45015            0            0          961
-         258686        45416            0            0          983
-         261068        45842            0            0          962
-         263311        46284            0            0          916
-         265602        46698            0            0          953
-         268014        47094            0            0          997
-         270388        47507            0            0          949
-         272708        47912            0            0          965
-         274992        48348            0            0          931
-    ^C[oracle@cata sdb_demo_app]$
+     RO Queries | RW Queries | RO Failed  | RW Failed  | APS 
+         360777        59498            0            0         2301
+         367004        60534            0            0         2266
+         373080        61532            0            0         2190
+         379101        62594            0            0         2215
+         385379        63640            0            0         2310
+         391673        64697            0            0         2292
+         397901        65731            0            0         2262
+         404158        66799            0            0         2297
+         410087        67894            0            0         2168
+         416111        68929            0            0         2205
+         422107        70023            0            0         2192
+         428365        71073            0            0         2301
+         434379        72102            0            0         2186
+         440585        73122            0            0         2289
+         446531        74149            0            0         2209
+    ^C[oracle@gsmhost sdb_demo_app]$ 
     ```
 
 
 
 
-## Task 4: Export the Demo Data and Copy DMP File
+## Task 4: Export the Demo Data and Copy the DMP File
 
-In this step, you will export the demo application data and copy the dmp file to the catalog and each of the shard hosts. You will import the data to the shard database in the next lab.
+In this step, you will export the demo application data and copy the dmp file to the catalog and each of the shard hosts. You will import the data to the globally distributed database in the next lab.
 
-1. Connect to the shard3 host, switch to the oracle user.
+1. Exit to the gsmhost **opc** user, connect to the shardhost3.
 
     ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
-    Last login: Mon Nov 30 11:24:36 2020 from 59.66.120.23
-    -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-    
-    [opc@shd3 ~]$ <copy>sudo su - oracle</copy>
-    Last login: Mon Nov 30 11:27:34 GMT 2020 on pts/0
-    [oracle@shd3 ~]$ 
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost3</copy>
+    Last login: Fri Sep 20 05:00:04 2024 from 10.0.0.20
+    [opc@shardhost3 ~]$ 
     ```
 
    
 
+2.  Switch to the oracle user.
+
+    ```
+    [opc@shardhost3 ~]$ <copy>sudo su - oracle</copy>
+    Last login: Fri Sep 20 05:18:56 UTC 2024 on pts/0
+    [oracle@shardhost3 ~]$ 
+    ```
+    
+    
+    
 2. Connect to the non-sharded database as `app_schema` user with SQLPLUS.
 
     ```
-    [oracle@shd3 ~]$ <copy>sqlplus app_schema/app_schema@shd3:1521/nspdb</copy>
+    [oracle@shardhost3 ~]$ <copy>sqlplus app_schema/app_schema@shardhost3:1521/nspdb</copy>
     
-    SQL*Plus: Release 19.0.0.0.0 - Production on Sat Dec 5 07:43:15 2020
-    Version 19.14.0.0.0
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 05:19:53 2024
+    Version 23.5.0.24.07
     
-    Copyright (c) 1982, 2020, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
     
-    Last Successful login time: Sat Dec 05 2020 07:33:33 +00:00
+    Last Successful login time: Fri Sep 20 2024 05:14:54 +00:00
     
     Connected to:
-    Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.14.0.0.0
+    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
     
     SQL> 
     ```
 
    
 
-3. Create a dump directory and exit the SQLPLUS.
+3. Create a dump directory and 
 
     ```
     SQL> <copy>create directory demo_pump_dir as '/home/oracle';</copy>
     
     Directory created.
-    
-    SQL> <copy>exit</copy>
-    Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Version 19.14.0.0.0
-    [oracle@shd3 ~]$
     ```
 
    
 
+4. Exit the SQLPLUS.
+
+    ```
+    SQL> <copy>exit</copy>
+    Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    [oracle@shardhost3 ~]$ 
+    ```
+    
+    
+    
 4. Run the following command to export the demo data.
 
     - `GROUP_PARTITION_TABLE_DATA `: Unloads all partitions as a single operation producing a single partition of data in the dump file. Subsequent imports will not know this was originally made up of multiple partitions.
 
     ```
-    [oracle@shd3 ~]$ <copy>expdp app_schema/app_schema@shd3:1521/nspdb directory=demo_pump_dir \
+    [oracle@shardhost3 ~]$ <copy>expdp app_schema/app_schema@shardhost3:1521/nspdb directory=demo_pump_dir \
       dumpfile=original.dmp logfile=original.log \
       schemas=app_schema data_options=group_partition_table_data</copy>
     ```
@@ -1017,22 +871,21 @@ In this step, you will export the demo application data and copy the dmp file to
 5. The result screen like the following.
 
     ```
-    Export: Release 19.0.0.0.0 - Production on Mon Dec 7 01:35:33 2020
-    Version 19.14.0.0.0
+    Export: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 05:26:48 2024
+    Version 23.5.0.24.07
     
-    Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
     
-    Connected to: Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-    Starting "APP_SCHEMA"."SYS_EXPORT_SCHEMA_01":  app_schema/********@shd3:1521/nspdb directory=demo_pump_dir dumpfile=original.dmp logfile=original.log schemas=app_schema data_options=group_partition_table_data 
+    Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Starting "APP_SCHEMA"."SYS_EXPORT_SCHEMA_01":  app_schema/********@shardhost3:1521/nspdb directory=demo_pump_dir dumpfile=original.dmp logfile=original.log schemas=app_schema data_options=group_partition_table_data 
     Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
     Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
     Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
-    Processing object type SCHEMA_EXPORT/STATISTICS/MARKER
     Processing object type SCHEMA_EXPORT/USER
     Processing object type SCHEMA_EXPORT/SYSTEM_GRANT
     Processing object type SCHEMA_EXPORT/ROLE_GRANT
     Processing object type SCHEMA_EXPORT/DEFAULT_ROLE
-    Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA
+    Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA/LOGREP
     Processing object type SCHEMA_EXPORT/SEQUENCE/SEQUENCE
     Processing object type SCHEMA_EXPORT/TABLE/TABLE
     Processing object type SCHEMA_EXPORT/TABLE/GRANT/OWNER_GRANT/OBJECT_GRANT
@@ -1045,131 +898,118 @@ In this step, you will export the demo application data and copy the dmp file to
     Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
     Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
     Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
-    . . exported "APP_SCHEMA"."CUSTOMERS"                    5.475 MB   24343 rows
-    . . exported "APP_SCHEMA"."PRODUCTS"                     27.25 KB     480 rows
-    . . exported "APP_SCHEMA"."ORDERS"                       1.864 MB   37280 rows
-    . . exported "APP_SCHEMA"."LINEITEMS"                    2.651 MB   66524 rows
+    . . exported "APP_SCHEMA"."CUSTOMERS"                      6.6 MB   29481 rows
+    . . exported "APP_SCHEMA"."PRODUCTS"                      27.4 KB     480 rows
+    . . exported "APP_SCHEMA"."ORDERS"                         2.3 MB   45611 rows
+    . . exported "APP_SCHEMA"."LINEITEMS"                      3.2 MB   80891 rows
     Master table "APP_SCHEMA"."SYS_EXPORT_SCHEMA_01" successfully loaded/unloaded
     ******************************************************************************
     Dump file set for APP_SCHEMA.SYS_EXPORT_SCHEMA_01 is:
       /home/oracle/original.dmp
-    Job "APP_SCHEMA"."SYS_EXPORT_SCHEMA_01" successfully completed at Mon Dec 7 01:37:06 2020 elapsed 0 00:01:29
-    
-    [oracle@shd3 ~]$ 
+    Job "APP_SCHEMA"."SYS_EXPORT_SCHEMA_01" successfully completed at Fri Sep 20 05:28:26 2024 elapsed 0 00:01:36
     ```
 
    
 
-6. From the shard3 host, create a ssh key pair. Press **Enter** to accept all the default values.
+6. From the shardhost3, Exit to **opc** user.
 
     ```
-    [oracle@shd3 ~]$ <copy>ssh-keygen -t rsa</copy>
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/oracle/.ssh/id_rsa): 
-    Created directory '/home/oracle/.ssh'.
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
-    Your identification has been saved in /home/oracle/.ssh/id_rsa.
-    Your public key has been saved in /home/oracle/.ssh/id_rsa.pub.
-    The key fingerprint is:
-    SHA256:3K6FxUIvo04bOYn0LxH0WMf89VRGvomJWsL9ob/bYDU oracle@shd3
-    The key's randomart image is:
-    +---[RSA 2048]----+
-    |         o     .=|
-    |      . . +   .o.|
-    |     . +.. . . o.|
-    |      ooo+. o o +|
-    |    .  .So=+ + E |
-    |   . o.+ B+ o o .|
-    |    . O...o. +   |
-    |     o.= o  o o  |
-    |      o.o    +o. |
-    +----[SHA256]-----+
-    [oracle@shd3 ~]$ 
+    [oracle@shardhost3 ~]$ <copy>exit</copy>
+    logout
+    [opc@shardhost3 ~]$
     ```
 
    
 
-7. View the content of the public key.
+7. You can copy the dump file to a shared storage which all the host can access it or you can copy it to each of the host. In our lab, we will copy the dump file to the catalog host and each of the shard host.
 
     ```
-    [oracle@shd3 ~]$ <copy>cat .ssh/id_rsa.pub</copy>
-    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5MxF+Vt+SILTrw+iXxzpPo277RL1KAOT9YQW3ZfbFY5f08THsbzeyt1ecRZjeSUfG+V2iTOWii+GHtBg4yylzYkzBoTinZ72MkW62t1XcV7w1GIOnDbIX0AG7JD6OURDm8br6+4bjNNKkRjmEZPuJ/KiB4FVcfk3heNG0K6s99OUh7EQsEb2guvalp2KTP9gL6UJRcVeY6omzk5+VeEP0Sm285ev9nQ2/SWgqb1qz7241WP89REIZMEuIJ/g2h8yhXvoCoK59WiZYJuzGWV4AX57t/8viH948suHN4sfabQT9DWuAAJAYryAZPqVwvTgRNMaQRuhUxQB2lwKcMY5N oracle@shd3
-    [oracle@shd3 ~]$ 
+    [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost0:/tmp</copy>
+    The authenticity of host 'catahost (10.0.0.10)' can't be established.
+    ECDSA key fingerprint is SHA256:+9TKXWk+ZjpgVTHccz73xTHhrj+T8UHvBPhOjutPk5c.
+    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+    Warning: Permanently added 'catahost,10.0.0.10' (ECDSA) to the list of known hosts.
+    original.dmp                                                                                     100%   13MB 189.4MB/s   00:00  
+    
+    [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost1:/tmp</copy>
+    The authenticity of host 'shardhost1 (10.0.0.11)' can't be established.
+    ECDSA key fingerprint is SHA256:Ukred/JAQK0SvhfGPr7SuBexUkW4FqiLKsNQzwsiv3w.
+    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+    Warning: Permanently added 'shardhost1,10.0.0.11' (ECDSA) to the list of known hosts.
+    original.dmp                                                                                     100%   13MB 152.0MB/s   00:00    
+    
+    [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost2:/tmp</copy>
+    The authenticity of host 'shardhost2 (10.0.0.12)' can't be established.
+    ECDSA key fingerprint is SHA256:9bcJpOj9J0YdRhuer1cenmiIkj/R0sImAuWaHlO9YSQ.
+    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+    Warning: Permanently added 'shardhost2,10.0.0.12' (ECDSA) to the list of known hosts.
+    original.dmp                                                                                     100%   13MB 172.4MB/s   00:00 
+    ```
+    
+    
+    
+7. Exit to the gsmhost
+
+    ```
+    [opc@shardhost3 ~]$ <copy>exit</copy>
+    logout
+    Connection to shardhost3 closed.
+    [opc@gsmhost ~]$ 
+    ```
+    
+    
+    
+7. Connect to catalog host, move the dump file to the ```/home/oracle``` directory
+
+    ```
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost0</copy>
+    Last login: Fri Sep 20 04:53:28 2024 from 10.0.0.20
+    
+    [opc@shardhost0 ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@shardhost0 ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@shardhost0 ~]$ <copy>exit</copy>
+    logout
+    Connection to shardhost0 closed.
+    [opc@gsmhost ~]$ 
+    ```
+    
+    
+    
+7. Connect to shardhost1, move the dump file to the ```/home/oracle``` directory
+
+    ```
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost1</copy>
+    Last login: Thu Sep 19 23:15:42 2024 from 10.0.0.20
+    [opc@shardhost1 ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@shardhost1 ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@shardhost1 ~]$ <copy>exit</copy>
+    logout
+    Connection to shardhost1 closed.
+    [opc@gsmhost ~]$ 
+    ```
+    
+    
+    
+7. Connect to shardhost2, move the dump file to the ```/home/oracle``` directory
+
+    ```
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost2</copy>
+    Last login: Fri Sep 20 04:53:28 2024 from 10.0.0.20
+    
+    [opc@catahost ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@catahost ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@catahost ~]$ <copy>exit</copy>
+    logout
+    Connection to catahost closed.
+    [opc@gsmhost ~]$ 
     ```
 
    
-
-8. Open another terminal to connect to the cata host. Switch to oracle user.
-
-    ```
-    $ <copy>ssh -i labkey opc@xxx.xxx.xxx.xxx</copy>
-    Last login: Mon Nov 30 11:22:42 2020 from 59.66.120.23
-    -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-    
-    [opc@shd1 ~]$ <copy>sudo su - oracle</copy>
-    Last login: Sun Nov 29 03:15:53 GMT 2020 on pts/0
-    [oracle@cata ~]$ 
-    ```
-
-   
-
-9. Make a `.ssh` directory and edit the authorized_keys file.
-
-    ```
-    [oracle@cata ~]$ <copy>mkdir .ssh</copy>
-    [oracle@cata ~]$ <copy>vi .ssh/authorized_keys</copy>
-    ```
-
-   
-
-10. Copy all the content of the SSH public key from Shard3 host. Save the file and chmod the file.
-
-    ```
-    [oracle@shd1 ~]$ <copy>chmod 600 .ssh/authorized_keys</copy> 
-    [oracle@shd1 ~]$
-    ```
-
-   
-
-11. **Repeat do the same steps**  from previous steps 8 - 10. This time connect to the shard1 and shard2 host. Create `authorized_keys` in each of the shard hosts.
-
-12. From shard3 host side. Copy the dmp file to the catalog, shard1 and shard2 host. Press yes when prompt ask if you want to  continue.
-
-    ```
-    [oracle@shd3 ~]$ scp original.dmp oracle@cata:~
-    The authenticity of host 'shd1 (10.0.0.3)' can't be established.
-    ECDSA key fingerprint is SHA256:fdIUiIXRNQ8LsOsDjN1/OLeLaz2kDeIzpLngV/15tPs.
-    ECDSA key fingerprint is MD5:ea:d8:d5:fe:6e:a4:98:3e:e3:a4:dc:a3:24:ed:40:65.
-    Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'cata,10.0.0.2' (ECDSA) to the list of known hosts.
-    original.dmp                                                  100% 6864KB  46.0MB/s   00:00    
-    
-    [oracle@shd3 ~]$ scp original.dmp oracle@shd1:~
-    The authenticity of host 'shd1 (10.0.0.3)' can't be established.
-    ECDSA key fingerprint is SHA256:fdIUiIXRNQ8LsOsDjN1/OLeLaz2kDeIzpLngV/15tPs.
-    ECDSA key fingerprint is MD5:ea:d8:d5:fe:6e:a4:98:3e:e3:a4:dc:a3:24:ed:40:65.
-    Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'shd1,10.0.0.3' (ECDSA) to the list of known hosts.
-    original.dmp                                                  100% 6864KB  46.0MB/s   00:00    
-    
-    [oracle@shd3 ~]$ scp original.dmp oracle@shd2:~
-    The authenticity of host 'shd2 (10.0.0.4)' can't be established.
-    ECDSA key fingerprint is SHA256:DZD3FA2afLdsB17yvn1IoGxHqmTiei6fiqnUHRJXVNw.
-    ECDSA key fingerprint is MD5:49:b0:06:11:14:1f:85:76:47:4f:9c:04:d2:15:a9:00.
-    Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'shd2,10.0.0.4' (ECDSA) to the list of known hosts.
-    original.dmp                                                  100% 6864KB  49.6MB/s   00:00    
-    [oracle@shd3 ~]$ 
-    ```
-
-    
-
-    
 
 You may now proceed to the next lab..
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management, Dec 2020 
-* **Last Updated By/Date** - Minqiao Wang, Aug 2022
+* **Author** - Minqiao Wang, Oracle SE
+* **Contributor** - Satyabrata Mishra, Database Product Management
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024
 
