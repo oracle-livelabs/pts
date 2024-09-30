@@ -124,7 +124,7 @@ Last, but not least, we need to create an ACL for making sure that package DBMS_
 BEGIN
 
     DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
-        host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open
+        host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open. You can use '*' if you want it open to any connection. 
         ace => xs$ace_type(privilege_list => xs$name_list('connect'),
                            principal_name => 'specific_user_or_role', -- Restrict to a specific user or role
                            principal_type => xs_acl.ptype_db)
