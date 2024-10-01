@@ -258,6 +258,8 @@ This lab assumes you have already completed the following:
 
 ## Task 2: Execute Prep Scripts for Oracle Sharding on Catalog
 
+**Remember we use shardhost0 as catalog host.**
+
 1.   Upload your private key to the gsmhost.
 
      ```
@@ -291,7 +293,7 @@ This lab assumes you have already completed the following:
 4.   Edit the hosts file
 
      ```
-     [opc@catahost ~]$ <copy>sudo vi /etc/hosts</copy>
+     [opc@shardhost0 ~]$ <copy>sudo vi /etc/hosts</copy>
      ```
 
      Copy an paste the following entries into the host file

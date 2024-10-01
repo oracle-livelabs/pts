@@ -925,10 +925,10 @@ In this step, you will export the demo application data and copy the dmp file to
 
     ```
     [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost0:/tmp</copy>
-    The authenticity of host 'catahost (10.0.0.10)' can't be established.
+    The authenticity of host 'shardhost0 (10.0.0.10)' can't be established.
     ECDSA key fingerprint is SHA256:+9TKXWk+ZjpgVTHccz73xTHhrj+T8UHvBPhOjutPk5c.
     Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-    Warning: Permanently added 'catahost,10.0.0.10' (ECDSA) to the list of known hosts.
+    Warning: Permanently added 'shardhost0,10.0.0.10' (ECDSA) to the list of known hosts.
     original.dmp                                                                                     100%   13MB 189.4MB/s   00:00  
     
     [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost1:/tmp</copy>
@@ -996,11 +996,11 @@ In this step, you will export the demo application data and copy the dmp file to
     [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost2</copy>
     Last login: Fri Sep 20 04:53:28 2024 from 10.0.0.20
     
-    [opc@catahost ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
-    [opc@catahost ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
-    [opc@catahost ~]$ <copy>exit</copy>
+    [opc@shardhost2 ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@shardhost2 ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@shardhost2 ~]$ <copy>exit</copy>
     logout
-    Connection to catahost closed.
+    Connection to shardhost2 closed.
     [opc@gsmhost ~]$ 
     ```
 

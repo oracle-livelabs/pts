@@ -111,7 +111,7 @@ When using Resource Manager to deploy an environment, execute a terraform  **App
 
 3. Write down the gsmhost public ip address. It's will be used in the next Tasks.
 
-4. Now, you have gotten the lab resources like the following (**Note:** the DB Unique Name may different if you input the different suffix name when creating the stack).  The shardhost0 is used for catalog database.
+4. Now, you have gotten the lab resources like the following (**Note:** the DB Unique Name may different if you input the different suffix name when creating the stack).  **The shardhost0 is used for catalog database.**
 
     | Host       | Private IP | DB Name | DB Unique Name | PDB Name |
     | ---------- | ---------- | ------- | -------------- | -------- |
