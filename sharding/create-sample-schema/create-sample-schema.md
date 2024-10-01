@@ -218,7 +218,7 @@ This lab assumes you have already completed the following:
     00:16:11 SQL> REM
     00:16:11 SQL> REM Connect to the Shard Catalog and Create Schema
     00:16:11 SQL> REM
-    00:16:11 SQL> connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba
+    00:16:11 SQL> connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba
     Connected.
     00:16:11 SQL> REM alter session set container=catapdb;
     00:16:11 SQL> alter session enable shard ddl;
@@ -282,7 +282,7 @@ This lab assumes you have already completed the following:
     00:16:12 SQL> REM
     00:16:12 SQL> REM Create Sharded and Duplicated tables
     00:16:12 SQL> REM
-    00:16:12 SQL> connect app_schema/App_Schema_Pass_123@catahost:1521/catapdb
+    00:16:12 SQL> connect app_schema/App_Schema_Pass_123@shardhost0:1521/shard0
     Connected.
     00:16:12 SQL> alter session enable shard ddl;
     
@@ -879,7 +879,7 @@ Loading the data directly into the database shards is much faster, because each 
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
     Version 23.5.0.24.07
-    [oracle@catahost ~]$ 
+    [oracle@gsmhost ~]$ 
     ```
 
     
@@ -905,7 +905,7 @@ Loading the data directly into the database shards is much faster, because each 
     
     Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
     Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
-    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@catahost:1521/catapdb directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Products content=DATA_ONLY 
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@shardhost0:1521/shard0 directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Products content=DATA_ONLY 
     Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
     . . imported "APP_SCHEMA"."PRODUCTS"                      27.4 KB     480 rows
     Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
