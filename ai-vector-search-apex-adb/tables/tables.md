@@ -245,7 +245,7 @@ END;
 </copy>
 ```
 
-## Task 3: Option 2 OCI GenAI Service - Create function to generate response using OCI GenAI LLM
+## Task 3: Option 2 IS NOT AVAILABLE AT THE MOMENT. PLEASE USE OPTION 1.
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
