@@ -157,4 +157,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Milton Wan
-* **Last Updated By/Date** -  July 2024
+* **Last Updated By/Date** -  Blake Hendricks, October 2024
