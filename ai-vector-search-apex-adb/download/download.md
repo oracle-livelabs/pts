@@ -107,6 +107,7 @@ From ADMIN user, run the following to ensure your database user has the necessar
 <copy>
 CREATE USER VECTOR identified by <password>;
 GRANT CONNECT to VECTOR;
+GRANT CREATE SESSION to VECTOR;
 GRANT RESOURCE to VECTOR;
 GRANT DB_DEVELOPER_ROLE to VECTOR;
 GRANT EXECUTE ON DBMS_CLOUD TO VECTOR;
@@ -116,6 +117,31 @@ GRANT CREATE ANY DIRECTORY TO VECTOR;
 GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
 </copy>
 ```
+
+Enable the Rest Access for the Vector User:
+
+```sql
+<copy>
+-- REST ENABLE
+BEGIN
+    ORDS_ADMIN.ENABLE_SCHEMA(
+        p_enabled => TRUE,
+        p_schema => 'VECTOR',
+        p_url_mapping_type => 'BASE_PATH',
+        p_url_mapping_pattern => 'vector',
+        p_auto_rest_auth=> FALSE
+    );
+    -- ENABLE DATA SHARING
+    C##ADP$SERVICE.DBMS_SHARE.ENABLE_SCHEMA(
+            SCHEMA_NAME => 'VECTOR',
+            ENABLED => TRUE
+    );
+    commit;
+END;
+/
+</copy>
+```
+
 
 Last, but not least, we need to create an ACL for making sure that package DBMS_VECTOR_CHAIN (which does a direct callout to internet from PL/SQL without going through APEX webservices packages) works as intended. You can run this as admin:
 

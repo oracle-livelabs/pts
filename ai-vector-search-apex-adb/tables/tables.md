@@ -224,7 +224,7 @@ BEGIN
   "provider": "openai",
   "credential_name": "OPENAI_CRED",
   "url": "https://api.openai.com/v1/chat/completions",
-  "model": "gpt-3.5-turbo-16k",
+  "model": "gpt-4o-mini",
   "max_tokens": 2000,
   "temperature": 1.0
 }';
