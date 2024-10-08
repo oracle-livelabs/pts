@@ -318,7 +318,7 @@ BEGIN
       "provider":"ocigenai",
       "credential_name": "GENAI_CRED",
       "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/generateText",
-      "model": "cohere.command",
+      "model": "cohere.command-r-16k",
       "inferenceRequest": {
         "maxTokens": 2000,
         "temperature": 1
