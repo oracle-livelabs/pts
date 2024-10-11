@@ -224,7 +224,7 @@ BEGIN
   "provider": "openai",
   "credential_name": "OPENAI_CRED",
   "url": "https://api.openai.com/v1/chat/completions",
-  "model": "gpt-3.5-turbo-16k",
+  "model": "gpt-4o-mini",
   "max_tokens": 2000,
   "temperature": 1.0
 }';
@@ -245,7 +245,7 @@ END;
 </copy>
 ```
 
-## Task 3: Option 2 OCI GenAI Service - Create function to generate response using OCI GenAI LLM
+## Task 3: Option 2 IS NOT AVAILABLE AT THE MOMENT. PLEASE USE OPTION 1.
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
@@ -318,7 +318,7 @@ BEGIN
       "provider":"ocigenai",
       "credential_name": "GENAI_CRED",
       "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/generateText",
-      "model": "cohere.command",
+      "model": "cohere.command-r-16k",
       "inferenceRequest": {
         "maxTokens": 2000,
         "temperature": 1
@@ -405,4 +405,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Vijay Balebail, Milton Wan, Blake Hendricks
-* **Last Updated By/Date** - Milton Wan, July 2024
+* **Last Updated By/Date** - Blake Hendricks, October 2024
