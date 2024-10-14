@@ -19,7 +19,7 @@ Estimated time: 3 hours.
 
 - A provisioned LiveLabs Environment
     - On the Attendee Page, you should see the NoVNC URL
-The labs have been set up to work with a NoVNC remove desktop environment using an HTML5-compatible browser. This setup will work with most proxy systems.
+The labs have been set up to work with a NoVNC remote desktop environment using an HTML5-compatible browser. This setup will work with most proxy systems.
 - If you want to run (parts) of the workshop using a direct SSH connection, you need direct access to the Internet or a proxy that supports tunnelling.
     - Labs 3-5 can be run using SSH only
     - The setup of SSH for your keys (password authentication is not allowed) is not described in the lab.
