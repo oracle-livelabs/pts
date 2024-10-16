@@ -505,19 +505,17 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
       -- Construct params JSON
       -- In order to use the ocigenai provider below we have precreated the credentials
-      params_genai := '
-    {
-      "provider":"ocigenai",
-      "credential_name": "GENAI_CRED",
-      "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/generateText",
-      "model": "cohere.command",
-      "inferenceRequest": {
-        "maxTokens": 2000,
-        "temperature": 1
-      }
+      -- Construct params JSON
+      params_genai:=   '{
+              "provider": "ocigenai",
+              "credential_name" : "GENAI_CRED",
+              "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
+              "model": "cohere.command-r-16k",
+              "chatRequest": {
+                "maxTokens": 300}
+              }';
 
-    }
-    ';
+
     -- dbms_output.put_line(messages);
       dbms_output.put_line(to_char(user_question_vec));
 
@@ -733,4 +731,4 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** - Vijay Balebail, May 2024
+* **Last Updated By/Date** - Vijay Balebail, October 2024
