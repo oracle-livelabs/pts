@@ -1,8 +1,8 @@
-# Explore the RAFT replication Features
+# Explore the Raft replication Features
 
 ## Introduction
 
-In this lab, you will explare the RAFT replication features
+In this lab, you will explare the Raft replication features
 
 Estimated Lab Time: 30 minutes.
 
@@ -10,9 +10,9 @@ Estimated Lab Time: 30 minutes.
 
 In this lab, you will perform the following steps:
 
-- Check the current RAFT replication configure
-- RAFT Replication Failover
-- Manager the RAFT RU
+- Check the current Raft replication configure
+- Raft Replication Failover
+- Manager the Raft RU
 
 ### Prerequisites
 
@@ -21,7 +21,7 @@ This lab assumes you have already completed the following:
 - Globally Distributed Database Deployment
 - Create Demo Sample Schema
 
-## Task 1: Explore RAFT Replication Configure
+## Task 1: Explore Raft Replication Configuration
 
 1.   Log into gsmhost , switch to **oracle** user
 
@@ -38,7 +38,7 @@ This lab assumes you have already completed the following:
 
      
 
-2.   Connect to  GDSCLT
+2.   Connect to  GDSCTL
 
      ```
      [oracle@gsmhost ~]$ <copy>gdsctl</copy>
@@ -161,7 +161,7 @@ This lab assumes you have already completed the following:
 
      
 
-## Task 2: RAFT Replication Failover
+## Task 2: Raft Replication Failover
 
 1.   Open antoher terminal, from gsmhost **opc** user, connec to the shardhost1
 
@@ -347,7 +347,7 @@ This lab assumes you have already completed the following:
 
 
 
-## Task3: Manager the RAFT Replication RU
+## Task3: Manager the Raft Replication Units
 
 1.   From GDSCTL, check current RU Leaders
 
@@ -511,10 +511,10 @@ This lab assumes you have already completed the following:
 
      You may now proceed to the next lab.
 
-     ## Acknowledgements
+## Acknowledgements
 
-     * **Author** - Minqiao Wang, Oracle China 
-     * **Contributor** - Satyabrata Mishra, Database Product Management
-     * **Last Updated By/Date** - Minqiao Wang, Sep 2024  
+* **Author** - Minqiao Wang, Oracle China 
+* **Contributor** - Satyabrata Mishra, Database Product Management
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024  
 
      
