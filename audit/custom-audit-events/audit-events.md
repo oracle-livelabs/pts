@@ -29,19 +29,19 @@ This lab assumes you have the following:
 
 1. Navigate to OCI console main menu ≡ > Oracle Database > **Autonomous Database**.
 
-    ![ingress rules](images/oci-main-menu.png " ")
+    ![oci main menu](images/oci-main-menu.png " ")
 
 2. Click **Create Autonomous Database**.
 
-    ![ingress rules](images/create-adb.png " ")
+    ![create adb](images/create-adb.png " ")
 
 3. Use the form to **Create Autonomous Database** instance, any flavor and shape, including Always Free.
 
-    ![ingress rules](images/create-autonomous-database.png " ")
+    ![create autonomous database](images/create-autonomous-database.png " ")
 
 4. When your Autonomous Database (ADB) instance is **available**, click Database Actions > **SQL**.
 
-    ![ingress rules](images/database-actions-sql.png " ")
+    ![database actions sql](images/database-actions-sql.png " ")
 
 5. Create a table to store all database errors.
 
@@ -64,7 +64,7 @@ This lab assumes you have the following:
 
 6. When executing DDL, click the **Run Script** button.
 
-    ![ingress rules](images/run-script.png " ")
+    ![run script](images/run-script.png " ")
 
 7. Create an index on top of the errors table.
 
@@ -141,7 +141,7 @@ This lab assumes you have the following:
 
 11. When executing SQL select statement, click the **Run Statement** button.
 
-    ![ingress rules](images/run-statement.png " ")
+    ![run statement](images/run-statement.png " ")
 
 12. Create a table to store all DDL statements executed.
 
@@ -236,7 +236,7 @@ This lab assumes you have the following:
 
 1. Both new tables `ALL_ERROR_LOG` and `ALL_DDL_LOG` are empty if you didn't run any DDL statement or you have not received any errors.
 
-    ![ingress rules](images/select-all-ddl-log.png " ")
+    ![select all ddl log](images/select-all-ddl-log.png " ")
 
 2. Create an audit policy for privilege grants.
 
@@ -327,15 +327,15 @@ This lab assumes you have the following:
 
 1. Navigate to Database Actions main menu ≡ > **Database Users**.
 
-    ![ingress rules](images/db-actions-users.png " ")
+    ![db actions users](images/db-actions-users.png " ")
 
 2. Or from the OCI cloud console.
 
-    ![ingress rules](images/database-users.png " ")
+    ![database users](images/database-users.png " ")
 
 3. Click **Create User**.
 
-    ![ingress rules](images/create-user.png " ")
+    ![create user](images/create-user.png " ")
 
 4. Use the following details:
 
@@ -344,15 +344,15 @@ This lab assumes you have the following:
     - Web Access: enabled
     - Quota on Tablespace DATA: Unlimited
 
-    ![ingress rules](images/create-user-auditr.png " ")
+    ![create user auditor](images/create-user-auditr.png " ")
 
 5. Click **Granted Roles**. Search for `audit`. Enable **Granted** and **Default** for **AUDIT_VIEWER** role. Click **Create User**.
 
-    ![ingress rules](images/granted-roles.png " ")
+    ![granted roles](images/granted-roles.png " ")
 
 6. Navigate to Database Actions main menu ≡ > **SQL**.
 
-    ![ingress rules](images/db-actions-sql.png " ")
+    ![db actions sql](images/db-actions-sql.png " ")
 
 7. Grant user `AUDITR` select privilege on `ALL_DDL_LOG` table.
 
@@ -375,65 +375,65 @@ This lab assumes you have the following:
 
 1. On the Oracle Cloud console, open the Tool Configuration tab on the Autonomous Database details dialog. Click **Copy** next to the Public access URL for the **Oracle APEX** tool.
 
-    ![ingress rules](images/apex-url-copy.png " ")
+    ![apex url copy](images/apex-url-copy.png " ")
 
 2. Open a new tab in your browser and open the Oracle APEX URL. Use the administrator (ADMIN) password you specified when you provisioned the ADB instance.
 
-    ![ingress rules](images/apex-admin-login.png " ")
+    ![apex admin login](images/apex-admin-login.png " ")
 
 3. Click **Create Workspace**.
 
-    ![ingress rules](images/create-workspace.png " ")
+    ![create workspace](images/create-workspace.png " ")
 
 4. Create a workspace for an **Existing Schema**.
 
-    ![ingress rules](images/existing-schema.png " ")
+    ![existing schema](images/existing-schema.png " ")
 
 5. Click the selector next to **Database User** to specify `AUDITR` schema. The last two fields are:
 
     - Workspace Username: AUDITADMIN
     - Workspace Password: a strong password
 
-    ![ingress rules](images/create-workspace-details.png " ")
+    ![create workspace details](images/create-workspace-details.png " ")
 
 6. Once the workspace is created, click on the **AUDITR** link to access it.
 
-    ![ingress rules](images/workspace-created.png " ")
+    ![workspace created](images/workspace-created.png " ")
 
 7. Use the details specified to sign in.
 
-    ![ingress rules](images/workspace-sign-in.png " ")
+    ![workspace sign in](images/workspace-sign-in.png " ")
 
 8. Click **App Builder**.
 
-    ![ingress rules](images/app-builder.png " ")
+    ![application builder](images/app-builder.png " ")
 
 9. Click **Import**.
 
-    ![ingress rules](images/import-app.png " ")
+    ![import application](images/import-app.png " ")
 
 10. Download the [AuditR_f100.sql](https://oraclepartnersas.objectstorage.eu-frankfurt-1.oci.customer-oci.com/p/ks_jbzzTiM8dcMb1PfAFhWijGb_BOoVJ-VUt-Th1o5Z4KSSDHkFi-hnRr9SiKfD-/n/oraclepartnersas/b/WS-files/o/AuditALL/AuditR_f100.sql) APEX application file and open it in the Import wizard. Click **Next**.
 
-    ![ingress rules](images/import-auditr-f100.png " ")
+    ![import auditor f100 sql](images/import-auditr-f100.png " ")
 
 11. Click **Install Application**.
 
-    ![ingress rules](images/install-application.png " ")
+    ![install application](images/install-application.png " ")
 
 12. Once the application is installed, click **Edit Application** to see all pages and components.
 
-    ![ingress rules](images/application-installed.png " ")
+    ![application installed](images/application-installed.png " ")
 
 
 ## Task 5: Get ready with the practice application
 
 1. Click **Run Application**.
 
-    ![ingress rules](images/run-application.png " ")
+    ![run application](images/run-application.png " ")
 
 2. Sign in using the `AUDITADMIN` user.
 
-    ![ingress rules](images/auditr-sign-in.png " ")
+    ![auditor sign in](images/auditr-sign-in.png " ")
 
 3. The home page of this basic learning application shows a graph with all the events recorded from the three sources: 
 
@@ -441,31 +441,31 @@ This lab assumes you have the following:
     - `ALL_ERROR_LOG` table displayed with the **ERROR LOG** event type;
     - `UNIFIED_AUDIT_TRAIL` audit trail is displayed as the other event types.
 
-    ![ingress rules](images/events.png " ")
+    ![events](images/events.png " ")
 
 4. Use the dropdown selector to set the period of time limit for the events displayed.
 
-    ![ingress rules](images/last-week.png " ")
+    ![last week](images/last-week.png " ")
 
 5. Place your mouse pointer on any of the events to see more details.
 
-    ![ingress rules](images/event-execute.png " ")
+    ![event execute](images/event-execute.png " ")
 
 6. Use the main menu of this practice application to see the full report on audit trail events.
 
-    ![ingress rules](images/audit-report.png " ")
+    ![audit report](images/audit-report.png " ")
 
 7. Just in case the audit trail in your database has a different structure, edit the audit events on page 2 and re-synchronize the columns of the report. Right-click on the Audit report component and click **Synchronize Columns**.
 
-    ![ingress rules](images/synchronize-columns.png " ")
+    ![synchronize columns](images/synchronize-columns.png " ")
 
 8. The third entry in the application's main menu is the report about all DDL code executed.
 
-    ![ingress rules](images/ddl-report.png " ")
+    ![ddl report](images/ddl-report.png " ")
 
 9. The last entry is the report with all errors captured in the database instance.
 
-    ![ingress rules](images/errors-report.png " ")
+    ![errors report](images/errors-report.png " ")
 
 
 ## Learn More
