@@ -35,7 +35,7 @@ In this lab, you will:
 2. From the terminal OS prompt type the following to launch jupyter notebook:
 
     ```
-        $ cd /home/oracle/AIdemo
+        $ cd /home/oracle/aidemo
         $ jupyter lab
     ```
 

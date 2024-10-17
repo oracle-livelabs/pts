@@ -24,7 +24,7 @@ In this lab you will run the RAG application interactively using a user interfac
 2.  Run the RAG application
 
     ```
-    $ genai_run genai_plsql.py
+    $ streamlit run genai_plsql.py
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
