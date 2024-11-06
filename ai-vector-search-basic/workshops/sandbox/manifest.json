@@ -1,18 +1,20 @@
 {
     "workshoptitle": "Oracle AI Vector Search",
     "help": "livelabs-help-db_us@oracle.com",
-    "variables": ["../../variables/variables.json",
-        "../../variables/variables-in-another-file.json"],
+    "variables": [
+        "../../variables/variables.json",
+        "../../variables/variables-in-another-file.json"
+    ],
     "tutorials": [
+        {
+            "title": "Get Started",
+            "description": "Check and Verify Sandbox Connection information and test connectivity.",
+            "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        },
         {
             "title": "Introduction",
             "description": "The Introduction to AI Vector Search.",
             "filename": "../../introduction/introduction.md"
-        },
-        {
-        "title": "Get Started",
-        "description": "Check and Verify Sandbox Connection information and test connectivity.",
-        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
         },
         {
             "title": "Lab 1: Vector DDL, DML and Queries",
@@ -43,6 +45,11 @@
             "title": "Lab 6: Other Vector Functions",
             "description": "Understanding Other Vector Functions",
             "filename": "../../lab6/other_vector_functions.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         }
     ]
 }
