@@ -57,7 +57,7 @@ Use SODA for Python on Oracle Autonomous JSON Database to develop a micro-servic
 
     ````bash
     <copy>
-    wget -O python-simple-project.zip http://bit.ly/41qLoNq
+    wget -O python-simple-project.zip https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/sDpfVA-B8mBaKmtEo0SPZj9fnIwIsr_r_dQEyfEwpBeh-Rjy2iVTPhVxNGS-oQl6/n/oraclepartnersas/b/WS-files/o/PythonMongoAPI/python-simple-project.zip
     </copy>
     ````
 
