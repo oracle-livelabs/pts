@@ -131,7 +131,7 @@ In this lab, you will:
 
 ## Task 2: Provision Compute Node for development
 
-1. Click on the following link to access to a marketplace image from [Oracle marketplace](https://bit.ly/3CxvsxA).
+1. Click on the following link to access to a marketplace image from [Oracle marketplace](https://cloudmarketplace.oracle.com/marketplace/en_US/listing/122021686).
 
     ![Marketplace Image](./images/marketplace-image.png)
 
