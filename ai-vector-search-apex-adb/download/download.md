@@ -266,7 +266,7 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-<https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx>
+<https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx>
 
 URL to tinybert.onnx is:
 <https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx>
