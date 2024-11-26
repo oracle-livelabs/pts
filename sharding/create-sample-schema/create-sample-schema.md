@@ -18,7 +18,7 @@ In this lab, you will perform the following steps:
 ### Prerequisites
 
 This lab assumes you have already completed the following:
-- Deploy the Globally Distributed Database with RAFT
+- Deploy the Globally Distributed Database with Raft
 - Set up the non sharded database
 
 
@@ -47,7 +47,7 @@ This lab assumes you have already completed the following:
 2. Download the SQL scripts `create-sample-schema.sql`.
 
     ```
-    [oracle@gsmhost ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/create-sample-schema.sql</copy>
+    [oracle@gsmhost ~]$ <copy>wget https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/refs/heads/main/create-sample-schema/create-sample-schema.sql</copy>
     ```
 
    
@@ -1046,7 +1046,7 @@ Loading the data directly into the database shards is much faster, because each 
 
 13. Now all the data from normal instance migrate to the sharded tables.
 
-## Task 5: Setup and Run the Application for Globally Distribute Database
+## Task 5: Setup and Run the Application for Globally Distributed Database
 
 1.   In the gsm host with **oracle** user, change the directory to ```sdb_demo_app/sql```.
 
@@ -1129,7 +1129,7 @@ Loading the data directly into the database shards is much faster, because each 
      name=demo
      connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=localhost)(PORT=1522)(PROTOCOL=tcp)))
      monitor.user=dbmonuser
-     monitor.pass=TEZiPP4MsLLL
+     monitor.pass=TEZiPP4_MsLLL_1
      #app.service.write=oltp_rw_srvc.cust_sdb.oradbcloud
      app.service.write=oltp_rw_svc.orasdb.oradbcloud
      #app.service.readonly=oltp_rw_srvc.cust_sdb.oradbcloud

@@ -247,6 +247,7 @@ END;
 
 ## Task 3: Option 2 OCIGEN AI
 
+
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
 LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai.

@@ -1,8 +1,8 @@
-# Deploy the RAFT Replication
+# Deploy the Raft Replication
 
 ## Introduction
 
-In this lab, you will provision a Globally Distributed Database with RAFT replication. 
+In this lab, you will provision a Globally Distributed Database with Raft replication. 
 
 Estimated Lab Time: 60 minutes.
 
@@ -12,7 +12,7 @@ In this lab, you will perform the following steps:
 
 -   Install the GSM Software in the gsmhost Compute Instance.
 -   Configure the Catalog DB and Shard DB.
--   Deploy the GDD with RAFT replication.
+-   Deploy the GDD with Raft replication.
 
 ### Prerequisites
 
@@ -256,7 +256,7 @@ This lab assumes you have already completed the following:
 
 15.   Exit from the terminal.
 
-## Task 2: Execute Prep Scripts for Oracle Sharding on Catalog
+## Task 2: Execute Prep Scripts for Oracle Sharding on Catalog Host
 
 **Remember we use shardhost0 as catalog host.**
 
@@ -376,7 +376,7 @@ This lab assumes you have already completed the following:
 
 10.   Exit and back to the gsmhost **opc** user.
 
-## Task 3: Execute Prep Scripts for Oracle Sharding on each shard
+## Task 3: Execute Prep Scripts for Oracle Globally Distributed Database on each shard
 
 **Note: You need to connect to each shard to execute the following commands to prepare shards**
 
@@ -570,7 +570,7 @@ This lab assumes you have already completed the following:
 
      
 
-3.   Create shard catalog, the `-repl NATIVE` for native RAFT replication.
+3.   Create shard catalog, the `-repl NATIVE` for native Raft replication.
 
      ```
      <copy>create shardcatalog -database shardhost0:1521/shard0 -user mysdbadmin/WelcomePTS_2024# -repl native -repfactor 3 -chunks 18</copy>
@@ -920,7 +920,7 @@ This lab assumes you have already completed the following:
 
       
 
-Now the RAFT replication environment is ready.
+Now the Raft replication environment is ready.
 
 You may now proceed to the next lab.
 

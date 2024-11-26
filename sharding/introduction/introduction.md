@@ -3,7 +3,7 @@
 
 ## About this Workshop
 
-In this workshop you will learn how to deploy Oracle Globally Distributed Database with RAFT replication. You will also deploy an application base on the RAFT with high availability. 
+In this workshop you will learn how to deploy Oracle Globally Distributed Database with Raft replication. You will also deploy an application base on the Raft with high availability. 
 
 Estimated Lab Time: 4 hours.
 
@@ -13,9 +13,9 @@ Oracle Globally Distributed Database disperses segments of a data set across man
 
 
 
-## About RAFT Replication
+## About Raft Replication
 
-RAFT Replication enables rapid failover within seconds and zero data loss during node or data center outages, facilitating an Active-Active-Active symmetric distributed database architecture that enhances availability, simplifies management, and optimizes resource utilization globally.
+Raft Replication enables rapid failover within seconds and zero data loss during node or data center outages, facilitating an Active-Active-Active symmetric distributed database architecture that enhances availability, simplifies management, and optimizes resource utilization globally.
 
 **Replication Unit**
 
@@ -54,7 +54,9 @@ In Oracle Globally Distributed Database , the replication factor is specified fo
 
 In this workshop, you will
 
-- Deploy a Globally Distributed Database with RAFT replication.
+- Deploy a Globally Distributed Database with Raft replication.
+- Migrate a single instance application to the Globally Distributed Database.
+- Explore the Raft replication features
 
 
 

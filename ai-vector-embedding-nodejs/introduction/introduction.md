@@ -4,6 +4,19 @@
 
 In this lab you will learn how to use Oracle Vector datatypes with external embedding models. You will see how to perform binds and defines using hard-coded vectors. 
 
+Estimated Time:  1 hour 30 minutes 
+
+### Objectives
+
+In this workshop, you will learn how to:
+* Use Vectors in Oracle 23ai Free database.
+* Learn basic query and DML operation on Vectors.
+* Use vector embedding models leveraging node.js.
+
+### Prerequisites
+
+- Basic knowledge of SQL
+- Basic knowledge of Node.js
 
 ## 1. Vector Embedding Models
 
@@ -176,4 +189,4 @@ To switch between learning about Cohere and Hugging Face embedding models click 
 ## Acknowledgements
 * **Author** - Doug Hood, Product Manager
 * **Contributors** -  Sean Stacey, Outbound Product Manager, Zackary Rice, Software Developer
-* **Last Updated By/Date** - Zackary Rice, May 2024
+* **Last Updated By/Date** - Zackary Rice, November 2024

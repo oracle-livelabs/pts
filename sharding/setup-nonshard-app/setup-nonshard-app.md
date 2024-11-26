@@ -561,7 +561,7 @@ This lab assumes you have already completed the following:
     grant shard_monitor_role, gsmadmin_role to app_schema;
     
     
-    create user dbmonuser identified by TEZiPP4MsLLL;
+    create user dbmonuser identified by TEZiPP4_MsLLL_1;
     grant connect, alter session, shard_monitor_role, gsmadmin_role to dbmonuser;
     
     grant all privileges on app_schema.products to dbmonuser;
@@ -719,7 +719,7 @@ This lab assumes you have already completed the following:
     name=demo
     connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=shardhost3)(PORT=1521)(PROTOCOL=tcp)))
     monitor.user=dbmonuser
-    monitor.pass=TEZiPP4MsLLL
+    monitor.pass=TEZiPP4_MsLLL_1
     app.service.write=nspdb
     app.service.readonly=nspdb
     app.user=app_schema

@@ -17,7 +17,7 @@
             "filename": "../../setup-environment/setup-environment.md"
         },
         {
-            "title": "Lab 2: Deployment the RAFT replication Sharded Database",
+            "title": "Lab 2: Deployment the Globally Distributed Database with Raft replication",
             "filename": "../../deploy-raft-replication/deploy-raft-replication.md"
         },
         {
@@ -29,7 +29,7 @@
             "filename": "../../create-sample-schema/create-sample-schema.md"
         },
         {
-            "title": "Lab 5: Explore the RAFT Replication Features",
+            "title": "Lab 5: Explore the Raft Replication Features",
             "filename": "../../explore-raft-replication/explore-raft-replication.md"
         },
         {
