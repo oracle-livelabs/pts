@@ -452,3 +452,9 @@ This completes the back-end changes required to support the `priority` field in 
 ## Conclusion
 
 In this lab, you’ve successfully added a `priority` field to your To-Do app across the full stack (front-end, back-end, and database). This change was integrated into your OCI CI/CD pipeline, demonstrating how to automate schema updates and deployment to Oracle Kubernetes Engine (OKE). This workflow ensures that your app can evolve rapidly while maintaining consistency and automation throughout the pipeline.
+
+
+## Acknowledgements
+
+- **Author**: Ashu Kumar, Principal Product Manager
+- **Last Updated By/Date**: Ashu Kumar, December 2024

@@ -9,27 +9,27 @@
         {
             "title": "Lab 2: Overview of the Workshop",
             "description": "Provision essential resources on Oracle Cloud Infrastructure (OCI), including network, compute, and storage services, to build the foundation for a cloud-native application.",
-            "filename": "./introduction/introduction.md"
+            "filename": "../../introduction/introduction.md"
         },
         {
             "title": "Lab 3: Create Comparment and OKE",
             "description": "Create Compartment and OKE",
-            "filename": "./setup-cloud-env/setup-cloud-env.md"
+            "filename": "../../setup-cloud-env/setup-cloud-env.md"
         },
         {
             "title": "Lab 4: Policies and ADB",
             "description": "Policies and ADB",
-            "filename": "./policies-adb/policies-adb.md"
+            "filename": "../../policies-adb/policies-adb.md"
         },
         {
             "title": "Lab 5: Create DevOps Projects",
             "description": "Create DevOps Projects",
-            "filename": "./devops-projects/devops-projects.md"
+            "filename": "../../devops-projects/devops-projects.md"
         },
         {
             "title": "Lab 6: OCI CI/CD Pipeline Enhancement: FE, BE, and Database using Liquibase",
             "description": "OCI CI/CD Pipeline Enhancement: Front-End, Back-End, and Database",
-            "filename": "./update-app/update-app.md"
+            "filename": "../../update-app/update-app.md"
         }
 
     ]

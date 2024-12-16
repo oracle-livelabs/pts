@@ -222,5 +222,5 @@ In this task, you’ve created a dynamic group to support your CI/CD pipeline an
 
 ## Acknowledgements
 
-- **Author**: Ashu Kumar
-- **Last Updated By/Date**: Ashu Kumar, October 2024
+- **Author**: Ashu Kumar, Principal Product Manager
+- **Last Updated By/Date**: Ashu Kumar, December 2024

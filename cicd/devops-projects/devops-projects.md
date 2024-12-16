@@ -128,7 +128,20 @@ Estimated time: 30 minutes
    </copy>
    ```
 
-This will download the code from the GitHub repository and then commit and push it into your OCI DevOps project’s code repository for use in your CI/CD pipelines.
+***Important: Steps to Push Your Code Securely***: 
+
+   - **Repository Authentication Details:**
+      - **Username**: Use your Tenancy name/OCI Cloud username. eg.: mytenancy/myusername ie. oraclepartnersas/ashu.kumar@oracle.com
+      - **Password**: Use an **Authentication Token** generated from your Oracle Cloud Infrastructure Console.
+
+   - **Generating an Authentication Token**
+   
+   To push code securely, you must use an authentication token instead of a password:
+
+      - Go to the Oracle Cloud Infrastructure Console.
+      - Navigate to Profile → Auth Tokens.
+      - Click Generate Token and save it securely.
+      - Use this token as your password when prompted during Git operations.
 
 ---
 
@@ -323,5 +336,5 @@ In this guide, you’ve set up an OCI project for CI/CD. By integrating a Git re
 
 ## Acknowledgements
 
-- **Author**: Ashu Kumar
-- **Last Updated**: Date
+- **Author**: Ashu Kumar, Principal Product Manager
+- **Last Updated By/Date**: Ashu Kumar, December 2024

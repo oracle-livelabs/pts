@@ -36,5 +36,5 @@ You may now **proceed to the next section** to configure networking and other pr
 
 ## Acknowledgements
 
-- **Author**: [Ashu Kumar]
-- **Last Updated By/Date**: [Ashu Kumar], October 2024
+- **Author**: Ashu Kumar, Principal Product Manager
+- **Last Updated By/Date**: Ashu Kumar, December 2024
