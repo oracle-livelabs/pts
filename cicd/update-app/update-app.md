@@ -32,6 +32,7 @@ Estimated time: 30 minutes
    update in the `index.html` (if using a table to display ToDo items):
    ```
    <copy>   
+    {% raw %}
     {% extends 'base.html' %}
     {% block content %}
     &lt;h1&gt;Todo List&lt;/h1&gt;
@@ -82,6 +83,7 @@ Estimated time: 30 minutes
         &lt;a href="{{ url_for('create_todo') }}" class="btn btn-primary"&gt;Add New Todo&lt;/a&gt;
     &lt;/div&gt;
     {% endblock %}
+    {% endraw %}
     </copy>
     ```
 
