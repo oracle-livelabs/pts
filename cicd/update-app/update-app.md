@@ -30,7 +30,7 @@ Estimated time: 30 minutes
    - Add a new column for displaying the `priority` field.
 
    update in the `index.html` (if using a table to display ToDo items):
-   ```html
+   ```
    <copy>   
     {% extends 'base.html' %}
     {% block content %}
@@ -86,7 +86,7 @@ Estimated time: 30 minutes
     ```
 
 3. **Add `priority` input in the ToDo creation form** (`todo_form.html`):
-   ```html
+   ```
    <copy>
     &lt;!doctype html&gt;
     &lt;html lang="en"&gt;
