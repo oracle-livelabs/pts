@@ -93,8 +93,10 @@ Estimated time: 30 minutes
       4. Navigate to the Wallet folder and update the **sqlnet.ora** file with the following:
          - change DIRECTORY path with DIRECTORY="/app/Wallet"
          ```bash
+         <copy>
          WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="/app/Wallet")))
          SSL_SERVER_DN_MATCH=yes
+         </copy>
          ```
       5. Navigate to the Wallet folder and update the **ojdbc.properties** file with the following:
          - Comment out the oracle.net.wallet_location line.
@@ -107,8 +109,20 @@ Estimated time: 30 minutes
          javax.net.ssl.keyStore=${TNS_ADMIN}/keystore.jks
          javax.net.ssl.keyStorePassword=my_wallet_password
          ```
+6. **Update Docker Image path**.
+   1. Open **kubernate.yaml** from the root folder.
+   2. Update the image path in image path remember in the next lab keep image name same as **todo-img** while creating container registory.
+   ```
+   current value: image: bom.ocir.io/oraclepartnersas/todo-img:${BUILDRUN_HASH}
 
-6. **Commit the code to your OCI DevOps repository**:
+   pattern: region/tenancy/todo-img:${BUILDRUN_HASH}
+
+   eg. bom.ocir.io/oraclepartnersas/todo-img:${BUILDRUN_HASH}
+   ```
+   
+   ![Marketplace Image](./images/Docker_Push_Build_Pipeline.png)
+
+7. **Commit the code to your OCI DevOps repository**:
    - Stage all the files:
    ```bash
    <copy>
