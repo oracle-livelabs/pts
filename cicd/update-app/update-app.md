@@ -32,7 +32,7 @@ Estimated time: 30 minutes
    update in the `index.html` (if using a table to display ToDo items):
    ```html
    <copy>   
-    {% extends 'base.html' %}
+    {% include 'base.html' %}
     {% block content %}
     &lt;h1&gt;Todo List&lt;/h1&gt;
     &lt;div class="container"&gt;
