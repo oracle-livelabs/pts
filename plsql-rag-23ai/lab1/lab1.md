@@ -159,7 +159,7 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
+4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first three text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
