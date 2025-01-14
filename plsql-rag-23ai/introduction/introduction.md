@@ -6,7 +6,7 @@ Retrieval Augmented Generation (RAG) plays a pivotal role in Generative AI, offe
 
 1. Minimize Hallucinations:  Large Language Models (LLMs) may generate inaccurate or irrelevant responses if they lack training on prompts. Re-training LLMs to align with desired responses incurs substantial costs.  
 2. Safeguarding Confidentiality: LLMs are trained on publicly available information from the internet – they do not know about your company specific data. Do not send your company specific information across the internet as you are giving away your private information to a 3rd party.  Instead keep your enterprise data within your realm by using local LLMs within your data center or cloud tenancy.
-3. Up to date information: LLMs are trained up to a certain date [eg Sept 2021 for ChatGPT], newer events/facts are unknown. The LLM can provide responses based on up-to-date facts in the form of prompts provided by your vector database.  This means that your LLM has the benefit of the latest data from your company without the need to train the LLM on your company data.
+3. Up to date information: LLMs are trained up to a certain date, newer events or facts are unknown. The LLM can provide responses based on up-to-date facts in the form of prompts provided by your vector database.  This means that your LLM has the benefit of the latest data from your company without the need to train the LLM on your company data.
 
 RAG addresses these challenges by enabling the inclusion of vital context alongside prompts provided to LLMs. In our laboratory scenario, this context comprises business information stored in Oracle Database 23ai as vectors. Using Oracle PLSQL and Oracle AI Vector Search makes implementing a RAG architecture simple.
 
