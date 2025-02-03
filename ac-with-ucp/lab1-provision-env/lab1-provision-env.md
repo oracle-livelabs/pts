@@ -25,7 +25,7 @@ This lab assumes you have:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [BusinessContinuityStack.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/N60IjOyB4GQ-dmmkM8dC8oaquCwDZtUdqqqcDOIANjVrbBVyGBUfxwnhwL_gO-cb/n/c4u04/b/terraform/o/pts/BusinessContinuity-freetier-mkplc.zip) - Packaged Terraform Environment creation script.
+- [BusinessContinuityStack.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/BusinessContinuity-freetier-mkplc_18032024.zip) - Packaged Terraform Environment creation script.
 
 ## Task 1: Load Terraform Stack
 
