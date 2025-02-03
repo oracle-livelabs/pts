@@ -83,7 +83,7 @@ Compartment: select your own compartment
 
   ```
   <copy>
-  Policy: allow user to manage generative-ai-family in compartment \<your compartment>
+  Policy: allow group <group name> to manage generative-ai-family in compartment <your compartment>
   </copy>
   ```
 
