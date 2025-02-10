@@ -510,7 +510,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
               "provider": "ocigenai",
               "credential_name" : "GENAI_CRED",
               "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-              "model": "cohere.command-r-16k",
+              "model": "cohere.command-r-08-2024",
               "chatRequest": {
                 "maxTokens": 300}
               }';
