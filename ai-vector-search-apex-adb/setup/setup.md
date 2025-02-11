@@ -53,7 +53,7 @@ By completing this lab, you will achieve the following objectives:
 ![alt text](images/compartmentsave.png)
 
 
-  The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
+  Please create a group and title it ProdObjectManagers. The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
 
 7. Add the following statements to allow the respective policy actions:
     * Allow group ProdObjectManagers to read buckets in compartment PROD
