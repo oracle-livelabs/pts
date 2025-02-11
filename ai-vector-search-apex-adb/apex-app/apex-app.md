@@ -47,7 +47,7 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 2. Edit the remote server and plug in the pre-authenticated request URL.
 3. Grab the pre-authenticated request URL from your bucket and plug it into the box where it says endpoint URL. Ensure it is in the format `https://objectstorage.us-ashburn-1.oraclecloud.com/p/-j_vl5Rra_FHPSt1Qx6lVjOdguVRDOjRdqZI/n/xyz`. Make sure the URL cuts off at the point where it mentions your tenancy (e.g., `xyz`). Click **Save Changes**.
 ![alt text](images/urlpathprefix.png)
-4. Open the same editing page again, copy the static identifier, and paste it into the name of this REST data source. The name should reflect what the static identifier has. Click **Save Changes**.
+4. Click **Save Changes**.
 5. The rest of the URL: `/b/apex_file_storage/o/` will be used to plug into the URL path prefix underneath the base URL.
 6. Ensure the URL format cuts off at the tenancy point.
 7. Repeat the same steps for the other two sources `list_buckets` and `list_objects_in_bucket`.
