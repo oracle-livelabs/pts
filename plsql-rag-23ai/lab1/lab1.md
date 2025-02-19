@@ -159,7 +159,7 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
+4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first three text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
@@ -510,7 +510,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
               "provider": "ocigenai",
               "credential_name" : "GENAI_CRED",
               "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-              "model": "cohere.command-r-16k",
+              "model": "cohere.command-r-08-2024",
               "chatRequest": {
                 "maxTokens": 300}
               }';
