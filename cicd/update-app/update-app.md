@@ -29,112 +29,14 @@ Estimated time: 30 minutes
    - Open the main UI file responsible for displaying ToDo items (file name: `index.html`).
    - Add a new column for displaying the `priority` field.
 
-   update in the `index.html` (if using a table to display ToDo items):
-   ```html
-   <copy>   
-    {% include 'base.html' %}
-    {% contentfor content %}
-    &lt;h1&gt;Todo List&lt;/h1&gt;
-    &lt;div class="container"&gt;
-        &lt;table class="table"&gt;
-            &lt;thead&gt;
-                &lt;tr&gt;
-                    &lt;th&gt;ID&lt;/th&gt;
-                    &lt;th&gt;Title&lt;/th&gt;
-                    &lt;th&gt;Description&lt;/th&gt;
-                    &lt;th&gt;Completed&lt;/th&gt;
-                    &lt;th&gt;Priority&lt;/th&gt; &lt;!-- New Column for Priority --&gt;
-                    &lt;th&gt;Due Date&lt;/th&gt;
-                    &lt;th&gt;Actions&lt;/th&gt;
-                &lt;/tr&gt;
-            &lt;/thead&gt;
-            &lt;tbody&gt;
-                {% for todo in todos %}
-                &lt;tr&gt;
-                    &lt;td&gt;{{ todo[0] }}&lt;/td&gt;
-                    &lt;td&gt;{{ todo[1] }}&lt;/td&gt;
-                    &lt;td&gt;{{ todo[2] }}&lt;/td&gt;
-                    &lt;td&gt;{{ 'Yes' if todo[3] == 'Y' else 'No' }}&lt;/td&gt;
-                    &lt;td&gt
-                        &lt;span class="{% if todo[6] == 3 %}text-danger{% elif todo[6] == 2 %}text-warning{% elif todo[6] == 1 %}text-success{% else %}text-muted{% endif %}"&gt;
-                        {% if todo[6] == 3 %}
-                            High
-                        {% elif todo[6] == 2 %}
-                            Medium
-                        {% elif todo[6] == 1 %}
-                            Low
-                        {% else %}
-                            N/A
-                        {% endif %}
-                        &lt;/span&gt;
-                    &lt;/td&gt
-                    &lt;td&gt;{{ todo[4] if todo[4] else 'N/A' }}&lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;a href="{{ url_for('todo_detail', id=todo[0]) }}" class="btn btn-info"&gt;View&lt;/a&gt;
-                        &lt;form action="{{ url_for('delete_todo', id=todo[0]) }}" method="post" style="display:inline;"&gt;
-                            &lt;button type="submit" class="btn btn-danger"&gt;Delete&lt;/button&gt;
-                        &lt;/form&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-                {% endfor %}
-            &lt;/tbody&gt;
-        &lt;/table&gt;
-        &lt;a href="{{ url_for('create_todo') }}" class="btn btn-primary"&gt;Add New Todo&lt;/a&gt;
-    &lt;/div&gt;
-    {% endcontentfor %}
-    </copy>
-    ```
-
+    1. Open index-2.0.html from templates folder and copy its contents.
+    2. Paste the copied content into index.html, replacing its current content.
+    
+    
 3. **Add `priority` input in the ToDo creation form** (`todo_form.html`):
-   ```html
-   <copy>
-    &lt;!doctype html&gt;
-    &lt;html lang="en"&gt;
-    &lt;head&gt;
-        &lt;meta charset="utf-8"&gt;
-        &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-        &lt;title&gt;Todo Form&lt;/title&gt;
-        &lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div class="container"&gt;
-            &lt;h1&gt;{% if todo %}Update{% else %}Create{% endif %} Todo&lt;/h1&gt;
-            &lt;form method="post"&gt;
-                &lt;div class="form-group"&gt;
-                    &lt;label for="title"&gt;Title&lt;/label&gt;
-                    &lt;input type="text" class="form-control" id="title" name="title" value="{{ todo[1] if todo else '' }}" required&gt;
-                &lt;/div&gt;
-                &lt;div class="form-group"&gt;
-                    &lt;label for="description"&gt;Description&lt;/label&gt;
-                    &lt;textarea class="form-control" id="description" name="description" required&gt;{{ todo[2] if todo else '' }}&lt;/textarea&gt;
-                &lt;/div&gt;
-                &lt;div class="form-group"&gt;
-                    &lt;label for="completed"&gt;Completed&lt;/label&gt;
-                    &lt;select class="form-control" id="completed" name="completed"&gt;
-                        &lt;option value="Y" {% if todo and todo[3] == 'Y' %}selected{% endif %}&gt;Yes&lt;/option&gt;
-                        &lt;option value="N" {% if todo and todo[3] == 'N' %}selected{% endif %}&gt;No&lt;/option&gt;
-                    &lt;/select&gt;
-                &lt;/div&gt;
-                &lt;div class="form-group"&gt;
-                    &lt;label for="due_date"&gt;Due Date&lt;/label&gt;
-                    &lt;input type="date" class="form-control" id="due_date" name="due_date" value="{{ todo[4].strftime('%Y-%m-%d') if todo and todo[4] else '' }}"&gt;
-                &lt;/div&gt;
-                &lt;div class="form-group"&gt;
-                    &lt;label for="priority"&gt;Priority&lt;/label&gt;
-                    &lt;select class="form-control" id="priority" name="priority"&gt;
-                        &lt;option value="Low">Low</option&gt;
-                        &lt;option value="Medium">Medium</option&gt;
-                        &lt;option value="High">High</option&gt;
-                    &lt;/select&gt;
-                &lt;/div&gt;
-                &lt;button type="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;
-            &lt;/form&gt;
-            &lt;a href="{{ url_for('index') }}" class="btn btn-secondary"&gt;Back to List&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
-    </copy>
-    ```
+
+    1. Open todo_form-2.0.html from templates folder and copy its contents.
+    2. Paste the copied content into todo_form.html, replacing its current content.
 
 4. **Push the Front-End Changes** to the OCI DevOps repository:
    ```bash
