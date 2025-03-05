@@ -81,7 +81,9 @@ Estimated time: 30 minutes
    git remote add origin [oci-devops-repo-https-url]
    </copy>
    ```
-   - Replace `[oci-devops-repo-https-url]` with the actual URL of your OCI DevOps project repository by clicking on Clone option repo you will get the https url.
+   - Replace `[oci-devops-repo-https-url]` with the actual URL of your OCI DevOps project repository by selecting the 3 dot menu of your code repository, and select clone repo you will get the https url.
+
+
 
        ![Marketplace Image](./images/Git_Remote_ADD.png)
        
@@ -103,11 +105,13 @@ Estimated time: 30 minutes
          - Set javax.net.ssl.trustStorePassword to the Wallet password that you entered to download the Wallet.
          - Set javax.net.ssl.keyStorePassword to the Wallet password that you entered to download the Wallet.
          ```bash
-         #oracle.net.wallet_location=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=${TNS_ADMIN})))
+          <copy>
+          #oracle.net.wallet_location=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=${TNS_ADMIN})))
          javax.net.ssl.trustStore=${TNS_ADMIN}/truststore.jks
          javax.net.ssl.trustStorePassword=my_wallet_password
          javax.net.ssl.keyStore=${TNS_ADMIN}/keystore.jks
          javax.net.ssl.keyStorePassword=my_wallet_password
+         </copy>
          ```
 6. **Update Docker Image path**.
    1. Open **kubernate.yaml** from the root folder.
@@ -115,7 +119,7 @@ Estimated time: 30 minutes
    ```
    current value: image: bom.ocir.io/oraclepartnersas/todo-img:${BUILDRUN_HASH}
 
-   pattern: region/tenancy/todo-img:${BUILDRUN_HASH}
+   pattern: region/tenancy/repository-name
 
    eg. bom.ocir.io/oraclepartnersas/todo-img:${BUILDRUN_HASH}
    ```
@@ -138,7 +142,7 @@ Estimated time: 30 minutes
    - Push the code to the OCI DevOps repository:
    ```bash
    <copy>
-   git push
+   git push -u origin master -f
    </copy>
    ```
 
@@ -212,7 +216,7 @@ Estimated time: 30 minutes
 4. Next Click on second option **Create Artifact**, Give it a name **Push Docker Image**, select type **Container Image Repository** with the path:   
 
    ```
-   region/tenancy/image-path:${BUILDRUN_HASH}
+   pattern: region/tenancy/repository-name
 
    eg. bom.ocir.io/oraclepartnersas/todo-img:${BUILDRUN_HASH}
    ```

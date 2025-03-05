@@ -1,8 +1,10 @@
 # Introduction
 
-## OCI Project & CI/CD
+## CI/CD with Oracle Autonomous Database
 
-This workshop provides a step-by-step guide to creating, deploying, and managing projects on **Oracle Cloud Infrastructure (OCI)**. You will set up cloud-native resources, create a Kubernetes cluster, configure a CI/CD pipeline, and deploy a sample **Todo App** using OCI services. This lab will also help you gain hands-on experience with Autonomous Database and Oracle Kubernetes Engine (OKE), applying modern DevOps practices.
+
+This workshop provides a step-by-step guide to configure a CI/CD pipeline, and deploy a sample Todo App using OCI services and Oracle Autonomous Database. This lab will also help you gain hands-on experience with Oracle Kubernetes Engine (OKE), applying modern DevOps practices
+
 
 **Estimated Time**: 3 hours 30 minutes
 

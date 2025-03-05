@@ -70,9 +70,6 @@ Now you are ready to move on to Step 3.
 1. Keep the name to **cluster1** and the other default values, click Next to review the cluster settings. Do not choose the Kubernetes API Endpoint to be _Private Endpoint_ or you will need a bastion or an admin instance to access the kubectl commands. You can explore Private Endpoint on an specific lab.
 <sup>_Optionally choose visibility of the Kubernetes Worker Nodes to **Public Workers** if you want public access to your nodes and number of nodes to **2** or **1** if you want reduced number of nodes_</sup>
 
-Keep the name to cluster1 and the other default values, click Next to review the cluster settings
-Optionally choose visibility type to Private Endpoint to host your Kubernetes endpoint in a private subnet. Also choose visibility type to Public Workers if you want public access to your nodes. You can also change the number of nodes to 2 or 1 if you want to reduce the number of nodes.
-
    ![Cluster Details](images/OKE-create-cluster-details.png " ")
 
 1. Review the the Cluster Creation and then select **Create Cluster**.
@@ -135,6 +132,5 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 
-- **Author** - Satyajeet Joshi
-- **Contributors** -  Kamryn Vinson, Adao Junior
-- **Last Updated By/Date** - Adao Junior, April 2021
+- **Author**: Ashu Kumar
+- **Last Updated By/Date**: Ashu Kumar, October 2024
