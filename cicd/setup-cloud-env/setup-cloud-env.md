@@ -65,10 +65,11 @@ Now you are ready to move on to Step 3.
 
 1. Choose Quick Create as it will create the new cluster along with the new network resources such as Virtual Cloud Network (VCN), Internet Gateway (IG), NAT Gateway (NAT), Regional Subnet for worker nodes, and a Regional Subnet for load balancers. Select **Launch Workflow**
 
-   ![Quick Create Cluster](images/OKE-create-cluster.png " ")
+   ![Quick Create Cluster](images/create_cluster.png " ")
 
 1. Keep the name to **cluster1** and the other default values, click Next to review the cluster settings. Do not choose the Kubernetes API Endpoint to be _Private Endpoint_ or you will need a bastion or an admin instance to access the kubectl commands. You can explore Private Endpoint on an specific lab.
 <sup>_Optionally choose visibility of the Kubernetes Worker Nodes to **Public Workers** if you want public access to your nodes and number of nodes to **2** or **1** if you want reduced number of nodes_</sup>
+
 
    ![Cluster Details](images/OKE-create-cluster-details.png " ")
 
