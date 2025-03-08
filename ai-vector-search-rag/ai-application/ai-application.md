@@ -555,51 +555,31 @@ This lab assumes you have the following:
 
     ![appuser table edit row](./images/appuser-table-edit-row.png " ")
 
-6. Go back to your application pages under the App Builder. Use the Search bar at the top of the APEX development environment to search and replace some strings in the application code.
+6. Go back to your application pages under the App Builder. Click Shared Components.
 
-    ![application dev](./images/application-dev.png " ")
+    ![shared components](./images/shared-components.png " ")
 
-7. Set the correct Compartment OCID in the application code. Search this App for `here_use_your_own_compartment_ocid` string.
+7. Click Aplication Definition.
 
-    ![here use your compartment ocid](./images/here-use-your-compartment-ocid.png " ")
+    ![application definition](./images/application-definition.png " ")
 
-8. Click View under every result to access the component code in the application.
+8. Under Substitutions, set the correct Compartment OCID, Tenancy name, and Region with the correct values from your notes.
 
-    ![view item source code](./images/view-item-source-code.png " ")
+    ![substitutions](./images/substitutions.png " ")
 
-9. Edit the source code of the component and replace `ocid1.compartment.oc1..aaaaaaaa_here_use_your_own_compartment_ocid` with your Compartment OCID.
-
-    ![edit source code](./images/edit-source-code.png " ")
-
-10. Repeat the process until the search string is not found in your application.
-
-    ![nothing found with search](./images/nothing-found-with-search.png " ")
-
-11. Use the same search bar to set the correct Tenancy name in the Object Storage URL. Search this App for `YourOCItenancy`.
-
-    ![search app yourocitenancy](./images/search-app-yourocitenancy.png " ")
-
-12. Replace `https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy` with the correct URL part of your Object Storage Bucket, leaving the rest of the URL as it is.
-
-    ![view search result](./images/view-search-result.png " ")
-
-13. Repeat the process until the search string is not found in your application.
-
-    ![nothing found yourocitenancy](./images/nothing-found-yourocitenancy.png " ")
-
-14. Navigate to Workspace Utilities under the App Builder.
+9. Navigate to Workspace Utilities under the App Builder.
 
     ![app builder workspace utilities](./images/app-builder-workspace-utilities.png " ")
 
-15. Click Web Credentials.
+10. Click Web Credentials.
 
     ![web credentials](./images/web-credentials.png " ")
 
-16. Click Create.
+11. Click Create.
 
     ![no web credentials](./images/no-web-credentials.png " ")
 
-17. Name it OBJAPI. Use the following details with your values to create the Web Credentials.
+12. Name it OBJAPI. Use the following details with your values to create the Web Credentials.
 
     - Name: OBJAPI
     - Static ID: OBJAPI
@@ -626,7 +606,7 @@ This lab assumes you have the following:
 
     ![create web credentials](./images/create-web-credentials.png " ")
 
-18. The new Web Credential entry will appear in the list.
+13. The new Web Credential entry will appear in the list.
 
     ![action processed](./images/action-processed.png " ")
 
@@ -683,7 +663,7 @@ This lab assumes you have the following:
 
     ![embedding document](./images/embedding-document.png " ")
 
-14. After the document is vectorized, it is listed in the report that shows all vectorized documents in your `VECTORS` table with the corresponding number of vectors. This document generated 226 vectors during the embedding process. The number of vectors may differ from yours because of updates to the application code. You can click on the chunks number to inspect them.
+14. After the document is vectorized, it is listed in the report that shows all vectorized documents in your `VECTORS` table with the corresponding number of vectors. This document generated 226 vectors during the embedding process. The number of vectors may differ from yours because of updates to the application code. You can click on the vectors number to inspect the chunks.
 
     ![vectors embedded documents](./images/vectors-embedded-documents.png " ")
 
