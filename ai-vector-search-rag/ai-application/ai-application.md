@@ -1,8 +1,8 @@
-# Oracle AI Vector Search with RAG Basic Example
+# Oracle AI Vector Search and RAG Basic Example
 
 ## Introduction
 
-Estimated Time:  120 minutes
+Estimated Time: 90 minutes.
 
 ### Prerequisites
 
@@ -708,7 +708,7 @@ This lab assumes you have the following:
     ![bucket objects pdf](./images/bucket-objects-pdf.png " ")
 
 
-This workshop is now complete.
+You may now **proceed to the next lab**.
 
 ## **Acknowledgements**
 
