@@ -13,9 +13,14 @@
             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
         },
         {            
-            "title": "Lab 1: Oracle AI Vector Search with RAG",
+            "title": "Lab 1: Oracle AI Vector Search and RAG",
             "description": "Setup ADB instance running 23ai with APEX and AI application",
             "filename": "../../ai-application/ai-application.md"
+        },
+        {            
+            "title": "Lab 2: Understand RAG Example application",
+            "description": "Explain the APEX AI Vector Search and RAG application code",
+            "filename": "../../understand-app/understand-app.md"
         },
         {
             "title": "Need Help?",
