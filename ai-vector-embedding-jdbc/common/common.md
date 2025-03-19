@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this preparatory lab, we will review the Java code used in the later labs to utilize Oracle 23ai database with JDBC to perform Similarity Search. If you are running the workshop in your environment, you can use whichever IDE you prefer.
+In this preparatory lab, we will review the Java code used in the later labs to utilize Oracle Database 23ai with JDBC to perform Similarity Search. If you are running the workshop in your environment, you can use whichever IDE you prefer.
 
 Estimated Time: 20 minutes
 
