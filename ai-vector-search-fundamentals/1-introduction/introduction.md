@@ -10,6 +10,8 @@ Key components of AI Vector Search include:
 
 *Vector Data Type*: A data type designed to store vector data directly within Oracle Database, facilitating seamless integration.
 
+*Similarity Search*: The ability to search for semantically similarity on structured or unstructured data.
+
 *Vector Indexes*: Specialized indexing optimized for rapid and efficient retrieval of similar vectors, enhancing the database's search efficiency.
 
 *Vector Search SQL Operators*: These SQL operators are tailored for conducting intricate similarity searches on vector data, providing developers with powerful tools to explore and analyze complex datasets.
@@ -20,7 +22,7 @@ At the heart of AI Vector Search is the ability to do a similarity search. A sim
 
 Another big benefit of AI Vector Search is that similarity search can be combined with relational search on business data in one single system. This is not only powerful but also significantly more effective because AI Vector Search allows you to generate, store, index, and query vector embeddings along with other business data, using the full power of SQL. This means you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
 
-In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to find attributes of US National Parks based on your interests. For example, finding parks on a vacation where you might want to have a family picnic or go rock climbing in parks that are close to your planned destination. Finding a good match in this case requires combining a semantic picture search with searches on relational data.
+In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see spectacular sights. You might also want to narrow your search to parks that are close to your planned destination. Finding a good match in this case requires combining a similarity search with searches on relational data.
 
 Estimated Time: 5 minutes
 
@@ -31,8 +33,9 @@ This Lab will use a public dataset based on the US National Parks (??). There ar
 ### Objectives
 
 In this workshop, you will learn how to:
-* Create a vector data type.
-* Create vector embeddings from an embedding model in Oracle database.
+* Load a vector embedding model into Oracle database.
+* Learn about vectors and the new vector data type.
+* Create vector embeddings from the embedding model you loaded.
 * Learn what similarity search is.
 * Perform an exact similarity search using basic SQL query operations.
 * Create a vector index.

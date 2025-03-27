@@ -24,9 +24,6 @@ In this lab, you will:
 * Describe and display a vector
 * Create a vector column and describe the attributes
 * Create vector embeddings on the PARKS table DESCRIPTION column
-* Run exact similarity searches
-  * Show an execution plan from the query
-  * Show vector distances to reinforce how the search is evaluated
 
 ### Prerequisites (Optional)
 
@@ -37,11 +34,28 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Task 1: Load an Embedding Model
+## Connecting to your Vector Database
+
+The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *vector* with the password: *vector*
+
+The lab will use SQL Developer Web to run the SQL commands in this lab. To connect with SQL\*Plus you can use:
+
+```
+
+  <copy>sqlplus vector/vector@orclpdb1</copy>
+
+```
+
+You should see:
+
+ ![Lab 1 Task 0](images/lab1task000.png)
+
+
+## Task 1: Load an embedding model into the database
 
 This task will involved identifying and loading an ONNX model into the database. The pre-built all_MiniLM_L12_v2 will be used as described in the About section above.
 
-1. Let's see if there are any Machine Learning models currently loaded:
+1. Let's verify that the all_MiniLM_L12_v2 Machine embedding model is not currently loaded:
    ```
    <copy>
    select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
@@ -96,7 +110,7 @@ This task will involved identifying and loading an ONNX model into the database.
    ```
    <copy>
    select model_name, attribute_name, attribute_type, data_type, vector_info 
-   from user_mining_model_attributes;
+   from user_mining_model_attributes order by 1,3;
    </copy>
    ```
 
@@ -106,6 +120,18 @@ This task will involved identifying and loading an ONNX model into the database.
 
 
 ## Task 2: Describe and display a vector
+
+AI Vector Search adds a new VECTOR data type to Oracle Database. You can add one or more VECTOR data type columns to your application's table(s) to store vector embeddings. A vector embedding is a mathematical  representation of data points or, more simply, an array of numbers. Vector embeddings are generated using Machine Learning models to represent the distance between data. We will create vector embeddings in the next lab using the VECTOR data type we add in this lab.
+
+The VECTOR data type is created as a column in a table. You can optionally specify the number of dimensions and their format. If you don't specify any dimension or format, you can enter vectors of different dimensions with different formats, although not at the same time. This is a simplification to help you get started with using vectors in Oracle Database and avoids having to recreate the vector definition if you later decide to change the vector embedding model and it uses a different number of dimensions and/or format.
+
+The number of dimensions must be strictly greater than zero, with a maximum of 65535 for non-BINARY vectors and 65528 for BINARY vectors.
+
+The possible dimension formats are:
+*	INT8 (8-bit integers) 
+*	FLOAT32 (32-bit IEEE floating-point numbers) 
+*	FLOAT64 (64-bit IEEE floating-point numbers) 
+*	BINARY (packed UINT8 bytes where each dimension is a single bit) 
 
 Now that we have loaded an embedding model let's take a look at what a vector looks like.
 
@@ -121,11 +147,15 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
    ![directory query](images/vector_example.png)
 
-2. Now let's create an embedding for the DESCRIPTION column in the PARKS table. We will just create the embedding for one row in the table, but in the next section we will create vector embeddings for the entire table based on the DESCRIPTION column.
+   If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display:
+
+   ![directory query](images/vector_example_detail.png)
+
+2. Now let's create a vector for the DESCRIPTION column in the PARKS table. We will just create the vector for one row in the table, but in the next section we will create vectors for the entire table based on the DESCRIPTION column.
 
    ```
    <copy>
-   SELECT SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data)
+   SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data)
    from parks fetch first 1 rows only;
    </copy>
    ```
@@ -134,11 +164,9 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
    ![directory query](images/parks_row_vector.png)
 
-   The description column has been added so you can see the full text that was used for the vector embedding. Below is a text version so hopefully you can appreciate the size of the full vector.
+   Again, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
-   ![directory query](images/parks_row_vector_text.png)
-
-
+   
 ## Task 3: Create a vector column and describe the attributes
 
 Now we are ready to take a look at the PARKS table. We will be using the DESCRIPTION column which is a text string describing the particular park's attributes. We will create a vector embedding for this column.
@@ -179,12 +207,13 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
 In this next task we will create vector embeddings on the DESCRIPTION column for all of the rows in the PARKS table.
 
-1. Create vector embeddings:
+1. Create vector embeddings for the DESCRIPTION column in the PARKS table:
 
    ```
    <copy>
    update parks
    set desc_vector = vector_embedding(minilm_l12_v2 using DESCRIPTION as data);
+   commit;
    </copy>
    ```
 
@@ -199,79 +228,12 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
    ```
    <copy>
-   SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data)
+   SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data) as vector
    from parks fetch first 15 rows only;
    </copy>
    ```
 
 	 ![directory query](images/parks_embeddings_query.png)
-
-
-
-## Task 5: Run exact similarity searches
-
-In this task we will put our work to use and run some exact similarity searches on the DESCRIPTION vector embeddings that we just created.
-
-1. Our first query will look for parks that are associated with the Civil War:
-
-    ```
-    <copy>
-    select name, city, states, description from parks
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' as data), COSINE)
-    fetch exact first 10 rows only;
-    </copy>
-    ```
-
-    ![directory query](images/parks_exact_civil_war.png)
-
-    If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so lets try something a little harder in our next query.
-
-2. For our second query we will try a query with a term that doesn't show up in the description:
-
-    ```
-    <copy>
-    select name, city, states, description from parks 
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch exact first 10 rows only);
-    </copy>
-    ```
-
-    ![directory query](images/parks_exact_rock_climbing.png)
-
-    The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidate for rock climbing. We will see later in the Lab how close we actually came.
-
-3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
-
-    ```
-    <copy>
-    select name, 
-      to_number(vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)),
-      description
-    from parks
-    order by 2
-    fetch exact first 10 rows only;
-    </copy>
-    ```
-
-	 ![directory query](images/parks_exact_rock_climbing_distance.png)
-
-    Notice that the distance number, the TO_NUMBER(VECTOR... column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
-
-4. One last step. Since we are doing exact queries, that is we have not created any vector indexes, what does an execution plan look like?
-
-    ```
-    <copy>
-    select name, description from parks 
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch exact first 10 rows only);
-    </copy>
-    ```
-  
-    Click on the "Explain Plan" button to display an image like the one below:
-
-	 ![directory query](images/parks_execute_plan.png)
-
-    Notice that a TABLE ACCESS FULL is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
 
 
 ## Learn More
