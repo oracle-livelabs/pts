@@ -51,7 +51,7 @@ In a few seconds the LLM will answer the question and respond with context store
 - Tell me more about AI Vector Search
 - Tell me more about new enhancement to SQL
 - Tell me more about JSON Relational Duality
-- List 5 new features of Oracle 23ai database
+- List 5 new features of Oracle Database 23ai
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results

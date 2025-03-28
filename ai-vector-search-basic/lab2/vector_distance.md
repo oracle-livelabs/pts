@@ -43,7 +43,7 @@ Connect to your database, and use the SQL vector() constructor or to\_vector() t
 
 You need to specify the vector values, with optional number dimensions and format.
 The following constructors represent the above e two-dimensional coordinates.
-In Oracle 23ai, you do not need to specify a table for a SQL function.
+In Oracle Database 23ai, you do not need to specify a table for a SQL function.
 The values in the vector will be in scientific format.
 
 1. **OPTIONAL:** The following commands can be set to echo your sql commands and format output results.
