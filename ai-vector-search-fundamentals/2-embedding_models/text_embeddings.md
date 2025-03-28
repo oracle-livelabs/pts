@@ -25,7 +25,7 @@ In this lab, you will:
 * Create a vector column and describe the attributes
 * Create vector embeddings on the PARKS table DESCRIPTION column
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * An Oracle Cloud account
@@ -40,11 +40,9 @@ The lab environment includes a preinstalled Oracle 23ai Database which includes 
 
 The lab will use SQL Developer Web to run the SQL commands in this lab. To connect with SQL\*Plus you can use:
 
-```
-
+  ```
   <copy>sqlplus vector/vector@orclpdb1</copy>
-
-```
+  ```
 
 You should see:
 
@@ -88,7 +86,7 @@ This task will involved identifying and loading an ONNX model into the database.
    </copy>
    ```
 
-   ![directory query](images/load_model.png)
+   ![load model sql](images/load_model.png)
 
    Using the DBMS_VECTOR.LOAD_ONNX_MODEL procedure the database read the all_MiniLM_L12_v2.onnx file in the DM_DUMP directory and loaded it into the database.
 
@@ -101,7 +99,7 @@ This task will involved identifying and loading an ONNX model into the database.
    </copy>
    ```
 
-   ![directory query](images/embedding_models2.png)
+   ![model query](images/embedding_models2.png)
 
    You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
   
@@ -114,7 +112,7 @@ This task will involved identifying and loading an ONNX model into the database.
    </copy>
    ```
 
-   ![directory query](images/model_details.png)
+   ![model details query](images/model_details.png)
 
    You may notice that the VECTOR_INFO column displays 'VECTOR(384,FLOAT32)' which matches our description in the About section where we stated that the all_MiniLM_L12_v2 model has 384-dimensional vectors and a dimension format of FLOAT32.
 
@@ -145,11 +143,11 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
    See the image below:
 
-   ![directory query](images/vector_example.png)
+   ![vector display](images/vector_example.png)
 
    If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display:
 
-   ![directory query](images/vector_example_detail.png)
+   ![vector details](images/vector_example_detail.png)
 
 2. Now let's create a vector for the DESCRIPTION column in the PARKS table. We will just create the vector for one row in the table, but in the next section we will create vectors for the entire table based on the DESCRIPTION column.
 
@@ -162,11 +160,11 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
    See the image below:
 
-   ![directory query](images/parks_row_vector.png)
+   ![table vector query](images/parks_row_vector.png)
 
    Again, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
-   
+
 ## Task 3: Create a vector column and describe the attributes
 
 Now we are ready to take a look at the PARKS table. We will be using the DESCRIPTION column which is a text string describing the particular park's attributes. We will create a vector embedding for this column.
@@ -175,7 +173,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
    See the image below:
 
-   ![directory query](images/parks_columns1.png)
+   ![table columns](images/parks_columns1.png)
 
 2. Next will add a new column to the table of type VECTOR. We will call the column DESC_VECTOR.
 
@@ -185,11 +183,11 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
    </copy>
    ```
 
-   ![directory query](images/parks_add_column.png)
+   ![add vector column](images/parks_add_column.png)
 
 3. Refresh the screen to see the newly added column:
 
-   ![directory query](images/parks_refresh.png)
+   ![refreshed view](images/parks_refresh.png)
 
 4. Now let's describe the column and take a look at the VECTOR column definitions:
 
@@ -199,7 +197,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
    </copy>
    ```
 
-	 ![directory query](images/parks_describe.png)
+	 ![table describe](images/parks_describe.png)
 
    Notice that the column definition is VECTOR(\*,\*,DENSE). Since we didn't specify any dimension or format it has been set to a '*'. This means that we could change the vector dimension and/or format and not have to redefine the column. This can be less disruptive than having to change the column definition.
 
@@ -217,7 +215,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
    </copy>
    ```
 
-	 ![directory query](images/parks_embedding.png)
+	 ![add vectors](images/parks_embedding.png)
 
    There are other methods of creating vector embeddings, but for the small number of rows in our PARKS table this was probably the simplest method and only took a short amount of time.
 
@@ -233,7 +231,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
    </copy>
    ```
 
-	 ![directory query](images/parks_embeddings_query.png)
+	 ![verify vectors query](images/parks_embeddings_query.png)
 
 
 ## Learn More

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab walks you through the steps to load a vector embedding model into the database and display it's characteristics.
+This lab walks you through the steps to run exact similarity searches and what is happening during the search.
 
 Estimated Lab Time: 10 minutes
 
@@ -25,7 +25,7 @@ In this lab, you will:
 * Show vector distances to reinforce how the search is evaluated
 * Show an execution plan from a query
 
-### Prerequisites (Optional)
+### Prerequisites
 
 This lab assumes you have:
 * An Oracle Cloud account
@@ -44,12 +44,13 @@ In this task we will put our work to use and run some exact similarity searches 
     ```
     <copy>
     select name, city, states, description from parks
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' as data), COSINE)
-    fetch exact first 10 rows only;
+    order by vector_distance(desc_vector, 
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' as data), COSINE)
+    fetch EXACT first 10 rows only;
     </copy>
     ```
 
-    ![directory query](images/parks_exact_civil_war.png)
+    ![exact query1](images/parks_exact_civil_war.png)
 
     If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so lets try something a little harder in our next query.
 
@@ -58,12 +59,13 @@ In this task we will put our work to use and run some exact similarity searches 
     ```
     <copy>
     select name, city, states, description from parks 
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch exact first 10 rows only);
+    order by vector_distance(desc_vector, 
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
+    fetch EXACT first 10 rows only);
     </copy>
     ```
 
-    ![directory query](images/parks_exact_rock_climbing.png)
+    ![exact query2](images/parks_exact_rock_climbing.png)
 
     The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidate for rock climbing. We will see later in the Lab how close we actually came.
 
@@ -77,11 +79,11 @@ In this task we will put our work to use and run some exact similarity searches 
       description
     from parks
     order by 2
-    fetch exact first 10 rows only;
+    fetch EXACT first 10 rows only;
     </copy>
     ```
 
-	 ![directory query](images/parks_exact_rock_climbing_distance.png)
+	 ![distance query](images/parks_exact_rock_climbing_distance.png)
 
     Notice that the distance number, the TO_NUMBER(VECTOR... column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
 
@@ -90,16 +92,17 @@ In this task we will put our work to use and run some exact similarity searches 
     ```
     <copy>
     select name, description from parks 
-    order by vector_distance(desc_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch exact first 10 rows only);
+    order by vector_distance(desc_vector, 
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
+    fetch EXACT first 10 rows only);
     </copy>
     ```
   
-    Click on the "Explain Plan" button to display an image like the one below:
+    Click on the "Explain Plan" button and choose the "Advanced View" to display an image like the one below:
 
-	 ![directory query](images/parks_execute_plan.png)
+	 ![plan query](images/parks_execute_plan.png)
 
-    Notice that a TABLE ACCESS FULL is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
+    Notice that a TABLE ACCESS is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
 
 
 ## Learn More
