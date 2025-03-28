@@ -58,11 +58,11 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
     You can see that there are two pools, the 1MB pool and the 64KB pool. The VECTOR_MEMORY_SIZE has been set to 5G and you can view how that memory has been allocated to each pool in the ALLOC_BYTES column. Since we have not created any vector indexes yet you can see that the USED_BYTES is 0 for both pools.
 
 
-## Task 2: Run index vector memory advisor
+## Task 2: Run the Index Vector Memory Advisor
 
-In this task we will run the index vector memory advisor to estimate how much memory our index will need.
+In this task we will run the Index Vector Memory Advisor to estimate how much memory our index will need.
 
-1. Run the advisor for the DESC_VECTOR column in the PARKS table:
+1. Run the Advisor for the DESC_VECTOR column in the PARKS table:
 
     ```
     <copy>
@@ -101,7 +101,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ![index create](images/create_index.png)
 
-    Notice that an HNSW index is created by specifying INMEMORY NEIGHBOR GRAPH. This embedding model works well with the COSINE distance method and we have specified a TARGET ACCURACY of 95 percent.
+    Notice that an HNSW index is created by specifying INMEMORY NEIGHBOR GRAPH. The minilm_l12_v2 embedding model we have been using works well with the COSINE distance method and we have also specified a TARGET ACCURACY of 95 percent.
 
 2. Display information about the new vector index:
 
@@ -131,7 +131,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 ## Task 4: Run approximate similarity searches
 
-In this task we will the same queries we ran in the the Exact Search lab, but now we will run approximate similarity searches with the vector index that we just created.
+In this task we will run the same queries we ran in the the Exact Search lab, but now we will run approximate similarity searches with the vector index that we just created.
 
 1. Recall that the first query we ran in the Exact Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the FETCH line to APPROX for approximate. Although this is not required, the optimizer will choose an index if the cost is less than an exact search, it helps to ensure that you are actually running an approximate search:
 
@@ -161,7 +161,7 @@ In this task we will the same queries we ran in the the Exact Search lab, but no
 
    Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
 
-3. Since we are now doing an approximate search using a vector index, what does the execution plan look like now?
+3. Since we are now doing an approximate search using a vector index, what does the execution plan look like?
 
     ```
     <copy>

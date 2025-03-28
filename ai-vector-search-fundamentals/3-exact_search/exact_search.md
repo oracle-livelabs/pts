@@ -54,7 +54,7 @@ In this task we will put our work to use and run some exact similarity searches 
 
     If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so lets try something a little harder in our next query.
 
-2. For our second query we will try a query with a term that doesn't show up in the description:
+2. For our second query we will try a query with a term, "rock climbing", that doesn't show up in the description:
 
     ```
     <copy>
@@ -67,7 +67,7 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ![exact query2](images/parks_exact_rock_climbing.png)
 
-    The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidate for rock climbing. We will see later in the Lab how close we actually came.
+    The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
 
 3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
 
@@ -85,7 +85,7 @@ In this task we will put our work to use and run some exact similarity searches 
 
 	 ![distance query](images/parks_exact_rock_climbing_distance.png)
 
-    Notice that the distance number, the TO_NUMBER(VECTOR... column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
+    Notice that the distance number, the DISTANCE column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
 
 4. One last step. Since we are doing exact queries, that is we have not created any vector indexes, what does an execution plan look like?
 
