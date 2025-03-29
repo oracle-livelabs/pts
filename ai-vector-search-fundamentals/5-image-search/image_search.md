@@ -126,7 +126,7 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ![rock climbing image](images/rock_climber.png)
 
-3. Lastly, let's search for waterfalls, but let's add a twist. We will add a twist and join to the PARKS table so we can include the park location details:
+3. Lastly, let's search for waterfalls, but let's add a twist. We will add a join to the PARKS table so we can include the park location details:
 
     ```
     <copy>
