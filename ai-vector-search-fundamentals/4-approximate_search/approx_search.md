@@ -12,9 +12,9 @@ In the previous Lab, Exact Search, we performed exact similarity searches which 
 
 There are currently three types of vector indexes available in AI Vector Search:
 
-*	In-Memory Neighbor Graph Vector Index – Oracle AI Vector Search supports an in-memory Hierarchical Navigable Small World (HNSW) type of In-Memory Neighbor Graph vector index where vertices represent vectors and edges between vertices represent similarity.  This is an in-memory only index. This type of index is typically highly efficient for both accuracy and speed.
-* Neighbor Partition Vector Index – Oracle AI Vector Search also supports an Inverted File Flat (IVF) partition-based index with vectors clustered into table partitions based on similarity. This type of index typically provides an efficient scale-out index, with fast and seamless transactional support.  
-* Hybrid Vector Index - There is also a Hybrid Vector Index that combines the information retrieval capabilities of Oracle Text search indexes and the semantic search capabilities of Oracle AI Vector Search vector indexes.
+*	**In-Memory Neighbor Graph Vector Index** – Oracle AI Vector Search supports an in-memory Hierarchical Navigable Small World (HNSW) type of In-Memory Neighbor Graph vector index where vertices represent vectors and edges between vertices represent similarity.  This is an in-memory only index. This type of index is typically highly efficient for both accuracy and speed.
+* **Neighbor Partition Vector Index** – Oracle AI Vector Search also supports an Inverted File Flat (IVF) partition-based index with vectors clustered into table partitions based on similarity. This type of index typically provides an efficient scale-out index, with fast and seamless transactional support.  
+* **Hybrid Vector Index** - There is also a Hybrid Vector Index that combines the information retrieval capabilities of Oracle Text search indexes and the semantic search capabilities of Oracle AI Vector Search vector indexes.
 
 In this Lab we will use HNSW indexes to enable approximate similarity search since they provide the fastest performance and our dataset will easily fit in-memory.
 
@@ -40,12 +40,26 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
+## Connecting to your Vector Database
+
+The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks* with the password: *nationalparks*. The Lab will be run using SQL Developer Web.
+
+To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+
+ ```
+ <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
+ ```
+
+After signing in you should see a browser window like the following:
+
+ ![sqldev browser](images/sqldev_web.png)
+
 
 ## Task 1: View the Vector Pool
 
 When HNSW indexes are used, you must enable a new memory area in the database called the Vector Pool. The Vector Pool is memory allocated from the System Global Area (SGA) to store HNSW type vector indexes and their associated metadata. It is allocated using a new database initialization parameter called VECTOR_MEMORY_SIZE.
 
-1. Lets see how much memory has been allocated to the Vector Pool in our Lab environment:
+1. Let's see how much memory has been allocated to the Vector Pool in our Lab environment:
 
     ```
     <copy>
@@ -55,14 +69,14 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
 
     ![directory query](images/vector_pool.png)
 
-    You can see that there are two pools, the 1MB pool and the 64KB pool. The VECTOR_MEMORY_SIZE has been set to 5G and you can view how that memory has been allocated to each pool in the ALLOC_BYTES column. Since we have not created any vector indexes yet you can see that the USED_BYTES is 0 for both pools.
+    You can see that there are two pools, the 1MB pool and the 64KB pool. The VECTOR\_MEMORY\_SIZE has been set to 5G and you can view how that memory has been allocated to each pool in the ALLOC\_BYTES column. Since we have not created any vector indexes yet you can see that the USED\_BYTES is 0 for both pools.
 
 
 ## Task 2: Run the Index Vector Memory Advisor
 
 In this task we will run the Index Vector Memory Advisor to estimate how much memory our index will need.
 
-1. Run the Advisor for the DESC_VECTOR column in the PARKS table:
+1. Run the Advisor for the DESC\_VECTOR column in the PARKS table:
 
     ```
     <copy>
@@ -89,7 +103,7 @@ In this task we will run the Index Vector Memory Advisor to estimate how much me
 
 In this task we will create an HNSW vector index and see how much space is used in the Vector Pool.
 
-1. Create a vector index for the DESC_VECTOR column in the PARKS table:
+1. Create a vector index for the DESC\_VECTOR column in the PARKS table:
 
     ```
     <copy>
@@ -101,7 +115,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ![index create](images/create_index.png)
 
-    Notice that an HNSW index is created by specifying INMEMORY NEIGHBOR GRAPH. The minilm_l12_v2 embedding model we have been using works well with the COSINE distance method and we have also specified a TARGET ACCURACY of 95 percent.
+    Notice that an HNSW index is created by specifying INMEMORY NEIGHBOR GRAPH. The minilm\_l12\_v2 embedding model we have been using works well with the COSINE distance method and we have also specified a TARGET ACCURACY of 95 percent.
 
 2. Display information about the new vector index:
 

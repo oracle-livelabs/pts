@@ -34,6 +34,20 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
+## Connecting to your Vector Database
+
+The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks* with the password: *nationalparks*. The Lab will be run using SQL Developer Web.
+
+To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+
+  ```
+  <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
+  ```
+
+After signing in you should see a browser window like the following:
+
+ ![sqldev browser](images/sqldev_web.png)
+
 
 ## Task 1: Run exact similarity searches
 
@@ -52,7 +66,7 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ![exact query1](images/parks_exact_civil_war.png)
 
-    If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so lets try something a little harder in our next query.
+    If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so let's try something a little harder in our next query.
 
 2. For our second query we will try a query with a term, "rock climbing", that doesn't show up in the description:
 

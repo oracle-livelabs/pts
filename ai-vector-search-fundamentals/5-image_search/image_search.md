@@ -31,6 +31,20 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
+## Connecting to your Vector Database
+
+The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks* with the password: *nationalparks*. The Lab will be run using SQL Developer Web.
+
+To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+
+  ```
+  <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
+  ```
+
+After signing in you should see a browser window like the following:
+
+ ![sqldev browser](images/sqldev_web.png)
+
 
 ## Task 1: Display the CLIP embedding model
 
@@ -38,55 +52,54 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
 1. Display the CLIP embedding model:
 
-   ```
-   <copy>
-   select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
-   from user_mining_models;
-   </copy>
-   ```
+    ```
+    <copy>
+    select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
+    from user_mining_models;
+    </copy>
+    ```
 
-   ![model query](images/CLIP_model.png)
+    ![model query](images/CLIP_model.png)
 
-   You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
-  
+      
 2. Display the model details:
 
-   ```
-   <copy>
-   select model_name, attribute_name, attribute_type, data_type, vector_info 
-   from user_mining_model_attributes order by 1,3;
-   </copy>
-   ```
+    ```
+    <copy>
+    select model_name, attribute_name, attribute_type, data_type, vector_info 
+    from user_mining_model_attributes order by 1,3;
+    </copy>
+    ```
 
-   ![model details query](images/CLIP_details.png)
+    ![model details query](images/CLIP_details.png)
 
-   You may notice that the VECTOR_INFO column displays 'VECTOR(384,FLOAT32)' which matches our description in the About section where we stated that the all_MiniLM_L12_v2 model has 384-dimensional vectors and a dimension format of FLOAT32.
+    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model.
 
 
-## Task 2: Display the Vector column in the PARKS_IMAGES table
+## Task 2: Display the Vector column in the PARKS\_IMAGES table
 
-In this task we will take a look at the PARK_IMAGES table. The table itself has a URL to the park images, they are not actually stored in the table. Vector embeddings of each of those images have been created and stored in the IMAGES_VECTOR column. These embeddings were created externally using the CLIP embedding model. We have stored the actual images in the Object Store so you can look at them based on the searches you will perform in this Lab.
+In this task we will take a look at the PARK\_IMAGES table. The table itself has a URL to the park images, they are not actually stored in the table. Vector embeddings of each of those images have been created and stored in the IMAGES\_VECTOR column. These embeddings were created externally using the CLIP embedding model. We have stored the actual images in the Object Store so you can look at them based on the searches you will perform in this Lab.
 
-1. Display the columns in the PARK_IMAGES table by clicking on the arrow next to the PARK_IMAGES table in the SQL Developer Web navigator column on the left. Alternatively you can right-click on the PARK_IMAGES table anc click the Open option.
+1. Display the columns in the PARK\_IMAGES table by clicking on the arrow next to the PARK\_IMAGES table in the SQL Developer Web navigator column on the left. Alternatively you can right-click on the PARK\_IMAGES table and click the Open option.
 
-   See the image below:
+    See the image below:
 
-   ![vector column](images/park_images_columns.png)
+    ![vector column](images/park_images_columns.png)
 
-2. Display one of the IMAGE_VECTOR columns:
+2. Display one of the IMAGE\_VECTOR columns:
 
-   ```
-   <copy>
-   select image_vector from park_images
-   fetch first 1 rows only;
-   </copy>
-   ```
+    ```
+    <copy>
+    select image_vector from park_images
+    fetch first 1 rows only;
+    </copy>
+    ```
 
-   ![image vector](images/image_vector.png)
+    ![image vector](images/image_vector.png)
 
-   You can select the IMAGE_VECTOR and then click on the eye image to expand the entire vector:
+    You can select the IMAGE\_VECTOR and then click on the eye image to expand the entire vector:
 
-   ![image vector details](images/image_vector_details.png)
+    ![image vector details](images/image_vector_details.png)
 
 ## Task 3: Run image based similarity searches
 
