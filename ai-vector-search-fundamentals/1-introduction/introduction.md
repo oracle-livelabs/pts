@@ -1,6 +1,6 @@
 # Introduction
 
-## About this Workshop
+### About this Workshop
 
 The **Oracle AI Vector Search Fundamentals** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
 
@@ -26,9 +26,9 @@ In this lab we will build the AI Vector Search features that will enable you to 
 
 Estimated Time: 5 minutes
 
-## Dataset
+### Dataset
 
-This Lab will use a public dataset based on the US National Parks (??). There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
+This Lab will use a public dataset based on the US National Parks (www.nps.gov). There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
 
 ### Objectives
 
@@ -43,13 +43,13 @@ In this workshop, you will learn how to:
 * Use similarity search with traditional relational searches.
 * Run an APEX demo using the previously created data and queries.
 
-## Learn More
+### Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 
-## Acknowledgements
+### Acknowledgements
 * **Author** - Andy Rivenes and Sean Stacey, Product Managers
 * **Contributors** - Markus Kissling, Product Manager
 * **Last Updated By/Date** - Andy Rivenes, March 2025

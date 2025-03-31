@@ -10,7 +10,7 @@ Estimated Lab Time: 10 minutes
 
 In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
 
-The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors. This model has already been loaded into the database as well, and is called CLIP_VIT_TXT. You may have even noticed it when we looking at text embedding model in the Embedding Model lab.
+The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors. This model has already been loaded into the database as well, and is called CLIP\_VIT\_TXT. You may have even noticed it when we looking at text embedding model in the Embedding Model lab.
 
 
 ### Objectives
@@ -33,7 +33,7 @@ This lab assumes you have:
 
 ## Connecting to your Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks* with the password: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
 
 To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
 
