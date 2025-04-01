@@ -46,7 +46,7 @@ To connect with SQL Developer Web to run the SQL commands in this lab you will f
 
 After signing in you should see a browser window like the following:
 
-![sqldev browser](images/sqldev_web.png)
+![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Load an embedding model into the database
@@ -61,7 +61,7 @@ This task will involved identifying and loading an ONNX model into the database.
     </copy>
     ```
 
-    ![Mining models query](images/embedding_models1.png)
+    ![Mining models query](images/embedding_models1.png " ")
 
 2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DM\_DUMP directory. You can display this directory with the following SQL:
 
@@ -71,7 +71,7 @@ This task will involved identifying and loading an ONNX model into the database.
     </copy>
     ```
 
-    ![directory query](images/onnx_directory.png)
+    ![directory query](images/onnx_directory.png " ")
 
     The all\_MiniLM\_L12\_v2.onnx file resides in this operating system directory.
 
@@ -86,7 +86,7 @@ This task will involved identifying and loading an ONNX model into the database.
     </copy>
     ```
 
-    ![load model sql](images/load_model.png)
+    ![load model sql](images/load_model.png " ")
 
    Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DM\_DUMP directory and loaded it into the database.
 
@@ -99,7 +99,7 @@ This task will involved identifying and loading an ONNX model into the database.
     </copy>
     ```
 
-    ![model query](images/embedding_models2.png)
+    ![model query](images/embedding_models2.png " ")
 
    You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
   
@@ -112,7 +112,7 @@ This task will involved identifying and loading an ONNX model into the database.
     </copy>
     ```
 
-    ![model details query](images/model_details.png)
+    ![model details query](images/model_details.png " ")
 
     You may notice that the VECTOR\_INFO column displays 'VECTOR(384,FLOAT32)' which matches our description in the About section where we stated that the all\_MiniLM\_L12\_v2 model has 384-dimensional vectors and a dimension format of FLOAT32.
 
@@ -143,11 +143,11 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     See the image below:
 
-    ![vector display](images/vector_example.png)
+    ![vector display](images/vector_example.png " ")
 
     If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display:
 
-    ![vector details](images/vector_example_detail.png)
+    ![vector details](images/vector_example_detail.png " ")
 
 2. Now let's create a vector for the DESCRIPTION column in the PARKS table. We will just create the vector for one row in the table, but in the next section we will create vectors for the entire table based on the DESCRIPTION column.
 
@@ -160,7 +160,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     See the image below:
 
-    ![table vector query](images/parks_row_vector.png)
+    ![table vector query](images/parks_row_vector.png " ")
 
     Again, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
@@ -173,7 +173,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
     See the image below:
 
-    ![table columns](images/parks_columns1.png)
+    ![table columns](images/parks_columns1.png " ")
 
 2. Next will add a new column to the table of type VECTOR. We will call the column DESC\_VECTOR.
 
@@ -183,11 +183,11 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
     </copy>
     ```
 
-    ![add vector column](images/parks_add_column.png)
+    ![add vector column](images/parks_add_column.png " ")
 
 3. Refresh the screen to see the newly added column:
 
-    ![refreshed view](images/parks_refresh.png)
+    ![refreshed view](images/parks_refresh.png " ")
 
 4. Now let's describe the column and take a look at the VECTOR column definitions:
 
@@ -197,7 +197,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
     </copy>
     ```
 
-    ![table describe](images/parks_describe.png)
+    ![table describe](images/parks_describe.png " ")
 
     Notice that the column definition is VECTOR(\*,\*,DENSE). Since we didn't specify any dimension or format it has been set to a '*'. This means that we could change the vector dimension and/or format and not have to redefine the column. This can be less disruptive than having to change the column definition.
 
@@ -215,7 +215,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     </copy>
     ```
 
-    ![add vectors](images/parks_embedding.png)
+    ![add vectors](images/parks_embedding.png " ")
 
     There are other methods of creating vector embeddings, but for the small number of rows in our PARKS table this was probably the simplest method and only took a short amount of time.
 
@@ -231,7 +231,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     </copy>
     ```
 
-    ![verify vectors query](images/parks_embeddings_query.png)
+    ![verify vectors query](images/parks_embeddings_query.png " ")
 
 
 ## Learn More

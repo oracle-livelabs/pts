@@ -52,7 +52,7 @@ To connect with SQL Developer Web to run the SQL commands in this lab you will f
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png)
+ ![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: View the Vector Pool
@@ -67,7 +67,7 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
     </copy>
     ```
 
-    ![directory query](images/vector_pool.png)
+    ![directory query](images/vector_pool.png " ")
 
     You can see that there are two pools, the 1MB pool and the 64KB pool. The VECTOR\_MEMORY\_SIZE has been set to 5G and you can view how that memory has been allocated to each pool in the ALLOC\_BYTES column. Since we have not created any vector indexes yet you can see that the USED\_BYTES is 0 for both pools.
 
@@ -94,7 +94,7 @@ In this task we will run the Index Vector Memory Advisor to estimate how much me
     </copy>
     ```
 
-    ![index memory advisor](images/memory_advisor.png)
+    ![index memory advisor](images/memory_advisor.png " ")
 
     Notice that we have included a TARGET ACCURACY of 95 percent.
 
@@ -113,7 +113,7 @@ In this task we will create an HNSW vector index and see how much space is used 
     </copy>
     ```
 
-    ![index create](images/create_index.png)
+    ![index create](images/create_index.png " ")
 
     Notice that an HNSW index is created by specifying INMEMORY NEIGHBOR GRAPH. The minilm\_l12\_v2 embedding model we have been using works well with the COSINE distance method and we have also specified a TARGET ACCURACY of 95 percent.
 
@@ -126,7 +126,7 @@ In this task we will create an HNSW vector index and see how much space is used 
     </copy>
     ```
 
-    ![index details query](images/index_details.png)
+    ![index details query](images/index_details.png " ")
 
     Notice the space consumed by the index.
 
@@ -138,7 +138,7 @@ In this task we will create an HNSW vector index and see how much space is used 
     </copy>
     ```
 
-    ![mem used query](images/vector_pool_used.png)
+    ![mem used query](images/vector_pool_used.png " ")
 
   Notice that our advisor estimate was 2995931 which was higher than what was actually used.
 
@@ -151,27 +151,29 @@ In this task we will run the same queries we ran in the the Exact Search lab, bu
 
     ```
     <copy>
-    select name, city, states, description from parks
+    select name, city, states, description 
+    from parks
     order by vector_distance(desc_vector, 
       VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' as data), COSINE)
     fetch APPROX first 10 rows only;
     </copy>
     ```
 
-    ![exact query1](images/parks_approx_civil_war.png)
+    ![exact query1](images/parks_approx_civil_war.png " ")
 
 2. Lets also re-run our "rock climbing" query and see if there are any differences running an approximate search:
 
     ```
     <copy>
-    select name, city, states, description from parks
+    select name, city, states, description 
+    from parks
     order by vector_distance(desc_vector,
       VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
     fetch APPROX first 10 rows only;
     </copy>
     ```
 
-    ![exact query2](images/parks_approx_rock_climbing.png)
+    ![exact query2](images/parks_approx_rock_climbing.png " ")
 
    Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
 
@@ -179,7 +181,8 @@ In this task we will run the same queries we ran in the the Exact Search lab, bu
 
     ```
     <copy>
-    select name, city, states, description from parks 
+    select name, city, states, description 
+    from parks 
     order by vector_distance(desc_vector, 
       VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
     fetch APPROX first 10 rows only;
@@ -188,7 +191,7 @@ In this task we will run the same queries we ran in the the Exact Search lab, bu
   
     Click on the "Explain Plan" button and select the "Advanced View" to display an image like the one below:
 
-	![plan query](images/parks_approx_execute_plan.png)
+	![plan query](images/parks_approx_execute_plan.png " ")
 
     Notice that a VECTOR INDEX access is now performed on the PARKS table since we now have a vector index available.
 

@@ -43,7 +43,7 @@ To connect with SQL Developer Web to run the SQL commands in this lab you will f
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png)
+ ![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Display the CLIP embedding model
@@ -59,7 +59,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     </copy>
     ```
 
-    ![model query](images/CLIP_model.png)
+    ![model query](images/CLIP_model.png " ")
 
       
 2. Display the model details:
@@ -71,7 +71,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     </copy>
     ```
 
-    ![model details query](images/CLIP_details.png)
+    ![model details query](images/CLIP_details.png " ")
 
     You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model.
 
@@ -84,22 +84,23 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
     See the image below:
 
-    ![vector column](images/park_images_columns.png)
+    ![vector column](images/park_images_columns.png " ")
 
 2. Display one of the IMAGE\_VECTOR columns:
 
     ```
     <copy>
-    select image_vector from park_images
+    select image_vector 
+    from park_images
     fetch first 1 rows only;
     </copy>
     ```
 
-    ![image vector](images/image_vector.png)
+    ![image vector](images/image_vector.png " ")
 
     You can select the IMAGE\_VECTOR and then click on the eye image to expand the entire vector:
 
-    ![image vector details](images/image_vector_details.png)
+    ![image vector details](images/image_vector_details.png " ")
 
 ## Task 3: Run image based similarity searches
 
@@ -109,35 +110,37 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url from park_images
+    select description, url 
+    from park_images
     order by vector_distance(image_vector, 
       VECTOR_EMBEDDING(clip_vit_txt USING 'Civil War' as data), COSINE)
     fetch APPROX first 10 rows only;
     </copy>
     ```
 
-    ![civil war query](images/query_civil_war.png)
+    ![civil war query](images/query_civil_war.png " ")
 
     If you copy the first URL into a browser window you will see an image like the following:
 
-    ![civil war image](images/civil_war.png)
+    ![civil war image](images/civil_war.png " ")
 
 2. Now let's see if we can find images that have rock climbing:
 
     ```
     <copy>
-    select description, url from park_images
+    select description, url 
+    from park_images
     order by vector_distance(image_vector, 
       VECTOR_EMBEDDING(clip_vit_txt USING 'rock climbing' as data), COSINE)
     fetch APPROX first 10 rows only;
     </copy>
     ```
 
-    ![rock climbing query](images/query_rock_climbing.png)
+    ![rock climbing query](images/query_rock_climbing.png " ")
 
     If you copy the first URL into a browser window you will see an image like the following:
 
-    ![rock climbing image](images/rock_climber.png)
+    ![rock climbing image](images/rock_climber.png " ")
 
 3. Lastly, let's search for waterfalls, but let's add a twist. We will add a join to the PARKS table so we can include the park location details:
 
@@ -153,11 +156,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
     </copy>
     ```
 
-    ![waterfall query](images/query_waterfalls_location.png)
+    ![waterfall query](images/query_waterfalls_location.png " ")
 
     If you copy the first URL into a browser window you will see an image like the following:
 
-    ![waterfall image](images/waterfall.png)
+    ![waterfall image](images/waterfall.png " ")
 
 
 ## Learn More

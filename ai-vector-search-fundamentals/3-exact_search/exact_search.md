@@ -42,7 +42,7 @@ To connect with SQL Developer Web to run the SQL commands in this lab you will f
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png)
+ ![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Run exact similarity searches
@@ -60,7 +60,7 @@ In this task we will put our work to use and run some exact similarity searches 
     </copy>
     ```
 
-    ![exact query1](images/parks_exact_civil_war.png)
+    ![exact query1](images/parks_exact_civil_war.png " ")
 
     If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so let's try something a little harder in our next query.
 
@@ -75,7 +75,7 @@ In this task we will put our work to use and run some exact similarity searches 
     </copy>
     ```
 
-    ![exact query2](images/parks_exact_rock_climbing.png)
+    ![exact query2](images/parks_exact_rock_climbing.png " ")
 
     The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
 
@@ -93,7 +93,7 @@ In this task we will put our work to use and run some exact similarity searches 
     </copy>
     ```
 
-	 ![distance query](images/parks_exact_rock_climbing_distance.png)
+	 ![distance query](images/parks_exact_rock_climbing_distance.png " ")
 
     Notice that the distance number, the DISTANCE column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
 
@@ -110,7 +110,7 @@ In this task we will put our work to use and run some exact similarity searches 
   
     Click on the "Explain Plan" button and choose the "Advanced View" to display an image like the one below:
 
-	 ![plan query](images/parks_execute_plan.png)
+	 ![plan query](images/parks_execute_plan.png " ")
 
     Notice that a TABLE ACCESS is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
 

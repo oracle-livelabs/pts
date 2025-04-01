@@ -41,7 +41,7 @@ To connect with SQL Developer Web to run the SQL commands in this lab you will f
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/apex_demo.png)
+ ![sqldev browser](images/apex_demo.png " ")
 
 
 ## Task 1: Run the APEX demo
@@ -50,7 +50,7 @@ You can now enter any search term and location that you would like to search on.
 
 1. Run APEX demo:
 
-    ![model query](images/CLIP_model.png)
+    ![model query](images/CLIP_model.png " ")
 
 
 ## Learn More
