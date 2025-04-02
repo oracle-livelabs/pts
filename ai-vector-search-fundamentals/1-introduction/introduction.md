@@ -1,6 +1,12 @@
 # Introduction
 
-### About this Workshop
+## Introduction
+
+This lab will introduce you to the Oracle AI Vector Search Workshop.
+
+Estimated Lab Time: 5 minutes
+
+### About This Workshop
 
 The **Oracle AI Vector Search Fundamentals** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
 
@@ -24,8 +30,6 @@ Another big benefit of AI Vector Search is that similarity search can be combine
 
 In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see spectacular sights. You might also want to narrow your search to parks that are close to your planned destination. Finding a good match in this case requires combining a similarity search with searches on relational data.
 
-Estimated Time: 1 minutes
-
 ### Objectives
 
 In this workshop, you will learn how to:
@@ -47,11 +51,13 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
+
 ## Dataset
 
 This Lab will use a public dataset based on the US National Parks (www.nps.gov). There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
 
 ![apex demo](images/apex_demo.png " ")
+
 
 ## Tools
 
@@ -59,9 +65,11 @@ In this Lab you will use the SQL Developer Web  tool to access the database and 
 
 ![sqldev help](images/sqldev_help.png " ")
 
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [OML4Py: Leveraging ONNX and Hugging Face for AI Vector Search](https://blogs.oracle.com/machinelearning/post/oml4py-leveraging-onnx-and-hugging-face-for-advanced-ai-vector-search)
 * [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 
