@@ -26,11 +26,19 @@ In this lab we will build the AI Vector Search features that will enable you to 
 
 Estimated Time: 5 minutes
 
-### Dataset
+## Dataset
 
 This Lab will use a public dataset based on the US National Parks (www.nps.gov). There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
 
-### Objectives
+![apex demo](images/apex_demo.png " ")
+
+## Tools
+
+In this Lab you will use the SQL Developer Web  tool to access the database and run queries. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
+
+![sqldev help](images/sqldev_help.png " ")
+
+## Objectives
 
 In this workshop, you will learn how to:
 * Load a vector embedding model into Oracle database.
@@ -43,13 +51,13 @@ In this workshop, you will learn how to:
 * Use similarity search with traditional relational searches.
 * Run an APEX demo using the previously created data and queries.
 
-### Learn More
+## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 
-### Acknowledgements
-* **Author** - Andy Rivenes and Sean Stacey, Product Managers
-* **Contributors** - Markus Kissling, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, March 2025
+## Acknowledgements
+* **Author** - Andy Rivenes, Product Manager
+* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
+* **Last Updated By/Date** - Andy Rivenes, April 2025

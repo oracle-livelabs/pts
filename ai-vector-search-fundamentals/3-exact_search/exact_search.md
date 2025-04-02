@@ -53,10 +53,11 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, city, states, description from parks
-    order by vector_distance(desc_vector, 
-      VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' as data), COSINE)
-    fetch EXACT first 10 rows only;
+    select name, city, states, description 
+    from parks
+    order by vector_distance(desc_vector,
+      vector_embedding(minilm_l12_v2 USING 'Civil War' as data), cosine)
+    fetch exact first 10 rows only;
     </copy>
     ```
 
@@ -68,10 +69,11 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, city, states, description from parks 
-    order by vector_distance(desc_vector, 
-      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch EXACT first 10 rows only);
+    select name, city, states, description
+    from parks
+    order by vector_distance(desc_vector,
+      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
+    fetch exact first 10 rows only);
     </copy>
     ```
 
@@ -83,13 +85,13 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, 
-      to_number(vector_distance(desc_vector, 
-        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)) as distance,
+    select name,
+      to_number(vector_distance(desc_vector,
+        vector_embedding(minilm_l12_v2 USING 'rock climbing' as data), cosine)) as distance,
       description
     from parks
     order by 2
-    fetch EXACT first 10 rows only;
+    fetch exact first 10 rows only;
     </copy>
     ```
 
@@ -101,10 +103,11 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, description from parks 
-    order by vector_distance(desc_vector, 
-      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' as data), COSINE)
-    fetch EXACT first 10 rows only);
+    select name, description
+    from parks
+    order by vector_distance(desc_vector,
+      vector_embedding(minilm_l12_v2 USING 'rock climbing' as data), cosine)
+    fetch exact first 10 rows only);
     </copy>
     ```
   
@@ -123,6 +126,6 @@ In this task we will put our work to use and run some exact similarity searches 
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes and Sean Stacey, Product Managers
-* **Contributors** - Markus Kissling, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, March 2025
+* **Author** - Andy Rivenes, Product Manager
+* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
+* **Last Updated By/Date** - Andy Rivenes, April 2025

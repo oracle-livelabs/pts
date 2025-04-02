@@ -61,6 +61,6 @@ You can now enter any search term and location that you would like to search on.
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Markus Kissling, Product Managers
-* **Contributors** - Sean Stacey, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes and Sean Stacey, Product Managers
+* **Contributors** - Markus Kissling, Product Manager
+* **Last Updated By/Date** - Andy Rivenes, March 2025

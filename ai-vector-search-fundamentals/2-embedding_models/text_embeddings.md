@@ -56,7 +56,7 @@ This task will involved identifying and loading an ONNX model into the database.
 1. Let's verify that the all\_MiniLM\_L12\_v2 embedding model is not currently loaded:
     ```
     <copy>
-    select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
+    select model_name, mining_function,algorithm, algorithm_type, model_size
     from user_mining_models;
     </copy>
     ```
@@ -81,7 +81,7 @@ This task will involved identifying and loading an ONNX model into the database.
     <copy>
     begin
        dbms_vector.load_onnx_model('DM_DUMP','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
-         JSON('{"function" : "embedding", "embeddingOutput" : "embedding", "input": {"input": ["DATA"]}}'));
+         json('{"function" : "embedding", "embeddingOutput" : "embedding", "input": {"input": ["DATA"]}}'));
     end;
     </copy>
     ```
@@ -94,7 +94,7 @@ This task will involved identifying and loading an ONNX model into the database.
 
     ```
     <copy>
-    select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
+    select model_name, mining_function,algorithm, algorithm_type, model_size
     from user_mining_models;
     </copy>
     ```
@@ -102,12 +102,12 @@ This task will involved identifying and loading an ONNX model into the database.
     ![model query](images/embedding_models2.png " ")
 
    You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
-  
+
 5. Display the model details:
 
     ```
     <copy>
-    select model_name, attribute_name, attribute_type, data_type, vector_info 
+    select model_name, attribute_name, attribute_type, data_type, vector_info
     from user_mining_model_attributes order by 1,3;
     </copy>
     ```
@@ -137,7 +137,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     ```
     <copy>
-    SELECT VECTOR_EMBEDDING(minilm_l12_v2 USING 'hello' as data);
+    select vector_embedding(minilm_l12_v2 USING 'hello' as data);
     </copy>
     ```
 
@@ -153,7 +153,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     ```
     <copy>
-    SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data)
+    select description, vector_embedding(minilm_l12_v2 using description as data)
     from parks fetch first 1 rows only;
     </copy>
     ```
@@ -179,7 +179,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
     ```
     <copy>
-    alter table PARKS add (desc_vector vector);
+    alter table parks add (desc_vector vector);
     </copy>
     ```
 
@@ -193,7 +193,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
     ```
     <copy>
-    desc PARKS
+    desc parks
     </copy>
     ```
 
@@ -210,7 +210,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     ```
     <copy>
     update parks
-    set desc_vector = vector_embedding(minilm_l12_v2 using DESCRIPTION as data);
+    set desc_vector = vector_embedding(minilm_l12_v2 using description as data);
     commit;
     </copy>
     ```
@@ -226,7 +226,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
     ```
     <copy>
-    SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description as data) as vector
+    select description, vector_embedding(minilm_l12_v2 using description as data) as vector
     from parks fetch first 15 rows only;
     </copy>
     ```
@@ -242,6 +242,6 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes and Sean Stacey, Product Managers
-* **Contributors** - Markus Kissling, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, March 2025
+* **Author** - Andy Rivenes, Product Manager
+* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
+* **Last Updated By/Date** - Andy Rivenes, April 2025

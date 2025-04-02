@@ -10,7 +10,7 @@ Estimated Lab Time: 10 minutes
 
 In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
 
-The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors. This model has already been loaded into the database as well, and is called CLIP\_VIT\_TXT. You may have even noticed it when we looking at text embedding model in the Embedding Model lab.
+The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors. This model has already been loaded into the database as well, and is called CLIP\_VIT\_TXT.
 
 
 ### Objectives
@@ -54,7 +54,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select MODEL_NAME, MINING_FUNCTION, ALGORITHM, ALGORITHM_TYPE, MODEL_SIZE 
+    select model_name, mining_function, algorithm, algorithm_type, model_size
     from user_mining_models;
     </copy>
     ```
@@ -66,7 +66,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select model_name, attribute_name, attribute_type, data_type, vector_info 
+    select model_name, attribute_name, attribute_type, data_type, vector_info
     from user_mining_model_attributes order by 1,3;
     </copy>
     ```
@@ -90,7 +90,7 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
     ```
     <copy>
-    select image_vector 
+    select image_vector
     from park_images
     fetch first 1 rows only;
     </copy>
@@ -110,11 +110,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url 
+    select description, url
     from park_images
-    order by vector_distance(image_vector, 
-      VECTOR_EMBEDDING(clip_vit_txt USING 'Civil War' as data), COSINE)
-    fetch APPROX first 10 rows only;
+    order by vector_distance(image_vector,
+      vector_embedding(clip_vit_txt using 'Civil War' as data), cosine)
+    fetch exact first 10 rows only;
     </copy>
     ```
 
@@ -128,11 +128,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url 
+    select description, url
     from park_images
-    order by vector_distance(image_vector, 
-      VECTOR_EMBEDDING(clip_vit_txt USING 'rock climbing' as data), COSINE)
-    fetch APPROX first 10 rows only;
+    order by vector_distance(image_vector,
+      vector_embedding(clip_vit_txt using 'rock climbing' as data), cosine)
+    fetch exact first 10 rows only;
     </copy>
     ```
 
@@ -150,8 +150,8 @@ In this task we will run similar queries to the ones we ran in the previous Labs
     from park_images pi, parks p
     where pi.park_code = p.park_code
       and p.states in ('CA','OR','NV','WA','AZ','CO')
-    order by vector_distance(pi.image_vector, 
-      VECTOR_EMBEDDING(clip_vit_txt USING 'waterfall' as data), COSINE)
+    order by vector_distance(pi.image_vector,
+      vector_embedding(clip_vit_txt using 'waterfall' as data), cosine)
     fetch exact first 10 rows only;
     </copy>
     ```
@@ -171,6 +171,6 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes and Sean Stacey, Product Managers
-* **Contributors** - Markus Kissling, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, March 2025
+* **Author** - Andy Rivenes, Product Manager
+* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
+* **Last Updated By/Date** - Andy Rivenes, April 2025
