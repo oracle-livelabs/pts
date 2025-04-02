@@ -24,7 +24,28 @@ Another big benefit of AI Vector Search is that similarity search can be combine
 
 In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see spectacular sights. You might also want to narrow your search to parks that are close to your planned destination. Finding a good match in this case requires combining a similarity search with searches on relational data.
 
-Estimated Time: 5 minutes
+Estimated Time: 1 minutes
+
+### Objectives
+
+In this workshop, you will learn how to:
+* Load a vector embedding model into Oracle database.
+* Learn about vectors and the new vector data type.
+* Create vector embeddings from the embedding model you loaded.
+* Learn what similarity search is.
+* Perform an exact similarity search using basic SQL query operations.
+* Create a vector index.
+* Perform an approximate similarity search.
+* Use similarity search with traditional relational searches.
+* Run an APEX demo using the previously created data and queries.
+
+### Prerequisites
+
+This lab assumes you have:
+* An Oracle Cloud account
+
+
+*This is the "fold" - below items are collapsed by default*
 
 ## Dataset
 
@@ -37,19 +58,6 @@ This Lab will use a public dataset based on the US National Parks (www.nps.gov).
 In this Lab you will use the SQL Developer Web  tool to access the database and run queries. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
 
 ![sqldev help](images/sqldev_help.png " ")
-
-## Objectives
-
-In this workshop, you will learn how to:
-* Load a vector embedding model into Oracle database.
-* Learn about vectors and the new vector data type.
-* Create vector embeddings from the embedding model you loaded.
-* Learn what similarity search is.
-* Perform an exact similarity search using basic SQL query operations.
-* Create a vector index.
-* Perform an approximate similarity search.
-* Use similarity search with traditional relational searches.
-* Run an APEX demo using the previously created data and queries.
 
 ## Learn More
 
