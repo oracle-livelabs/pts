@@ -167,6 +167,9 @@ In this task we will run the same queries we ran in the the Exact Search lab, bu
     Notice that a vector index access is now performed on the PARKS table since we now have a vector index available.
 
 
+You may now **proceed to the next lab**
+
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)

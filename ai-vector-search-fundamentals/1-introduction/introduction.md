@@ -66,6 +66,8 @@ In this Lab you will use the SQL Developer Web tool to access the database and r
 ![sqldev help](images/sqldev_help.png " ")
 
 
+You may now **proceed to the next lab**
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)

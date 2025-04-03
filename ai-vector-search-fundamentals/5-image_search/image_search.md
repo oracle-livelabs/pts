@@ -163,6 +163,9 @@ In this task we will run similar queries to the ones we ran in the previous Labs
     ![waterfall image](images/waterfall.png " ")
 
 
+You may now **proceed to the next lab**
+
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)

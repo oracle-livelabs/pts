@@ -118,6 +118,9 @@ In this task we will put our work to use and run some exact similarity searches 
     Notice that a TABLE ACCESS is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
 
 
+You may now **proceed to the next lab**
+
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)

@@ -234,6 +234,9 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     ![verify vectors query](images/parks_embeddings_query.png " ")
 
 
+You may now **proceed to the next lab**
+
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
