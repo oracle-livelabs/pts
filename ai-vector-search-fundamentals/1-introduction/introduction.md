@@ -28,7 +28,10 @@ At the heart of AI Vector Search is the ability to do a similarity search. A sim
 
 Another big benefit of AI Vector Search is that similarity search can be combined with relational search on business data in one single system. This is not only powerful but also significantly more effective because AI Vector Search allows you to generate, store, index, and query vector embeddings along with other business data, using the full power of SQL. This means you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
 
-In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see spectacular sights. You might also want to narrow your search to parks that are close to your planned destination. Finding a good match in this case requires combining a similarity search with searches on relational data.
+In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
+
+![apex demo](images/apex_demo.png " ")
+
 
 ### Objectives
 
@@ -54,14 +57,11 @@ This lab assumes you have:
 
 ## Dataset
 
-This Lab will use a public dataset based on the US National Parks (www.nps.gov). There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
-
-![apex demo](images/apex_demo.png " ")
-
+This workshop will use a public dataset from the US National Parks (www.nps.gov) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks. 
 
 ## Tools
 
-In this Lab you will use the SQL Developer Web  tool to access the database and run queries. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
+In this Lab you will use the SQL Developer Web tool to access the database and run queries. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
 
 ![sqldev help](images/sqldev_help.png " ")
 

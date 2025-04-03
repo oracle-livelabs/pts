@@ -2,13 +2,13 @@
 
 ## Introduction
 
-This lab walks you through a demonstration of AI Vector Search in an APEX application using the SQL that we build in the previous steps in this Lab.
+This lab walks you through a demonstration of AI Vector Search in an APEX application using the SQL that we built in the previous steps in this Lab.
 
 Estimated Lab Time: 5 minutes
 
 ### About APEX Demo
 
-In the previous Labs, we loaded vector embedding models in the database and ran exact similarity searches and then created a vector index and ran approximate similarity searches. Now we are going to show you an APEX demo that uses the same dataset and queries that we were using in our SQL Developer Web to show how one might use AI Vector Search to write applications.
+In the previous Labs, we loaded a vector embedding model in the database, looked at how vectors are created, ran exact similarity searches, and then created a vector index and ran approximate similarity searches. We also looked at how running similarity searches on images was really the same as on text. This is one of the great features of AI Vector Search. You can search all sorts of data easily. Now we are going to show you an APEX demo that uses the same dataset and queries that we were using in our SQL Developer Web labs to show how one might use AI Vector Search to write actual applications.
 
 This demo will allow you to search for US National Parks based on some attribute like picnic tables and a general location if for example, you wanted to find a park to have a family picnic. Perhaps you're more adventurous and would like to find parks that you could go rock climbing in on your next vacation. We have also designed the application so you can supply any search term you want.
 
@@ -29,28 +29,30 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to the APEX application
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
-
-In this Lab  you will connect to APEX instead of SQL Developer Web. To connect to the APEX demo run the following command. You will then be prompted to sign in:
+This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the following URL in your web browser:
 
   ```
-  <copy>google-chrome http://localhost:8080/ords/nationalparks/image-search</copy>
+  <copy>http://localhost:8080/ords/apex/nationalparks/nationalparks</copy>
   ```
 
-After signing in you should see a browser window like the following:
+You should see a browser window like the following:
 
- ![sqldev browser](images/civil_war.png " ")
+ ![sqldev browser](images/apex_initial_screen.png " ")
 
 
 ## Task 1: Run the APEX demo
 
-You can now enter any search term and location that you would like to search on. You can pull down on a pre-created list of search terms or make up your own. You can specify a location or search all parks.
+You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The following shows searching on the term "picnic tables":
 
 1. Run APEX demo:
 
-    ![model query](images/civil_war.png " ")
+    ![apex search](images/apex_search.png " ")
+
+2. If you would like to see the SQL that is being run then just click on the arrow next to the "Display Query" label:
+
+    ![apex query](images/apex_query_screen.png " ")
 
 
 ## Learn More
