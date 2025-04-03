@@ -25,7 +25,7 @@ This lab assumes you have:
 ## Learn More
 
 * [Oracle Autonomous Database](https://www.oracle.com/autonomous-database/)
-* [Oracle 23ai - Creating Custom Unified Audit Policies](https://docs.oracle.com/en/database/oracle/oracle-database/23/dbseg/creating-custom-unified-audit-policies.html)
+* [Oracle Database 23ai - Creating Custom Unified Audit Policies](https://docs.oracle.com/en/database/oracle/oracle-database/23/dbseg/creating-custom-unified-audit-policies.html)
 * [YouTube: How to audit every DDL command executed on the database](https://www.youtube.com/watch?v=ulB-HXFa3-I)
 
 ## Acknowledgements

@@ -105,7 +105,7 @@ Let's import the libraries.
 2. This next code snippet defines the function to include metadata with the chunks.  Select the code snippet and click **Run**.
 
     ```python
-    # Function to format and add metadata to Oracle 23ai Vector Store
+    # Function to format and add metadata to Oracle Database 23ai Vector Store
 
     def chunks_to_docs_wrapper(row: dict) -> Document:
         """

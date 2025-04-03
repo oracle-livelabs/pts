@@ -11,6 +11,7 @@ This lab assumes you have the following:
 * Experience with Oracle Database features, SQL, and PL/SQL.
 * Experience with Oracle Application Express (APEX) low-code development.
 
+
 ## Task 1: Review and understand the Home page
 
 1. Look at the `P1_PROMPT` item SQL Query. It has a sub-query called `query_vector` that vectorizes the question written in item `P1_QUERY` using the same LLM. This vector is compared with the vectors stored in the `VECTORS` table and returns the first 5 results by distance. The contents of the closest 5 chunks is concatenanted and returned as `FINAL_PROMPT`.
@@ -18,7 +19,7 @@ This lab assumes you have the following:
     ````
     <copy>
     select  
-    apex_string.join_clobs(apex_t_clob(listagg(CHUNK_CONTENTS, ';'))) as FINAL_PROMPT
+    apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_PROMPT
     from (
     with query_vector as (
                 select TO_VECTOR(VECTOR_EMBEDDING(ALLMINL12V2 using :P1_QUERY as DATA)) as vector_embedding)
@@ -29,7 +30,20 @@ This lab assumes you have the following:
     </copy>
     ````
 
-2. Review the code of the `P1_RESPONSE` item PL/SQL Function Body. This function builds the prompt `l_prompt` (also called prompt engineering) using a simple XML structure with two fields: `CONTEXT` and `QUESTION`. This prompt is used to create an API request to OCI Generative AI service with the body `l_body` using a simple JSON structure that specifies the parameters and the prompt. The response is captured in `l_resp` variable and also has a JSON structure. The `l_result` variable is used to process the fields in the response and extract the answer text. The information is inserted into the `CONVERSATION` table.
+2. The generative AI prompt is used to initiate a response from the AI system. It is a natural language question or statement that triggers the AI to generate a relevant and contextually appropriate response. This particular application uses a promp that has an XML structure, similar to this:
+
+    ````
+    <copy>
+    <CONTEXT>
+        Here goes the information used to answer the question based on the concatenation - listagg(CHUNK_CONTENTS, ';') - of the first 5 document chunks based on vector proximity.
+        <QUESTION>
+            Using the information from the previous context, answer the following question: Here goes the question - query_vector - to be answered.
+        </QUESTION>
+    </CONTEXT>
+    </copy>
+    ````
+
+3. Review the code of the `P1_RESPONSE` item PL/SQL Function Body. This function builds the prompt `l_prompt` (also called prompt engineering) using the simple XML structure with two fields: `CONTEXT` and `QUESTION`. This prompt is used to create an API request to OCI Generative AI service with the body `l_body` using a simple JSON structure that specifies the parameters and the prompt. The response is captured in `l_resp` variable and also has a JSON structure. The `l_result` variable is used to process the fields in the response and extract the answer text. The information is inserted into the `CONVERSATION` table.
 
     ````
     <copy>
@@ -73,7 +87,90 @@ This lab assumes you have the following:
     </copy>
     ````
 
-3. All questions submitted and answered stored in the historical `CONVERSATION` table are listed in the `Conversation` report using this SQL Query.
+4. If you just want to test the API request to OCI Generative AI service from APEX SQL Workshop > SQL Commands, run the following code (check the chat request for Cohere models attributes in the 'Learn more' section at the bottom of this lab):
+
+    ````
+    <copy>
+    declare
+    body json_object_t;
+    resp dbms_cloud_types.resp;
+    result clob;
+    begin
+    body := json_object_t('{
+    "compartmentId": "ocid1.compartment.oc1..aaaaaaaa_here_use_your_own_compartment_ocid",
+    "servingMode": {
+        "modelId": "cohere.command-r-plus-08-2024",
+        "servingType": "ON_DEMAND"
+    },
+    "chatRequest": {
+        "apiFormat": "COHERE",
+        "maxTokens": 600,
+        "message": "What are the most important new features of Oracle Database 23ai?"
+    }
+    }');
+    resp := dbms_cloud.send_request(
+        credential_name   => 'OCI_CREDENTIAL',
+        uri => 'oci://inference.generativeai.uk-london-1.oci.oraclecloud.com/20231130/actions/chat',
+        method => dbms_cloud.METHOD_POST,
+        body => utl_raw.cast_to_raw(body.to_clob),
+        headers => json_object('Accept' value 'application/json')
+    );
+    result := json_query(dbms_cloud.get_response_text(resp), '$.chatResponse.text');
+    dbms_output.put_line(result);
+    end;
+    /
+    </copy>
+    ````
+
+5. If you want to test an API request to OCI Generative AI service with a specific prompt, run the following code:
+
+    ````
+    <copy>
+    declare
+    l_body json_object_t;
+    l_resp dbms_cloud_types.resp;
+    l_context clob;
+    l_question clob;
+    l_prompt clob;
+    l_result clob;
+    P1_PROMPT clob := 'Here you can add the context for the prompt, all the
+    information you want to include,
+    it can be on multiple lines.';
+    P1_QUERY clob := 'What are the most important new features of Oracle Database 23ai?';
+    COMPARTMENT_OCID varchar2(100) := 'ocid1.compartment.oc1..aaaaaaaa_here_use_your_own_compartment_ocid';
+    TENANCY_REGION varchar2(20) := 'uk-london-1';
+    begin
+    l_context := replace(replace(replace(P1_PROMPT, '"', '“'), chr(13), ''), chr(10), ' ');
+    l_question := replace(replace(replace(P1_QUERY, '"', '“'), chr(13), ''), chr(10), ' ');
+    l_prompt := '<CONTEXT> ' || l_context || ' <QUESTION> Using the information from the previous context, answer the following question: ' || l_question || ' </QUESTION></CONTEXT>';
+    l_body := json_object_t('{
+    "compartmentId": "' || COMPARTMENT_OCID || '",
+    "servingMode": {
+        "modelId": "cohere.command-r-plus-08-2024",
+        "servingType": "ON_DEMAND"
+    },
+    "chatRequest": {
+        "apiFormat": "COHERE",
+        "maxTokens": 600,
+        "message": "' || l_prompt || '"
+    }
+    }');
+    l_resp := dbms_cloud.send_request(
+        credential_name   => 'OCI_CREDENTIAL',
+        uri => 'oci://inference.generativeai.' || TENANCY_REGION || '.oci.oraclecloud.com/20231130/actions/chat',
+        method => dbms_cloud.METHOD_POST,
+        body => utl_raw.cast_to_raw(l_body.to_clob),
+        headers => json_object('Accept' value 'application/json')
+    );
+    l_result := json_query(dbms_cloud.get_response_text(l_resp), '$.chatResponse.text');
+    l_result := substr(l_result, 2, length(l_result) - 2);
+    l_result := replace(replace(replace(l_result,'\n', chr(10)), '\t', ' '), '\"', '“');
+    dbms_output.put_line(l_result);
+    end;
+    </copy>
+    ````
+
+6. All questions submitted and answered stored in the historical `CONVERSATION` table are listed in the `Conversation` report using this SQL Query.
 
     ````
     <copy>
@@ -82,6 +179,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
+
 ## Task 2: Review and understand the Test page
 
 1. This page is simiar to the Home page except it displays the top 5 chunks that are used to build the prompt. The `P3000_PROMPT` item SQL Query is the same as the one on the Home page.
@@ -89,7 +187,7 @@ This lab assumes you have the following:
     ````
     <copy>
     select  
-    apex_string.join_clobs(apex_t_clob(listagg(CHUNK_CONTENTS, ';'))) as FINAL_PROMPT
+    apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_PROMPT
     from (
     with query_vector as (
                 select TO_VECTOR(VECTOR_EMBEDDING(ALLMINL12V2 using :P3000_QUERY as DATA)) as vector_embedding)
@@ -158,6 +256,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
+
 ## Task 3: Review and understand the Upload page
 
 1. The Upload page is used to send documents from your computer to the OCI Object Storage bucket. Review the `Upload` process PL/SQL Code that uses a REST API `PUT` request to perform the operation. The table `OBJSDOCS` is used to keep track of the documents uploaded and available in the Object Storage bucket. If the same document has been uploaded before, the previous record is removed from the table, as the file is overwritten. A record in inserted into the `OBJSDOCS` table for the uploaded document.
@@ -199,6 +298,15 @@ This lab assumes you have the following:
     where upper(lo.OBJECT_NAME) not like '%.ONNX';
     </copy>
     ````
+
+3. This is actually the same query used to list objects in your Object Storage Bucket with a join on `OBJSDOCS` table for additional metadata fields.
+
+    ````
+    <copy>
+    select * from dbms_cloud.list_objects('OBJS_CREDENTIAL','https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy/b/DBAI-bucket/o/');
+    </copy>
+    ````
+
 
 ## Task 4: Review and understand the Docs page
 
@@ -267,6 +375,17 @@ This lab assumes you have the following:
     </copy>
     ````
 
+3. Write down in your notes the ID of one document that was imported into the `BLOBDOCS` table for some tests (`BLOBDOCS.ID` column). Call it `TEST_DOC_ID`.
+
+    ````
+    <copy>
+    select b.ID, o.FILE_NAME
+    from BLOBDOCS b left join OBJSDOCS o on o.ID = b.OBJSDOC_ID
+    where o.CREATED is not NULL
+    </copy>
+    ````
+
+
 ## Task 5: Review and understand the Vectors page
 
 1. Read, understand, and customize the `Vectorize` process PL/SQL Code to fully understand how this process works. There are multiple ways of creating embeddings (vectorize) your data inside the Oracle Database 23ai, please check the documentation links at the end of this lab for the complete set of details. The SQL query used to generate the embeddings (with JSON format), used to extract the necessary fields (`EMBED_ID`, `EMBED_DATA`, and `EMBED_VECTOR`) inserted into the `VECTORS` table, has three procedures executed in cascade:
@@ -297,7 +416,29 @@ This lab assumes you have the following:
     </copy>
     ````
 
-2. The plain text extracted from PDF documents can be processed in multiple ways. Read the `ChunkLines` process PL/SQL Code to see another example of reading data from the PDF document, converting it to HTML code, and extracting all paragraphs as individual lines. The chunk lines are stored in the `CHUNKLINES` table. This data can be further processed with Oracle Text, or you can use Oracle Machine Learning to classify these lines by their contents and label them with different categories. This way, you can eliminate noise from the text documents data, perform aditional filtering, extract metadata from specific fields like title, author, headers, footers, etc.
+2. Use APEX SQL Workshop > SQL Commands to test different embedding operations by changing the parameters of the `DBMS_VECTOR_CHAIN.utl_to_chunks` utility function. Check the `DBMS_VECTOR_CHAIN` PL/SQL Package Reference documentation link at the bottom of this lab.
+
+    ````
+    <copy>
+    select b.ID, et.EMBED_ID, et.EMBED_DATA, to_vector(et.EMBED_VECTOR) EMBED_VECTOR
+        from BLOBDOCS b,
+            DBMS_VECTOR_CHAIN.utl_to_embeddings(
+              DBMS_VECTOR_CHAIN.utl_to_chunks(
+                DBMS_VECTOR_CHAIN.utl_to_text(b.DOC_DATA),
+                json('{ "max":"210",
+                        "overlap":"15",
+                        "language":"english",
+                        "normalize":"all" }')),
+              json('{"provider":"database", "model":"ALLMINL12V2"}')) t,
+            json_table(t.column_value, '$[*]' columns (
+                embed_id number path '$.embed_id', 
+                embed_data varchar2(4000) path '$.embed_data',
+                embed_vector clob path '$.embed_vector')) et
+    where b.ID = TEST_DOC_ID;
+    </copy>
+    ````
+
+3. The plain text extracted from PDF documents can be processed in multiple ways. Read the `ChunkLines` process PL/SQL Code to see another example of reading data from the PDF document, converting it to HTML code, and extracting all paragraphs as individual lines. The chunk lines are stored in the `CHUNKLINES` table. This data can be further processed with Oracle Text or Graph, or you can use Oracle Machine Learning to classify these lines by their contents and label them with different categories. This way, you can eliminate noise from the text documents data, perform aditional filtering, extract metadata from specific fields like title, author, headers, footers, etc.
 
     ````
     <copy>
@@ -314,7 +455,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
-3. Use the `Embedded Documents` report SQL Query to list all documents that have been vectorized and the number of vectors (chunks) each one of them has.
+4. Use the `Embedded Documents` report SQL Query to list all documents that have been vectorized and the number of vectors (chunks) each one of them has.
 
     ````
     <copy>
@@ -348,6 +489,16 @@ This lab assumes you have the following:
     </copy>
     ````
 
+3. Use APEX SQL Workshop > SQL Commands to list the lines of the first chunk of the test document.
+
+    ````
+    <copy>
+    select ID, BLOBDOC_ID, CHUNK_NO, LINE_NO, LINE_CONTENTS, LINE_TYPE 
+    from CHUNKLINES 
+    where BLOBDOC_ID = TEST_DOC_ID and CHUNK_NO = 1;
+    </copy>
+    ````
+
 This workshop is now complete.
 
 
@@ -360,6 +511,7 @@ This workshop is now complete.
 * [VECTOR_DISTANCE SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/vector_distance.html)
 * [APEX_WEB_SERVICE API Reference](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_WEB_SERVICE.html)
 * [SQL/JSON Function JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/sql-json-function-json_table.html)
+* [CohereChatRequest Reference](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/CohereChatRequest)
 
 ## **Acknowledgements**
 
