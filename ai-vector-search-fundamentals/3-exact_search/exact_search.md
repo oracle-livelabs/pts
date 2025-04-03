@@ -47,13 +47,13 @@ After signing in you should see a browser window like the following:
 
 ## Task 1: Run exact similarity searches
 
-In this task we will put our work to use and run some exact similarity searches on the DESCRIPTION vector embeddings that we just created.
+In this task we will put our work to use and run some exact similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
 
 1. Our first query will look for parks that are associated with the Civil War:
 
     ```
     <copy>
-    select name, city, states, description 
+    select name, city, states, description
     from parks
     order by vector_distance(desc_vector,
       vector_embedding(minilm_l12_v2 USING 'Civil War' as data), cosine)
@@ -81,7 +81,7 @@ In this task we will put our work to use and run some exact similarity searches 
 
     The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
 
-3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
+3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other. In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
 
     ```
     <copy>
@@ -103,11 +103,11 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 USING 'rock climbing' as data), cosine)
-    fetch exact first 10 rows only);
+    SELECT name, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
   
