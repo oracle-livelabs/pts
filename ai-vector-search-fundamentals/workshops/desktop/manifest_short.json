@@ -15,7 +15,7 @@
         {
             "title": "Lab 2: Similarity Search",
             "description": "Understanding Similarity Search",
-            "filename": "../../3-exact_search/exact_search.md"
+            "filename": "../../3-exhaustive_search/exhaustive_search.md"
         },
         {
             "title": "Lab 3: Image Search",

@@ -1,23 +1,23 @@
-# Exact Similarity Search
+# Exhaustive Similarity Search
 
 ## Introduction
 
-This lab walks you through the steps to run exact similarity searches and what is happening during the search.
+This lab walks you through the steps to run exhaustive similarity searches and what is happening during the search.
 
 Estimated Lab Time: 10 minutes
 
-### About Exact Similarity Search
+### About Exhaustive Similarity Search
 
-An exact similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. In this type of search, all vectors are compared, and produces the most accurate results.
+An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. In this type of search, all vectors are compared, and produces the most accurate results.
 
-In this Lab we are going to be performing exact similarity searches on a text column, and we will use the all-MiniLM-L12-v2 model. This is the same model we used in the Embedding Models lab to create the vector embeddings for the DESCRIPTION column in the PARKS table.
+In this Lab we are going to be performing exhaustive similarity searches on a text column, and we will use the all-MiniLM-L12-v2 model. This is the same model we used in the Embedding Models lab to create the vector embeddings for the DESCRIPTION column in the PARKS table.
 
 
 ### Objectives
 
 In this lab, you will:
 
-* Run exact similarity searches
+* Run exhaustive similarity searches
 * Show vector distances to reinforce how the search is evaluated
 * Show an execution plan from a query
 
@@ -45,23 +45,23 @@ After signing in you should see a browser window like the following:
  ![sqldev browser](images/sqldev_web.png " ")
 
 
-## Task 1: Run exact similarity searches
+## Task 1: Run exhaustive similarity searches
 
-In this task we will put our work to use and run some exact similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
+In this task we will put our work to use and run some exhaustive similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
 
 1. Our first query will look for parks that are associated with the Civil War:
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 USING 'Civil War' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
-    ![exact query1](images/parks_exact_civil_war.png " ")
+    ![exhaustive query1](images/parks_exhaustive_civil_war.png " ")
 
     If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so let's try something a little harder in our next query.
 
@@ -69,37 +69,37 @@ In this task we will put our work to use and run some exact similarity searches 
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
-    fetch exact first 10 rows only);
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 using 'rock climbing' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
-    ![exact query2](images/parks_exact_rock_climbing.png " ")
+    ![exhaustive query2](images/parks_exhaustive_rock_climbing.png " ")
 
-    The results are even more surprising since only two description have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
+    The results are even more surprising since only two descriptions have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
 
 3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other. In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
 
     ```
     <copy>
-    select name,
-      to_number(vector_distance(desc_vector,
-        vector_embedding(minilm_l12_v2 USING 'rock climbing' as data), cosine)) as distance,
+    SELECT name,
+      to_number(VECTOR_DISTANCE(desc_vector,
+        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)) AS distance,
       description
-    from parks
-    order by 2
-    fetch exact first 10 rows only;
+    FROM parks
+    ORDER BY 2
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
-	 ![distance query](images/parks_exact_rock_climbing_distance.png " ")
+	 ![distance query](images/parks_exhaustive_rock_climbing_distance.png " ")
 
     Notice that the distance number, the DISTANCE column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
 
-4. One last step. Since we are doing exact queries, that is we have not created any vector indexes, what does an execution plan look like?
+4. One last step. Since we are doing exhaustive queries, that is we have not created any vector indexes, what does an execution plan look like?
 
     ```
     <copy>
@@ -111,7 +111,7 @@ In this task we will put our work to use and run some exact similarity searches 
     </copy>
     ```
   
-    Click on the "Explain Plan" button and choose the "Advanced View" to display an image like the one below:
+    Click on the "Explain Plan" button and choose the "Advanced View" button to display an image like the one below:
 
 	 ![plan query](images/parks_execute_plan.png " ")
 

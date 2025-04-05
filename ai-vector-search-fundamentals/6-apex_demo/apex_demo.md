@@ -44,7 +44,7 @@ You should see a browser window like the following:
 
 ## Task 1: Run the APEX demo
 
-You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The following shows searching on the term "picnic tables":
+You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The following shows searching on the term "geysers":
 
 1. Run APEX demo:
 

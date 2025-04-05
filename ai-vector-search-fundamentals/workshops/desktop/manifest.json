@@ -18,9 +18,9 @@
             "filename": "../../2-embedding_models/text_embeddings.md"
         },
         {
-            "title": "Lab 2: Exact Search",
-            "description": "Understanding Exact Similarity Search",
-            "filename": "../../3-exact_search/exact_search.md"
+            "title": "Lab 2: Exhaustive Search",
+            "description": "Understanding Exhaustive Similarity Search",
+            "filename": "../../3-exhaustive_search/exhaustive_search.md"
         },
         {
             "title": "Lab 3: Approximate Search",

@@ -8,7 +8,7 @@ Estimated Lab Time: 10 minutes
 
 ### About Approximate Similarity Search
 
-In the previous Lab, Exact Search, we performed exact similarity searches which examined each vector in the table. This can be resource intensive since examining vector distances are computationally expensive and don't scale well for very large vector datasets. This is where approximate similarity searches have an advantage. Creating vector indexes enables the ability to use approximate similarity search. Instead of checking every possible match, an approximate similarity search uses a class of algorithms referred to as _Approximate Nearest Neighbor_. Using vector indexes helps reduce the number of distance calculations, making searches faster and more efficient with only a slight penalty in accuracy.
+In the previous Lab, Exhaustive Search, we performed exhaustive similarity searches which examined each vector in the table. This can be resource intensive since examining vector distances are computationally expensive and don't scale well for very large vector datasets. This is where approximate similarity searches have an advantage. Creating vector indexes enables the ability to use approximate similarity search. Instead of checking every possible match, an approximate similarity search uses a class of algorithms referred to as _Approximate Nearest Neighbor_. Using vector indexes helps reduce the number of distance calculations, making searches faster and more efficient with only a slight penalty in accuracy.
 
 There are currently three types of vector indexes available in AI Vector Search:
 
@@ -29,7 +29,7 @@ In this lab, you will:
 * Show index memory usage and information
 * Run approximate similarity searches
 * Show an execution plan from a query
-* Show differences between and exact and approximate similarity searches
+* Show differences between and exhaustive and approximate similarity searches
 
 ### Prerequisites
 
@@ -116,9 +116,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 ## Task 3: Run approximate similarity searches
 
-In this task we will run the same queries we ran in the the Exact Search lab, but now we will run approximate similarity searches with the vector index that we just created.
+In this task we will run the same queries we ran in the the Exhaustive Search lab, but now we will run approximate similarity searches with the vector index that we just created.
 
-1. Recall that the first query we ran in the Exact Search lab looked for parks that were associated with the Civil War. Notice that we have changed the exact keyword on the fetch line to approx for approximate. Although this is not required, the optimizer will choose an index if the cost is less than an exact search, it helps to ensure that you are actually running an approximate search:
+1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. Although this is not required, the optimizer will choose an index if the cost is less than an exhaustive search, it helps to ensure that you are actually running an approximate search:
 
     ```
     <copy>
@@ -160,7 +160,7 @@ In this task we will run the same queries we ran in the the Exact Search lab, bu
     </copy>
     ```
   
-    Click on the "Explain Plan" button and select the "Advanced View" to display an image like the one below:
+    Click on the "Explain Plan" button and select the "Advanced View" button to display an image like the one below:
 
 	![plan query](images/parks_approx_execute_plan.png " ")
 

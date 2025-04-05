@@ -11,33 +11,33 @@
         },
         {
             "title": "Introduction",
-            "description": "The Introduction is always second for LiveLabs. The title and contents menu title match for the Introduction.",
-            "filename": "../../introduction/introduction.md"
+            "description": "Introduction to AI Vector Search.",
+            "filename": "../../1-introduction/introduction.md"
         },
         {
-            "title": "Lab 1: Provision an Instance",
-            "description": "Labs that follow the introduction are numbered, starting with Lab 1",
-            "filename": "../../provision/provision.md"
+            "title": "Lab 1: Vector Embeddings",
+            "description": "Vectors and vector embeddings in AI Vector Search",
+            "filename": "../../2-embedding_models/text_embeddings.md"
         },
         {
-            "title": "Lab 2: Setup the Environment",
-            "filename": "../../setup/setup.md"
+            "title": "Lab 2: Exhaustive Search",
+            "description": "Understanding Exhaustive Similarity Search",
+            "filename": "../../3-exact_search/exact_search.md"
         },
         {
-            "title": "Lab 3: Load Data into an Instance",
-            "filename": "../../data-load/data-load.md"
+            "title": "Lab 3: Approximate Search",
+            "description": "Understanding Approximate Similarity Search",
+            "filename": "../../4-approximate_search/approx_search.md"
         },
         {
-            "title": "Lab 4: Query Data",
-            "filename": "../../query/query.md"
+            "title": "Lab 4: Image Search",
+            "description": "Exploring Image Search",
+            "filename": "../../5-image_search/image_search.md"
         },
         {
-            "title": "Lab 6: Variables in LiveLabs",
-            "filename": "../../variables/variables.md"
-        },
-        {
-            "title": "Lab 5: Tables in LiveLabs",
-            "filename": "../../tables/tables.md"
+            "title": "Lab 5: APEX Demo",
+            "description": "Running AI Vector Search in an APEX application",
+            "filename": "../../6-apex_demo/apex_demo.md"
         },
         {
             "title": "Need Help?",
