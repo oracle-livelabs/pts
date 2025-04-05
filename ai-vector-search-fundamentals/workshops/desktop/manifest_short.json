@@ -1,0 +1,36 @@
+{
+    "workshoptitle": "Oracle AI Vector Search Fundamentals",
+    "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction to AI Vector Search.",
+            "filename": "../../1-introduction/introduction.md"
+        },
+        {
+            "title": "Lab 1: Vector Embeddings",
+            "description": "Vectors and vector embeddings in AI Vector Search",
+            "filename": "../../2-embedding_models/text_embeddings.md"
+        },
+        {
+            "title": "Lab 2: Similarity Search",
+            "description": "Understanding Similarity Search",
+            "filename": "../../3-exhaustive_search/exhaustive_search.md"
+        },
+        {
+            "title": "Lab 3: Image Search",
+            "description": "Exploring Image Search",
+            "filename": "../../5-image_search/image_search.md"
+        },
+        {
+            "title": "Lab 4: APEX Demo",
+            "description": "Running AI Vector Search in an APEX application",
+            "filename": "../../6-apex_demo/apex_demo.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+        }
+    ]
+}

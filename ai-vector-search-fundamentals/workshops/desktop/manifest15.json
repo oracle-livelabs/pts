@@ -1,0 +1,31 @@
+{
+    "workshoptitle": "Oracle AI Vector Search",
+    "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "The Introduction to AI Vector Search.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+        "title": "Get Started with noVNC Remote Desktop",
+        "description": "Using noVNC Remote Desktop",
+        "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
+        },
+        {
+            "title": "Lab 1: Vector DDL, DML and Queries",
+            "description": "Using AI Vector Search Query, DML and DDL",
+            "filename": "../../lab1/vector_quries.md"
+        },
+        {
+            "title": "Lab 2: Vector Distance",
+            "description": "Understanding Vector Distance functions",
+            "filename": "../../lab2/vector_distance.md"
+        },
+        {
+            "title": "Lab 3: Similarity Search",
+            "description": "Understanding Similarity Search",
+            "filename": "../../lab3/similarity_search.md"
+        }
+    ]
+}
