@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab walks you through the steps to create vector indexes and run approximate similarity searches.
+This lab walks you through the steps to create vector indexes and run approximate similarity searches on images.
 
 Estimated Lab Time: 10 minutes
 
@@ -73,7 +73,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ![model details query](images/CLIP_details.png " ")
 
-    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model.
+    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP text model is wider as it has 512 dimensions.
 
 
 ## Task 2: Display the Vector column in the PARKS\_IMAGES table

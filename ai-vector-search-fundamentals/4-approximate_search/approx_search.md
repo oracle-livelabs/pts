@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab walks you through the steps to create vector indexes and run approximate similarity searches.
+This lab walks you through the steps to create vector indexes and run approximate similarity searches for text.
 
 Estimated Lab Time: 10 minutes
 
@@ -118,7 +118,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 In this task we will run the same queries we ran in the the Exhaustive Search lab, but now we will run approximate similarity searches with the vector index that we just created.
 
-1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. Although this is not required, the optimizer will choose an index if the cost is less than an exhaustive search, it helps to ensure that you are actually running an approximate search:
+1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. If the EXACT keyword is NOT used, the optimizer will choose a vector index if the cost is less than an exhaustive search. This can help ensure that you are actually running an approximate search:
+The APPROX keyword is optional and helps make the intent of the approximate query more obvious.
+The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>

@@ -44,7 +44,9 @@ You should see a browser window like the following:
 
 ## Task 1: Run the APEX demo
 
-You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The following shows searching on the term "geysers":
+You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The demo is designed to return the top 10 most similar park images based on the search term. Only one image per park is returned although the dataset contains many images for most parks.
+
+The following shows searching on the term "geysers":
 
 1. Run APEX demo:
 
