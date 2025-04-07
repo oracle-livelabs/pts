@@ -67,8 +67,8 @@ This task will involved identifying and loading an ONNX model into the database.
 
     ```
     <copy>
-    SELECT * 
-    FROM all_directories 
+    SELECT *
+    FROM all_directories
     WHERE directory_name = 'DM_DUMP';
     </copy>
     ```
@@ -110,7 +110,7 @@ This task will involved identifying and loading an ONNX model into the database.
     ```
     <copy>
     SELECT model_name, attribute_name, attribute_type, data_type, vector_info
-    FROM user_mining_model_attributes 
+    FROM user_mining_model_attributes
     ORDER BY 1,3;
     </copy>
     ```
@@ -157,7 +157,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
     ```
     <copy>
     SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description AS data)
-    FROM parks 
+    FROM parks
     FETCH FIRST 1 ROWS ONLY;
     </copy>
     ```

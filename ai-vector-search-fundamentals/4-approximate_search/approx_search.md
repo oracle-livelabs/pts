@@ -124,11 +124,11 @@ The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'Civil War' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -138,11 +138,11 @@ The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -154,11 +154,11 @@ The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
   

@@ -54,8 +54,8 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select model_name, mining_function, algorithm, algorithm_type, model_size
-    from user_mining_models;
+    SELECT model_name, mining_function, algorithm, algorithm_type, model_size
+    FROM user_mining_models;
     </copy>
     ```
 
@@ -66,8 +66,9 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select model_name, attribute_name, attribute_type, data_type, vector_info
-    from user_mining_model_attributes order by 1,3;
+    SELECT model_name, attribute_name, attribute_type, data_type, vector_info
+    FROM user_mining_model_attributes
+    ORDER BY 1,3;
     </copy>
     ```
 
@@ -90,9 +91,9 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
     ```
     <copy>
-    select image_vector
-    from park_images
-    fetch first 1 rows only;
+    SELECT image_vector
+    FROM park_images
+    FETCH FIRST 1 ROWS ONLY;
     </copy>
     ```
 
@@ -110,11 +111,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url
-    from park_images
-    order by vector_distance(image_vector,
-      vector_embedding(clip_vit_txt using 'Civil War' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT description, url
+    FROM park_images
+    ORDER BY VECTOR_DISTANCE(image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'Civil War' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -136,11 +137,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url
-    from park_images
-    order by vector_distance(image_vector,
-      vector_embedding(clip_vit_txt using 'rock climbing' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT description, url
+    FROM park_images
+    ORDER BY VECTOR_DISTANCE(image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'rock climbing' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -154,13 +155,13 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select p.description, p.city, p.states, pi.url
-    from park_images pi, parks p
-    where pi.park_code = p.park_code
-      and p.states in ('CA','OR','NV','WA','AZ','CO')
-    order by vector_distance(pi.image_vector,
-      vector_embedding(clip_vit_txt using 'waterfall' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT p.description, p.city, p.states, pi.url
+    FROM park_images pi, parks p
+    WHERE pi.park_code = p.park_code
+      AND p.states in ('CA','OR','NV','WA','AZ','CO')
+    ORDER BY VECTOR_DISTANCE(pi.image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'waterfall' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
