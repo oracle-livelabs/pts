@@ -63,6 +63,8 @@ This task will involved identifying and loading an ONNX model into the database.
 
     ![Mining models query](images/embedding_models1.png " ")
 
+    You may see the CLIP\_VIT\_TXT embedding model that we will use later in the Image Search lab.
+
 2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DM\_DUMP directory. You can display this directory with the following SQL:
 
     ```
@@ -82,8 +84,8 @@ This task will involved identifying and loading an ONNX model into the database.
     ```
     <copy>
     BEGIN
-       DBMS_VECTOR.LOAD_ONNX_MODEL('DM_DUMP','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
-         JSON('{"function" : "embedding", "embeddingOutput" : "embedding", "input": {"input": ["DATA"]}}'));
+      DBMS_VECTOR.LOAD_ONNX_MODEL('DM_DUMP','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
+      JSON('{"function" : "embedding", "embeddingOutput" : "embedding", "input": {"input": ["DATA"]}}'));
     END;
     </copy>
     ```
@@ -111,6 +113,7 @@ This task will involved identifying and loading an ONNX model into the database.
     <copy>
     SELECT model_name, attribute_name, attribute_type, data_type, vector_info
     FROM user_mining_model_attributes
+    where model_name = 'MINILM_L12_V2'
     ORDER BY 1,3;
     </copy>
     ```
@@ -221,7 +224,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
     ![add vectors](images/parks_embedding.png " ")
 
-    There are other methods of creating vector embeddings, but for the small number of rows in our PARKS table this was probably the simplest method and only took a short amount of time.
+    There are other methods of creating vector embeddings that can be much faster, but for the small number of rows in our PARKS table this was probably the simplest method and only took a short amount of time.
 
 
 2. Verify that embeddings were created:
@@ -238,6 +241,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
     ![verify vectors query](images/parks_embeddings_query.png " ")
 
+    We displayed just the first 15 rows, or embeddings, that were created. Feel free to query more rows if you wish. The PARKS table has a total of 472 rows.
 
 You may now **proceed to the next lab**
 

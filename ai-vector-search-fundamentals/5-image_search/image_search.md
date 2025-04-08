@@ -68,6 +68,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     <copy>
     SELECT model_name, attribute_name, attribute_type, data_type, vector_info
     FROM user_mining_model_attributes
+    WHERE model_name = 'CLIP_VIT_TXT'
     ORDER BY 1,3;
     </copy>
     ```
@@ -123,11 +124,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     If you click on the first URL and then click on the eye icon the URL will open in a new window:
 
-    ![civil war url](images/query_civil_war_3_click_eye.png " ")
+    ![civil war url](images/query_civil_war_2_click_eye.png " ")
     
     If you then highlight the URL and right click a dialog box will open. Choose the "Go to ..." option to open the image in a new browser tab:
     
-    ![civil war url](images/query_civil_war_6_open_url.png " ")
+    ![civil war url](images/query_civil_war_3_open_url.png " ")
     
     You should see an image like the following:
 
@@ -165,7 +166,7 @@ In this task we will run similar queries to the ones we ran in the previous Labs
     </copy>
     ```
 
-    ![waterfall query](images/query_waterfalls_location.png " ")
+    ![waterfall query](images/query_waterfall_location.png " ")
 
     If you click on the first URL, click on the eye icon, then highlight the URL and right click you can choose the "Go to ..." option to open the image in a new browser tab:
 

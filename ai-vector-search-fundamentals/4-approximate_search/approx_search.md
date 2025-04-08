@@ -63,7 +63,7 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
 
     ```
     <copy>
-    select * from v$vector_memory_pool;
+    SELECT * FROM v$vector_memory_pool;
     </copy>
     ```
 
@@ -80,9 +80,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    create vector index parks_hnsw_idx on parks (desc_vector)
-    organization inmemory neighbor graph
-    distance cosine with target accuracy 95;
+    CREATE VECTOR INDEX parks_hnsw_idx ON parks (desc_vector)
+    ORGANIZATION INMEMORY NEIGHBOR GRAPH
+    DISTANCE COSINE WITH TARGET ACCURACY 95;
     </copy>
     ```
 
@@ -94,8 +94,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    select owner, index_name, index_organization, num_vectors
-    from v$vector_index where index_name = 'PARKS_HNSW_IDX';
+    SELECT owner, index_name, index_organization, num_vectors
+    FROM v$vector_index
+    WHERE index_name = 'PARKS_HNSW_IDX';
     </copy>
     ```
 
@@ -107,7 +108,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    select * from v$vector_memory_pool;
+    SELECT * FROM v$vector_memory_pool;
     </copy>
     ```
 
