@@ -51,7 +51,7 @@ After signing in you should see a browser window like the following:
 
 ## Task 1: Load an embedding model into the database
 
-This task will involved identifying and loading an ONNX model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
+This task will involve identifying and loading an ONNX model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
 
 1. Let's verify that the all\_MiniLM\_L12\_v2 embedding model is not currently loaded:
     ```
@@ -77,7 +77,7 @@ This task will involved identifying and loading an ONNX model into the database.
 
     ![directory query](images/onnx_directory.png " ")
 
-    The all\_MiniLM\_L12\_v2.onnx file resides in this operating system directory.
+    We previously placed the all\_MiniLM\_L12\_v2.onnx file in the operating system directory pointed to by the DM_DUMP database directory to streamline the Lab. Recall that there is a blog post identified in the "About Vector Embedding" section above that explains the details about this pre-build embedding model.
 
 3. Load the all\_MiniLM\_L12\_v2 embedding model into the database:
 
@@ -129,7 +129,7 @@ AI Vector Search adds a new VECTOR data type to Oracle Database. You can add one
 
 The VECTOR data type is created as a column in a table. You can optionally specify the number of dimensions and their format. If you don't specify any dimension or format, you can enter vectors of different dimensions with different formats. This is a simplification to help you get started with using vectors in Oracle Database with different vector embedding models.  Once you have chosen your preferred vector embedding model, you should define your vector columns with the dimension size and format used by that embedding model.  Vector indexes require that all vectors have the same dimension sizes and types. When the vector dimensions are explicitly defined, the vector search will be faster as the validity checking is done at insert/update time rather than at query time.
 
-The number of dimensions must be strictly greater than zero, with a maximum of 65535 for non-BINARY vectors and 65528 for BINARY vectors.
+The number of dimensions must be strictly greater than zero, with a maximum of 65535 vectors.
 
 The possible dimension formats are:
 *	INT8 (8-bit integers) 
@@ -182,7 +182,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
     ![table columns](images/parks_columns1.png " ")
 
-2. Next will add a new column to the table of type VECTOR. We will call the column DESC\_VECTOR.
+2. Next we will add a new column to the table of type VECTOR. We will call the column DESC\_VECTOR.
 
     ```
     <copy>
@@ -196,7 +196,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
     ![refreshed view](images/parks_refresh.png " ")
 
-4. Now let's describe the column and take a look at the VECTOR column definitions:
+4. Now let's describe the table and take a look at the VECTOR column definitions:
 
     ```
     <copy>

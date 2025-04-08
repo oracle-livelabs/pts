@@ -167,7 +167,7 @@ The EXACT keyword forces an exhaustive search.
 
 	![plan query](images/parks_approx_execute_plan.png " ")
 
-    Notice that a vector index access is now performed on the PARKS table since we now have a vector index available.
+    Notice that a vector index access is now performed on the PARKS table since we have a vector index available.
 
 
 You may now **proceed to the next lab**

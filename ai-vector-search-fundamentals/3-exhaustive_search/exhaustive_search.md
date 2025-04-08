@@ -8,7 +8,7 @@ Estimated Lab Time: 10 minutes
 
 ### About Exhaustive Similarity Search
 
-An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. In this type of search, all vectors are compared, and produces the most accurate results.
+An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. This type of search produces the most accurate results as all vectors are compared.
 
 In this Lab we are going to be performing exhaustive similarity searches on a text column, and we will use the all-MiniLM-L12-v2 model. This is the same model we used in the Embedding Models lab to create the vector embeddings for the DESCRIPTION column in the PARKS table.
 
