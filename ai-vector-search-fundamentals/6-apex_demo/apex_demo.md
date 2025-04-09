@@ -44,7 +44,7 @@ You should see a browser window like the following:
 
 ## Task 1: Run the APEX demo
 
-You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The demo is designed to return the top 10 most similar park images based on the search term. Only one image per park is returned although the dataset contains many images for most parks.
+You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The demo is designed to return the top 10 most similar park images based on the search term. Only one image per park is returned in search order, although the dataset contains many images for most parks.
 
 The following shows searching on the term "geysers":
 
@@ -52,9 +52,15 @@ The following shows searching on the term "geysers":
 
     ![apex search](images/apex_search.png " ")
 
-2. If you would like to see the SQL that is being run then just click on the arrow next to the "Display Query" label:
+2. If you would like to see a list of search terms then you can just click on the arrow to the far right of the query box:
+
+    ![apex query](images/apex_pulldown_screen.png " ")
+
+3. If you would like to see the SQL that is being run then just click on the arrow next to the "Display Query" label:
 
     ![apex query](images/apex_query_screen.png " ")
+
+Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
 
 
 ## Learn More
