@@ -34,7 +34,7 @@ This lab assumes you have:
 This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the following URL in your web browser:
 
   ```
-  <copy>http://localhost:8080/ords/apex/nationalparks/nationalparks</copy>
+  <copy>http://localhost:8080/ords/r/nationalparks/nationalparks/image-search</copy>
   ```
 
 You should see a browser window like the following:

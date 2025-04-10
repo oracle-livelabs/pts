@@ -38,7 +38,7 @@ The lab environment includes a preinstalled Oracle 23ai Database which includes 
 To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
 
   ```
-  <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
+  <copy>http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
   ```
 
 After signing in you should see a browser window like the following:
