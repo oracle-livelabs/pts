@@ -31,15 +31,15 @@ This lab assumes you have:
 
 ## Connecting to the APEX application
 
-This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the following URL in your web browser:
+This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. The URL can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-  ```
-  <copy>http://localhost:8080/ords/r/nationalparks/nationalparks/image-search</copy>
-  ```
+See the image below for an example:
 
-You should see a browser window like the following:
+![browser setup](images/browser_setup.png " ")
 
- ![sqldev browser](images/apex_initial_screen.png " ")
+After signing in you should see a browser window like the following:
+
+ ![apex screen](images/apex_initial_screen.png " ")
 
 
 ## Task 1: Run the APEX demo

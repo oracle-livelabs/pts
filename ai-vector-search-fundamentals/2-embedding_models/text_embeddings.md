@@ -34,15 +34,13 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to your Oracle AI Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+See the image below for an example:
 
-```
-<copy>http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
-```
+![browser setup](images/browser_setup.png " ")
 
 After signing in you should see a browser window like the following:
 
@@ -65,13 +63,13 @@ This task will involve identifying and loading an ONNX model into the database. 
 
     You may see the CLIP\_VIT\_TXT embedding model that we will use later in the Image Search lab.
 
-2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DM\_DUMP directory. You can display this directory with the following SQL:
+2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DATA\_PUMP\_DIR directory. You can display this directory with the following SQL:
 
     ```
     <copy>
     SELECT *
     FROM all_directories
-    WHERE directory_name = 'DM_DUMP';
+    WHERE directory_name = 'DATA_PUMP_DIR';
     </copy>
     ```
 
@@ -84,7 +82,7 @@ This task will involve identifying and loading an ONNX model into the database. 
     ```
     <copy>
     BEGIN
-      DBMS_VECTOR.LOAD_ONNX_MODEL('DM_DUMP','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
+      DBMS_VECTOR.LOAD_ONNX_MODEL('DATA_PUMP_DIR','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
       JSON('{"function" : "embedding", "embeddingOutput" : "embedding", "input": {"input": ["DATA"]}}'));
     END;
     </copy>

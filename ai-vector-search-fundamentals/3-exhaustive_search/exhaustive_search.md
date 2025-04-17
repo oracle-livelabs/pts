@@ -30,19 +30,17 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to your Oracle AI Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+See the image below for an example:
 
-  ```
-  <copy>http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
-  ```
+![browser setup](images/browser_setup.png " ")
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png " ")
+![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Run exhaustive similarity searches
