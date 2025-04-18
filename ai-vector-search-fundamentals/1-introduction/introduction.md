@@ -16,7 +16,7 @@ Key components of AI Vector Search include:
 
 *Vector Data Type*: A data type designed to store vector data directly within Oracle Database, facilitating seamless integration.
 
-*Similarity Search*: The ability to search for semantically similarity on structured or unstructured data.
+*Similarity Search*: The ability to search for semantic similarity on structured or unstructured data.
 
 *Vector Indexes*: Specialized indexing optimized for rapid and efficient retrieval of similar vectors, enhancing the database's search efficiency.
 
@@ -28,7 +28,7 @@ At the heart of AI Vector Search is the ability to do a similarity search. A sim
 
 Another big benefit of AI Vector Search is that similarity search can be combined with relational search on business data in one single system. This is not only powerful but also significantly more effective because AI Vector Search allows you to generate, store, index, and query vector embeddings along with other business data, using the full power of SQL. This means you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
 
-In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
+In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to search on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run using the APEX-based demo in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
 
 ![apex demo](images/apex_demo.png " ")
 

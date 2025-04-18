@@ -31,28 +31,36 @@ This lab assumes you have:
 
 ## Connecting to the APEX application
 
-This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the following URL in your web browser:
+This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. The URL can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-  ```
-  <copy>http://localhost:8080/ords/apex/nationalparks/nationalparks</copy>
-  ```
+See the image below for an example:
 
-You should see a browser window like the following:
+![browser setup](images/browser_setup.png " ")
 
- ![sqldev browser](images/apex_initial_screen.png " ")
+After signing in you should see a browser window like the following:
+
+ ![apex screen](images/apex_initial_screen.png " ")
 
 
 ## Task 1: Run the APEX demo
 
-You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The following shows searching on the term "geysers":
+You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The demo is designed to return the top 10 most similar park images based on the search term. Only one image per park is returned in search order, although the dataset contains many images for most parks.
+
+The following shows searching on the term "geysers":
 
 1. Run APEX demo:
 
     ![apex search](images/apex_search.png " ")
 
-2. If you would like to see the SQL that is being run then just click on the arrow next to the "Display Query" label:
+2. If you would like to see a list of search terms then you can just click on the arrow to the far right of the query box:
+
+    ![apex query](images/apex_pulldown_screen.png " ")
+
+3. If you would like to see the SQL that is being run then just click on the arrow next to the "Display Query" label:
 
     ![apex query](images/apex_query_screen.png " ")
+
+Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
 
 
 ## Learn More

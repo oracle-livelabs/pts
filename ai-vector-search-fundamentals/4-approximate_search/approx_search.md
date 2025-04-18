@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab walks you through the steps to create vector indexes and run approximate similarity searches.
+This lab walks you through the steps to create vector indexes and run approximate similarity searches for text.
 
 Estimated Lab Time: 10 minutes
 
@@ -40,19 +40,17 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to your Oracle AI Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+See the image below for an example:
 
- ```
- <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
- ```
+![browser setup](images/browser_setup.png " ")
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png " ")
+![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: View the Vector Pool
@@ -63,7 +61,7 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
 
     ```
     <copy>
-    select * from v$vector_memory_pool;
+    SELECT * FROM v$vector_memory_pool;
     </copy>
     ```
 
@@ -80,9 +78,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    create vector index parks_hnsw_idx on parks (desc_vector)
-    organization inmemory neighbor graph
-    distance cosine with target accuracy 95;
+    CREATE VECTOR INDEX parks_hnsw_idx ON parks (desc_vector)
+    ORGANIZATION INMEMORY NEIGHBOR GRAPH
+    DISTANCE COSINE WITH TARGET ACCURACY 95;
     </copy>
     ```
 
@@ -94,8 +92,9 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    select owner, index_name, index_organization, num_vectors
-    from v$vector_index where index_name = 'PARKS_HNSW_IDX';
+    SELECT owner, index_name, index_organization, num_vectors
+    FROM v$vector_index
+    WHERE index_name = 'PARKS_HNSW_IDX';
     </copy>
     ```
 
@@ -107,7 +106,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ```
     <copy>
-    select * from v$vector_memory_pool;
+    SELECT * FROM v$vector_memory_pool;
     </copy>
     ```
 
@@ -118,15 +117,17 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 In this task we will run the same queries we ran in the the Exhaustive Search lab, but now we will run approximate similarity searches with the vector index that we just created.
 
-1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. Although this is not required, the optimizer will choose an index if the cost is less than an exhaustive search, it helps to ensure that you are actually running an approximate search:
+1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. If the EXACT keyword is NOT used, the optimizer will choose a vector index if the cost is less than an exhaustive search. This can help ensure that you are actually running an approximate search:
+The APPROX keyword is optional and helps make the intent of the approximate query more obvious.
+The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'Civil War' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'Civil War' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -136,11 +137,11 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -152,11 +153,11 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
     ```
     <copy>
-    select name, city, states, description
-    from parks
-    order by vector_distance(desc_vector,
-      vector_embedding(minilm_l12_v2 using 'rock climbing' as data), cosine)
-    fetch approx first 10 rows only;
+    SELECT name, city, states, description
+    FROM parks
+    ORDER BY VECTOR_DISTANCE(desc_vector,
+      VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)
+    FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
   
@@ -164,7 +165,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
 	![plan query](images/parks_approx_execute_plan.png " ")
 
-    Notice that a vector index access is now performed on the PARKS table since we now have a vector index available.
+    Notice that a vector index access is now performed on the PARKS table since we have a vector index available.
 
 
 You may now **proceed to the next lab**
