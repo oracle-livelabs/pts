@@ -68,14 +68,13 @@ This task will involve identifying and loading an ONNX model into the database. 
     ```
     <copy>
     SELECT *
-    FROM all_directories
-    WHERE directory_name = 'DATA_PUMP_DIR';
+    FROM (DBMS_CLOUD.LIST_FILES(directory_name=>'DATA_PUMP_DIR'));
     </copy>
     ```
 
     ![directory query](images/onnx_directory.png " ")
 
-    We previously placed the all\_MiniLM\_L12\_v2.onnx file in the operating system directory pointed to by the DM_DUMP database directory to streamline the Lab. Recall that there is a blog post identified in the "About Vector Embedding" section above that explains the details about this pre-build embedding model.
+    We previously placed the all\_MiniLM\_L12\_v2.onnx file in the operating system directory pointed to by the DATA\_PUMP\_DIR database directory to streamline the Lab. Recall that there is a blog post identified in the "About Vector Embedding" section above that explains the details about this pre-build embedding model.
 
 3. Load the all\_MiniLM\_L12\_v2 embedding model into the database:
 
