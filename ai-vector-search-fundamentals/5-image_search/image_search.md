@@ -124,7 +124,7 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ![civil war url](images/query_civil_war_2_click_eye.png " ")
     
-    If you then highlight the URL and right click a dialog box will open. Choose the "Go to ..." option to open the image in a new browser tab:
+    If you then highlight the URL and right click on it a dialog box will open. Depending on your browser, there should be an option to open the URL in a new window. The following example uses Google Chrome, other browsers you slightly different terminology. With Google Chrome you can choose the "Go to ..." option to open the image in a new browser window:
     
     ![civil war url](images/query_civil_war_3_open_url.png " ")
     

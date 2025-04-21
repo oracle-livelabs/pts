@@ -55,7 +55,7 @@ After signing in you should see a browser window like the following:
 
 ## Task 1: View the Vector Pool
 
-When HNSW indexes are used, you must enable a new memory area in the database called the Vector Pool. The Vector Pool is memory allocated from the System Global Area (SGA) to store HNSW type vector indexes and their associated metadata. It is allocated using a new database initialization parameter called VECTOR_MEMORY_SIZE.
+When HNSW indexes are used, you must enable a new memory area in the database called the Vector Pool. The Vector Pool is memory allocated from the System Global Area (SGA) to store HNSW type vector indexes and their associated metadata. It is allocated using a new database initialization parameter called VECTOR\_MEMORY\_SIZE.
 
 1. Let's see how much memory has been allocated to the Vector Pool in our Lab environment:
 
@@ -67,8 +67,7 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
 
     ![directory query](images/vector_pool.png " ")
 
-    You can see that there are two pools, the 1MB pool and the 64KB pool. The VECTOR\_MEMORY\_SIZE has been set to 5G and you can view how that memory has been allocated to each pool in the ALLOC\_BYTES column. Since we have not created any vector indexes yet you can see that the USED\_BYTES is 0 for both pools.
-
+    You can see that there are two pools, the 1MB pool and the 64KB pool. Notice that no memory has been allocated to the vector memory pool. Since we are running in an Oracle Autonomous Database the vector memory pool will not be allocated until the first vector index is created.
 
 ## Task 2: Create a vector index
 
@@ -100,7 +99,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ![index details query](images/index_details.png " ")
 
-    Notice the space consumed by the index.
+    The index details show us that we have indexed 472 vectors, which is the number of rows in the PARKS table.
 
 3. See how much memory was used in the Vector Pool:
 
@@ -112,6 +111,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ![mem used query](images/vector_pool_used.png " ")
 
+    Now you should see that memory has been allocated to each pool in the ALLOC\_BYTES column. You should also see how much memory has been used for the vector index we just created in the USED\_BYTES column.
 
 ## Task 3: Run approximate similarity searches
 

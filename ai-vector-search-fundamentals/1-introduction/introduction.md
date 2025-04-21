@@ -61,9 +61,15 @@ This workshop will use a public dataset from the US National Parks (www.nps.gov)
 
 ## Tools
 
-In this Lab you will use the SQL Developer Web tool to access the database and run queries. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
+The examples in the Lab were run using the Google Chrome browser. If you use a different browser some attributes may be slightly different. For example, cut and paste may behave differently, and opening new windows based on a URL may have slightly different instructions.
+
+In this Lab you will use the SQL Developer Web tool to access the database and run queries. The URL to invoke SQL Developer Web is listed in the "View Login Info" details. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
 
 ![sqldev help](images/sqldev_help.png " ")
+
+In the last lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
+
+Each lab starts out with a "Connecting to your Oracle AI Vector Database" section which explains how to find and invoke the URL in detail.
 
 
 You may now **proceed to the next lab**
