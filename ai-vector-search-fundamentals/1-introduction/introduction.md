@@ -10,7 +10,7 @@ Estimated Lab Time: 5 minutes
 
 The **Oracle AI Vector Search Fundamentals** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
 
-Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as multidimensional arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
+Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
 
 Key components of AI Vector Search include:
 
@@ -49,7 +49,7 @@ In this workshop, you will learn how to:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 
 
 *This is the "fold" - below items are collapsed by default*

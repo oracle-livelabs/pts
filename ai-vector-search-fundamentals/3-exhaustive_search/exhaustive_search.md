@@ -24,7 +24,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
@@ -47,7 +47,7 @@ After signing in you should see a browser window like the following:
 
 In this task we will put our work to use and run some exhaustive similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
 
-1. Our first query will look for parks that are associated with the Civil War:
+1. Our first query will look for parks that are associated with the American Civil War (1861-1865):
 
     ```
     <copy>
@@ -84,8 +84,8 @@ In this task we will put our work to use and run some exhaustive similarity sear
     ```
     <copy>
     SELECT name,
-      to_number(VECTOR_DISTANCE(desc_vector,
-        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)) AS distance,
+      VECTOR_DISTANCE(desc_vector,
+        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE) AS distance,
       description
     FROM parks
     ORDER BY 2

@@ -8,9 +8,9 @@ Estimated Lab Time: 10 minutes
 
 ### About Image Similarity Search
 
-In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
+In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. It is also possible to use images to search for similar images, but we will keep it simple and use text based searches to find semantically similar images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
 
-The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors in this lab. This model has already been loaded into the database as well, and is called CLIP\_VIT\_TXT.
+The image vector embeddings have already been created since that would have taken too long for this lab environment, but we will take a look at them. The embedding model that was used to create the vector embeddings was the OpenAI CLIP model. This model enables searching image vectors with text phrases or even other images, and can be split into two different ONNX compatible embedding models to allow searching for images based on text words and/or phrases or actual images. We will keep it simple and use a text based search version of the embedding model to search the image vectors in this lab. This model has already been loaded into the database as you saw earlier, and is called CLIP\_VIT\_TXT.
 
 
 ### Objectives
@@ -25,7 +25,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
