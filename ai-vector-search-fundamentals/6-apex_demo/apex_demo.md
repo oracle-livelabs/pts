@@ -23,7 +23,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 

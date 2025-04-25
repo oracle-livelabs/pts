@@ -8,12 +8,12 @@ Estimated Lab Time: 10 minutes
 
 ### About Approximate Similarity Search
 
-In the previous Lab, Exhaustive Search, we performed exhaustive similarity searches which examined each vector in the table. This can be resource intensive since examining vector distances are computationally expensive and don't scale well for very large vector datasets. This is where approximate similarity searches have an advantage. Creating vector indexes enables the ability to use approximate similarity search. Instead of checking every possible match, an approximate similarity search uses a class of algorithms referred to as _Approximate Nearest Neighbor_. Using vector indexes helps reduce the number of distance calculations, making searches faster and more efficient with only a slight penalty in accuracy.
+In the previous Lab, Exhaustive Search, we performed exhaustive similarity searches which examined each vector in the table. This can be resource intensive, and therefore very time consuming, since examining vector distances are computationally expensive and don't scale well for very large vector datasets. This is where approximate similarity searches have an advantage. Creating vector indexes enables the ability to use approximate similarity search. Instead of checking every possible match, an approximate similarity search uses a class of algorithms referred to as _Approximate Nearest Neighbor_. Using vector indexes helps reduce the number of distance calculations, making searches faster and more efficient with only a slight penalty in accuracy.
 
 There are currently three types of vector indexes available in AI Vector Search:
 
 *	**In-Memory Neighbor Graph Vector Index** – Oracle AI Vector Search supports an in-memory Hierarchical Navigable Small World (HNSW) type of In-Memory Neighbor Graph vector index where vertices represent vectors and edges between vertices represent similarity.  This is an in-memory only index. This type of index is typically highly efficient for both accuracy and speed.
-* **Neighbor Partition Vector Index** – Oracle AI Vector Search also supports an Inverted File Flat (IVF) partition-based index with vectors clustered into table partitions based on similarity. This type of index typically provides an efficient scale-out index, with fast and seamless transactional support.
+* **Neighbor Partition Vector Index** – Oracle AI Vector Search also supports an Inverted File Flat (IVF) partition-based index with vectors clustered into table partitions based on similarity. This type of index typically provides an efficient scale-out index, with fast and seamless transactional support, and is an alternative to an HNSW index when there is not enough memory to fit the whole index in-memory.
 * **Hybrid Vector Index** - There is also a Hybrid Vector Index that combines the information retrieval capabilities of Oracle Text search indexes and the semantic search capabilities of Oracle AI Vector Search vector indexes.
 
 In this Lab we will use HNSW indexes to enable approximate similarity search since they provide the fastest performance and our dataset will easily fit in-memory.
@@ -34,7 +34,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
@@ -85,7 +85,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
     ![index create](images/create_index.png " ")
 
-    Notice that an HNSW index is created by specifying "inmemory neighbor graph". The minilm\_l12\_v2 embedding model we have been using works well with the "cosine" distance method and we have also specified a "target accuracy" of 95 percent.
+    Notice that an HNSW index is created by specifying "inmemory neighbor graph". The minilm\_l12\_v2 embedding model we have been using works well with the "COSINE" distance method and we have also specified a "TARGET ACCURACY" of 95 percent.
 
 2. Display information about the new vector index:
 
@@ -117,9 +117,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 In this task we will run the same queries we ran in the the Exhaustive Search lab, but now we will run approximate similarity searches with the vector index that we just created.
 
-1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. If the EXACT keyword is NOT used, the optimizer will choose a vector index if the cost is less than an exhaustive search. This can help ensure that you are actually running an approximate search:
-The APPROX keyword is optional and helps make the intent of the approximate query more obvious.
-The EXACT keyword forces an exhaustive search.
+1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. If the EXACT keyword is NOT used, the optimizer will choose a vector index if one exists and if the access cost is less than an exhaustive search. Specifying APPROX can help ensure that you are actually running an approximate search. The APPROX keyword is optional but helps make the intent to run an approximate query more obvious. The EXACT keyword forces an exhaustive search.
 
     ```
     <copy>

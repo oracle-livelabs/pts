@@ -12,7 +12,7 @@ To enable similarity search, we will need to create vector embeddings for the co
 
 Vector embeddings are generated using Machine Learning models. How do you decide which embedding model to use? After all, there are open-source embedding models and proprietary embedding models that you might have to pay for, or you could create and train your own embedding models. To add to the confusion, each embedding model has been trained on specific data. The type of embedding model you use will depend on the type of data that you plan to embed and how well that model performs for the searches you or your application need to perform.
 
-Once you decide on one or more embedding models to try, you can choose to create vector embeddings outside the database or inside the database by importing the models directly into Oracle Database if they are compatible with the Open Neural Network Exchange (ONNX) standard. Since Oracle Database implements an ONNX runtime directly within the database, these imported models can be used to generate vector embeddings in Oracle Database.
+Once you decide on one or more embedding models to try, you can choose to create vector embeddings outside the database or inside the database by importing the models directly into Oracle Database if they are compatible with the Open Neural Network Exchange (ONNX) standard. Since Oracle Database uses the ONNX runtime directly within the database, these imported models can be used to generate vector embeddings in Oracle Database.
 
 In this Lab we are going to be searching on a text column, and we will use the all-MiniLM-L12-v2 model. This model was built using the sentence-transformers library. This model takes sentences or paragraphs and converts them into 384-dimensional vectors. Each of these 384 dimensions captures a specific aspect of the sentence's meaning or characteristics. We will be using a pre-built version of this model, which just means that it has already been converted into an ONNX format and is ready to be loaded into the database. You can find the details about how this was done in this blog post: https://blogs.oracle.com/machinelearning/post/use-our-prebuilt-onnx-model-now-available-for-embedding-generation-in-oracle-database-23ai.
 
@@ -28,7 +28,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
@@ -89,7 +89,7 @@ This task will involve identifying and loading an ONNX model into the database. 
 
     ![load model sql](images/load_model.png " ")
 
-   Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DM\_DUMP directory and loaded it into the database.
+   Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DATA\_PUMP\_DIR directory and loaded it into the database.
 
 4. Display the newly loaded model:
 
@@ -173,7 +173,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
 Now we are ready to take a look at the PARKS table. We will be using the DESCRIPTION column which is a text string describing the particular park's attributes. We will create a vector embedding for this column.
 
-1. In the SQL Developer Web window you can you can expand the PARKS table by clicking on the arrow just to the left of the PARKS table. The table's columns will display underneath. You can display all of the table attributes by right clicking on the table name and choosing Open.
+1. In the SQL Developer Web window you can expand the PARKS table by clicking on the arrow just to the left of the PARKS table. The table's columns will display underneath. You can display all of the table attributes by right clicking on the table name and choosing Open.
 
     See the image below:
 
