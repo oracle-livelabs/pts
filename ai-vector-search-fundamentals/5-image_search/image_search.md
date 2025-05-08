@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This lab walks you through the steps to create vector indexes and run approximate similarity searches.
+This lab walks you through the steps to create vector indexes and run approximate similarity searches on images.
 
 Estimated Lab Time: 10 minutes
 
 ### About Image Similarity Search
 
-In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
+In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. It is also possible to use images to search for similar images, but we will keep it simple and use text based searches to find semantically similar images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
 
-The image vector embeddings have already been created since that would take too long for this lab environment, but we will take a look at them. The embedding model that was used was the OpenAI CLIP model that was built to enable searching images with text phrases or even other images. We will keep it simple and use the text version of the embedding model to search the image vectors in this lab. This model has already been loaded into the database as well, and is called CLIP\_VIT\_TXT.
+The image vector embeddings have already been created since that would have taken too long for this lab environment, but we will take a look at them. The embedding model that was used to create the vector embeddings was the OpenAI CLIP model. This model enables searching image vectors with text phrases or even other images, and can be split into two different ONNX compatible embedding models to allow searching for images based on text words and/or phrases or actual images. We will keep it simple and use a text based search version of the embedding model to search the image vectors in this lab. This model has already been loaded into the database as you saw earlier, and is called CLIP\_VIT\_TXT.
 
 
 ### Objectives
@@ -25,25 +25,23 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to your Oracle AI Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+See the image below for an example:
 
-  ```
-  <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
-  ```
+![browser setup](images/browser_setup.png " ")
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png " ")
+![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Display the CLIP embedding model
@@ -54,8 +52,8 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select model_name, mining_function, algorithm, algorithm_type, model_size
-    from user_mining_models;
+    SELECT model_name, mining_function, algorithm, algorithm_type, model_size
+    FROM user_mining_models;
     </copy>
     ```
 
@@ -66,14 +64,16 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
 
     ```
     <copy>
-    select model_name, attribute_name, attribute_type, data_type, vector_info
-    from user_mining_model_attributes order by 1,3;
+    SELECT model_name, attribute_name, attribute_type, data_type, vector_info
+    FROM user_mining_model_attributes
+    WHERE model_name = 'CLIP_VIT_TXT'
+    ORDER BY 1,3;
     </copy>
     ```
 
     ![model details query](images/CLIP_details.png " ")
 
-    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model.
+    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP text model is wider as it has 512 dimensions.
 
 
 ## Task 2: Display the Vector column in the PARKS\_IMAGES table
@@ -90,9 +90,9 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
     ```
     <copy>
-    select image_vector
-    from park_images
-    fetch first 1 rows only;
+    SELECT image_vector
+    FROM park_images
+    FETCH FIRST 1 ROWS ONLY;
     </copy>
     ```
 
@@ -110,11 +110,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url
-    from park_images
-    order by vector_distance(image_vector,
-      vector_embedding(clip_vit_txt using 'Civil War' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT description, url
+    FROM park_images
+    ORDER BY VECTOR_DISTANCE(image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'Civil War' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -122,11 +122,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     If you click on the first URL and then click on the eye icon the URL will open in a new window:
 
-    ![civil war url](images/query_civil_war_3_click_eye.png " ")
+    ![civil war url](images/query_civil_war_2_click_eye.png " ")
     
-    If you then highlight the URL and right click a dialog box will open. Choose the "Go to ..." option to open the image in a new browser tab:
+    If you then highlight the URL and right click on it a dialog box will open. Depending on your browser, there should be an option to open the URL in a new window. The following example uses Google Chrome, other browsers you slightly different terminology. With Google Chrome you can choose the "Go to ..." option to open the image in a new browser window:
     
-    ![civil war url](images/query_civil_war_6_open_url.png " ")
+    ![civil war url](images/query_civil_war_3_open_url.png " ")
     
     You should see an image like the following:
 
@@ -136,11 +136,11 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select description, url
-    from park_images
-    order by vector_distance(image_vector,
-      vector_embedding(clip_vit_txt using 'rock climbing' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT description, url
+    FROM park_images
+    ORDER BY VECTOR_DISTANCE(image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'rock climbing' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
@@ -154,17 +154,17 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ```
     <copy>
-    select p.description, p.city, p.states, pi.url
-    from park_images pi, parks p
-    where pi.park_code = p.park_code
-      and p.states in ('CA','OR','NV','WA','AZ','CO')
-    order by vector_distance(pi.image_vector,
-      vector_embedding(clip_vit_txt using 'waterfall' as data), cosine)
-    fetch exact first 10 rows only;
+    SELECT p.description, p.city, p.states, pi.url
+    FROM park_images pi, parks p
+    WHERE pi.park_code = p.park_code
+      AND p.states in ('CA','OR','NV','WA','AZ','CO')
+    ORDER BY VECTOR_DISTANCE(pi.image_vector,
+      VECTOR_EMBEDDING(clip_vit_txt USING 'waterfall' AS data), COSINE)
+    FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
 
-    ![waterfall query](images/query_waterfalls_location.png " ")
+    ![waterfall query](images/query_waterfall_location.png " ")
 
     If you click on the first URL, click on the eye icon, then highlight the URL and right click you can choose the "Go to ..." option to open the image in a new browser tab:
 

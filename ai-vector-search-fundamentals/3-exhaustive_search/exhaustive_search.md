@@ -8,7 +8,7 @@ Estimated Lab Time: 10 minutes
 
 ### About Exhaustive Similarity Search
 
-An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. In this type of search, all vectors are compared, and produces the most accurate results.
+An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. This type of search produces the most accurate results as all vectors are compared.
 
 In this Lab we are going to be performing exhaustive similarity searches on a text column, and we will use the all-MiniLM-L12-v2 model. This is the same model we used in the Embedding Models lab to create the vector embeddings for the DESCRIPTION column in the PARKS table.
 
@@ -24,32 +24,30 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-* An Oracle Cloud account
+* An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Vector Database
+## Connecting to your Oracle AI Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Database which includes AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *nationalparks*. The Lab will be run using SQL Developer Web.
+The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
-To connect with SQL Developer Web to run the SQL commands in this lab you will first need to start a browser using the following URL. You will then be prompted to sign in:
+See the image below for an example:
 
-  ```
-  <copy>google-chrome http://localhost:8080/ords/nationalparks/_sdw/?nav=worksheet</copy>
-  ```
+![browser setup](images/browser_setup.png " ")
 
 After signing in you should see a browser window like the following:
 
- ![sqldev browser](images/sqldev_web.png " ")
+![sqldev browser](images/sqldev_web.png " ")
 
 
 ## Task 1: Run exhaustive similarity searches
 
 In this task we will put our work to use and run some exhaustive similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
 
-1. Our first query will look for parks that are associated with the Civil War:
+1. Our first query will look for parks that are associated with the American Civil War (1861-1865):
 
     ```
     <copy>
@@ -86,8 +84,8 @@ In this task we will put our work to use and run some exhaustive similarity sear
     ```
     <copy>
     SELECT name,
-      to_number(VECTOR_DISTANCE(desc_vector,
-        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE)) AS distance,
+      VECTOR_DISTANCE(desc_vector,
+        VECTOR_EMBEDDING(minilm_l12_v2 USING 'rock climbing' AS data), COSINE) AS distance,
       description
     FROM parks
     ORDER BY 2
