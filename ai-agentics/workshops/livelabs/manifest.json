@@ -1,0 +1,33 @@
+{
+  "workshoptitle": "AI Agentics",
+  "help": "livelabs-help-db_us@oracle.com",
+  "variables": ["../../variables/variables.json",
+      "../../variables/variables-in-another-file.json"],
+  "tutorials": [
+      {
+      "title": "Introduction",
+      "description": "Introduction to RAG in GenAI",
+      "filename": "../../introduction/introduction.md"
+      },
+      {
+        "title": "Setup the environment",
+        "description": "Verify Setup of compute instance",
+        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+      },
+      {
+      "title": "Lab 1: Building a Document Search and PDF Generation Agent",
+      "description": "Building a Document Search and PDF Generation Agent",
+      "filename": "../../lab1/oci5.md"
+      },
+      {
+      "title": "Lab 2: Run the same RAG application with an interactive UI",
+      "description": "Run the Streamlit RAG Application.",
+      "filename": "../../lab2/lab2.md"
+      },
+      {
+      "title": "Need Help?",
+      "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+      "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+    }
+  ]
+}
