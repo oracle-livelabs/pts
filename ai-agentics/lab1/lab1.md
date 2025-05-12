@@ -1,734 +1,633 @@
-# Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and PLSQL
+# Building a Document Search and PDF Generation Agent
+
 
 ## Introduction
 
-A typical RAG application design has 7 steps and requires a vector store.  Oracle Database 23ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.
-1.	Load your document.
-2.	Transform the document to text.
-3.	Chunk the text document into smaller pieces.
-4.	Using an embedding model, embed the chunks as vectors into Oracle Database 23ai.
-5.	Ask the question for the prompt, the prompt will use the same embedding model to vectorize the question.
-6.	The question will be passed to Oracle Database 23ai and a similarity search is performed on the question.
-7.	The results (context) of the search and the prompt are passed to the LLM to generate the response.
+This notebook demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. Throughout this workshop, we'll explore:
 
- ![RAG Design](images/ragdesign.png)
+1. Setting up the environment and dependencies
+2. Creating custom tools for our agent
+3. Designing effective prompt templates
+4. Initializing and running the agent
 
-Estimated Time: 10 min
+Let's get started!
 
-To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai Free edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
+# Section 1: Environment Setup and Imports
 
-### Objectives
+## **Imports and Configuration**
 
-In this lab, you will:
-* Use PLSQL to build the RAG application with Oracle Database 23ai
+We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
 
-### Prerequisites
+We are using OracleDB Python Drivers to connect to Oracle database and not cx_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
 
-* Environment with Oracle Database 23ai
+To import all the require libararies for this work run the below code.  
 
-## Task 1: Launch Jupyter notebook, check connection to the database, create tables
+```python
 
-1. From the Activities menu, open a terminal window if it is not already opened.
+import os
+import io
+import re
+import json
+import traceback
+from typing import Union, Dict, List
 
-   ![Open terminal](images/browser.png)
+# Third-party imports
+import oracledb
+import pandas as pd
+from dotenv import load_dotenv
 
-2. From the terminal OS prompt type the following to launch jupyter notebook:
+# LangChain imports
+from langchain.memory import ConversationBufferMemory
+from langchain.schema import HumanMessage, AIMessage
+from langchain_core.prompts import PromptTemplate
+from langchain.agents import Tool, create_react_agent, AgentExecutor
+from langchain_community.chat_models import ChatOCIGenAI
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import OracleVS
+from langchain_community.vectorstores.utils import DistanceStrategy
 
-    ```
-        $ cd /home/oracle/aidemo
-        $ jupyter lab
-    ```
+# PDF generation
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
 
-3. Open the notebook **RAGLAB1.ipynb**. You can double click or right-click and select **Open**.
+# From sql magic
+# loads the SQL magic extensions
 
-    ![Open RAG notebook](images/step0.png)
+#from prettytable import DEFAULT, MARKDOWN, MSWORD_FRIENDLY, ORGMODE, PLAIN_COLUMNS, RANDOM,  SINGLE_BORDER, DOUBLE_BORDER, FRAME, NONE
+#from prettytable import  TableStyle,PLAIN_COLUMNS
+%load_ext sql
+%config SqlMagic.autopandas = True
+%config SqlMagic.style = 'PLAIN_COLUMNS'  # 
+%sql oracle+oracledb://vector:vector@129.213.75.70:1521?service_name=ORCLPDB1
 
 
-    Now you're ready to run each code snippet in sequence starting from the top in Jupyter.  To run a code snippet, select the cell of the code and click **Run** to execute the code.  You don't need to edit any of the code for this application to run.
+# Load environment variables
+load_dotenv()
 
-    When the code snippet has completed running a number will appear in the square brackets. You can then proceed to the next cell and code snippet.  Some of the code will print an output so you can get feedback. Pay attention to the 7 steps for RAG as you proceed. At any time you can also re-run the code snippets in the Jupyter cell.
+# For visualization in the notebook
+import matplotlib.pyplot as plt
+from IPython.display import display, Image, FileLink, Markdown
 
-    In the current environment all the required libraries and modules have already been installed for this RAG application. We are going to use the **oracledb** python driver which is the latest driver release for the 23ai database.  We no longer need the **cx\_oracle** driver.
+# Set the figure size for plots
+plt.rcParams["figure.figsize"] = (10, 6)
 
 
-    *`from dotenv import load_dotenv`* statement will load environment variables from .env file on the current directory.  This will have the connection and authentication information.
+```
 
-    *`%load_ext sql`* is used to run sql statements from Jupyter notebook,  it is the part of the Jupyter magic SQL extension.
+# Section 2: Database and Vector Store Setup
 
+## **Oracle Database Connection**
 
-    Let's import the libraries.
+Connecting to Oracle database using the database username and password which are stored as environment variables (in .env file on linux)
 
-4. Select the code snippet and click **Run** in Jupyter. A blue line indicates the cell is selected.
-
-    ![Select code in Jupyter](images/step1.png)
-
-    ```sql
-    # Import libraries and modules
-
-    import oracledb
-    import sys
-    import os
-    from dotenv import load_dotenv
-    %load_ext sql
-
-    ```
-
-5. This code will establish the connection to Oracle Database 23ai using the oracledb driver. Select the code snippet and click **Run**.
-
-    ``` 
-    # Load environment variables
-
-    load_dotenv()
-    username = os.getenv("username")
-    password = os.getenv("password")
-    dsn = os.getenv("dsn")
-    COMPARTMENT_OCID = os.getenv("COMPARTMENT_OCID")
-    print("The database user name is:",username)
-    print("Database connection information is:",dsn)
-
-    # Connect to the database
-    try: 
-        conn23ai = oracledb.connect(user=username, password=password, dsn=dsn)
-        print("Connection successful!")
-    except Exception as e:
-        print("Connection failed!")
-
-    ```
-
-6. This code will create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Select the code snippet and click **Run**.
-
-    ``` 
-    %%sql
-
-    CREATE TABLE IF NOT EXISTS "VECTOR"."MY_BOOKS"
-        ( 
-        ID              INTEGER GENERATED BY DEFAULT ON NULL AS IDENTITY 
-            ( START WITH 1 CACHE 20 ) PRIMARY KEY, 
-        file_name      VARCHAR2 (900) , 
-        file_size      INTEGER , 
-        file_type       VARCHAR2 (100) , 
-        file_content    BLOB
-        ) 
-        LOGGING 
-    ```
-
-7. This code will create a table named *VECTOR\_STORE* in the VECTOR schema. This is used to store the corresponding text chunks and embeddings in a column of vector datatype. Select the code snippet and click **Run**.
-
-    ``` 
-    %%sql
-
-    CREATE TABLE IF NOT EXISTS VECTOR_STORE
-      (	"DOC_ID" NUMBER(*,0) NOT NULL ENABLE, 
-      "EMBED_ID" NUMBER, 
-      "EMBED_DATA" VARCHAR2(4000 BYTE), 
-      "EMBED_VECTOR" VECTOR,
-        FOREIGN KEY (DOC_ID) REFERENCES MY_BOOKS(ID)
-      )
-
-    ```
-
-## Task 2: Understanding `DBMS_VECTOR_CHAIN` package.
-
-
-**1 - Load the document**
-
-
-1. Using the below code we will load the file into the table **MY\_BOOKS**. The document in our use case is in PDF format.  The file 'Release\_notes.pdf' is already present on the OS, and directory  **VEC\_DUMP** has been precreated to point to '/home/oracle/'.  Select the code snippet and click **Run**.
-
-    ```
-    %%sql 
-    insert into my_books(file_name,file_size,file_type,file_content)  values
-    ('Release_notes.pdf',dbms_lob.getlength(to_blob(bfilename('VEC_DUMP', 'Release_notes.pdf'))),'PDF', to_blob(bfilename('VEC_DUMP', 'Release_notes.pdf')))
-
-    ```
-
-2. Commit the inserted rows.  Select the cell and click **Run**.
-
-    ```
-    %%sql commit
-    ```
-
-**2 - Transform the document to text**
-
-3. Use package **DBMS\_VECTOR\_CHAIN.utl\_to\_text** to convert the BLOB column to plain text.  The following statement shows the output of the first 2000 chars from the PDF.
-
-    ``` 
-    %%sql
-    select id, SUBSTR( REPLACE (REPLACE(TRIM( dbms_vector_chain.utl_to_text(dt.file_content)),'  ',' ') , CHR(10), ''), 1, 2000) from my_books dt 
-    ```
-
-**3 - Split the text into chunks**
-
-4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first three text chunks.  Click **Run** to execute the code.
-
-    ``` 
-    %%sql 
-    SELECT ct.* from 
-    my_books dt, 
-    dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) ct where rownum < 4
-    ```
-
-    The output has the following columns:
-
-    • chunk\_id specifies the chunk ID for each chunk
-
-    • chunk\_offset specifies the original position of each chunk in the source document, relative to the start of document which has a position of 1
-
-    • chunk\_length specifies the character length of each chunk
-
-    • chunk\_data displays text pieces from each chunk.
-
-**4 - Converting the single JSON column into multiple columns**
-
-5. JSON\_VALUE is function in Oracle database for string manipulation of JSON datatype.  We will convert single JSON column into multiple columns.  Click **Run** to execute the code.
-
-    ``` 
-    %%sql
-    SELECT 
-    JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
-    JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
-    JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
-    SUBSTR( REPLACE (REPLACE(TRIM( JSON_VALUE(C.column_value, '$.chunk_data')),'  ',' ') , CHR(10), ''), 1, 2000) AS chunk_txt 
-    FROM my_books dt, dbms_vector_chain.utl_to_chunks(dbms_vector_chain.utl_to_text(dt.file_content)) C where rownum < 4
-    ```
-
-
-**Tune the text chunk size for improved results and accuracy.**
-
-6. We can tweak the chunk size parameter, in this example we are setting MAX words per text chunk to 300.  This averages to a text chunk size of 1600 characters.  The below SQL will show the first 4 records.
-
-    ``` 
-    %%sql
-
-    SELECT 
-        JSON_VALUE(C.column_value, '$.chunk_id' RETURNING NUMBER) AS id,
-        JSON_VALUE(C.column_value, '$.chunk_offset' RETURNING NUMBER) AS pos,
-        JSON_VALUE(C.column_value, '$.chunk_length' RETURNING NUMBER) AS chunk_length,
-        JSON_VALUE(C.column_value, '$.chunk_data') AS chunk_txt
-    FROM 
-        my_books dt, 
-        dbms_vector_chain.utl_to_chunks(
-            dbms_vector_chain.utl_to_text(dt.file_content),
-            JSON('{"by":"words","max":"300","overlap":"0","split":"recursively","language":"american","normalize":"all"}')
-        ) C where rownum <= 4
-
-    ```
-
-## Task 3: Get familiar with creating vector embeddings
-
-
-ONNX, which stands for Open Neural Network Exchange, is an open-source format designed to represent deep learning models. It aims to provide interoperability between different deep learning frameworks, allowing models trained in one framework to be used in another without the need for extensive conversion or retraining.
-
-Using ONNX models in Oracle Database 23ai to create vectors can be more secure, scalable and convenient than creating vectors outside the database. Currently the vector_embedding SQL function is significantly slower than creating vectors outside of the database with local embedding models.
-
-
-**Load two ONNX models into the database**
-
-1. Oracle AI Vector Search supports ONNX compliant models for vector embedding and search. Load two ONNX models into the database. The models are loaded from the **VEC\_DUMP** directory and stored in the SGA. The models are loaded into the SGA and persisted.
-
-    ```
-    # Create a cursor
-    cursor = conn23ai.cursor()
-    procedure_query = """
-    BEGIN
-      DBMS_DATA_MINING.DROP_MODEL(model_name => 'TINYBERT_MODEL', force => true);
-      DBMS_DATA_MINING.DROP_MODEL(model_name => 'All_MINILM_L6V2MODEL', force => true);
-      DBMS_VECTOR.LOAD_ONNX_MODEL('VEC_DUMP','tinybert.onnx','TINYBERT_MODEL',json('{"function":"embedding","embeddingOutput":"embedding",'||'"input":{"input":["DATA"]}}'));
-      DBMS_VECTOR.LOAD_ONNX_MODEL( 'VEC_DUMP', 'all-MiniLM-L6-v2.onnx', 'All_MINILM_L6V2MODEL', JSON('{"function" : "embedding",'||'"input":{"input":["DATA"]}}'));
-    End;
-    """
-    # Execute the procedure creation query
-    cursor.execute(procedure_query)
-    print ("Load the models for embedding and vector search");
-
-    ```
- 
-
-2. To verify the model exists in database run the following statement.
-
-    ```
-    %%sql
-    SELECT MODEL_NAME, MINING_FUNCTION,
-    ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models 
-    ```
-**Demonstrate and compare vector embedding using different models**
-3. Create vector embeddings for text chunks using the Tinybert model, and observe the text chunks and vectors.
-
-    ```
-    %%sql 
-    select file_name,file_size,text_chunk , embed_vector from 
-    my_books dt
-                CROSS JOIN TABLE(
-                    dbms_vector_chain.utl_to_embeddings(
-                        dbms_vector_chain.utl_to_chunks(
-                            dbms_vector_chain.utl_to_text(dt.file_content), 
-                            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
-                        ),
-                        json('{"provider":"database", "model":"TINYBERT_MODEL"}')
-                    )
-                )  t
-                CROSS JOIN JSON_TABLE(
-                    t.column_value, 
-                    '$[*]' COLUMNS (
-                        id NUMBER PATH '$.embed_id',
-                        text_chunk VARCHAR2(4000) PATH '$.embed_data',
-                        embed_vector CLOB PATH '$.embed_vector'
-                    )
-                ) AS et where rownum < 2
-    ```
-
-    Now by just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
-
-
-4. Create vector embedding for text chunk using All\_MINILM\_L6V2MODEL model, and observe the text chunk and vectors.
-
-    ```
-    %%sql 
-    select file_name,file_size,text_chunk , embed_vector from 
-    my_books dt
-                CROSS JOIN TABLE(
-                    dbms_vector_chain.utl_to_embeddings(
-                        dbms_vector_chain.utl_to_chunks(
-                            dbms_vector_chain.utl_to_text(dt.file_content), 
-                            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
-                        ),
-                        json('{"provider":"database", "model":"All_MINILM_L6V2MODEL"}')
-                    )
-                )  t
-                CROSS JOIN JSON_TABLE(
-                    t.column_value, 
-                    '$[*]' COLUMNS (
-                        id NUMBER PATH '$.embed_id',
-                        text_chunk VARCHAR2(4000) PATH '$.embed_data',
-                        embed_vector CLOB PATH '$.embed_vector'
-                    )
-                ) AS et where rownum < 2
-    ```
-
-
-## Task 4: Creating vector embedding using PLSQL packages and storing in vector store
-
-In the below SQL statement we are storing DOC\_ID from MY\_BOOKS table and its corresponding text chunks and vector embedding in the columns embed\_data & embed\_vector of table vector\_store.  The statement converts the document to text chunks and chunks to vector embeddings in a single insert statement.
-
-Note that we are using the local ONNX model for embedding, this ensures no data is sent outside the database which is more secure and faster to create embedding as there are no API calls across internet.
-
-**1 - Create the vector embedding** 
-
-1. Create the vector embedding and storing the embeddings by selecting the cell and clicking **Run**.
-
-    ```
-    %%sql 
-    INSERT into VECTOR_STORE ( doc_id, embed_id, embed_data, embed_vector) 
-    select  id, embed_id, text_chunk ,embed_vector 
-    from my_books dt
-                CROSS JOIN TABLE(
-                    dbms_vector_chain.utl_to_embeddings(
-                        dbms_vector_chain.utl_to_chunks(
-                            dbms_vector_chain.utl_to_text(dt.file_content), 
-                            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
-                        ),
-                        json('{"provider":"database", "model":"TINYBERT_MODEL"}')
-                    )
-                )  t
-                CROSS JOIN JSON_TABLE(
-                    t.column_value, 
-                    '$[*]' COLUMNS (
-                        embed_id NUMBER PATH '$.embed_id',
-                        text_chunk VARCHAR2(4000) PATH '$.embed_data',
-                        embed_vector CLOB PATH '$.embed_vector'
-                    )
-                ) AS et 
-    ```
-
-2. Commit the changes. Select the cell and click **Run**.
-
-    ```
-    %%sql commit
-
-    ```
-
-**Celebrate and take stock of what being done.**
-
-Lets summarize the steps we did so far.
-
-  <table>
-    <thead>
-      <tr>
-        <th style={{ width: "200px" }}>
-          Description
-        </th>
-        <th>
-          Package Name
-        </th>
-      </tr>
-    </thead>
-      <tbody>
-      <tr>
-        <td>
-          You have successfully loaded a PDF file into table my_books
-        </td>
-        <td>
-          to_blob(bfilename(‘VEC_DUMP’, ‘Release Notes.pdf’))
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Then you have opened the pdf and extract the text
-        </td>
-        <td>
-          DBMS_VECTOR_CHAIN.UTL_TO_TEXT(dt.file_content))
-        </td>
-      </tr>
-      <tr>
-        <td>
-          next the text is broken up into text_chunks.
-        </td>
-        <td>
-          DBMS_VECTOR_CHAIN.UTL_TO_CHUNKS
-        </td>
-      </tr>
-          <tr>
-        <td>
-          next creating vector embeddings for each of the text chunks
-        </td>
-        <td>
-          DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING
-        </td>
-      </tr>
-      <tr>
-        <td>
-          finally inserted text_chunk, vectors into vector_store
-        </td>
-        <td>
-          INSERT AS SELECT..
-        </td>
-      </tr>
-      </tbody>
-  </table>
-
-
-This completes the process of loading the PDF file, converting it into text and creating chunks and embeddings.
-The next task is to search for the relevant text chunks based on user queries. 
-
-## Task 5: Vectorize the question and perform vector Search
-
-The traditional text search operates directly on textual data using lexical and syntactic analysis, vector search represents data as numerical vectors and compares them based on similarity measures. Vector search tends to offer more advanced semantic understanding and scalability, making it suitable for a wide range of modern applications.
-
-The quality of vector a search result tend to depend on the embedding model being used.  Embedding models with more dimensions tend to provide better quality vectors.
-
-In order to search the relevant text chunks we have to create a vector from the user question.
-
-**1 - Vectorize the user question.**
-
-You need to convert the question/query into a vector.  You must use the same vector embedding model to create the query vector else the similarity search will not work.  You must use the VECTOR_EMBEDDING SQL function to create the query vector.
-
-1. Select the cell and click **Run**.
-
-    ```
-    %sql select vector_embedding(tinybert_model USING ‘What is the result of the release version’ as data) as embedding
-    ```
-
-**2 - Perform the vector search on the question using Cosine distance function.**
-
-1. We use the VECTOR\_DISTANCE function to do the similarity search. The shorter the vector distance the more relevant the corresponding text chuck will be for the question. The VECTOR\_DISTANCE function supports various algorithms, COSINE, DOT, MANHATTAN, and HAMMING.  COSINE is the default algorithm used when not specified.
-
-In this step we are selecting the text chunks that has relevant information for the user question based on vector search.  We are using COSINE algorithm for vector distance computation. Select the cell and click **Run**.
-
-  ```
-  %%sql
-  WITH query_vector AS (
-              SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
-  SELECT embed_id, embed_data
-  FROM VECTOR_STORE, query_vector
-  ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
-  FETCH APPROX FIRST 4 ROWS ONLY
-
-  ```
-
-## Task 6: Generating output using LLM.
-
-### **Send the text chunks from the vector search with the user question to the LLM and generate the response.**
-
-In this lab we are using the Oracle Gen AI LLM service.   The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality.
-
-
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The following PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
-
-
-*Note: The generation process involves synthesizing information, considering linguistic nuances, and producing a coherent answer. The model's output reflects its comprehension of the input context and its ability to generate contextually relevant responses, demonstrating the power of AI in natural language understanding and generation tasks.*
-
-In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function.  We then send the text chunks to OCI GenAI to provide the response. 
-
-For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL.  The syntax of establishing the connection with OCI GenAI can be found in the documentation. 
-
-1. Select the cell and click **Run**.
-
-    ```
-    # Create a cursor
-    cursor = conn23ai.cursor()
-    procedure_query = """
-    create or replace FUNCTION generate_text_response_gen(user_question VARCHAR2, doc_id number) RETURN CLOB IS
-      messages CLOB;
-      params_genai CLOB;
-      output CLOB;
-      message_line VARCHAR2(4000);
-      message_cursor SYS_REFCURSOR;
-      user_question_vec vector;
-        search_query varchar2(4000);
-    BEGIN
-
-      --vectorize the user_question
-      select to_vector(vector_embedding(tinybert_model USING user_question as data)) as embedding  into  user_question_vec ;
-      -- Open the cursor using the provided query string
-      search_query := 'SELECT EMBED_DATA from VECTOR_STORE where doc_id ='||doc_id||' ORDER BY vector_distance(EMBED_VECTOR, :user_question_vec, COSINE)'||
-      ' FETCH   FIRST 10 ROWS ONLY ' ;
-      OPEN message_cursor FOR search_query USING user_question_vec;
-
-      -- Initialize messages CLOB
-      messages := '';
-
-      -- Loop through cursor results and construct messages
-      LOOP
-        FETCH message_cursor INTO message_line;
-        EXIT WHEN message_cursor%NOTFOUND;
-
-        -- Append message line to messages CLOB
-        messages := messages || '{"message": "' || message_line || '"},' || CHR(10);
-      END LOOP;
-        -- Finally pass the user question
-        messages := messages || '{"Qusetion": "' || user_question  || '"},' || CHR(10);
-      -- Close the cursor
-      CLOSE message_cursor;
-
-      -- Remove the trailing comma and newline character
-      messages := RTRIM(messages, ',' || CHR(10));
-
-      -- Construct params JSON
-      -- In order to use the ocigenai provider below we have precreated the credentials
-      -- Construct params JSON
-      params_genai:=   '{
-              "provider": "ocigenai",
-              "credential_name" : "GENAI_CRED",
-              "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-              "model": "cohere.command-r-08-2024",
-              "chatRequest": {
-                "maxTokens": 300}
-              }';
-
-
-    -- dbms_output.put_line(messages);
-      dbms_output.put_line(to_char(user_question_vec));
-
-      -- Call UTL function to generate text
-      output := dbms_vector_chain.utl_to_generate_text(messages, json(params_genai));
-      dbms_output.put_line(output);
-      -- Return the generated text
-      RETURN output;
-
-    EXCEPTION
-      WHEN OTHERS THEN
-        RETURN SQLERRM || SQLCODE;
-    END;
-    """
-
-    # Execute the procedure creation query
-    cursor.execute(procedure_query)
-    ```
-
-2.  Select the doc id on which to query
-
-
-   In the function  `generate_text_response_gen`,  we pass the doc\_id to select the chucks related to a PDF doucment we loaded.  This improves the acquracy of the LLM response for the question by restricting the result within the content of PDF.
-
-
-    ```
-    %%sql select   a.file_name, a.file_size , b.doc_id,b.count,b.avg_text_chunk_size, b.max_chunk_size  from
-    my_books a, (select doc_id ,count(*)  count, round(avg(length(embed_data))) avg_text_chunk_size, max(length(embed_data)) max_chunk_size from vector_store group by  doc_id) b 
-    where a.id = b.doc_id
-    ```
-3. Generate LLM response
-
-    Generate the response using the query below. This calls function `generate_text_response_gen` and passes the `doc_id` from previous step
-
-    ```
-    %%sql
-    select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
-    ```
-
-
-    Observe the output.  Retry by replacing the question and see how the output changes.
-
-    
-    We successfully performed the vector search, sent the relevant chunks to the LLM along with the question and got the answer. 
-
-    In this lab we learned how to create a complete RAG solution using PLSQL.  The table below lists the vector functions we used.
-
-    <table>
-      <thead>
-        <tr>
-          <th style={{ width: "200px" }}>
-            Description
-          </th>
-          <th>
-            Function
-          </th>
-        </tr>
-      </thead>
-        <tbody>
-        <tr>
-          <td>
-            Embedding the user question  
-          </td>
-          <td>
-            VECTOR_EMBEDDING(tinybert_model USING user_question as data)   
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Do vector search on question against text chunk embeddings
-          </td>
-          <td>
-            VECTOR_DISTANCE(EMBED_VECTOR, :user_question_vec, COSINE)
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Pass the result chunks and the user question to the LLM 
-          </td>
-          <td>
-            DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params_genai))
-          </td>
-        </tr>          
-        </tbody>
-    </table>
-
-    **HURRAY!!!  We just completed LAB 1, a complete implementation of RAG using PLSQL**
-        
-
-
-
-## Task 7: Preparation for LAB 2
-
-In LAB 2 we will run a Python application which uses the functions and code we just learned in the previous steps.    
-
-To prepare for LAB 2, run the following:
-
-a. Create a procedure `insert_my_table_row` to insert the PDF file into the MY\_BOOKS table and return the doc\_id
-
-b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the PDF and store it in the VECTOR\_STORE table.
-
-1. Create a procedure `insert_my_table_row`
-
-    ```
-    cursor = conn23ai.cursor()
-    procedure_query = """
-    create or replace PROCEDURE insert_my_table_row(
-        p_file_name IN my_books.file_name%TYPE,
-        p_file_size IN my_books.file_size%TYPE,
-        p_file_type IN my_books.file_type%TYPE,
-        p_file_content IN my_books.file_content%TYPE,
-        p_new_id OUT number
+```python
+def create_db_connection():
+    Create and return a database connection using environment variables.
+    return oracledb.connect(
+        user=os.getenv("ORACLE_USER"),
+        password=os.getenv("ORACLE_PASSWORD"),
+        dsn=os.getenv("ORACLE_DSN")
     )
-    IS
-        v_count NUMBER;
-        v_id    number;
-        new_id  number ;
-    BEGIN
-        -- Check if the combination of a and b already exists
-        BEGIN
-        SELECT id INTO new_id FROM MY_BOOKS WHERE file_name = p_file_name AND file_size = p_file_size;
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-        INSERT INTO MY_BOOKS (file_name, file_size, file_type, file_content)
-            VALUES (p_file_name, p_file_size, p_file_type, p_file_content)
-            RETURNING id into new_id;
-        END;
-        p_new_id := new_id;
-        dbms_output.put_line(new_id);
-        COMMIT;
-    EXCEPTION
-        WHEN OTHERS THEN
-            -- Exception handling here, for example, a rollback or a custom error message
-                DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
-            --RAISE;
-    END insert_my_table_row;
-    """
-
-    # Execute the procedure creation query
-    cursor.execute(procedure_query)
 
 
-    ```
+print(os.getenv("ORACLE_DSN"))
 
-2.  Create a trigger `trg_mybooks_vector_store_compound`
+# Initialize connection
+connection = create_db_connection()
 
-    ```
-    cursor = conn23ai.cursor()
-    create_trigger = """
-    CREATE OR REPLACE TRIGGER trg_mybooks_vector_store_compound
-    FOR INSERT ON my_books
-    COMPOUND TRIGGER
+print("Database connection established")
 
-        TYPE t_id_tab IS TABLE OF my_books.id%TYPE INDEX BY PLS_INTEGER;
-        v_ids t_id_tab;
+```
 
-        AFTER EACH ROW IS
-        BEGIN
-            v_ids(v_ids.COUNT + 1) := :NEW.id;
-        END AFTER EACH ROW;
+## **Vector Store Setup**
 
-        AFTER STATEMENT IS
-        BEGIN
-            FOR i IN 1 .. v_ids.COUNT LOOP
-                INSERT INTO vector_store (doc_id, embed_id, embed_data, embed_vector)
-                SELECT dt.id AS doc_id, 
-                      et.embed_id, 
-                      et.embed_data, 
-                      to_vector(et.embed_vector) AS embed_vector
-                FROM my_books dt
-                CROSS JOIN TABLE(
-                    dbms_vector_chain.utl_to_embeddings(
-                        dbms_vector_chain.utl_to_chunks(
-                            dbms_vector_chain.utl_to_text(dt.file_content), 
-                            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
-                        ),
-                        json('{"provider":"database", "model":"tinybert_model"}')
-                    )
-                )  t
-                CROSS JOIN JSON_TABLE(
-                    t.column_value, 
-                    '$[*]' COLUMNS (
-                        embed_id NUMBER PATH '$.embed_id',
-                        embed_data VARCHAR2(4000) PATH '$.embed_data',
-                        embed_vector CLOB PATH '$.embed_vector'
-                    )
-                ) AS et
-                WHERE dt.id = v_ids(i);
-            END LOOP;
-        END AFTER STATEMENT;
+Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
 
-    END trg_mybooks_vector_store_compound;
-    """
-    # Execute the trigger creation
-    cursor.execute(create_trigger)
+Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
+For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
 
-    ```
+The model we are using is all-MiniLM-L6-v2. This model has been download as ONNX file and loaded in the database already.
+
+Note: To learn more about creating embedding in database check for live lab ( AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain [https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927] )
+
+Run the below code to initialize the Oracle Vector Store 
+
+```
+def setup_vector_store(connection):
+    Set up and return the Oracle Vector Store.
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    vector_store = OracleVS(
+        client=connection,
+        embedding_function=embeddings,
+        table_name="AGENTICS_AI",
+        distance_strategy=DistanceStrategy.COSINE
+    )
+    print("? Oracle Vector Store ready")
+    return vector_store
+
+# Initialize vector store
+vector_store = setup_vector_store(connection)
+```
+## **Verify the Vectore Store table**
+
+To explore the vector store we created, run the sql query to select the first 5 rows of the table that holds the vector data.
+
+```python
+%sql select * from AGENTICS_AI where rownum <= 5
+```
+
+The out put shows 4 columns having id, text, meta and embedding.
+id is the primary key,  Text column contains the text chunks, meta column contain additional information which can be used for filtering i.e location and page of the chunk, emmbeding column contain the Vector value of text chunk.
+
+--------------Add a image of output of the sql query
 
 
-• In the next LAB, python-oracle DB code is only focused on calling the package routines in the 23ai database.
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-• This means that these packages could then easily be called from any programming language, eg.,
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-    * JDBC
-    * C# with OPD.NET
-    * python-oracledb
-    * node-oracledb
-    * OCI, OCCI, ODBC, Pro*C or Pro*COBOL
-    * Go, Rust, PHP, Ruby etc
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>text</th>
+      <th>metadata</th>
+      <th>embedding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>b'K"ww\xd4\xdd\x1f\xc6'</td>
+      <td>may be trademarks of their respective owners. ...</td>
+      <td>{"id": "4", "link": "Page 4"}</td>
+      <td>[-0.10093670338392258, -0.0510505847632885, -0...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b'\xef-\x12}\xe3{\x94+'</td>
+      <td>damages incur red due to your access to or use...</td>
+      <td>{"id": "5", "link": "Page 5"}</td>
+      <td>[-0.05846373364329338, -0.03191264346241951, 0...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>b'_\xec\xebf\xff\xc8o8'</td>
+      <td>Oracle Database®  \nOracle Database New Featur...</td>
+      <td>{"id": "0", "link": "Page 0"}</td>
+      <td>[-0.03197915479540825, -0.004067039582878351, ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b'k\x86\xb2s\xff4\xfc\xe1'</td>
+      <td>The information contained herein is subject to...</td>
+      <td>{"id": "1", "link": "Page 1"}</td>
+      <td>[-0.033684320747852325, 0.03027949295938015, -...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>b'\xd4s^:&amp;^\x16\xee'</td>
+      <td>"commercial computer software documentation," ...</td>
+      <td>{"id": "2", "link": "Page 2"}</td>
+      <td>[-0.05899398773908615, -0.008670773357152939, ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+## **Understanding AI Agent Components**
+ 
+![AiArchitectire](images/flowstepsai.jpg)
+
+The diagram shows the core structure of an AI agent: **Tools**, **Model**, and **Prompt** feed into the **Agent**, which is then processed by an **Agent Executor** that incorporates tools and memory. Specifically, the agent is initialized with a model (e.g., `ChatOCIGenAI`), a prompt template (`PromptTemplate.from_template(...)`), and a set of tools. The `AgentExecutor` then manages the agent’s operations, leveraging tools and memory to execute tasks effectively.
+
+### **Explanation of Components and Tools**
+
+We’ll define a set of specialized tools that the AI agent will utilize to perform its tasks, aligning with the workflow shown in the diagram:
+
+- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and retrieve Retrieval-Augmented Generation (RAG) answers from a large language model (LLM), enhancing its ability to provide accurate, data-driven responses from Oracle Database 23ai.
+  
+- **fetch\_recipients**: Designed to look up email addresses based on a given name, this tool allows the agent to dynamically fetch recipient details for email automation tasks, ensuring seamless communication workflows.
+
+- **create\_pdf\_tool**: This tool empowers the agent to generate PDFs, either with a specified title and content or formatted as an email, enabling professional document creation for reporting or sharing purposes.
+
+- **extract\_user\_name**: By accessing the agent’s short-term memory (as part of the `AgentExecutor`’s memory component), this tool retrieves user names from prior conversations, ensuring the agent maintains context and personalizes interactions effectively.
+
+These tools, combined with the model and prompt, are orchestrated by the `AgentExecutor` to enable the AI agent to perform complex, multi-step tasks like data retrieval, email automation, and PDF generation, all while maintaining contextual awareness through memory.
+How to Use:
+Copy the above content into a text editor.
+Save it as AI_Agent_Components.md.
+Open it in any Markdown viewer or editor (e.g., VS Code, Typora, or GitHub) to see the formatted output.
+Let me know if you need further assistance!
 
 
-You may now [proceed to the next lab](#next).
+
+# Section 3: Building Agent Tools
+
+Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
+
+## Tool 1: RAG Search
+
+In the RAG Search tool we create a function rag\_search. The variables in funcation are 
+- query: Input User query about the RAG serch in the document.
+- K=5: Specfies the number of top k-chuck to be sent to LLM for generating answer for query. We have to 5, can change as needed.
+- content: This variable will hold the result set of similarity search and return as fuction output. 
+
+```python
+def rag_search(query: str) -> str:
+    Search for relevant documents using the vector store.
+    docs = vector_store.similarity_search(query, k=5)
+    content = "\n".join([doc.page_content for doc in docs])
+    return content
+```
+
+Sample input/output
+
+    Input: Question about the document for a RAG search
+    Output: Top 8 pages that have most relavent answers for the question.
+
+## Tool 2: Fetch Recipients (Database Tool)
+
+Fetch Recipients tools will query the database table for the first name and last name and return the corresponding email id.  The function fetch\_recipients is created for this.  The parameter used in the function are 
+
+- Input: Takes name of the person
+- Output: frist name, last name and email address
+
+```python
+def fetch_recipients(query: str) -> str:
+    Search for recipients by name and return formatted results.
+    try:
+        # Clean the query
+        cleaned_query = query.strip()
+        while cleaned_query.endswith('O'): cleaned_query = cleaned_query[:-1]
+        
+        # Use the existing connection
+        cursor = connection.cursor()
+        
+        # Parse search terms and build query
+        search_terms = cleaned_query.split()
+        base_query = "SELECT first_name, last_name, email FROM recipients WHERE 1=0"
+        conditions, params = [], []
+        
+        for term in search_terms:
+            conditions.extend(["LOWER(first_name) LIKE LOWER(:term)||'%'", "LOWER(last_name) LIKE LOWER(:term)||'%'"])
+            params.extend([term, term])
+        
+        query = base_query.replace("1=0", " OR ".join(conditions))
+        cursor.execute(query, params)
+        recipients = cursor.fetchall()
+        cursor.close()
+        
+        # Format results
+        if not recipients: return f"No recipients found matching '{cleaned_query}'."
+        
+        formatted_results = [f"{first_name} {last_name} ({email})" for first_name, last_name, email in recipients]
+        if len(recipients) == 1:
+            first_name, last_name, email = recipients[0]
+            return f"{first_name} {last_name} ({email})\n\nSuggested recipient: {email}"
+        
+        return "\n".join(formatted_results) + "\n\nMultiple recipients found. Using the first email address: " + recipients[0][2]
+    
+    except Exception as e:
+        return f"Error finding email addresses: {str(e)}"
+
+```
+Fetch Recipients:
+
+    Input: First Name or Last Name from chat conversation
+    Output: email id associated with the name.
+
+
+## Tool 3: PDF Creation
+
+Using python libraries (reportlab) to generate PDF files
+
+
+PDF Creation
+- **Input**: Well  formed JSON document. which either has title and text, or To, subject and body
+- **Output**: A PDF file is created in the current directory.
+
+```python
+def generate_email_pdf(email_data, filename="email.pdf"):
+    Generate a PDF from email data.
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    elements = [
+        Paragraph("Email", styles['Title']),
+        Spacer(1, 0.2 * inch),
+        Paragraph(f"<b>To:</b> {email_data['to']}", styles['Normal']),
+        Paragraph(f"<b>Subject:</b> {email_data['subject']}", styles['Normal']),
+        Spacer(1, 0.2 * inch),
+        Paragraph("<b>Message:</b>", styles['Normal']),
+        Spacer(1, 0.1 * inch)
+    ]
+
+    message_paragraphs = email_data['message'].split('\n\n')
+    for para in message_paragraphs:
+        if para.strip():
+            elements.append(Paragraph(para.replace('\n', '<br/>'), styles['Normal']))
+            elements.append(Spacer(1, 0.1 * inch))
+
+    pdf.build(elements)
+    buffer.seek(0)
+
+    with open(filename, "wb") as f:
+        f.write(buffer.getvalue())
+
+    return f"Email PDF generated and saved as {filename}"
+
+def create_pdf_tool(input_data: Union[str, Dict]) -> str:
+    
+    Create a PDF from email content or general information.
+    Input should be a JSON with "title", "content", and optionally "filename".
+    For emails, content should contain "to", "subject", and "message" fields.
+    
+    try:
+        # Parse input if it's a string
+        if isinstance(input_data, str):
+            try:
+                data = json.loads(input_data)
+            except json.JSONDecodeError:
+                # If parsing fails, treat it as content
+                data = {
+                    "title": "Generated Content",
+                    "content": input_data,
+                    "filename": "generated_document.pdf"
+                }
+        else:
+            data = input_data
+
+        # Use default filename if not provided
+        title = data.get("title", "Generated Content")
+        filename = data.get("filename")
+
+        if not filename:
+           if title.lower() == "email" and isinstance(data.get("content"), dict):
+               to_name = re.sub(r"[^\w\s]", "", data["content"].get("to", "recipient")).strip().replace(" ", "_")
+               from_match = re.search(r"Best regards,\s*(\w+(?:_\w+)*)", data["content"].get("message", ""), re.IGNORECASE)
+               from_name = from_match.group(1) if from_match else "me"
+               filename = f"Email_to_{to_name}_from_{from_name}.pdf"
+           else:
+               # Fallback for general documents
+               safe_title = re.sub(r"[^\w\s-]", "", title).strip().replace(" ", "_")
+               filename = f"{safe_title}.pdf"
+
+
+        # Check if content is an email (has to, subject, message)
+        is_email_format = False
+        if isinstance(data["content"], dict):
+            if all(k in data["content"] for k in ["to", "subject", "message"]):
+                is_email_format = True
+
+        if is_email_format:
+            # Create email PDF
+            result = generate_email_pdf(data["content"], filename)
+        else:
+            # Create general content PDF
+            buffer = io.BytesIO()
+            pdf = SimpleDocTemplate(buffer, pagesize=letter)
+            styles = getSampleStyleSheet()
+            elements = [
+                Paragraph(data["title"], styles['Title']),
+                Spacer(1, 0.2 * inch)
+            ]
+
+            # Convert string content to paragraphs
+            if isinstance(data["content"], str):
+                paragraphs = data["content"].split('\n\n')  # Split on double newlines
+                for para in paragraphs:
+                    if para.strip():
+                        elements.append(Paragraph(para.replace('\n', '<br/>'), styles['Normal']))
+                        elements.append(Spacer(1, 0.1 * inch))
+            elif isinstance(data["content"], list):
+                for item in data["content"]:
+                    elements.append(Paragraph(str(item).replace('\n', '<br/>'), styles['Normal']))
+                    elements.append(Spacer(1, 0.1 * inch))
+
+            pdf.build(elements)
+            buffer.seek(0)
+            with open(filename, "wb") as f:
+                f.write(buffer.getvalue())
+            result = f"PDF generated and saved as {filename}"
+
+        return result
+    except Exception as e:
+        traceback.print_exc()
+        return f"Error creating PDF: {str(e)}"
+
+```
+
+## Tool 4: User Name Extraction
+
+The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user interacting form the last question and entire context of conversation.
+
+
+Username extraction:
+- **Input**: Username from memory
+- **Output**: Find the name of the user from memory and lookup email if asked to create pdf in email format.
+
+```python
+def format_chat_history(memory_vars):
+    Format the last few messages from the chat history for the prompt.
+    chat_hist = memory_vars.get("chat_history", [])
+    formatted_lines = []
+    # Consider up to the last 6 messages (to keep prompt concise)
+    for msg in chat_hist[-6:]:
+        if isinstance(msg, HumanMessage):
+            formatted_lines.append(f"Human: {msg.content}")
+        elif isinstance(msg, AIMessage):
+            formatted_lines.append(f"Assistant: {msg.content}")
+    return "\n".join(formatted_lines)
+
+def extract_user_name(memory):
+    Extract user name from chat history based on 'My name is' pattern.
+    chat_hist = memory.load_memory_variables({}).get("chat_history", [])
+    for msg in chat_hist:
+        if isinstance(msg, HumanMessage):
+            name_match = re.search(r"[Mm]y name is (\w+(?:\s+\w+)*)", msg.content)
+            if name_match:
+                return name_match.group(1)
+    return None
+
+```
+
+## Agent Memory
+
+Memory is crucial for agents that need to maintain context over multiple turns.
+Our agent uses `ConversationBufferMemory` which:
+1. Stores the complete conversation history
+2. Makes it available to the agent on each turn
+3. Allows the agent to refer back to prior information (like user names)
+
+```
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+```
+
+## Agent Model
+
+The brain behind the agent is Oracle GenAI, the funcation initializes the specific model using Oracle API keys.
+
+```python
+
+def initialize_llm():
+    Initialize and return the LLM model.
+    model = ChatOCIGenAI(
+        model_id="cohere.command-r-08-2024",
+        service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
+        compartment_id=os.getenv("OCI_COMPARTMENT_ID"),
+        auth_type="API_KEY",
+        model_kwargs={"temperature": 0, "max_tokens": 700}
+    )
+    print(" LLM model initialized")
+    return model
+```
+
+
+## Creating the Agent Prompt Template
+
+
+### The Importance of Effective Prompt Templates
+
+A well-crafted prompt template is essential for guiding agent behavior effectively. It should clearly define the agent's role and limitations, establish strict formatting rules (such as enforcing the ReAct structure), and include specific instructions for handling special cases like usernames or conditional actions (e.g., when to generate a PDF). Examples are crucial—they illustrate proper reasoning and the expected format across different scenarios. Additionally, a concise list of available tools with descriptions helps the agent choose the right tool for the task.
+
+Without these components, the agent is likely to produce inconsistent responses, make formatting errors that disrupt the reasoning-action loop, select inappropriate tools, or overlook important contextual information. A strong prompt template ensures consistent, accurate, and context-aware outputs from the agent.
+
+
+
+```python
+
+def create_agent_prompt():
+    Create and return the prompt template for the agent.
+    template = 
+    You are an assistant that can search documents, look up emails, and create PDFs.
+
+    Previous Chat History:
+    {chat_history}
+
+    STRICT FORMAT RULES:
+    1. NEVER respond directly after "Thought:" - ALWAYS follow with either "Action:" or "Final Answer:"
+    2. NEVER combine Action and Final Answer in the same response
+    3. For name introductions: ONLY use "Thought:" followed by "Final Answer:"
+    4. For PDF creation: Use "Action: Create PDF" with JSON in "Action Input:", then wait for "Observation:" before proceeding
+
+    - If usr says "from me", check chat history to extract my name and use it in email sign-off as: "Best regards, <User Name>".
+    - When the user says "from me", use the name from chat history (if available) in the signature. Use "Best regards,\n<User Name>" in the email body.
+    - You may use the tool 'Get User Name' to extract the name.
+    - If the user says "from <Name>", you MUST use <Name> exactly as provided in the sign-off.
+      Example: "Generate email from Milton" ? use "Best regards,\nMilton" in the email body
+
+    - If the user says "do not generate a PDF", you MUST NOT call the Create PDF tool.
+
+    EXAMPLES:
+
+    CORRECT (for name introduction):
+    Thought: The user introduced themselves, I should respond appropriately.
+    Final Answer: Hello [Name]! Nice to meet you. How can I help you today?
+
+    CORRECT (for PDF creation):
+    Thought: I'll create the requested PDF.
+    Action: Create PDF
+    Action Input: {{ "title": "Test Document", "content": "This is a test" }}
+    Observation: [PDF creation result]
+    Thought: The PDF has been created.
+    Final Answer: I've created a PDF titled "Test Document".
+
+    CORRECT (for feature listing with PDF):
+    Thought: I need to find features and create a PDF.
+    Action: RAG Search
+    Action Input: features
+    Observation: [search results]
+    Thought: Now I'll create a PDF with these features.
+    Action: Create PDF
+    Action Input: {{ "title": "Oracle Features", "content": "Here are 5 features:..." }}
+    Observation: [PDF creation result]
+    Thought: I have completed both tasks.
+    Final Answer: I've found these features and created a PDF.
+
+
+    CORRECT (for feature listing without PDF):
+    Thought: User wants only the features without a PDF.
+    Action: RAG Search
+    Action Input: features
+    Observation: [search results]
+    Thought: I will now summarize 5 new features.
+    Final Answer: 1. ... 2. ... 3. ...
+
+    Available tools:
+    {tools}
+
+    Use the following format:
+    Question: {input}
+    Thought: [your reasoning]
+    Action: [tool name]
+    Action Input: [tool input]
+    Observation: [tool result]
+    ... (repeat Action/Action Input/Observation if needed)
+    Thought: [your conclusion]
+    Final Answer: [your response to the user]
+
+    Begin!
+    Question: {input}
+    Thought:{agent_scratchpad}
+    
+    return template
+
+```
+
+
+
+## Initilize Agent & Agent_executor
+
+We defined tools, models and prompt, next we need to initialize the agent and agent executor.  the agent executor has additional information like number of itrations, versbose mode for logging thought process, and keywords when the answer is found.
+
+![AiArchitectire](images/flowstepsai.jpg)  
+
+
+The below code snippet initializes the agent
+
+```
+
+agent = create_react_agent(model, tools, prompt)
+
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    memory=memory,
+    verbose=True,
+    max_iterations=15,
+    handle_parsing_errors=True,
+    output_key="output"
+
+````
+
+
+##Agent Initialization Process
+
+The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
+
+Next, all tools required by the agent are registered with clear names and descriptions. These descriptions are essential, as they guide the LLM in selecting the appropriate tool during execution. The prompt is then constructed by combining a predefined template with dynamic components such as the tool list and a function to access chat history. This forms the basis for how the agent understands and responds to tasks.
+
+Finally, the agent is created using LangChain’s ReAct agent framework, integrating the configured LLM, tools, and prompt. Execution settings like the maximum number of iterations, verbosity, and error handling are also established to ensure controlled and informative runs. Together, these steps ensure the agent is fully equipped for interactive, tool-augmented reasoning.
+
+
 
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** - Vijay Balebail, October 2024
+* **Authors** - Vijay Balebail, Milton Wan
+* **Contributors** - Rajeev Rumale, Doug Hood
+* **Last Updated By/Date** -  Rajeev Rumale, May 2025

@@ -17,12 +17,17 @@
       {
       "title": "Lab 1: Building a Document Search and PDF Generation Agent",
       "description": "Building a Document Search and PDF Generation Agent",
-      "filename": "../../lab1/oci5.md"
+      "filename": "../../lab1/lab1.md"
       },
       {
-      "title": "Lab 2: Run the same RAG application with an interactive UI",
-      "description": "Run the Streamlit RAG Application.",
+      "title": "Lab 2: Agentics Demonstration ",
+      "description": "Agentics Demonstration",
       "filename": "../../lab2/lab2.md"
+      },
+            {
+      "title": "Lab 3: Run Agentics Application ",
+      "description": "Run Agentics Application",
+      "filename": "../../lab3/lab3.md"
       },
       {
       "title": "Need Help?",
