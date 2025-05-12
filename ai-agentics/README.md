@@ -1,2 +1,2 @@
-# oracle-ai-vector-search-live-labs
-LiveLabs for RAG with AI Vector Search using PLSQL
+# oracle-ai-agentics-live-labs
+# Oracle AI Agent Workshop - Building a Document Search and PDF Generation Agent
