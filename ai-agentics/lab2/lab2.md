@@ -776,24 +776,24 @@ Observer that the question mentions from me. And since you introduced your self 
 ## What We've Learned
 
 1. **LLM Agent Architecture**
-   - How to combine LLMs with tools for enhanced capabilities
-   - The ReAct pattern for reasoning and acting
+    - How to combine LLMs with tools for enhanced capabilities
+    - The ReAct pattern for reasoning and acting
 
 2. **Vector Search & RAG**
-   - Setting up Oracle Vector Store
-   - Implementing semantic search for document retrieval
+    - Setting up Oracle Vector Store
+    - Implementing semantic search for document retrieval
 
 3. **Tool Development**
-   - Creating custom tools for specific tasks
-   - Handling different input formats and error cases
+    - Creating custom tools for specific tasks
+    - Handling different input formats and error cases
 
 4. **Prompt Engineering**
-   - Designing effective templates for guiding agent behavior
-   - Using examples and rules to improve performance
+    - Designing effective templates for guiding agent behavior
+    - Using examples and rules to improve performance
    
 5. **Agent Configuration**
-   - Setting up memory for contextual conversations
-   - Configuring the agent for optimal performance
+    - Setting up memory for contextual conversations
+    - Configuring the agent for optimal performance
 
 ## Next Steps
 
