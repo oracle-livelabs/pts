@@ -616,7 +616,7 @@ agent_executor = AgentExecutor(
 ````
 
 
-##Agent Initialization Process
+## Agent Initialization Process
 
 The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
 
