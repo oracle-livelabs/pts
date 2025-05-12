@@ -8,9 +8,9 @@ Estimated Lab Time: 10 minutes
 
 ### About Image Similarity Search
 
-In the previous Labs, we looked at embedding models and similarity search on text based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. It is also possible to use images to search for similar images, but we will keep it simple and use text based searches to find semantically similar images. The US National Parks dataset that we have been using has two tables. One based on parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
+In the previous labs, we looked at embedding models and similarity search on text-based data. Now we are going to look at something even more impressive. The ability to use words or phrases to search images. It is also possible to use images to search for similar images, but we will keep it simple in this lab and just use text-based searches to find semantically similar images. The US National Parks dataset that we have been using has two tables. One that describes parks and then another that has images for those parks. We are going to search the images and then also combine a query to join the two tables and look through images based on a general location.
 
-The image vector embeddings have already been created since that would have taken too long for this lab environment, but we will take a look at them. The embedding model that was used to create the vector embeddings was the OpenAI CLIP model. This model enables searching image vectors with text phrases or even other images, and can be split into two different ONNX compatible embedding models to allow searching for images based on text words and/or phrases or actual images. We will keep it simple and use a text based search version of the embedding model to search the image vectors in this lab. This model has already been loaded into the database as you saw earlier, and is called CLIP\_VIT\_TXT.
+The image vector embeddings have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was the CLIP multi-modal embedding pipeline, and can be split into two different ONNX compatible embedding models to allow searching for images based on text words and/or phrases or actual images. This is described in more detail in the [Oracle AI Vector Search User's Guide] (https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). The text-based model has already been loaded into the database as you saw earlier, and is called CLIP\_VIT\_TXT.
 
 
 ### Objectives
@@ -46,7 +46,7 @@ After signing in you should see a browser window like the following:
 
 ## Task 1: Display the CLIP embedding model
 
-The CLIP embedding model has already been converted to ONNX format and loaded into the database. This is the same model that was used to create vectors of the park images that were also pre-loaded.
+The CLIP embedding model has already been converted to ONNX format and loaded into the database. This was described in the lab introduction and is the same model that was used to create the vectors of the park images, which were also pre-loaded.
 
 1. Display the CLIP embedding model:
 
@@ -86,7 +86,7 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
     ![vector column](images/park_images_columns.png " ")
 
-2. Display one of the IMAGE\_VECTOR columns:
+2. Display one of the vectors in IMAGE\_VECTOR column:
 
     ```
     <copy>
@@ -104,7 +104,7 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
 ## Task 3: Run image based similarity searches
 
-In this task we will run similar queries to the ones we ran in the previous Labs, but now we will use our text phrases to search the image vectors, not text vectors.
+In this task we will run similar queries to the ones we ran in the previous labs, but now we will use our text phrases to search the image vectors, not text vectors.
 
 1. First we can search for Civil War park images:
 
@@ -124,7 +124,7 @@ In this task we will run similar queries to the ones we ran in the previous Labs
 
     ![civil war url](images/query_civil_war_2_click_eye.png " ")
     
-    If you then highlight the URL and right click on it a dialog box will open. Depending on your browser, there should be an option to open the URL in a new window. The following example uses Google Chrome, other browsers you slightly different terminology. With Google Chrome you can choose the "Go to ..." option to open the image in a new browser window:
+    If you then highlight the URL and right click on it a dialog box will open. Depending on your browser, there should be an option to open the URL in a new window. The following example uses Google Chrome, other browsers use slightly different terminology. With Google Chrome you can choose the "Go to ..." option to open the image in a new browser window:
     
     ![civil war url](images/query_civil_war_3_open_url.png " ")
     
