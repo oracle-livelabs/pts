@@ -21,10 +21,6 @@ We'll demonstrate:
 * Have got the Sandbox instance created and able to access the noVNC console.
 
 
-## Task 1: Run the application
-
-xxxxxxxxxxxxxxxxxxxxx
-
 ## Example 1: Name Introduction --Memory test
 
 This will to used to test if the agent can retrive info from chat context.
@@ -91,7 +87,7 @@ print("\nResponse:\n", response.get("output"))
      The email address for Vijay Balebail is vijay.balebail@oracle.com.
 
 
-## Insert your name and email into the database and verify.
+### Insert your name and email into the database and verify.
 
 Edit the below sql to put in your first name, last name and email id into the database and verify it exists.
 
@@ -235,7 +231,7 @@ Edit the below sql to put in your first name, last name and email id into the da
 
 
 
-## Verify your email can be retrived from the database.
+### Verify your email can be retrived from the database.
 
 
 ```python
@@ -410,7 +406,7 @@ print("\nResponse:\n", response.get("output"))
      I've created a PDF titled 'Workshop Notes'. You can find it saved as Workshop_Notes.pdf.
 
 
-## Example 4: Combined Task - RAG Search and Create PDF
+## Example 5: Combined Task - RAG Search and Create PDF
 Demonstration of using Oracle Vector search with 3rd party tools.
 **Create pdf with info from milton to vijay**
 
@@ -525,7 +521,7 @@ print("\nResponse:\n", response.get("output"))
      I've found the requested information about Oracle Cloud Infrastructure and created a PDF summary. You can find it saved as Oracle_Cloud_Infrastructure_Summary.pdf.
 
 
-## Example 4: Combined Task - Rag Search , fetch_recipients and create PDF
+## Example 6: Combined Task - Rag Search , fetch_recipients and create PDF
 Demonstrating use of Oracle Vector search, with 3rd party tools and information from prompt.
 
 
@@ -641,7 +637,7 @@ Demonstrating use of Oracle Vector search, with 3rd party tools and information 
      I've created an email PDF with the 5 new features from the document and sent it to Vijay from Milton. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Milton.pdf.
 
 
-## Example 4: Combined Task - Rag Search , fetch_recipients and create PDF and MEMORY
+## Example 7: Combined Task - Rag Search , fetch_recipients and create PDF and MEMORY
 Demonstrating use of Oracle Vector search, with 3rd party tools and mixing information from relational query, vector search,external tools  and conversation memory
 
 
@@ -773,7 +769,6 @@ Demonstrating use of Oracle Vector search, with 3rd party tools and mixing infor
 
 
 Observer that the question mentions from me. And since you introduced your self as Homer Simson, its taking that information from memory and addressing.
-
 
 
 # Workshop Takeaways
