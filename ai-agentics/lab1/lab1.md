@@ -1,6 +1,5 @@
 # Building a Document Search and PDF Generation Agent
 
-
 ## Introduction
 
 This notebook demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. Throughout this workshop, we'll explore:
@@ -12,7 +11,7 @@ This notebook demonstrates how to build a powerful AI agent that can search docu
 
 Let's get started!
 
-# Section 1: Environment Setup and Imports
+## Section 1: Environment Setup and Imports
 
 ## **Imports and Configuration**
 
