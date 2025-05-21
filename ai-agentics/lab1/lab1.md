@@ -11,9 +11,9 @@ This notebook demonstrates how to build a powerful AI agent that can search docu
 
 Let's get started!
 
-## Section 1: Environment Setup and Imports
+## **Section 1: Environment Setup and Imports**
 
-## **Imports and Configuration**
+### **Imports and Configuration**
 
 We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
 
@@ -75,9 +75,9 @@ plt.rcParams["figure.figsize"] = (10, 6)
 
 ```
 
-# Section 2: Database and Vector Store Setup
+## **Section 2: Database and Vector Store Setup**
 
-## **Oracle Database Connection**
+### **Oracle Database Connection**
 
 Connecting to Oracle database using the database username and password which are stored as environment variables (in .env file on linux)
 
@@ -100,7 +100,7 @@ print("Database connection established")
 
 ```
 
-## **Vector Store Setup**
+### **Vector Store Setup**
 
 Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
 
@@ -129,7 +129,7 @@ def setup_vector_store(connection):
 # Initialize vector store
 vector_store = setup_vector_store(connection)
 ```
-## **Verify the Vectore Store table**
+### **Verify the Vectore Store table**
 
 To explore the vector store we created, run the sql query to select the first 5 rows of the table that holds the vector data.
 
@@ -207,7 +207,7 @@ id is the primary key,  Text column contains the text chunks, meta column contai
 </table>
 </div>
 
-## **Understanding AI Agent Components**
+### **Understanding AI Agent Components**
  
 ![AiArchitectire](images/flowstepsai.jpg)
 
@@ -234,7 +234,7 @@ Let me know if you need further assistance!
 
 
 
-# Section 3: Building Agent Tools
+## Section 3: Building Agent Tools
 
 Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
 
@@ -597,6 +597,14 @@ We defined tools, models and prompt, next we need to initialize the agent and ag
 ![AiArchitectire](images/flowstepsai.jpg)  
 
 
+### Agent Initialization Process
+
+The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
+
+Next, all tools required by the agent are registered with clear names and descriptions. These descriptions are essential, as they guide the LLM in selecting the appropriate tool during execution. The prompt is then constructed by combining a predefined template with dynamic components such as the tool list and a function to access chat history. This forms the basis for how the agent understands and responds to tasks.
+
+Finally, the agent is created using LangChain’s ReAct agent framework, integrating the configured LLM, tools, and prompt. Execution settings like the maximum number of iterations, verbosity, and error handling are also established to ensure controlled and informative runs. Together, these steps ensure the agent is fully equipped for interactive, tool-augmented reasoning.
+
 The below code snippet initializes the agent
 
 ```
@@ -613,17 +621,6 @@ agent_executor = AgentExecutor(
     output_key="output"
 
 ````
-
-
-## Agent Initialization Process
-
-The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
-
-Next, all tools required by the agent are registered with clear names and descriptions. These descriptions are essential, as they guide the LLM in selecting the appropriate tool during execution. The prompt is then constructed by combining a predefined template with dynamic components such as the tool list and a function to access chat history. This forms the basis for how the agent understands and responds to tasks.
-
-Finally, the agent is created using LangChain’s ReAct agent framework, integrating the configured LLM, tools, and prompt. Execution settings like the maximum number of iterations, verbosity, and error handling are also established to ensure controlled and informative runs. Together, these steps ensure the agent is fully equipped for interactive, tool-augmented reasoning.
-
-
 
 
 ## Acknowledgements
