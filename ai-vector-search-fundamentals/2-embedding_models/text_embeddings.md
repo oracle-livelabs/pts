@@ -166,7 +166,9 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     ![table vector query](images/parks_row_vector.png " ")
 
-    Again, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
+    Note: your DESCRIPTION, and therefore vector, may be different than in our example since we didn't add an ORDER BY clause. This example is just showing how you can create a vector for one row in the PARKS table.
+    
+    Also, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
 
 ## Task 3: Create a vector column and describe the attributes
