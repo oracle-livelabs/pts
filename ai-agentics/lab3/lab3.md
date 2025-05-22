@@ -1,16 +1,19 @@
-# Lab 2: Run the same RAG Application interactively
+# Lab 3: Run the same Agentic Application interactively
 
 ## Introduction
+
+Run the and test the application.  The application run with a GUI front end that takes accepts a user question. The agent then tries to resolve the question with using all the tools available to it based on the agent initialiation role (prompt template).  The agent interfaces with the given LLM to give the best possible answer.
+
 
 Estimated Time: 5 min
 
 ### Objectives
 
-In this lab you will run the RAG application interactively using a simple user interface. You can select and load from several PDF documents, and ask your own question in the prompt.  This is the same application with the 7 essential RAG steps as the previous lab but demonstrates use through a user interface.
+To demonstrate the ability of AI agents to do RAG search and access relational data to generate answers and interface with external tools (create PDF ).
 
 ### Prerequisites
 
-* VM environment running Oracle Database 23ai
+* VM environment provided in this lab running Oracle Database 23ai
 
 
 ## Task 1: Run application
@@ -21,9 +24,10 @@ In this lab you will run the RAG application interactively using a simple user i
     $ cd /home/oracle/aidemo
     ```
 
-2.  Run the RAG application
+2.  Run the Agentic application
+
     ```
-    $ streamlit run genai.py
+    $ streamlit run GenAI_Agent.ipynb
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
