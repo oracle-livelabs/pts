@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "AI Agentics",
+  "workshoptitle": "Build an Agentic AI application using LangChain and Oracle Database 23ai",
   "help": "livelabs-help-db_us@oracle.com",
   "variables": ["../../variables/variables.json",
       "../../variables/variables-in-another-file.json"],

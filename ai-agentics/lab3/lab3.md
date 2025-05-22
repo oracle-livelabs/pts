@@ -5,7 +5,7 @@
 Run the and test the application.  The application run with a GUI front end that takes accepts a user question. The agent then tries to resolve the question with using all the tools available to it based on the agent initialiation role (prompt template).  The agent interfaces with the given LLM to give the best possible answer.
 
 
-Estimated Time: 5 min
+Estimated Time: 15 min
 
 ### Objectives
 
@@ -27,7 +27,7 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 2.  Run the Agentic application
 
     ```
-    $ streamlit run GenAI_Agent.ipynb
+    $ streamlit run GenAI_Agent.py
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
@@ -35,6 +35,8 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 4. Enter **localhost:8501** for the URL in the browser.
    
 Your application will now be running.  Simply follow the UI.
+
+![Streamlit UI](images/streamlitocigenai.png)
 
 5. Click on the **Browse files** button and load a PDF document.
 
