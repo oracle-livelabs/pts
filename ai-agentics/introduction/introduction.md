@@ -1,8 +1,8 @@
-# Oracle AI Agent Workshop - Building a Document Search and PDF Generation Agent
+# Build an Agentic AI application using LangChain and Oracle Database 23ai
 
 ## About this Workshop
 
-Introduction
+### **Introduction**
 
 This workshop demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. This hands-on workshop teaches building AI agents with Python and LangChain, focusing on Oracle Database 23ai integration for relational and RAG data. Learn to design prompts, create custom tools, and use memory for tasks like email automation and PDF generation. using LangChain participants will gain skills to develop cutting-edge AI solutions, showcasing Oracle’s AI Agentics capabilities.
 
@@ -45,7 +45,8 @@ Memory: Contextual memory for retaining prior interactions in multi-step tasks.
 Planner: Breaks down tasks into steps, selecting tools and actions.
 Environment: Data sources like Oracle 23ai for processing information.
 
- ![AI Agent Architecture](images/ai-architecture.jpg)
+
+ ![AI Agent Architecture](images/ai-architecture.jpg )
 
 
 

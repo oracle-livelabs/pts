@@ -238,7 +238,7 @@ Let me know if you need further assistance!
 
 Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
 
-## Tool 1: RAG Search
+### Tool 1: RAG Search
 
 In the RAG Search tool we create a function rag\_search. The variables in funcation are 
 - query: Input User query about the RAG serch in the document.
@@ -258,7 +258,7 @@ Sample input/output
     Input: Question about the document for a RAG search
     Output: Top 8 pages that have most relavent answers for the question.
 
-## Tool 2: Fetch Recipients (Database Tool)
+### Tool 2: Fetch Recipients (Database Tool)
 
 Fetch Recipients tools will query the database table for the first name and last name and return the corresponding email id.  The function fetch\_recipients is created for this.  The parameter used in the function are 
 
@@ -310,7 +310,7 @@ Fetch Recipients:
     Output: email id associated with the name.
 
 
-## Tool 3: PDF Creation
+### Tool 3: PDF Creation
 
 Using python libraries (reportlab) to generate PDF files
 
@@ -431,7 +431,7 @@ def create_pdf_tool(input_data: Union[str, Dict]) -> str:
 
 ```
 
-## Tool 4: User Name Extraction
+### Tool 4: User Name Extraction
 
 The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user interacting form the last question and entire context of conversation.
 
@@ -464,8 +464,9 @@ def extract_user_name(memory):
     return None
 
 ```
+## Section 4: Setting up Agent using LangChain.
 
-## Agent Memory
+### Agent Memory
 
 Memory is crucial for agents that need to maintain context over multiple turns.
 Our agent uses `ConversationBufferMemory` which:
@@ -477,7 +478,7 @@ Our agent uses `ConversationBufferMemory` which:
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 ```
 
-## Agent Model
+### Agent Model
 
 The brain behind the agent is Oracle GenAI, the funcation initializes the specific model using Oracle API keys.
 
@@ -497,7 +498,7 @@ def initialize_llm():
 ```
 
 
-## Creating the Agent Prompt Template
+### Creating the Agent Prompt Template
 
 
 ### The Importance of Effective Prompt Templates
@@ -590,7 +591,7 @@ def create_agent_prompt():
 
 
 
-## Initilize Agent & Agent_executor
+### Initilize Agent & Agent_executor
 
 We defined tools, models and prompt, next we need to initialize the agent and agent executor.  the agent executor has additional information like number of itrations, versbose mode for logging thought process, and keywords when the answer is found.
 
