@@ -34,17 +34,21 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
 4. Enter **localhost:8501** for the URL in the browser.
    
-Your application will now be running.  Simply follow the UI.
+    Your application will now be running.  The UI will look like the figure below.  Click on the ">" icon on the upper left corner as highlighted with red box.  This would expand the section to display file loading options and email display fields
 
-![Streamlit UI](images/streamlitocigenai.png)
+    ![Streamlit UI](images/opening_screen_collapsed.png)
+
+    The expanded UI would look like below
+
+    ![Streamlit UI](images/opening_screen_expanded.png)
 
 5. Click on the **Browse files** button and load a PDF document.
 
-After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
-
-![Streamlit UI](images/streamlitocigenai.png)
-
-A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
+    After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
+    
+    ![Streamlit UI](images/streamlitocigenai.png)
+    
+    A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
 
 6. Type a question and hit return.
 

@@ -4,7 +4,11 @@
 
 ### **Introduction**
 
-This workshop demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. This hands-on workshop teaches building AI agents with Python and LangChain, focusing on Oracle Database 23ai integration for relational and RAG data. Learn to design prompts, create custom tools, and use memory for tasks like email automation and PDF generation. using LangChain participants will gain skills to develop cutting-edge AI solutions, showcasing Oracle’s AI Agentics capabilities.
+This workshop is to teach how to build AI Agent framework using Langchain and Oracle 23ai database. We will discuss how an Agent is initialized, access tools, and use of Context Memory.  Once you understand the building components of Agent.  The application that you can build using the AI agentic framework are limitless.
+
+Oracle 23ai database is an Converged database that inculde support for AI Vector Search, Graph, JSON, Machine Learning and Several AI features. By showing how an agent can interact with database, an Architect can design an application harnessing the power of Relational database and GenAI LLMs.
+
+In this workshop, we will demonstrate how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. This hands-on workshop teaches building AI agents with Python and LangChain, focusing on Oracle Database 23ai integration for relational and RAG data. Learn to design prompts, create custom tools, and use memory for tasks like email automation and PDF generation. using LangChain participants will gain skills to develop cutting-edge AI solutions, showcasing Oracle’s AI Agentics capabilities.
 
 ### **About LLM Agents**
 What are LLM Agents?
