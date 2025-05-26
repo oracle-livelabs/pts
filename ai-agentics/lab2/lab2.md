@@ -68,9 +68,9 @@ Notice it responds back with your name as you entered in Introduction and retain
 
 ## Example 2: Get name from DB -- Testing reteriving relational data from database
 
-In this example we will to us test if the agent can retrive info from relational database. This is a power feature if the agent and combine the data in the database and LLM to get the desired output using the tools available. 
+In this example, we'll evaluate the agent's ability to retrieve information from a relational database—a key and powerful capability. By leveraging both the database and the language model, the agent can generate the desired output using its available tools.
 
-To test we ask the question about some information that is stored in database,  i.e., we ask it to retrieve email address of Vijay.  
+To test this, we’ll ask a question that requires accessing the database—for instance, retrieving Vijay’s email address.  
 
 ```python
 response = agent_executor.invoke({"input": "what is the email of vijay."})
@@ -120,6 +120,8 @@ Oracle Vector Store leverages Oracle's database capabilities for efficient simil
 For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
 
 
+<--- add image to show the location where the PDF file is generated --->
+
 ```python
 # Run this cell to test
 response = agent_executor.invoke({"input": "List are 5  features from the document"})
@@ -143,8 +145,7 @@ The response would be as below
 
 ## Example 4: Creating a Simple PDF -- Test working of Create pdf tool
 
-This is to demonstrate use of  non-database tools and later test how the agent can use some or all the tools available to get to the solution.
-
+This is to demonstrate how agent can interact with 3rd party tools. And test how the agent can call the tools available to get to the solution.
 
 ```python
 # Run this cell to test
@@ -164,10 +165,7 @@ The final response would be
 
 ## Example 5: Combined Task - RAG Search and Create PDF
 
-Demonstration of using Oracle Vector search with 3rd party tools.
-**Create pdf with info from milton to vijay**
-
-In this we demonstrate the use of RAG Vector serach and creation of PDF tools using multiple iterations of the agent.  For this enter the question with two task in one sentence. Agent will understand the two task and do the necesary actions.
+In this we demonstrate the use of RAG Vector Search and creation of PDF tools using multiple iterations of the agent. For this enter the question with two tasks in one sentence. Agent will understand the two task and do the necessary actions.
 
 ```python
 response = agent_executor.invoke({
@@ -176,8 +174,9 @@ response = agent_executor.invoke({
 print("\nResponse:\n", response.get("output"))
 ```
 
-Notice the verbose output for how agent plan and use tools in iteration and given the final output.
+Notice the verbose output for how the agent plans and uses tools in iteration and given the final output.
 
+````
 Entering new AgentExecutor chain...
 Thought: I will search for information about Oracle Cloud Infrastructure and then create a PDF summary.
 Action: RAG Search
@@ -189,24 +188,24 @@ Action: Create PDF
 Action Input: { <json input> }
 Final Answer: I've found the requested information about Oracle Cloud Infrastructure and created a PDF summary. You can find it saved as Oracle_Cloud_Infrastructure_Summary.pdf.
 Finished chain.
+````
 
 The final response would be
 
 ````  
-    Response:
-     I've found the requested information about Oracle Cloud Infrastructure and created a PDF summary. You can find it saved as Oracle_Cloud_Infrastructure_Summary.pdf.
+Response:
+I've found the requested information about Oracle Cloud Infrastructure and created a PDF summary. You can find it saved as Oracle_Cloud_Infrastructure_Summary.pdf.
 ````
 
 ## Example 6: Combined Task - Rag Search, fetch_recipients and create PDF
 
-Demonstrating use of Oracle Vector search, with 3rd party tools and information from prompt.
-
-We will further increase the complixity by asking question requiring use of multiple tools and context memory.  
+Demonstrating the use of Oracle Vector Search, with 3rd party tools and information from the prompt.
+We will further increase the complexity by asking questions requiring the use of multiple tools and context memory.  
 
 ```python
 
     print("\n=== Listing Features and Generate PDF in email format===")
-    response = agent_executor.invoke({"input": "List 5 new features from the document. Generate a pdf in email format to send to vijay from Milton"})
+    response = agent_executor.invoke({"input": "List 5 new features from the document. Generate a PDF in email format to send to Vijay from Milton"})
     print("\nResponse:\n", response.get("output"))
 
 ```
@@ -265,26 +264,24 @@ Observer that the question mentions from me. And since you introduced your self 
 ## Next Steps
 
 - Scroll back and read through the template initilization. This is what makes an agent costamized to your needs.
-- Implement more sophisticated tools (database queries, API integrations)
-- Explore different memory mechanisms for long-term context
-- Fine-tune the prompt for better handling of edge cases
+- Implement more sophisticated tools (database queries, API integrations).
+- Explore different memory mechanisms for long-term context.
+- Fine-tune the prompt for better handling of edge cases.
+- For more understanding RAG Vector Search in Oracle Database 23ai, to look at the live lab [AI Vector Search - Complete RAG Application using PL/SQL in Oracle Database 23ai](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3934)
+- And also the live lab [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3927)
 
 
 ## Bonus: Create an Email PDF from Personal Information
 
 #### Run this cell to try it
-response = agent_executor.invoke({
-    "input": "Create an email to the workshop organizer thanking them for the session. Sign it from me."
-})
-print("\nResponse:\n", response.get("output"))
 
+We showed how agent can interact with LLM.  The type of questions you can ask are limitless. This lab does not have a email sending option enable for security reasons. That is the reason we only create the email in PDF.  To create a email me (Vijay) run the below code.
 
 ```python
-response = agent_executor.invoke({ "input": "Create an email to the workshop Author (vijay) thanking them for the session. do not use rag_search, Generate a pdf in email format to send to vijay from me" })
+response = agent_executor.invoke({ "input": "Create an email to the workshop Author (Vijay) thanking him for the session. Do not use rag_search, Generate a pdf in email format to send to Vijay from me" })
 print("\nResponse:\n", response.get("output"))
 ```
-
-    
+   
     
     [1m> Entering new AgentExecutor chain...[0m
     [32;1m[1;3mThought: I will create an email PDF to send to Vijay from the user's name, Homer Simpson, as per the chat history.

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This notebook demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. Throughout this workshop, we'll explore:
+In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. Throughout this workshop, we'll explore:
 
 1. Setting up the environment and dependencies
 2. Creating custom tools for our agent
@@ -21,7 +21,7 @@ We are using OracleDB Python Drivers to connect to Oracle database and not cx_or
 
 To import all the require libararies for this work run the below code.  
 
-```python
+```Python
 
 import os
 import io
@@ -81,7 +81,7 @@ plt.rcParams["figure.figsize"] = (10, 6)
 
 Connecting to Oracle database using the database username and password which are stored as environment variables (in .env file on linux)
 
-```python
+```Python
 def create_db_connection():
     Create and return a database connection using environment variables.
     return oracledb.connect(
@@ -129,18 +129,16 @@ def setup_vector_store(connection):
 # Initialize vector store
 vector_store = setup_vector_store(connection)
 ```
-### **Verify the Vectore Store table**
+### **Verify the Vector Store table**
 
 To explore the vector store we created, run the sql query to select the first 5 rows of the table that holds the vector data.
 
-```python
+```Python
 %sql select * from AGENTICS_AI where rownum <= 5
 ```
 
 The out put shows 4 columns having id, text, meta and embedding.
 id is the primary key,  Text column contains the text chunks, meta column contain additional information which can be used for filtering i.e location and page of the chunk, emmbeding column contain the Vector value of text chunk.
-
---------------Add a image of output of the sql query
 
 
 <div>
@@ -234,7 +232,7 @@ Let me know if you need further assistance!
 
 
 
-## Section 3: Building Agent Tools
+## **Section 3: Building Agent Tools**
 
 Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
 
@@ -245,7 +243,7 @@ In the RAG Search tool we create a function rag\_search. The variables in funcat
 - K=5: Specfies the number of top k-chuck to be sent to LLM for generating answer for query. We have to 5, can change as needed.
 - content: This variable will hold the result set of similarity search and return as fuction output. 
 
-```python
+```Python
 def rag_search(query: str) -> str:
     Search for relevant documents using the vector store.
     docs = vector_store.similarity_search(query, k=5)
@@ -265,7 +263,7 @@ Fetch Recipients tools will query the database table for the first name and last
 - Input: Takes name of the person
 - Output: frist name, last name and email address
 
-```python
+```Python
 def fetch_recipients(query: str) -> str:
     Search for recipients by name and return formatted results.
     try:
@@ -312,14 +310,14 @@ Fetch Recipients:
 
 ### Tool 3: PDF Creation
 
-Using python libraries (reportlab) to generate PDF files
+Using Python libraries (reportlab) to generate PDF files
 
 
 PDF Creation
 - **Input**: Well  formed JSON document. which either has title and text, or To, subject and body
 - **Output**: A PDF file is created in the current directory.
 
-```python
+```Python
 def generate_email_pdf(email_data, filename="email.pdf"):
     Generate a PDF from email data.
     buffer = io.BytesIO()
@@ -433,14 +431,14 @@ def create_pdf_tool(input_data: Union[str, Dict]) -> str:
 
 ### Tool 4: User Name Extraction
 
-The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user interacting form the last question and entire context of conversation.
+The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user's interaction with application i.e., the last question and entire context of conversation.
 
 
 Username extraction:
 - **Input**: Username from memory
 - **Output**: Find the name of the user from memory and lookup email if asked to create pdf in email format.
 
-```python
+```Python
 def format_chat_history(memory_vars):
     Format the last few messages from the chat history for the prompt.
     chat_hist = memory_vars.get("chat_history", [])
@@ -464,7 +462,7 @@ def extract_user_name(memory):
     return None
 
 ```
-## Section 4: Setting up Agent using LangChain.
+## **Section 4: Setting up Agent using LangChain.**
 
 ### Agent Memory
 
@@ -478,11 +476,11 @@ Our agent uses `ConversationBufferMemory` which:
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 ```
 
-### Agent Model
+### Initialize Oracle GenAI Model
 
 The brain behind the agent is Oracle GenAI, the funcation initializes the specific model using Oracle API keys.
 
-```python
+```Python
 
 def initialize_llm():
     Initialize and return the LLM model.
@@ -509,7 +507,7 @@ Without these components, the agent is likely to produce inconsistent responses,
 
 
 
-```python
+```Python
 
 def create_agent_prompt():
     Create and return the prompt template for the agent.
@@ -610,16 +608,39 @@ The below code snippet initializes the agent
 
 ```
 
-agent = create_react_agent(model, tools, prompt)
+def setup_agent():
+    """Set up and return the agent executor."""
+    # Initialize memory
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    memory=memory,
-    verbose=True,
-    max_iterations=15,
-    handle_parsing_errors=True,
-    output_key="output"
+    # Initialize LLM
+    model = initialize_llm()
+
+    # Create tools
+    tools = [
+        Tool(name="RAG Search", ......),
+        Tool(name="fetch_recipients",......),
+        Tool(name="Get User Name",.......),
+        Tool(name="Create PDF",.....)
+    ]
+
+    # Create prompt template
+    template = create_agent_prompt()
+    prompt = PromptTemplate.from_template(template).partial(....., ......, .....)
+        
+    # Create agent and executor
+    agent = create_react_agent(model, tools, prompt)
+
+    agent_executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        memory=memory,
+        verbose=True,
+        max_iterations=15,
+        handle_parsing_errors=True,
+        output_key="output"
+    )
+    return agent_executor, memory
 
 ````
 
