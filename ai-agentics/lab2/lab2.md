@@ -36,10 +36,10 @@ print("\nResponse:\n", response.get("output"))
 
     The output would be similar to below
     
-    [1m> Entering new AgentExecutor chain...[0m
-    [32;1m[1;3mHello Homer Simpson! Nice to meet you. How can I help you today?[0mInvalid Format: Missing 'Action:' after 'Thought:'[32;1m[1;3mFinal Answer: Hello Homer Simpson! Nice to meet you. How can I help you today?[0m
+    Entering new AgentExecutor chain...
+    Hello Homer Simpson! Nice to meet you. How can I help you today?Invalid Format: Missing 'Action:' after 'Thought:'Final Answer: Hello Homer Simpson! Nice to meet you. How can I help you today?
     
-    [1m> Finished chain.[0m
+    Finished chain.
     
     Response:
      Hello Homer Simpson! Nice to meet you. How can I help you today?
@@ -54,12 +54,12 @@ print("\nResponse:\n", response.get("output"))
 
     The output would be similar to below
     
-    [1m> Entering new AgentExecutor chain...[0m
-    [32;1m[1;3mThought: I will use the 'Get User Name' tool to extract the user's name from the chat history.
+    Entering new AgentExecutor chain...
+    Thought: I will use the 'Get User Name' tool to extract the user's name from the chat history.
     Action: Get User Name
-    [32;1m[1;3mFinal Answer: Your name is Homer Simpson. Is there anything else I can help you with?[0m
+    Final Answer: Your name is Homer Simpson. Is there anything else I can help you with?
     
-    [1m> Finished chain.[0m
+    Finished chain.
     
     Response:
      Your name is Homer Simpson. Is there anything else I can help you with?
@@ -79,8 +79,8 @@ print("\nResponse:\n", response.get("output"))
 The final response would be like 
 
 ````    
-    Response:
-     The email address for Vijay Balebail is vijay.balebail@oracle.com.
+Response:
+    The email address for Vijay Balebail is vijay.balebail@oracle.com.
 ````
 
 ### Insert your name and email into the database and verify.
@@ -101,10 +101,6 @@ Now run the below sql to query the data we inserted
 %sql SELECT first_name, last_name, email FROM recipients 
 ```
 
-     * oracle+oracledb://vector:***@129.213.75.70:1521?service_name=ORCLPDB1
-    0 rows affected.
-
-
 ### Verify your email can be retrived from the database.
 
 replace the name with the name you inserted to verify if the agent can retrieve the data from relational table.
@@ -119,8 +115,6 @@ This is a demonstration of doing vector search of data stored in Oracle using ve
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
 For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
 
-
-<--- add image to show the location where the PDF file is generated --->
 
 ```python
 # Run this cell to test
@@ -158,9 +152,12 @@ print("\nResponse:\n", response.get("output"))
 The final response would be
 
 ````
-    Response:
-     I've created a PDF titled 'Workshop Notes'. You can find it saved as Workshop_Notes.pdf.
+Response:
+    I've created a PDF titled 'Workshop Notes'. You can find it saved as Workshop_Notes.pdf.
 ````
+You can check the output file in the file browser. You can double click the filename to view the pdf file.
+
+![Showing the location of PDF file output in Jupyter Notebook](images/location_of_pdf_file_output.png)
 
 
 ## Example 5: Combined Task - RAG Search and Create PDF
@@ -204,16 +201,17 @@ We will further increase the complexity by asking questions requiring the use of
 
 ```python
 
-    print("\n=== Listing Features and Generate PDF in email format===")
-    response = agent_executor.invoke({"input": "List 5 new features from the document. Generate a PDF in email format to send to Vijay from Milton"})
-    print("\nResponse:\n", response.get("output"))
+print("\n=== Listing Features and Generate PDF in email format===")
+response = agent_executor.invoke({"input": "List 5 new features from the document. Generate a PDF in email format to send to Vijay from Milton"})
+print("\nResponse:\n", response.get("output"))
 
 ```
 
 Check the verbose output to understand how the agent though and action happens.  The final response would be as below.
+
 ````
-    Response:
-     I've created an email PDF with the 5 new features from the document and sent it to Vijay from Milton. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Milton.pdf.
+Response:
+    I've created an email PDF with the 5 new features from the document and sent it to Vijay from Milton. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Milton.pdf.
 ````
 
 ## Example 7: Combined Task - Rag Search , fetch_recipients and create PDF and MEMORY
@@ -223,15 +221,15 @@ Demonstrating use of Oracle Vector search, with 3rd party tools and mixing infor
 
 ```python
     
-    response = agent_executor.invoke({"input": "List 4 new features from the document. Generate a pdf in email format to send to vijay from me"})
-    print("\nResponse:\n", response.get("output"))
+response = agent_executor.invoke({"input": "List 4 new features from the document. Generate a pdf in email format to send to vijay from me"})
+print("\nResponse:\n", response.get("output"))
 
 ```
 
 Notice the verbose output and final response.  
 ````
-    Response:
-     I've created an email PDF with the 4 new features from the document and sent it to Vijay from your name, Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
+Response:
+    I've created an email PDF with the 4 new features from the document and sent it to Vijay from your name, Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
 ````
 
 Observer that the question mentions from me. And since you introduced your self as Homer Simson, its taking that information from memory and addressing.
@@ -283,8 +281,8 @@ print("\nResponse:\n", response.get("output"))
 ```
    
     
-    [1m> Entering new AgentExecutor chain...[0m
-    [32;1m[1;3mThought: I will create an email PDF to send to Vijay from the user's name, Homer Simpson, as per the chat history.
+    Entering new AgentExecutor chain...
+    Thought: I will create an email PDF to send to Vijay from the user's name, Homer Simpson, as per the chat history.
     Action: Create PDF
     Action Input: {
         "title": "Email",
@@ -293,7 +291,7 @@ print("\nResponse:\n", response.get("output"))
             "subject": "Thank you for the workshop",
             "message": "Dear Vijay,\n\nI wanted to reach out and express my gratitude for the wonderful workshop you conducted. It was an insightful and engaging session, and I learned a lot about building an AI agent with Oracle GenAI.\n\nThank you for your time and expertise. I look forward to applying these concepts in my work.\n\nBest regards,\nHomer Simpson"
         }
-    [32;1m[1;3mAction: Create PDFerated and saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf[0m
+    Action: Create PDFerated and saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf
     Action Input: {
         "title": "Email",
         "content": {
@@ -301,17 +299,17 @@ print("\nResponse:\n", response.get("output"))
             "subject": "Thank you for the workshop",
             "message": "Dear Vijay,\n\nI wanted to reach out and express my gratitude for the wonderful workshop you conducted. It was an insightful and engaging session, and I learned a lot about building an AI agent with Oracle GenAI.\n\nThank you for your time and expertise. I look forward to applying these concepts in my work.\n\nBest regards,\nHomer Simpson"
         }
-    [32;1m[1;3mThought: I have created an email PDF to send to Vijay from Homer Simpson, as per the user's request.
+    Thought: I have created an email PDF to send to Vijay from Homer Simpson, as per the user's request.
     
-    Final Answer: I've created an email PDF and sent it to Vijay from Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.[0m
+    Final Answer: I've created an email PDF and sent it to Vijay from Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf
     
-    [1m> Finished chain.[0m
+    Finished chain.
     
     Response:
      I've created an email PDF and sent it to Vijay from Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
 
 
-**Completed. Thanks for running the lab.**
+**You have succesfully completed Lab2.  Please proceed for the next lab.**
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan

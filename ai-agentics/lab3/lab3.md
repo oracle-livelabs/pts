@@ -2,7 +2,9 @@
 
 ## Introduction
 
-Run the and test the application.  The application run with a GUI front end that takes accepts a user question. The agent then tries to resolve the question with using all the tools available to it based on the agent initialiation role (prompt template).  The agent interfaces with the given LLM to give the best possible answer.
+Run and test the application. It features a GUI front end that accepts user questions. The agent processes the input using all available tools, guided by its initialization role defined in the prompt template. It interacts with the specified LLM to generate the most accurate and relevant response.
+
+For keeping the resouce usage in limit we have restricted the agent max iteration to 15.  In case the question timesout or give error on max limits, you re-run the same question again or rephrase the question.
 
 
 Estimated Time: 15 min
@@ -42,44 +44,53 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
     ![Streamlit UI](images/opening_screen_expanded.png)
 
-5. Click on the **Browse files** button and load a PDF document.
+5. Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.
+
+    **Step 1: Load a pdf file "23ai new features guide"**
+
+    Click on the **Browse files** button and load a PDF document.
 
     After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
     
-    ![Application GUI](images/streamlitocigenai.png)
-    
+   
     A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
 
-6. Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.
+    ![Loading PDF file for querying](images/load_pdf_file.png)
 
-    Step 1: Load a pdf file "23ai new features guide"
+    Note: In the Lab 2, we used a table with pre-loaded vector data for "Oracle 23ai new feature guide" document. In this demo we are actually reading the document, chuncking and vectorizing it in a different table.
 
-    < image 1 >
+    You should see the confirmation of file uploaded as shown in figure below.
 
-    Step 2: To test memory tell LLM your name i.e., "My name is Homer Simpson".
+    ![Loading PDF file for querying](images/load_pdf_file_confirmation.png)
 
-    < image 2 >
     
-    Step 3: Now check if application remembers your name i.e., "What is my name?"  
+    **Step 2: To test context Memory feature**
+    
+    Tell LLM your name i.e., "My name is Homer Simpson".  Then check if application remembers your name by asking i.e., "What is my name?"       
 
-    < image 3 >
+    ![Checking the Name of user](images/checking_name_from_context.png)
 
-    Step 4: Do a RAG Search on document uploaded i.e.,  "List 5 features of Oracle 23ai from document"
+    **Step 3: Do a RAG Search on document uploaded** 
+
+    Ask a question to query the document i.e.,  "List 5 features of Oracle 23ai from the document"
     Note: Agentic is prompted to RAG search only if ask search within document.
 
-    < image 4 >
+    ![Doing RAG search on the document](images/listing_5_new_features.png)
 
-    Step 5: Send the information to Vijay as email from your side i.e.,  "Send the information as email to Vijay from me"
+    **Step 4: Send the information as email**
+    
+    To test the email creation agent  ask question to send earlier information to Vijay as email from your side i.e.,  "Send the information as email to Vijay from me"
 
-    < image 5 >
-
-  Proceed to test other PDF files provided on VM and ask more question as per your imagination.
-
+    Check the email form on the left side for the result 
+    
+    ![Doing RAG search on the document](images/send_information_as_email.png)
+    
+    Proceed to test other PDF files provided on VM and ask more question as per your imagination. Few suggested question are below
 
 
 **Suggestions**
 
- For the Oracle Database 23ai documentation:
+For the Oracle Database 23ai documentation:
 - What are the new features in Oracle Database 23ai
 - Tell me more about AI Vector Search
 - Tell me more about new enhancement to SQL
@@ -101,11 +112,11 @@ Now check out the application code using the UI. From a terminal window type:
 ```
 
 Note the additional imported libraries and **st** objects for Streamlit.
-But essentially the code is the same 7 steps for building a RAG application with Oracle AI Vector Search and LangChain.
+But essentially the code is the same AI Agentic application that we studied in Lab 2.
 
 ### Conclusion
 
-In Lab 2 you ran a through the steps for the application in Jupyter Noteboom.  In this lab we ran it with a UI using the same.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
+Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
 
 By using AI Vector Search in Oracle Database 23ai, you can build AI Agentic applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 

@@ -17,7 +17,7 @@ Let's get started!
 
 We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
 
-We are using OracleDB Python Drivers to connect to Oracle database and not cx_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
+We are using OracleDB Python Drivers to connect to Oracle database and not cx\_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
 
 To import all the require libararies for this work run the below code.  
 
@@ -61,7 +61,6 @@ from reportlab.lib.units import inch
 %config SqlMagic.style = 'PLAIN_COLUMNS'  # 
 %sql oracle+oracledb://vector:vector@129.213.75.70:1521?service_name=ORCLPDB1
 
-
 # Load environment variables
 load_dotenv()
 
@@ -71,7 +70,6 @@ from IPython.display import display, Image, FileLink, Markdown
 
 # Set the figure size for plots
 plt.rcParams["figure.figsize"] = (10, 6)
-
 
 ```
 
@@ -90,7 +88,6 @@ def create_db_connection():
         dsn=os.getenv("ORACLE_DSN")
     )
 
-
 print(os.getenv("ORACLE_DSN"))
 
 # Initialize connection
@@ -105,11 +102,11 @@ print("Database connection established")
 Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
 
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
-For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
+For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
 
 The model we are using is all-MiniLM-L6-v2. This model has been download as ONNX file and loaded in the database already.
 
-Note: To learn more about creating embedding in database check for live lab ( AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain [https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927] )
+Note: To learn more about creating embedding in database check for live lab ( [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain] (https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927) )
 
 Run the below code to initialize the Oracle Vector Store 
 
@@ -205,11 +202,14 @@ id is the primary key,  Text column contains the text chunks, meta column contai
 </table>
 </div>
 
+
 ### **Understanding AI Agent Components**
+
+The diagram shows the core structure of an AI agent: **Tools**, **Model**, and **Prompt** feed into the **Agent**, which is then processed by an **Agent Executor** that incorporates tools and memory. Specifically, the agent is initialized with a model (e.g., `ChatOCIGenAI`), a prompt template (`PromptTemplate.from\_template(...)`), and a set of tools. The `AgentExecutor` then manages the agent’s operations, leveraging tools and memory to execute tasks effectively.
  
 ![AiArchitectire](images/flowstepsai.jpg)
 
-The diagram shows the core structure of an AI agent: **Tools**, **Model**, and **Prompt** feed into the **Agent**, which is then processed by an **Agent Executor** that incorporates tools and memory. Specifically, the agent is initialized with a model (e.g., `ChatOCIGenAI`), a prompt template (`PromptTemplate.from_template(...)`), and a set of tools. The `AgentExecutor` then manages the agent’s operations, leveraging tools and memory to execute tasks effectively.
+
 
 ### **Explanation of Components and Tools**
 
@@ -226,7 +226,7 @@ We’ll define a set of specialized tools that the AI agent will utilize to perf
 These tools, combined with the model and prompt, are orchestrated by the `AgentExecutor` to enable the AI agent to perform complex, multi-step tasks like data retrieval, email automation, and PDF generation, all while maintaining contextual awareness through memory.
 How to Use:
 Copy the above content into a text editor.
-Save it as AI_Agent_Components.md.
+Save it as AI\_Agent\_Components.md.
 Open it in any Markdown viewer or editor (e.g., VS Code, Typora, or GitHub) to see the formatted output.
 Let me know if you need further assistance!
 
@@ -236,7 +236,7 @@ Let me know if you need further assistance!
 
 Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
 
-### Tool 1: RAG Search
+### **Tool 1: RAG Search**
 
 In the RAG Search tool we create a function rag\_search. The variables in funcation are 
 - query: Input User query about the RAG serch in the document.
@@ -256,7 +256,7 @@ Sample input/output
     Input: Question about the document for a RAG search
     Output: Top 8 pages that have most relavent answers for the question.
 
-### Tool 2: Fetch Recipients (Database Tool)
+### **Tool 2: Fetch Recipients (Database Tool)**
 
 Fetch Recipients tools will query the database table for the first name and last name and return the corresponding email id.  The function fetch\_recipients is created for this.  The parameter used in the function are 
 
@@ -308,7 +308,7 @@ Fetch Recipients:
     Output: email id associated with the name.
 
 
-### Tool 3: PDF Creation
+### **Tool 3: PDF Creation**
 
 Using Python libraries (reportlab) to generate PDF files
 
@@ -429,7 +429,7 @@ def create_pdf_tool(input_data: Union[str, Dict]) -> str:
 
 ```
 
-### Tool 4: User Name Extraction
+### **Tool 4: User Name Extraction**
 
 The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user's interaction with application i.e., the last question and entire context of conversation.
 
@@ -464,7 +464,7 @@ def extract_user_name(memory):
 ```
 ## **Section 4: Setting up Agent using LangChain.**
 
-### Agent Memory
+### **Agent Memory**
 
 Memory is crucial for agents that need to maintain context over multiple turns.
 Our agent uses `ConversationBufferMemory` which:
@@ -476,7 +476,7 @@ Our agent uses `ConversationBufferMemory` which:
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 ```
 
-### Initialize Oracle GenAI Model
+### **Initialize Oracle GenAI Model**
 
 The brain behind the agent is Oracle GenAI, the funcation initializes the specific model using Oracle API keys.
 
@@ -496,10 +496,10 @@ def initialize_llm():
 ```
 
 
-### Creating the Agent Prompt Template
+### **Creating the Agent Prompt Template**
 
 
-### The Importance of Effective Prompt Templates
+### **The Importance of Effective Prompt Templates**
 
 A well-crafted prompt template is essential for guiding agent behavior effectively. It should clearly define the agent's role and limitations, establish strict formatting rules (such as enforcing the ReAct structure), and include specific instructions for handling special cases like usernames or conditional actions (e.g., when to generate a PDF). Examples are crucial—they illustrate proper reasoning and the expected format across different scenarios. Additionally, a concise list of available tools with descriptions helps the agent choose the right tool for the task.
 
@@ -587,16 +587,14 @@ def create_agent_prompt():
 
 ```
 
-
-
-### Initilize Agent & Agent_executor
+### **Initilize Agent & Agent\_executor**
 
 We defined tools, models and prompt, next we need to initialize the agent and agent executor.  the agent executor has additional information like number of itrations, versbose mode for logging thought process, and keywords when the answer is found.
 
 ![AiArchitectire](images/flowstepsai.jpg)  
 
 
-### Agent Initialization Process
+### **Agent Initialization Process**
 
 The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
 
@@ -644,6 +642,9 @@ def setup_agent():
 
 ````
 
+You have completed the Code explaination. We would do code walk through in the next lab.
+
+Please proceed to the next lab.
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan
