@@ -34,7 +34,7 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
 4. Enter **localhost:8501** for the URL in the browser.
    
-    Your application will now be running.  The UI will look like the figure below.  Click on the ">" icon on the upper left corner as highlighted with red box.  This would expand the section to display file loading options and email display fields
+    Your application will now be running.  The UI will look like the figure below.  Click on the **">"** icon on the upper left corner as highlighted with red box.  This would expand the section to display file loading options and email display fields
 
     ![Streamlit UI](images/opening_screen_collapsed.png)
 
@@ -46,13 +46,36 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
     After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
     
-    ![Streamlit UI](images/streamlitocigenai.png)
+    ![Application GUI](images/streamlitocigenai.png)
     
     A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below. 
 
-6. Type a question and hit return.
+6. Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.
 
-In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.  
+    Step 1: Load a pdf file "23ai new features guide"
+
+    < image 1 >
+
+    Step 2: To test memory tell LLM your name i.e., "My name is Homer Simpson".
+
+    < image 2 >
+    
+    Step 3: Now check if application remembers your name i.e., "What is my name?"  
+
+    < image 3 >
+
+    Step 4: Do a RAG Search on document uploaded i.e.,  "List 5 features of Oracle 23ai from document"
+    Note: Agentic is prompted to RAG search only if ask search within document.
+
+    < image 4 >
+
+    Step 5: Send the information to Vijay as email from your side i.e.,  "Send the information as email to Vijay from me"
+
+    < image 5 >
+
+  Proceed to test other PDF files provided on VM and ask more question as per your imagination.
+
+
 
 **Suggestions**
 
@@ -74,7 +97,7 @@ Now check out the application code using the UI. From a terminal window type:
 
 ```
     $ cd /home/oracle/aidemo
-    $ more genai.py
+    $ more GenAI_Agent.py
 ```
 
 Note the additional imported libraries and **st** objects for Streamlit.
@@ -82,9 +105,9 @@ But essentially the code is the same 7 steps for building a RAG application with
 
 ### Conclusion
 
-In Lab 2 you ran a RAG application with a UI using the same 7 steps for RAG and Oracle AI Vector Search.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
+In Lab 2 you ran a through the steps for the application in Jupyter Noteboom.  In this lab we ran it with a UI using the same.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
 
-By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+By using AI Vector Search in Oracle Database 23ai, you can build AI Agentic applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 
 
 **Completed. Thanks for running the lab.**
@@ -92,4 +115,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan 
 * **Contributors** - Rajeev Rumale
-* **Last Updated By/Date** -  Rajeev Rumale, October 2024
+* **Last Updated By/Date** -  Rajeev Rumale, May 2025
