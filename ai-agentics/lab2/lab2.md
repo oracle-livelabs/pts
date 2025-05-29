@@ -1,4 +1,4 @@
-# Lab 2:  Demonstrating AI Agent resoning with Examples
+# Lab 2:  Demonstrating AI Agent reasoning with Examples
 
 ## Introduction
 

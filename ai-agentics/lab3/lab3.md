@@ -126,4 +126,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build AI Agentic appl
 ## Acknowledgements
 * **Authors** - Vijay Balebail, 
 * **Contributors** - Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** -  Rajeev Rumale, May 202525
+* **Last Updated By/Date** -  Rajeev Rumale, May 2025
