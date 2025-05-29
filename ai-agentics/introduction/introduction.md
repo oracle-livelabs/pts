@@ -68,10 +68,8 @@ Memory: Contextual memory for retaining prior interactions in multi-step tasks.
 Planner: Breaks down tasks into steps, selecting tools and actions.
 Environment: Data sources like Oracle Database 23ai for processing information.
 
-
  ![AI Agent Architecture](images/ai-architecture.jpg )
 
-## Task 2
 
 ### Learn More
 

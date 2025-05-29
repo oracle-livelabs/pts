@@ -24,7 +24,7 @@ We'll demonstrate:
 * Have got the Sandbox instance created and able to access the noVNC console.
 
 
-## Task Example 1: Testing Context Memory - Name Introduction  
+## Example 1: Testing Context Memory - Name Introduction  
 
 This will to used to test if the agent can retrive info from chat context.
 We chat with the agent and introduce ourselve and check if it remember our name during the whole conversation. The output is in verbose mode and will trace the activities and thought process of agent. it would be labeled as Observation, Action,  Final answer and Response.
@@ -66,7 +66,7 @@ print("\nResponse:\n", response.get("output"))
 
 Notice it responds back with your name as you entered in Introduction and retained in Contect Memory.
 
-## Task Example 2: Get name from DB -- Testing reteriving relational data from database
+## Example 2: Get name from DB -- Testing reteriving relational data from database
 
 In this example, we'll evaluate the agent's ability to retrieve information from a relational database—a key and powerful capability. By leveraging both the database and the language model, the agent can generate the desired output using its available tools.
 
@@ -109,7 +109,7 @@ replace the name with the name you inserted to verify if the agent can retrieve 
 response = agent_executor.invoke({"input": "what is the email for james"})
 ```
 
-## Task Example 3: RAG Search -- Test Oracle DB vector search 
+## Example 3: RAG Search -- Test Oracle DB vector search 
 
 This is a demonstration of doing vector search of data stored in Oracle using vector search.
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
@@ -137,7 +137,7 @@ The response would be as below
 ```` 
 
 
-## Task Example 4: Creating a Simple PDF -- Test working of Create pdf tool
+## Example 4: Creating a Simple PDF -- Test working of Create pdf tool
 
 This is to demonstrate how agent can interact with 3rd party tools. And test how the agent can call the tools available to get to the solution.
 
@@ -160,7 +160,7 @@ You can check the output file in the file browser. You can double click the file
 ![Showing the location of PDF file output in Jupyter Notebook](images/location_of_pdf_file_output.png)
 
 
-## Task Example 5: Combined Task - RAG Search and Create PDF
+## Example 5: Combined Task - RAG Search and Create PDF
 
 In this we demonstrate the use of RAG Vector Search and creation of PDF tools using multiple iterations of the agent. For this enter the question with two tasks in one sentence. Agent will understand the two task and do the necessary actions.
 
@@ -214,7 +214,7 @@ Response:
     I've created an email PDF with the 5 new features from the document and sent it to Vijay from Milton. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Milton.pdf.
 ````
 
-## Task Example 7: Combined Task - Rag Search , fetch_recipients and create PDF and MEMORY
+## Example 7: Combined Task - Rag Search , fetch_recipients and create PDF and MEMORY
 
 Demonstrating use of Oracle Vector search, with 3rd party tools and mixing information from relational query, vector search, external tools and conversation memory. Similar to previous example, we add addtional request to get user name from Context Memory
 
@@ -259,7 +259,7 @@ Observer that the question mentions from me. And since you introduced your self 
     - Setting up memory for contextual conversations
     - Configuring the agent for optimal performance
 
-## Task: Next Steps
+## Next Steps
 
 - Scroll back and read through the template initilization. This is what makes an agent costamized to your needs.
 - Implement more sophisticated tools (database queries, API integrations).
@@ -269,7 +269,7 @@ Observer that the question mentions from me. And since you introduced your self 
 - And also the live lab [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3927)
 
 
-## Task Bonus: Create an Email PDF from Personal Information
+## Bonus: Create an Email PDF from Personal Information
 
 #### Run this cell to try it
 
