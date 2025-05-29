@@ -1,4 +1,4 @@
-# Lab 3: Demoing an Interactive Agentic Application
+# Lab 3: Run an Interactive Agentic Application
 
 ## Introduction
 
@@ -124,6 +124,6 @@ By using AI Vector Search in Oracle Database 23ai, you can build AI Agentic appl
 **Completed. Thanks for running the lab.**
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, 
-* **Contributors** - Milton Wan, Rajeev Rumale
+* **Authors** - Vijay Balebail, Rajeev Rumale
+* **Contributors** - Milton Wan, Dough Hood
 * **Last Updated By/Date** -  Rajeev Rumale, May 2025

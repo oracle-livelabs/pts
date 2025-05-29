@@ -1,6 +1,4 @@
-# Build an Agentic AI application using LangChain and Oracle Database 23ai
-
-## About this Workshop
+# Build an Agentic AI application with LangChain and Oracle Database 23ai
 
 ### **Introduction**
 
@@ -10,9 +8,32 @@ Oracle Database 23ai is a converged database that includes support for AI Vector
 
 In this workshop, we will demonstrate how to build a powerful AI agent that performs AI Vector search, query relational database,  generate PDFs, and handle email-related tasks using LangChain with Oracle GenAI  service. This hands-on workshop teaches building AI agents with Python and LangChain with Oracle Database 23ai. Learn to design prompts, create custom tools, and use memory for maintaining context of LLM.  Using LangChain participants will gain skills using one of many AI Agentics framework to develop cutting-edge AI solutions, showcasing Oracle Database 23ai.
 
-### **About LLM Agents**
-What are LLM Agents?
-An LLM Agents is another name for AI agents. AI Agent is a reasoning framework built around a Large Language Model (LLM) that can interpret user input, reason through it step-by-step, and autonomously use external tools (like vector search, relational query, email, or PDF generators) to accomplish tasks.
+Estimated Time:  15 min
+
+### Objectives
+
+In this workshop, we'll perform the follow:
+
+* Setting up the environment and dependencies
+* Creating custom tools for our AI agent
+* Designing effective prompt templates
+* Initializing and running the AI agent
+
+
+Let's get started!
+
+
+### Prerequisites
+* An Oracle LiveLabs Account
+* Check out Livelab - Complete RAG Application using PL/SQL in Oracle Database 23ai
+
+
+## Task: Understanding AI Agents
+
+
+### **What are AI Agents?**
+
+An AI Agents is another name for AI agents. AI Agent is a reasoning framework built around a Large Language Model (LLM) that can interpret user input, reason through it step-by-step, and autonomously use external tools (like vector search, relational query, email, or PDF generators) to accomplish tasks.
 
 Think of it as turning an LLM into a decision-making assistant ? not just a chatbot that responds, but a system that plans, decides, and acts.
 
@@ -50,28 +71,9 @@ Environment: Data sources like Oracle Database 23ai for processing information.
 
  ![AI Agent Architecture](images/ai-architecture.jpg )
 
+## Task 2
 
-Estimated Time:  15 min
-
-### Objectives
-
-In this workshop, we'll perform the follow:
-
-* Setting up the environment and dependencies
-* Creating custom tools for our AI agent
-* Designing effective prompt templates
-* Initializing and running the AI agent
-
-
-Let's get started!
-
-
-### Prerequisites
-
-- An Oracle LiveLabs Account
-- Check out Livelab - Complete RAG Application using PL/SQL in Oracle Database 23ai
-
-## Learn More
+### Learn More
 
 See below for more information on Oracle Database 23ai and Oracle AI Vector Search
 
@@ -79,8 +81,11 @@ See below for more information on Oracle Database 23ai and Oracle AI Vector Sear
 * [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle AI Vector Search Blog](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
 
+
+
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Authors** -  Vijay Balebail, Milton Wan, Rajeev Rumale, Doug Hood
+* **Authors** - Vijay Balebail, Rajeev Rumale
+* **Contributors** - Milton Wan, Dough Hood
 * **Last Updated By/Date** -  Rajeev Rumale, May 2025

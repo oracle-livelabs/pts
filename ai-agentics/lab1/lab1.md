@@ -1,6 +1,6 @@
 # Agentic Architecture and Code Walkthrough
 
-## Introduction
+### Introduction
 
 In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. In this workshop, we'll explore:
 
@@ -11,7 +11,7 @@ In this workshop we use notebook to demonstrates how to build a powerful AI agen
 
 Let's get started!
 
-## **Section 1: Environment Setup and Imports**
+## **Task 1: Environment Setup and Imports**
 
 ### **Imports and Configuration**
 
@@ -73,7 +73,7 @@ plt.rcParams["figure.figsize"] = (10, 6)
 
 ```
 
-## **Section 2: Database and Vector Store Setup**
+## **Task 2: Database and Vector Store Setup**
 
 ### **Oracle Database Connection**
 
@@ -232,7 +232,7 @@ Let me know if you need further assistance!
 
 
 
-## **Section 3: Building Agent Tools**
+## **Task 3: Building Agent Tools**
 
 Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
 
@@ -462,7 +462,7 @@ def extract_user_name(memory):
     return None
 
 ```
-## **Section 4: Setting up Agent using LangChain.**
+## **Task 4: Setting up Agent using LangChain.**
 
 ### **Agent Memory**
 
@@ -647,6 +647,6 @@ You have completed the Code explaination. We would do code walk through in the n
 Please proceed to the next lab.
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, 
-* **Contributors** - Milton Wan, Rajeev Rumale
+* **Authors** - Vijay Balebail, Rajeev Rumale
+* **Contributors** - Milton Wan, Dough Hood
 * **Last Updated By/Date** -  Rajeev Rumale, May 2025

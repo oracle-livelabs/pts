@@ -1,8 +1,6 @@
 {
-  "workshoptitle": "Build an Agentic AI application using LangChain and Oracle Database 23ai",
+  "workshoptitle": "Build an Agentic AI application with LangChain and Oracle Database 23ai",
   "help": "livelabs-help-db_us@oracle.com",
-  "variables": ["../../variables/variables.json",
-      "../../variables/variables-in-another-file.json"],
   "tutorials": [
     {
     "title": "Introduction",
@@ -20,13 +18,13 @@
     "filename": "../../lab1/lab1.md"
     },
     {
-    "title": "Lab 2: Demonstrating AI Agent reasoning with Examples",
-    "description": "Demonstrating AI Agent reasoning with Examples",
+    "title": "Lab 2: Demonstrate AI Agent Reasoning with Examples",
+    "description": "Demonstrate AI Agent Reasoning with Examples",
     "filename": "../../lab2/lab2.md"
     },
     {
-    "title": "Lab 3: Demoing an Interactive Agentic Application",
-    "description": "Demoing an Interactive Agentic Application",
+    "title": "Lab 3: Run an Interactive Agentic Application",
+    "description": "Run an Interactive Agentic Application",
     "filename": "../../lab3/lab3.md"
     },
     {
