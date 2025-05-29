@@ -309,7 +309,9 @@ print("\nResponse:\n", response.get("output"))
      I've created an email PDF and sent it to Vijay from Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
 
 
-**You have succesfully completed Lab2.  Please proceed for the next lab.**
+**You have succesfully completed Lab2.**
+
+You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan
