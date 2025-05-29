@@ -1,4 +1,4 @@
-# Lab 2:  Agentic Demonstration
+# Lab 2:  Demonstrating AI Agent resoning with Examples
 
 ## Introduction
 

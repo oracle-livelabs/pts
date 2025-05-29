@@ -1,4 +1,4 @@
-# Lab 3: Run the same Agentic Application interactively
+# Lab 3: Run the Agentic Application interactively
 
 ## Introduction
 

@@ -1,8 +1,8 @@
-# Build an Agentic AI application using LangChain and Oracle Database 23ai
+# Agentic Architecture and Code Walkthrough
 
 ## Introduction
 
-In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. Throughout this workshop, we'll explore:
+In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. In this workshop, we'll explore:
 
 1. Setting up the environment and dependencies
 2. Creating custom tools for our agent
