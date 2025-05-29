@@ -1,4 +1,4 @@
-# Lab 3: Run the Agentic Application interactively
+# Lab 3: Demoing an Interactive Agentic Application
 
 ## Introduction
 
