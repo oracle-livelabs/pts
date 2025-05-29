@@ -314,6 +314,6 @@ print("\nResponse:\n", response.get("output"))
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan
-* **Contributors** - Rajeev Rumale, Doug Hood
+* **Authors** - Vijay Balebail, 
+* **Contributors** - Milton Wan, Rajeev Rumale
 * **Last Updated By/Date** -  Rajeev Rumale, May 2025

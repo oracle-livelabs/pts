@@ -647,6 +647,6 @@ You have completed the Code explaination. We would do code walk through in the n
 Please proceed to the next lab.
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Milton Wan
-* **Contributors** - Rajeev Rumale, Doug Hood
+* **Authors** - Vijay Balebail, 
+* **Contributors** - Milton Wan, Rajeev Rumale
 * **Last Updated By/Date** -  Rajeev Rumale, May 2025
