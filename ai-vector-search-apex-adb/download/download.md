@@ -240,6 +240,20 @@ end;
 
 Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
 
+Copy this statement and replace with your username and password for Oracle Cloud.
+
+```sql
+<copy>
+BEGIN
+  DBMS_CLOUD.CREATE_CREDENTIAL(
+    credential_name => 'OBJ_STORE_CRED',
+    username => '<your_oci_user_name>',
+    password => '<your_oci_password>'
+  );
+END;
+/
+</copy>
+```
 
 Run to create the staging directory.
 
