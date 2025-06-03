@@ -107,6 +107,7 @@ From ADMIN user, run the following to ensure your database user has the necessar
 <copy>
 CREATE USER VECTOR identified by <password>;
 GRANT CONNECT to VECTOR;
+ALTER USER VECTOR QUOTA UNLIMITED ON DATA;
 GRANT CREATE SESSION to VECTOR;
 GRANT RESOURCE to VECTOR;
 GRANT DB_DEVELOPER_ROLE to VECTOR;
