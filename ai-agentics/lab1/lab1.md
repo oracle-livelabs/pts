@@ -24,7 +24,7 @@ Let's get started!
 
     ```
         $ cd /home/oracle/aidemo
-        $ jupyter notebook
+        $ jupyter lab
     ```
 
 3. Open the notebook **GenAI\_Agent.ipynb**. You can double click or right-click and select **Open**.

@@ -279,8 +279,9 @@ We showed how agent can interact with LLM.  The type of questions you can ask ar
 response = agent_executor.invoke({ "input": "Create an email to the workshop Author (Vijay) thanking him for the session. Do not use rag_search, Generate a pdf in email format to send to Vijay from me" })
 print("\nResponse:\n", response.get("output"))
 ```
-   
-    
+The output would be similar to text shown below   
+
+```` 
     Entering new AgentExecutor chain...
     Thought: I will create an email PDF to send to Vijay from the user's name, Homer Simpson, as per the chat history.
     Action: Create PDF
@@ -307,7 +308,7 @@ print("\nResponse:\n", response.get("output"))
     
     Response:
      I've created an email PDF and sent it to Vijay from Homer Simpson. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
-
+````
 
 **You have succesfully completed Lab2.**
 
