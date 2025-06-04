@@ -13,6 +13,31 @@ Let's get started!
 
 ## **Task 1: Environment Setup and Imports**
 
+
+### Launch Jupyter Lab Notebook
+
+1. From the Activities menu, open a terminal window if it is not already opened.
+
+ ![Open terminal](images/browser.png)
+
+2. From the terminal OS prompt type the following to launch jupyter notebook:
+
+    ```
+        $ cd /home/oracle/aidemo
+        $ jupyter notebook
+    ```
+
+3. Open the notebook **GenAI\_Agent.ipynb**. You can double click or right-click and select **Open**.
+   
+    ![Open AI Agentics notebook using Jupyter lab](images/open_jupyter_notebook.png)
+
+
+    If you want to enlarge the window and have larger fonts, you can zoom in with the browser.
+
+    ![Zoom in](images/zoom.png)
+
+
+
 ### **Imports and Configuration**
 
 We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
@@ -112,20 +137,25 @@ Run the below code to initialize the Oracle Vector Store
 
 ```
 def setup_vector_store(connection):
-    Set up and return the Oracle Vector Store.
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    """Set up and return the Oracle Vector Store."""    
+    local_model_path = "/home/oracle/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+    embeddings = HuggingFaceEmbeddings(model_name=local_model_path) 
+    #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     vector_store = OracleVS(
         client=connection,
         embedding_function=embeddings,
         table_name="AGENTICS_AI",
         distance_strategy=DistanceStrategy.COSINE
     )
-    print("? Oracle Vector Store ready")
+    print("Oracle Vector Store ready")
     return vector_store
 
 # Initialize vector store
 vector_store = setup_vector_store(connection)
 ```
+
+Note: We are using the embedding model cached locally on disk.
+
 ### **Verify the Vector Store table**
 
 To explore the vector store we created, run the sql query to select the first 5 rows of the table that holds the vector data.
