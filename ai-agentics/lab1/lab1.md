@@ -2,7 +2,7 @@
 
 ### Introduction
 
-In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. In this workshop, we'll explore:
+In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. In this lab you will perform the following tasks
 
 1. Setting up the environment and dependencies
 2. Creating custom tools for our agent
@@ -40,11 +40,11 @@ Let's get started!
 
 ### **Imports and Configuration**
 
-We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
+We need to import Oracle implementation of Langchain from langchain community.  Additional libraries are imported for PDF generation and standard library.
 
 We are using OracleDB Python Drivers to connect to Oracle database and not cx\_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
 
-To import all the require libararies for this work run the below code.  
+To import all the require libararies run the below code.  
 
 ```Python
 
