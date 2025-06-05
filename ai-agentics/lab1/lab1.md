@@ -13,7 +13,6 @@ Let's get started!
 
 ## **Task 1: Environment Setup and Imports**
 
-
 ### Launch Jupyter Lab Notebook
 
 1. From the Activities menu, open a terminal window if it is not already opened.
@@ -37,14 +36,13 @@ Let's get started!
     ![Zoom in](images/zoom.png)
 
 
-
 ### **Imports and Configuration**
 
-We need to import Oracle implementation of Langchain from langchain community.  Additional libraries are imported for PDF generation and standard library.
+We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
 
 We are using OracleDB Python Drivers to connect to Oracle database and not cx\_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
 
-To import all the require libararies run the below code.  
+To import all the required libararies, run the below code.  
 
 ```Python
 
@@ -137,10 +135,12 @@ Run the below code to initialize the Oracle Vector Store
 
 ```
 def setup_vector_store(connection):
-    """Set up and return the Oracle Vector Store."""    
+
+  """Set up and return the Oracle Vector Store."""    
     local_model_path = "/home/oracle/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
     embeddings = HuggingFaceEmbeddings(model_name=local_model_path) 
     #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
     vector_store = OracleVS(
         client=connection,
         embedding_function=embeddings,
@@ -153,7 +153,6 @@ def setup_vector_store(connection):
 # Initialize vector store
 vector_store = setup_vector_store(connection)
 ```
-
 Note: We are using the embedding model cached locally on disk.
 
 ### **Verify the Vector Store table**
