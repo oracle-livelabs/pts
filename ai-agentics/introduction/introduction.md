@@ -2,7 +2,7 @@
 
 ### **Introduction**
 
-This workshop is to teach how to build AI Agent framework using LangChain and Oracle Database 23ai . We will discuss how an Agent is initialized, make calls to tools, and use context memory.  Once you understand the building components of an Agent, the application that you build using the AI agentic framework are limitless.
+This workshop is to show how to build AI Agent application using LangChain and Oracle Database 23ai. We will discuss how an Agent is initialized, make calls to tools, and use context memory.  Once you understand the building components of an Agent, the application that you build using the AI agentic framework are limitless.
 
 Oracle Database 23ai is a converged database that includes support for AI Vector Search, Graph, JSON, Machine Learning and many more AI features. By showing how an AI agent can interact with the Oracle database, an architect can design an application harnessing the power of Oracle Converged database with GenAI LLMs.
 
@@ -33,9 +33,7 @@ Let's get started!
 
 ### **What are AI Agents?**
 
-An AI Agents is another name for AI agents. AI Agent is a reasoning framework built around a Large Language Model (LLM) that can interpret user input, reason through it step-by-step, and autonomously use external tools (like vector search, relational query, email, or PDF generators) to accomplish tasks.
-
-Think of it as turning an LLM into a decision-making assistant ? not just a chatbot that responds, but a system that plans, decides, and acts.
+An AI or LLM Agent is a reasoning framework built around a Large Language Model (LLM) that can interpret user input, reason through it step-by-step, and autonomously use external tools (like vector search, relational query, email, or PDF generators) to accomplish tasks, not just a chatbot that responds, but a system that plans, decides, and acts.
 
 It's like giving the LLM: a brain to reason and remember (via prompts + memory),
 eyes and ears to read documents or look up info (via tools),
@@ -85,5 +83,5 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Rajeev Rumale
-* **Contributors** - Milton Wan, Dough Hood
-* **Last Updated By/Date** -  Rajeev Rumale, May 2025
+* **Contributors** - Milton Wan, Doug Hood
+* **Last Updated By/Date** -  Rajeev Rumale, June 2025
