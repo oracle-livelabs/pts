@@ -677,5 +677,5 @@ Please proceed to the next lab.
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Rajeev Rumale
-* **Contributors** - Milton Wan, Dough Hood
-* **Last Updated By/Date** -  Rajeev Rumale, May 2025
+* **Contributors** - Milton Wan, Doug Hood
+* **Last Updated By/Date** -  Rajeev Rumale, June 2025
