@@ -11,6 +11,7 @@ Estimated Time: 10 minutes
 In this lab, you will:
 
 * Create the vector table in Oracle Autonomous Database 23ai
+* Create the credential
 * Create a procedure to store the document
 * Create a trigger to embed the vectors
 * Create a function to return similar chunks and generate LLM response
@@ -19,12 +20,32 @@ In this lab, you will:
 
 * Environment with Oracle Autonomous Database 23ai
 
-## Task 1: Create tables to store the document, chunks, and vectors
+## Task 1: Create credential and tables to store the document, chunks, and vectors
 
 1. From your Autonomous Database console select Database Actions SQL worksheet
 ![alt text](images/sqlworksheet.png)
-2. Login as VECTOR user.
+2. Login as VECTOR user and create the crendetial, make sure the private key is on one line.
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
+
+    ```
+    <copy>
+    declare
+      jo json_object_t;
+    begin
+      jo := json_object_t();
+      jo.put('user_ocid','<your ocid1.user goes here>');
+      jo.put('tenancy_ocid','<your ocid1.tenancy goes here>');
+      jo.put('compartment_ocid','<your compartment ocid1.compartment goes here>');
+      jo.put('private_key','<your API private key goes here>');
+      jo.put('fingerprint','<your fingerprint goes here>');
+      dbms_vector.create_credential(
+        credential_name   => 'GENAI_CRED',
+        params            => json(jo.to_string));
+    end;
+    /
+    </copy>
+    ```
+
 
     ```
     <copy>
@@ -67,36 +88,34 @@ Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the
 
     ```
     <copy>
-    create or replace PROCEDURE insert_my_table_row(
-        p_file_name IN my_books.file_name%TYPE,
-        p_file_size IN my_books.file_size%TYPE,
-        p_file_type IN my_books.file_type%TYPE,
-        p_file_content IN my_books.file_content%TYPE,
-        p_new_id OUT number
+    CREATE OR REPLACE PROCEDURE insert_my_table_row(
+        p_file_name    IN VARCHAR2,
+        p_file_size    IN NUMBER,
+        p_file_type    IN VARCHAR2,
+        p_file_content IN BLOB,
+        p_new_id       OUT NUMBER
     )
     IS
-        v_count NUMBER;
-        v_id    number;
-        new_id  number ;
+        new_id NUMBER;
     BEGIN
-        -- Check if the combination of a and b already exists
         BEGIN
-        SELECT id INTO new_id FROM MY_BOOKS WHERE file_name = p_file_name AND file_size = p_file_size;
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-        INSERT INTO MY_BOOKS (file_name, file_size, file_type, file_content)
-            VALUES (p_file_name, p_file_size, p_file_type, p_file_content)
-            RETURNING id into new_id;
+            SELECT id INTO new_id 
+            FROM VECTOR.MY_BOOKS 
+            WHERE file_name = p_file_name AND file_size = p_file_size;
+        EXCEPTION 
+            WHEN NO_DATA_FOUND THEN
+                INSERT INTO VECTOR.MY_BOOKS (file_name, file_size, file_type, file_content)
+                VALUES (p_file_name, p_file_size, p_file_type, p_file_content)
+                RETURNING id INTO new_id;
         END;
+
         p_new_id := new_id;
-        dbms_output.put_line(new_id);
+        DBMS_OUTPUT.PUT_LINE(new_id);
         COMMIT;
     EXCEPTION
         WHEN OTHERS THEN
-            -- Exception handling here, for example, a rollback or a custom error message
-                DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
-            --RAISE;
+            DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
     END insert_my_table_row;
-
     </copy>
     ```
 
