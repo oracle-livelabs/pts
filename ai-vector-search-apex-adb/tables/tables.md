@@ -11,6 +11,7 @@ Estimated Time: 10 minutes
 In this lab, you will:
 
 * Create the vector table in Oracle Autonomous Database 23ai
+* Create the credential
 * Create a procedure to store the document
 * Create a trigger to embed the vectors
 * Create a function to return similar chunks and generate LLM response
@@ -19,12 +20,32 @@ In this lab, you will:
 
 * Environment with Oracle Autonomous Database 23ai
 
-## Task 1: Create tables to store the document, chunks, and vectors
+## Task 1: Create credential and tables to store the document, chunks, and vectors
 
 1. From your Autonomous Database console select Database Actions SQL worksheet
 ![alt text](images/sqlworksheet.png)
-2. Login as VECTOR user.
+2. Login as VECTOR user and create the crendetial
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
+
+    ```
+    <copy>
+    declare
+      jo json_object_t;
+    begin
+      jo := json_object_t();
+      jo.put('user_ocid','<your ocid1.user goes here>');
+      jo.put('tenancy_ocid','<your ocid1.tenancy goes here>');
+      jo.put('compartment_ocid','<your compartment ocid1.compartment goes here>');
+      jo.put('private_key','<your API private key goes here>');
+      jo.put('fingerprint','<your fingerprint goes here>');
+      dbms_vector.create_credential(
+        credential_name   => 'GENAI_CRED',
+        params            => json(jo.to_string));
+    end;
+    /
+    </copy>
+    ```
+
 
     ```
     <copy>
