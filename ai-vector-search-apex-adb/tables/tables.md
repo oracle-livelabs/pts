@@ -24,7 +24,7 @@ In this lab, you will:
 
 1. From your Autonomous Database console select Database Actions SQL worksheet
 ![alt text](images/sqlworksheet.png)
-2. Login as VECTOR user and create the crendetial
+2. Login as VECTOR user and create the crendetial, make sure the private key is on one line.
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
 
     ```
