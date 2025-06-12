@@ -7,12 +7,11 @@ Estimated Time: 90 minutes.
 ### Prerequisites
 
 This lab assumes you have the following:
-* Access to Oracle Cloud Infrastructure (OCI), paid account or free tier, in a region that has:
-    - Autonomous Database with Oracle Database 23ai
-    - Generative AI
+* Access to Autonomous Database 23ai, paid account or free tier, in a region with Generative AI.
+    - [Regions with Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/overview.htm#regions)
 * Basic experience with OCI Cloud Console and standard components.
 * Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle Application Express (APEX) low-code development.
+* Experience with Oracle APEX low-code development.
 
 ## Task 1: Prepare the OCI cloud components
 
@@ -23,6 +22,10 @@ This lab assumes you have the following:
 2. Click the tenancy name link and copy your Tenancy OCID in your notes.
 
     ![tenancy ocid](./images/tenancy-ocid.png " ")
+
+3. Copy your Object Storage Namespace in your notes.
+
+    ![object storage namespace](./images/obj-storage-namespace.png " ")
 
 3. Open the user menu in the upper-right corner and click on your username.
 
@@ -62,8 +65,12 @@ This lab assumes you have the following:
 
 12. Write down in your notes the Auth token generated. You will need this information for the Object Storage credential:
 
-    - CLOUD_USER='oracleidentitycloudservice/YourOCIusername'
+    - CLOUD_USER='YourOCIusername'
     - CLOUD_TOKEN='6h[H9h)h}hH.23hHha0H'
+
+    > **Note:** If your tenancy uses an Identity Domain, `CLOUD_USER` value should be 'YourIdentityDomain/YourOCIusername'.
+
+    ![tenancy identity domain](./images/tenancy-identity-domain.png " ")
 
 13. Click API keys and Add API key.
 
@@ -195,7 +202,26 @@ This lab assumes you have the following:
 
     ![grant execute](./images/grant-execute.png " ")
 
-13. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs.
+13. Grant more privileges to DBAI user that are required for Oracle Text analysis.
+
+    ````sql
+    <copy>
+    grant create ANY DIRECTORY to DBAI;
+    grant create MINING MODEL to DBAI;
+    grant create PROCEDURE to DBAI;
+    grant CTXAPP to DBAI;
+    grant execute on CTXSYS.CTX_CLS to DBAI;
+    grant execute on CTXSYS.CTX_DDL to DBAI;
+    grant execute on CTXSYS.CTX_DOC to DBAI;
+    grant execute on CTXSYS.CTX_OUTPUT to DBAI;
+    grant execute on CTXSYS.CTX_QUERY to DBAI;
+    grant execute on CTXSYS.CTX_REPORT to DBAI;
+    grant execute on CTXSYS.CTX_THES to DBAI;
+    grant execute on CTXSYS.CTX_ULEXER to DBAI;
+    </copy>
+    ````
+
+14. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs. Same for `adobe.io` domain.
 
     ````sql
     <copy>
@@ -210,41 +236,57 @@ This lab assumes you have the following:
     </copy>
     ````
 
+    ````sql
+    <copy>
+    BEGIN
+    DBMS_NETWORK_ACL_ADMIN.append_host_ace (
+        host       => '*.adobe.io',
+        ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
+                                principal_name => 'DBAI',
+                                principal_type => xs_acl.ptype_db));
+    END;
+    /
+    </copy>
+    ````
+
     ![create network acl](./images/create-network-acl.png " ")
 
-14. On the Oracle Cloud Console, on your ADB instance page, under the Tool Configuration tab, you will use Oracle APEX for the AI Vector Search and RAG application.
+    >Note: Adobe is a trademark of Adobe Systems, Incorporated.
+
+15. On the Oracle Cloud Console, on your ADB instance page, under the Tool Configuration tab, you will use Oracle APEX for the AI Vector Search and RAG application.
 
     ![tool configuration](./images/tool-configuration.png " ")
 
-15. Copy the APEX URL in your notes.
+16. Copy the APEX URL in your notes.
 
     ![copy apex url](./images/copy-apex-url.png " ")
 
-16. Paste your Oracle APEX URL in a new tab of your browser. For example:
+17. Paste your Oracle APEX URL in a new tab of your browser. For example:
 
     - https://apexinstance-adbinstancename.adb.uk-london-1.oraclecloudapps.com/ords/apex
 
-17. Click the Administration Services link.
+18. Click the Administration Services link.
 
     ![administration services](./images/administration-services.png " ")
 
-18. Use the ADB admin user's strong password to log in.
+19. Use the ADB admin user's strong password to log in.
 
     - Password: `Your#5tr0ng_PassW0rd`
 
     ![sign in to administration](./images/sign-in-to-administration.png " ")
 
-19. Click Manage Workspaces > Create Workspace.
+20. Click Manage Workspaces > Create Workspace.
 
     ![manage workspaces create](./images/manage-workspaces-create.png " ")
 
-20. Choose Existing Schema.
+21. Choose Existing Schema.
 
     ![existing schema](./images/existing-schema.png " ")
 
-21. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
+22. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
 
     ![create workspace](./images/create-workspace.png " ")
+
 
 ## Task 3: Prepare Workspace and import application
 
@@ -305,7 +347,7 @@ This lab assumes you have the following:
     BEGIN
         DBMS_CLOUD.create_credential(
         credential_name => 'OBJS_CREDENTIAL',
-        username => 'oracleidentitycloudservice/YourOCIusername',
+        username => 'YourOCIusername',
         password => '6h[H9h)h}hA.23hAha0H');
     END;
     /
@@ -314,19 +356,23 @@ This lab assumes you have the following:
 
     ![create objs credential](./images/create-objs-credential.png " ")
 
+    > **Note:** If your tenancy uses an Identity Domain, `username` value should be 'YourIdentityDomain/YourOCIusername'.
+
+    ![tenancy identity domain](./images/tenancy-identity-domain.png " ")
+
 14. Verify the new Credential. List objects in your Object Storage Bucket.
 
     ````sql
     <copy>
     SELECT * FROM table(dbms_cloud.list_objects(
       credential_name => 'OBJS_CREDENTIAL',
-      location_uri => 'https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy/b/DBAI-bucket/'));
+      location_uri => 'https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com/n/YourObjStorageNamespace/b/DBAI-bucket/'));
     </copy>
     ````
 
     ````sql
     <copy>
-    select * from dbms_cloud.list_objects('OBJS_CREDENTIAL','https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy/b/DBAI-bucket/o/');
+    select * from dbms_cloud.list_objects('OBJS_CREDENTIAL','https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com/n/YourObjStorageNamespace/b/DBAI-bucket/o/');
     </copy>
     ````
 
@@ -530,7 +576,7 @@ This lab assumes you have the following:
       model_source BLOB := NULL;
     BEGIN
       model_source := DBMS_CLOUD.get_object(credential_name => 'OBJS_CREDENTIAL',
-        object_uri => 'https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy/b/DBAI-bucket/o/all_MiniLM_L12_v2.onnx'); 
+        object_uri => 'https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com/n/YourObjStorageNamespace/b/DBAI-bucket/o/all_MiniLM_L12_v2.onnx'); 
       DBMS_VECTOR.load_onnx_model('ALLMINL12V2',
                                   model_source,
                                   JSON('{"function" : "embedding",
@@ -775,9 +821,9 @@ This lab assumes you have the following:
     ````
     - OCI Tenancy ID: `ocid1.tenancy.oc1..aaaaaaaa6aea6xvr6thisismytenancyhahahahaahhahaahaa4opc3fib2a`
     - OCI Public Key Fingerprint: `25:0h:57:07:2h:55:0h:10:6h:h6:ha:06:h1:9h:32:9h`
-    - Valid for URLs (replace `YourOCItenancy` with your tenancy name): 
+    - Valid for URLs (replace `YourObjStorageNamespace` with your namespace): 
     ````
-    https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com
+    https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com
     https://objectstorage.uk-london-1.oraclecloud.com
     ````
 
@@ -884,8 +930,8 @@ This lab assumes you have the following:
 
     ![bucket objects pdf](./images/bucket-objects-pdf.png " ")
 
-
 You may now **proceed to the next lab**.
+
 
 ## **Acknowledgements**
 

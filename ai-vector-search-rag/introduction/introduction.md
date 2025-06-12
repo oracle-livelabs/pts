@@ -7,6 +7,8 @@ This hands-on workshop covers the Oracle Database 23ai latest AI Vector Search c
 How is this workshop different from other workshops?
 During this workshop you only need an Autonomous Database instance, it can be a Free Tier one, and you will import an APEX application that has all the components you need to run AI Vector Search and Retrieval-augmented generation (RAG) written in simple SQL and PL/SQL code that you can modify to understand how it works.
 
+Oracle APEX is the world's most popular enterprise low-code application platform that enables you to build scalable, secure web and mobile apps, with world-class features, that can be deployed anywhere – cloud or on premises. Using APEX, developers can quickly develop and deploy compelling apps that solve real problems and provide immediate value. You don't need to be an expert in a vast array of technologies to deliver sophisticated solutions. Focus on solving the problem and let APEX take care of the rest.
+
 Estimated Workshop Time: 120 minutes.
 
 ### About AI Vector Search
@@ -37,12 +39,11 @@ In this workshop, you will learn how to:
 ### Prerequisites
 
 This lab assumes you have the following:
-* Access to Oracle Cloud Infrastructure (OCI), paid account or free tier, in a region that has:
-    - Autonomous Database with Oracle Database 23ai
-    - Generative AI
+* Access to Autonomous Database 23ai, paid account or free tier, in a region with Generative AI.
+    - [Regions with Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/overview.htm#regions)
 * Basic experience with OCI Cloud Console and standard components.
 * Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle Application Express (APEX) low-code development.
+* Experience with Oracle APEX low-code development.
 
 ## Learn More
 
