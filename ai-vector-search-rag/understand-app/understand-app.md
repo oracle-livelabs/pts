@@ -4,19 +4,29 @@
 
 Estimated Time: 30 minutes.
 
+Watch these videos for a quick demonstration of the main capabilities explained in this workshop:
+
+[The database can help you organize documents](youtube:qhEtVaTFv1s)
+
+[The database can help you search documents](youtube:Pr4oDiFYwrc)
+
+[The database can help you classify documents](youtube:PwhYcEa67Q8)
+
+[The database can help you convert documents](youtube:0NBj0T53mz0)
+
 ### Prerequisites
 
 This lab assumes you have the following:
 * Completed the previous labs of this workshop.
 * Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle Application Express (APEX) low-code development.
+* Experience with Oracle APEX low-code development.
 
 
 ## Task 1: Review and understand the Home page
 
 1. Look at the `P1_PROMPT` item SQL Query. It has a sub-query called `query_vector` that vectorizes the question written in item `P1_QUERY` using the same LLM. This vector is compared with the vectors stored in the `VECTORS` table and returns the first 5 results by distance. The contents of the closest 5 chunks is concatenanted and returned as `FINAL_PROMPT`.
 
-    ````
+    ````sql
     <copy>
     select  
     apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_PROMPT
@@ -32,7 +42,7 @@ This lab assumes you have the following:
 
 2. The generative AI prompt is used to initiate a response from the AI system. It is a natural language question or statement that triggers the AI to generate a relevant and contextually appropriate response. This particular application uses a promp that has an XML structure, similar to this:
 
-    ````
+    ````sql
     <copy>
     <CONTEXT>
         Here goes the information used to answer the question based on the concatenation - listagg(CHUNK_CONTENTS, ';') - of the first 5 document chunks based on vector proximity.
@@ -45,7 +55,7 @@ This lab assumes you have the following:
 
 3. Review the code of the `P1_RESPONSE` item PL/SQL Function Body. This function builds the prompt `l_prompt` (also called prompt engineering) using the simple XML structure with two fields: `CONTEXT` and `QUESTION`. This prompt is used to create an API request to OCI Generative AI service with the body `l_body` using a simple JSON structure that specifies the parameters and the prompt. The response is captured in `l_resp` variable and also has a JSON structure. The `l_result` variable is used to process the fields in the response and extract the answer text. The information is inserted into the `CONVERSATION` table.
 
-    ````
+    ````sql
     <copy>
     declare
     l_body json_object_t;
@@ -89,7 +99,7 @@ This lab assumes you have the following:
 
 4. If you just want to test the API request to OCI Generative AI service from APEX SQL Workshop > SQL Commands, run the following code (check the chat request for Cohere models attributes in the 'Learn more' section at the bottom of this lab):
 
-    ````
+    ````sql
     <copy>
     declare
     body json_object_t;
@@ -124,7 +134,7 @@ This lab assumes you have the following:
 
 5. If you want to test an API request to OCI Generative AI service with a specific prompt, run the following code:
 
-    ````
+    ````sql
     <copy>
     declare
     l_body json_object_t;
@@ -172,7 +182,7 @@ This lab assumes you have the following:
 
 6. All questions submitted and answered stored in the historical `CONVERSATION` table are listed in the `Conversation` report using this SQL Query.
 
-    ````
+    ````sql
     <copy>
     select QUESTION, ANSWER, CREATED from CONVERSATION
     where APPUSER_ID = :AI_USER_ID
@@ -184,7 +194,7 @@ This lab assumes you have the following:
 
 1. This page is simiar to the Home page except it displays the top 5 chunks that are used to build the prompt. The `P3000_PROMPT` item SQL Query is the same as the one on the Home page.
 
-    ````
+    ````sql
     <copy>
     select  
     apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_PROMPT
@@ -201,7 +211,7 @@ This lab assumes you have the following:
 
 2. The `P3000_RESPONSE` item PL/SQL Function Body is the same as the one on the Home page.
 
-    ````
+    ````sql
     <copy>
     declare
     l_body json_object_t;
@@ -245,7 +255,7 @@ This lab assumes you have the following:
 
 3. The `Proximity Vectors` report lists the first 5 chunks that are closer to the question based on their vector distance value using this SQL Query:
 
-    ````
+    ````sql
     <copy>
     with query_vector as (
                 select TO_VECTOR(VECTOR_EMBEDDING(ALLMINL12V2 using :P3000_QUERY as DATA)) as vector_embedding)
@@ -261,7 +271,7 @@ This lab assumes you have the following:
 
 1. The Upload page is used to send documents from your computer to the OCI Object Storage bucket. Review the `Upload` process PL/SQL Code that uses a REST API `PUT` request to perform the operation. The table `OBJSDOCS` is used to keep track of the documents uploaded and available in the Object Storage bucket. If the same document has been uploaded before, the previous record is removed from the table, as the file is overwritten. A record in inserted into the `OBJSDOCS` table for the uploaded document.
 
-    ````
+    ````sql
     <copy>
     declare
         l_user_id number;
@@ -289,7 +299,7 @@ This lab assumes you have the following:
 
 2. The `Object Storage` classic report retrieves the list of documents stored in your Object Storage bucker using the following SQL Query:
 
-    ````
+    ````sql
     <copy>
     select od.ID, lo.OBJECT_NAME, lo.BYTES, lo.LAST_MODIFIED, od.CREATED_BY
     from dbms_cloud.list_objects('OBJS_CREDENTIAL',
@@ -301,9 +311,9 @@ This lab assumes you have the following:
 
 3. This is actually the same query used to list objects in your Object Storage Bucket with a join on `OBJSDOCS` table for additional metadata fields.
 
-    ````
+    ````sql
     <copy>
-    select * from dbms_cloud.list_objects('OBJS_CREDENTIAL','https://YourOCItenancy.objectstorage.uk-london-1.oci.customer-oci.com/n/YourOCItenancy/b/DBAI-bucket/o/');
+    select * from dbms_cloud.list_objects('OBJS_CREDENTIAL','https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com/n/YourObjStorageNamespace/b/DBAI-bucket/o/');
     </copy>
     ````
 
@@ -312,7 +322,7 @@ This lab assumes you have the following:
 
 1. Review the `Import` process PL/SQL Code. It reads the first 32400 bytes of the document from the Object Storage bucket into the `doc_file` variable. Then, it reads the rest of the file in segments (parts) of 32400 bytes each, and appends them to the same `doc_file` variable. Once it has the entire document, it stores it as a BLOB into the `BLOBDOCS` table. At the end, it performs some clean-up operations for vectors that have been removed from the `VECTORS` table and documents that have been deleted from the `OBJSDOCS` table.
 
-    ````
+    ````sql
     <copy>
     DECLARE
         doc_file    BLOB default EMPTY_BLOB();
@@ -367,7 +377,7 @@ This lab assumes you have the following:
 
 2. Check the `Imported Documents` interactive report SQL Query that lists all the documents that have been imported as BLOBs into the database `BLOBDOCS` table. It is easier, faster, and more secure to process files inside the database than reading always from the Object Storage bucket.
 
-    ````
+    ````sql
     <copy>
     select b.ID, o.FILE_NAME, o.CREATED, o.CREATED_BY, length(b.DOC_DATA) Data
     from BLOBDOCS b left join OBJSDOCS o on o.ID = b.OBJSDOC_ID
@@ -377,7 +387,7 @@ This lab assumes you have the following:
 
 3. Write down in your notes the ID of one document that was imported into the `BLOBDOCS` table for some tests (`BLOBDOCS.ID` column). Call it `TEST_DOC_ID`.
 
-    ````
+    ````sql
     <copy>
     select b.ID, o.FILE_NAME
     from BLOBDOCS b left join OBJSDOCS o on o.ID = b.OBJSDOC_ID
@@ -394,7 +404,7 @@ This lab assumes you have the following:
     * `DBMS_VECTOR_CHAIN.utl_to_chunks` utility function splits data into smaller pieces or chunks. Input parameters are specified in JSON format.
     * `DBMS_VECTOR_CHAIN.utl_to_embeddings` chainable utility function converts data to vector embeddings. You can perform a text-to-embedding transformation by accessing either Oracle Database or a third-party service provider. In this example, Oracle Database is the service provider using the imported LLM model `ALLMINL12V2`.
 
-    ````
+    ````sql
     <copy>
     insert into VECTORS (BLOBDOC_ID, CHUNK_NO, CHUNK_CONTENTS, VECTOR_EMBEDDING)
     select b.ID, et.EMBED_ID, et.EMBED_DATA, to_vector(et.EMBED_VECTOR) EMBED_VECTOR
@@ -418,7 +428,7 @@ This lab assumes you have the following:
 
 2. Use APEX SQL Workshop > SQL Commands to test different embedding operations by changing the parameters of the `DBMS_VECTOR_CHAIN.utl_to_chunks` utility function. Check the `DBMS_VECTOR_CHAIN` PL/SQL Package Reference documentation link at the bottom of this lab.
 
-    ````
+    ````sql
     <copy>
     select b.ID, et.EMBED_ID, et.EMBED_DATA, to_vector(et.EMBED_VECTOR) EMBED_VECTOR
         from BLOBDOCS b,
@@ -440,7 +450,7 @@ This lab assumes you have the following:
 
 3. The plain text extracted from PDF documents can be processed in multiple ways. Read the `ChunkLines` process PL/SQL Code to see another example of reading data from the PDF document, converting it to HTML code, and extracting all paragraphs as individual lines. The chunk lines are stored in the `CHUNKLINES` table. This data can be further processed with Oracle Text or Graph, or you can use Oracle Machine Learning to classify these lines by their contents and label them with different categories. This way, you can eliminate noise from the text documents data, perform aditional filtering, extract metadata from specific fields like title, author, headers, footers, etc.
 
-    ````
+    ````sql
     <copy>
     insert into CHUNKLINES (BLOBDOC_ID, CHUNK_NO, LINE_NO, LINE_CONTENTS)
     with xml_tab as (select CHUNK_NO, xmltype('<html>' || replace(apex_markdown.to_html(b.CHUNK_CONTENTS),'<br />',' ') || '</html>') html_text
@@ -457,7 +467,7 @@ This lab assumes you have the following:
 
 4. Use the `Embedded Documents` report SQL Query to list all documents that have been vectorized and the number of vectors (chunks) each one of them has.
 
-    ````
+    ````sql
     <copy>
     select b.ID, o.FILE_NAME, o.CREATED, o.CREATED_BY, count(v.ID) Vectors
     from VECTORS v left join BLOBDOCS b on b.ID = v.BLOBDOC_ID
@@ -470,7 +480,7 @@ This lab assumes you have the following:
 
 1. Check the `Chunks` report SQL Query that returns all chunks and their contents for a specific document.
 
-    ````
+    ````sql
     <copy>
     select ID, BLOBDOC_ID, CHUNK_NO, CHUNK_CONTENTS 
     from VECTORS
@@ -481,7 +491,7 @@ This lab assumes you have the following:
 
 2. Review the `Chunk Lines` report SQL Query that returns the paragraphs of a single chunk as individual lines stored in the `CHUNKLINES` table. The `LINE_TYPE` could be used to classify each line with predefined labes like: title, author, link, index, header, footer, etc.
 
-    ````
+    ````sql
     <copy>
     select ID, BLOBDOC_ID, CHUNK_NO, LINE_NO, LINE_CONTENTS, LINE_TYPE 
     from CHUNKLINES 
@@ -491,7 +501,7 @@ This lab assumes you have the following:
 
 3. Use APEX SQL Workshop > SQL Commands to list the lines of the first chunk of the test document.
 
-    ````
+    ````sql
     <copy>
     select ID, BLOBDOC_ID, CHUNK_NO, LINE_NO, LINE_CONTENTS, LINE_TYPE 
     from CHUNKLINES 
@@ -499,7 +509,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
-This workshop is now complete.
+You may now **proceed to the next lab**.
 
 
 ## Learn More
