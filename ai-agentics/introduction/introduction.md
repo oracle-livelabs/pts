@@ -2,17 +2,17 @@
 
 ### **Introduction**
 
-This workshop is to show how to build AI Agent application using LangChain and Oracle Database 23ai. We will discuss how an Agent is initialized, make calls to tools, and use context memory.  Once you understand the building components of an Agent, the application that you build using the AI agentic framework are limitless.
+This workshop is to show how to build AI Agent application using LangChain and Oracle Database 23ai. We will discuss how an Agent is initialized, make calls to tools, and use context memory.  Once you understand the building components of an Agent, the application that you build using the AI Agentic framework are limitless.
 
 Oracle Database 23ai is a converged database that includes support for AI Vector Search, Graph, JSON, Machine Learning and many more AI features. By showing how an AI agent can interact with the Oracle database, an architect can design an application harnessing the power of Oracle Converged database with GenAI LLMs.
 
-In this workshop, we will demonstrate how to build a powerful AI agent that performs AI Vector search, query relational database,  generate PDFs, and handle email-related tasks using LangChain with Oracle GenAI  service. This hands-on workshop teaches building AI agents with Python and LangChain with Oracle Database 23ai. Learn to design prompts, create custom tools, and use memory for maintaining context of LLM.  Using LangChain participants will gain skills using one of many AI Agentics framework to develop cutting-edge AI solutions, showcasing Oracle Database 23ai.
+In this workshop, we will demonstrate how to build a powerful AI agent that performs AI Vector search, query relational database,  generate PDFs, and handle email-related tasks using LangChain with Oracle GenAI  service. This hands-on workshop teaches building AI agents with Python and LangChain with Oracle Database 23ai. Learn to design prompts, create custom tools, and use memory for maintaining context of LLM.  Using LangChain participants will gain skills using one of many AI Agentic framework to develop cutting-edge AI solutions, showcasing Oracle Database 23ai.
 
 Estimated Time:  15 min
 
 ### Objectives
 
-In this workshop, we'll perform the follow:
+In this workshop, we'll perform the following:
 
 * Setting up the environment and dependencies
 * Creating custom tools for our AI agent
@@ -73,7 +73,7 @@ Environment: Data sources like Oracle Database 23ai for processing information.
 
 See below for more information on Oracle Database 23ai and Oracle AI Vector Search
 
-* [Oracle AI Agentics Blog ](https://docs.oracle.com/en/database/oracle/oracle-database/)
+* [Oracle AI Agentic Blog ](https://docs.oracle.com/en/database/oracle/oracle-database/)
 * [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle AI Vector Search Blog](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
 
