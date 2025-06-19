@@ -54,44 +54,44 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
 Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.
 
-    **Step 1: Load a pdf file "23ai new features guide"**
+**Step 1: Load a pdf file "23ai new features guide"**
 
-    Click on the **Browse files** button and load a PDF document.
+Click on the **Browse files** button and load a PDF document.
 
-    After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
+After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
 
-    A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below.
+A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below.
 
-    ![Loading PDF file for querying](images/load_pdf_file.png)
+![Loading PDF file for querying](images/load_pdf_file.png)
 
-    Note: In the Lab 2, we used a table with pre-loaded vector data for "Oracle 23ai new feature guide" document. In this demo we are actually reading the document, chunking and vectorized it in a different table.
+Note: In the Lab 2, we used a table with pre-loaded vector data for "Oracle 23ai new feature guide" document. In this demo we are actually reading the document, chunking and vectorized it in a different table.
 
-    You should see the confirmation of file uploaded as shown in figure below.
+You should see the confirmation of file uploaded as shown in figure below.
 
-    ![Loading PDF file for querying](images/load_pdf_file_confirmation.png)
+![Loading PDF file for querying](images/load_pdf_file_confirmation.png)
 
-    **Step 2: To test context Memory feature**
+**Step 2: To test context Memory feature**
 
-    Tell LLM your name i.e., "My name is Homer Simpson".  Then check if application remembers your name by asking i.e., "What is my name?"
+Tell LLM your name i.e., "My name is Homer Simpson".  Then check if application remembers your name by asking i.e., "What is my name?"
 
-    ![Checking the Name of user](images/checking_name_from_context.png)
+![Checking the Name of user](images/checking_name_from_context.png)
 
-    **Step 3: Do a RAG Search on document uploaded**
+**Step 3: Do a RAG Search on document uploaded**
 
-    Ask a question to query the document i.e.,  "List 5 features of Oracle 23ai from the document"
-    Note: Agentic is prompted to RAG search only if ask search within document.
+Ask a question to query the document i.e.,  "List 5 features of Oracle 23ai from the document"
+Note: Agentic is prompted to RAG search only if ask search within document.
 
-    ![Doing RAG search on the document](images/listing_5_new_features.png)
+![Doing RAG search on the document](images/listing_5_new_features.png)
 
-    **Step 4: Send the information as email**
+**Step 4: Send the information as email**
 
-    To test the email creation agent  ask question to send earlier information to Vijay as email from your side i.e.,  "Send the information as email to Vijay from me"
+To test the email creation agent  ask question to send earlier information to Vijay as email from your side i.e.,  "Send the information as email to Vijay from me"
 
-    Check the email form on the left side for the result
+Check the email form on the left side for the result
 
-    ![Doing RAG search on the document](images/send_information_as_email.png)
+![Doing RAG search on the document](images/send_information_as_email.png)
 
-    Proceed to test other PDF files provided on VM and ask more question as per your imagination. Few suggested question are below
+Proceed to test other PDF files provided on VM and ask more question as per your imagination. Few suggested question are below
 
 **Suggestions**
 
@@ -111,8 +111,8 @@ For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 Now check out the application code using the UI. From a terminal window type:
 
 ```bash
-    cd /home/oracle/aidemo
-    more GenAI_Agent.py
+cd /home/oracle/aidemo
+more GenAI_Agent.py
 ```
 
 Note the additional imported libraries and **st** objects for Streamlit.
