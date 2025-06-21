@@ -1,8 +1,8 @@
-# Deploy the RAFT Replication
+# Deploy the Raft Replication
 
 ## Introduction
 
-In this lab, you will provision a Globally Distributed Database with RAFT replication. 
+In this lab, you will provision a Globally Distributed Database with Raft replication. 
 
 Estimated Lab Time: 60 minutes.
 
@@ -12,7 +12,7 @@ In this lab, you will perform the following steps:
 
 -   Install the GSM Software in the gsmhost Compute Instance.
 -   Configure the Catalog DB and Shard DB.
--   Deploy the GDD with RAFT replication.
+-   Deploy the GDD with Raft replication.
 
 ### Prerequisites
 
@@ -53,7 +53,7 @@ This lab assumes you have already completed the following:
 
      ```
      <copy>10.0.0.20 gsmhost.subnet1.primaryvcn.oraclevcn.com gsmhost
-     10.0.0.10 catahost.subnet1.primaryvcn.oraclevcn.com catahost
+     10.0.0.10 shardhost0.subnet1.primaryvcn.oraclevcn.com shardhost0
      10.0.0.11 shardhost1.subnet1.primaryvcn.oraclevcn.com shardhost1
      10.0.0.12 shardhost2.subnet1.primaryvcn.oraclevcn.com shardhost2
      10.0.0.13 shardhost3.subnet1.primaryvcn.oraclevcn.com shardhost3</copy>
@@ -256,7 +256,9 @@ This lab assumes you have already completed the following:
 
 15.   Exit from the terminal.
 
-## Task 2: Execute Prep Scripts for Oracle Sharding on Catalog
+## Task 2: Execute Prep Scripts for Oracle Sharding on Catalog Host
+
+**Remember we use shardhost0 as catalog host.**
 
 1.   Upload your private key to the gsmhost.
 
@@ -274,16 +276,16 @@ This lab assumes you have already completed the following:
 
      
 
-3.   from **opc** user, connec to the **catahost**, 
+3.   from **opc** user, connec to the catalog host, 
 
      ```
-     [opc@gsmhost ~]$ <copy>ssh -i <your_private_key> opc@catahost</copy>
-     The authenticity of host 'catahost (10.0.0.10)' can't be established.
-     ECDSA key fingerprint is SHA256:3Bebd2KRlGZHVp8fxOLOodVa4UyT7wdegMIuC/rpiFo.
+     [opc@gsmhost ~]$ ssh -i labkey opc@shardhost0
+     The authenticity of host 'shardhost0 (10.0.0.10)' can't be established.
+     ECDSA key fingerprint is SHA256:nUgw525hsLNOOoW277E5j35wxfblNHk2CXqN0RPt7VU.
      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-     Warning: Permanently added 'catahost,10.0.0.10' (ECDSA) to the list of known hosts.
-     Last login: Thu Aug  8 05:36:59 2024 from 202.45.129.202
-     [opc@catahost ~]$ 
+     Warning: Permanently added 'shardhost0,10.0.0.10' (ECDSA) to the list of known hosts.
+     Last login: Tue Jun  4 05:47:51 2024 from 144.25.17.122
+     [opc@shardhost0 ~]$ 
      ```
 
      
@@ -291,14 +293,14 @@ This lab assumes you have already completed the following:
 4.   Edit the hosts file
 
      ```
-     [opc@catahost ~]$ <copy>sudo vi /etc/hosts</copy>
+     [opc@shardhost0 ~]$ <copy>sudo vi /etc/hosts</copy>
      ```
 
      Copy an paste the following entries into the host file
 
      ```
      <copy>10.0.0.20 gsmhost.subnet1.primaryvcn.oraclevcn.com gsmhost
-     10.0.0.10 catahost.subnet1.primaryvcn.oraclevcn.com catahost
+     10.0.0.10 shardhost0.subnet1.primaryvcn.oraclevcn.com shardhost0
      10.0.0.11 shardhost1.subnet1.primaryvcn.oraclevcn.com shardhost1
      10.0.0.12 shardhost2.subnet1.primaryvcn.oraclevcn.com shardhost2
      10.0.0.13 shardhost3.subnet1.primaryvcn.oraclevcn.com shardhost3</copy>
@@ -309,9 +311,9 @@ This lab assumes you have already completed the following:
 5.   Then switch to **oracle** user
 
      ```
-     [opc@catahost ~]$ <copy>sudo su - oracle</copy>
+     [opc@shardhost0 ~]$ <copy>sudo su - oracle</copy>
      Last login: Thu Aug  8 05:35:06 UTC 2024
-     [oracle@catahost ~]$
+     [oracle@shardhost0 ~]$
      ```
 
      
@@ -319,7 +321,7 @@ This lab assumes you have already completed the following:
 6.   Connect to oracle database as sysdba
 
      ```
-     [oracle@catahost ~]$ <copy>sqlplus / as sysdba</copy>
+     [oracle@shardhost0 ~]$ <copy>sqlplus / as sysdba</copy>
      
      SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Thu Aug 8 05:30:55 2024
      Version 23.5.0.24.07
@@ -364,7 +366,7 @@ This lab assumes you have already completed the following:
 8.   PDB configuration settings
 
      ```
-     <copy>alter session set container=catapdb;
+     <copy>alter session set container=shard0;
      alter user gsmcatuser account unlock;
      create user mysdbadmin identified by WelcomePTS_2024#;
      grant gsmadmin_role to mysdbadmin;</copy>
@@ -374,7 +376,7 @@ This lab assumes you have already completed the following:
 
 10.   Exit and back to the gsmhost **opc** user.
 
-## Task 3: Execute Prep Scripts for Oracle Sharding on each shard
+## Task 3: Execute Prep Scripts for Oracle Globally Distributed Database on each shard
 
 **Note: You need to connect to each shard to execute the following commands to prepare shards**
 
@@ -404,7 +406,7 @@ This lab assumes you have already completed the following:
 
      ```
      <copy>10.0.0.20 gsmhost.subnet1.primaryvcn.oraclevcn.com gsmhost
-     10.0.0.10 catahost.subnet1.primaryvcn.oraclevcn.com catahost
+     10.0.0.10 shardhost0.subnet1.primaryvcn.oraclevcn.com shardhost0
      10.0.0.11 shardhost1.subnet1.primaryvcn.oraclevcn.com shardhost1
      10.0.0.12 shardhost2.subnet1.primaryvcn.oraclevcn.com shardhost2
      10.0.0.13 shardhost3.subnet1.primaryvcn.oraclevcn.com shardhost3</copy>
@@ -535,7 +537,7 @@ This lab assumes you have already completed the following:
 
 8.   Exit and back to gsmhost.
 
-11.   Repeat Task 3 steps to configure other shards.
+11.   Repeat Task 3 steps to configure other shards(shard2 and shard3).
 
       
 
@@ -568,10 +570,10 @@ This lab assumes you have already completed the following:
 
      
 
-3.   Create shard catalog, the `-repl NATIVE` for native RAFT replication.
+3.   Create shard catalog, the `-repl NATIVE` for native Raft replication.
 
      ```
-     <copy>create shardcatalog -database catahost:1521/catapdb -user mysdbadmin/WelcomePTS_2024# -repl native -repfactor 3 -chunks 18</copy>
+     <copy>create shardcatalog -database shardhost0:1521/shard0 -user mysdbadmin/WelcomePTS_2024# -repl native -repfactor 3 -chunks 18</copy>
      ```
 
      
@@ -579,7 +581,7 @@ This lab assumes you have already completed the following:
 4.   Connect to catalog database:
 
      ```
-     <copy>connect mysdbadmin/WelcomePTS_2024#@catahost:1521/catapdb</copy>
+     <copy>connect mysdbadmin/WelcomePTS_2024#@shardhost0:1521/shard0</copy>
      ```
 
      
@@ -587,7 +589,7 @@ This lab assumes you have already completed the following:
 5.   Add GSM named sharddirector1
 
      ```
-     <copy>add gsm -gsm sharddirector1 -catalog catahost:1521/catapdb -pwd WelcomePTS_2024#</copy>
+     <copy>add gsm -gsm sharddirector1 -catalog shardhost0:1521/shard0 -pwd WelcomePTS_2024#</copy>
      ```
 
      
@@ -632,7 +634,7 @@ This lab assumes you have already completed the following:
 7.   Add invited nodes
 
      ```
-     <copy>add invitednode catahost
+     <copy>add invitednode shardhost0
      add invitednode shardhost1
      add invitednode shardhost2
      add invitednode shardhost3
@@ -655,9 +657,9 @@ This lab assumes you have already completed the following:
      GDSCTL> config vncr
      Name                          Group ID                      
      ----                          --------                      
-     catahost                                                    
-     catahost.subnet1.primaryvcn.o                               
-     raclevcn.com                                                
+     shardhost0                                                  
+     shardhost0.subnet1.primaryvcn                               
+     .oraclevcn.com                                              
      
      shardhost1                                                  
      shardhost1.subnet1.primaryvcn                               
@@ -669,7 +671,7 @@ This lab assumes you have already completed the following:
      
      shardhost3                                                  
      shardhost3.subnet1.primaryvcn                               
-     .oraclevcn.com  
+     .oraclevcn.com
      ```
 
      
@@ -864,7 +866,16 @@ This lab assumes you have already completed the following:
 
       
 
-18.   Exit to the **oracle** user, check the status of the listener.
+18.   Exit to the **oracle** user
+
+      ```
+      GDSCTL> <copy>exit</copy>
+      [oracle@gsmhost ~]$
+      ```
+      
+      
+      
+18.   Check the status of the listener.
 
       ```
       [oracle@gsmhost ~]$ <copy>lsnrctl status sharddirector1</copy>
@@ -909,7 +920,7 @@ This lab assumes you have already completed the following:
 
       
 
-Now the RAFT replication environment is ready.
+Now the Raft replication environment is ready.
 
 You may now proceed to the next lab.
 

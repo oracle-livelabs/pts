@@ -18,13 +18,13 @@ In this lab you will run the RAG application interactively using a user interfac
 1.  From the terminal, go to directory 
 
     ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     ```
 
 2.  Run the RAG application
 
     ```
-    $ genai_run genai_plsql.py
+    $ streamlit run genai_plsql.py
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
@@ -67,7 +67,7 @@ Now check out the application code using the UI. From a terminal window type:
 
 
 ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     $ more genai_plsql.py
 ```
 
@@ -84,4 +84,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan
 * **Contributors** - Rajeev Rumale, Doug Hood
-* **Last Updated By/Date** -  Milton Wan, May 2024
+* **Last Updated By/Date** -  Rajeev Rumale, October 2024

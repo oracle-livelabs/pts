@@ -1,8 +1,8 @@
-# Create Sample Schema with Sharded Tables
+# Migrate the Application to Globally Distribute Database
 
 ## Introduction
 
-In this lab you will create a sample schema. You will create a sharded table family `Customers->Orders->LineItems` sharded by `CustId`, and a duplicate table `Products`.
+In order to migrate the application from normal instance to globally distribute database, you need to redesign the schema and application. In this lab you will create a sample schema in the globally distribute database. You will create a sharded table family `Customers->Orders->LineItems` sharded by `CustId`, and a duplicate table `Products`.
 
 Estimated Lab Time: 30 minutes.
 
@@ -13,11 +13,13 @@ In this lab, you will perform the following steps:
 - Verify that the DDLs have been propagated to all the shards
 - Insert data into the sharded table
 - Import dump file into the sharded tables.
+- Setup and run the sample application
 
 ### Prerequisites
 
 This lab assumes you have already completed the following:
-- Deploy the RAFT Sharded Database
+- Deploy the Globally Distributed Database with Raft
+- Set up the non sharded database
 
 
 ## Task 1: Create Sample Schema
@@ -45,7 +47,7 @@ This lab assumes you have already completed the following:
 2. Download the SQL scripts `create-sample-schema.sql`.
 
     ```
-    [oracle@gsmhost ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/create-sample-schema.sql</copy>
+    [oracle@gsmhost ~]$ <copy>wget https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/refs/heads/main/create-sample-schema/create-sample-schema.sql</copy>
     ```
 
    
@@ -61,7 +63,7 @@ This lab assumes you have already completed the following:
     REM
     REM Connect to the Shard Catalog and Create Schema
     REM
-    connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba
+    connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba
     REM alter session set container=catapdb;
     alter session enable shard ddl;
     create user app_schema identified by App_Schema_Pass_123;
@@ -88,7 +90,7 @@ This lab assumes you have already completed the following:
     REM
     REM Create Sharded and Duplicated tables
     REM
-    connect app_schema/App_Schema_Pass_123@catahost:1521/catapdb
+    connect app_schema/App_Schema_Pass_123@shardhost0:1521/shard0
     alter session enable shard ddl;
     REM
     REM Create a Sharded table for Customers  (Root table)
@@ -216,7 +218,7 @@ This lab assumes you have already completed the following:
     00:16:11 SQL> REM
     00:16:11 SQL> REM Connect to the Shard Catalog and Create Schema
     00:16:11 SQL> REM
-    00:16:11 SQL> connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba
+    00:16:11 SQL> connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba
     Connected.
     00:16:11 SQL> REM alter session set container=catapdb;
     00:16:11 SQL> alter session enable shard ddl;
@@ -280,7 +282,7 @@ This lab assumes you have already completed the following:
     00:16:12 SQL> REM
     00:16:12 SQL> REM Create Sharded and Duplicated tables
     00:16:12 SQL> REM
-    00:16:12 SQL> connect app_schema/App_Schema_Pass_123@catahost:1521/catapdb
+    00:16:12 SQL> connect app_schema/App_Schema_Pass_123@shardhost0:1521/shard0
     Connected.
     00:16:12 SQL> alter session enable shard ddl;
     
@@ -654,7 +656,7 @@ This lab assumes you have already completed the following:
 10. Connect to the catalog database using your own sys user password..
 
     ```
-    SQL> <copy>connect sys/WelcomePTS_2024#@catahost:1521/catapdb as sysdba</copy>
+    SQL> <copy>connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba</copy>
     Connected.
     SQL> 
     ```
@@ -679,21 +681,7 @@ This lab assumes you have already completed the following:
 
 ## Task 3: Insert Data Into Sharded Table
 
-1.   Connect to the gsm host and switch to **oracle** user
-
-     ```
-     $ <copy>ssh -i <ssh_private_key> opc@<gsmhost_public_ip></copy>
-     Last login: Sun Nov 29 01:26:28 2020 from 59.66.120.23
-     -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-     
-     [opc@gsmhost ~]$ <copy>sudo su - oracle</copy>
-     Last login: Sat Aug 10 23:59:23 GMT 2024 on pts/0
-     [oracle@gsmhost ~]$
-     ```
-
-     
-
-2.   Connect the sharded database using the default GDS$CATALOG service
+1.   Still in the gsm host with **oracle** user. Connect the sharded database using the default ```GDS$CATALOG``` service
 
      ```
      [oracle@gsmhost ~]$ <copy>sqlplus app_schema/App_Schema_Pass_123@gsmhost:1522/GDS\$CATALOG.oradbcloud</copy>
@@ -714,7 +702,7 @@ This lab assumes you have already completed the following:
 
      
 
-3.   Run the following script to insert 1000 records into customers table.
+2.   Run the following script to insert 1000 records into customers table.
 
      ```
      SQL> <copy>begin
@@ -729,7 +717,7 @@ This lab assumes you have already completed the following:
 
      
 
-4.   Commit
+3.   Commit
 
      ```
      SQL> <copy>commit;</copy>
@@ -739,7 +727,7 @@ This lab assumes you have already completed the following:
 
      
 
-5.   Check the records in the table.
+4.   Check the records in the table.
 
      ```
      SQL> <copy>select count(*) from customers;</copy>
@@ -751,12 +739,12 @@ This lab assumes you have already completed the following:
 
      
 
-6.   Connect to each of the shard database, check the records in each of the shard.
+5.   Connect to each of the shard database, check the records in each of the shard.
 
      ```
      SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost1:1521/shard1</copy>
      Connected.
-     SQL> select count(*) from customers;
+     SQL> <copy>select count(*) from customers;</copy>
      
        COUNT(*)
      ----------
@@ -764,7 +752,7 @@ This lab assumes you have already completed the following:
      
      SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost2:1521/shard2</copy>
      Connected.
-     SQL> select count(*) from customers;
+     SQL> <copy>select count(*) from customers;</copy>
      
        COUNT(*)
      ----------
@@ -772,14 +760,14 @@ This lab assumes you have already completed the following:
      
      SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost3:1521/shard3</copy>
      Connected.
-     SQL> select count(*) from customers;
+     SQL> <copy>select count(*) from customers;</copy>
      
        COUNT(*)
      ----------
             326
      ```
 
-7.   You can connect to the shard database with a sharding key
+6.   You can connect to the shard database with a sharding key
 
      ```
      SQL> <copy>connect app_schema/App_Schema_Pass_123@'(description=(address=(protocol=tcp)(host=gsmhost)(port=1522))(connect_data=(service_name=oltp_rw_svc.orasdb.oradbcloud)(SHARDING_KEY=1)))'</copy>
@@ -788,7 +776,7 @@ This lab assumes you have already completed the following:
 
      
 
-8.   Show current connected shard DB.
+7.   Show current connected shard DB.
 
      ```
      SQL> <copy>select db_unique_name from v$database;</copy>
@@ -800,7 +788,7 @@ This lab assumes you have already completed the following:
 
      
 
-9.   Try to connect with another sharding key
+8.   Try to connect with another sharding key
 
      ```
      SQL> <copy>connect app_schema/App_Schema_Pass_123@'(description=(address=(protocol=tcp)(host=gsmhost)(port=1522))(connect_data=(service_name=oltp_rw_svc.orasdb.oradbcloud)(SHARDING_KEY=1000)))'</copy>
@@ -809,19 +797,36 @@ This lab assumes you have already completed the following:
 
      
 
-10.   Show current connected shard DB
+9.   Show current connected shard DB
+
+     ```
+     SQL> <copy>select db_unique_name from v$database;</copy>
+     
+     DB_UNIQUE_NAME
+     ------------------------------
+     sdb2_workshop
+     ```
+
+     
+
+10.   Connect to catalog database.
 
       ```
-      SQL> <copy>select db_unique_name from v$database;</copy>
-      
-      DB_UNIQUE_NAME
-      ------------------------------
-      sdb2_workshop
+      SQL> <copy>connect app_schema/App_Schema_Pass_123@gsmhost:1522/GDS$CATALOG.oradbcloud</copy>
       ```
 
       
 
-11.   Exit from SQLPlus.
+11.   Delete the data in the customers table and commit;
+
+      ```
+      SQL> <copy>delete from customers;</copy>
+      SQL> <copy>commit;</copy>
+      ```
+
+      
+
+12.   Exit from SQLPlus.
 
       
 
@@ -839,37 +844,17 @@ When loading a sharded table, each database shard accommodates a distinct subset
 
 Loading the data directly into the database shards is much faster, because each shard is loaded separately. The Data Pump Import detects that you are importing into a shard and only load rows that belong to that shard.  
 
-1. From gsmhost **opc** user, connec to the catalog host.
+1. From gsmhost **oracle** user, connect to the catalog pdb with `app_schema` user.
 
     ```
-    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@catahost</copy>
-    Last login: Fri Sep 20 05:50:21 2024 from 10.0.0.20
-    [opc@catahost ~]$
-    ```
-
+    [oracle@gsmhost ~]$ <copy>sqlplus app_schema/App_Schema_Pass_123@gsmhost:1522/GDS\$CATALOG.oradbcloud</copy>
     
-
-2. Switch to **oracle** user
-
-    ```
-    [opc@catahost ~]$ <copy>sudo su - oracle</copy>
-    Last login: Fri Sep 20 06:17:26 UTC 2024
-    [oracle@catahost ~]$ 
-    ```
-
-    
-
-3. Use SQLPLUS, connect to the catalog pdb with `app_schema` user.
-
-    ```
-    [oracle@catahost ~]$ <copy>sqlplus app_schema/App_Schema_Pass_123@catahost:1521/catapdb</copy>
-    
-    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:29:59 2024
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Sep 21 01:23:49 2024
     Version 23.5.0.24.07
     
     Copyright (c) 1982, 2024, Oracle.  All rights reserved.
     
-    Last Successful login time: Fri Sep 20 2024 06:29:18 +00:00
+    Last Successful login time: Sat Sep 21 2024 01:23:29 +00:00
     
     Connected to:
     Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
@@ -894,15 +879,15 @@ Loading the data directly into the database shards is much faster, because each 
     SQL> <copy>exit</copy>
     Disconnected from Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
     Version 23.5.0.24.07
-    [oracle@catahost ~]$ 
+    [oracle@gsmhost ~]$ 
     ```
 
     
 
-5. From the catalog host, run the following command to import the public table data.
+5. From the gsm host, run the following command to import the public table data.
 
     ```
-    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@catahost:1521/catapdb directory=demo_pump_dir \
+    [oracle@gsmhost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost0:1521/shard0 directory=demo_pump_dir \
           dumpfile=original.dmp logfile=imp.log \
           tables=Products \
           content=DATA_ONLY</copy>
@@ -920,7 +905,7 @@ Loading the data directly into the database shards is much faster, because each 
     
     Connected to: Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
     Master table "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
-    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@catahost:1521/catapdb directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Products content=DATA_ONLY 
+    Starting "APP_SCHEMA"."SYS_IMPORT_TABLE_01":  app_schema/********@shardhost0:1521/shard0 directory=demo_pump_dir dumpfile=original.dmp logfile=imp.log tables=Products content=DATA_ONLY 
     Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
     . . imported "APP_SCHEMA"."PRODUCTS"                      27.4 KB     480 rows
     Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
@@ -932,7 +917,7 @@ Loading the data directly into the database shards is much faster, because each 
 7. Run the following command to import data into the shard1 tables.
 
     ```
-    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost1:1521/shard1 directory=demo_pump_dir \
+    [oracle@gsmhost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost1:1521/shard1 directory=demo_pump_dir \
           dumpfile=original.dmp logfile=imp.log \
           tables=Customers, Orders, LineItems \
           content=DATA_ONLY</copy>
@@ -940,7 +925,7 @@ Loading the data directly into the database shards is much faster, because each 
 
     
 
-8. The result likes the following. You may notes the only part of the rows are imported into the sharded tables.
+8. The result likes the following. 
 
     ```
     Import: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 06:34:00 2024
@@ -960,10 +945,49 @@ Loading the data directly into the database shards is much faster, because each 
 
     
 
-9. Run the following command to load data into shard2 tables.
+7. You may notes the all the rows are imported into the sharded tables. However, when you check from each of the shard database, you can found only part of the data in shard1 can be access. Connect to shard1 and check the row count.
 
     ```
-    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost2:1521/shard2 directory=demo_pump_dir \
+    [oracle@gsmhost ~]$ sqlplus app_schema/App_Schema_Pass_123@shardhost1:1521/shard1
+    
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Sep 21 01:31:51 2024
+    Version 23.5.0.24.07
+    
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+    
+    Last Successful login time: Sat Sep 21 2024 01:28:12 +00:00
+    
+    Connected to:
+    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+    Version 23.5.0.24.07
+    
+    SQL> select count(*) from customers;
+    
+      COUNT(*)
+    ----------
+          9838
+    ```
+
+    
+
+8. Connect to shard2 or shard3, you can found there is no record can be select.
+
+    ```
+    SQL> <copy>connect app_schema/App_Schema_Pass_123@shardhost2:1521/shard2</copy>
+    Connected.
+    SQL> <copy>select count(*) from customers;</copy>
+    
+      COUNT(*)
+    ----------
+    	 0
+    ```
+
+    
+
+9. Exit from SQLPlus. Run the following command to load data into shard2 tables.
+
+    ```
+    [oracle@gsmhost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost2:1521/shard2 directory=demo_pump_dir \
           dumpfile=original.dmp logfile=imp.log \
           tables=Customers, Orders, LineItems \
           content=DATA_ONLY</copy>
@@ -994,7 +1018,7 @@ Loading the data directly into the database shards is much faster, because each 
 11. Run the following command to load data into shard3 tables.
 
     ```
-    [oracle@catahost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost3:1521/shard3 directory=demo_pump_dir \
+    [oracle@gsmhost ~]$ <copy>impdp app_schema/App_Schema_Pass_123@shardhost3:1521/shard3 directory=demo_pump_dir \
           dumpfile=original.dmp logfile=imp.log \
           tables=Customers, Orders, LineItems \
           content=DATA_ONLY</copy>
@@ -1020,7 +1044,140 @@ Loading the data directly into the database shards is much faster, because each 
     Job "APP_SCHEMA"."SYS_IMPORT_TABLE_01" successfully completed at Fri Sep 20 06:45:10 2024 elapsed 0 00:00:38
     ```
 
-13. Exit to the gsm host.
+13. Now all the data from normal instance migrate to the sharded tables.
+
+## Task 5: Setup and Run the Application for Globally Distributed Database
+
+1.   In the gsm host with **oracle** user, change the directory to ```sdb_demo_app/sql```.
+
+     ```
+     [oracle@gsmhost ~]$ <copy>cd sdb_demo_app/sql</copy>
+     [oracle@gsmhost sql]$
+     ```
+
+     
+
+2.   View the content in the file ```sdb_demo_app_ext.sql ```. Make sure the connect string is correct.
+
+     ```
+     [oracle@gsmhost sql]$ <copy>cat sdb_demo_app_ext.sql</copy> 
+     -- Create catalog monitor packages
+     connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba
+     @catalog_monitor.sql
+     
+     connect app_schema/App_Schema_Pass_123@shardhost0:1521/shard0;
+     
+     alter session enable shard ddl;
+     
+     CREATE OR REPLACE VIEW SAMPLE_ORDERS AS
+       SELECT OrderId, CustId, OrderDate, SumTotal FROM
+         (SELECT * FROM ORDERS ORDER BY OrderId DESC)
+           WHERE ROWNUM < 10;
+     
+     alter session disable shard ddl;
+     
+     -- Allow a special query for dbaview
+     connect sys/WelcomePTS_2024#@shardhost0:1521/shard0 as sysdba
+     
+     -- For demo app purposes
+     grant shard_monitor_role, gsmadmin_role to app_schema;
+     
+     alter session enable shard ddl;
+     
+     create user dbmonuser identified by TEZiPP4_MsLLL_1;
+     grant connect, alter session, shard_monitor_role, gsmadmin_role to dbmonuser;
+     
+     grant all privileges on app_schema.products to dbmonuser;
+     grant read on app_schema.sample_orders to dbmonuser;
+     
+     alter session disable shard ddl;
+     -- End workaround
+     
+     exec dbms_global_views.create_any_view('SAMPLE_ORDERS', 'APP_SCHEMA.SAMPLE_ORDERS', 'GLOBAL_SAMPLE_ORDERS', 0, 1);
+     ```
+
+     
+
+3.   Using SQLPlus to run the script. Make sure no error in the result.
+
+     ```
+     [oracle@gsmhost sql]$ <copy>sqlplus /nolog</copy>
+     
+     SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Sep 21 23:54:21 2024
+     Version 23.5.0.24.07
+     
+     Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+     
+     SQL> <copy>@sdb_demo_app_ext.sql</copy>
+     ```
+
+     
+
+4.   Exit form SQLPlus. Change the directory to ```sdb_demo_app```
+
+     ```
+     [oracle@gsmhost sql]$ <copy>cd ~/sdb_demo_app</copy>
+     [oracle@gsmhost sdb_demo_app]$ 
+     ```
+
+     
+
+5.   View the content of th property file.  
+
+     ```
+     [oracle@gsmhost sdb_demo_app]$ <copy>cat sdbdemo.properties</copy> 
+     name=demo
+     connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=localhost)(PORT=1522)(PROTOCOL=tcp)))
+     monitor.user=dbmonuser
+     monitor.pass=TEZiPP4_MsLLL_1
+     #app.service.write=oltp_rw_srvc.cust_sdb.oradbcloud
+     app.service.write=oltp_rw_svc.orasdb.oradbcloud
+     #app.service.readonly=oltp_rw_srvc.cust_sdb.oradbcloud
+     app.service.readonly=oltp_ro_svc.orasdb.oradbcloud
+     app.user=app_schema
+     app.pass=App_Schema_Pass_123
+     app.threads=7
+     ```
+
+     
+
+6.   Run the application using this property file.
+
+     ```
+     [oracle@gsmhost sdb_demo_app]$ <copy>./run.sh demo sdbdemo.properties</copy>
+     ```
+
+     The result like the following:
+
+     ```
+      RO Queries | RW Queries | RO Failed  | RW Failed  | APS 
+               0            0            0            0            3
+               3            0            0            0            0
+             136            0            0            0           49
+            1195          184            0            0          385
+            3842          577            0            0          948
+            6477         1048            0            0          953
+            9666         1541            0            0         1146
+           13158         2120            0            0         1257
+           17226         2771            0            0         1460
+           21349         3433            0            0         1496
+           25599         4060            0            0         1534
+           29616         4723            0            0         1441
+           33419         5424            0            0         1380
+           37272         6092            0            0         1400
+           41356         6742            0            0         1482
+           45025         7409            0            0         1321
+           48884         8079            0            0         1403
+           52662         8733            0            0         1388
+           56624         9386            0            0         1437
+           60542        10019            0            0         1442
+     ```
+
+     
+
+7.   The application can now running with globally distribute database. Using ```Control+C``` to exit the application.
+
+
 
 You may now proceed to the next lab.
 

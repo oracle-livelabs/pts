@@ -18,7 +18,7 @@ In this lab you will run the RAG application interactively using a simple user i
 1.  From the terminal, go to directory 
 
     ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     ```
 
 2.  Run the RAG application
@@ -51,6 +51,7 @@ In a few seconds the LLM will answer the question and respond with context store
 - Tell me more about AI Vector Search
 - Tell me more about new enhancement to SQL
 - Tell me more about JSON Relational Duality
+- List 5 new features of Oracle Database 23ai
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results
@@ -62,7 +63,7 @@ Now check out the application code using the UI. From a terminal window type:
 
 
 ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     $ more genai.py
 ```
 
@@ -81,4 +82,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan 
 * **Contributors** - Rajeev Rumale
-* **Last Updated By/Date** -  Milton Wan, May 2024
+* **Last Updated By/Date** -  Rajeev Rumale, October 2024

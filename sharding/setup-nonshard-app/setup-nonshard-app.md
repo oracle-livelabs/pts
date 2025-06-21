@@ -43,7 +43,7 @@ This lab assumes you have already completed the following:
     
     
     
-2. Connect to the catalog host.
+2. Connect to the shardhost3.
 
     ```
     [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost3</copy>
@@ -83,7 +83,7 @@ This lab assumes you have already completed the following:
 
    
 
-3. Create a new pdb name nspdb.
+3. Create a new pdb name **nspdb**.
 
     ```
     SQL> <copy>CREATE PLUGGABLE DATABASE nspdb ADMIN USER admin IDENTIFIED BY WelcomePTS_2024#;</copy>   
@@ -164,7 +164,7 @@ This lab assumes you have already completed the following:
 2. Review the content in the sql scripts file.
 
     ```
-    [oracle@shardhost3 ~]$ cat nonshard-app-schema.sql
+    [oracle@shardhost3 ~]$ <copy>cat nonshard-app-schema.sql</copy>
     set echo on 
     set termout on
     set time on
@@ -289,17 +289,12 @@ This lab assumes you have already completed the following:
 3. Use SQLPLUS to run this sql scripts.
 
     ```
-    [oracle@shardhost3 ~]$ <copy>sqlplus / as sysdba</copy>
+    [oracle@shardhost3 ~]$ <copy>sqlplus /nolog</copy>
     
-    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Fri Sep 20 05:06:08 2024
+    SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sat Sep 21 05:29:30 2024
     Version 23.5.0.24.07
     
     Copyright (c) 1982, 2024, Oracle.  All rights reserved.
-    
-    
-    Connected to:
-    Oracle Database 23ai EE Extreme Perf Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
-    Version 23.5.0.24.07
     
     SQL> <copy>@nonshard-app-schema.sql</copy>
     ```
@@ -566,7 +561,7 @@ This lab assumes you have already completed the following:
     grant shard_monitor_role, gsmadmin_role to app_schema;
     
     
-    create user dbmonuser identified by TEZiPP4MsLLL;
+    create user dbmonuser identified by TEZiPP4_MsLLL_1;
     grant connect, alter session, shard_monitor_role, gsmadmin_role to dbmonuser;
     
     grant all privileges on app_schema.products to dbmonuser;
@@ -675,9 +670,17 @@ This lab assumes you have already completed the following:
     
     View created.
     
+    
+    Session altered.
+    
     Connected.
     
     Grant succeeded.
+    
+    ERROR:
+    ORA-02521: attempted to enable shard DDL in a non-shard database
+    Help: https://docs.oracle.com/error-help/db/ora-02521/
+    
     
     
     User created.
@@ -690,6 +693,9 @@ This lab assumes you have already completed the following:
     
     
     Grant succeeded.
+    
+    
+    Session altered.
     
     
     PL/SQL procedure successfully completed.
@@ -713,7 +719,7 @@ This lab assumes you have already completed the following:
     name=demo
     connect_string=(ADDRESS_LIST=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(HOST=shardhost3)(PORT=1521)(PROTOCOL=tcp)))
     monitor.user=dbmonuser
-    monitor.pass=TEZiPP4MsLLL
+    monitor.pass=TEZiPP4_MsLLL_1
     app.service.write=nspdb
     app.service.readonly=nspdb
     app.user=app_schema
@@ -918,11 +924,11 @@ In this step, you will export the demo application data and copy the dmp file to
 7. You can copy the dump file to a shared storage which all the host can access it or you can copy it to each of the host. In our lab, we will copy the dump file to the catalog host and each of the shard host.
 
     ```
-    [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@catahost:/tmp</copy>
-    The authenticity of host 'catahost (10.0.0.10)' can't be established.
+    [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost0:/tmp</copy>
+    The authenticity of host 'shardhost0 (10.0.0.10)' can't be established.
     ECDSA key fingerprint is SHA256:+9TKXWk+ZjpgVTHccz73xTHhrj+T8UHvBPhOjutPk5c.
     Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-    Warning: Permanently added 'catahost,10.0.0.10' (ECDSA) to the list of known hosts.
+    Warning: Permanently added 'shardhost0,10.0.0.10' (ECDSA) to the list of known hosts.
     original.dmp                                                                                     100%   13MB 189.4MB/s   00:00  
     
     [opc@shardhost3 ~]$ <copy>sudo scp -i <ssh_private_key> /home/oracle/original.dmp opc@shardhost1:/tmp</copy>
@@ -956,14 +962,14 @@ In this step, you will export the demo application data and copy the dmp file to
 7. Connect to catalog host, move the dump file to the ```/home/oracle``` directory
 
     ```
-    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@catahost</copy>
+    [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost0</copy>
     Last login: Fri Sep 20 04:53:28 2024 from 10.0.0.20
     
-    [opc@catahost ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
-    [opc@catahost ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
-    [opc@catahost ~]$ <copy>exit</copy>
+    [opc@shardhost0 ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@shardhost0 ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@shardhost0 ~]$ <copy>exit</copy>
     logout
-    Connection to catahost closed.
+    Connection to shardhost0 closed.
     [opc@gsmhost ~]$ 
     ```
     
@@ -990,11 +996,11 @@ In this step, you will export the demo application data and copy the dmp file to
     [opc@gsmhost ~]$ <copy>ssh -i <ssh_private_key> opc@shardhost2</copy>
     Last login: Fri Sep 20 04:53:28 2024 from 10.0.0.20
     
-    [opc@catahost ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
-    [opc@catahost ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
-    [opc@catahost ~]$ <copy>exit</copy>
+    [opc@shardhost2 ~]$ <copy>sudo chown oracle:oinstall /tmp/original.dmp</copy>
+    [opc@shardhost2 ~]$ <copy>sudo mv /tmp/original.dmp /home/oracle</copy>
+    [opc@shardhost2 ~]$ <copy>exit</copy>
     logout
-    Connection to catahost closed.
+    Connection to shardhost2 closed.
     [opc@gsmhost ~]$ 
     ```
 

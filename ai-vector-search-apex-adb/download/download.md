@@ -71,9 +71,9 @@ Before we dive into the procedure, make sure you have the following:
 15. Select BYOL license type.
 
 16. Click Create Autonomous Database.
-    ![](./images/provision-atp-7.png)
 
-    Your console will show that ATP is provisioning. This will take about 2 or 3 minutes to complete.
+
+    Your console will show that ADW is provisioning. This will take about 2 or 3 minutes to complete.
 
     You can check the status of the provisioning in the Work Request.
 
@@ -107,6 +107,8 @@ From ADMIN user, run the following to ensure your database user has the necessar
 <copy>
 CREATE USER VECTOR identified by <password>;
 GRANT CONNECT to VECTOR;
+ALTER USER VECTOR QUOTA UNLIMITED ON DATA;
+GRANT CREATE SESSION to VECTOR;
 GRANT RESOURCE to VECTOR;
 GRANT DB_DEVELOPER_ROLE to VECTOR;
 GRANT EXECUTE ON DBMS_CLOUD TO VECTOR;
@@ -114,6 +116,50 @@ GRANT EXECUTE ON DBMS_VECTOR TO VECTOR;
 GRANT EXECUTE ON DBMS_VECTOR_CHAIN TO VECTOR;
 GRANT CREATE ANY DIRECTORY TO VECTOR;
 GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
+</copy>
+```
+
+Enable the Rest Access for the Vector User:
+
+```sql
+<copy>
+-- REST ENABLE
+BEGIN
+    ORDS_ADMIN.ENABLE_SCHEMA(
+        p_enabled => TRUE,
+        p_schema => 'VECTOR',
+        p_url_mapping_type => 'BASE_PATH',
+        p_url_mapping_pattern => 'vector',
+        p_auto_rest_auth=> FALSE
+    );
+    -- ENABLE DATA SHARING
+    C##ADP$SERVICE.DBMS_SHARE.ENABLE_SCHEMA(
+            SCHEMA_NAME => 'VECTOR',
+            ENABLED => TRUE
+    );
+    commit;
+END;
+/
+</copy>
+```
+
+
+Last, but not least, we need to create an ACL for making sure that package DBMS_VECTOR_CHAIN (which does a direct callout to internet from PL/SQL without going through APEX webservices packages) works as intended. You can run this as admin:
+
+```sql
+<copy>
+BEGIN
+
+    DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+        host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open. You can use '*' if you want it open to any connection. 
+        ace => xs$ace_type(privilege_list => xs$name_list('connect'),
+                           principal_name => 'specific_user_or_role', -- Restrict to a specific user or role. For example, "Public"
+                           principal_type => xs_acl.ptype_db)
+    );
+
+END;
+
+/
 </copy>
 ```
 
@@ -166,7 +212,9 @@ end;
 /
 ```
 
-## Task 6: Option 2 - Create the credential for ADB to access OpenAI
+
+## Task 5: Option 2 - Create the credential for ADB to access OpenAI
+
 
 ### OpenAI
 
@@ -188,9 +236,25 @@ end;
 </copy>
 ```
 
-## Task 7: Download ONNX embedding models Using `DBMS\_CLOUD.GET\_OBJECTS`
 
-Now log in as VECTOR or `<your_database_user>`, use the `DBMS\_CLOUD.GET\_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
+## Task 6: Download ONNX embedding models Using `DBMS_CLOUD.GET_OBJECTS`
+
+Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
+
+Copy this statement and replace with your username and password for Oracle Cloud.
+
+```sql
+<copy>
+BEGIN
+  DBMS_CLOUD.CREATE_CREDENTIAL(
+    credential_name => 'OBJ_STORE_CRED',
+    username => '<your_oci_user_name>',
+    password => '<your_oci_password>'
+  );
+END;
+/
+</copy>
+```
 
 Run to create the staging directory.
 
@@ -238,7 +302,9 @@ END;
 </copy>
 ```
 
-## Task 8: Verify the File in Oracle ADB
+
+## Task 7: Verify the File in Oracle ADB
+
 
 After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
 
@@ -297,4 +363,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
-* **Last Updated By/Date** -  July 2024
+* **Last Updated By/Date** -  Blake Hendricks, October 2024
