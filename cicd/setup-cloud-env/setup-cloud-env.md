@@ -45,11 +45,6 @@ Estimated time: 20 minutes
 
   ![AppDev Compartment](images/compartment-create.png " ")
 
-1. Click the Cloud Shell icon in the Console header. Note that the OCI CLI running in the Cloud Shell will execute commands against the region selected in the Console's Region selection menu when the Cloud Shell was started.
-
-  ![CloudShell](images/cloudshell-1.png " ")
-
-  ![CloudShell](images/cloudshell-2.png " ")
 
 Now you are ready to move on to Step 3.
 
