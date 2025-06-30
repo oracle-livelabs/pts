@@ -2,13 +2,12 @@
 
 ### Introduction
 
-Until now the agent and tools are initialized. Now we will call the agent with and ask specific questions to demonstrate how Agent calls appropriate tools and generates answer.
+The agent and tools are initialized in Lab 1. Now we will call the agent with and ask specific questions to demonstrate how Agent calls appropriate tools and generates answer.
 
 Estimated Time: 15 min
 
 ### Objectives
 
-We'll demonstrate:
 1. Demonstrate agent context memory
 2. Demonstrate agent ability to use to call RAG tools
 3. Demonstrate agent's ability to create PDFs
@@ -225,7 +224,7 @@ Response:
     I've created an email PDF with the 4 new features from the document and sent it to Vijay from your name, Homer. You can find the PDF saved as Email_to_vijaybalebailoraclecom_from_Homer.pdf.
 ````
 
-Observer that the question mentions from me. And since you introduced your self as Homer, its taking that information from memory and addressing.
+Observe that the question mentions "from me". And since you introduced your self as Homer, its taking that information from memory and addressing to Homer.
 
 ## Task: Workshop Takeaways
 

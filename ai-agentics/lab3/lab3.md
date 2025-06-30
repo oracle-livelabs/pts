@@ -4,7 +4,7 @@
 
 Run and test the application. It features a GUI front end that accepts user questions. The agent processes the input using all available tools, guided by its initialization role defined in the prompt template. It interacts with the specified LLM to generate the most accurate and relevant response.
 
-> Important Note: To Keep the resource usage in limit we have restricted the agent max iteration to 15.  In case the question times out or give error stating max iterations reached. Please re-submit the same question again or try rephrase the question.
+> Important Note: To keep the resource usage with in limit we have restricted the agent max iteration to 15.  In case the question times out or gives an error stating max iterations reached, please re-submit the same question again or try to rephrase the question.
 
 Estimated Time: 15 min
 
