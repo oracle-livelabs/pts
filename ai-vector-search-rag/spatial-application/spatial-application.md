@@ -8,8 +8,12 @@ Estimated Time: 60 minutes
 
 In this lab, you will:
 
-- Prepare APEX application schema for spatial data
-- Create in-database JSON components for advanced retrieval techniques
+- Prepare APEX application schema for spatial data.
+- Create in-database JSON components for advanced retrieval techniques.
+
+The end result of this lab is an application that can generate GeoJSON documents to be used as embedings in the RAG workflow.
+
+[Prepare for Spatial JSON vectorization](youtube:YcmUogkR4Xo)
 
 ### Prerequisites
 
