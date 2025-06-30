@@ -4,6 +4,14 @@
 
 Estimated Time: 30 minutes.
 
+### Objectives
+
+In this lab, you will:
+
+- Review APEX application SQL statement and PL/SQL code.
+- Test some code snippets in APEX SQL Workshop > SQL Commands.
+- Use Oracle Cloud Console > Database Actions if necessary to practice more.
+
 Watch these videos for a quick demonstration of the main capabilities explained in this workshop:
 
 [The database can help you organize documents](youtube:qhEtVaTFv1s)
