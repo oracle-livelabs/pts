@@ -51,8 +51,10 @@ import json
 import traceback
 from typing import Union, Dict, List
 
-# Third-party imports
+# Oracle Python driver 
 import oracledb
+
+# Third-party imports
 import pandas as pd
 from dotenv import load_dotenv
 
@@ -63,9 +65,11 @@ from langchain_core.prompts import PromptTemplate
 from langchain.agents import Tool, create_react_agent, AgentExecutor
 from langchain_community.chat_models import ChatOCIGenAI
 from langchain_community.embeddings import HuggingFaceEmbeddings
+
+# Oracle specific LangChain libraries imports
 from langchain_community.vectorstores import OracleVS
 from langchain_community.vectorstores.utils import DistanceStrategy
-
+ 
 # PDF generation
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
@@ -123,9 +127,9 @@ print("Database connection established")
 Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
 
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
-For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks along with the question to LLM and return a human readable text.
+For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle 23ai New features"**  So we will be doing a vector search and returning the top N text chunks and sending the text chunks along with the question to the LLM and returning a human readable text.
 
-The model we are using is all-MiniLM-L6-v2. This model has been download as ONNX file and loaded in the database already.
+The model we are using is all-MiniLM-L6-v2. This model has been downloaded as ONNX file and loaded in the database already.
 
 Note: To learn more about creating embedding in database check for live lab ( [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain] (<https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927>) )
 
@@ -162,8 +166,8 @@ To explore the vector store we created, run the sql query to select the first 5 
 %sql select * from AGENTICS_AI where rownum <= 5
 ```
 
-The out put shows 4 columns having id, text, meta and embedding.
-id is the primary key,  Text column contains the text chunks, meta column contain additional information which can be used for filtering i.e location and page of the chunk, emmbeding column contain the Vector value of text chunk.
+The output shows 4 columns having id, text, metadata and embedding.
+id is the primary key, Text column contains the text chunks, metadata column contains additional information which can be used for filtering, i.e location and page of the chunk, embedding column contains the Vector value of text chunk.
 
 <div>
 <style scoped>
@@ -239,20 +243,16 @@ The diagram shows the core structure of an AI agent: **Tools**, **Model**, and *
 
 We’ll define a set of specialized tools that the AI agent will utilize to perform its tasks, aligning with the workflow shown in the diagram:
 
-- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and retrieve Retrieval-Augmented Generation (RAG) answers from a large language model (LLM), enhancing its ability to provide accurate, data-driven responses from Oracle Database 23ai.
+- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and Retrieval-Augmented Generation (RAG) answers from a large language model(LLM), enhancing its ability to provide accurate, data-driven responses from Oracle Database 23ai.
   
 - **fetch\_recipients**: Designed to look up email addresses based on a given name, this tool allows the agent to dynamically fetch recipient details for email automation tasks, ensuring seamless communication workflows.
 
-- **create\_pdf\_tool**: This tool empowers the agent to generate PDFs, either with a specified title and content or formatted as an email, enabling professional document creation for reporting or sharing purposes.
+- **create\_pdf\_tool**: This tool enables the agent to generate PDFs, either with a specified title and content or formatted as an email, enabling professional document creation for reporting or sharing purposes.
 
 - **extract\_user\_name**: By accessing the agent’s short-term memory (as part of the `AgentExecutor`’s memory component), this tool retrieves user names from prior conversations, ensuring the agent maintains context and personalizes interactions effectively.
 
 These tools, combined with the model and prompt, are orchestrated by the `AgentExecutor` to enable the AI agent to perform complex, multi-step tasks like data retrieval, email automation, and PDF generation, all while maintaining contextual awareness through memory.
-How to Use:
-Copy the above content into a text editor.
-Save it as AI\_Agent\_Components.md.
-Open it in any Markdown viewer or editor (e.g., VS Code, Typora, or GitHub) to see the formatted output.
-Let me know if you need further assistance!
+
 
 ## **Task 3: Building Agent Tools**
 
@@ -260,7 +260,7 @@ Python tools are defined similarly to standard Python programs. When using LangC
 
 ### **Tool 1: RAG Search**
 
-In the RAG Search tool we create a function rag\_search. The variables in function are
+In the RAG Search tool we create a function rag\_search. The variables in the function are
 
 - query: Input User query about the RAG search in the document.
 - K=5: Specifies the number of top k-chuck to be sent to LLM for generating answer for query. We have to 5, can change as needed.
@@ -277,7 +277,7 @@ def rag_search(query: str) -> str:
 Sample input/output
 
     Input: Question about the document for a RAG search
-    Output: Top 8 pages that have most relevant answers for the question.
+    Output: Top 5 pages that have most relevant answers for the question.
 
 ### **Tool 2: Fetch Recipients (Database Tool)**
 
@@ -454,7 +454,7 @@ def create_pdf_tool(input_data: Union[str, Dict]) -> str:
 
 ### **Tool 4: User Name Extraction**
 
-The `extract_user_name` tool demonstrate how we can parse this history to extract specific information. This tool extract the name of user's interaction with application i.e., the last question and entire context of conversation.
+The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extracts the name of user from user's interaction with the application i.e., the last question and entire context of conversation.
 
 Username extraction:
 
@@ -662,7 +662,7 @@ def setup_agent():
 
 ````
 
-You have completed the Code explanation. We would do code walk through in the next lab.
+You have completed the Code explanation. We will run through examples in the next lab.
 
 Please proceed to the next lab.
 
