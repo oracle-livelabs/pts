@@ -471,11 +471,11 @@ This lab assumes you have the following:
     -- Post authenticate procedure
     <copy>
     CREATE OR REPLACE EDITIONABLE PROCEDURE post_authenticate (
-        p_username in varchar2,
-        out_user_id out number,
-        out_time_zone out varchar2,
+      p_username in varchar2,
+      out_user_id out number,
+      out_time_zone out varchar2,
       out_role_id out number,
-        out_locked out number
+      out_locked out number
     )
     is
       l_id        number;
@@ -730,8 +730,8 @@ This lab assumes you have the following:
     begin
     -- escape special characters and Oracle Text reserved words from Token
     select trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                                                    '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                                                    1, 0, 'i')) into L_TOKEN 
+                               '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
+                               1, 0, 'i')) into L_TOKEN 
     from TOKENS where ID = L_TOKEN_ID;
     delete from DOCS_TOKENS_REF where TOKEN_ID = L_TOKEN_ID;
     insert into DOCS_TOKENS_REF
@@ -753,8 +753,8 @@ This lab assumes you have the following:
     begin
     -- escape special characters and Oracle Text reserved words from Token
     select trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                                                    '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                                                    1, 0, 'i')) into L_TOKEN 
+                               '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
+                               1, 0, 'i')) into L_TOKEN 
     from TOKENS where ID = L_TOKEN_ID;
     delete from VECTORS_TOKENS_REF where TOKEN_ID = L_TOKEN_ID;
     insert into VECTORS_TOKENS_REF
@@ -778,9 +778,10 @@ This lab assumes you have the following:
     delete from DOCS_TOKENS_REF where BLOBDOC_ID = L_BLOBDOC_ID;
     delete from VECTORS_TOKENS_REF where VECTOR_ID in (select ID from VECTORS where BLOBDOC_ID = L_BLOBDOC_ID);
     -- escape special characters and Oracle Text reserved words from Token
-    for rec in (select ID, trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                                                '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                                                1, 0, 'i')) as L_TOKEN from TOKENS) loop
+    for rec in (
+        select ID, trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
+                                       '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
+                                       1, 0, 'i')) as L_TOKEN from TOKENS) loop
     begin
         -- insert new references
         insert into DOCS_TOKENS_REF
@@ -872,7 +873,9 @@ This lab assumes you have the following:
     ````
     https://YourObjStorageNamespace.objectstorage.uk-london-1.oci.customer-oci.com
     https://objectstorage.uk-london-1.oraclecloud.com
+    https://document.aiservice.uk-london-1.oci.oraclecloud.com
     ````
+    - Prompt On Install: ON
 
     ![create web credentials](./images/create-web-credentials.png " ")
 
