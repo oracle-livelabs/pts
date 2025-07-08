@@ -1,90 +1,148 @@
 # Building AI Agents with Model Context Protocol (MCP) and Oracle Database 23ai
 
+### Introduction
 
-### **Introduction**
+This workshop demonstrates how to build an AI agent application using LangChain, Oracle Database 23ai, and the Model Context Protocol (MCP)—an open standard that defines how AI agents manage context, memory, and tool usage in a portable and secure way.
 
-This workshop demonstrates how to build an AI agent application using LangChain, Oracle Database 23ai, and the Model Context Protocol (MCP)—an open standard for AI agent context, memory, and tool interoperability (modelcontextprotocol.io ). You’ll learn how MCP defines agent tasks, interactions, and contextual memory in a consistent, model-agnostic format.
+MCP acts as the **interoperability layer** between large language models (LLMs), agent logic, tools, and enterprise data systems. It separates agent reasoning from execution, enabling AI systems to scale safely and remain adaptable to different environments or LLMs.
 
-Using LangChain and Oracle Database 23ai's converged features (including AI Vector Search, Graph, and JSON), we'll show how MCP enables seamless communication between the agent, database, and external services. MCP’s standardized API allows your agent to initiate tasks, call tools, manage context/memory, and be portable across LLMs and platforms.
+By combining LangChain with Oracle Database 23ai’s AI-native features (Vector Search, JSON, Graph), and using MCP to structure all interactions, this workshop shows how to build enterprise-grade AI agents that are modular, context-aware, and secure.
 
-In this hands-on session, you'll see how MCP can be used for AI Vector search, relational queries, PDF generation, and email workflows—with all interactions flowing through MCP’s unified context and task specifications. You’ll design MCP-compatible prompts, create tools, and use standard memory management, illustrating how to build future-proof GenAI applications with agentic frameworks.
+You’ll learn how to:
 
-By leveraging MCP, you ensure your agent application is interoperable, composable, and ready for rapid advances in AI and data platforms like Oracle Database 23ai.
+* Register MCP tools that wrap Oracle services
+* Build agents that follow MCP tasks and tool metadata
+* Maintain structured memory and task flows using the MCP format
 
-Estimated Time:  15 min
+Estimated Time: 15 min
 
 ### Objectives
 
-In this workshop, we'll perform the follow:
+In this workshop, we'll:
 
-* Setting up the environment and dependencies
-* Creating custom tools for our AI agent
-* Designing effective prompt templates
-* Initializing and running the AI agent
+* Set up the development environment
+* Use Model Context Protocol (MCP) to standardize agent-tool interactions
+* Build MCP-compliant tools for Oracle services (SQL, vector search, PDF)
+* Structure prompts and memory using MCP schemas
+* Run a reasoning agent that plans, calls tools, and maintains context
 
-
-Let's get started!
-
+Let’s get started.
 
 ### Prerequisites
-* An Oracle LiveLabs Account
-* Check out Livelab - Complete RAG Application using PL/SQL in Oracle Database 23ai
 
+* Oracle LiveLabs account
+* Familiarity with Python and LLMs
+* Completed: “Complete RAG Application using PL/SQL in Oracle Database 23ai”
 
-## Task: Understanding AI Agents
+---
 
+## Task: Understanding MCP & AI Agents
 
-### **What are AI Agents?**
+### What is MCP?
 
-An AI or LLM Agent is a reasoning framework built around a Large Language Model (LLM) that can interpret user input, reason through it step-by-step, and autonomously use external tools (like vector search, relational query, email, or PDF generators) to accomplish tasks, not just a chatbot that responds, but a system that plans, decides, and acts.
+Model Context Protocol (MCP) is an open protocol that defines how AI agents operate:
 
-It's like giving the LLM: a brain to reason and remember (via prompts + memory),
-eyes and ears to read documents or look up info (via tools),
-and hands to take action (e.g., sending emails, generating PDFs).
- 
+* It standardizes tool registration, memory, and context
+* It allows tools and agents to interact across languages and frameworks
+* It enables tool isolation: agents **can only access tools exposed via MCP**, with clear input/output definitions
 
-### **Why AI Agents Matter?**
-AI agents are transforming industries by automating sophisticated workflows, boosting productivity, and enabling intelligent scalable solutions. Integrated with databases like Oracle Database 23ai, they enhance tasks like enterprise customer support and data analysis, reducing costs and errors. For developers, mastering AI agents unlocks opportunities to build innovative, competitive solutions.
+In short, MCP gives AI agents **a clean, declarative interface** to reason over tasks and securely call external systems.
 
-### **Understanding the AI Agent Architecture**
+Instead of hardcoding APIs or database access into agents, you register tools with MCP and let the agent **dynamically discover and invoke** them—based on metadata and real-time decisions.
 
-AI Agent system have the following characteristics :
+MCP enables:
 
-Plan and Reason: Analyze a task and determine the necessary steps
-Tools: Execute functions to gather information or perform actions.
-Maintain Context: Remember conversation history and previous actions.
-Make Decisions: Choose appropriate next steps based on observations.
-Reasoning: The agent thinks through the problem
-Acting: The agent takes action based on reasoning
-Observation: The agent observes the result
-Repeat: Until the task is complete """
+* Tool discovery through structured schemas
+* Memory and context tracking across agent steps
+* Portable agents that work across LLMs, platforms, or runtimes
 
-### **Agent Components**
+It’s the **standard glue** for safe and scalable AI agents.
 
-AI agents rely on the following components for functionality:
-Tools: External resources or APIs (e.g., database queries, email services, PDF generation).
-Prompts: Instructions guiding the agent’s behavior for accurate outputs.
-Model: The AI model (e.g., GPT, LLaMA) powering reasoning and decisions.
-Memory: Contextual memory for retaining prior interactions in multi-step tasks.
-Planner: Breaks down tasks into steps, selecting tools and actions.
-Environment: Data sources like Oracle Database 23ai for processing information.
+---
 
- ![AI Agent Architecture](images/ai-architecture.jpg )
+### What Are AI Agents?
 
+AI agents are systems that use LLMs to plan, reason, and take actions to complete tasks. Unlike simple chatbots, agents think through problems step-by-step and interact with external tools.
 
-### Learn More
+An agent becomes truly powerful when it can:
 
-See below for more information on Oracle Database 23ai and Oracle AI Vector Search
+* Understand intent from user input
+* Choose from a list of registered tools
+* Call tools securely and evaluate the output
+* Track task progress using memory and context
 
-* [Oracle AI Agentics Blog ](https://docs.oracle.com/en/database/oracle/oracle-database/)
-* [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
-* [Oracle AI Vector Search Blog](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
+With MCP, all of these steps happen in a **structured**, **repeatable**, and **governable** way.
 
+---
 
+### Why MCP Matters for AI Agents
+
+In traditional systems, tool access is hardcoded into the agent logic. This makes it difficult to:
+
+* Apply security controls
+* Swap tools or APIs
+* Track usage or enforce compliance
+
+MCP solves this by decoupling the **agent’s brain (LLM reasoning)** from the **hands (tools)** and **memory (context store)**.
+
+With MCP, your agent:
+
+* Requests a task plan
+* Sees the available tools via MCP metadata
+* Calls tools through a secure interface
+* Uses observations to continue reasoning
+
+This enables **fine-grained control**, easy debugging, and safe scalability—critical for production GenAI systems in Oracle environments.
+
+---
+
+## AI Agent Architecture with MCP
+
+An MCP-powered agent system includes:
+
+* **Planner**: Determines task steps
+* **MCP Tool Server**: Hosts tools the agent can call
+* **Memory**: Tracks history and intermediate steps
+* **LLM**: Powers reasoning and decision making
+* **Context**: Carries structured task metadata
+
+Oracle Database 23ai complements this by offering:
+
+* AI Vector Search tools
+* Relational/JSON queries
+* Stored memory in a converged format
+* Graph reasoning
+
+MCP acts as the **middleware protocol**, enabling consistent interaction across all these components.
+
+---
+
+### Agent Components in an MCP System
+
+| Component | Description                           | Oracle Example                 |
+| --------- | ------------------------------------- | ------------------------------ |
+| Tools     | Wrapped APIs/services exposed via MCP | SQL query, vector search, PDF  |
+| Prompts   | Standardized task definitions         | “Summarize this document”      |
+| Model     | Reasoning engine (LLM)                | OpenAI, Cohere, OCI model      |
+| Memory    | Structured memory store               | JSON stored in Oracle DB       |
+| Planner   | Selects next step/tool                | Chooses based on tool metadata |
+| Context   | MCP-formatted task metadata           | Inputs, tools, prior steps     |
+
+---
+
+## Learn More
+
+* [MCP Protocol Overview](https://modelcontextprotocol.io/)
+* [Oracle MCP + OCI Blog](https://blogs.oracle.com/ai-and-datascience/post/unleashing-the-power-of-mcp-with-oracle-oci-genai)
+* [LangChain MCP Adapter](https://github.com/langchain-ai/langchain-mcp-adapter)
+* [Oracle Vector Search Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 
 You may now [proceed to the next lab](#next).
 
+---
+
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Rajeev Rumale
-* **Contributors** - Milton Wan, Doug Hood
-* **Last Updated By/Date** -  Rajeev Rumale, June 2025
+
+* Authors – Vijay Balebail, Rajeev Rumale, Ashu Kumar
+* Contributors – Milton Wan, Doug Hood
+* Last Updated – Rajeev Rumale, June 2025
