@@ -188,7 +188,7 @@ This lab assumes you have:
     ```sql
     <copy>
     create or replace editionable view OSM_ELEMENT_MEMBERS as
-    select osm.ID, xt.MEMB_TYPE, xt.MEMB_REF, xt.MEMB_ROLE, oid.ID RESPONSE_ID
+    select osm.ID, osm.ELEMENT, xt.MEMB_TYPE, xt.MEMB_REF, xt.MEMB_ROLE, oid.ID RESPONSE_ID
       from OSMRESULTS osm,
           XMLTABLE('/osm/relation/member'
             PASSING osm.RESPONSE
@@ -199,7 +199,7 @@ This lab assumes you have:
             ) xt
       left join OSMRESULTS oid on xt.MEMB_REF = oid.ID
     union all
-    select osm.ID, 'node' MEMB_TYPE, xt.NODE_REF MEMB_REF, 'node' MEMB_ROLE, oid.ID RESPONSE_ID
+    select osm.ID, osm.ELEMENT, 'node' MEMB_TYPE, xt.NODE_REF MEMB_REF, 'node' MEMB_ROLE, oid.ID RESPONSE_ID
       from OSMRESULTS osm,
           XMLTABLE('/osm/way/nd'
             PASSING osm.RESPONSE
