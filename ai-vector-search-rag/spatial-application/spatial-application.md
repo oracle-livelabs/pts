@@ -188,25 +188,35 @@ This lab assumes you have:
     ```sql
     <copy>
     create or replace editionable view OSM_ELEMENT_MEMBERS as
-    select osm.ID, osm.ELEMENT, xt.MEMB_TYPE, xt.MEMB_REF, xt.MEMB_ROLE, oid.ID RESPONSE_ID
-      from OSMRESULTS osm,
-          XMLTABLE('/osm/relation/member'
-            PASSING osm.RESPONSE
-            COLUMNS 
-              memb_type varchar2(1024) PATH '@type',
-              memb_ref number PATH '@ref',
-              memb_role varchar2(1024) PATH '@role'
-            ) xt
-      left join OSMRESULTS oid on xt.MEMB_REF = oid.ID
-    union all
-    select osm.ID, osm.ELEMENT, 'node' MEMB_TYPE, xt.NODE_REF MEMB_REF, 'node' MEMB_ROLE, oid.ID RESPONSE_ID
-      from OSMRESULTS osm,
-          XMLTABLE('/osm/way/nd'
-            PASSING osm.RESPONSE
-            COLUMNS 
-              node_ref number PATH '@ref'
-            ) xt
-      left join OSMRESULTS oid on xt.NODE_REF = oid.ID;
+    select oem.ID, xtj.NAME, oem.ELEMENT, oem.MEMB_TYPE, oem.MEMB_REF, oem.MEMB_ROLE, oem.RESPONSE_ID from
+      (select osm.ID, osm.ELEMENT, xt.MEMB_TYPE, xt.MEMB_REF, xt.MEMB_ROLE, oid.ID RESPONSE_ID
+          from OSMRESULTS osm,
+              XMLTABLE('/osm/relation/member'
+                PASSING osm.RESPONSE
+                COLUMNS 
+                  memb_type varchar2(1024) PATH '@type',
+                  memb_ref number PATH '@ref',
+                  memb_role varchar2(1024) PATH '@role'
+                ) xt
+          left join OSMRESULTS oid on xt.MEMB_REF = oid.ID
+        union all
+        select osm.ID, osm.ELEMENT, 'node' MEMB_TYPE, xt.NODE_REF MEMB_REF, 'node' MEMB_ROLE, oid.ID RESPONSE_ID
+          from OSMRESULTS osm,
+              XMLTABLE('/osm/way/nd'
+                PASSING osm.RESPONSE
+                COLUMNS 
+                  node_ref number PATH '@ref'
+                ) xt
+          left join OSMRESULTS oid on xt.NODE_REF = oid.ID) oem
+      left join (select osm.ID, xt.TAG_KEY, xt.TAG_VALUE as NAME
+                  from OSMRESULTS osm,
+                      XMLTABLE('/osm/*/tag'
+                        PASSING osm.RESPONSE
+                        COLUMNS 
+                          tag_key varchar2(1024) PATH '@k',
+                          tag_value varchar2(1024) PATH '@v'
+                        ) xt
+      where xt.TAG_KEY = 'name') xtj on oem.ID = xtj.ID;
     </copy>
     ```
 
