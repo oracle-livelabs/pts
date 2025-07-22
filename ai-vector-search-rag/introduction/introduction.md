@@ -33,6 +33,7 @@ In this workshop, you will learn how to:
 * Import files into the database from OCI Object Storage
 * Work with LLMs imported inside Oracle Database
 * Split documents and vectorize the chunks
+* Convert your documents to Markdown format
 * Perform AI Vector Search on text data
 * Execute RAG on text data using OCI Generative AI service
 
