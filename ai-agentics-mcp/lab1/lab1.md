@@ -122,8 +122,42 @@ mcp = FastMCP("AgentAssitant")
 
 
 @mcp.tool()
-def lookup_recipients(name: str):
-    return fetch_recipients(name)
+def fetch_recipients(query: str) -> str:
+    Search for recipients by name and return formatted results.
+    try:
+        # Clean the query
+        cleaned_query = query.strip()
+        while cleaned_query.endswith('O'): cleaned_query = cleaned_query[:-1]
+
+        # Use the existing connection
+        cursor = connection.cursor()
+
+        # Parse search terms and build query
+        search_terms = cleaned_query.split()
+        base_query = "SELECT first_name, last_name, email FROM recipients WHERE 1=0"
+        conditions, params = [], []
+
+        for term in search_terms:
+            conditions.extend(["LOWER(first_name) LIKE LOWER(:term)||'%'", "LOWER(last_name) LIKE LOWER(:term)||'%'"])
+            params.extend([term, term])
+
+        query = base_query.replace("1=0", " OR ".join(conditions))
+        cursor.execute(query, params)
+        recipients = cursor.fetchall()
+        cursor.close()
+
+        # Format results
+        if not recipients: return f"No recipients found matching '{cleaned_query}'."
+
+        formatted_results = [f"{first_name} {last_name} ({email})" for first_name, last_name, email in recipients]
+        if len(recipients) == 1:
+            first_name, last_name, email = recipients[0]
+            return f"{first_name} {last_name} ({email})\n\nSuggested recipient: {email}"
+
+        return "\n".join(formatted_results) + "\n\nMultiple recipients found. Using the first email address: " + recipients[0][2]
+
+    except Exception as e:
+        return f"Error finding email addresses: {str(e)}" 
 
 @mcp.tool()
 def oracle_connect() -> str:
@@ -245,6 +279,119 @@ def rag_search(query: str) -> str:
     except Exception as e:
         return f"Error during document search: {str(e)}"
 
+
+@mcp.tool()
+def create_pdf_tool(input_data: Union[str, Dict]) -> str:
+    """    
+    Create a PDF from email content or general information.
+    Input should be a JSON with "title", "content", and optionally "filename".
+    For emails, content should contain "to", "subject", and "message" fields.
+    
+    try:
+        # Parse input if it's a string
+        if isinstance(input_data, str):
+            try:
+                data = json.loads(input_data)
+            except json.JSONDecodeError:
+                # If parsing fails, treat it as content
+                data = {
+                    "title": "Generated Content",
+                    "content": input_data,
+                    "filename": "generated_document.pdf"
+                }
+        else:
+            data = input_data
+
+        # Use default filename if not provided
+        title = data.get("title", "Generated Content")
+        filename = data.get("filename")
+
+        if not filename:
+           if title.lower() == "email" and isinstance(data.get("content"), dict):
+               to_name = re.sub(r"[^\w\s]", "", data["content"].get("to", "recipient")).strip().replace(" ", "_")
+               from_match = re.search(r"Best regards,\s*(\w+(?:_\w+)*)", data["content"].get("message", ""), re.IGNORECASE)
+               from_name = from_match.group(1) if from_match else "me"
+               filename = f"Email_to_{to_name}_from_{from_name}.pdf"
+           else:
+               # Fallback for general documents
+               safe_title = re.sub(r"[^\w\s-]", "", title).strip().replace(" ", "_")
+               filename = f"{safe_title}.pdf"
+
+
+        # Check if content is an email (has to, subject, message)
+        is_email_format = False
+        if isinstance(data["content"], dict):
+            if all(k in data["content"] for k in ["to", "subject", "message"]):
+                is_email_format = True
+
+        if is_email_format:
+            # Create email PDF
+            result = generate_email_pdf(data["content"], filename)
+        else:
+            # Create general content PDF
+            buffer = io.BytesIO()
+            pdf = SimpleDocTemplate(buffer, pagesize=letter)
+            styles = getSampleStyleSheet()
+            elements = [
+                Paragraph(data["title"], styles['Title']),
+                Spacer(1, 0.2 * inch)
+            ]
+
+            # Convert string content to paragraphs
+            if isinstance(data["content"], str):
+                paragraphs = data["content"].split('\n\n')  # Split on double newlines
+                for para in paragraphs:
+                    if para.strip():
+                        elements.append(Paragraph(para.replace('\n', '
+'), styles['Normal']))
+                        elements.append(Spacer(1, 0.1 * inch))
+            elif isinstance(data["content"], list):
+                for item in data["content"]:
+                    elements.append(Paragraph(str(item).replace('\n', '
+'), styles['Normal']))
+                    elements.append(Spacer(1, 0.1 * inch))
+
+            pdf.build(elements)
+            buffer.seek(0)
+            with open(filename, "wb") as f:
+                f.write(buffer.getvalue())
+            result = f"PDF generated and saved as {filename}"
+
+        return result
+    except Exception as e:
+        traceback.print_exc()
+        return f"Error creating PDF: {str(e)}"  
+
+def generate_email_pdf(email_data, filename="email.pdf"):
+    Generate a PDF from email data.
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    elements = [
+        Paragraph("Email", styles['Title']),
+        Spacer(1, 0.2 * inch),
+        Paragraph(f"To: {email_data['to']}", styles['Normal']),
+        Paragraph(f"Subject: {email_data['subject']}", styles['Normal']),
+        Spacer(1, 0.2 * inch),
+        Paragraph("Message:", styles['Normal']),
+        Spacer(1, 0.1 * inch)
+    ]
+
+    message_paragraphs = email_data['message'].split('\n\n')
+    for para in message_paragraphs:
+        if para.strip():
+            elements.append(Paragraph(para.replace('\n', '
+'), styles['Normal']))
+            elements.append(Spacer(1, 0.1 * inch))
+
+    pdf.build(elements)
+    buffer.seek(0)
+
+    with open(filename, "wb") as f:
+        f.write(buffer.getvalue())
+
+    return f"Email PDF generated and saved as {filename}"
 
 if __name__ == "__main__":
     print(" Starting MCP Agentic Server ...")
@@ -481,6 +628,129 @@ def oracle_connect() -> str:
 *   **Input:** None.
 *   **Output:** A string indicating the Oracle DB connection status.
 
+### Tool 6: `PDF Creation` (MCP Tool)
+
+Using Python libraries (reportlab) to generate PDF files
+
+```python
+@mcp.tool()
+def create_pdf_tool(input_data: Union[str, Dict]) -> str:
+    """    
+    Create a PDF from email content or general information.
+    Input should be a JSON with "title", "content", and optionally "filename".
+    For emails, content should contain "to", "subject", and "message" fields.
+    
+    try:
+        # Parse input if it's a string
+        if isinstance(input_data, str):
+            try:
+                data = json.loads(input_data)
+            except json.JSONDecodeError:
+                # If parsing fails, treat it as content
+                data = {
+                    "title": "Generated Content",
+                    "content": input_data,
+                    "filename": "generated_document.pdf"
+                }
+        else:
+            data = input_data
+
+        # Use default filename if not provided
+        title = data.get("title", "Generated Content")
+        filename = data.get("filename")
+
+        if not filename:
+           if title.lower() == "email" and isinstance(data.get("content"), dict):
+               to_name = re.sub(r"[^\w\s]", "", data["content"].get("to", "recipient")).strip().replace(" ", "_")
+               from_match = re.search(r"Best regards,\s*(\w+(?:_\w+)*)", data["content"].get("message", ""), re.IGNORECASE)
+               from_name = from_match.group(1) if from_match else "me"
+               filename = f"Email_to_{to_name}_from_{from_name}.pdf"
+           else:
+               # Fallback for general documents
+               safe_title = re.sub(r"[^\w\s-]", "", title).strip().replace(" ", "_")
+               filename = f"{safe_title}.pdf"
+
+
+        # Check if content is an email (has to, subject, message)
+        is_email_format = False
+        if isinstance(data["content"], dict):
+            if all(k in data["content"] for k in ["to", "subject", "message"]):
+                is_email_format = True
+
+        if is_email_format:
+            # Create email PDF
+            result = generate_email_pdf(data["content"], filename)
+        else:
+            # Create general content PDF
+            buffer = io.BytesIO()
+            pdf = SimpleDocTemplate(buffer, pagesize=letter)
+            styles = getSampleStyleSheet()
+            elements = [
+                Paragraph(data["title"], styles['Title']),
+                Spacer(1, 0.2 * inch)
+            ]
+
+            # Convert string content to paragraphs
+            if isinstance(data["content"], str):
+                paragraphs = data["content"].split('\n\n')  # Split on double newlines
+                for para in paragraphs:
+                    if para.strip():
+                        elements.append(Paragraph(para.replace('\n', '
+'), styles['Normal']))
+                        elements.append(Spacer(1, 0.1 * inch))
+            elif isinstance(data["content"], list):
+                for item in data["content"]:
+                    elements.append(Paragraph(str(item).replace('\n', '
+'), styles['Normal']))
+                    elements.append(Spacer(1, 0.1 * inch))
+
+            pdf.build(elements)
+            buffer.seek(0)
+            with open(filename, "wb") as f:
+                f.write(buffer.getvalue())
+            result = f"PDF generated and saved as {filename}"
+
+        return result
+    except Exception as e:
+        traceback.print_exc()
+        return f"Error creating PDF: {str(e)}"  
+
+def generate_email_pdf(email_data, filename="email.pdf"):
+    Generate a PDF from email data.
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    elements = [
+        Paragraph("Email", styles['Title']),
+        Spacer(1, 0.2 * inch),
+        Paragraph(f"To: {email_data['to']}", styles['Normal']),
+        Paragraph(f"Subject: {email_data['subject']}", styles['Normal']),
+        Spacer(1, 0.2 * inch),
+        Paragraph("Message:", styles['Normal']),
+        Spacer(1, 0.1 * inch)
+    ]
+
+    message_paragraphs = email_data['message'].split('\n\n')
+    for para in message_paragraphs:
+        if para.strip():
+            elements.append(Paragraph(para.replace('\n', '
+'), styles['Normal']))
+            elements.append(Spacer(1, 0.1 * inch))
+
+    pdf.build(elements)
+    buffer.seek(0)
+
+    with open(filename, "wb") as f:
+        f.write(buffer.getvalue())
+
+    return f"Email PDF generated and saved as {filename}"
+```
+
+**Parameters:**
+*   **Input:** Well formed JSON document. which either has title and text, or To, subject and body.
+*   **Output:** A PDF file is created in the current directory.
+
 ---
 
 ## Task 4: Database and Vector Store Setup (MCP Perspective)
@@ -625,7 +895,7 @@ The output shows 4 columns: `id`, `text`, `meta`, and `embedding`.
 
 ## Task 5: Setting up Agent using LangChain
 
-This task details the process of setting up your AI agent using LangChain. We will cover agent memory, LLM initialization, prompt template creation, and the overall agent initialization process. This section will focus on how the agent interacts with MCP-exposed tools.
+This task details the process of setting up your AI agent using     . We will cover agent memory, LLM initialization, prompt template creation, and the overall agent initialization process. This section will focus on how the agent interacts with MCP-exposed tools.
 
 ### Agent Memory
 
