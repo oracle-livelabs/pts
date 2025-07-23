@@ -562,73 +562,8 @@ def prepare_and_send_email(email_data: dict) -> dict:
 *   **Input:** A dictionary with keys: "to", "subject", and "message"
 *   **Output:** A dictionary indicating success or failure of email sending.
 
-### Tool 4: `store_text_chunks` (MCP Tool)
 
-The `store_text_chunks` tool is exposed via the MCP server and is responsible for splitting text and storing it as embeddings in the Oracle Vector Store. This is a crucial step for preparing documents for RAG operations within the MCP framework.
-
-```python
-@mcp.tool()
-def store_text_chunks(file_path: str) -> str:
-    """Split text and store as embeddings in Oracle Vector Store"""
-    try:
-        db_ops = DatabaseOperations()
-        
-        if not db_ops.connect():
-            return "Oracle connection failed."
-
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-            raw_text = f.read()
-
-            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-            chunks = text_splitter.split_text(raw_text)
-            file_name = os.path.basename(file_path)
-            docs = [
-                chunks_to_docs_wrapper({\'id\': f"{file_name}_{i}", \'link\': f"{file_name} - Chunk {i}", \'text\': chunk})
-                for i, chunk in enumerate(chunks)
-            ]
-
-
-            embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-            OracleVS.from_documents(
-                docs, embeddings, client=db_ops.connection,
-                table_name="MY_DEMO4", distance_strategy=DistanceStrategy.COSINE)
-            
-            return f"Stored {len(docs)} chunks from {file_name}"
-
-    except Exception as e:
-        return f"Error: {str(e)}"
-```
-
-**Parameters:**
-*   **Input:** `file_path`: The path to the text file to be chunked and stored.
-*   **Output:** A string indicating the number of chunks stored and the file name, or an error message.
-
-### Tool 5: `oracle_connect` (MCP Tool)
-
-The `oracle_connect` tool is exposed via the MCP server and checks the connection status to the Oracle Database. This is a utility tool to ensure database connectivity for other MCP tools that rely on it.
-
-```python
-@mcp.tool()
-def oracle_connect() -> str:
-    """
-    Checks and returns Oracle DB connection status.
-    """
-    try:
-        db_ops = DatabaseOperations()
-        if db_ops.connect():
-            print("Oracle connection successful!")
-            return "Oracle DB is reachable."
-        return None
-    except Exception as e:
-        print(f"Oracle connection failed: {str(e)}")
-        return None    
-```
-
-**Parameters:**
-*   **Input:** None.
-*   **Output:** A string indicating the Oracle DB connection status.
-
-### Tool 6: `PDF Creation` (MCP Tool)
+### Tool 4: `PDF Creation` (MCP Tool)
 
 Using Python libraries (reportlab) to generate PDF files
 
@@ -762,6 +697,7 @@ This task focuses on configuring the Oracle Database and setting up the Vector S
 Establishing a secure connection to your Oracle Database is the first step. We will connect using database credentials typically stored as environment variables for security best practices (e.g., in a `.env` file on Linux). This ensures that your MCP tools can interact with the database to fetch or store information as needed.
 
 ```python
+@mcp.tool()
 def create_db_connection():
     """Create and return a database connection using environment variables."""
     return oracledb.connect(
@@ -792,24 +728,36 @@ The embedding model we are using is `all-MiniLM-L6-v2`. This model has been down
 Run the below code to initialize the Oracle Vector Store:
 
 ```python
-def setup_vector_store(connection):
+@mcp.tool()
+def store_text_chunks(file_path: str) -> str:
+    """Split text and store as embeddings in Oracle Vector Store"""
+    try:
+        db_ops = DatabaseOperations()
 
-  """Set up and return the Oracle Vector Store."""    
-    local_model_path = "/home/oracle/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
-    embeddings = HuggingFaceEmbeddings(model_name=local_model_path) 
-    #embeddings = HugcingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        if not db_ops.connect():
+            return "Oracle connection failed."
 
-    vector_store = OracleVS(
-        client=connection,
-        embedding_function=embeddings,
-        table_name="AGENTICS_AI",
-        distance_strategy=DistanceStrategy.COSINE
-    )
-    print("Oracle Vector Store ready")
-    return vector_store
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            raw_text = f.read()
 
-# Initialize vector store
-vector_store = setup_vector_store(connection)
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+            chunks = text_splitter.split_text(raw_text)
+            file_name = os.path.basename(file_path)
+            docs = [
+                chunks_to_docs_wrapper({\'id\': f"{file_name}_{i}", \'link\': f"{file_name} - Chunk {i}", \'text\': chunk})
+                for i, chunk in enumerate(chunks)
+            ]
+
+
+            embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+            OracleVS.from_documents(
+                docs, embeddings, client=db_ops.connection,
+                table_name="MY_DEMO4", distance_strategy=DistanceStrategy.COSINE)
+
+            return f"Stored {len(docs)} chunks from {file_name}"
+
+    except Exception as e:
+        return f"Error: {str(e)}"
 ```
 **Note:** We are using the embedding model cached locally on disk.
 
@@ -892,177 +840,47 @@ The output shows 4 columns: `id`, `text`, `meta`, and `embedding`.
 </div>
 
 ---
+## Task 5: Setting Up the MCP-Compatible LangGraph Agent
 
-## Task 5: Setting up Agent using LangChain
+In this step, you will set up an AI agent using LangGraph and Oracle’s MCP (Modular Component Platform). This agent will use tool-based reasoning and interact with a running MCP tool server.
 
-This task details the process of setting up your AI agent using     . We will cover agent memory, LLM initialization, prompt template creation, and the overall agent initialization process. This section will focus on how the agent interacts with MCP-exposed tools.
 
-### Agent Memory
-
-Memory is crucial for agents that need to maintain context over multiple turns. Our agent uses `ConversationBufferMemory`, which:
-1.  Stores the complete conversation history.
-2.  Makes it available to the agent on each turn.
-3.  Allows the agent to refer back to prior information (like user names).
+### Part 1: Configure the LLM and MCP Server Parameters
 
 ```python
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+# Set up the LLM (replace with ChatOCIGenAI if using Oracle GenAI)
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
+
+# MCP tool server configuration
+server_params = StdioServerParameters(
+    command="python",
+    args=["server.py"]
+)
 ```
 
-### Initialize Oracle GenAI Model
-
-The brain behind the agent is Oracle GenAI. This function initializes the specific model using Oracle API keys, providing the agent with its reasoning capabilities.
+### Part 2: Define the Agent Execution Function
 
 ```python
-def initialize_llm():
-    """Initialize and return the LLM model."""
-    model = ChatOCIGenAI(
-        model_id="cohere.command-r-08-2024",
-        service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
-        compartment_id=os.getenv("OCI_COMPARTMENT_ID"),
-        auth_type="API_KEY",
-        model_kwargs={"temperature": 0, "max_tokens": 700}
-    )
-    print(" LLM model initialized")
-    return model
+async def run_mcp_agent(prompt: str) -> str:
+    """Run the agent with the given prompt using MCP tools."""
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            tools = await load_mcp_tools(session)
+            agent = create_react_agent(llm, tools)
+            response = await agent.ainvoke({
+                "messages": [HumanMessage(content=prompt)]
+            })
+            return response["messages"][-1].content
 ```
 
-### Creating the Agent Prompt Template
-
-A well-crafted prompt template is essential for guiding agent behavior effectively. It should clearly define the agent\'s role and limitations, establish strict formatting rules (such as enforcing the ReAct structure), and include specific instructions for handling special cases like usernames or conditional actions (e.g., when to generate a PDF). Examples are crucial—they illustrate proper reasoning and the expected format across different scenarios. Additionally, a concise list of available tools with descriptions helps the agent choose the right tool for the task.
-
-Without these components, the agent is likely to produce inconsistent responses, make formatting errors that disrupt the reasoning-action loop, select inappropriate tools, or overlook important contextual information. A strong prompt template ensures consistent, accurate, and context-aware outputs from the agent.
-
+### You can test the setup by running the following script:
 ```python
-def create_agent_prompt():
-    """Create and return the prompt template for the agent."""
-    template = """
-    You are an assistant that can search documents, look up emails, and create PDFs.
-
-    Previous Chat History:
-    {chat_history}
-
-    STRICT FORMAT RULES:
-    1. NEVER respond directly after "Thought:" - ALWAYS follow with either "Action:" or "Final Answer:"
-    2. NEVER combine Action and Final Answer in the same response
-    3. For name introductions: ONLY use "Thought:" followed by "Final Answer:"
-    4. For PDF creation: Use "Action: Create PDF" with JSON in "Action Input:", then wait for "Observation:" before proceeding
-
-    - If usr says "from me", check chat history to extract my name and use it in email sign-off as: "Best regards, <User Name>".
-    - When the user says "from me", use the name from chat history (if available) in the signature. Use "Best regards,\n<User Name>" in the email body.
-    - You may use the tool \`Get User Name\` to extract the name.
-    - If the user says "from <Name>", you MUST use <Name> exactly as provided in the sign-off.
-      Example: "Generate email from Milton" ? use "Best regards,\nMilton" in the email body
-
-    - If the user says "do not generate a PDF", you MUST NOT call the Create PDF tool.
-
-    EXAMPLES:
-
-    CORRECT (for name introduction):
-    Thought: The user introduced themselves, I should respond appropriately.
-    Final Answer: Hello [Name]! Nice to meet you. How can I help you today?
-
-    CORRECT (for PDF creation):
-    Thought: I\'ll create the requested PDF.
-    Action: Create PDF
-    Action Input: {{ "title": "Test Document", "content": "This is a test" }}
-    Observation: [PDF creation result]
-    Thought: The PDF has been created.
-    Final Answer: I\'ve created a PDF titled "Test Document".
-
-    CORRECT (for feature listing with PDF):
-    Thought: I need to find features and create a PDF.
-    Action: RAG Search
-    Action Input: features
-    Observation: [search results]
-    Thought: Now I\'ll create a PDF with these features.
-    Action: Create PDF
-    Action Input: {{ "title": "Oracle Features", "content": "Here are 5 features:..." }}
-    Observation: [PDF creation result]
-    Thought: I have completed both tasks.
-    Final Answer: I\'ve found these features and created a PDF.
-
-
-    CORRECT (for feature listing without PDF):
-    Thought: User wants only the features without a PDF.
-    Action: RAG Search
-    Action Input: features
-    Observation: [search results]
-    Thought: I will now summarize 5 new features.
-    Final Answer: 1. ... 2. ... 3. ...
-
-    Available tools:
-    {tools}
-
-    Use the following format:
-    Question: {input}
-    Thought: [your reasoning]
-    Action: [tool name]
-    Action Input: [tool input]
-    Observation: [tool result]
-    ... (repeat Action/Action Input/Observation if needed)
-    Thought: [your conclusion]
-    Final Answer: [your response to the user]
-
-    Begin!
-    Question: {input}
-    Thought:{agent_scratchpad}
-    """
-    return template
-
+if __name__ == "__main__":
+    user_input = input("Enter your question: ")
+    output = asyncio.run(run_mcp_agent(user_input))
+    print("Agent Response:\n", output)
 ```
-
-### Initialize Agent & AgentExecutor
-
-We defined tools, models, and a prompt. Next, we need to initialize the agent and its executor. The `AgentExecutor` has additional information like the number of iterations, verbose mode for logging the thought process, and keywords for when the answer is found.
-
-![AiArchitectire](images/flowstepsai.jpg)
-
-### Agent Initialization Process
-
-The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
-
-Next, all tools required by the agent are registered with clear names and descriptions. These descriptions are essential, as they guide the LLM in selecting the appropriate tool during execution. The prompt is then constructed by combining a predefined template with dynamic components such as the tool list and a function to access chat history. This forms the basis for how the agent understands and responds to tasks.
-
-Finally, the agent is created using LangChain’s ReAct agent framework, integrating the configured LLM, tools, and prompt. Execution settings like the maximum number of iterations, verbosity, and error handling are also established to ensure controlled and informative runs. Together, these steps ensure the agent is fully equipped for interactive, tool-augmented reasoning.
-
-The below code snippet initializes the agent:
-
-```python
-def setup_agent():
-    """Set up and return the agent executor."""
-    # Initialize memory
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-
-    # Initialize LLM
-    model = initialize_llm()
-
-    # Create tools
-    tools = [
-        Tool(name="RAG Search", func=rag_search, description="Useful for searching documents and retrieving information."),
-        Tool(name="fetch_recipients", func=fetch_recipients, description="Useful for looking up email addresses by name."),
-        Tool(name="Get User Name", func=extract_user_name, description="Useful for extracting the user\'s name from chat history."),
-        Tool(name="Create PDF", func=create_pdf_tool, description="Useful for generating PDF documents from text or email data.")
-    ]
-
-    # Create prompt template
-    template = create_agent_prompt()
-    prompt = PromptTemplate.from_template(template)
-        
-    # Create agent and executor
-    agent = create_react_agent(model, tools, prompt)
-
-    agent_executor = AgentExecutor(
-        agent=agent,
-        tools=tools,
-        memory=memory,
-        verbose=True,
-        max_iterations=15,
-        handle_parsing_errors=True,
-        output_key="output"
-    )
-    return agent_executor, memory
-
-````
 
 You have completed the Code explanation. We would do code walk through in the next lab.
 
