@@ -28,8 +28,11 @@ Let's get started!
 
 3. Open the notebook **GenAI\_Agent.ipynb**. You can double click or right-click and select **Open**.
    
-    ![Open AI Agentics notebook using Jupyter lab](images/open_jupyter_notebook.png)
+    ![Open AI Agentics notebook using Jupyter lab](images/jupyter_notebook.png)
 
+4.  **GenAI\_Agent.ipynb**.
+
+    ![Open AI Agentics notebook using Jupyter lab](images/open_jupyter_notebook.png)
 
     If you want to enlarge the window and have larger fonts, you can zoom in with the browser.
 
@@ -57,6 +60,15 @@ from typing import Union, Dict, List
 import oracledb
 import pandas as pd
 from dotenv import load_dotenv
+
+# MCP Imports 
+from mcp.server.fastmcp import FastMCP
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+from langchain_mcp_adapters.tools import load_mcp_tools
+
+# LangGraph import
+from langgraph.prebuilt import create_react_agent
 
 # LangChain imports
 from langchain.memory import ConversationBufferMemory
@@ -95,16 +107,393 @@ from IPython.display import display, Image, FileLink, Markdown
 plt.rcParams["figure.figsize"] = (10, 6)
 
 ```
+## Task 2: Setting up the MCP Server
 
-## **Task 2: Database and Vector Store Setup**
+This task guides you through setting up the Model Context Protocol (MCP) server, which is the central component responsible for exposing tools to your AI agents in a standardized and secure manner. The MCP server acts as a crucial intermediary, allowing your agents to discover and invoke functionalities without needing direct knowledge of their underlying implementations.
 
-### **Oracle Database Connection**
+### Create MCP Server File (server.py)
 
-Connecting to Oracle database using the database username and password which are stored as environment variables (in .env file on linux)
+We will define our MCP tools within a Python file named `server.py`. The `FastMCP` class from the MCP library is used to instantiate the server and register our tools. Each tool is defined as a Python function decorated with `@mcp.tool()`, making it discoverable and callable by MCP-compliant agents.
 
-```Python
+Here’s the `server.py` code:
+
+```python
+mcp = FastMCP("AgentAssitant")
+
+
+@mcp.tool()
+def lookup_recipients(name: str):
+    return fetch_recipients(name)
+
+@mcp.tool()
+def oracle_connect() -> str:
+    """
+    Checks and returns Oracle DB connection status.
+    """
+    try:
+        db_ops = DatabaseOperations()
+        if db_ops.connect():
+            print("Oracle connection successful!")
+            return "Oracle DB is reachable."
+        return None
+    except Exception as e:
+        print(f"Oracle connection failed: {str(e)}")
+        return None    
+
+@mcp.tool()
+def extract_email_fields_from_response(response_text: str) -> dict:
+    """
+    Parses a draft email message and extracts structured fields including recipient (To), subject, and body text.
+
+    This tool is useful when the AI assistant generates an email draft and you want to extract its components to populate an email form.
+
+    Input:
+    - response_text: AI-generated email draft (e.g., "To: someone@example.com\nSubject: ...\nMessage: ...")
+
+    Output:
+    - A dictionary with keys: "to", "subject", "message"
+    """
+    try:
+        return extract_email_data_from_response(response_text)
+    except Exception as e:
+        return {"error": f"Failed to extract email data: {str(e)}"}
+
+
+@mcp.tool()
+def prepare_and_send_email(email_data: dict) -> dict:
+    """
+    Sends an email using the given dictionary with keys: to, subject, and message.
+    """
+    try:
+        to = email_data["to"]
+        subject = email_data["subject"]
+        message = email_data["message"]
+
+        # Example sending logic (replace with real SMTP or email API logic)
+        print(f"Sending email:\nTo: {to}\nSubject: {subject}\nMessage:\n{message}")
+        
+        # Actual email logic (ensure this is correct)
+        return send_email_function({"to": to, "subject": subject, "message": message})
+    
+    except Exception as e:
+        return {"error": f"Failed to send email: {str(e)}"}
+
+
+
+
+@mcp.tool()
+def store_text_chunks(file_path: str) -> str:
+    """Split text and store as embeddings in Oracle Vector Store"""
+    try:
+        db_ops = DatabaseOperations()
+        
+        if not db_ops.connect():
+            return "Oracle connection failed."
+
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            raw_text = f.read()
+
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+            chunks = text_splitter.split_text(raw_text)
+            file_name = os.path.basename(file_path)
+            docs = [
+                chunks_to_docs_wrapper({\'id\': f"{file_name}_{i}", \'link\': f"{file_name} - Chunk {i}", \'text\': chunk})
+                for i, chunk in enumerate(chunks)
+            ]
+
+
+            embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+            OracleVS.from_documents(
+                docs, embeddings, client=db_ops.connection,
+                table_name="MY_DEMO4", distance_strategy=DistanceStrategy.COSINE)
+            
+            return f"Stored {len(docs)} chunks from {file_name}"
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def rag_search(query: str) -> str:
+    """
+    Retrieve relevant information from user-uploaded documents stored in the Oracle Vector Store.
+
+    Use this tool whenever a user asks a question that may be answered from the uploaded documents
+    (e.g., HR policy files, contracts, technical manuals, PDF uploads, etc.).
+
+    The tool performs a semantic similarity search over the embedded document chunks and returns
+    the top 5 most relevant text snippets.
+
+    Input:
+    - A natural language question or topic from the user.
+
+    Output:
+    - A formatted string combining the most relevant document excerpts.
+
+    Examples:
+    - "What is the leave policy for new employees?"
+    - "Summarize the refund terms in the uploaded contract"
+    - "Find safety precautions mentioned in the manual"
+    """
+    try:
+        # Load vector store (or access from persistent source if needed)
+        vector_store = get_vector_store()
+        if vector_store is None:
+            return "No documents have been indexed yet."
+
+        docs = vector_store.similarity_search(query, k=5)
+        return "\n".join([doc.page_content for doc in docs])
+    except Exception as e:
+        return f"Error during document search: {str(e)}"
+
+
+if __name__ == "__main__":
+    print(" Starting MCP Agentic Server ...")
+    mcp.run(transport="stdio")
+```
+
+### Run MCP Server
+
+To start the MCP server, execute the following command in your terminal:
+
+````
+<copy>
+python server.py
+</copy>
+````
+
+This command will launch the MCP server, making the registered tools available for discovery and invocation by your AI agents.
+
+## Task 3: Reviewing MCP Tools
+
+This task delves into the specific tools that our AI agent will utilize, all of which are exposed via the MCP server. These tools are registered with the MCP server and can be dynamically discovered and invoked by MCP-compliant agents to perform specialized actions like RAG search, recipient lookup, email processing, and PDF generation.
+
+### Tool 1: `rag_search` (MCP Tool)
+
+The `rag_search` tool is exposed via the MCP server and is designed to retrieve relevant information from a vector store. It takes a user query and performs a similarity search, returning the most relevant document chunks. This is crucial for Retrieval-Augmented Generation (RAG) applications, where the agent needs to access external knowledge bases through the MCP framework.
+
+```python
+@mcp.tool()
+def rag_search(query: str) -> str:
+    """
+    Retrieve relevant information from user-uploaded documents stored in the Oracle Vector Store.
+
+    Use this tool whenever a user asks a question that may be answered from the uploaded documents
+    (e.g., HR policy files, contracts, technical manuals, PDF uploads, etc.).
+
+    The tool performs a semantic similarity search over the embedded document chunks and returns
+    the top 5 most relevant text snippets.
+
+    Input:
+    - A natural language question or topic from the user.
+
+    Output:
+    - A formatted string combining the most relevant document excerpts.
+
+    Examples:
+    - "What is the leave policy for new employees?"
+    - "Summarize the refund terms in the uploaded contract"
+    - "Find safety precautions mentioned in the manual"
+    """
+    try:
+        # Load vector store (or access from persistent source if needed)
+        vector_store = get_vector_store()
+        if vector_store is None:
+            return "No documents have been indexed yet."
+
+        docs = vector_store.similarity_search(query, k=5)
+        return "\n".join([doc.page_content for doc in docs])
+    except Exception as e:
+        return f"Error during document search: {str(e)}"
+```
+
+**Parameters:**
+*   `query`: The user\'s input query for the RAG search.
+*   `k=5`: Specifies the number of top `k` chunks to be sent to the LLM for generating an answer. This can be adjusted as needed.
+*   `content`: This variable will hold the result set of the similarity search and is returned as the function\'s output.
+
+**Sample Input/Output:**
+*   **Input:** A question about a document for a RAG search.
+*   **Output:** The top 5 most relevant text chunks that have the most relevant answers for the question.
+
+### Tool 2: `lookup_recipients` (MCP Tool)
+
+The `lookup_recipients` tool is exposed via the MCP server and queries a database table to retrieve email IDs based on a person\'s first or last name. This enables the agent to dynamically find contact information for email-related tasks through the MCP framework.
+
+```python
+@mcp.tool()
+def fetch_recipients(query: str) -> str:
+    Search for recipients by name and return formatted results.
+    try:
+        # Clean the query
+        cleaned_query = query.strip()
+        while cleaned_query.endswith('O'): cleaned_query = cleaned_query[:-1]
+
+        # Use the existing connection
+        cursor = connection.cursor()
+
+        # Parse search terms and build query
+        search_terms = cleaned_query.split()
+        base_query = "SELECT first_name, last_name, email FROM recipients WHERE 1=0"
+        conditions, params = [], []
+
+        for term in search_terms:
+            conditions.extend(["LOWER(first_name) LIKE LOWER(:term)||'%'", "LOWER(last_name) LIKE LOWER(:term)||'%'"])
+            params.extend([term, term])
+
+        query = base_query.replace("1=0", " OR ".join(conditions))
+        cursor.execute(query, params)
+        recipients = cursor.fetchall()
+        cursor.close()
+
+        # Format results
+        if not recipients: return f"No recipients found matching '{cleaned_query}'."
+
+        formatted_results = [f"{first_name} {last_name} ({email})" for first_name, last_name, email in recipients]
+        if len(recipients) == 1:
+            first_name, last_name, email = recipients[0]
+            return f"{first_name} {last_name} ({email})\n\nSuggested recipient: {email}"
+
+        return "\n".join(formatted_results) + "\n\nMultiple recipients found. Using the first email address: " + recipients[0][2]
+
+    except Exception as e:
+        return f"Error finding email addresses: {str(e)}"
+```
+
+**Parameters:**
+*   **Input:** First Name or Last Name from the chat conversation.
+*   **Output:** The email ID associated with the name.
+
+### Tool 3: `prepare_and_send_email` and `extract_email_fields_from_response` (MCP Tools)
+
+The `prepare_and_send_email` and `extract_email_fields_from_response` tools are exposed via the MCP server to handle email processing. `extract_email_fields_from_response` parses email drafts, and `prepare_and_send_email` sends emails using the extracted data. These tools enable the agent to manage email-related functionalities through the MCP framework.
+
+```python
+@mcp.tool()
+def extract_email_fields_from_response(response_text: str) -> dict:
+    """
+    Parses a draft email message and extracts structured fields including recipient (To), subject, and body text.
+
+    This tool is useful when the AI assistant generates an email draft and you want to extract its components to populate an email form.
+
+    Input:
+    - response_text: AI-generated email draft (e.g., "To: someone@example.com\nSubject: ...\nMessage: ...")
+
+    Output:
+    - A dictionary with keys: "to", "subject", "message"
+    """
+    try:
+        return extract_email_data_from_response(response_text)
+    except Exception as e:
+        return {"error": f"Failed to extract email data: {str(e)}"}
+
+
+@mcp.tool()
+def prepare_and_send_email(email_data: dict) -> dict:
+    """
+    Sends an email using the given dictionary with keys: to, subject, and message.
+    """
+    try:
+        to = email_data["to"]
+        subject = email_data["subject"]
+        message = email_data["message"]
+
+        # Example sending logic (replace with real SMTP or email API logic)
+        print(f"Sending email:\nTo: {to}\nSubject: {subject}\nMessage:\n{message}")
+        
+        # Actual email logic (ensure this is correct)
+        return send_email_function({"to": to, "subject": subject, "message": message})
+    
+    except Exception as e:
+        return {"error": f"Failed to send email: {str(e)}"}
+```
+
+**Parameters for `extract_email_fields_from_response`:**
+*   **Input:** AI-generated email draft (e.g., "To: someone@example.com\nSubject: ...\nMessage: ...")
+*   **Output:** A dictionary with keys: "to", "subject", "message"
+
+**Parameters for `prepare_and_send_email`:**
+*   **Input:** A dictionary with keys: "to", "subject", and "message"
+*   **Output:** A dictionary indicating success or failure of email sending.
+
+### Tool 4: `store_text_chunks` (MCP Tool)
+
+The `store_text_chunks` tool is exposed via the MCP server and is responsible for splitting text and storing it as embeddings in the Oracle Vector Store. This is a crucial step for preparing documents for RAG operations within the MCP framework.
+
+```python
+@mcp.tool()
+def store_text_chunks(file_path: str) -> str:
+    """Split text and store as embeddings in Oracle Vector Store"""
+    try:
+        db_ops = DatabaseOperations()
+        
+        if not db_ops.connect():
+            return "Oracle connection failed."
+
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            raw_text = f.read()
+
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+            chunks = text_splitter.split_text(raw_text)
+            file_name = os.path.basename(file_path)
+            docs = [
+                chunks_to_docs_wrapper({\'id\': f"{file_name}_{i}", \'link\': f"{file_name} - Chunk {i}", \'text\': chunk})
+                for i, chunk in enumerate(chunks)
+            ]
+
+
+            embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+            OracleVS.from_documents(
+                docs, embeddings, client=db_ops.connection,
+                table_name="MY_DEMO4", distance_strategy=DistanceStrategy.COSINE)
+            
+            return f"Stored {len(docs)} chunks from {file_name}"
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+```
+
+**Parameters:**
+*   **Input:** `file_path`: The path to the text file to be chunked and stored.
+*   **Output:** A string indicating the number of chunks stored and the file name, or an error message.
+
+### Tool 5: `oracle_connect` (MCP Tool)
+
+The `oracle_connect` tool is exposed via the MCP server and checks the connection status to the Oracle Database. This is a utility tool to ensure database connectivity for other MCP tools that rely on it.
+
+```python
+@mcp.tool()
+def oracle_connect() -> str:
+    """
+    Checks and returns Oracle DB connection status.
+    """
+    try:
+        db_ops = DatabaseOperations()
+        if db_ops.connect():
+            print("Oracle connection successful!")
+            return "Oracle DB is reachable."
+        return None
+    except Exception as e:
+        print(f"Oracle connection failed: {str(e)}")
+        return None    
+```
+
+**Parameters:**
+*   **Input:** None.
+*   **Output:** A string indicating the Oracle DB connection status.
+
+---
+
+## Task 4: Database and Vector Store Setup (MCP Perspective)
+
+This task focuses on configuring the Oracle Database and setting up the Vector Store, which are essential for providing your AI agents with access to persistent data and advanced search capabilities through the MCP server. The setup described here directly supports the MCP tools that interact with the database.
+
+### Oracle Database Connection
+
+Establishing a secure connection to your Oracle Database is the first step. We will connect using database credentials typically stored as environment variables for security best practices (e.g., in a `.env` file on Linux). This ensures that your MCP tools can interact with the database to fetch or store information as needed.
+
+```python
 def create_db_connection():
-    Create and return a database connection using environment variables.
+    """Create and return a database connection using environment variables."""
     return oracledb.connect(
         user=os.getenv("ORACLE_USER"),
         password=os.getenv("ORACLE_PASSWORD"),
@@ -120,26 +509,25 @@ print("Database connection established")
 
 ```
 
-### **Vector Store Setup**
+### Vector Store Setup
 
-Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
+Vector search is a powerful technique that allows AI agents to find semantically similar data (e.g., text, images, or audio) by comparing their numerical vector representations, moving beyond traditional keyword matching. Oracle Vector Store leverages Oracle\`s robust database capabilities for efficient similarity search, making it an ideal backend for RAG (Retrieval-Augmented Generation) tools exposed via MCP.
 
-Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
-For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
+For this workshop, the **Oracle Table AGENTICS_AI is already loaded with data from the file "Oracle 23ai New features"**. This pre-loaded data will be used by the `rag_search` MCP tool to retrieve relevant information. The `rag_search` tool will perform a vector search, retrieve top N text chunks, and send them along with the user\`s question to the LLM to generate a human-readable answer.
 
-The model we are using is all-MiniLM-L6-v2. This model has been download as ONNX file and loaded in the database already.
+The embedding model we are using is `all-MiniLM-L6-v2`. This model has been downloaded as an ONNX file and is already loaded in the database, ensuring efficient local processing.
 
-Note: To learn more about creating embedding in database check for live lab ( [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain] (https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927) )
+**Note:** To learn more about creating embeddings in the database, refer to the LiveLab: [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain](https://apexapps.oracle.com/pls/apex/f?p=133:180:6805094326698::::wid:3927).
 
-Run the below code to initialize the Oracle Vector Store 
+Run the below code to initialize the Oracle Vector Store:
 
-```
+```python
 def setup_vector_store(connection):
 
   """Set up and return the Oracle Vector Store."""    
     local_model_path = "/home/oracle/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
     embeddings = HuggingFaceEmbeddings(model_name=local_model_path) 
-    #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    #embeddings = HugcingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
     vector_store = OracleVS(
         client=connection,
@@ -153,23 +541,25 @@ def setup_vector_store(connection):
 # Initialize vector store
 vector_store = setup_vector_store(connection)
 ```
-Note: We are using the embedding model cached locally on disk.
+**Note:** We are using the embedding model cached locally on disk.
 
-### **Verify the Vector Store table**
+### Verify the Vector Store Table
 
-To explore the vector store we created, run the sql query to select the first 5 rows of the table that holds the vector data.
+To explore the vector store we created, run the SQL query to select the first 5 rows of the table that holds the vector data. This will help you understand the structure of the stored embeddings and associated metadata.
 
-```Python
+```python
 %sql select * from AGENTICS_AI where rownum <= 5
 ```
 
-The out put shows 4 columns having id, text, meta and embedding.
-id is the primary key,  Text column contains the text chunks, meta column contain additional information which can be used for filtering i.e location and page of the chunk, emmbeding column contain the Vector value of text chunk.
-
+The output shows 4 columns: `id`, `text`, `meta`, and `embedding`.
+*   `id` is the primary key.
+*   `text` column contains the text chunks.
+*   `meta` column contains additional information which can be used for filtering (e.g., location and page of the chunk).
+*   `embedding` column contains the vector value of the text chunk.
 
 <div>
 <style scoped>
-    .dataframe tbody tr th:only-of-type {
+    .dataframe tbody tr th:only-of_type {
         vertical-align: middle;
     }
 
@@ -194,35 +584,35 @@ id is the primary key,  Text column contains the text chunks, meta column contai
   <tbody>
     <tr>
       <th>0</th>
-      <td>b'K"ww\xd4\xdd\x1f\xc6'</td>
+      <td>b\'K"ww\xd4\xdd\x1f\xc6\'</td>
       <td>may be trademarks of their respective owners. ...</td>
       <td>{"id": "4", "link": "Page 4"}</td>
       <td>[-0.10093670338392258, -0.0510505847632885, -0...</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>b'\xef-\x12}\xe3{\x94+'</td>
+      <th>1</th>  
+      <td>b\'\xef-\x12}\xe3{\x94+\'</td>
       <td>damages incur red due to your access to or use...</td>
       <td>{"id": "5", "link": "Page 5"}</td>
       <td>[-0.05846373364329338, -0.03191264346241951, 0...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>b'_\xec\xebf\xff\xc8o8'</td>
+      <td>b\'_\xec\xebf\xff\xc8o8\'</td>
       <td>Oracle Database®  \nOracle Database New Featur...</td>
       <td>{"id": "0", "link": "Page 0"}</td>
       <td>[-0.03197915479540825, -0.004067039582878351, ...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>b'k\x86\xb2s\xff4\xfc\xe1'</td>
+      <td>b\'k\x86\xb2s\xff4\xfc\xe1\'</td>
       <td>The information contained herein is subject to...</td>
       <td>{"id": "1", "link": "Page 1"}</td>
       <td>[-0.033684320747852325, 0.03027949295938015, -...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>b'\xd4s^:&amp;^\x16\xee'</td>
+      <td>b\'\xd4s^:&^\x16\xee\'</td>
       <td>"commercial computer software documentation," ...</td>
       <td>{"id": "2", "link": "Page 2"}</td>
       <td>[-0.05899398773908615, -0.008670773357152939, ...</td>
@@ -231,288 +621,30 @@ id is the primary key,  Text column contains the text chunks, meta column contai
 </table>
 </div>
 
+---
 
-### **Understanding AI Agent Components**
+## Task 5: Setting up Agent using LangChain
 
-The diagram shows the core structure of an AI agent: **Tools**, **Model**, and **Prompt** feed into the **Agent**, which is then processed by an **Agent Executor** that incorporates tools and memory. Specifically, the agent is initialized with a model (e.g., `ChatOCIGenAI`), a prompt template (`PromptTemplate.from\_template(...)`), and a set of tools. The `AgentExecutor` then manages the agent’s operations, leveraging tools and memory to execute tasks effectively.
- 
-![AiArchitectire](images/flowstepsai.jpg)
+This task details the process of setting up your AI agent using LangChain. We will cover agent memory, LLM initialization, prompt template creation, and the overall agent initialization process. This section will focus on how the agent interacts with MCP-exposed tools.
 
+### Agent Memory
 
+Memory is crucial for agents that need to maintain context over multiple turns. Our agent uses `ConversationBufferMemory`, which:
+1.  Stores the complete conversation history.
+2.  Makes it available to the agent on each turn.
+3.  Allows the agent to refer back to prior information (like user names).
 
-### **Explanation of Components and Tools**
-
-We’ll define a set of specialized tools that the AI agent will utilize to perform its tasks, aligning with the workflow shown in the diagram:
-
-- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and retrieve Retrieval-Augmented Generation (RAG) answers from a large language model (LLM), enhancing its ability to provide accurate, data-driven responses from Oracle Database 23ai.
-  
-- **fetch\_recipients**: Designed to look up email addresses based on a given name, this tool allows the agent to dynamically fetch recipient details for email automation tasks, ensuring seamless communication workflows.
-
-- **create\_pdf\_tool**: This tool empowers the agent to generate PDFs, either with a specified title and content or formatted as an email, enabling professional document creation for reporting or sharing purposes.
-
-- **extract\_user\_name**: By accessing the agent’s short-term memory (as part of the `AgentExecutor`’s memory component), this tool retrieves user names from prior conversations, ensuring the agent maintains context and personalizes interactions effectively.
-
-These tools, combined with the model and prompt, are orchestrated by the `AgentExecutor` to enable the AI agent to perform complex, multi-step tasks like data retrieval, email automation, and PDF generation, all while maintaining contextual awareness through memory.
-How to Use:
-Copy the above content into a text editor.
-Save it as AI\_Agent\_Components.md.
-Open it in any Markdown viewer or editor (e.g., VS Code, Typora, or GitHub) to see the formatted output.
-Let me know if you need further assistance!
-
-
-
-## **Task 3: Building Agent Tools**
-
-Python tools are defined similarly to standard Python programs. When using LangChain with Python, tools are essentially Python functions that can operate independently of an agent, as no API abstraction interface is required if the agent and tools share the same language.
-
-### **Tool 1: RAG Search**
-
-In the RAG Search tool we create a function rag\_search. The variables in funcation are 
-- query: Input User query about the RAG serch in the document.
-- K=5: Specfies the number of top k-chuck to be sent to LLM for generating answer for query. We have to 5, can change as needed.
-- content: This variable will hold the result set of similarity search and return as fuction output. 
-
-```Python
-def rag_search(query: str) -> str:
-    Search for relevant documents using the vector store.
-    docs = vector_store.similarity_search(query, k=5)
-    content = "\n".join([doc.page_content for doc in docs])
-    return content
-```
-
-Sample input/output
-
-    Input: Question about the document for a RAG search
-    Output: Top 8 pages that have most relavent answers for the question.
-
-### **Tool 2: Fetch Recipients (Database Tool)**
-
-Fetch Recipients tools will query the database table for the first name and last name and return the corresponding email id.  The function fetch\_recipients is created for this.  The parameter used in the function are 
-
-- Input: Takes name of the person
-- Output: frist name, last name and email address
-
-```Python
-def fetch_recipients(query: str) -> str:
-    Search for recipients by name and return formatted results.
-    try:
-        # Clean the query
-        cleaned_query = query.strip()
-        while cleaned_query.endswith('O'): cleaned_query = cleaned_query[:-1]
-        
-        # Use the existing connection
-        cursor = connection.cursor()
-        
-        # Parse search terms and build query
-        search_terms = cleaned_query.split()
-        base_query = "SELECT first_name, last_name, email FROM recipients WHERE 1=0"
-        conditions, params = [], []
-        
-        for term in search_terms:
-            conditions.extend(["LOWER(first_name) LIKE LOWER(:term)||'%'", "LOWER(last_name) LIKE LOWER(:term)||'%'"])
-            params.extend([term, term])
-        
-        query = base_query.replace("1=0", " OR ".join(conditions))
-        cursor.execute(query, params)
-        recipients = cursor.fetchall()
-        cursor.close()
-        
-        # Format results
-        if not recipients: return f"No recipients found matching '{cleaned_query}'."
-        
-        formatted_results = [f"{first_name} {last_name} ({email})" for first_name, last_name, email in recipients]
-        if len(recipients) == 1:
-            first_name, last_name, email = recipients[0]
-            return f"{first_name} {last_name} ({email})\n\nSuggested recipient: {email}"
-        
-        return "\n".join(formatted_results) + "\n\nMultiple recipients found. Using the first email address: " + recipients[0][2]
-    
-    except Exception as e:
-        return f"Error finding email addresses: {str(e)}"
-
-```
-Fetch Recipients:
-
-    Input: First Name or Last Name from chat conversation
-    Output: email id associated with the name.
-
-
-### **Tool 3: PDF Creation**
-
-Using Python libraries (reportlab) to generate PDF files
-
-
-PDF Creation
-- **Input**: Well  formed JSON document. which either has title and text, or To, subject and body
-- **Output**: A PDF file is created in the current directory.
-
-```Python
-def generate_email_pdf(email_data, filename="email.pdf"):
-    Generate a PDF from email data.
-    buffer = io.BytesIO()
-    pdf = SimpleDocTemplate(buffer, pagesize=letter)
-    styles = getSampleStyleSheet()
-
-    elements = [
-        Paragraph("Email", styles['Title']),
-        Spacer(1, 0.2 * inch),
-        Paragraph(f"<b>To:</b> {email_data['to']}", styles['Normal']),
-        Paragraph(f"<b>Subject:</b> {email_data['subject']}", styles['Normal']),
-        Spacer(1, 0.2 * inch),
-        Paragraph("<b>Message:</b>", styles['Normal']),
-        Spacer(1, 0.1 * inch)
-    ]
-
-    message_paragraphs = email_data['message'].split('\n\n')
-    for para in message_paragraphs:
-        if para.strip():
-            elements.append(Paragraph(para.replace('\n', '<br/>'), styles['Normal']))
-            elements.append(Spacer(1, 0.1 * inch))
-
-    pdf.build(elements)
-    buffer.seek(0)
-
-    with open(filename, "wb") as f:
-        f.write(buffer.getvalue())
-
-    return f"Email PDF generated and saved as {filename}"
-
-def create_pdf_tool(input_data: Union[str, Dict]) -> str:
-    
-    Create a PDF from email content or general information.
-    Input should be a JSON with "title", "content", and optionally "filename".
-    For emails, content should contain "to", "subject", and "message" fields.
-    
-    try:
-        # Parse input if it's a string
-        if isinstance(input_data, str):
-            try:
-                data = json.loads(input_data)
-            except json.JSONDecodeError:
-                # If parsing fails, treat it as content
-                data = {
-                    "title": "Generated Content",
-                    "content": input_data,
-                    "filename": "generated_document.pdf"
-                }
-        else:
-            data = input_data
-
-        # Use default filename if not provided
-        title = data.get("title", "Generated Content")
-        filename = data.get("filename")
-
-        if not filename:
-           if title.lower() == "email" and isinstance(data.get("content"), dict):
-               to_name = re.sub(r"[^\w\s]", "", data["content"].get("to", "recipient")).strip().replace(" ", "_")
-               from_match = re.search(r"Best regards,\s*(\w+(?:_\w+)*)", data["content"].get("message", ""), re.IGNORECASE)
-               from_name = from_match.group(1) if from_match else "me"
-               filename = f"Email_to_{to_name}_from_{from_name}.pdf"
-           else:
-               # Fallback for general documents
-               safe_title = re.sub(r"[^\w\s-]", "", title).strip().replace(" ", "_")
-               filename = f"{safe_title}.pdf"
-
-
-        # Check if content is an email (has to, subject, message)
-        is_email_format = False
-        if isinstance(data["content"], dict):
-            if all(k in data["content"] for k in ["to", "subject", "message"]):
-                is_email_format = True
-
-        if is_email_format:
-            # Create email PDF
-            result = generate_email_pdf(data["content"], filename)
-        else:
-            # Create general content PDF
-            buffer = io.BytesIO()
-            pdf = SimpleDocTemplate(buffer, pagesize=letter)
-            styles = getSampleStyleSheet()
-            elements = [
-                Paragraph(data["title"], styles['Title']),
-                Spacer(1, 0.2 * inch)
-            ]
-
-            # Convert string content to paragraphs
-            if isinstance(data["content"], str):
-                paragraphs = data["content"].split('\n\n')  # Split on double newlines
-                for para in paragraphs:
-                    if para.strip():
-                        elements.append(Paragraph(para.replace('\n', '<br/>'), styles['Normal']))
-                        elements.append(Spacer(1, 0.1 * inch))
-            elif isinstance(data["content"], list):
-                for item in data["content"]:
-                    elements.append(Paragraph(str(item).replace('\n', '<br/>'), styles['Normal']))
-                    elements.append(Spacer(1, 0.1 * inch))
-
-            pdf.build(elements)
-            buffer.seek(0)
-            with open(filename, "wb") as f:
-                f.write(buffer.getvalue())
-            result = f"PDF generated and saved as {filename}"
-
-        return result
-    except Exception as e:
-        traceback.print_exc()
-        return f"Error creating PDF: {str(e)}"
-
-```
-
-### **Tool 4: User Name Extraction**
-
-The `extract_user_name` tool demonstrates how we can parse this history to extract specific information. This tool extract the name of user's interaction with application i.e., the last question and entire context of conversation.
-
-
-Username extraction:
-- **Input**: Username from memory
-- **Output**: Find the name of the user from memory and lookup email if asked to create pdf in email format.
-
-```Python
-def format_chat_history(memory_vars):
-    Format the last few messages from the chat history for the prompt.
-    chat_hist = memory_vars.get("chat_history", [])
-    formatted_lines = []
-    # Consider up to the last 6 messages (to keep prompt concise)
-    for msg in chat_hist[-6:]:
-        if isinstance(msg, HumanMessage):
-            formatted_lines.append(f"Human: {msg.content}")
-        elif isinstance(msg, AIMessage):
-            formatted_lines.append(f"Assistant: {msg.content}")
-    return "\n".join(formatted_lines)
-
-def extract_user_name(memory):
-    Extract user name from chat history based on 'My name is' pattern.
-    chat_hist = memory.load_memory_variables({}).get("chat_history", [])
-    for msg in chat_hist:
-        if isinstance(msg, HumanMessage):
-            name_match = re.search(r"[Mm]y name is (\w+(?:\s+\w+)*)", msg.content)
-            if name_match:
-                return name_match.group(1)
-    return None
-
-```
-## **Task 4: Setting up Agent using LangChain.**
-
-### **Agent Memory**
-
-Memory is crucial for agents that need to maintain context over multiple turns.
-Our agent uses `ConversationBufferMemory` which:
-1. Stores the complete conversation history
-2. Makes it available to the agent on each turn
-3. Allows the agent to refer back to prior information (like user names)
-
-```
+```python
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 ```
 
-### **Initialize Oracle GenAI Model**
+### Initialize Oracle GenAI Model
 
-The brain behind the agent is Oracle GenAI, the funcation initializes the specific model using Oracle API keys.
+The brain behind the agent is Oracle GenAI. This function initializes the specific model using Oracle API keys, providing the agent with its reasoning capabilities.
 
-```Python
-
+```python
 def initialize_llm():
-    Initialize and return the LLM model.
+    """Initialize and return the LLM model."""
     model = ChatOCIGenAI(
         model_id="cohere.command-r-08-2024",
         service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
@@ -524,23 +656,16 @@ def initialize_llm():
     return model
 ```
 
+### Creating the Agent Prompt Template
 
-### **Creating the Agent Prompt Template**
-
-
-### **The Importance of Effective Prompt Templates**
-
-A well-crafted prompt template is essential for guiding agent behavior effectively. It should clearly define the agent's role and limitations, establish strict formatting rules (such as enforcing the ReAct structure), and include specific instructions for handling special cases like usernames or conditional actions (e.g., when to generate a PDF). Examples are crucial—they illustrate proper reasoning and the expected format across different scenarios. Additionally, a concise list of available tools with descriptions helps the agent choose the right tool for the task.
+A well-crafted prompt template is essential for guiding agent behavior effectively. It should clearly define the agent\'s role and limitations, establish strict formatting rules (such as enforcing the ReAct structure), and include specific instructions for handling special cases like usernames or conditional actions (e.g., when to generate a PDF). Examples are crucial—they illustrate proper reasoning and the expected format across different scenarios. Additionally, a concise list of available tools with descriptions helps the agent choose the right tool for the task.
 
 Without these components, the agent is likely to produce inconsistent responses, make formatting errors that disrupt the reasoning-action loop, select inappropriate tools, or overlook important contextual information. A strong prompt template ensures consistent, accurate, and context-aware outputs from the agent.
 
-
-
-```Python
-
+```python
 def create_agent_prompt():
-    Create and return the prompt template for the agent.
-    template = 
+    """Create and return the prompt template for the agent."""
+    template = """
     You are an assistant that can search documents, look up emails, and create PDFs.
 
     Previous Chat History:
@@ -554,7 +679,7 @@ def create_agent_prompt():
 
     - If usr says "from me", check chat history to extract my name and use it in email sign-off as: "Best regards, <User Name>".
     - When the user says "from me", use the name from chat history (if available) in the signature. Use "Best regards,\n<User Name>" in the email body.
-    - You may use the tool 'Get User Name' to extract the name.
+    - You may use the tool \`Get User Name\` to extract the name.
     - If the user says "from <Name>", you MUST use <Name> exactly as provided in the sign-off.
       Example: "Generate email from Milton" ? use "Best regards,\nMilton" in the email body
 
@@ -567,24 +692,24 @@ def create_agent_prompt():
     Final Answer: Hello [Name]! Nice to meet you. How can I help you today?
 
     CORRECT (for PDF creation):
-    Thought: I'll create the requested PDF.
+    Thought: I\'ll create the requested PDF.
     Action: Create PDF
     Action Input: {{ "title": "Test Document", "content": "This is a test" }}
     Observation: [PDF creation result]
     Thought: The PDF has been created.
-    Final Answer: I've created a PDF titled "Test Document".
+    Final Answer: I\'ve created a PDF titled "Test Document".
 
     CORRECT (for feature listing with PDF):
     Thought: I need to find features and create a PDF.
     Action: RAG Search
     Action Input: features
     Observation: [search results]
-    Thought: Now I'll create a PDF with these features.
+    Thought: Now I\'ll create a PDF with these features.
     Action: Create PDF
     Action Input: {{ "title": "Oracle Features", "content": "Here are 5 features:..." }}
     Observation: [PDF creation result]
     Thought: I have completed both tasks.
-    Final Answer: I've found these features and created a PDF.
+    Final Answer: I\'ve found these features and created a PDF.
 
 
     CORRECT (for feature listing without PDF):
@@ -611,19 +736,18 @@ def create_agent_prompt():
     Begin!
     Question: {input}
     Thought:{agent_scratchpad}
-    
+    """
     return template
 
 ```
 
-### **Initilize Agent & Agent\_executor**
+### Initialize Agent & AgentExecutor
 
-We defined tools, models and prompt, next we need to initialize the agent and agent executor.  the agent executor has additional information like number of itrations, versbose mode for logging thought process, and keywords when the answer is found.
+We defined tools, models, and a prompt. Next, we need to initialize the agent and its executor. The `AgentExecutor` has additional information like the number of iterations, verbose mode for logging the thought process, and keywords for when the answer is found.
 
-![AiArchitectire](images/flowstepsai.jpg)  
+![AiArchitectire](images/flowstepsai.jpg)
 
-
-### **Agent Initialization Process**
+### Agent Initialization Process
 
 The agent initialization process begins with setting up memory to retain the conversation history, enabling the agent to access prior exchanges at each step. This is followed by configuring the language model—specifically Oracle’s ChatOCIGenAI powered by the Cohere Command-R model—where parameters such as temperature are tuned (e.g., setting it to 0 for deterministic responses).
 
@@ -631,10 +755,9 @@ Next, all tools required by the agent are registered with clear names and descri
 
 Finally, the agent is created using LangChain’s ReAct agent framework, integrating the configured LLM, tools, and prompt. Execution settings like the maximum number of iterations, verbosity, and error handling are also established to ensure controlled and informative runs. Together, these steps ensure the agent is fully equipped for interactive, tool-augmented reasoning.
 
-The below code snippet initializes the agent
+The below code snippet initializes the agent:
 
-```
-
+```python
 def setup_agent():
     """Set up and return the agent executor."""
     # Initialize memory
@@ -645,15 +768,15 @@ def setup_agent():
 
     # Create tools
     tools = [
-        Tool(name="RAG Search", ......),
-        Tool(name="fetch_recipients",......),
-        Tool(name="Get User Name",.......),
-        Tool(name="Create PDF",.....)
+        Tool(name="RAG Search", func=rag_search, description="Useful for searching documents and retrieving information."),
+        Tool(name="fetch_recipients", func=fetch_recipients, description="Useful for looking up email addresses by name."),
+        Tool(name="Get User Name", func=extract_user_name, description="Useful for extracting the user\'s name from chat history."),
+        Tool(name="Create PDF", func=create_pdf_tool, description="Useful for generating PDF documents from text or email data.")
     ]
 
     # Create prompt template
     template = create_agent_prompt()
-    prompt = PromptTemplate.from_template(template).partial(....., ......, .....)
+    prompt = PromptTemplate.from_template(template)
         
     # Create agent and executor
     agent = create_react_agent(model, tools, prompt)
@@ -671,7 +794,7 @@ def setup_agent():
 
 ````
 
-You have completed the Code explaination. We would do code walk through in the next lab.
+You have completed the Code explanation. We would do code walk through in the next lab.
 
 Please proceed to the next lab.
 
