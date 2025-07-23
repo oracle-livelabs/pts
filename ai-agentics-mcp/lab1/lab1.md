@@ -1,13 +1,13 @@
-# Agentic Architecture and Code Walkthrough
+# Designing Agentic Workflows with MCP: Architecture and Code Walkthrough
 
 ### Introduction
 
-In this workshop we use notebook to demonstrates how to build a powerful AI agent that can search documents, generate PDFs, and handle email-related tasks using LangChain and Oracle GenAI. In this lab you will perform the following tasks
+This workshop leverages the Model Context Protocol (MCP) to demonstrate how to build a powerful AI agent capable of dynamic tool interaction, context management, and robust task execution. Through this LiveLab, you will learn to integrate Oracle GenAI and other services within an MCP-driven architecture to enable your agent to perform complex tasks such as searching documents, generating PDFs, and handling email-related operations. In this lab, you will perform the following tasks:
 
-1. Setting up the environment and dependencies
-2. Creating custom tools for our agent
-3. Designing effective prompt templates
-4. Initializing and running the agent
+1. Setting up the MCP-compatible environment and dependencies.
+2. Setting Up an MCP Server to Isolate Tools for Secure Agent Execution
+3. Designing effective prompt templates that leverage MCP context
+4. Initializing and running your MCP-enabled agent
 
 Let's get started!
 
@@ -41,7 +41,7 @@ Let's get started!
 
 ### **Imports and Configuration**
 
-We need to import Oracle implementation of Langchain from langchain community.  Addition libraries are imported for PDF generation and standard library.
+Import Oracle LangChain from langchain_community, along with MCP and LangGraph for agent creation, plus libraries for PDF generation and standard utilities.
 
 We are using OracleDB Python Drivers to connect to Oracle database and not cx\_oracle driver, as only the latest driver supports the new feature like Vector Data type. 
 
