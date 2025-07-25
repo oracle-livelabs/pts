@@ -35,6 +35,8 @@ By completing this lab, you will achieve the following objectives:
 
 ## Task 1: Create an OCI Compartment
 
+**Some regions don't offer all the models. See the region for each pretrained model to find out which models are available in a region near you. [Oracle Generative AI Overview](https://docs.oracle.com/en-us/iaas/Content/generative-ai/overview.htm)**
+
 1. Click the hamburger icon (≡) at the top left corner of the page.
 
 2. Click Identity & Security. Hover over Identity and click the Compartment submenu item.
@@ -53,7 +55,7 @@ By completing this lab, you will achieve the following objectives:
 ![alt text](images/compartmentsave.png)
 
 
-  The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
+  Please create a group and title it ProdObjectManagers. The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
 
 7. Add the following statements to allow the respective policy actions:
     * Allow group ProdObjectManagers to read buckets in compartment PROD
@@ -69,7 +71,7 @@ Oracle's GenAI service is an LLM service from Oracle Cloud Infrastructure (OCI).
 Create an OCI policy to enable access to OCI GenAI service.
 Create a policy that will allow you to use OCI GenAI within your previously defined compartment. Make sure your policy uses the compartment where your database is deployed. The policy will be necessary for the database to interact with OCI Generative AI.
 
-1. From the Console, open the Navigation menu and click Identity & Security. Under Identity, click Policies.
+1. From the Console, open the Navigation menu and click Identity & Security. Under Identity, click Policies. 
 
 2. Click on Create policy and paste the following into the appropriate fields:
 
@@ -83,7 +85,7 @@ Compartment: select your own compartment
 
   ```
   <copy>
-  Policy: allow user to manage generative-ai-family in compartment \<your compartment>
+  Policy: allow group <group name> to manage generative-ai-family in compartment <your compartment>
   </copy>
   ```
 

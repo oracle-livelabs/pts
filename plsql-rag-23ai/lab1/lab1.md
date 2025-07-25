@@ -425,7 +425,7 @@ You need to convert the question/query into a vector.  You must use the same vec
 1. Select the cell and click **Run**.
 
     ```
-    %sql select vector_embedding(tinybert_model USING ‘What is the result of the release version’ as data) as embedding
+    %sql select vector_embedding(tinybert_model USING 'What is the result of the release version' as data) as embedding
     ```
 
 **2 - Perform the vector search on the question using Cosine distance function.**
@@ -437,7 +437,7 @@ In this step we are selecting the text chunks that has relevant information for 
   ```
   %%sql
   WITH query_vector AS (
-              SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
+              SELECT VECTOR_EMBEDDING(tinybert_model USING 'list some limitations' AS data) as embedding)
   SELECT embed_id, embed_data
   FROM VECTOR_STORE, query_vector
   ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
@@ -510,7 +510,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
               "provider": "ocigenai",
               "credential_name" : "GENAI_CRED",
               "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-              "model": "cohere.command-r-16k",
+              "model": "cohere.command-r-08-2024",
               "chatRequest": {
                 "maxTokens": 300}
               }';
@@ -732,3 +732,110 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
 * **Last Updated By/Date** - Vijay Balebail, October 2024
+
+CREATE TABLE case_issues (
+    case_id       VARCHAR2(100) PRIMARY KEY,
+    title         VARCHAR2(255),
+    error         CLOB,
+    work_around   CLOB,
+    case_status   VARCHAR2(50),
+    created_date  DATE DEFAULT SYSDATE,
+    vector        VECTOR(1536)
+)
+
+CREATE OR REPLACE PROCEDURE process_error_pdf(
+    p_case_id IN VARCHAR2,
+    p_title IN VARCHAR2,
+    p_error IN CLOB,
+    p_work_around IN CLOB,
+    p_case_status IN VARCHAR2 DEFAULT 'Open'
+)
+IS
+    v_pdf_content BLOB;
+    v_text_chunks CLOB;
+    v_embedding CLOB;
+BEGIN
+    -- Load PDF content
+    v_pdf_content := to_blob(bfilename('VEC_DUMP', 'oracle_errors.pdf'));
+    
+    -- Extract text and create chunks
+    v_text_chunks := dbms_vector_chain.utl_to_text(v_pdf_content);
+    
+    -- Create embedding for the error text
+    v_embedding := dbms_vector_chain.utl_to_embeddings(
+        dbms_vector_chain.utl_to_chunks(
+            v_text_chunks,
+            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
+        ),
+        json('{"provider":"database", "model":"TINYBERT_MODEL"}')
+    );
+    
+    -- Insert into case_issues table
+    INSERT INTO case_issues (
+        case_id,
+        title,
+        error,
+        work_around,
+        case_status,
+        vector
+    ) VALUES (
+        p_case_id,
+        p_title,
+        p_error,
+        p_work_around,
+        p_case_status,
+        to_vector(v_embedding)
+    );
+    
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RAISE;
+END process_error_pdf;
+
+CREATE OR REPLACE TRIGGER trg_case_issues_vector
+BEFORE INSERT ON case_issues
+FOR EACH ROW
+BEGIN
+    IF :NEW.vector IS NULL AND :NEW.error IS NOT NULL THEN
+        :NEW.vector := to_vector(
+            dbms_vector_chain.utl_to_embeddings(
+                dbms_vector_chain.utl_to_chunks(
+                    :NEW.error,
+                    json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
+                ),
+                json('{"provider":"database", "model":"TINYBERT_MODEL"}')
+            )
+        );
+    END IF;
+END;
+
+CREATE OR REPLACE FUNCTION find_similar_cases(
+    p_search_text IN VARCHAR2,
+    p_limit IN NUMBER DEFAULT 5
+) RETURN SYS_REFCURSOR
+IS
+    v_result SYS_REFCURSOR;
+    v_search_vector VECTOR;
+BEGIN
+    -- Create vector for search text
+    v_search_vector := to_vector(
+        vector_embedding(tinybert_model USING p_search_text as data)
+    );
+    
+    -- Open cursor with similar cases
+    OPEN v_result FOR
+    SELECT 
+        case_id,
+        title,
+        error,
+        work_around,
+        case_status,
+        vector_distance(vector, v_search_vector, COSINE) as similarity
+    FROM case_issues
+    ORDER BY vector_distance(vector, v_search_vector, COSINE)
+    FETCH FIRST p_limit ROWS ONLY;
+    
+    RETURN v_result;
+END;

@@ -105,7 +105,7 @@ Let's import the libraries.
 2. This next code snippet defines the function to include metadata with the chunks.  Select the code snippet and click **Run**.
 
     ```python
-    # Function to format and add metadata to Oracle 23ai Vector Store
+    # Function to format and add metadata to Oracle Database 23ai Vector Store
 
     def chunks_to_docs_wrapper(row: dict) -> Document:
         """
@@ -277,7 +277,7 @@ Note: To learn more about using other LLMs and accessing LLMs with secure API ke
 
     ENDPOINT = "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com"
     COMPARTMENT_OCID = COMPARTMENT_OCID
-    #EMBED_MODEL="cohere.command-r-16k"
+    #EMBED_MODEL="cohere.command-r-08-2024"
     EMBED_MODEL="meta.llama-3.1-70b-instruct"
     print(ENDPOINT)
 
