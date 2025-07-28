@@ -13,14 +13,19 @@
       "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
     },
     {
-    "title": "Lab 1: Agentic Workflows with MCP: Architecture and Code Walkthrough",
-    "description": "Agentic Architecture and Code Walkthrough",
-    "filename": "../../lab1/lab1.md"
+      "title": "Lab 1: Understanding MCP",
+      "description": "Deep Dive on MCP",
+      "filename": "../../lab1/lab1.md"
     },
     {
-    "title": "Lab 2: Demonstrate AI Agent Reasoning with Examples",
-    "description": "Demonstrate AI Agent Reasoning with Examples",
+    "title": "Lab 2: Agentic Workflows with MCP: Architecture and Code Walkthrough",
+    "description": "Agentic Architecture and Code Walkthrough",
     "filename": "../../lab2/lab2.md"
+    },
+    {
+    "title": "Lab 3: Demonstrate AI Agent Reasoning with Examples",
+    "description": "Demonstrate AI Agent Reasoning with Examples",
+    "filename": "../../lab3/lab3.md"
     },
     {
     "title": "Need Help?",
