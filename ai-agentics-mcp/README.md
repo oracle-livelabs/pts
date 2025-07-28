@@ -1,2 +1,2 @@
-# oracle-ai-agentics-live-labs
-# Oracle AI Agent Workshop - Building a Document Search and PDF Generation Agent
+# oracle-ai-agentics-mcp-live-labs
+# Building AI Agents with Model Context Protocol (MCP) and Oracle Database 23ai
