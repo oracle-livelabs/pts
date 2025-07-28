@@ -4,7 +4,7 @@
 
 Welcome to an Oracle LiveLab dedicated to the **Model Context Protocol (MCP)**, the open standard poised to revolutionize how we build, manage, and scale AI agent applications. This workshop is designed to provide a deep, hands-on understanding of MCP and its critical role in the future of enterprise AI. While we will leverage powerful tools like LangChain and Oracle Database 23ai, our primary focus remains squarely on mastering MCP as the core of your AI agent architecture.
 
-
+**Prerequisite Note:** To fully benefit from this lab, it is highly recommended that you first complete the foundational AI Agentic Lab: [Building AI Agents with LangChain and Oracle Database 23ai](https://livelabs.oracle.com/pls/apex/dbpm/r/livelabs/view-workshop?wid=4185). This current lab serves as an extension, focusing specifically on the integration and benefits of the Model Context Protocol (MCP) within an AI agent architecture.
 
 
 ### The Imperative for a Standard: Why MCP?

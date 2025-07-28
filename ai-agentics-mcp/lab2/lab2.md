@@ -317,6 +317,6 @@ The output would be similar to text shown below
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Rajeev Rumale
+* **Authors** - Vijay Balebail, Rajeev Rumale, Ashu Kumar
 * **Contributors** - Milton Wan, Doug Hood
 * **Last Updated By/Date** -  Rajeev Rumale, June 2025

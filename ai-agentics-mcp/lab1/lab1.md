@@ -94,7 +94,7 @@ from reportlab.lib.units import inch
 %load_ext sql
 %config SqlMagic.autopandas = True
 %config SqlMagic.style = 'PLAIN_COLUMNS'  # 
-%sql oracle+oracledb://vector:vector@129.213.75.70:1521?service_name=ORCLPDB1
+%sql oracle+oracledb://vector:vector@localhost:1521?service_name=ORCLPDB1
 
 # Load environment variables
 load_dotenv()
@@ -887,6 +887,6 @@ You have completed the Code explanation. We would do code walk through in the ne
 Please proceed to the next lab.
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Rajeev Rumale
+* **Authors** - Vijay Balebail, Rajeev Rumale, Ashu Kumar
 * **Contributors** - Milton Wan, Doug Hood
 * **Last Updated By/Date** -  Rajeev Rumale, June 2025
