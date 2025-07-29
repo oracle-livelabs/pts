@@ -1,9 +1,9 @@
-# Lab 2:  Demonstrate AI Agent Reasoning with Examples
+# Lab 3:  Demonstrating AI Agent Reasoning with Model Context Protocol (MCP)
 
 ### Introduction
 
 
-Until now the agent and tools are initialized. Now we will call the agent with and ask specific questions to demonstrate how Agent calls apporpirate tools and generates answer.
+Until now the MCP server, agent, and tools initialized, we are now ready to interact with the system. We'll ask specific questions to see how the agent leverages MCP to select and invoke the appropriate tools—such as RAG, PDF generation, or database access—and generate accurate, context-aware
 
 
 Estimated Time: 15 min
@@ -11,11 +11,11 @@ Estimated Time: 15 min
 ### Objectives
 
 We'll demonstrate:
-1. Demonstrate agent context memory
-2. Demonstrate agent ability to use to call RAG tools
-3. Demonstrate agent's ability to create PDFs
-4. Demonstarte agents ability to access the database.
-5. Demonstrate the ability of agent to use all the above tools in iteration to perform complex task.
+1. How the agent, using MCP, maintains and utilizes contextual memory across interactions.
+2. How the agent uses MCP to call RAG tools for document retrieval
+3. How the agent, through MCP, generates PDFs dynamically using the registered PDF tool.
+4. How the agent securely queries databases using MCP’s tool invocation interface.
+5. How the agent, powered by MCP, orchestrates multiple tools in sequence to perform complex, multi-step tasks.
 
 
 ### Prerequisites
@@ -208,38 +208,35 @@ Milton
 
 ### What We've Learned
 
-1. **LLM Agent Architecture**
-    - How to combine LLMs with tools for enhanced capabilities
-    - The ReAct pattern for reasoning and acting
+1. **MCP Agent Architecture**
+    - How to build secure, modular AI agents by combining LLMs with MCP-registered tools
+    - Leveraging the MCP Supervisor pattern to coordinate reasoning and tool execution
 
-2. **Vector Search & RAG**
-    - Setting up Oracle Vector Store
-    - Implementing semantic search for document retrieval
+2. **MCP-Based Vector Search & RAG**
+    - Configuring and storing embeddings in Oracle Vector Store using MCP
+    - Implementing semantic search through RAG tools managed via MCP
 
-3. **Tool Development**
-    - Creating custom tools for specific tasks
-    - Handling different input formats and error cases
+3. **Custom MCP server Tool Development**
+    - Creating domain-specific tools (e.g., PDF generation, database access) that conform to the MCP interface
+    - Validating and handling diverse input types using MCP's tool framework
 
-4. **Prompt Engineering**
-    - Designing effective templates for guiding agent behavior
-    - Using examples and rules to improve performance
+4. **Prompt Engineering with MCP Context**
+    - Designing effective system and user prompts that align with tool capabilities exposed through MCP
+    - Using examples and protocol-based templates to guide agent reasoning and tool invocation
    
-5. **Agent Configuration**
+5. **Agent Configuration and Memory with MCP**
     - Setting up memory for contextual conversations
-    - Configuring the agent for optimal performance
+    - Optimizing agent behavior and tool selection via MCP’s structured tool and memory orchestration
 
 ## Next Steps
 
-- Scroll back and read through the template initilization. This is what makes an agent costamized to your needs.
-- Implement more sophisticated tools (database queries, API integrations).
+- Scroll back and review the MCP server and agent initialization—this is what customizes the agent to your needs.
+- Develop more sophisticated MCP tools, such as those for database queries, external API integrations, or report generation
 - Explore different memory mechanisms for long-term context.
-- Fine-tune the prompt for better handling of edge cases.
+- Explore how MCP decouples LLM reasoning from tool execution, enabling secure, scalable, and auditable AI workflows.
 - For more understanding RAG Vector Search in Oracle Database 23ai, to look at the live lab [AI Vector Search - Complete RAG Application using PL/SQL in Oracle Database 23ai](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3934)
 - And also the live lab [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3927)
 
-
-
-You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Rajeev Rumale, Ashu Kumar
