@@ -49,7 +49,7 @@ An AI agent becomes truly powerful when it can dynamically interact with its env
 
 An AI agent system powered by the Model Context Protocol (MCP) is architected for maximum modularity, scalability, and security, with MCP serving as its central nervous system. This architecture ensures that all components communicate and operate in a standardized, efficient, and secure manner.
 
-At its core, an MCP-driven agent system comprises several interconnected components, all orchestrated by the MCP:
+At its core, an MCP-driven agent system comprises several interconnected components:
 
 *   **Planner:** This component, often an LLM or a dedicated planning module, determines the sequence of actions an agent needs to take. It leverages MCP-defined tool metadata and context to formulate optimal task execution plans.
 *   **MCP Tool Server:** This is the critical gateway for all external interactions. It hosts and manages various tools, exposing their functionalities through standardized MCP interfaces. When an agent needs to perform an action (e.g., query a database, call an API), it sends an MCP-compliant request to the Tool Server, which then securely invokes the underlying tool.

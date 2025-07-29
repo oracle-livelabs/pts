@@ -3,7 +3,7 @@
 ### Introduction
 
 
-Until now the MCP server, agent, and tools initialized, we are now ready to interact with the system. We'll ask specific questions to see how the agent leverages MCP to select and invoke the appropriate tools—such as RAG, PDF generation, or database access—and generate accurate, context-aware
+Until now the MCP server, agent and tools are initialized, we are now ready to interact with the system. We'll ask specific questions to see how the agent leverages MCP to select and invoke the appropriate tools—such as RAG, PDF generation, or database access—and generate accurate, context-aware
 
 
 Estimated Time: 15 min
@@ -30,7 +30,7 @@ This will to used to test if the agent can retrive info from chat context.
 We chat with the agent and introduce ourselve and check if it remember our name during the whole conversation. The output is in verbose mode and will trace the activities and thought process of agent. it would be labeled as Observation, Action,  Final answer and Response.
 
 ```python
-prompt = "My name is Homer Simpson"
+prompt = "My name is Simpson"
 result = await run_mcp_agent(prompt)
 print("\nResponse:\n", result)
 ```
@@ -38,7 +38,7 @@ print("\nResponse:\n", result)
     The output would be similar to below
     
     Response:
-    Hello, Homer Simpson! How can I assist you today?
+    Hello, Simpson! How can I assist you today?
 
 Now we ask agent for our name.
 
@@ -50,7 +50,7 @@ print("\nResponse:\n", result)
 
     The output would be similar to below
     
-    Your name is Homer Simpson.
+    Your name is Simpson.
 
 Notice it responds back with your name as you entered in Introduction and retained in Contect Memory.
 
@@ -111,7 +111,7 @@ For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from f
 
 ```python
 # Run this cell to test
-prompt = "List are 5  features from the document"
+prompt = "List the 5 features from the document"
 result = await run_mcp_agent(prompt)
 print("\nResponse:\n", result)
 ```
