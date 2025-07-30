@@ -22,7 +22,7 @@ Let's get started!
 2. From the terminal OS prompt type the following to launch jupyter notebook:
 
     ```
-        $ cd /home/oracle/aidemo
+        $ cd /home/oracle/aidemo/oracle-mcp-agent
         $ jupyter lab
     ```
 
