@@ -111,7 +111,7 @@ This lab assumes you have:
 
     * From the Oracle Cloud web console, go to **Oracle Database** > **Oracle Base Database Service**
 
-      ![Select dbrac database](./images/task1/basedatabaseservice.png " ")
+      ![Select dbrac database](./images/task1/basedb.png " ")
 
     * Select database **dbrac**
 
@@ -133,7 +133,7 @@ This lab assumes you have:
 
     * From the Oracle Cloud web console, go to **Oracle Database** > **Oracle Base Database Service**
 
-      ![Select dbrac database](./images/task1/basedatabaseservice.png " ")
+      ![Select dbrac database](./images/task1/basedb.png " ")
 
     * Select database **dbrac**
 
