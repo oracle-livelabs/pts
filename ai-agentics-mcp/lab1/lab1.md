@@ -1,4 +1,4 @@
-# Understanding MCP
+# The Model Context Protocol (MCP): A Deep Dive
 
 
 ## Deep Dive: The Model Context Protocol (MCP) Explained
