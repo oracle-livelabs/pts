@@ -849,7 +849,19 @@ In this step, you will set up an AI agent using LangGraph and Oracle’s MCP (Mo
 
 ```python
 # Set up the LLM (replace with ChatOCIGenAI if using Oracle GenAI)
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+def initialize_llm():
+    """Initialize and return the LLM model."""
+    model = ChatOCIGenAI(
+        model_id="cohere.command-r-08-2024",
+        service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
+        compartment_id=os.getenv("COMPARTMENT_OCID"),
+        auth_type="API_KEY",
+        model_kwargs={"temperature": 0, "max_tokens": 700}
+    )
+    print(" LLM model initialized")
+    return model
+
+llm = initialize_llm()
 
 # MCP tool server configuration
 server_params = StdioServerParameters(
