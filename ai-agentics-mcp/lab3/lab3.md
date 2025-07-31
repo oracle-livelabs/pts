@@ -1,4 +1,4 @@
-# Lab 3:  Demonstrating AI Agent Reasoning with Model Context Protocol (MCP)
+# Lab 3:  Demonstrate AI Agent Reasoning with Model Context Protocol (MCP)
 
 ### Introduction
 
