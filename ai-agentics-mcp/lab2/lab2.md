@@ -899,6 +899,6 @@ You have completed the Code explanation. We would do code walk through in the ne
 Please proceed to the next lab.
 
 ## Acknowledgements
-* **Authors** - Vijay Balebail, Rajeev Rumale, Ashu Kumar
+* **Authors** - Ashu Kumar, Vijay Balebail, Rajeev Rumale
 * **Contributors** - Milton Wan, Doug Hood
 * **Last Updated By/Date** -  Rajeev Rumale, June 2025
