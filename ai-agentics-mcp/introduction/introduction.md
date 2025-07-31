@@ -65,4 +65,4 @@ This Oracle LiveLab, focusing on the Model Context Protocol, was made possible b
 
 *   **Authors:** Ashu Kumar, Vijay Balebail, Rajeev Rumale
 *   **Contributors:** Milton Wan, Doug Hood
-*   **Last Updated:** Rajeev Rumale, June 2025
+*   **Last Updated:** Ashu Kumar, July 2025
