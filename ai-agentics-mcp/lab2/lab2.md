@@ -848,7 +848,7 @@ In this step, you will set up an AI agent using LangGraph and Oracle’s MCP (Mo
 ### Part 1: Configure the LLM and MCP Server Parameters
 
 ```python
-# Set up the LLM (replace with ChatOCIGenAI if using Oracle GenAI)
+# Set up the LLM
 def initialize_llm():
     """Initialize and return the LLM model."""
     model = ChatOCIGenAI(
