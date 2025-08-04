@@ -1,7 +1,7 @@
 # The Model Context Protocol (MCP): A Deep Dive
 
 
-## Deep Dive: The Model Context Protocol (MCP) Explained
+## Task 1: The Model Context Protocol (MCP) Explained
 
 This section provides an in-depth exploration of the Model Context Protocol (MCP), elucidating its design principles, functionalities, and the profound impact it has on the architecture and capabilities of modern AI agents.
 
@@ -45,7 +45,7 @@ An AI agent becomes truly powerful when it can dynamically interact with its env
 
 ---
 
-## AI Agent Architecture: MCP as the Central Nervous System
+## Task 2: MCP as the Central Nervous System
 
 An AI agent system powered by the Model Context Protocol (MCP) is architected for maximum modularity, scalability, and security, with MCP serving as its central nervous system. This architecture ensures that all components communicate and operate in a standardized, efficient, and secure manner.
 

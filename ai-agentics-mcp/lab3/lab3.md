@@ -159,7 +159,7 @@ You can check the output file in the file browser. You can double click the file
 ![Showing the location of PDF file output in Jupyter Notebook](images/location_of_pdf_file_output.png)
 
 
-## Example 6: Combined Task - Rag Search, fetch_recipients and create PDF
+## Example 5: Combined Task - Rag Search, fetch_recipients and create PDF
 
 Demonstrating the use of Oracle Vector Search, with 3rd party tools and information from the prompt.
 We will further increase the complexity by asking questions requiring the use of multiple tools and context memory.  
