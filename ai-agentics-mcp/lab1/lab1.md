@@ -1,5 +1,12 @@
 # The Model Context Protocol (MCP): A Deep Dive
 
+## Introduction
+
+The Model Context Protocol (MCP) is a powerful, open standard that enables AI agents to securely manage context, memory, and tool usage. This lab offers a hands-on deep dive into MCP, showing how it powers intelligent, modular, and secure agent systems—especially when integrated with Oracle Database 23ai and GenAI tools.
+
+Let’s explore how MCP brings AI agents to life.
+
+
 
 ## Task 1: The Model Context Protocol (MCP) Explained
 

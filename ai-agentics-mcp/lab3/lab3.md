@@ -1,27 +1,9 @@
 # Lab 3:  Demonstrate AI Agent Reasoning with Model Context Protocol (MCP)
 
-### Introduction
+## Introduction
 
 
 Until now the MCP server, agent and tools are initialized, we are now ready to interact with the system. We'll ask specific questions to see how the agent leverages MCP to select and invoke the appropriate tools—such as RAG, PDF generation, or database access—and generate accurate, context-aware
-
-
-Estimated Time: 15 min
-
-### Objectives
-
-We'll demonstrate:
-1. How the agent, using MCP, maintains and utilizes contextual memory across interactions.
-2. How the agent uses MCP to call RAG tools for document retrieval
-3. How the agent, through MCP, generates PDFs dynamically using the registered PDF tool.
-4. How the agent securely queries databases using MCP’s tool invocation interface.
-5. How the agent, powered by MCP, orchestrates multiple tools in sequence to perform complex, multi-step tasks.
-
-
-### Prerequisites
-
-* Have read through the lab 1 and understood the code snippets
-* Have got the Sandbox instance created and able to access the noVNC console.
 
 
 ## Example 1: Testing Context Memory - Name Introduction  
@@ -159,7 +141,6 @@ You can check the output file in the file browser. You can double click the file
 ![Showing the location of PDF file output in Jupyter Notebook](images/location_of_pdf_file_output.png)
 
 
-## Example 5: Combined Task - Rag Search, fetch_recipients and create PDF
 
 Demonstrating the use of Oracle Vector Search, with 3rd party tools and information from the prompt.
 We will further increase the complexity by asking questions requiring the use of multiple tools and context memory.  

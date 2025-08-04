@@ -1,6 +1,6 @@
 # Designing Agentic Workflows with MCP: Architecture and Code Walkthrough
 
-### Introduction
+## Introduction
 
 This workshop leverages the Model Context Protocol (MCP) to demonstrate how to build a powerful AI agent capable of dynamic tool interaction, context management, and robust task execution. Through this LiveLab, you will learn to integrate Oracle GenAI and other services within an MCP-driven architecture to enable your agent to perform complex tasks such as searching documents, generating PDFs, and handling email-related operations. In this lab, you will perform the following tasks:
 
@@ -11,7 +11,7 @@ This workshop leverages the Model Context Protocol (MCP) to demonstrate how to b
 
 Let's get started!
 
-## **Task 1: Environment Setup and Imports**
+## Task 1: Environment Setup and Imports
 
 ### Launch Jupyter Lab Notebook
 
