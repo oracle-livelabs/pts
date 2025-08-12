@@ -154,12 +154,12 @@ GRANT SELECT ON sys.v_$vector_index TO nationalparks;
 
     ```
     <copy>
-    oci db autonomous-database generate-wallet --autonomous-database-id < Insert your OCID > --file adb.zip --password  Welcome_12345
+    oci db autonomous-database generate-wallet --autonomous-database-id <Insert your OCID here> --file adb.zip --password  Welcome_12345
     </copy>
     ```
 
-    Don't forget that you have to insert your OCID for the autonomous-database-id.
-    The OCID can be obtained from the ADB General Information section:
+    Don't forget that you have to insert your OCID for the autonomous-database-id above.
+    The OCID can be obtained from the ADB General Information section in the ADB page:
 
     ![OCID location](images/ADB_OCID_location.png)
 
@@ -176,7 +176,7 @@ GRANT SELECT ON sys.v_$vector_index TO nationalparks;
 4. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step:
 
     ```sql
-    sql ADMIN/Training4ADW@"paste connect string here"
+    sql ADMIN/Training4ADW@"insert your connect string here"
     @w100001.sql
     @f114.sql
     </copy>
