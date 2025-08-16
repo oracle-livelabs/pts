@@ -1,6 +1,6 @@
 # Build an Agentic AI application with LangChain and Oracle Database 23ai
 
-### **Introduction**
+## **Introduction**
 
 This workshop is to show how to build an AI Agent application using LangChain and Oracle Database 23ai. We will discuss how an Agent is initialized, makes calls to tools, and uses context memory. Once you understand the building components of an Agent, the applications that you build using AI Agentic frameworks are limitless.
 
