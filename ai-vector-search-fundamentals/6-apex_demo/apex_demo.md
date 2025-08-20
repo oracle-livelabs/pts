@@ -29,9 +29,15 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to the APEX application
 
-This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. The URL can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
+## Task 1: Connecting to the APEX application
+
+This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. Depending on which environment you are running in, that is an Oracle environment or sandbox, or your own environment or tenancy you will follow either Task 1a or Task 1b to determine the correct URL to use in your web browser.
+
+
+### Task 1a: Running in an Oracle environment (sandbox)
+
+In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
 
 See the image below for an example:
 
@@ -42,7 +48,36 @@ After signing in you should see a browser window like the following:
  ![apex screen](images/apex_initial_screen.png " ")
 
 
-## Task 1: Run the APEX demo
+### Task 1b: Running in your Oracle environment (tenancy)
+
+In your own tenancy environment you will need to navigate to the "Tool configuration" tab in the ADB page:
+
+![tool config](images/tool_config.png " ")
+
+and copy the APEX "Public access URL":
+
+![apex_url](images/apex_url.png " ")
+
+You will then need to open a new browser window or tab and copy the URL into the address bar and replace "apex" at the end of the URL:
+
+`https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
+
+with the following string:
+
+`/r/nationalparks/nationalparks/image-search`
+
+The resulting URL should look like this (note that host_name will be your actual host name):
+
+`https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks/image-search`
+
+Then hit enter to go to the APEX demo and sign in with the username "nationalparks" and the password "Welcome_12345".
+
+After signing in you should see a browser window like the following:
+
+ ![apex screen](images/apex_initial_screen.png " ")
+
+
+## Task 2: Run the APEX demo
 
 You can now enter any search term you would like to search on. You can pull down on a pre-created list of search terms or make up your own. The demo is designed to return the top 10 most similar park images based on the search term. Only one image per park is returned in search order, although the dataset contains many images for most parks.
 
@@ -73,4 +108,4 @@ Go ahead and experiment with different search terms. You can't hurt anything and
 ## Acknowledgements
 * **Author** - Andy Rivenes, Markus Kissling, Product Managers
 * **Contributors** - Sean Stacey, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Last Updated By/Date** - Andy Rivenes, August 2025

@@ -4,10 +4,10 @@
     "variables": ["../../variables/variables.json",
         "../../variables/variables-in-another-file.json"],
     "include": {
-     "adb-create-user.md":"../../adb-setup/adb-create-user.md",
+     "adb-create-user.md":"../../adb_setup/adb-create-user.md",
      "adb-goto-service-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/goto-service-body.md",
      "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md",
-     "adb-connect-with-sql-worksheet-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/connect-with-sql-worksheet-body.md"
+     "adb-connect-with-sql-worksheet-body.md":"../../adb_setup/connect-with-sql-worksheet-body.md"
     },
     "tutorials": [
         {
@@ -23,7 +23,7 @@
         {
             "title": "Lab 2: Create User and Populate Tables",
             "description":"Create a database user and populate tables",
-            "filename":"../../adb-setup/create-nationalparks-user.md"
+            "filename":"../../adb_setup/create-nationalparks-user.md"
         },
         {
             "title": "Lab 3: Introduction",

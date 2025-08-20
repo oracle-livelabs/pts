@@ -35,7 +35,7 @@ Now create the **NATIONALPARKS** user and provide Database Actions access for th
 
     ![SQL worksheet](images/SQL-worksheet.png)
 
-2. Proceed with **Grant privileges**:
+2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
 
 ```sql
 <copy>
@@ -71,6 +71,9 @@ GRANT SELECT ON sys.v_$vector_memory_pool TO nationalparks;
 GRANT SELECT ON sys.v_$vector_index TO nationalparks;
 </copy>
 ```
+
+Note: Run the entire script by clicking on the "Run Script" button.
+
 
 3. Confirm that you can login with the new user.
 
@@ -153,9 +156,7 @@ GRANT SELECT ON sys.v_$vector_index TO nationalparks;
 3. Create a wallet zip file and unzip for TNS connection to the database:
 
     ```
-    <copy>
     oci db autonomous-database generate-wallet --autonomous-database-id <Insert your OCID here> --file adb.zip --password  Welcome_12345
-    </copy>
     ```
 
     Don't forget that you have to insert your OCID for the autonomous-database-id above.
@@ -175,11 +176,10 @@ GRANT SELECT ON sys.v_$vector_index TO nationalparks;
 
 4. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step:
 
-    ```sql
-    sql ADMIN/Training4ADW@"insert your connect string here"
+    ```
+    sql ADMIN/Training4ADW@<insert your connect string here>
     @w100001.sql
     @f114.sql
-    </copy>
     ```
 
 You may now proceed to the next lab.
