@@ -40,18 +40,6 @@ This lab assumes you have:
 
 *This is the "fold" - below items are collapsed by default*
 
-## Connecting to your Oracle AI Vector Database
-
-The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the SQL Worksheet link and sign in with the username "nationalparks" and the password "Welcome_12345".
-
-See the image below for an example:
-
-![browser setup](images/browser_setup.png " ")
-
-After signing in you should see a browser window like the following:
-
-![sqldev browser](images/sqldev_web.png " ")
-
 
 ## Task 1: View the Vector Pool
 
