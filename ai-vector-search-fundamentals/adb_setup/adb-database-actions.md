@@ -1,6 +1,6 @@
 <!--
     {
-        "name":"Connect with SQL Worksheet",
+        "name":"ADB Database Actions (was connect-with-sql-worksheet-body.md)",
         "description":"Connect to Autonomous Database using the SQL Worksheet in Database Actions"
     }
 -->

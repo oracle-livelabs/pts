@@ -7,7 +7,7 @@
      "adb-create-user.md":"../../adb_setup/adb-create-user.md",
      "adb-goto-service-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/goto-service-body.md",
      "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md",
-     "adb-connect-with-sql-worksheet-body.md":"../../adb_setup/connect-with-sql-worksheet-body.md"
+     "adb-database-actions.md":"../../adb_setup/adb-database-actions.md"
     },
     "tutorials": [
         {
