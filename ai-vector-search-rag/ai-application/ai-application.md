@@ -204,11 +204,6 @@ This lab assumes you have the following:
     ````sql
     <copy>
     grant execute on SYS.UTL_HTTP to DBAI;
-    </copy>
-    ````
-
-    ````sql
-    <copy>
     grant execute on DBMS_CLOUD to DBAI;
     </copy>
     ````
@@ -234,7 +229,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
-14. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs. Same for `adobe.io` domain.
+14. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs. Same for `adobe.io` and `openstreetmap.org` domains.
 
     ````sql
     <copy>
@@ -254,6 +249,19 @@ This lab assumes you have the following:
     BEGIN
     DBMS_NETWORK_ACL_ADMIN.append_host_ace (
         host       => '*.adobe.io',
+        ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
+                                principal_name => 'DBAI',
+                                principal_type => xs_acl.ptype_db));
+    END;
+    /
+    </copy>
+    ````
+
+    ````sql
+    <copy>
+    BEGIN
+    DBMS_NETWORK_ACL_ADMIN.append_host_ace (
+        host       => '*.openstreetmap.org',
         ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
                                 principal_name => 'DBAI',
                                 principal_type => xs_acl.ptype_db));
@@ -319,62 +327,67 @@ This lab assumes you have the following:
 
     ![apex workspace](./images/apex-workspace.png " ")
 
-4. Download the AI Vector Search and RAG demo application: [QandA](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/cH9HegImtUSFIQzzT9j3dbyFsmu1J1NM8A3Xq0bqp-C3jhPHUC7yr4KpNx7HOkxH/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
+4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/PwomXJU_5EWrhM8w4f2FVbRa58BpGwpoIfYG6U8jUWhUqRp92PdgebCefEaNfIN4/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
 
-5. Click App Builder and Import.
+5. Go to SQL Workshop > SQL Scripts.
 
-    ![app builder](./images/app-builder.png " ")
+    ![sql workshop sql scripts](./images/sql-wkshop-sql-scripts.png " ")
 
-6. Import App: `QandA-livelab-f100.sql`. Click Next.
+6. Click Upload.
 
-    ![import app](./images/import-app.png " ")
+    ![sql scripts create](./images/sql-scripts-create.png " ")
 
-7. Review the installation details and click Install Application.
+7. Select the downloaded SQL file to be uploaded.
 
-    ![install application](./images/install-application.png " ")
+    ![sql script upload](./images/sql-script-upload.png " ")
 
-8. Once the application is installed successfully, click Edit Application.
+8. Click Edit.
 
-    ![application installed](./images/application-installed.png " ")
+    ![sql script run](./images/sql-script-run.png " ")
 
-9. Check application pages. Click Shared Components.
+9. Set the correct values for the first 7 variables in the script.
 
-    ![application pages](./images/application-pages.png " ")
-
-10. Click List of Values.
-
-    ![shared components other](./images/shared-components-other.png " ")
-
-11. This application uses a set of roles to authorize users to perform different tasks.
-
-    ![list of values roles](./images/list-of-values-roles.png " ")
-
-12. Navigate to SQL Workshop > SQL Commands.
-
-    ![sql workshop](./images/sql-workshop.png " ")
-
-13. Use SQL Commands to run the following code to create a Credential for Object Storage. Use the Token for your notes for the `password` attribute.
-
-    ````sql
-    -- Create OCI token credential
-    <copy>
-    BEGIN
-        DBMS_CLOUD.create_credential(
-        credential_name => 'OBJS_CREDENTIAL',
-        username => 'YourOCIusername',
-        password => '6h[H9h)h}hA.23hAha0H');
-    END;
-    /
-    </copy>
-    ````
-
-    ![create objs credential](./images/create-objs-credential.png " ")
+    ![sql script variables](./images/sql-script-variables.png " ")
 
     > **Note:** If your tenancy uses an Identity Domain, `username` value should be 'YourIdentityDomain/YourOCIusername'.
 
-    ![tenancy identity domain](./images/tenancy-identity-domain.png " ")
+10. Save the script and run it. Make sure there are no errors.
 
-14. Verify the new Credential. List objects in your Object Storage Bucket.
+11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/cH9HegImtUSFIQzzT9j3dbyFsmu1J1NM8A3Xq0bqp-C3jhPHUC7yr4KpNx7HOkxH/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
+
+12. Click App Builder and Import.
+
+    ![app builder](./images/app-builder.png " ")
+
+13. Import App: `QandA-livelab-f100.sql`. Click Next.
+
+    ![import app](./images/import-app.png " ")
+
+14. Review the installation details and click Install Application.
+
+    ![install application](./images/install-application.png " ")
+
+15. Once the application is installed successfully, click Edit Application.
+
+    ![application installed](./images/application-installed.png " ")
+
+16. Check application pages. Click Shared Components.
+
+    ![application pages](./images/application-pages.png " ")
+
+17. Click List of Values.
+
+    ![shared components other](./images/shared-components-other.png " ")
+
+18. This application uses a set of roles to authorize users to perform different tasks.
+
+    ![list of values roles](./images/list-of-values-roles.png " ")
+
+19. Navigate to SQL Workshop > SQL Commands.
+
+    ![sql workshop](./images/sql-workshop.png " ")
+
+20. Verify the new Credential. List objects in your Object Storage Bucket.
 
     ````sql
     -- Test OCI token credential
@@ -393,224 +406,7 @@ This lab assumes you have the following:
 
     ![select list objects](./images/select-list-objects.png " ")
 
-15. Create an OCI native credential. This credential will be used to communicate with OCI Generative AI services. Use the values you saved in your notes for the attributes.
-
-    ````sql
-    -- Create OCI native credential
-    <copy>
-    declare
-      jo json_object_t;
-    begin
-      jo := json_object_t();
-      jo.put('user_ocid', 'ocid1.user.oc1..aaaaaaaat2x6ry4xsb6m5thisismyuserhahahahahahahaahahahab2bvcjq');
-      jo.put('tenancy_ocid', 'ocid1.tenancy.oc1..aaaaaaaa6aea6xvr6thisismytenancyhahahahaahhahaahaa4opc3fib2a');
-      jo.put('compartment_ocid', 'ocid1.compartment.oc1..aaaaaaaatthisismycompartmenthahahahahahasbkxvzhmmbv2gncfa');
-      jo.put('private_key', 'MIIEvQIHahaHahahAhaHAhaHaHahaHahahahaHAHAgEAAoIBAQCzI+0Vnd4AUZZ1
-      Z35Qp0p58oCCHahaHahahAhaHAhaHaHahaHahahahaHAHhahHGtkDKZYqMD6ThOa
-      Whg8rBnyIHahaHahahAhaHAhaHaHahaHahahahaHAHhaha4Uvw1e3qhEWPH8l3vB
-      t6VHahaHahahAhaHAhaHaHahaHahahahaHAHhahahahahjjhWrXk+gT/UZbqunwW
-      ... 20 lines more ...
-      /OAkRHahaHahahAhaHAhaHaHahaHahahahaHAHhahahahahhaLXXr4e1LrX40wbX
-      P0uKHahaHahahAhaHAhaHaHahaHahahahaHAHhahahahahHAHJ2v/1mIGy+pOt3S
-      ZmkxgWIvS6B0ixYjuSHAvzU=');
-      jo.put('fingerprint', '25:0h:57:07:2h:55:0h:10:6h:h6:ha:06:h1:9h:32:9h');
-      DBMS_OUTPUT.put_line(jo.to_string);
-      DBMS_VECTOR.create_credential(
-        credential_name => 'OCI_CREDENTIAL',
-        params => json(jo.to_string));
-    end;
-    /
-    </copy>
-    ````
-
-    ![create native credential](./images/create-native-credential.png " ")
-
-16. Use the APEX SQL Commands interface to create the database objects required by the sample application.
-
-    ````sql
-    -- Demo application users table
-    <copy>
-    CREATE TABLE APPUSER
-        ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-        "EMAIL" VARCHAR2(255 CHAR) NOT NULL ENABLE,
-        "ROLE_ID" NUMBER,
-        "LOCKED" NUMBER(1),
-        "FIRSTNAME" VARCHAR2(255 CHAR),
-        "LASTNAME" VARCHAR2(255 CHAR),
-        "BIRTHDAY" DATE,
-        "DELETE_REQUEST" NUMBER(1),
-        "TIME_ZONE" VARCHAR2(40 CHAR),
-        "CREATED" DATE NOT NULL ENABLE,
-        "UPDATED" DATE NOT NULL ENABLE,
-        "UPDATED_BY" VARCHAR2(255 CHAR) NOT NULL ENABLE,
-        "LAST_LOGIN" DATE,
-        CONSTRAINT "APPUSER_EMAIL_UNQ" UNIQUE ("EMAIL"));
-    </copy>
-    ````
-
-    ````sql
-    <copy>
-    CREATE OR REPLACE EDITIONABLE TRIGGER "APPUSER_BIU"
-        before insert or update on APPUSER for each row
-    begin
-        if inserting then
-            :new.ROLE_ID := 1;
-            :new.CREATED := SYSDATE;
-            :new.LAST_LOGIN := SYSDATE;
-            :new.LOCKED := 0;
-            :new.DELETE_REQUEST := 0;
-        end if;
-        :new.UPDATED := SYSDATE;
-        :new.UPDATED_BY := NVL(SYS_CONTEXT('APEX$SESSION','APP_USER'),user);
-        :new.EMAIL := LOWER(:new.EMAIL);
-    end;
-    /
-    </copy>
-    ````
-
-    ````sql
-    -- Post authenticate procedure
-    <copy>
-    CREATE OR REPLACE EDITIONABLE PROCEDURE post_authenticate (
-      p_username in varchar2,
-      out_user_id out number,
-      out_time_zone out varchar2,
-      out_role_id out number,
-      out_locked out number
-    )
-    is
-      l_id        number;
-      l_role_id   number;
-      l_locked    number;
-      l_time_zone varchar2(40 char);
-    begin
-      select id, role_id, time_zone, locked
-        into l_id, l_role_id, l_time_zone, l_locked
-        from APPUSER
-        where upper(email) = upper(NVL(SYS_CONTEXT('APEX$SESSION','APP_USER'),user));
-        out_user_id   := l_id;
-        out_time_zone := l_time_zone;
-        out_role_id   := l_role_id;
-        out_locked    := l_locked;
-      exception when no_data_found then  
-        insert into APPUSER (email) values (NVL(SYS_CONTEXT('APEX$SESSION','APP_USER'),user));
-        commit;
-    end post_authenticate;
-    /
-    </copy>
-    ````
-
-17. Create application tables to store documents and vectors.
-
-    ````sql
-    -- Object Storage files uploaded in application bucket DBAI-bucket
-    <copy>
-    CREATE TABLE OBJSDOCS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "FILE_NAME" VARCHAR2(250) NOT NULL ENABLE,
-    "CREATED" DATE NOT NULL ENABLE,
-    "CREATED_BY" NUMBER NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Documents imported into the database as BLOB objects
-    <copy>
-    CREATE TABLE BLOBDOCS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "OBJSDOC_ID" NUMBER NOT NULL ENABLE,
-    "DOC_DATA" BLOB NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Chunks and embeddings of vectorized documents
-    <copy>
-    CREATE TABLE VECTORS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "CHUNK_NO" NUMBER NOT NULL ENABLE,
-    "CHUNK_CONTENTS" CLOB NOT NULL ENABLE,
-    "VECTOR_EMBEDDING" VECTOR NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Chunks converted to Markdown format
-    <copy>
-    CREATE TABLE MDCHUNKS
-    ("VECTOR_ID" NUMBER NOT NULL ENABLE,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "CHUNK_NO" NUMBER NOT NULL ENABLE,
-    "MARKDOWN" CLOB NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Lines from Markdown chunks to be labeled
-    <copy>
-    CREATE TABLE MDLINES
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "VECTOR_ID" NUMBER NOT NULL ENABLE,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "CHUNK_NO" NUMBER NOT NULL ENABLE,
-    "LINE_NO" NUMBER NOT NULL ENABLE,
-    "LINE_CONTENTS" VARCHAR2(4000) NOT NULL ENABLE,
-    "LINE_TYPE" NUMBER);
-    </copy>
-    ````
-
-    ````sql
-    -- Log of conversation with the inference LLM on OCI GenAI
-    <copy>
-    CREATE TABLE CONVERSATION 
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "APPUSER_ID" NUMBER NOT NULL ENABLE,
-    "QUESTION" CLOB NOT NULL ENABLE,
-    "ANSWER" CLOB NOT NULL ENABLE,
-    "CREATED" DATE NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Access Tokens to connect to 3rd party cloud services
-    <copy>
-    CREATE TABLE ACCESS_TOKENS
-    ("ACCESS_TOKEN" VARCHAR2(1024 CHAR) NOT NULL ENABLE,
-    "EXPIRES" DATE NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Documents converted on 3rd party cloud services
-    <copy>
-    CREATE TABLE CONVERTEDOCS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "DOC_DATA" BLOB NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Response from OCI Document Understanding AI service
-    <copy>
-    CREATE TABLE OCRESULTS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "RESULTS" JSON NOT NULL ENABLE,
-    "RESID" RAW(2000));
-    </copy>
-    ````
-
-    ````sql
-    -- JSON results from OCI Document Understanding AI service
-    <copy>
-    CREATE JSON COLLECTION TABLE OCR_RESULTS;
-    </copy>
-    ````
-
-
-18. Import `all_MiniLM_L12_v2.onnx` large language model (LLM) into your ADB instance from the object storage bucket. Make sure you use your `object_uri` attribute value.
+21. Import `all_MiniLM_L12_v2.onnx` large language model (LLM) into your ADB instance from the object storage bucket. Make sure you use your `object_uri` attribute value.
 
     ````sql
     -- import LLM from Object Storage
@@ -632,7 +428,7 @@ This lab assumes you have the following:
 
     ![load onnx model](./images/load-onnx-model.png " ")
 
-19. List LLM models in your ADB instance and their attributes.
+22. List LLM models in your ADB instance and their attributes.
 
     ````sql
     <copy>
@@ -649,229 +445,6 @@ This lab assumes you have the following:
     ````
 
     ![select mining model](./images/select-mining-model.png " ")
-
-20. Create database objects to store and process terms and tokens.
-
-    ````sql
-    -- Terms identified by the inference LLM that represent the chunk summary
-    <copy>
-    CREATE TABLE TERM_EXTRACTION
-    ("BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "CHUNK_NO" NUMBER NOT NULL ENABLE,
-    "TERM" VARCHAR2(100) NOT NULL ENABLE,
-    "WEIGHT" NUMBER NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Tokens defined from terms to be used by Oracle Text operations
-    <copy>
-    CREATE TABLE TOKENS
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "TOKEN" VARCHAR2(100) NOT NULL ENABLE,
-    "ENABLED" BOOLEAN DEFAULT 'YES' NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- Ranking of the Oracle Text tokens for document chunks with relevance score
-    <copy>
-    CREATE TABLE VECTORS_TOKENS_REF
-    ("VECTOR_ID" NUMBER NOT NULL ENABLE,
-    "TOKEN_ID" NUMBER NOT NULL ENABLE,
-    "SCORE" NUMBER NOT NULL ENABLE,
-    CONSTRAINT TVECTORS_FK FOREIGN KEY (VECTOR_ID) REFERENCES VECTORS(ID),
-    CONSTRAINT VTOKENS_FK FOREIGN KEY (TOKEN_ID) REFERENCES TOKENS(ID));
-    </copy>
-    ````
-
-    ````sql
-    -- Ranking of the Oracle Text tokens for entire document with relevance score
-    <copy>
-    CREATE TABLE DOCS_TOKENS_REF
-    ("BLOBDOC_ID" NUMBER NOT NULL ENABLE,
-    "TOKEN_ID" NUMBER NOT NULL ENABLE,
-    "SCORE" NUMBER NOT NULL ENABLE,
-    CONSTRAINT TBLOBDOCS_FK FOREIGN KEY (BLOBDOC_ID) REFERENCES BLOBDOCS(ID),
-    CONSTRAINT BTOKENS_FK FOREIGN KEY (TOKEN_ID) REFERENCES TOKENS(ID));
-    </copy>
-    ````
-
-    ````sql
-    -- Create a thesaurus called DEFAULT. This is always used by Oracle Text when you don't specify a thesaurus in your statements
-    <copy>
-    begin
-    ctx_thes.create_thesaurus('DEFAULT', FALSE);
-    end;
-    </copy>
-    ````
-
-    ````sql
-    -- CONTEXT index for large amounts of text
-    <copy>
-    create index BLOBDOCS_DOC_DATA_IDX on BLOBDOCS(DOC_DATA) indextype is CTXSYS.CONTEXT;
-    </copy>
-    ````
-
-    ````sql
-    -- full-text search index
-    <copy>
-    create search index VECTORS_SRC_IDX on VECTORS(CHUNK_CONTENTS);
-    </copy>
-    ````
-
-    ````sql
-    -- update scores for all documents for a given token
-    <copy>
-    create or replace procedure UPDATE_TOKEN_DOC_SCORES (
-    L_TOKEN_ID number
-    ) as 
-    L_TOKEN varchar2(100);
-    L_SCORE number;
-    begin
-    -- escape special characters and Oracle Text reserved words from Token
-    select trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                               '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                               1, 0, 'i')) into L_TOKEN 
-    from TOKENS where ID = L_TOKEN_ID;
-    delete from DOCS_TOKENS_REF where TOKEN_ID = L_TOKEN_ID;
-    insert into DOCS_TOKENS_REF
-    select ID, L_TOKEN_ID, score(1) SCORE from BLOBDOCS
-    where contains(DOC_DATA, L_TOKEN, 1) > 30;
-    end;
-    /
-    </copy>
-    ````
-
-    ````sql
-    -- update scores for all chunks for a given token
-    <copy>
-    create or replace procedure UPDATE_TOKEN_VEC_SCORES (
-    L_TOKEN_ID number
-    ) as 
-    L_TOKEN varchar2(100);
-    L_SCORE number;
-    begin
-    -- escape special characters and Oracle Text reserved words from Token
-    select trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                               '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                               1, 0, 'i')) into L_TOKEN 
-    from TOKENS where ID = L_TOKEN_ID;
-    delete from VECTORS_TOKENS_REF where TOKEN_ID = L_TOKEN_ID;
-    insert into VECTORS_TOKENS_REF
-    select ID, L_TOKEN_ID, score(1) SCORE from VECTORS
-    where contains(CHUNK_CONTENTS, L_TOKEN, 1) > 30;
-    end;
-    /
-    </copy>
-    ````
-
-    ````sql
-    -- update scores for all tokens for a given document
-    <copy>
-    create or replace procedure UPDATE_DOC_TOKEN_SCORES (
-    L_BLOBDOC_ID number
-    ) as 
-    L_TOKEN varchar2(100);
-    L_SCORE number;
-    begin
-    -- clean old references
-    delete from DOCS_TOKENS_REF where BLOBDOC_ID = L_BLOBDOC_ID;
-    delete from VECTORS_TOKENS_REF where VECTOR_ID in (select ID from VECTORS where BLOBDOC_ID = L_BLOBDOC_ID);
-    -- escape special characters and Oracle Text reserved words from Token
-    for rec in (
-        select ID, trim(REGEXP_REPLACE(' ' || REGEXP_REPLACE(TOKEN,'("|\\|\*|_|&|%|-|\$|>)','\\\1') || ' ',
-                                       '\W*(pattern)\W*|\W*(fuzzy)\W*|\W(and)\W|\W(or)\W',' {\1\2\3\4} ',
-                                       1, 0, 'i')) as L_TOKEN from TOKENS) loop
-    begin
-        -- insert new references
-        insert into DOCS_TOKENS_REF
-        select ID, rec.ID, score(1) SCORE from BLOBDOCS 
-            where contains(DOC_DATA, rec.L_TOKEN, 1) > 30 and ID = L_BLOBDOC_ID;
-        insert into VECTORS_TOKENS_REF
-        select ID, rec.ID, score(1) SCORE from VECTORS 
-            where contains(CHUNK_CONTENTS, rec.L_TOKEN, 1) > 30 
-            and ID in (select ID from VECTORS where BLOBDOC_ID = L_BLOBDOC_ID);
-    exception
-        when others then
-        DBMS_OUTPUT.put_line(sqlerrm);
-        DBMS_OUTPUT.put_line(rec.L_TOKEN);
-    end;
-    end loop;
-    end;
-    /
-    </copy>
-    ````
-
-21. Create database objects to store and process extracted tables from PDF documents.
-
-    ````sql
-    -- ZIP resource files generated by extractpdf operations
-    <copy>
-    CREATE TABLE EXTRACTEDZIP
-    ("ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY (CACHE 5) PRIMARY KEY,
-    "BLOBDOC_ID" NUMBER NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- list of compressed files in ZIP resource files generated by extractpdf operations
-    <copy>
-    CREATE TABLE ZIPFILELIST
-    ("EXTRACTEDZIP_ID" NUMBER NOT NULL ENABLE,
-    "FILENAME" VARCHAR2(250) NOT NULL ENABLE,
-    "FILEPART" NUMBER NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- CSV extracted contents from ZIP resource files
-    <copy>
-    CREATE TABLE ZIPFILECSV
-    ("EXTRACTEDZIP_ID" NUMBER NOT NULL ENABLE,
-    "FILEPART" NUMBER NOT NULL ENABLE,
-    "CSVCONTENT" CLOB NOT NULL ENABLE);
-    </copy>
-    ````
-
-    ````sql
-    -- CSV dummy table to create classic report with dynamic number of columns
-    <copy>
-    CREATE TABLE CSV_TABLE_0
-    ("LINE_NUMBER" NUMBER,
-    "COL001" VARCHAR2(1),
-    "COL002" VARCHAR2(1),
-    "COL003" VARCHAR2(1),
-    "COL004" VARCHAR2(1),
-    "COL005" VARCHAR2(1),
-    "COL006" VARCHAR2(1),
-    "COL007" VARCHAR2(1),
-    "COL008" VARCHAR2(1),
-    "COL009" VARCHAR2(1),
-    "COL010" VARCHAR2(1),
-    "COL011" VARCHAR2(1),
-    "COL012" VARCHAR2(1),
-    "COL013" VARCHAR2(1),
-    "COL014" VARCHAR2(1),
-    "COL015" VARCHAR2(1),
-    "COL016" VARCHAR2(1),
-    "COL017" VARCHAR2(1),
-    "COL018" VARCHAR2(1),
-    "COL019" VARCHAR2(1),
-    "COL020" VARCHAR2(1),
-    "COL021" VARCHAR2(1),
-    "COL022" VARCHAR2(1),
-    "COL023" VARCHAR2(1),
-    "COL024" VARCHAR2(1),
-    "COL025" VARCHAR2(1),
-    "COL026" VARCHAR2(1),
-    "COL027" VARCHAR2(1),
-    "COL028" VARCHAR2(1),
-    "COL029" VARCHAR2(1),
-    "COL030" VARCHAR2(1)
-    );
-    </copy>
-    ````
 
 
 ## Task 4: Fix app code with your OCI components
