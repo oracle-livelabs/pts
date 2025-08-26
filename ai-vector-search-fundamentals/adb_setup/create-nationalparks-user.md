@@ -21,7 +21,7 @@ Estimated time: 10 minutes
 
 ## Task 1: Login to Database Actions
 
-[](include:adb-connect-with-sql-worksheet-body.md)
+[](include:adb-database-actions.md)
 
 ## Task 2: Create a database user
 
