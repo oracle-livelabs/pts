@@ -58,7 +58,7 @@ and copy the APEX "Public access URL":
 
 ![apex_url](images/apex_url.png " ")
 
-You will then need to open a new browser window or tab and copy the URL into the address bar and replace "apex" at the end of the URL:
+You will then need to open a new browser window or tab and copy the URL into the address bar (note that your URL may have a different hostname) and replace "apex" at the end of the URL:
 
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
 
@@ -66,7 +66,7 @@ with the following string:
 
 `/r/nationalparks/nationalparks/image-search`
 
-The resulting URL should look like this (note that host_name will be your actual host name):
+The resulting URL should look like this (note that your URL may have a different hostname):
 
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks/image-search`
 

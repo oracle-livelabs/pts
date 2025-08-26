@@ -21,67 +21,116 @@ Estimated time: 10 minutes
 
 ## Task 1: Login to Database Actions
 
-[](include:adb-database-actions.md)
+Although you can connect to your Oracle Autonomous Database using desktop tools like Oracle SQL Developer, you can conveniently access the browser-based SQL Worksheet directly from your Autonomous Database console.
+
+1. If you are not logged in to the Oracle Cloud Console, log in and select **Oracle Database** from the navigation menu and then **Autonomous Database** from the **Overview** column, make sure you are in the right compartment where your ADB is provisioned, and select your database display name, **[](var:db_display_name)** if you used the recommended name in the Create an Autonomous Database lab, in the **Display name** column.
+
+    ![Oracle Home page left navigation menu.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/oci-navigation-adb.png " ")
+
+
+    ![Autonomous Databases homepage.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/oci-adb-list-with-db.png " ")
+
+2. In your ADB database's details page, click the **Database Actions** button and then choose the **View all database actions** option.
+
+    ![Click Database Actions button.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-dbactions-goto.png " ")
+
+    Logging in from the OCI service console expects that you are the ADMIN user. Log in as ADMIN, or your admin user, if you are not automatically logged in.
+
+3. The Database Actions page opens. In the **Development** box, click **SQL**.
+
+    ![Click SQL.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-dbactions-click-sql.png " ")
+
+4.  The first time you open SQL Worksheet, a series of pop-up informational boxes may appear, providing you a tour that introduces the main features. If not, click the Tour button (labeled with binoculars symbol) in the upper right corner. Click **Next** to take a tour through the informational boxes.
+
+    ![SQL Worksheet.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-sql-worksheet-opening-tour.png " ")
 
 ## Task 2: Create a database user
 
 Now create the **NATIONALPARKS** user and provide Database Actions access for this user.
 
-[](include:adb-create-user.md)
+When you create a new Autonomous Database, you automatically get an account called ADMIN that is your super administrator user. In this task we will need to create a separate new user for the lab. This section will guide you through this process using the "New User" wizard within the Database Actions set of tools.
+
+1. Navigate to the Details page of the Autonomous Database you previously provisioned. In this example, the database name is **[](var:db_name)**, but yours may be different depending on what name you chose. Click the **Database Actions -> Database Users** button.
+
+    ![Click Database Actions](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/goto-database-users-from-console.png "Click Database Actions")
+
+  You will automatically be logged in as the ADMIN user, or you may be prompted to provide the username and password of the administrator you specified when you created the Autonomous Database instance.
+
+2.  You can see that your ADMIN user appears as the current user. And, several other system users may already exist. On the right-hand side, click the **+ Create User** button.
+
+    ![Create User button highlighted on the Database Users page](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/db-actions-click-create-user.png " ")
+
+4. The **Create User** form will appear on the right-hand side of your browser window. Use the settings below to complete the form:
+
+- User Name: **NATIONALPARKS**
+- Password:  **Welcome_12345**
+- Quota on tablespace DATA: UNLIMITED
+
+- Leave the **Graph** toggle button as off.
+- Toggle the **Web Access** button to **On**.
+- Leave the **OML** button as off.
+- In the upper right section of the Create User dialog, select **UNLIMITED** from the drop down menu for Quota on tablespace DATA.
+
+- Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
+- Leave the **Account is Locked** toggle button as off. 
+
+- Click **Create User** at the bottom of the form.
+
+    ![The Create User dialog](images/ADB_create_user.png " ")
 
 ## Task 3: Grant database privileges
 
 1. Switch back to the **SQL | Oracle Database Actions** window.
 
-    ![SQL worksheet](images/SQL-worksheet.png)
+  ![SQL worksheet](images/SQL-worksheet.png)
 
 2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
 
-```sql
-<copy>
--- ADD ROLES
-GRANT CONNECT TO NATIONALPARKS;
-GRANT RESOURCE TO NATIONALPARKS;
+    ```sql
+    <copy>
+    -- ADD ROLES
+    GRANT CONNECT TO NATIONALPARKS;
+    GRANT RESOURCE TO NATIONALPARKS;
 
 
--- REST ENABLE
-BEGIN
-    ORDS_ADMIN.ENABLE_SCHEMA(
+    -- REST ENABLE
+    BEGIN
+      ORDS_ADMIN.ENABLE_SCHEMA(
         p_enabled => TRUE,
         p_schema => 'NATIONALPARKS',
         p_url_mapping_type => 'BASE_PATH',
         p_url_mapping_pattern => 'nationalparks',
         p_auto_rest_auth=> TRUE
-    );
-    -- ENABLE DATA SHARING
-    C##ADP$SERVICE.DBMS_SHARE.ENABLE_SCHEMA(
-            SCHEMA_NAME => 'NATIONALPARKS',
-            ENABLED => TRUE
-    );
-    commit;
-END;
-/
+      );
+      -- ENABLE DATA SHARING
+      C##ADP$SERVICE.DBMS_SHARE.ENABLE_SCHEMA(
+        SCHEMA_NAME => 'NATIONALPARKS',
+        ENABLED => TRUE
+      );
+      commit;
+    END;
+    /
 
--- QUOTA
-GRANT ORDS_RUNTIME_ROLE TO nationalparks;
-GRANT EXECUTE ON dbms_cloud TO nationalparks;
-GRANT READ,WRITE ON directory data_pump_dir TO nationalparks;
-GRANT CREATE mining model TO nationalparks;
-GRANT SELECT ON sys.v_$vector_memory_pool TO nationalparks;
-GRANT SELECT ON sys.v_$vector_index TO nationalparks;
-</copy>
-```
+    -- QUOTA
+    GRANT ORDS_RUNTIME_ROLE TO nationalparks;
+    GRANT EXECUTE ON dbms_cloud TO nationalparks;
+    GRANT READ,WRITE ON directory data_pump_dir TO nationalparks;
+    GRANT CREATE mining model TO nationalparks;
+    GRANT SELECT ON sys.v_$vector_memory_pool TO nationalparks;
+    GRANT SELECT ON sys.v_$vector_index TO nationalparks;
+    </copy>
+    ```
 
-Note: Run the entire script by clicking on the "Run Script" button.
+    Note: Run the entire script by clicking on the "Run Script" button.
 
 
 3. Confirm that you can login with the new user.
 
-    This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". You should then sign in as the NATIONALPARKS user with the password of "Welcome_12345".
+  This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". You should then sign in as the NATIONALPARKS user with the password of "Welcome_12345".
 
-    ![NATIONALPARKS](images/nationalparks_login.png)
+  ![NATIONALPARKS](images/nationalparks_login.png)
 
-    For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the documentation.
+  For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the documentation.
 
 ## Task 4: Import ONNX Models
 
@@ -177,7 +226,7 @@ Note: Run the entire script by clicking on the "Run Script" button.
 4. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step:
 
     ```
-    sql ADMIN/Training4ADW@<insert your connect string here>
+    sql ADMIN/Training4ADW@<insert your TNS alias here>
     @w100001.sql
     @f114.sql
     ```

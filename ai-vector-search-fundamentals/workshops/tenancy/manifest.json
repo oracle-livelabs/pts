@@ -4,10 +4,8 @@
     "variables": ["../../variables/variables.json",
         "../../variables/variables-in-another-file.json"],
     "include": {
-     "adb-create-user.md":"../../adb_setup/adb-create-user.md",
      "adb-goto-service-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/goto-service-body.md",
-     "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md",
-     "adb-database-actions.md":"../../adb_setup/adb-database-actions.md"
+     "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md"
     },
     "tutorials": [
         {
@@ -18,6 +16,7 @@
         {
             "title": "Lab 1: Create an Autonomous Database",
             "description":"Setup an Always Free autonomous database instance",
+            "type": "freetier",
             "filename":"https://oracle-livelabs.github.io/common/building-blocks/blocks/adb/provision/provision-console.md"
         },
         {
