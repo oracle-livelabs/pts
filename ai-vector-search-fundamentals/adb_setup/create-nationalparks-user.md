@@ -66,13 +66,13 @@ When you create a new Autonomous Database, you automatically get an account call
 - Password:  **Welcome_12345**
 - Quota on tablespace DATA: UNLIMITED
 
+- Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
+- Leave the **Account is Locked** toggle button as off. 
+
 - Leave the **Graph** toggle button as off.
 - Toggle the **Web Access** button to **On**.
 - Leave the **OML** button as off.
-- In the upper right section of the Create User dialog, select **UNLIMITED** from the drop down menu for Quota on tablespace DATA.
-
-- Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
-- Leave the **Account is Locked** toggle button as off. 
+- Toggle the **REST, GraphQL, MondoDB, and Web access** button to **On**.
 
 - Click **Create User** at the bottom of the form.
 
@@ -121,8 +121,9 @@ When you create a new Autonomous Database, you automatically get an account call
     </copy>
     ```
 
-    Note: Run the entire script by clicking on the "Run Script" button.
+    **Note:** Run the entire script by clicking on the "Run Script" button.
 
+    ![grant privileges](images/grant_privileges.png " ")
 
 3. Confirm that you can login with the new user.
 
@@ -134,9 +135,11 @@ When you create a new Autonomous Database, you automatically get an account call
 
 ## Task 4: Import ONNX Models
 
-1. Now that you are logged in as the NATIONALPARKS user bring up a Database Actions SQL worksheet.
+1. Now that you are logged in as the NATIONALPARKS user bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
 
-2. Copy the ONNX models to the DATA\_PUMP\_DIR directory and load into the database by copying the script below, paste it into a SQL Dev Web window and then click on the "Run Script" button:
+  ![sqldev browser](images/sqldev_web.png " ")
+
+2. Copy the ONNX models to the DATA\_PUMP\_DIR directory and load into the database by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
 
     ```sql
     <copy>
@@ -165,11 +168,13 @@ When you create a new Autonomous Database, you automatically get an account call
     </copy>
     ```
 
+  ![import onnx files](images/import_onnx.png " ")
+
 ## Task 5: Import Tables into NATIONALPARKS schema
 
-1. From the Database Actions SQL worksheet as the NATIONALPARKS user you will import the NATIONALPARKS schema in the next step.
+1. As the NATIONALPARKS user you will import the NATIONALPARKS schema in the next step.
 
-2. Import the NATIONALPARKS tables:
+2. Import the NATIONALPARKS tables by copying the script below and pasting it into the Database Actions SQL window and click run script:
 
     ```sql
     <copy>
@@ -191,7 +196,11 @@ When you create a new Autonomous Database, you automatically get an account call
 
 1. Go to the ADB page and click on the Developers Tools icon at the top of the page and select "Cloud Shell" to create a cloud shell environment.
 
-    ![cloud shell](images/cloud_shell_selection.png)
+    ![create cloudshell](images/cloudshell_selection.png)
+
+  You can expand the cloudshell window by clicking on the slanted double arrows if you want to make the window bigger.
+
+    ![expand cloudshell](images/create_cloudshell.png)
 
 2. Copy the APEX workspace and application files from object storage to the local directory:
 
@@ -201,6 +210,7 @@ When you create a new Autonomous Database, you automatically get an account call
     wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/f114.sql
     </copy>
     ```
+  ![copy apex files](images/copy_apex_files.png)
 
 3. Create a wallet zip file and unzip for TNS connection to the database:
 
@@ -211,8 +221,8 @@ When you create a new Autonomous Database, you automatically get an account call
     Don't forget that you have to insert your OCID for the autonomous-database-id above.
     The OCID can be obtained from the ADB General Information section in the ADB page:
 
-    ![OCID location](images/adb_ocid_location.png)
-
+    ![create wallet](images/create_wallet_file.png)
+    
     You can then unzip your zip file to get the tnsnames.ora file.
 
     ```
@@ -221,7 +231,11 @@ When you create a new Autonomous Database, you automatically get an account call
     </copy>
     ```
 
-    You can list the tnsnames.ora file for the TNS alias' available. You should be able to use your "**Database\_name**\_low" TNS alias to connect to the database with SQLcl in the next step.
+    ![unzip wallet](images/unzip_wallet.png)
+
+    You can list the tnsnames.ora file for the TNS alias' available. You should be able to use the "**trainingdatabase**\_low" TNS alias to connect to the database with SQLcl in the next step if you followed our naming guidelines. Otherwise use the one that fits name you chose.
+
+    ![list tnsnames](images/list_tnsnames.png)
 
 4. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step:
 
@@ -230,6 +244,9 @@ When you create a new Autonomous Database, you automatically get an account call
     @w100001.sql
     @f114.sql
     ```
+
+    ![run sqlcl](images/run_sqlcl.png)
+
 
 You may now proceed to the next lab.
 
