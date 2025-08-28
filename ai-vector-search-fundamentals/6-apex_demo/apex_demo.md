@@ -37,7 +37,7 @@ This lab will be run by accessing an APEX application running in our LiveLabs da
 
 ### Task 1a: Running in an Oracle environment (sandbox)
 
-In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
+In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "NATIONALPARKS" and the password "Welcome_12345".
 
 See the image below for an example:
 
