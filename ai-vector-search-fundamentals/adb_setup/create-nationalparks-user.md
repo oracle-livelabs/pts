@@ -82,7 +82,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
 1. Switch back to the **SQL | Oracle Database Actions** window.
 
-  ![SQL worksheet](images/sql-worksheet.png)
+  ![SQL worksheet](images/sql_worksheet.png)
 
 2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
 
