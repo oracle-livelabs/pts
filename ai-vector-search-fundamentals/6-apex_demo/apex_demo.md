@@ -43,7 +43,7 @@ See the image below for an example:
 
 ![browser setup](images/browser_setup.png " ")
 
-After signing in you should see a browser window like the following:
+After signing in with the Username and User Password from the Terraform Values section shown in your version of the page above you should see a browser window like the following:
 
  ![apex screen](images/apex_initial_screen.png " ")
 
@@ -70,7 +70,7 @@ The resulting URL should look like this (note that your URL may have a different
 
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks/image-search`
 
-Then hit enter to go to the APEX demo and sign in with the username "nationalparks" and the password "Welcome_12345".
+Then hit enter to go to the APEX demo and sign in with the username "NATIONALPARKS" and the password "Welcome_12345".
 
 After signing in you should see a browser window like the following:
 
