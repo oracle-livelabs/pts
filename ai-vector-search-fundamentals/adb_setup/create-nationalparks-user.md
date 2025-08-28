@@ -76,13 +76,13 @@ When you create a new Autonomous Database, you automatically get an account call
 
 - Click **Create User** at the bottom of the form.
 
-    ![The Create User dialog](images/ADB_create_user.png " ")
+    ![The Create User dialog](images/adb_create_user.png " ")
 
 ## Task 3: Grant database privileges
 
 1. Switch back to the **SQL | Oracle Database Actions** window.
 
-  ![SQL worksheet](images/SQL-worksheet.png)
+  ![SQL worksheet](images/sql-worksheet.png)
 
 2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
 
@@ -211,7 +211,7 @@ When you create a new Autonomous Database, you automatically get an account call
     Don't forget that you have to insert your OCID for the autonomous-database-id above.
     The OCID can be obtained from the ADB General Information section in the ADB page:
 
-    ![OCID location](images/ADB_OCID_location.png)
+    ![OCID location](images/adb_ocid_location.png)
 
     You can then unzip your zip file to get the tnsnames.ora file.
 
