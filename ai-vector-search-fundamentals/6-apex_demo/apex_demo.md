@@ -63,8 +63,11 @@ You will then need to open a new browser window or tab and copy the URL into the
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
 
 with the following string:
-
-`/r/nationalparks/nationalparks/image-search`
+```
+<copy>
+/r/nationalparks/nationalparks/image-search
+</copy>
+```
 
 The resulting URL should look like this (note that your URL may have a different hostname):
 
