@@ -27,9 +27,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: Connecting to the APEX application
 
 This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. Depending on which environment you are running in, that is an Oracle environment or sandbox, or your own environment or tenancy you will follow either Task 1a or Task 1b to determine the correct URL to use in your web browser.
@@ -109,6 +106,6 @@ Go ahead and experiment with different search terms. You can't hurt anything and
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Markus Kissling, Product Managers
-* **Contributors** - Sean Stacey, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, August 2025
+* **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2025

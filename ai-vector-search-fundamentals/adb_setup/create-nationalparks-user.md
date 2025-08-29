@@ -19,6 +19,7 @@ Estimated time: 10 minutes
 - Oracle Cloud account
 - Provisioned Autonomous Database
 
+
 ## Task 1: Login to Database Actions
 
 Although you can connect to your Oracle Autonomous Database using desktop tools like Oracle SQL Developer, you can conveniently access the browser-based SQL Worksheet directly from your Autonomous Database console.
@@ -76,13 +77,13 @@ When you create a new Autonomous Database, you automatically get an account call
 
 - Click **Create User** at the bottom of the form.
 
-    ![The Create User dialog](images/adb_create_user.png " ")
+    ![The Create User dialog](images/adb_user_create.png " ")
 
 ## Task 3: Grant database privileges
 
 1. Switch back to the **SQL | Oracle Database Actions** window.
 
-  ![SQL worksheet](images/sql_worksheet.png)
+  ![SQL worksheet](images/sql_admin_worksheet.png)
 
 2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
 
@@ -137,7 +138,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
 1. Now that you are logged in as the NATIONALPARKS user bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
 
-  ![sqldev browser](images/sqldev_web.png " ")
+  ![sqldev browser](images/sql_np_worksheet.png " ")
 
 2. Copy the ONNX models to the DATA\_PUMP\_DIR directory and load into the database by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
 
@@ -233,7 +234,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![unzip wallet](images/unzip_wallet.png)
 
-    You can list the tnsnames.ora file for the TNS alias' available. You should be able to use the "**trainingdatabase**\_low" TNS alias to connect to the database with SQLcl in the next step if you followed our naming guidelines. Otherwise use the one that fits name you chose.
+    You can list the tnsnames.ora file for the TNS alias' available. You should be able to use the "**trainingdatabase**\_low" TNS alias to connect to the database with SQLcl in the next step if you followed our naming guidelines. Otherwise use the one that fits the name you chose.
 
     ![list tnsnames](images/list_tnsnames.png)
 
@@ -248,10 +249,10 @@ When you create a new Autonomous Database, you automatically get an account call
     ![run sqlcl](images/run_sqlcl.png)
 
 
-You may now proceed to the next lab.
+You may now **proceed to the next lab**
 
 ## Acknowledgements
 
 - **Author** - Andy Rivenes, Product Manager, AI Vector Search
 - **Contributors** - David Start
-- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search Product Manager, August 2025
+- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2025
