@@ -32,9 +32,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: Load an embedding model into the database
 
 This task will involve identifying and loading an ONNX model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
@@ -156,7 +153,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     Note: your DESCRIPTION, and therefore vector, may be different than in our example since we didn't add an ORDER BY clause. This example is just showing how you can create a vector for one row in the PARKS table.
     
-    Also, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
+    If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
 
 ## Task 3: Create a vector column and describe the attributes
@@ -241,6 +238,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025

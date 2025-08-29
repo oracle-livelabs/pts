@@ -29,9 +29,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: Display the CLIP embedding model
 
 The CLIP embedding model has already been converted to ONNX format and loaded into the database. This was described in the lab introduction and is the same model that was used to create the vectors of the park images, which were also pre-loaded.
@@ -45,7 +42,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     </copy>
     ```
 
-    ![model query](images/CLIP_model.png " ")
+    ![model query](images/clip_emb_model.png " ")
 
       
 2. Display the model details:
@@ -59,7 +56,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     </copy>
     ```
 
-    ![model details query](images/CLIP_details.png " ")
+    ![model details query](images/clip_emb_model_details.png " ")
 
     You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP text model is wider as it has 512 dimensions.
 
@@ -170,6 +167,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025
