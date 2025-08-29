@@ -1,6 +1,6 @@
 {
     "workshoptitle": "Getting Started with AI Vector Search",
-    "help": "livelabs-help-**enterarea**_us@oracle.com",
+    "help": "llivelabs-help-pts_us@oracle.com",
     "variables": ["../../variables/variables.json",
         "../../variables/variables-in-another-file.json"],
     "tutorials": [
