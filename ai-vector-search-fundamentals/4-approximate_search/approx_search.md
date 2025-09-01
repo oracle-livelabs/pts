@@ -38,9 +38,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: View the Vector Pool
 
 When HNSW indexes are used, you must enable a new memory area in the database called the Vector Pool. The Vector Pool is memory allocated from the System Global Area (SGA) to store HNSW type vector indexes and their associated metadata. It is allocated using a new database initialization parameter called VECTOR\_MEMORY\_SIZE.
@@ -165,6 +162,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025
