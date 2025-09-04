@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to run exhaustive similarity searches and what is happening during the search.
 
+Watch the video below for a quick walk-through of the exhaustive similarity search lab:
+
+[Exhaustive Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
+
 Estimated Lab Time: 10 minutes
 
 ### About Exhaustive Similarity Search

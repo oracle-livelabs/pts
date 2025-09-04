@@ -4,6 +4,10 @@
 
 This lab walks you through a demonstration of AI Vector Search in an APEX application using the SQL that we built in the previous steps in this Lab.
 
+Watch the video below for a quick walk-through of the APEX demo search on images lab:
+
+[APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab/1_gbjlu82h)
+
 Estimated Lab Time: 5 minutes
 
 ### About APEX Demo
