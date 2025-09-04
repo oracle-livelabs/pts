@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to create vector indexes and run approximate similarity searches on images.
 
+Watch the video below for a quick walk-through of the similarity search on images lab:
+
+[Similarity Search on Images](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab/1_6hwxhdjg)
+
 Estimated Lab Time: 10 minutes
 
 ### About Image Similarity Search
@@ -61,7 +65,7 @@ The CLIP embedding model has already been converted to ONNX format and loaded in
     You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP text model is wider as it has 512 dimensions.
 
 
-## Task 2: Display the Vector column in the PARKS\_IMAGES table
+## Task 2: Display the Vector column in the PARKS_IMAGES table
 
 In this task we will take a look at the PARK\_IMAGES table. The table itself has a URL to the park images, they are not actually stored in the table. Vector embeddings of each of those images have been created and stored in the IMAGES\_VECTOR column. These embeddings were created externally using the CLIP embedding model.
 

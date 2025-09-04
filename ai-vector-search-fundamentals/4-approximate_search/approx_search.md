@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to create vector indexes and run approximate similarity searches for text.
 
+Watch the video below for a quick walk-through of the approximate similarity search lab:
+
+[Approximate Similarity Search](https://videohub.oracle.com/media/Vector-Search-Approximate-Search-Lab/1_zmvlhld8)
+
 Estimated Lab Time: 10 minutes
 
 ### About Approximate Similarity Search
