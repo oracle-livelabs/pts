@@ -89,7 +89,7 @@ This lab assumes you have already completed the following:
 6.   Download the DB23ai GSM installation file from the [Oracle Database 23ai Download for Linux x86-64 Page](https://www.oracle.com/database/technologies/oracle23ai-linux-downloads.html), or using the following url:
 
      ```
-     <copy>wget https://objectstorage.ap-seoul-1.oraclecloud.com/p/BcWt-6XN2rvE98lV73Hux8jkVqK2iwjiQY-Yxc0d9yBGvdqUBirp-qCCJhlCCC73/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_235000_gsm.zip</copy>
+     <copy>wget https://objectstorage.ap-seoul-1.oraclecloud.com/p/4A9f5_0jZwLBAn-_99n7T3EzsGWGog5MrUJdpJ-ngjINNIUKV42T3wTH7B0c3tA2/n/oraclepartnersas/b/DB19c-GSM/o/LINUX.X64_235000_gsm.zip</copy>
      ```
 
      
