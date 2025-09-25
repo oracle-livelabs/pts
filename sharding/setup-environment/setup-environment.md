@@ -22,7 +22,7 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [gdd-raft-23ai-v5.zip](https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-environment/gdd-raft-23ai-v5.zip) - Packaged terraform resources creation script.
+- [gdd-raft-23ai-23.9.zip](https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-environment/gdd-raft-23ai-23.9.zip) - Packaged terraform resources creation script.
 
 
 
