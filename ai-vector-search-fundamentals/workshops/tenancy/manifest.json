@@ -1,0 +1,63 @@
+{
+    "workshoptitle": "Getting Started with AI Vector Search",
+    "help": "livelabs-help-pts_us@oracle.com",
+    "variables": ["../../variables/variables.json",
+        "../../variables/variables-in-another-file.json"],
+    "include": {
+     "adb-goto-service-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/goto-service-body.md",
+     "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md"
+    },
+    "tutorials": [
+        {
+            "title": "Get Started",
+            "description": "Register for a Free Tier account",
+            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
+        },
+        {
+            "title": "Lab 1: Create an Autonomous Database",
+            "description":"Setup an Always Free autonomous database instance",
+            "type": "freetier",
+            "filename":"https://oracle-livelabs.github.io/common/building-blocks/blocks/adb/provision/provision-console.md"
+        },
+        {
+            "title": "Lab 2: Create User and Populate Tables",
+            "description":"Create a database user and populate tables",
+            "filename":"../../adb_setup/create-nationalparks-user.md"
+        },
+        {
+            "title": "Lab 3: Introduction",
+            "description": "Introduction to AI Vector Search.",
+            "filename": "../../1-introduction/introduction.md"
+        },
+        {
+            "title": "Lab 4: Vector Embeddings",
+            "description": "Vectors and vector embeddings in AI Vector Search",
+            "filename": "../../2-embedding_models/text_embeddings.md"
+        },
+        {
+            "title": "Lab 5: Exhaustive Search",
+            "description": "Understanding Exhaustive Similarity Search",
+            "filename": "../../3-exhaustive_search/exhaustive_search.md"
+        },
+        {
+            "title": "Lab 6: Approximate Search",
+            "description": "Understanding Approximate Similarity Search",
+            "filename": "../../4-approximate_search/approx_search.md"
+        },
+        {
+            "title": "Lab 7: Image Search",
+            "description": "Exploring Image Search",
+            "filename": "../../5-image_search/image_search.md"
+        },
+        {
+            "title": "Lab 8: APEX Demo",
+            "description": "Running AI Vector Search in an APEX application",
+            "filename": "../../6-apex_demo/apex_demo.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+        }
+    ]
+}
