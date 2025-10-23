@@ -243,6 +243,8 @@ Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS`
 
 Copy this statement and replace with your username and password for Oracle Cloud.
 
+
+
 ```sql
 <copy>
 BEGIN
@@ -302,6 +304,8 @@ END;
 </copy>
 ```
 
+By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+
 
 ## Task 7: Verify the File in Oracle ADB
 
@@ -316,34 +320,7 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
-## Task 9: Load the ONNX Files into the Database
-
-Once the ONNX files are downloaded and verified, you can load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
-
-```sql
-<copy>
-BEGIN
-  DBMS_VECTOR.LOAD_ONNX_MODEL(
-    'staging',
-    'tinybert.onnx',
-    'TINYBERT_MODEL',
-    json('{"function":"embedding","embeddingOutput":"embedding","input":{"input":["DATA"]}}')
-  );
-
-  DBMS_VECTOR.LOAD_ONNX_MODEL(
-    'staging',
-    'all-MiniLM-L6-v2.onnx',
-    'ALL_MINILM_L6V2MODEL',
-    json('{"function":"embedding","input":{"input":["DATA"]}}')
-  );
-END;
-/
-</copy>
-```
-
-This code loads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT\_MODEL and ALL\_MINILM\_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
-
-By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+## Task 9: Verify Model exists in the Database
 
 To verify the model exists in database run the following statement.
 
@@ -363,4 +340,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
-* **Last Updated By/Date** -  Blake Hendricks, October 2024
+* **Last Updated By/Date** -  Blake Hendricks, June 2025
