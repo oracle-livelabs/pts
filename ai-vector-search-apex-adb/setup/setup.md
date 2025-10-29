@@ -46,7 +46,7 @@ By completing this lab, you will achieve the following objectives:
 ![alt text](images/16-create-compartment.png)
 
 4. Enter the following information in the corresponding fields or use your own names:
-    * **Name**: PROD
+    * **Name**: PROD or any other name
     * **Description**: Compartment for PROD assets
  ![alt text](images/17-create-compartment2.png)
 
@@ -91,8 +91,6 @@ Compartment: select your own compartment
 
 3. Click Create.
 
- ![](images/create-policy.png " ")
-
 Note: This policy allows any database in the specified compartment to access OCI Generative AI service. In a production environment, ensure your policy's scope is minimally inclusive.
 
 
@@ -106,7 +104,7 @@ Note: This policy allows any database in the specified compartment to access OCI
 
 ## Task 4: Create OCI API Key
 
-1. Select API KEYS under the resources section and add api key.
+1. Go to Tokens and Keys tab and click Add API key.
     ![alt text](images/addapikey.png)
 2. Click on download the private key and public key.
     ![alt text](images/apikeyadd.png)
@@ -130,7 +128,7 @@ In Oracle Object Storage, a bucket is a container for storing objects. To access
 
 1. Log in to the Oracle Cloud Infrastructure console as an administrator.
 2. Click the hamburger icon (≡), select Object Storage, and click Object Storage.
-3. Ensure the PROD compartment is selected.
+3. Ensure the proper compartment is selected.
 ![alt text](images/createbucket.png)
 4. Click Create Bucket and provide the following information in the corresponding fields:
     * **Bucket Name**: Enter `apex_file_storage`, for example.
@@ -143,12 +141,16 @@ In Oracle Object Storage, a bucket is a container for storing objects. To access
 
 ## Task 7: Create a Pre-Authenticated Request (PAR)
 
-1. Click Create Pre-Auth Request on the resources section from the newly created bucket.
+1. Click on the newly created bucket go to the Management tab and click on Create Pre-Auth Request.
 ![alt text](images/createpreauth.png)
-2. Name the bucket and permit object reads and writes, enabling object listing.
-3. Set the expiry date for the PAR to a time far in the future.
-4. Click Create and save the pre-auth request URL in a document for later use.
+2. Name the bucket and permit object reads and writes,
+3. Enabling object listing.
+4. Set the expiry date for the PAR to a time far in the future.
+5. Click Create
 ![alt text](images/copypreauth.png)
+
+6. Save the pre-auth request URL in a document for later use
+![alt text](images/copypreauth2.png)
 
 ## Summary
 
@@ -158,5 +160,5 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 
-* **Authors** - Blake Hendricks, Milton Wan
-* **Last Updated By/Date** -  Blake Hendricks, October 2024
+* **Authors** - Blake Hendricks, Milton Wan, Andrei Manoliu
+* **Last Updated By/Date** -  Andrei Manoliu, October 2025
