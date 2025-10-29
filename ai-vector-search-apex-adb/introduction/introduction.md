@@ -17,7 +17,7 @@ By the end of this lab, users will be able to:
 * Use AI Vector Search to store and search vectors in Oracle Autonomous Database
 * Access the LLM and generate output
 
-### Prerequisites
+## Prerequisites
 
 * An Oracle Cloud Account
 

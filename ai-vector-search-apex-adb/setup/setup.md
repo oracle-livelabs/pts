@@ -8,7 +8,7 @@ In the Identity Setup section, you will learn how to create compartments, manage
 
 Estimated Time: 10 minutes
 
-## Objectives
+### Objectives
 
 By completing this lab, you will achieve the following objectives:
 
@@ -40,19 +40,19 @@ By completing this lab, you will achieve the following objectives:
 1. Click the hamburger icon (≡) at the top left corner of the page.
 
 2. Click Identity & Security. Hover over Identity and click the Compartment submenu item.
-![alt text](images/15-identity-compartments.png)
+![Identity Compartments](images/15-identity-compartments.png)
 
 3. Click Create Compartment.
-![alt text](images/16-create-compartment.png)
+![Create Compartment](images/16-create-compartment.png)
 
 4. Enter the following information in the corresponding fields or use your own names:
     * **Name**: PROD or any other name
     * **Description**: Compartment for PROD assets
- ![alt text](images/17-create-compartment2.png)
+ ![Create Compartment Details](images/17-create-compartment2.png)
 
 5. Click Create to complete the process.
 6. Save the compartment OCID for later use.
-![alt text](images/compartmentsave.png)
+![Create Compartment Save](images/compartmentsave.png)
 
 
   Please create a group and title it ProdObjectManagers. The members of the ProdObjectManagers group will require the ability to list the buckets in the compartment and manage any objects in these buckets.
@@ -61,7 +61,7 @@ By completing this lab, you will achieve the following objectives:
     * Allow group ProdObjectManagers to read buckets in compartment PROD
     * Allow group ProdObjectManagers to manage objects in compartment PROD
 8. Click Create to complete the process.
-    ![Policies](/images/policyconfiguration.png)
+  
 
 
 ## Task 2: Create policy to enable access to OCI GenAI
