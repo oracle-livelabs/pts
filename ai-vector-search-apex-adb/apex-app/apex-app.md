@@ -14,7 +14,7 @@ By following this guide, you will:
 * Set up REST data sources to connect with OCI.
 * Update application definitions and substitutions for proper configuration.
 
-### Task 1: Insert OCI Credentials in APEX
+## Task 1: Insert OCI Credentials in APEX
 
 1. Go to the APEX application, click **App Builder**, and then **Workspace Utilities**.
 ![alt text](images/editworkspaceutil.png)
@@ -29,7 +29,7 @@ By following this guide, you will:
 4. Click apply changes.
 ![alt text](images/editociaccessconfig.png)
 
-### Task 2: Set Up REST Data Sources
+## Task 2: Set Up REST Data Sources
 
 Here we will be doing some repetitive work but it will be pretty easy. So we will edit all 3 of these source names the same exact way and methodology. I will showcase an example of one so you are aware of what to do after you finish one go ahead and complete it for the other two sources.
 
@@ -40,7 +40,7 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 3. Edit each REST data source (`Bucket V3`, `list_buckets`, `list_objects_in_bucket`) as follows:
 ![alt text](images/editrestdatasources.png)
 
-#### For `Bucket V3`
+### For `Bucket V3`
 
 1. Open the `Bucket V3` REST data source, and click the pencil icon to edit the remote server.
 ![alt text](images/editremoteserver.png)
@@ -53,21 +53,21 @@ Here we will be doing some repetitive work but it will be pretty easy. So we wil
 7. Repeat the same steps for the other two sources `list_buckets` and `list_objects_in_bucket`.
 8. Save changes.
 
-#### For `list_buckets`
+### For `list_buckets`
 
 1. Edit the `list_buckets` REST data source.
 2. Click on the parameters section and update the `compartmentid` with your PROD compartment ID.
 ![alt text](images/listbucketsparameters.png)
 3. Save changes.
 
-#### For `list_objects_in_bucket`
+### For `list_objects_in_bucket`
 
 1. Edit the `list_objects_in_bucket` REST data source.
 2. Click on the parameters section and update the `bucket_name` value to reflect the name of the bucket you created earlier.
 ![alt text](images/listobjectsinbucketparameters.png)
 3. Save changes.
 
-### Task 3: Change Application Definition Substitution
+## Task 3: Change Application Definition Substitution
 
 1. Click on your application and select **Edit Application Definition** in the top right corner above export/import.
 ![alt text](images/applicationdefinition.png)

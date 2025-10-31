@@ -24,7 +24,7 @@ Before we dive into the procedure, make sure you have the following:
 1. **Oracle Cloud Account**: You need an active Oracle Cloud account with access to Oracle Object Storage and Oracle Autonomous Database.
 2. **Object Storage Bucket**: Create a bucket in Oracle Object Storage and upload the files you want to download into Oracle ADB.
 3. **Credentials**: Ensure you have the necessary credentials (access key and secret key) to access Oracle Object Storage.
-4. **Oracle Autonomous Database 23ai**: Make sure you have an Oracle Autonomous Database 23ai
+4. **Oracle Autonomous Database 26ai**: Make sure you have an Oracle Autonomous Database 26ai
 
 ## Task 1: Login to Oracle Cloud
 
@@ -36,41 +36,33 @@ Before we dive into the procedure, make sure you have the following:
 
 1. Select your assigned Region from the upper right of the OCI console.
 
-2. From the hamburger menu (top left side), select Autonomous Transaction Processing.
+2. From the hamburger menu (top left side), select Oracle AI Database and chose Autonomous AI Database.
 ![alt text](images/createadw4.png)
 
 3. Select your Compartment. You may have to drill in (click “+”) to see your compartment.
 
-4. Select Workload Type Data Warehouse.
-
-5. Click Create Autonomous Database.
+4. Click Create Autonomous AI Database.
   ![alt text](images/createadw1.png)
 
-6. Choose your compartment.
-
-7. Enter any unique name (maybe your name) for your display and database name.
+5. Enter any unique name (maybe your name) for your display and database name.
    The display name is used in the  Console UI to identify your database.
   ![alt text](images/createadw2.png)
 
-8. Ensure Warehouse workload type is selected.
+6. Ensure Transaction Processing workload type is selected.
 
-9. Select **Serverless** for deployment type.
+7. Choose database version 26ai.
 
-10. Choose database version 23ai.
+8. Configure the database with **2 cores and 1 TB storage**.
 
-11. Configure the database with **2 cores and 1 TB storage**.
+9. Check Auto scaling.
 
-12. Check Auto scaling.
+10. Enter a password. The username is always ADMIN. (Note: remember your password)
 
-13. Enter a password. The username is always ADMIN. (Note: remember your password)
-
-14. Select Allow secure access from everywhere for this workshop.  
+11. Select Allow secure access from everywhere for this workshop.  
     As a best practice when you deploy your own application, you should select network access to be from Virtual cloud network.  
   ![alt text](images/createadw3.png)
 
-15. Select BYOL license type.
-
-16. Click Create Autonomous Database.
+12. Click Create.
 
 
     Your console will show that ADW is provisioning. This will take about 2 or 3 minutes to complete.
@@ -283,10 +275,10 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-<https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/CjS1gGPZaCZE2PoRWS5c6xmGNXK0v6ny6tNwoiVIOvqQrHux9NJ5oYo0dgLc6gOG/n/oraclepartnersas/b/onnx/o/all-MiniLM-L6-v2.onnx>
+<https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/uTI0rwPf775nrFGhef3hYJ1tp7GfnWS7B5bjm4TPSwu1Yss4C27zZmdTc_uVCeqq/n/oraclepartnersas/b/onnx_models/o/all-MiniLM-L6-v2.onnx>
 
 URL to tinybert.onnx is:
-<https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx>
+<https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/sQa5gNgX_0eKJdixQASXd1TyBd5YxsmE1rPkW21RrN5gqf1zjCP9AxAiOOoPNT8z/n/oraclepartnersas/b/onnx_models/o/tinybert.onnx>
 
 For example, to get tinybert.onnx and download it to ADB, the command will look like this:
 
@@ -295,7 +287,7 @@ For example, to get tinybert.onnx and download it to ADB, the command will look 
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://oraclepartnersas.objectstorage.us-ashburn-1.oci.customer-oci.com/p/m5o31C0ol_8B_OzCLOLvqc2rWYNqz0M7kZZpMZHEaOyX7GQkhEw8_UNKoKBtcQYC/n/oraclepartnersas/b/onnx/o/tinybert.onnx',
+    object_uri => 'https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/sQa5gNgX_0eKJdixQASXd1TyBd5YxsmE1rPkW21RrN5gqf1zjCP9AxAiOOoPNT8z/n/oraclepartnersas/b/onnx_models/o/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
@@ -320,7 +312,34 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
-## Task 9: Verify Model exists in the Database
+## Task 8: Load the ONNX Files into the Database
+
+Once the ONNX files are downloaded and verified, you can load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
+
+```sql
+<copy>
+BEGIN
+  DBMS_VECTOR.LOAD_ONNX_MODEL(
+    'staging',
+    'tinybert.onnx',
+    'TINYBERT_MODEL',
+    json('{"function":"embedding","embeddingOutput":"embedding","input":{"input":["DATA"]}}')
+  );
+
+  DBMS_VECTOR.LOAD_ONNX_MODEL(
+    'staging',
+    'all-MiniLM-L6-v2.onnx',
+    'ALL_MINILM_L6V2MODEL',
+    json('{"function":"embedding","input":{"input":["DATA"]}}')
+  );
+END;
+/
+</copy>
+```
+
+This code loads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT\_MODEL and ALL\_MINILM\_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
+
+By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
 
 To verify the model exists in database run the following statement.
 
@@ -331,6 +350,7 @@ To verify the model exists in database run the following statement.
 </copy>
 ```
 
+
 ## Summary
 
 In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle Autonomous Database with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
@@ -340,4 +360,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
-* **Last Updated By/Date** -  Blake Hendricks, June 2025
+* **Last Updated By/Date** -  Andrei Manoliu, October 2025
