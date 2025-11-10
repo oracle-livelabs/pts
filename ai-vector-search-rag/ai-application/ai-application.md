@@ -226,6 +226,7 @@ This lab assumes you have the following:
     grant execute on CTXSYS.CTX_REPORT to DBAI;
     grant execute on CTXSYS.CTX_THES to DBAI;
     grant execute on CTXSYS.CTX_ULEXER to DBAI;
+    grant execute on DBMS_CLOUD_AI to DBAI;
     </copy>
     ````
 
