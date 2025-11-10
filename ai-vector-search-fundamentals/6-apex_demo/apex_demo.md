@@ -4,6 +4,10 @@
 
 This lab walks you through a demonstration of AI Vector Search in an APEX application using the SQL that we built in the previous steps in this Lab.
 
+Watch the video below for a quick walk-through of the APEX demo search on images lab:
+
+[APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab/1_gbjlu82h)
+
 Estimated Lab Time: 5 minutes
 
 ### About APEX Demo
@@ -27,9 +31,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: Connecting to the APEX application
 
 This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. Depending on which environment you are running in, that is an Oracle environment or sandbox, or your own environment or tenancy you will follow either Task 1a or Task 1b to determine the correct URL to use in your web browser.
@@ -37,13 +38,13 @@ This lab will be run by accessing an APEX application running in our LiveLabs da
 
 ### Task 1a: Running in an Oracle environment (sandbox)
 
-In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "nationalparks" and the password "Welcome_12345".
+In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "NATIONALPARKS" and the password "Welcome_12345".
 
 See the image below for an example:
 
 ![browser setup](images/browser_setup.png " ")
 
-After signing in you should see a browser window like the following:
+After signing in with the Username and User Password from the Terraform Values section shown in your version of the page above you should see a browser window like the following:
 
  ![apex screen](images/apex_initial_screen.png " ")
 
@@ -58,19 +59,22 @@ and copy the APEX "Public access URL":
 
 ![apex_url](images/apex_url.png " ")
 
-You will then need to open a new browser window or tab and copy the URL into the address bar and replace "apex" at the end of the URL:
+You will then need to open a new browser window or tab and copy the URL into the address bar (note that your URL may have a different hostname) and replace "apex" at the end of the URL:
 
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
 
 with the following string:
+```
+<copy>
+/r/nationalparks/nationalparks/image-search
+</copy>
+```
 
-`/r/nationalparks/nationalparks/image-search`
-
-The resulting URL should look like this (note that host_name will be your actual host name):
+The resulting URL should look like this (note that your URL may have a different hostname):
 
 `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks/image-search`
 
-Then hit enter to go to the APEX demo and sign in with the username "nationalparks" and the password "Welcome_12345".
+Then hit enter to go to the APEX demo and sign in with the username "NATIONALPARKS" and the password "Welcome_12345".
 
 After signing in you should see a browser window like the following:
 
@@ -106,6 +110,6 @@ Go ahead and experiment with different search terms. You can't hurt anything and
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Markus Kissling, Product Managers
-* **Contributors** - Sean Stacey, Product Manager
-* **Last Updated By/Date** - Andy Rivenes, August 2025
+* **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2025

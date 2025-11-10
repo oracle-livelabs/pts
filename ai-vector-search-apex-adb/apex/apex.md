@@ -15,39 +15,70 @@ By following this guide, you will:
 * Login to your APEX instance.
 * Import and configure a pre-built application in APEX.
 
-### Task 1: Set Up Oracle APEX Service
+## Task 1: Set Up Oracle APEX Service
 
 1. Go to your ADB instance you created.
 2. Click on **Database Actions** and select **View All Database Actions**.
 ![alt text](images/databaseactions.png)
+
 3. Click on the **Development** tab.
 4. Click **APEX** on the left-hand side.
 ![alt text](images/dbactionsapex.png)
-5. Type in your password you created with the ADB instance and Click **Create Workspace**.
+
+5. Type in your password you created with the ADB instance 
 ![alt text](images/dbactionspassword.png)
+
+6.  Click **Create Workspace**.
 ![alt text](images/dbactionscreateworkspace.png)
-6. Select **Existing Schema**.
-![alt text](images/dbactionsexistingschema.png)
-7. Enter the existing database schema user to use for this workspace.
-8. Enter your desired values for the workspace name, username, and password. Click **Create Workspace**.
+
+7. Select **Existing Schema**.
+
+   ![alt text](images/dbactionsexistingschema.png)
+
+8. Enter the existing database schema user to use for this workspace.
+9. Enter your desired values for the workspace name, username, and password. Click **Create Workspace**.
 ![alt text](images/dbactionscredentials.png)
 
-### Task 2: Log In to Your APEX Instance
+## Task 2: Log In to Your APEX Instance
 
-1. Head back to the Autonomous Database you created.
-2. Click on the APEX instance name.
-![alt text](images/dbaccessapexinstance.png)
-3. Click **Launch APEX**.
-![alt text](images/dbactionlaunchapex.png)
+
+1. Sign out from Admin Workspace
+2. Log in to Vector Workspace.
+
 4. Enter the credentials you created with your workspace:
    * **Workspace Name**: Enter your workspace name.
    * **Username**: Your user you created for the workspace.
    * **Password**: The password you created in the workspace for that user.
+
+   ![alt text](images/dbaccessapexinstance.png)
+
 5. Click on **App Builder** located on the left of the dashboard.
 ![alt text](images/dbactionsappbuilder.png)
-6. Select **Import** and upload the [SQL file](images/f100.sql) we obtained to access the pre-configured application. 
-![alt text](images/dbactionsimport.png)
-7. Click next and install the application and the supporting objects.
+
+6. Download [Application SQL file](images/f100.sql) to import the pre-configured application
+
+7. Select **Import** and upload the f100 file.
+
+   ![alt text](images/dbactionsimport.png)
+
+
+8. Click next and install the application and the supporting objects.
+
+![alt text](images/apexinstall.png)
+
+
+9. Some object may need a review after the install. We will change them in the next chapter.
+
+![alt text](images/apexinstall2.png)
+
+Click Next
+
+10. Click Install Supporting Objects.
+
+![alt text](images/apexinstall3.png)
+
+With the application installed, in the next chapte we will change the parameter adapting to the new environment.
+
 
 ## Conclusion
 
@@ -58,4 +89,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Milton Wan
-* **Last Updated By/Date** -  July 2024
+* **Last Updated By/Date** -   Andrei Manoliu, October 2025

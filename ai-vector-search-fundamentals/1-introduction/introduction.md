@@ -8,7 +8,7 @@ Estimated Lab Time: 5 minutes
 
 ### About This Workshop
 
-The **Oracle AI Vector Search Fundamentals** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
+The **Getting Started with AI Vector Search** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
 
 Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
 
@@ -52,9 +52,6 @@ This lab assumes you have:
 * An Oracle Account (oracle.com account)
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Dataset
 
 This workshop will use a public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks. 
@@ -82,6 +79,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025

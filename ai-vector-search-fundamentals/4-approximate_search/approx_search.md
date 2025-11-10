@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to create vector indexes and run approximate similarity searches for text.
 
+Watch the video below for a quick walk-through of the approximate similarity search lab:
+
+[Approximate Similarity Search](https://videohub.oracle.com/media/Vector-Search-Approximate-Search-Lab/1_zmvlhld8)
+
 Estimated Lab Time: 10 minutes
 
 ### About Approximate Similarity Search
@@ -36,9 +40,6 @@ In this lab, you will:
 This lab assumes you have:
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
-
-*This is the "fold" - below items are collapsed by default*
 
 
 ## Task 1: View the Vector Pool
@@ -165,6 +166,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025

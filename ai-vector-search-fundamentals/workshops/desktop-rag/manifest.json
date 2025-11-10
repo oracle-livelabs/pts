@@ -1,6 +1,6 @@
 {
-    "workshoptitle": "Oracle AI Vector Search Fundamentals",
-    "help": "livelabs-help-db_us@oracle.com",
+    "workshoptitle": "Getting Started with AI Vector Search",
+    "help": "livelabs-help-pts_us@oracle.com",
     "tutorials": [
         {
             "title": "Introduction",
@@ -13,19 +13,14 @@
             "filename": "../../2-embedding_models/text_embeddings.md"
         },
         {
-            "title": "Lab 2: Similarity Search",
-            "description": "Understanding Similarity Search",
+            "title": "Lab 2: Exhaustive Search",
+            "description": "Understanding Exhaustive Similarity Search",
             "filename": "../../3-exhaustive_search/exhaustive_search.md"
         },
         {
-            "title": "Lab 3: Image Search",
-            "description": "Exploring Image Search",
-            "filename": "../../5-image_search/image_search.md"
-        },
-        {
-            "title": "Lab 4: APEX Demo",
-            "description": "Running AI Vector Search in an APEX application",
-            "filename": "../../6-apex_demo/apex_demo.md"
+            "title": "Lab 3: Retrieval Augmented Generation",
+            "description": "Understanding Retrieval Augmented Generation",
+            "filename": "../../rag/rag.md"
         },
         {
             "title": "Need Help?",

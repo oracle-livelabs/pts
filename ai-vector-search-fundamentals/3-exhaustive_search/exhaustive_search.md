@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to run exhaustive similarity searches and what is happening during the search.
 
+Watch the video below for a quick walk-through of the exhaustive similarity search lab:
+
+[Exhaustive Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
+
 Estimated Lab Time: 10 minutes
 
 ### About Exhaustive Similarity Search
@@ -28,9 +32,6 @@ This lab assumes you have:
 * All previous labs successfully completed
 
 
-*This is the "fold" - below items are collapsed by default*
-
-
 ## Task 1: Run exhaustive similarity searches
 
 In this task we will put our work to use and run some exhaustive similarity searches on the DESCRIPTION vector embeddings that we just created in the PARKS table.
@@ -51,7 +52,7 @@ In this task we will put our work to use and run some exhaustive similarity sear
 
     If you know anything about the Civil War you will notice that those are some pretty famous locations. However you might also notice that the words "Civil War" show up in almost all of the descriptions. You might ask, couldn't I have just searched on the term civil war? And that probably would have worked so let's try something a little harder in our next query.
 
-2. For our second query we will try a query with a term, "rock climbing", that doesn't show up in the description:
+2. For our second query we will try a query with, "rock climbing", a term that doesn't show up in the description:
 
     ```
     <copy>
@@ -65,7 +66,7 @@ In this task we will put our work to use and run some exhaustive similarity sear
 
     ![exhaustive query2](images/parks_exhaustive_rock_climbing.png " ")
 
-    The results are even more surprising since only two descriptions have words that are close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
+    The results are even more surprising since only two descriptions have words that are even close to "rock climbing". One has "rock climbers" in it, and one mentions "crack climbing", but otherwise no mention of actual rock climbing for parks that appear to be good candidates for rock climbing. We will see later in the Lab how close we actually came.
 
 3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other. In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
 
@@ -115,6 +116,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025

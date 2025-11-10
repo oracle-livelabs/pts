@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to load a vector embedding model into the database and display it's characteristics.
 
+Watch the video below for a quick walk-through of the vector embeddings lab:
+
+[Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab/1_usorsq27)
+
 Estimated Lab Time: 10 minutes
 
 ### About Vector Embedding
@@ -30,9 +34,6 @@ In this lab, you will:
 This lab assumes you have:
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
-
-*This is the "fold" - below items are collapsed by default*
 
 
 ## Task 1: Load an embedding model into the database
@@ -62,7 +63,7 @@ This task will involve identifying and loading an ONNX model into the database. 
 
     ![directory query](images/onnx_directory.png " ")
 
-    We previously placed the all\_MiniLM\_L12\_v2.onnx file in the operating system directory pointed to by the DATA\_PUMP\_DIR database directory to streamline the Lab. Recall that there is a blog post identified in the "About Vector Embedding" section above that explains the details about this pre-build embedding model.
+    We previously placed the all\_MiniLM\_L12\_v2.onnx file in the operating system directory pointed to by the DATA\_PUMP\_DIR database directory to streamline the Lab. Recall that there is a blog post identified in the "About Vector Embedding" section above that explains the details about this pre-built embedding model.
 
 3. Load the all\_MiniLM\_L12\_v2 embedding model into the database:
 
@@ -112,7 +113,7 @@ This task will involve identifying and loading an ONNX model into the database. 
 
 AI Vector Search adds a new VECTOR data type to Oracle Database. You can add one or more VECTOR data type columns to your application's table(s) to store vector embeddings. A vector embedding is a mathematical representation of data points or, more simply, an array of numbers. Vector embeddings are generated using Machine Learning models to represent the meaning of the data. We will create vector embeddings in the next lab using the VECTOR data type we add in this lab.
 
-The VECTOR data type is created as a column in a table. You can optionally specify the number of dimensions and their format. If you don't specify any dimension or format, you can enter vectors of different dimensions with different formats. This is a simplification to help you get started with using vectors in Oracle Database with different vector embedding models.  Once you have chosen your preferred vector embedding model, you should define your vector columns with the dimension size and format used by that embedding model.  Vector indexes require that all vectors have the same dimension sizes and types. When the vector dimensions are explicitly defined, the vector search will be faster as the validity checking is done at insert/update time rather than at query time.
+The VECTOR data type is created as a column in a table. You can optionally specify the number of dimensions and their format. If you don't specify any dimension or format, you can enter vectors of different dimensions with different formats. This is a simplification to help you get started with using vectors in Oracle Database with different vector embedding models.
 
 The number of dimensions must be strictly greater than zero, with a maximum of 65535 vectors.
 
@@ -156,7 +157,7 @@ Now that we have loaded an embedding model let's take a look at what a vector lo
 
     Note: your DESCRIPTION, and therefore vector, may be different than in our example since we didn't add an ORDER BY clause. This example is just showing how you can create a vector for one row in the PARKS table.
     
-    Also, if you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
+    If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
 
 ## Task 3: Create a vector column and describe the attributes
@@ -241,6 +242,6 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
-* **Author** - Andy Rivenes, Product Manager
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers
-* **Last Updated By/Date** - Andy Rivenes, April 2025
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2025
