@@ -2,7 +2,7 @@
 
 ## About this Workshop
 
-This hands-on workshop covers the Oracle Database 23ai latest AI Vector Search capabilities. Learn how AI Vector Search in Oracle Database 23ai combines semantic search on unstructured data with relational search on traditional business data for faster, more relevant, and more secure results. Retrieval Augmented Generation (RAG) is a technique that improves the accuracy of Large Language Models (LLMs) by augmenting interactions with business-specific data. It avoids having to train LLMs on sensitive enterprise data and reduces hallucinations.
+This hands-on workshop covers the Oracle AI Database 26ai latest AI Vector Search capabilities. Learn how AI Vector Search in Oracle AI Database 26ai combines semantic search on unstructured data with relational search on traditional business data for faster, more relevant, and more secure results. Retrieval Augmented Generation (RAG) is a technique that improves the accuracy of Large Language Models (LLMs) by augmenting interactions with business-specific data. It avoids having to train LLMs on sensitive enterprise data and reduces hallucinations.
 
 How is this workshop different from other workshops?
 During this workshop you only need an Autonomous Database instance, it can be a Free Tier one, and you will import an APEX application that has all the components you need to run AI Vector Search and Retrieval-augmented generation (RAG) written in simple SQL and PL/SQL code that you can modify to understand how it works.
@@ -13,11 +13,11 @@ Estimated Workshop Time: 120 minutes.
 
 ### About AI Vector Search
 
-Oracle AI Vector Search brings AI-powered similarity search to your business data without managing and integrating multiple databases or compromising functionality, security, and consistency. AI Vector Search enables searching both structured and unstructured data by semantics or meaning and values, enabling ultra-sophisticated AI search applications. Use the new native VECTOR data type to store vectors directly within tables in Oracle Database 23ai. This is why, for this workshop, you will use an Autonomous Database with Oracle Database 23ai.
+Oracle AI Vector Search brings AI-powered similarity search to your business data without managing and integrating multiple databases or compromising functionality, security, and consistency. AI Vector Search enables searching both structured and unstructured data by semantics or meaning and values, enabling ultra-sophisticated AI search applications. Use the new native VECTOR data type to store vectors directly within tables in Oracle AI Database 26ai. This is why, for this workshop, you will use an Autonomous Database with Oracle AI Database 26ai.
 
-[Oracle Database 23ai: Vector Search - Bring AI to your Data](youtube:pu79sny1AzY)
+[Oracle AI Database 26ai: Next-Gen AI-Native Database for All Your Data](youtube:RsG94924cyo)
 
-[Always Free Autonomous Database with Oracle Database 23ai](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/autonomous-always-free.html)
+[Always Free Autonomous AI Database](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/autonomous-always-free.html)
 
 ### About Retrieval Augmented Generation (RAG)
 
@@ -31,7 +31,7 @@ Oracle AI Vector Search capabilities can help LLMs deliver more accurate and con
 In this workshop, you will learn how to:
 * Upload files to OCI Object Storage using Oracle APEX
 * Import files into the database from OCI Object Storage
-* Work with LLMs imported inside Oracle Database
+* Work with LLMs imported inside Oracle AI Database
 * Split documents and vectorize the chunks
 * Convert your documents to Markdown format
 * Perform AI Vector Search on text data
@@ -40,16 +40,16 @@ In this workshop, you will learn how to:
 ### Prerequisites
 
 This lab assumes you have the following:
-* Access to Autonomous Database 23ai, paid account or free tier, in a region with Generative AI.
+* Access to Autonomous AI Database 26ai, paid account or free tier, in a region with Generative AI.
     - [Regions with Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/overview.htm#regions)
 * Basic experience with OCI Cloud Console and standard components.
-* Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle APEX low-code development.
+* Experience with Oracle AI Database features, SQL, and PL/SQL.
+* Basic experience with APEX AI Application Generator.
 
 ## Learn More
 
-* [Database 23ai: Feature Highlights](https://www.oracle.com/database/23ai/)
-* [Getting started with vectors in 23ai](https://blogs.oracle.com/coretec/post/getting-started-with-vectors-in-23ai)
+* [Oracle AI Database 26ai: Feature Highlights](https://www.oracle.com/database/26ai/)
+* [Introducing Oracle AI Database 26ai: Next-Gen AI-Native Database for All Your Data](https://blogs.oracle.com/database/oracle-announces-oracle-ai-database-26ai)
 * [Fast and Precise Business and Semantic Data Search with AI Vector Search](https://www.oracle.com/artificial-intelligence/semantic-data-search-with-vector-search/)
 * [Generative AI capabilities](https://www.oracle.com/artificial-intelligence/generative-ai/)
 
@@ -57,4 +57,4 @@ This lab assumes you have the following:
 ## **Acknowledgements**
 
 - **Author** - Valentin Leonard Tabacaru, Database Product Management
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, March 2025
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, November 2025
