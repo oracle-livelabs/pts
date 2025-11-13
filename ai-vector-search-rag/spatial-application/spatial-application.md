@@ -19,8 +19,8 @@ The end result of this lab is an application that can generate GeoJSON documents
 
 This lab assumes you have:
 * Completed the previous labs of this workshop.
-* Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle APEX low-code development.
+* Experience with Oracle AI Database features, SQL, and PL/SQL.
+* Basic experience with APEX AI Application Generator.
 * Basic experience with JSON document format.
 
 ## Task 1: Review APEX application logic
@@ -88,7 +88,7 @@ This lab assumes you have:
     </copy>
     ```
 
-3. Create a Data Guide for your GeoJSON documents. A JSON data guide lets you discover information about the structure and content of JSON documents stored in Oracle Database.
+3. Create a Data Guide for your GeoJSON documents. A JSON data guide lets you discover information about the structure and content of JSON documents stored in Oracle AI Database.
 
     **NOTE:** JSON data-guide information can be saved persistently as part of the JSON search index infrastructure, and this information is updated automatically as new JSON content is added.
 
@@ -248,10 +248,9 @@ This workshop is now complete.
 
 ## Learn More
 
-- [JSON-based Development in Oracle Database](https://www.oracle.com/database/what-is-json/technologies/database/)
-- [JSON Search Index](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/indexes-for-json-data.html#GUID-8A1B098E-D4FE-436E-A715-D8B465655C0D)
-- [JSON Data Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/json-dataguide.html#GUID-219FC30E-89A7-4189-BC36-7B961A24067C)
-- [GeoJSON Geographic Data](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/GeoJSON-geographic-data.html#GUID-1B740D97-DC77-4548-80F8-E8FBD28C3A38)
+- [JSON-based Development in Oracle AI Database](https://www.oracle.com/database/what-is-json/technologies/database/)
+- [Oracle AI Database New Features for JSON](https://docs.oracle.com/en/database/oracle/oracle-database/26/nfcoa/json.html)
+- [Using GeoJSON Geographic Data](https://docs.oracle.com/en/database/oracle/oracle-database/26/adjsn/using-geojson-geographic-data.html)
 
 ## **Acknowledgements**
 
