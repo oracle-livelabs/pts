@@ -14,17 +14,17 @@
         },
         {            
             "title": "Lab 1: Oracle AI Vector Search and RAG",
-            "description": "Setup ADB instance running 23ai with APEX and AI application",
+            "description": "Setup Autonomous AI Database instance 26ai with APEX",
             "filename": "../../ai-application/ai-application.md"
         },
         {            
-            "title": "Lab 2: Understand RAG Example application",
+            "title": "Lab 2: Understand a RAG Example application",
             "description": "Explain the APEX AI Vector Search and RAG application code",
             "filename": "../../understand-app/understand-app.md"
         },
         {            
             "title": "Lab 3: Prepare application for spatial JSON",
-            "description": "Prepare APEX application for spatial JSON data retrieval",
+            "description": "Prepare APEX application for spatial JSON data",
             "filename": "../../spatial-application/spatial-application.md"
         },
         {

@@ -20,11 +20,11 @@ Why Markdown? Because LLMs understand Markdown better than other text formats. C
 ### Prerequisites
 
 This lab assumes you have the following:
-* Access to Autonomous Database 23ai, paid account or free tier, in a region with Generative AI.
+* Access to Autonomous AI Database 26ai, paid account or free tier, in a region with Generative AI.
     - [Regions with Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/overview.htm#regions)
 * Basic experience with OCI Cloud Console and standard components.
-* Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle APEX low-code development.
+* Experience with Oracle AI Database features, SQL, and PL/SQL.
+* Basic experience with APEX AI Application Generator.
 
 ## Task 1: Prepare the OCI cloud components
 
@@ -137,7 +137,7 @@ This lab assumes you have the following:
 
     ![create bucket](./images/create-bucket.png " ")
 
-22. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
+22. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
 
     ![onnx models](./images/onnx-models.png " ")
 
@@ -155,19 +155,19 @@ This lab assumes you have the following:
 
 ## Task 2: Deploy and configure the ADB instance
 
-1. Click main menu ≡ > Oracle Database > Autonomous Database (ADB).
+1. Click main menu ≡ > Oracle AI Database > Autonomous AI Database (ADB).
 
-    ![oracle database autonomous](./images/oracle-database-autonomous.png " ")
+    ![oracle autonomous ai database](./images/oracle-database-autonomous.png " ")
 
 2. Click Create Autonomous Database.
 
-    ![autonomous databases](./images/autonomous-databases.png " ")
+    ![autonomous ai databases](./images/autonomous-databases.png " ")
 
 3. Leave the default Display name and Database name. Select Transaction Processing and Serverless.
 
-    ![create autonomous database](./images/create-autonomous-database.png " ")
+    ![create autonomous ai database](./images/create-autonomous-database.png " ")
 
-4. Choose database version 23ai. Use a strong password for your ADB instance admin user, for example, `Your#5tr0ng_PassW0rd`.
+4. Choose database version 26ai. Use a strong password for your ADB instance admin user, for example, `Your#5tr0ng_PassW0rd`.
 
     ![administrator credentials](./images/administrator-credentials.png " ")
 
@@ -226,6 +226,7 @@ This lab assumes you have the following:
     grant execute on CTXSYS.CTX_REPORT to DBAI;
     grant execute on CTXSYS.CTX_THES to DBAI;
     grant execute on CTXSYS.CTX_ULEXER to DBAI;
+    grant execute on DBMS_CLOUD_AI to DBAI;
     </copy>
     ````
 
@@ -538,7 +539,7 @@ This lab assumes you have the following:
     - Username: dbaiadmin
     - Password: `Your#5tr0ng_PassW0rd`
 
-3. Ask the following question on the first page: _What are the new features in Oracle Database 23ai?_
+3. Ask the following question on the first page: _What are the new features in Oracle AI Database 26ai?_
 
     ![qanda ask question](./images/qanda-ask-question.png " ")
 
@@ -546,13 +547,13 @@ This lab assumes you have the following:
 
     ![qanda home](./images/qanda-home.png " ")
 
-5. Download the `oracle-database-23ai-new-features-guide.pdf` document from Oracle Database documentation: https://docs.oracle.com/en/database/oracle/oracle-database/23/nfcoa/oracle-database-23ai-new-features-guide.pdf
+5. Download the **Oracle AI Database New Features** document from Oracle AI Database documentation: https://docs.oracle.com/en/database/oracle/oracle-database/26/nfcoa/oracle-ai-database-26ai-new-features-guide.pdf
 
 6. Open the QandA application menu. Click Upload. This application page allows you to upload documents to the Object Storage bucket.
 
     ![qanda upload](./images/qanda-upload.png " ")
 
-7. Upload the `oracle-database-23ai-new-features-guide.pdf` file using this dialog in the sample application to your Object Storage bucket.
+7. Upload the `oracle-ai-database-26ai-new-features-guide.pdf` file using this dialog in the sample application to your Object Storage bucket.
 
     ![upload pdf](./images/upload-pdf.png " ")
 
@@ -564,7 +565,7 @@ This lab assumes you have the following:
 
     ![docs select document](./images/docs-select-document.png " ")
 
-10. Import the `oracle-database-23ai-new-features-guide.pdf` document as a BLOB object into the database so it can be processed by the PL/SQL code.
+10. Import the `oracle-ai-database-26ai-new-features-guide.pdf` document as a BLOB object into the database so it can be processed by the PL/SQL code.
 
     ![import pdf](./images/import-pdf.png " ")
 
@@ -572,7 +573,7 @@ This lab assumes you have the following:
 
     ![pdf imported](./images/pdf-imported.png " ")
 
-12. Click Vectors. This application page allows you to vectorize entire documents stored into the database as BLOB objects and store the vectors using the new VECTOR datatype in Oracle Database 23ai. Select the `oracle-database-23ai-new-features-guide.pdf` document from the drop-down list and click Embed.
+12. Click Vectors. This application page allows you to vectorize entire documents stored into the database as BLOB objects and store the vectors using the new VECTOR datatype in Oracle AI Database 26ai. Select the `oracle-ai-database-26ai-new-features-guide.pdf` document from the drop-down list and click Embed.
 
     ![qanda vectors](./images/qanda-vectors.png " ")
 
@@ -604,7 +605,7 @@ This lab assumes you have the following:
 
     ![qanda test](./images/qanda-test.png " ")
 
-20. Ask the same question on the Test page: _What are the new features in Oracle Database 23ai?_ As you have new embedded documents, in other words, vectors that can be used to perform a similarity search for your question and build a better context for the prompt sent to the OCI Generative AI services, the answer may differ from the first one. The idea is to improve the answers with the embedded documents available in the database.
+20. Ask the same question on the Test page: _What are the new features in Oracle AI Database 26ai?_ As you have new embedded documents, in other words, vectors that can be used to perform a similarity search for your question and build a better context for the prompt sent to the OCI Generative AI services, the answer may differ from the first one. The idea is to improve the answers with the embedded documents available in the database.
 
     ![test ask question](./images/test-ask-question.png " ")
 
@@ -630,4 +631,4 @@ You may now **proceed to the next lab**.
 ## **Acknowledgements**
 
 - **Author** - Valentin Leonard Tabacaru, Database Product Management
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, March 2025
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, November 2025

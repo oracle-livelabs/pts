@@ -1,4 +1,4 @@
-# Understand RAG Basic Example application
+# Understand a RAG Basic Example application
 
 ## Introduction
 
@@ -26,8 +26,8 @@ Watch these videos for a quick demonstration of the main capabilities explained 
 
 This lab assumes you have the following:
 * Completed the previous labs of this workshop.
-* Experience with Oracle Database features, SQL, and PL/SQL.
-* Experience with Oracle APEX low-code development.
+* Experience with Oracle AI Database features, SQL, and PL/SQL.
+* Basic experience with APEX AI Application Generator.
 
 
 ## Task 1: Review and understand the Home page
@@ -123,7 +123,7 @@ This lab assumes you have the following:
     "chatRequest": {
         "apiFormat": "COHERE",
         "maxTokens": 600,
-        "message": "What are the most important new features of Oracle Database 23ai?"
+        "message": "What are the most important new features of Oracle AI Database 26ai?"
     }
     }');
     resp := dbms_cloud.send_request(
@@ -154,7 +154,7 @@ This lab assumes you have the following:
     P1_PROMPT clob := 'Here you can add the context for the prompt, all the
     information you want to include,
     it can be on multiple lines.';
-    P1_QUERY clob := 'What are the most important new features of Oracle Database 23ai?';
+    P1_QUERY clob := 'What are the most important new features of Oracle AI Database 26ai?';
     COMPARTMENT_OCID varchar2(100) := 'ocid1.compartment.oc1..aaaaaaaa_here_use_your_own_compartment_ocid';
     TENANCY_REGION varchar2(20) := 'uk-london-1';
     begin
@@ -406,11 +406,11 @@ This lab assumes you have the following:
 
 ## Task 5: Review and understand the Vectors page
 
-1. Read, understand, and customize the `Vectorize` process PL/SQL Code to fully understand how this process works. There are multiple ways of creating embeddings (vectorize) your data inside the Oracle Database 23ai, please check the documentation links at the end of this lab for the complete set of details. The SQL query used to generate the embeddings (with JSON format), used to extract the necessary fields (`EMBED_ID`, `EMBED_DATA`, and `EMBED_VECTOR`) inserted into the `VECTORS` table, has three procedures executed in cascade:
+1. Read, understand, and customize the `Vectorize` process PL/SQL Code to fully understand how this process works. There are multiple ways of creating embeddings (vectorize) your data inside the Oracle AI Database 26ai, please check the documentation links at the end of this lab for the complete set of details. The SQL query used to generate the embeddings (with JSON format), used to extract the necessary fields (`EMBED_ID`, `EMBED_DATA`, and `EMBED_VECTOR`) inserted into the `VECTORS` table, has three procedures executed in cascade:
 
     * `DBMS_VECTOR_CHAIN.utl_to_text` subprogram extracts plain text data from documents. The BLOB document is used as input.
     * `DBMS_VECTOR_CHAIN.utl_to_chunks` utility function splits data into smaller pieces or chunks. Input parameters are specified in JSON format.
-    * `DBMS_VECTOR_CHAIN.utl_to_embeddings` chainable utility function converts data to vector embeddings. You can perform a text-to-embedding transformation by accessing either Oracle Database or a third-party service provider. In this example, Oracle Database is the service provider using the imported LLM model `ALLMINL12V2`.
+    * `DBMS_VECTOR_CHAIN.utl_to_embeddings` chainable utility function converts data to vector embeddings. You can perform a text-to-embedding transformation by accessing either Oracle AI Database or a third-party service provider. In this example, Oracle AI Database is the service provider using the imported LLM model `ALLMINL12V2`.
 
     ````sql
     <copy>
@@ -473,7 +473,11 @@ This lab assumes you have the following:
     </copy>
     ````
 
-4. Use the `Embedded Documents` report SQL Query to list all documents that have been vectorized and the number of vectors (chunks) each one of them has.
+4. Read the following article to understand how you can use Oracle Machine Learning to classify the lines or documents:
+
+    [Text classification using Oracle Machine Learning](https://medium.com/@valitabacaru/text-classification-using-oracle-machine-learning-3af405289b2b)
+
+5. Use the `Embedded Documents` report SQL Query to list all documents that have been vectorized and the number of vectors (chunks) each one of them has.
 
     ````sql
     <copy>
@@ -523,15 +527,15 @@ You may now **proceed to the next lab**.
 ## Learn More
 
 * [Generative AI Service](https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-service/)
-* [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/whats-new-oracle-ai-vector-search.html)
-* [DBMS_VECTOR_CHAIN PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/arpls/dbms_vector_chain1.html)
-* [DBMS_CLOUD PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/arpls/dbms_cloud.html)
-* [VECTOR_DISTANCE SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/vector_distance.html)
+* [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/whats-new-oracle-ai-vector-search.html)
+* [DBMS_VECTOR_CHAIN PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html)
+* [DBMS_CLOUD PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_cloud.html)
+* [VECTOR_DISTANCE SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/vector_distance.html)
 * [APEX_WEB_SERVICE API Reference](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_WEB_SERVICE.html)
-* [SQL/JSON Function JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/sql-json-function-json_table.html)
+* [SQL/JSON Function JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/adjsn/sql-json-function-json_table.html)
 * [CohereChatRequest Reference](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/CohereChatRequest)
 
 ## **Acknowledgements**
 
 - **Author** - Valentin Leonard Tabacaru, Database Product Management
-- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, March 2025
+- **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, November 2025
