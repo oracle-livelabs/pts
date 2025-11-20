@@ -20,6 +20,7 @@
         {
             "title": "Lab 3: Retrieval Augmented Generation",
             "description": "Understanding Retrieval Augmented Generation",
+            "type": "sandbox",
             "filename": "../../rag/rag.md"
         },
         {

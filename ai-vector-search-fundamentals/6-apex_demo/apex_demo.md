@@ -35,7 +35,7 @@ This lab assumes you have:
 
 This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. Depending on which environment you are running in, that is an Oracle environment or sandbox, or your own environment or tenancy you will follow either Task 1a or Task 1b to determine the correct URL to use in your web browser.
 
-
+<if type="sandbox">
 ### Task 1a: Running in an Oracle environment (sandbox)
 
 In an Oracle sandbox environment you simply need to run the APEX Demo URL that can be found on the Introduction page that will be displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the APEX Demo link and sign in with the username "NATIONALPARKS" and the password "Welcome_12345".
@@ -47,8 +47,9 @@ See the image below for an example:
 After signing in with the Username and User Password from the Terraform Values section shown in your version of the page above you should see a browser window like the following:
 
  ![apex screen](images/apex_initial_screen.png " ")
+</if>
 
-
+<if type="tenancy">
 ### Task 1b: Running in your Oracle environment (tenancy)
 
 In your own tenancy environment you will need to navigate to the "Tool configuration" tab in the ADB page:
@@ -79,7 +80,7 @@ Then hit enter to go to the APEX demo and sign in with the username "NATIONALPAR
 After signing in you should see a browser window like the following:
 
  ![apex screen](images/apex_initial_screen.png " ")
-
+</if>
 
 ## Task 2: Run the APEX demo
 
