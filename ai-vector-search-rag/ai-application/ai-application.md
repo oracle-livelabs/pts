@@ -328,7 +328,7 @@ This lab assumes you have the following:
 
     ![apex workspace](./images/apex-workspace.png " ")
 
-4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/PwomXJU_5EWrhM8w4f2FVbRa58BpGwpoIfYG6U8jUWhUqRp92PdgebCefEaNfIN4/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
+4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/bYdyukrjVm8aKtj4U2Tl-aBxwcenimnhNZqO9vaDjfVga5d87EHp0LGxAdXd4J08/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
 
 5. Go to SQL Workshop > SQL Scripts.
 
@@ -354,7 +354,7 @@ This lab assumes you have the following:
 
 10. Save the script and run it. Make sure there are no errors.
 
-11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/cH9HegImtUSFIQzzT9j3dbyFsmu1J1NM8A3Xq0bqp-C3jhPHUC7yr4KpNx7HOkxH/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
+11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ZzjrPjnCsSy5SM5F3WoZP3lWGHmQDpOO0cr6oQVLskUhgdIO_VFGPodjE_7Olmuv/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
 
 12. Click App Builder and Import.
 
