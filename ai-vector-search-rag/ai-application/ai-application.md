@@ -217,6 +217,7 @@ This lab assumes you have the following:
     grant create ANY DIRECTORY to DBAI;
     grant create MINING MODEL to DBAI;
     grant create PROCEDURE to DBAI;
+    grant create JOB to DBAI;
     grant CTXAPP to DBAI;
     grant execute on CTXSYS.CTX_CLS to DBAI;
     grant execute on CTXSYS.CTX_DDL to DBAI;
