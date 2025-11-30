@@ -13,7 +13,7 @@ In this lab, you will:
 
 The end result of this lab is an application that can perform Web crawling - automated process of systematically browsing the internet to find and index web pages. Your APEX application will act as a web crawler, spiders, or bot, which follows links from page to page, download content, and extract information like text and images to build a searchable index for search engines like Oracle AI Vector Search.
 
-[Prepare...](youtube:)
+[Web Crawling using your Oracle Autonomous AI Database](youtube:PrbFVvME1-0)
 
 ### Prerequisites
 
