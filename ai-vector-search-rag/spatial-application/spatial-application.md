@@ -243,7 +243,7 @@ This lab assumes you have:
     </copy>
     ```
 
-This workshop is now complete.
+You may now **proceed to the next lab**.
 
 
 ## Learn More

@@ -32,19 +32,19 @@ This lab assumes you have the following:
 
 ## Task 1: Review and understand the Home page
 
-1. Look at the `P1_PROMPT` item SQL Query. It has a sub-query called `query_vector` that vectorizes the question written in item `P1_QUERY` using the same LLM. This vector is compared with the vectors stored in the `VECTORS` table and returns the first 5 results by distance. The contents of the closest 5 chunks is concatenanted and returned as `FINAL_PROMPT`.
+1. Look at the `P1_CONTEXT` item SQL Query. It has a sub-query called `query_vector` that vectorizes the question written in item `P1_QUERY` using the same LLM. This vector is compared with the vectors stored in the `VECTORS` table and returns the first 5 results by distance. The contents of the closest 5 chunks is concatenanted and returned as `FINAL_CONTEXT`.
 
     ````sql
     <copy>
     select  
-    apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_PROMPT
+    apex_string.join_clobs(apex_t_clob(listagg(replace(replace(CHUNK_CONTENTS, '''', '’'), '\', '\\'), ';'))) as FINAL_CONTEXT
     from (
     with query_vector as (
                 select TO_VECTOR(VECTOR_EMBEDDING(ALLMINL12V2 using :P1_QUERY as DATA)) as vector_embedding)
-    select v.CHUNK_CONTENTS
-    from VECTORS v, query_vector
-    order by VECTOR_DISTANCE(v.VECTOR_EMBEDDING, query_vector.vector_embedding, COSINE)
-    fetch first 5 rows ONLY);
+        select v.CHUNK_CONTENTS
+        from VECTORS v, query_vector
+        order by VECTOR_DISTANCE(v.VECTOR_EMBEDDING, query_vector.vector_embedding, COSINE)
+        fetch first 5 rows ONLY);
     </copy>
     ````
 
@@ -65,42 +65,81 @@ This lab assumes you have the following:
 
     ````sql
     <copy>
+    /* 
+    if you don't have access to Chicago region or another with xAI Grok LLM, use this l_body definition:
+        l_body := json_object_t('{
+            "compartmentId": "' || :COMPARTMENT_OCID || '",
+            "servingMode": {
+                "modelId": "cohere.command-r-plus-08-2024",
+                "servingType": "ON_DEMAND"
+            },
+            "chatRequest": {
+                "apiFormat": "COHERE",
+                "maxTokens": 1200,
+                "message": "' || l_prompt || '"
+            }
+            }');
+    replace the region in dbms_cloud.send_request uri
+    */
     declare
     l_body json_object_t;
     l_resp dbms_cloud_types.resp;
-    l_context clob;
-    l_question clob;
     l_prompt clob;
     l_result clob;
     begin
-    l_context := replace(replace(replace(:P1_PROMPT, '"', '“'), chr(13), ''), chr(10), ' ');
-    l_question := replace(replace(replace(:P1_QUERY, '"', '“'), chr(13), ''), chr(10), ' ');
-    l_prompt := '<CONTEXT> ' || l_context || ' <QUESTION> Using the information from the previous context, answer the following question: ' || l_question || ' </QUESTION></CONTEXT>';
-    l_body := json_object_t('{
-    "compartmentId": "' || :COMPARTMENT_OCID || '",
-    "servingMode": {
-        "modelId": "cohere.command-r-plus-08-2024",
-        "servingType": "ON_DEMAND"
-    },
-    "chatRequest": {
-        "apiFormat": "COHERE",
-        "maxTokens": 600,
-        "message": "' || l_prompt || '"
-    }
-    }');
-    l_resp := dbms_cloud.send_request(
+    -- if the AI operation is 'rag', then it performs Retrieval Augmented Generation
+    if :P1_AI_OP = 'rag' then
+        -- create the prompt sent to the LLM
+        l_prompt := '<PROMPT><CONTEXT> Use this information as the context: ' || :P1_CONTEXT || 
+                    ' </CONTEXT><QUESTION> Using the information from the previous context, answer the following question: '
+                    || :P1_QUERY || ' </QUESTION></PROMPT>';
+        -- escape all quotations, new line and tab characters, and backslashes
+        l_prompt := replace(replace(replace(replace(l_prompt, '"','“'), chr(13),'\r'), chr(10),'\n'), '\','\\');    
+        -- the body for the REST call sent to the LLM has a JSON scructure; check the documentation (this one is for COHERE)
+        l_body := json_object_t('{
+        "compartmentId": "' || :COMPARTMENT_OCID || '",
+        "servingMode": {"modelId": "xai.grok-4-fast-reasoning",
+                    "servingType": "ON_DEMAND"},
+        "chatRequest": {"apiFormat": "GENERIC",
+                        "maxTokens": 1200,
+                        "isStream": "FALSE",
+                        "messages": [{"role": "USER",
+                                    "content": [{"type": "TEXT",
+                                                "text": "' || l_prompt || '"} ] } ] }
+        }');
+        -- sent the REST API call to the OCI GenAI service LLM
+        -- changed oci: with https:
+        l_resp := dbms_cloud.send_request(
         credential_name   => 'OCI_CREDENTIAL',
-        uri => 'oci://inference.generativeai.' || :TENANCY_REGION || '.oci.oraclecloud.com/20231130/actions/chat',
+        uri => 'https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat',
         method => dbms_cloud.METHOD_POST,
         body => utl_raw.cast_to_raw(l_body.to_clob),
         headers => json_object('Accept' value 'application/json')
-    );
-    l_result := json_query(dbms_cloud.get_response_text(l_resp), '$.chatResponse.text');
-    l_result := substr(l_result, 2, length(l_result) - 2);
-    l_result := replace(replace(replace(l_result,'\n', chr(10)), '\t', ' '), '\"', '“');
-    insert into CONVERSATION (APPUSER_ID, QUESTION, ANSWER, CREATED) 
-        values (:AI_USER_ID, :P1_QUERY, l_result, SYSDATE);
-    return(l_result); 
+        );
+        -- OCI GenAI returns the answer with JSON format; extract the 'text' field
+        l_result := json_value(dbms_cloud.get_response_text(l_resp), '$.chatResponse.choices[0].message.content[0].text');
+        -- process the text from the answer before showing it on the screen
+        --l_result := substr(l_result, 2, length(l_result) - 2);
+        l_result := replace(replace(replace(l_result,'\n', chr(10)), '\t', ' '), '\"', '“');
+    else -- if another AI operation is selected, then it perform Select AI with the corresponding action
+        l_prompt := '<PROMPT><CONTEXT> Use the information you can get on all objects in the profile schemas. '||
+                    'You are an Oracle Database expert. Base your answers in Oracle SQL and PL/SQL. </CONTEXT> ' ||
+                    '<QUESTION> Using the information from the previous context, answer the following question: '
+                    || :P1_QUERY || ' </QUESTION></PROMPT>';
+        -- escape all quotations, new line and tab characters, and backslashes
+        l_prompt := replace(replace(replace(replace(l_prompt, '"','“'), chr(13),'\r'), chr(10),'\n'), '\','\\');
+        l_result := dbms_cloud_ai.generate(prompt       => l_prompt,
+                                        profile_name => 'DOCAI',
+                                        action       => :P1_AI_OP);
+    end if;
+    -- save the processed answer in a table that logs all conversations
+    insert into CONVERSATION (APPUSER_ID, QUESTION, AI_OP, ANSWER, CREATED) 
+        values (:AI_USER_ID, :P1_QUERY, :P1_AI_OP, l_result, SYSDATE);
+    l_result := regexp_replace(l_result,'#{1,8} ','###### ');
+    return(l_result);
+    EXCEPTION
+        WHEN OTHERS THEN
+            return('Error: ' || SQLERRM);
     end;
     </copy>
     ````
@@ -200,7 +239,7 @@ This lab assumes you have the following:
 
 ## Task 2: Review and understand the Test page
 
-1. This page is simiar to the Home page except it displays the top 5 chunks that are used to build the prompt. The `P3000_PROMPT` item SQL Query is the same as the one on the Home page.
+1. This page is simiar to the Home page except it displays the top 5 chunks that are used to build the prompt. The `P3000_CONTEXT` item SQL Query is the same as the one on the Home page.
 
     ````sql
     <copy>
@@ -406,11 +445,13 @@ This lab assumes you have the following:
 
 ## Task 5: Review and understand the Vectors page
 
-1. Read, understand, and customize the `Vectorize` process PL/SQL Code to fully understand how this process works. There are multiple ways of creating embeddings (vectorize) your data inside the Oracle AI Database 26ai, please check the documentation links at the end of this lab for the complete set of details. The SQL query used to generate the embeddings (with JSON format), used to extract the necessary fields (`EMBED_ID`, `EMBED_DATA`, and `EMBED_VECTOR`) inserted into the `VECTORS` table, has three procedures executed in cascade:
+1. Read, understand, and customize the `Background Vectorize` > `Vectorize` process PL/SQL Code to fully understand how this process works. There are multiple ways of creating embeddings (vectorize) your data inside the Oracle AI Database 26ai, please check the documentation links at the end of this lab for the complete set of details. The SQL query used to generate the embeddings (with JSON format), used to extract the necessary fields (`EMBED_ID`, `EMBED_DATA`, and `EMBED_VECTOR`) inserted into the `VECTORS` table, has three procedures executed in cascade:
 
     * `DBMS_VECTOR_CHAIN.utl_to_text` subprogram extracts plain text data from documents. The BLOB document is used as input.
     * `DBMS_VECTOR_CHAIN.utl_to_chunks` utility function splits data into smaller pieces or chunks. Input parameters are specified in JSON format.
     * `DBMS_VECTOR_CHAIN.utl_to_embeddings` chainable utility function converts data to vector embeddings. You can perform a text-to-embedding transformation by accessing either Oracle AI Database or a third-party service provider. In this example, Oracle AI Database is the service provider using the imported LLM model `ALLMINL12V2`.
+
+    > **Note:** This code version here is simplified. You don't need to run it on the database, it's just a sample to understand the logic.
 
     ````sql
     <copy>
@@ -487,6 +528,95 @@ This lab assumes you have the following:
     group by b.ID, o.FILE_NAME, o.CREATED, o.CREATED_BY
     </copy>
     ````
+6. Read, understand, and customize the `Background OCR` > `RunOCR` process PL/SQL Code. This process performs optical character recognition for scanned documents or images using OCI Document Understanding service via REST APIs. Use the `l_payload` variable to change the values accepted by this service as input parameters, for example `language` from `ENG` to `ARA` if your documents are written in Arabic.
+
+    ````sql
+    <copy>
+    declare
+    l_request_url varchar(2000);
+    l_object_name varchar2(250);
+    l_payload varchar(3200);
+    l_response clob;
+    l_jobid varchar2(200);
+    l_status varchar2(200);
+    l_resid raw(2000);
+    begin
+    select o.FILE_NAME into l_object_name from BLOBDOCS b, OBJSDOCS o
+        where o.ID = b.OBJSDOC_ID and b.ID = :P300_FILE_NAME;
+    -- OCI document aiservice processor job details
+    l_request_url := 'https://document.aiservice.' || :TENANCY_REGION || '.oci.oraclecloud.com/20221109/processorJobs';
+    apex_web_service.g_request_headers(1).name := 'Content-Type';
+    apex_web_service.g_request_headers(1).value := 'application/json';
+    l_payload := '{
+        "processorConfig" : {
+        "processorType" : "GENERAL",
+        "features" : [ {
+            "featureType" : "TEXT_EXTRACTION",
+            "generateSearchablePdf": true
+        } ],
+        "language" : "ENG"
+        },
+        "inputLocation" : {
+        "sourceType" : "OBJECT_STORAGE_LOCATIONS",
+        "objectLocations" : [ {
+            "source" : "OBJECT_STORAGE",
+            "namespaceName" : "' || :TENANCY_NAME || '",
+            "bucketName" : "DBAI-bucket",
+            "objectName" : "' || l_object_name || '"
+        } ]
+        },
+        "compartmentId" : "' || :COMPARTMENT_OCID || '",
+        "outputLocation" : {
+        "namespaceName" : "' || :TENANCY_NAME || '",
+        "bucketName" : "DBAI-bucket",
+        "prefix" : "OCR_Results"
+        }
+    }';
+    -- submit the document aiservice request
+    l_response := apex_web_service.make_rest_request(
+        p_url => l_request_url,
+        p_http_method => 'POST',
+        p_body => l_payload,
+        p_credential_static_id => 'OBJAPI');
+    -- save document aiservice response
+    delete from OCRESULTS where BLOBDOC_ID = :P300_FILE_NAME;
+    insert into OCRESULTS (BLOBDOC_ID, RESULTS) values (:P300_FILE_NAME, l_response);
+    -- check processor job status
+    select json_value(l_response, '$.lifecycleState') into l_status;
+    -- get job id to re-check status until completed
+    select json_value(l_response, '$.id') into l_jobid;
+    l_request_url := 'https://document.aiservice.' || :TENANCY_REGION || '.oci.oraclecloud.com/20221109/processorJobs/' || l_jobid;
+    -- wait until job is finished
+    WHILE l_status not in ('SUCCEEDED', 'FAILED', 'CANCELED') LOOP
+        DBMS_SESSION.SLEEP(10);
+        l_response := apex_web_service.make_rest_request(
+            p_url => l_request_url,
+            p_http_method => 'GET',
+            p_credential_static_id => 'OBJAPI');
+        l_status := JSON_VALUE(l_response, '$.status');
+    END LOOP;
+    -- add json result to OCR_RESULTS collection
+    IF l_status = 'SUCCEEDED' THEN
+        dbms_cloud.copy_collection(
+            collection_name => 'OCR_RESULTS',
+            credential_name => 'OBJS_CREDENTIAL',
+            file_uri_list => 'https://objectstorage.' || :TENANCY_REGION || '.oraclecloud.com/n/' || :TENANCY_NAME ||
+                            '/b/DBAI-bucket/o/OCR_Results/' || l_jobid || '/' || :TENANCY_NAME || '_DBAI-bucket/results/' ||
+                            l_object_name || '.json',
+            format => '{"recorddelimiter" : "0x''01''", "maxdocsize" : "100000000"}');
+        -- select last RESID from OCR_RESULTS collection
+        select o1.RESID into l_resid from OCR_RESULTS o1
+        left join OCRESULTS o2 on o1.RESID = o2.RESID
+        where o2.RESID is NULL;
+        -- add RESID and final response to OCRESULTS table
+        update OCRESULTS set RESID = l_resid, RESULTS = l_response where BLOBDOC_ID = :P300_FILE_NAME;
+        -- clean copy operation temp tables
+        dbms_cloud.delete_all_operations('COPY');
+    END IF;
+    end;
+    </copy>
+    ````
+
 
 ## Task 6: Review and understand the Chunks and Chunk lines pages
 
@@ -526,14 +656,15 @@ You may now **proceed to the next lab**.
 
 ## Learn More
 
-* [Generative AI Service](https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-service/)
-* [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/whats-new-oracle-ai-vector-search.html)
-* [DBMS_VECTOR_CHAIN PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html)
-* [DBMS_CLOUD PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_cloud.html)
-* [VECTOR_DISTANCE SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/vector_distance.html)
-* [APEX_WEB_SERVICE API Reference](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_WEB_SERVICE.html)
-* [SQL/JSON Function JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/adjsn/sql-json-function-json_table.html)
-* [CohereChatRequest Reference](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/CohereChatRequest)
+- [Text classification using Oracle Machine Learning](https://medium.com/@valitabacaru/text-classification-using-oracle-machine-learning-3af405289b2b)
+- [Generative AI Service](https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-service/)
+- [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/whats-new-oracle-ai-vector-search.html)
+- [DBMS_VECTOR_CHAIN PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html)
+- [DBMS_CLOUD PL/SQL Package Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_cloud.html)
+- [VECTOR_DISTANCE SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/vector_distance.html)
+- [APEX_WEB_SERVICE API Reference](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_WEB_SERVICE.html)
+- [SQL/JSON Function JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/adjsn/sql-json-function-json_table.html)
+- [CohereChatRequest Reference](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/CohereChatRequest)
 
 ## **Acknowledgements**
 
