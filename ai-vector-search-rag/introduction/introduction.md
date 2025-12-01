@@ -57,5 +57,5 @@ This lab assumes you have the following:
 ## **Acknowledgements**
 
 - **Author** - Valentin Leonard Tabacaru, Database Product Management
-- **Contributors** - Iyad Kloub
+- **Contributors** - Iyad Kloub, Karin Patenge
 - **Last Updated By/Date** - Valentin Leonard Tabacaru, Database Product Management, November 2025
