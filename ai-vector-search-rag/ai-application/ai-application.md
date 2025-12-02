@@ -40,43 +40,43 @@ This lab assumes you have the following:
 
     ![object storage namespace](./images/obj-storage-namespace.png " ")
 
-3. Open the user menu in the upper-right corner and click on your username.
+4. Open the user menu in the upper-right corner and click on your username.
 
     ![user menu](./images/user-menu.png " ")
 
-4. Under User information, copy the User OCID in your notes.
+5. Under User information, copy the User OCID in your notes.
 
     ![user ocid](./images/user-ocid.png " ")
 
-5. Under Resources, select Customer Secret Keys. Click Generate secret key.
+6. Under Resources, select Customer Secret Keys. Click Generate secret key.
 
     ![customer secret keys](./images/customer-secret-keys.png " ")
 
-6. Give it a name and generate.
+7. Give it a name and generate.
 
     ![generate secret key](./images/generate-secret-key.png " ")
 
-7. Copy the Generated key.
+8. Copy the Generated key.
 
     ![copy secret key](./images/copy-secret-key.png " ")
 
-8. Copy the Access key.
+9. Copy the Access key.
 
     ![copy access key](./images/copy-access-key.png " ")
 
-9. Click Auth tokens and Generate token.
+10. Click Auth tokens and Generate token.
 
     ![auth tokens](./images/auth-tokens.png " ")
 
-10. Give it a name and generate.
+11. Give it a name and generate.
 
     ![generate token](./images/generate-token.png " ")
 
-11. Copy the Auth token into your notes.
+12. Copy the Auth token into your notes.
 
     ![copy token](./images/copy-token.png " ")
 
-12. Write down in your notes the Auth token generated. You will need this information for the Object Storage credential:
+13. Write down in your notes the Auth token generated. You will need this information for the Object Storage credential:
 
     - CLOUD_USER='YourOCIusername'
     - CLOUD_TOKEN='6h[H9h)h}hH.23hHha0H'
@@ -85,27 +85,27 @@ This lab assumes you have the following:
 
     ![tenancy identity domain](./images/tenancy-identity-domain.png " ")
 
-13. Click API keys and Add API key.
+14. Click API keys and Add API key.
 
     ![api keys](./images/api-keys.png " ")
 
-14. Download the Private and Public keys and click Add.
+15. Download the Private and Public keys and click Add.
 
     ![add api key](./images/add-api-key.png " ")
 
-15. Click main menu ≡ > Identity & Security > Compartments.
+16. Click main menu ≡ > Identity & Security > Compartments.
 
     ![identity security compartments](./images/identity-security-compartments.png " ")
 
-16. Here is another place where you can find your Tenancy OCID.
+17. Here is another place where you can find your Tenancy OCID.
 
     ![compartments](./images/compartments.png " ")
 
-17. Create a Compartment for the Autonomous Database. Copy the OCID into your notes.
+18. Create a Compartment for the Autonomous Database. Copy the OCID into your notes.
 
     ![copy compartment ocid](./images/copy-compartment-ocid.png " ")
 
-18. You should have in your notes all these details you will need for the Native Credential:
+19. You should have in your notes all these details you will need for the Native Credential:
 
     - Tenancy OCID: `ocid1.tenancy.oc1..aaaaaaaa6aea6xvr6thisismytenancyhahahahaahahaa4opc3fib2a`
     - User OCID: `ocid1.user.oc1..aaaaaaaat2x6ry4xsb6m5thisismyuserhahahahahahahaahahahab2bvcjq`
@@ -125,31 +125,31 @@ This lab assumes you have the following:
     ````
     - Fingerprint: `25:0h:57:07:2h:55:0h:10:6h:h6:ha:06:h1:9h:32:9h`
 
-19. Click main menu ≡ > Storage > Buckets.
+20. Click main menu ≡ > Storage > Buckets.
 
     ![storage buckets](./images/storage-buckets.png " ")
 
-20. Click Create Bucket. 
+21. Click Create Bucket. 
 
     ![buckets in compartment](./images/buckets-in-compartment.png " ")
 
-21. Name it DBAI-bucket.
+22. Name it DBAI-bucket.
 
     ![create bucket](./images/create-bucket.png " ")
 
-22. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
+23. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
 
     ![onnx models](./images/onnx-models.png " ")
 
-23. Click Upload.
+24. Click Upload.
 
     ![bucket objects](./images/bucket-objects.png " ")
 
-24. Upload the `all_MiniLM_L12_v2.onnx` large language model (LLM) file to the DBAI-bucket.
+25. Upload the `all_MiniLM_L12_v2.onnx` large language model (LLM) file to the DBAI-bucket.
 
     ![upload onnx llm](./images/upload-onnx-llm.png " ")
 
-25. The LLM file is an object in your bucket.
+26. The LLM file is an object in your bucket.
 
     ![onnx llm object](./images/onnx-llm-object.png " ")
 
@@ -637,6 +637,8 @@ You may now **proceed to the next lab**.
 
 ## Learn More
 
+- [Oracle Cloud Infrastructure Documentation](https://docs.oracle.com/en-us/iaas/Content/home.htm)
+- [Oracle Autonomous AI Database Serverless](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/index.html)
 - [The database can be a document management system](https://medium.com/@valitabacaru/the-database-can-be-a-document-management-system-c3806728857d)
 
 ## **Acknowledgements**
