@@ -338,7 +338,7 @@ BEGIN
       "provider":"ocigenai",
       "credential_name": "GENAI_CRED",
       "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-      "model": "cohere.command-r-08-2024",
+      "model": "cohere.command-a-03-2025",
       "chatRequest" : {
         "maxTokens": 2000,
         "temperature": 1
