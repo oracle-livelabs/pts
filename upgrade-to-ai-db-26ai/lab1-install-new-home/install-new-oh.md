@@ -1,4 +1,4 @@
-# Install a new Oracle AI database 26ai home and instance#
+# Install a new Oracle AI database 26ai home and instance #
 
 ## Introduction
 
@@ -74,13 +74,13 @@ The software downloaded from the Oracle network is a zip file for your operating
 First, we need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
 
 ```text
-$ <copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
+<copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
 ```
 
-3. We can now use this new location to unzip our software.
+1. We can now use this new location to unzip our software.
 
    ```text
-   $ <copy>cd /u01/oracle/product/26ai/dbhome</copy>
+   <copy>cd /u01/oracle/product/26ai/dbhome</copy>
    ```
 
    ```text
@@ -103,6 +103,7 @@ $ <copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
      python/lib/pkgconfig/python3.pc -> python-3.13.pc
 
 [oracle@26ai-upgrade:/u01/oracle/product/26ai/dbhome]$
+
 ````
 
 We will not install any patches during this workshop; therefore, we can continue to prepare the operating system environment.
@@ -122,7 +123,7 @@ While running the OUI, we have the option to install only the software (so no da
 ````
 
 ```text
-$ <copy>./runInstaller &</copy>
+<copy>./runInstaller &</copy>
 ```
 
 The following screen should be visible on your (remote) desktop:
@@ -131,13 +132,13 @@ The following screen should be visible on your (remote) desktop:
 
 - Keep the default 'Create and Configure a single instance database' and press `NEXT`
 
-2. In the next screen, choose 'Desktop class' and press `NEXT`
+1. In the next screen, choose 'Desktop class' and press `NEXT`
 
    The desktop class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than those displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used.
 
    For the Oracle-provided Workshop environment, we will use the Desktop class.
 
-3. Make sure to check and change the following values in the various fields:
+2. Make sure to check and change the following values in the various fields:
 
    - Oracle Base
      - /u01/oracle (no changes)
@@ -160,7 +161,7 @@ The following screen should be visible on your (remote) desktop:
 
    - After you have entered the correct values, please press the `NEXT` button to continue.
 
-4. Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
+3. Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
 
    - Check the option to execute the configuration scripts automatically
      - Select the 'Use sudo' radio button
@@ -172,9 +173,9 @@ The following screen should be visible:
 
    ![Oracle Universal Installer root script screen](./images/oui-3.png)
 
-   - Click the 'Next' button to continue.
+- Click the 'Next' button to continue.
 
-5. The system will now start checking the prerequisites for the 26ai installation.
+1. The system will now start checking the prerequisites for the 26ai installation.
 
    If all prerequisites have been checked and the preparation check can find no warnings or errors, the OUI will display the summary screen:
 
@@ -184,7 +185,7 @@ The following screen should be visible:
 
     ![Oracle Universal Installer progress screen](./images/oui-5.png)
 
-7.  After about 3 minutes, provided there are no issues during the installation, the root.sh script needs to be executed. If you have entered the password for the root user in the OUI, the pop-up box will ask permission to execute the scripts:
+2. After about 3 minutes, provided there are no issues during the installation, the root.sh script needs to be executed. If you have entered the password for the root user in the OUI, the pop-up box will ask permission to execute the scripts:
 
     ![Oracle Universal Installer run rootscript pop-up](./images/oui-6.png)
 
@@ -196,8 +197,8 @@ The following screen should be visible:
     >
     > If you do not get the option to click `Yes`, please execute the script mentioned in the window as `root` user in a terminal environment.
 
-8.  The installer will now start to create the new CDB database with its PDB. This part of the installation will take about 10 minutes.
-9.  After the database creation has finished, the OUI will display the following screen (or similar):
+3. The installer will now start to create the new CDB database with its PDB. This part of the installation will take about 10 minutes.
+4. After the database creation has finished, the OUI will display the following screen (or similar):
 
     ![Oracle Universal Installer Installation complete screen](./images/oui-8.png)
 
@@ -221,7 +222,7 @@ The OUI takes a certain percentage of the available memory in our environment as
    ```text
    $ <copy>sqlplus / as sysdba</copy>
 
-   SQL*Plus: Release 23.26.1.0.0 - for Oracle Cloud and Engineered Systems on Wed Jan 7 13:34:12 2026
+   SQL*Plus: Release 23.26.1.0.0 - Production on Wed Jan 7 13:34:12 2026
    Version 23.26.1.0.0
 
     
@@ -229,7 +230,7 @@ The OUI takes a certain percentage of the available memory in our environment as
 
 
    Connected to:
-   Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - for Oracle Cloud and Engineered Systems
+   Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
    Version 23.26.1.0.0
 
    SQL> 
@@ -266,7 +267,7 @@ The OUI takes a certain percentage of the available memory in our environment as
    Fixed Size                  5365560 bytes
    Variable Size             704643072 bytes
    Database Buffers         2499805184 bytes
-   Redo Buffers	                8855552 bytes
+   Redo Buffers                 8855552 bytes
    Database mounted.
    Database opened.
    ```
@@ -275,7 +276,7 @@ The OUI takes a certain percentage of the available memory in our environment as
 
 Because upgrades and plugging in new PDBs will take up more space in certain tablespaces, they will grow. Growing tablespaces takes time, so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
 
-4. Increase the SYSAUX, SYSTEM, and UNDOTBS for the CDB:
+1. Increase the SYSAUX, SYSTEM, and UNDOTBS for the CDB:
 
    ```text
    <copy>ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/sysaux01.dbf' resize 1500M;
@@ -303,19 +304,19 @@ Because upgrades and plugging in new PDBs will take up more space in certain tab
    Database altered.
    ```
 
-5. You can now exit SQL\*Plus to make a final change to the operating system.
+2. You can now exit SQL\*Plus to make a final change to the operating system.
 
    ```text
    SQL> <copy>exit</copy>
 
-   Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - for Oracle Cloud and Engineered Systems
+   Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
    Version 23.26.1.0.0
    ```
 
-6. If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
+3. If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
 
    ```text
-   $ <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
+   <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
    ```
 
 You may now proceed to the next lab.
