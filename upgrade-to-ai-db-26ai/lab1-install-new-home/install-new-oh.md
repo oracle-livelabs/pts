@@ -19,7 +19,7 @@ In this lab, you will
 - You have access to the Upgrade to a Oracle AI Database 26ai Hands-on-Lab Livelabs environment
 - You have connected to the Hands-on-Lab Livelabs environment using the NoVNC link from the Livelabs reservation
 
-## Task 1: prepare 26ai software and operating system
+## Task 1: Prepare software and OS
 
 Before we can upgrade to Oracle 26ai, we need to have the Oracle software installed. Outside of this training environment, you should download the production software base release from [https://eDelivery.oracle.com](https://eDelivery.oracle.com "eDelivery.oracle.com"). In a production environment, please also download the patches required and apply them before you create or upgrade any instances. The DBA can download patches to patch the base 26ai version (23.26.0) from [https://support.oracle.com](https://support.oracle.com). Recommended patches are listed in MOS note 555.1.
 
@@ -71,7 +71,7 @@ Complete!
 
 The software downloaded from the Oracle network is a zip file for your operating system/architecture. In version 23c and up, the location where you unzip the software and start the Oracle Universal Installer (OUI) **will be used as your new Oracle Home**, so be careful where you unzip the software. Running the OUI will only register the software with the inventory (or create an inventory if none exists), not copy the software to that location.
 
-First, we need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
+1. We need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
 
 ```text
 <copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
@@ -108,7 +108,7 @@ First, we need to create a new location for the software. Execute the following 
 
 We will not install any patches during this workshop; therefore, we can continue to prepare the operating system environment.
 
-## Task 2: run OUI and create a new 26ai database
+## Task 2: Run OUI and create new CDB
 
 Before using the unzipped Oracle software, we need to run the Oracle Universal Installer (OUI) to register the software to the Oracle Inventory on the system and do mandatory (relinking) steps for this OS. This can either be done in a GUI mode or in a character mode (for systems that do not have access to a graphical interface). In this lab, we will run the OUI in GUI mode for learning purposes.
 
@@ -118,66 +118,66 @@ While running the OUI, we have the option to install only the software (so no da
 
 1. Execute the following commands in your terminal window as oracle user (if you are not already in this directory):
 
-   ```text
-   $ <copy>cd /u01/oracle/product/26ai/dbhome</copy>
-````
+    ```text
+    $ <copy>cd /u01/oracle/product/26ai/dbhome</copy>
+    ````
 
-```text
-<copy>./runInstaller &</copy>
-```
+    ```text
+    <copy>./runInstaller &</copy>
+    ```
 
-The following screen should be visible on your (remote) desktop:
+    The following screen should be visible on your (remote) desktop:
 
-![Oracle Universal Installer introduction screen 1](./images/oui-1.png)
+    ![Oracle Universal Installer introduction screen 1](./images/oui-1.png)
 
-- Keep the default 'Create and Configure a single instance database' and press `NEXT`
+    - Keep the default 'Create and Configure a single instance database' and press `NEXT`
 
 1. In the next screen, choose 'Desktop class' and press `NEXT`
 
-   The desktop class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than those displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used.
+    The desktop class will display one screen with all of the information required to create this type of database. If you think you need (for your local environment) other settings than those displayed on the Desktop class screen, feel free to use the Server class. If you choose the Server class, please check the documentation for the values to be used.
 
-   For the Oracle-provided Workshop environment, we will use the Desktop class.
+    For the Oracle-provided Workshop environment, we will use the Desktop class.
 
 2. Make sure to check and change the following values in the various fields:
 
-   - Oracle Base
-     - /u01/oracle (no changes)
-   - Database File Location
-     - /u01/oradata **(change this value)**
-   - Database Edition
-     - Enterprise Edition (no changes)
-   - Characterset
-     - Unicode (no changes)
-   - OSBDA group
-     - dba (no changes)
-   - Global Database name
-     - DB26ai **(change this value)**
-   - Password
-     - Welcome_123 **(change this value)**
-   - Pluggable database name
-     - PDB26ai01 **(change this value)**
+    - Oracle Base
+      - /u01/oracle (no changes)
+    - Database File Location
+      - /u01/oradata **(change this value)**
+    - Database Edition
+      - Enterprise Edition (no changes)
+    - Characterset
+      - Unicode (no changes)
+    - OSBDA group
+      - dba (no changes)
+    - Global Database name
+      - DB26ai **(change this value)**
+    - Password
+      - Welcome_123 **(change this value)**
+    - Pluggable database name
+      - PDB26ai01 **(change this value)**
 
-   ![Oracle Universal Installer screen 2](./images/oui-2.png)
+    ![Oracle Universal Installer screen 2](./images/oui-2.png)
 
-   - After you have entered the correct values, please press the `NEXT` button to continue.
+    - After you have entered the correct values, please press the `NEXT` button to continue.
 
 3. Like previous installations, the `root.sh` script needs to be executed after the relinking and registration of the Oracle Home. This screen lets you decide whether or not you want the OUI to do this for you. In this workshop environment, you can use the sudo option for the automatic execution of the root.sh script(s). For your local environment (at home), do what applies to your situation.
 
-   - Check the option to execute the configuration scripts automatically
-     - Select the 'Use sudo' radio button
-     - Change the command to execute to `/usr/bin/sudo`
-     - Enter _any_ password in the Password field.
-       - Please note the screen will display an error if you do not supply a (random) Password
+    - Check the option to execute the configuration scripts automatically
+      - Select the 'Use sudo' radio button
+      - Change the command to execute to `/usr/bin/sudo`
+      - Enter _any_ password in the Password field.
+        - Please note the screen will display an error if you do not supply a (random) Password
 
-The following screen should be visible:
+    The following screen should be visible:
 
-   ![Oracle Universal Installer root script screen](./images/oui-3.png)
+    ![Oracle Universal Installer root script screen](./images/oui-3.png)
 
-- Click the 'Next' button to continue.
+    - Click the 'Next' button to continue.
 
 1. The system will now start checking the prerequisites for the 26ai installation.
 
-   If all prerequisites have been checked and the preparation check can find no warnings or errors, the OUI will display the summary screen:
+    If all prerequisites have been checked and the preparation check can find no warnings or errors, the OUI will display the summary screen:
 
     ![Oracle Universal Installer Summary screen](./images/oui-4.png)
 
@@ -206,118 +206,114 @@ The following screen should be visible:
 
     Your 26ai Oracle Home has been created, and the initial database (DB26ai) has been started.
 
-## Task 3: change default memory parameters and perform administration
+## Task 3: Alter memory and startup ##
 
 The OUI takes a certain percentage of the available memory in our environment as default SGA size. In our workshop environment, this is an SGA of 18G. We need the memory for other tasks (databases) later on, so we will need to lower the memory usage of the new instance:
 
 1. Please execute the following commands as `oracle` user to login to the database:
 
-   ```text
-   $ <copy>. oraenv</copy>
+    ```text
+    $ <copy>. oraenv</copy>
 
-   ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
-   The Oracle base remains unchanged with value /u01/oracle
-   ```
+    ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
+    The Oracle base remains unchanged with value /u01/oracle
+    ```
 
-   ```text
-   $ <copy>sqlplus / as sysdba</copy>
+    ```text
+    $ <copy>sqlplus / as sysdba</copy>
 
-   SQL*Plus: Release 23.26.1.0.0 - Production on Wed Jan 7 13:34:12 2026
-   Version 23.26.1.0.0
-
+    SQL*Plus: Release 23.26.1.0.0 - Production on Wed Jan 7 13:34:12 2026
+    Version 23.26.1.0.0
     
-   Copyright (c) 1982, 2025, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2025, Oracle.  All rights reserved.
 
 
-   Connected to:
-   Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
-   Version 23.26.1.0.0
+    Connected to:
+    Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
+    Version 23.26.1.0.0
 
-   SQL> 
-   ```
+    SQL> 
+    ```
 
 2. Change the parameters for the memory setting to a lower value:
 
-   ```text
-   SQL> <copy>alter system set sga_max_size=3G scope=spfile;</copy>
+    ```text
+    SQL> <copy>alter system set sga_max_size=3G scope=spfile;</copy>
 
-   System altered.
-   ```
+    System altered.
+    ```
 
-   ```text
-   SQL> <copy>alter system set sga_target=3G scope=spfile;</copy>
+    ```text
+    SQL> <copy>alter system set sga_target=3G scope=spfile;</copy>
 
-   System altered.
-   ```
+    System altered.
+    ```
 
 3. Shutdown and startup the database to get the parameters into effect:
 
-   ```text
-   SQL> <copy>shutdown immediate</copy>
-   Database closed.
-   Database dismounted.
-   ORACLE instance shut down.
-   ```
+    ```text
+    SQL> <copy>shutdown immediate</copy>
+    Database closed.
+    Database dismounted.
+    ORACLE instance shut down.
+    ```
 
-   ```text
-   SQL> <copy>startup</copy>
-   ORACLE instance started.
+    ```text
+    SQL> <copy>startup</copy>
+    ORACLE instance started.
 
-   Total System Global Area 3218669368 bytes
-   Fixed Size                  5365560 bytes
-   Variable Size             704643072 bytes
-   Database Buffers         2499805184 bytes
-   Redo Buffers                 8855552 bytes
-   Database mounted.
-   Database opened.
-   ```
+    Total System Global Area 3218669368 bytes
+    Fixed Size                  5365560 bytes
+    Variable Size             704643072 bytes
+    Database Buffers         2499805184 bytes
+    Redo Buffers                 8855552 bytes
+    Database mounted.
+    Database opened.
+    ```
 
-### Increase the size of tablespaces
+    ### Increase the size of tablespaces
 
-Because upgrades and plugging in new PDBs will take up more space in certain tablespaces, they will grow. Growing tablespaces takes time, so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
+    Because upgrades and plugging in new PDBs will take up more space in certain tablespaces, they will grow. Growing tablespaces takes time, so it will be faster to increase the size of the existing tablespaces before we start the upgrade.
 
 1. Increase the SYSAUX, SYSTEM, and UNDOTBS for the CDB:
 
-   ```text
-   <copy>ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/sysaux01.dbf' resize 1500M;
-   ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/sysaux01.dbf' AUTOEXTEND ON
-      NEXT 100M MAXSIZE UNLIMITED;
-   ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/system01.dbf' resize 1500M;
-   ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/system01.dbf' AUTOEXTEND ON
-      NEXT 100M MAXSIZE UNLIMITED;
-   ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/undotbs01.dbf' resize 500M;
-   ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/undotbs01.dbf' AUTOEXTEND ON
-      NEXT 100M MAXSIZE UNLIMITED;
+    ```text
+    <copy>ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/sysaux01.dbf' resize 1500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/sysaux01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/system01.dbf' resize 1500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/system01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/undotbs01.dbf' resize 500M;
+    ALTER DATABASE DATAFILE '/u01/oradata/DB26AI/undotbs01.dbf' AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
 
-   </copy>
+    </copy>
 
-   Database altered.
+    Database altered.
 
-   Database altered.
+    Database altered.
 
-   Database altered.
+    Database altered.
 
-   Database altered.
+    Database altered.
 
-   Database altered.
+    Database altered.
 
-   Database altered.
-   ```
+    Database altered.
+    ```
 
 2. You can now exit SQL\*Plus to make a final change to the operating system.
 
-   ```text
-   SQL> <copy>exit</copy>
+    ```text
+    SQL> <copy>exit</copy>
 
-   Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
-   Version 23.26.1.0.0
-   ```
+    Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
+    Version 23.26.1.0.0
+    ```
 
 3. If you shut down your Hands-On-Lab environment, you will need to start the databases again. To make this automatic (using the default dbstart tool), execute the following command:
 
-   ```text
-   <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
-   ```
+    ```text
+    <copy>sudo sed -i 's/:N/:Y/' /etc/oratab</copy>
+    ```
 
 You may now proceed to the next lab.
 

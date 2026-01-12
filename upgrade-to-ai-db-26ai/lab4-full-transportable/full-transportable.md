@@ -30,7 +30,7 @@ When in doubt or need to start the databases use the following steps:
 1. Please log in as **oracle** user and execute the following command:
 
     ```text
-    <copy>. oraenv</copy>
+    $ <copy>. oraenv</copy>
     ```
 
 2. Please enter the SID of the 26ai database that you have created in the first lab. In this example, the SID is **`DB26ai`**
@@ -51,9 +51,9 @@ When in doubt or need to start the databases use the following steps:
     Processing Database instance "RRR": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
     Processing Database instance "TTT": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
     Processing Database instance "DB26ai": log file /u01/oracle/product/23/dbhome/rdbms/log/startup.log
-    ``
+    ```
 
-## Task 1: Prepare the target 26ai database ##
+## Task 1: Prepare target database ##
 
 The FTTS functionality requires an existing (pluggable) database as a target. For this, we will log into the existing 26ai instance and create a new Pluggable Database.
 
@@ -62,7 +62,7 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
 1. Please set the correct ORACLE\_HOME and ORACLE\_SID using oraenv:
 
     ```text
-    <copy>. oraenv</copy>
+    $ <copy>. oraenv</copy>
     ```
 
     Enter the SID for the 26ai environment you already created in a previous lab:
@@ -75,10 +75,10 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
 2. We can now log in to the 26ai environment. After login, we will create a new pluggable database as the target:
 
     ```text
-    <copy>sqlplus / as sysdba</copy>
+    $ <copy>sqlplus / as sysdba</copy>
     ```
 
-### Create a new PDB called PDB19C02 ###
+    ### Create a new PDB called PDB19C02 ###
 
 1. Please create a new PDB using the following command:
 
@@ -100,9 +100,9 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
     Pluggable database altered.
     ```
 
-### Prepare the target PDB ###
+    ### Prepare the target PDB ###
 
-The migration described in this lab requires a directory object for Datapump (for the logging) and a database link to the source database. We will use `/u01` as the temporary location for the Data Pump files.
+    The migration described in this lab requires a directory object for Datapump (for the logging) and a database link to the source database. We will use `/u01` as the temporary location for the Data Pump files.
 
 1. As are already logged in, we change the session focus to our new PDB (or container):
 
@@ -112,7 +112,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     Session altered.
     ```
 
-6. Create a new directory object that will be used by the DataPump import command:
+2. Create a new directory object that will be used by the DataPump import command:
 
     ```text
     SQL> <copy>create directory u01_dir as '/u01';</copy>
@@ -120,7 +120,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     Directory created.
     ```
 
-7. Grant rights to the system user:
+3. Grant rights to the system user:
 
     ```text
     SQL> <copy>grant read, write on directory u01_dir to system;</copy>
@@ -128,7 +128,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     Grant succeeded.
     ```
 
-8. Create the database link the we will use during the Transportable Tablespace step:
+4. Create the database link the we will use during the Transportable Tablespace step:
 
     ```text
     SQL> <copy>create public database link SOURCEDB
@@ -148,7 +148,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     TTT
     ```
 
-6. To be sure, make sure the user we need (and the contents of the source database) do not already exist in our target database. The user that exists in the source database (but should not exist in the target database) is TOILETMAP, and the table the schema contains is called TOILETMAP_AUSTRALIA.
+6. To be sure, make sure the user we need (and the contents of the source database) do not already exist in our target database. The user that exists in the source database (but should not exist in the target database) is TITANIC, and the table the schema contains is called PASSENGERS.
 
     First, check to see if the user exists in the target environment:
 
@@ -185,7 +185,7 @@ The migration described in this lab requires a directory object for Datapump (fo
 
     The table and user exist in the source 19C database. They do not exist in the (target) PDB to which we are connected.
 
- 13. We can now exit SQL*Plus on the target system and continue preparing the source system.
+9. We can now exit SQL*Plus on the target system and continue preparing the source system.
 
     ```text
     SQL> <copy>exit</copy>
@@ -257,7 +257,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     SQL> <copy>exit</copy>
     ```
 
-## Task 3: Copy datafiles and import into 19c target PDB ##
+## Task 3: Copy datafiles and import ##
 
 1. First, we copy the files to the location we will use for the 26ai target PDB TTT01:
 
@@ -324,9 +324,9 @@ The migration described in this lab requires a directory object for Datapump (fo
 
     You need to check the log file to determine if the errors harm your environment. In our migration, the errors should only concern a few users who could not be created or do not exist.
 
-## Task 4: Check the new upgraded target ##
+## Task 4: Check upgraded target ##
 
-The Data Pump process should have migrated the most crucial user in the database (TOILETMAP). We can check the target database to see if our table has been imported as it should:
+The Data Pump process should have migrated the most crucial user in the database (TITANIC). We can check the target database to see if our table has been imported as it should:
 
 1. Login to the target database
 

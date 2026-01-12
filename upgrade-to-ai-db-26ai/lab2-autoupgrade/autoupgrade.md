@@ -2,7 +2,7 @@
 
 ## Introduction ##
 
-In this lab, we will leverage the Autoupgrade tool and upgrade 3 databases using 3 different methods from a single call to the autoupgrade tool. 
+In this lab, we will leverage the Autoupgrade tool and upgrade 3 databases using 3 different methods from a single call to the autoupgrade tool.
 
 Estimated time: 75 minutes (please note you can run other labs in this training in parallel to this lab to reduce waiting time)
 
@@ -24,14 +24,16 @@ When in doubt or need to start the databases, use the following steps:
 1. Please log in as the **`oracle`** user and execute the following command:
 
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
 2. Please enter the SID of the 26ai database that you have created in the first lab. In this example, the SID is **`DB26ai`**
 
     ```text
     ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
     The Oracle base has been set to /u01/oracle
     ```
+
 3. Now execute the `dbstart` command to start all databases listed in the `/etc/oratab` file:
 
     ```text
@@ -58,6 +60,7 @@ In this lab we will migrate 3 databases from 19c to 26ai. Below is the setup of 
 </tr></table>
 
 ## Task 1: Prepare Source databases ##
+
 We will use the preinstalled 19c databases for this exercise. Autoupgrade supports upgrading 19c and 21c databases to 26ai, so we could have used a 21c database as well.
 
 ### Open all Pluggable databases in container database BBB ###
@@ -65,22 +68,24 @@ We will use the preinstalled 19c databases for this exercise. Autoupgrade suppor
 The autoupgrade and other scripts will only upgrade a pluggable database when it is open. The first step is to make sure that in our CDBs BBB and CCC, the pluggable database(s) are in the open state. We do not have to do this for the AAA database as this database is a non-CDB environment and has been started by the dbstart script.
 
 1. Set the environment variable to database BBB and open all pluggable databases:
- 
+
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
     ```
     ORACLE_SID = [oracle] ? <copy>BBB</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
+
 2. Login as sysdba
-    
+
     ```text
-    $ <copy>sqlplus / as sysdba</copy>
+    <copy>sqlplus / as sysdba</copy>
     ```
 
 3. First check if the PDBs are already open using the following command:
-    
+
     ```text
     SQL> <copy>show pdbs</copy>
     
@@ -92,9 +97,8 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
     The PDB$SEED will always be in READ ONLY mode and the BBB01 pluggable database is in MOUNTED mode (which means closed). This means we need to open the PDB first before we can upgrade it.
 
+4. If the BBB01 PDB is in MOUNT mode, execute the following commands:
 
-4.  If the BBB01 PDB is in MOUNT mode, execute the following commands:
-    
     ```text
     SQL> <copy>alter pluggable database all open;</copy>
 
@@ -111,8 +115,8 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
              2 PDB$SEED                       READ ONLY  NO
              3 BBB01                          READ WRITE NO
     ```
-    
-5.  You can now exit SQL*Plus
+
+5. You can now exit SQL*Plus
 
     ```text
     SQL> <copy>exit</copy>
@@ -122,22 +126,24 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     ```
 
 6. Do the same for the CCC database that we will use during this lab. Set the environment variable to database BBB and open all pluggable databases:
- 
+
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
     ```
     ORACLE_SID = [oracle] ? <copy>CCC</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
+
 7. Login as sysdba
-    
+
     ```text
-    $ <copy>sqlplus / as sysdba</copy>
+    <copy>sqlplus / as sysdba</copy>
     ```
 
 8. First check if the PDBs are already open using the following command:
-    
+
     ```text
     SQL> <copy>show pdbs</copy>
     
@@ -149,9 +155,8 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
 
     The PDB$SEED will always be in READ ONLY mode and the CCC01 pluggable database is in MOUNTED mode (which means closed). This means we need to open the PDB first before we can upgrade it.
 
+9. If the CCC01 PDB is in MOUNT mode, execute the following commands:
 
-9.  If the CCC01 PDB is in MOUNT mode, execute the following commands:
-    
     ```text
     SQL> <copy>alter pluggable database all open;</copy>
 
@@ -179,39 +184,41 @@ The autoupgrade and other scripts will only upgrade a pluggable database when it
     ```
 
 ## Task 2: The Autoupgrade tool ##
+
 Although the Auto Upgrade tool is part of the 26ai Oracle Home distribution, it is recommended to always download the latest version. The latest version can be downloaded from MyOracle Support under note 2485457.1. For this lab, the download has been done and the resulting .jar file has been stored in the /source directory.
 
 In this example we will put 3 different upgrade scenarios in a single configuration file but you can also use autoupgrade for one or many more migrations at the same time.
 
 ### Prepare the environment for autoupgrade ###
 
-
 1. First, we will create a directory on the operating system where we can store Autoupgrade-related files (and log files):
 
     ```text
-    $  <copy>mkdir -p /u01/autoupgrade</copy>
+    <copy>mkdir -p /u01/autoupgrade</copy>
     ```
+
     ```
-    $ <copy>cd /u01/autoupgrade</copy>
+    <copy>cd /u01/autoupgrade</copy>
     ```
+
     In a regular environment, you would now download the latest version of the autoupgrade tool. In this environment, the latest version is in the /source directory. Copy this latest version to the /u01/autoupgrade directory:
-    
+
     ```text
-    $ <copy>cp /source/autoupgrade*.jar /u01/autoupgrade/autoupgrade.jar</copy>
+    <copy>cp /source/autoupgrade*.jar /u01/autoupgrade/autoupgrade.jar</copy>
     ```
 
-### Create the Auto Upgrade Config file for database AAA ###
+   ### Create the Auto Upgrade Config file for database AAA ###
 
-2. Now we can create a new configuration file for the Auto Upgrade tool. In this example, the "vi" tool is used. If you are not familiar with "vi", feel free to exchange the command with "gedit":
+1. Now we can create a new configuration file for the Auto Upgrade tool. In this example, the "vi" tool is used. If you are not familiar with "vi", feel free to exchange the command with "gedit":
 
     ```text
-    $ <copy>vi autoupgrade.cfg</copy>
+    <copy>vi autoupgrade.cfg</copy>
     ```
 
     If you are unfamiliar with the 'vi' tool, press the 'i' key to set it to 'insert' mode.
 
     Make sure to paste the following lines to the new file:
-    
+
     ```text
     <copy>global.autoupg_log_dir=/u01/autoupgrade/log
     global.restoration=no
@@ -227,10 +234,10 @@ In this example we will put 3 different upgrade scenarios in a single configurat
 
     Be aware that in the above example, we used the `global.restoration=no`. This means that we will **not be able to restore** any database if something goes wrong. This setting is only to be used in databases that are in NOARCHIVE mode or databases (like Standard Edition databases) that cannot have a guaranteed restore point (GRP). In a production situation where archive logging is enabled, this parameter should be removed. In our setup, we use it to speed up the upgrade process (since no archive log needs to be written) and to save disk space in our limited environment.
 
-3.  Add the parameters for the database BBB
+1. Add the parameters for the database BBB
 
     For this scenario, we will upgrade both the CDB and the PDBs from 19c to 26ai. This will take longer because first the CDB needs to be upgraded before the PDBs can be upgraded (in parallel). Add the following parameters to the autoupgrade.cfg file:
-    
+
     ```text
     <copy>
     bbb.sid=BBB
@@ -238,13 +245,13 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     bbb.target_home=/u01/oracle/product/26ai/dbhome
     </copy>
     ```
-    
+
     In this list of parameters for database BBB, we do not specify a target CDB. As a result, the auto-upgrade tool will upgrade both the CDB and the PDBs.
-    
-4. Add the parameters for the database CCC
+
+1. Add the parameters for the database CCC
 
     In this scenario, we want autoupgrade to unplug the database from the 19c database, plug it into the existing DB26ai CDB and upgrade it. For this, add the following lines to the autoupgrade.cfg file:
-    
+
     ```text
     <copy>
     ccc.sid=CCC
@@ -255,21 +262,22 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     </copy>
     ```
 
-    Save the file and close the editor. Using the 'vi' tool, you do this with the following key sequence: "(ESC):wq" and ENTER.    
+    Save the file and close the editor. Using the 'vi' tool, you do this with the following key sequence: "(ESC):wq" and ENTER.
 
-### Launch the Auto Upgrade tool pre-check phase ###
+   ### Launch the Auto Upgrade tool pre-check phase ###
 
-3. We can now launch the Auto upgrade tool. First, make sure you have the 26ai environment variables set:
+1. We can now launch the Auto upgrade tool. First, make sure you have the 26ai environment variables set:
 
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
     ```text
     ORACLE_SID = [ORCL] ? <copy>DB26ai</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
-4. Execute the tool by executing the following command:
+1. Execute the tool by executing the following command:
 
     ```text
     $ <copy>$ORACLE_HOME/jdk/bin/java -jar /u01/autoupgrade/autoupgrade.jar -config autoupgrade.cfg -mode analyze -noconsole</copy>
@@ -317,27 +325,27 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.log
     ```
 
-5. Check the overall status of the jobs
+1. Check the overall status of the jobs
 
     In the output of the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
-    
+
     ```text
-    $ <copy>firefox /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html</copy>
+    <copy>firefox /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html</copy>
     ```
-    
+
     If you are working from a non-graphical environment, the same information is available in the log file indicated.
-    
+
     After you have checked that there are no issues, close the Chrome browser to continue. Please note that the order in which the databases are listed in the configuration file does not have to match the order of the databases in the output files or in the job number that is assigned.
-    
-6. Checking the individual pre-upgrade check logfiles
+
+1. Checking the individual pre-upgrade check logfiles
 
     Every database in the configuration file received a job number. In the general location for the logfiles for autoupgrade, subdirectories have been created for each database that contains the output for that particular database, split per job number.
-    
-    For example, database AAA has received jobnumber 100. In the directory `/u01/autoupgrade/log/AAA/100` you will find the output of any individual step during the execution of the job. At this moment, because we only ran the pre-upgrade step, the contents are mostly technical and are only needed, mostly by support, if there is an issue during the execution.
-     
-### Execute the full upgrade using Auto Upgrade ###
 
-6. To continue with the full upgrade of the database(s) in the config file, run the same command but this time with the 'mode=deploy' option.
+    For example, database AAA has received jobnumber 100. In the directory `/u01/autoupgrade/log/AAA/100` you will find the output of any individual step during the execution of the job. At this moment, because we only ran the pre-upgrade step, the contents are mostly technical and are only needed, mostly by support, if there is an issue during the execution.
+
+   ### Execute the full upgrade using Auto Upgrade ###
+
+1. To continue with the full upgrade of the database(s) in the config file, run the same command but this time with the 'mode=deploy' option.
 
     ```text
     $ <copy>$ORACLE_HOME/jdk/bin/java -jar /u01/autoupgrade/autoupgrade.jar -config autoupgrade.cfg -mode deploy</copy>
@@ -351,8 +359,8 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     Type 'help' to list console commands
     upg>
     ```
-    
-7. The tool will now upgrade the requested databases in the background. You can request the status by executing the 'lsj' command:
+
+1. The tool will now upgrade the requested databases in the background. You can request the status by executing the 'lsj' command:
 
     ```text
     upg> <copy>lsj</copy>
@@ -368,19 +376,20 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     ```
 
     Using the command prompt, you can control your upgrade in many ways. For example, if the upgrade fails, you can correct the issue and restart the job, or restore the environment to its original state. Of course, you can also check the status of your upgrade(s).
-    
-8. To show which commands can be used, use the `help` command:
+
+1. To show which commands can be used, use the `help` command:
 
     ```` text
     upg> <copy>help</copy>
     ````
+
     ```` text
     exit                                    To close and exit
     help                                    Displays help
     lsj [<option>] [-a <number>]            list jobs by status up to n elements.
-    	-f                                  Filter by finished jobs.
-    	-r                                  Filter by running jobs.
-	    -e                                  Filter by jobs with errors.
+     -f                                  Filter by finished jobs.
+     -r                                  Filter by running jobs.
+     -e                                  Filter by jobs with errors.
         -p                                  - Filter by jobs being prepared
         -n <number>                         - Display up to n jobs
         -a <number>                         - Repeats the command (in <number> 
@@ -423,88 +432,87 @@ In this example we will put 3 different upgrade scenarios in a single configurat
                                               given time from command execution
     ````
 
-
-9. To get the overall status of the running jobs, you can use the `status` command. It will show the status of all upgrades that are currently running and refresh the screen every 15 seconds:
+1. To get the overall status of the running jobs, you can use the `status` command. It will show the status of all upgrades that are currently running and refresh the screen every 15 seconds:
 
     ```text
     upg> <copy>status -a 15</copy>
 
     Config
 
-    	User configuration file    [/u01/autoupgrade/autoupgrade.cfg]
-    	General logs location      [/u01/autoupgrade/log/cfgtoollogs/upgrade/auto]
-     	Mode                       [DEPLOY]
+     User configuration file    [/u01/autoupgrade/autoupgrade.cfg]
+     General logs location      [/u01/autoupgrade/log/cfgtoollogs/upgrade/auto]
+      Mode                       [DEPLOY]
     Jobs Summary
 
-	    Total databases in configuration file [5]
-	    Total Non-CDB being processed         [0]
-	    Total Containers being processed      [5]
+     Total databases in configuration file [5]
+     Total Non-CDB being processed         [0]
+     Total Containers being processed      [5]
 
-	    Jobs finished successfully            [0]
-	    Jobs finished/stopped                 [0]
-	    Jobs in progress                      [3]
+     Jobs finished successfully            [0]
+     Jobs finished/stopped                 [0]
+     Jobs in progress                      [3]
 
     Progress
-	    +---+---------------------------------------------------------+
-	    |Job|                                                 Progress|
-	    +---+---------------------------------------------------------+
-	    |103|[||||||||||||||||||||||                            ] 42 %|
-	    |104|[||||||||||||||||||||||                            ] 42 %|
-	    |105|[|||||||||||||                                     ] 25 %|
-	    +---+---------------------------------------------------------+
+     +---+---------------------------------------------------------+
+     |Job|                                                 Progress|
+     +---+---------------------------------------------------------+
+     |103|[||||||||||||||||||||||                            ] 42 %|
+     |104|[||||||||||||||||||||||                            ] 42 %|
+     |105|[|||||||||||||                                     ] 25 %|
+     +---+---------------------------------------------------------+
 
     The command status is running every 15 seconds. PRESS ENTER TO EXIT
     ```
 
-10. Showing detailed output
+1. Showing detailed output
 
-    If you want to see more detailed output for a job, specify the job number in the status command. 
-    
+    If you want to see more detailed output for a job, specify the job number in the status command.
+
     First press \<ENTER\> to exit the refreshing status command. Then execute the following command to see detailed status for job number 103:
-    
+
     ```text
     $ <copy>status -job 103</copy>
     
     Details
 
-	    Job No           103
-	    Oracle SID       AAA
-	    Start Time       26/01/07 14:23:14
-	    Elapsed (min):   60
-	    End time:        N/A
+     Job No           103
+     Oracle SID       AAA
+     Start Time       26/01/07 14:23:14
+     Elapsed (min):   60
+     End time:        N/A
 
     Logfiles
 
-	    Logs Base:    /u01/autoupgrade/log/AAA
-	    Job logs:     /u01/autoupgrade/log/AAA/103
-	    Stage logs:   /u01/autoupgrade/log/AAA/103/postfixups
-	    TimeZone:     /u01/autoupgrade/log/AAA/temp
-	    Remote Dirs:  
+     Logs Base:    /u01/autoupgrade/log/AAA
+     Job logs:     /u01/autoupgrade/log/AAA/103
+     Stage logs:   /u01/autoupgrade/log/AAA/103/postfixups
+     TimeZone:     /u01/autoupgrade/log/AAA/temp
+     Remote Dirs:  
 
      Stages
-	     SETUP            <1 min
-	     PREUPGRADE       <1 min
-	     PRECHECKS        <1 min
-	     PREFIXUPS        1 min
-	     DRAIN            1 min
-	     DBUPGRADE        35 min
-	     DISPATCH         <1 min
-	     NONCDBTOPDB      18 min
-	     POSTCHECKS       <1 min
-	     POSTFIXUPS       ~0 min (RUNNING)
-	     POSTUPGRADE     
-	     SYSUPDATES      
+      SETUP            <1 min
+      PREUPGRADE       <1 min
+      PRECHECKS        <1 min
+      PREFIXUPS        1 min
+      DRAIN            1 min
+      DBUPGRADE        35 min
+      DISPATCH         <1 min
+      NONCDBTOPDB      18 min
+      POSTCHECKS       <1 min
+      POSTFIXUPS       ~0 min (RUNNING)
+      POSTUPGRADE     
+      SYSUPDATES      
 
      Stage-Progress Per Container
 
          +--------+----------+
-	     |Database|POSTFIXUPS|
-	     +--------+----------+
-	     |     AAA|     50 % |
-	     +--------+----------+
+      |Database|POSTFIXUPS|
+      +--------+----------+
+      |     AAA|     50 % |
+      +--------+----------+
     ```
 
-10. If you want to look at the output of the individual stages, you can check the location indicated in the 'Stage Logs'. To view the contents, open a new terminal window as closing the current upgrade prompt will stop all upgrade activity.
+1. If you want to look at the output of the individual stages, you can check the location indicated in the 'Stage Logs'. To view the contents, open a new terminal window as closing the current upgrade prompt will stop all upgrade activity.
 
     An example of the contents is below:
 
@@ -520,37 +528,37 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     -rw-r----- 1 oracle oinstall 38575982 Jan  7 12:56 catupgrd20240621123720aaa0.log
     ```
 
-11. In this lab, we are performing multiple upgrades simultaneously. Some upgrades require upgrading multiple databases (CDB + 2 PDBs), while others only require unplugging/plugging a PDB and upgrading it. 
+1. In this lab, we are performing multiple upgrades simultaneously. Some upgrades require upgrading multiple databases (CDB + 2 PDBs), while others only require unplugging/plugging a PDB and upgrading it.
 
     In the status page of autoupgrade, you will therefore see that some progress is higher after a while than others:
-    
+
     ```text
-   	+---+---------------------------------------------------------+
-	|Job|                                                 Progress|
-	+---+---------------------------------------------------------+
-	|103|[||||||||||||||||||||||                            ] 42 %|
-	|104|[||||||||||||||||||||||||||||||||||||||            ] 75 %|
-	|105|[||||||||||||||||||||||                            ] 42 %|
-	+---+---------------------------------------------------------+
+    +---+---------------------------------------------------------+
+
+ |Job|                                                 Progress|
+ +---+---------------------------------------------------------+
+ |103|[||||||||||||||||||||||                            ] 42 %|
+ |104|[||||||||||||||||||||||||||||||||||||||            ] 75 %|
+ |105|[||||||||||||||||||||||                            ] 42 %|
+ +---+---------------------------------------------------------+
     ```
-    
+
     After a while (about 30 minutes) you might even see `Job 104 completed` on the screen, which is reflected in the progress bar overview under the status command like this:
-    
+
     ```text
     +---+----------------------------------------------------------+
-	|Job|                                                  Progress|
-	+---+----------------------------------------------------------+
-	|103| [||||||||||||||||||||||                            ] 42 %|
-	|104|[|||||||||||||||||||||||||||||||||||||||||||||||||||] 100%|
-	|105| [||||||||||||||||||||||                            ] 42 %|
-	+---+----------------------------------------------------------+
+ |Job|                                                  Progress|
+ +---+----------------------------------------------------------+
+ |103| [||||||||||||||||||||||                            ] 42 %|
+ |104|[|||||||||||||||||||||||||||||||||||||||||||||||||||] 100%|
+ |105| [||||||||||||||||||||||                            ] 42 %|
+ +---+----------------------------------------------------------+
     ```
-    
+
     After about 45 minutes, job 103 will be finished. Job 105 will take the longest.
     **The whole upgrade using the options chosen in this lab takes about 90 minutes.** You can continue with other labs or let the instructor know you are waiting for the upgrade to finish.
-    
-11.    After a while, you will see that the upgrade has finished:
 
+8. After a while, you will see that the upgrade has finished:
 
     ```
     ------------------- Final Summary --------------------
@@ -574,12 +582,14 @@ In this example we will put 3 different upgrade scenarios in a single configurat
 1. To check your target DB26ai database, you can execute the following:
 
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
     ```
     ORACLE_SID = [DB26ai] ? <copy>DB26ai</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
+
     ```text
     $ <copy>sqlplus / as sysdba</copy>
     
@@ -593,41 +603,44 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     Oracle Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
     Version 23.26.1.0.0
     ```
-    
+
     The 26ai database was already running. More interesting are the PDBs that are now active in the CDB:
-    
+
     ```text
     SQL> <copy>show pdbs</copy>
 
     CON_ID CON_NAME     OPEN MODE   RESTRICTED
     ------ ------------ ----------- ----------
-	      2 PDB$SEED    READ ONLY   NO
-	      3 PDB26AI01   MOUNTED
-	      4 CCC01       READ WRITE  NO
-	      5 AAA         READ WRITE  NO
+       2 PDB$SEED    READ ONLY   NO
+       3 PDB26AI01   MOUNTED
+       4 CCC01       READ WRITE  NO
+       5 AAA         READ WRITE  NO
     ```
+
     For database AAA, we plugged a non-CDB into the DB26ai CDB so this database is displayed as AAA for its CON_NAME (=PDB name). The scenario for database CCC was that we would unplug the CCC01 Pluggable database and plug it into the DB26ai CDB. In the overview, you can see that both databases are plugged in and that there are no restrictions. Basically, the upgrade was a success.
-    
+
 2. We can now check the database scenario (BBB) where we upgraded both the CDB and its PDBs to the new version:
 
     First, exit SQL*Plus:
-    
+
     ```text
     SQL> <copy>exit</copy>
     
     Disconnected from Oracle Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
     Version 23.26.1.0.0
     ```
-    
+
     We can change the SID to database BBB:
-    
+
     ```text
-    $ <copy>. oraenv</copy>
+    <copy>. oraenv</copy>
     ```
+
     ```
     ORACLE_SID = [DB26ai] ? <copy>BBB</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
+
     ```text
     $ <copy>sqlplus / as sysdba</copy>
     
@@ -647,13 +660,13 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     ```text
     SQL> <copy>select version, version_full from v$instance;</copy>
 
-    VERSION 	  VERSION_FULL
+    VERSION    VERSION_FULL
     ----------------- -----------------
-    23.0.0.0.0	  23.26.1.0.0
+    23.0.0.0.0   23.26.1.0.0
     ```
-    
+
     Show the pluggable databases running in the CDB:
-    
+
     ```text
     SQL> <copy>show pdbs</copy>
 

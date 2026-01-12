@@ -44,7 +44,7 @@ When in doubt or need to start the databases use the following steps:
     Processing Database instance "DB26ai": log file /u01/oracle/product/23/dbhome/rdbms/log/startup.log
     ```
     
-## Task 1: Shutdown the source PDB ##
+## Task 1: Shutdown source PDB ##
 
 Execute the following steps as the OS user **oracle**.
 
@@ -98,7 +98,7 @@ Execute the following steps as the OS user **oracle**.
     
     In the database RRR, we have 1 pluggable database, RRR01 in MOUNTED state, that we can upgrade to 26ai.
 
-## Task 2: Unplugging the source pluggable database ##
+## Task 2: Unplug source PDB ##
 
  There are many ways to migrate a PDB to a new CDB. Some will keep the data files in place, and other options will recreate the data files (for which you need twice your databasesize available in your storage system). If you are moving the data files to another storage location, you can, for example, also use the Pluggable Archive option (this option will put all files into one zip file with a .pdb extension).
 
@@ -123,7 +123,7 @@ Execute the following steps as the OS user **oracle**.
 Version 19.21.0.0.0
     ```
 
-## Task 3: Plug the PDB into the target 26ai environment ##
+## Task 3: Plug PDB target CDB ##
 
 1. First, we need to change the environment settings to the 26aienvironment:
 
@@ -180,7 +180,7 @@ Version 19.21.0.0.0
     /u01/oradata/DB26AI/RRR01/users01.dbf
     ```
 
-## Task 4: Open the imported Pluggable Database for Replay Upgrade##
+## Task 4: Open PDB for Replay Upgrade##
 
  By opening the 19c PDB in a 26ai CDB, the system will recognize that an upgrade is needed. Instead of opening the pluggable database right away, the system will open the PDB in Upgrade mode automatically and start executing the SQL statements to upgrade the database.
  
