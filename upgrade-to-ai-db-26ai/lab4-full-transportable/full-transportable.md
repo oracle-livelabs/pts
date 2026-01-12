@@ -2,14 +2,14 @@
 
 ## Introduction ##
 
- In this lab, we will use the Full (Cross Platform) Transportable Database functionality to migrate an existing 19c (single-mode, non-CDB architecture) to a 23ai Pluggable database.
+ In this lab, we will use the Full (Cross Platform) Transportable Database functionality to migrate an existing 19c (single-mode, non-CDB architecture) to a 26ai Pluggable database.
 
  Estimated time: 15 minutes
 
 ### Objectives ###
 
-- Create a new 23ai PDB to act as a target for the source database.
-- Prepare the target 23ai database for the transported tablespaces
+- Create a new 26ai PDB to act as a target for the source database.
+- Prepare the target (26ai) PDB for the transported tablespaces
 - Prepare the source database for the transportable tablespace step
 - Execute the upgrade using Full Transportable Tablespaces
 - Check the target (upgraded) database to see that all data has been migrated
@@ -17,16 +17,13 @@
 ### Important ###
 
 - If you use the copy functionality in this lab, make sure you open the Lab instructions INSIDE the client image
-    - When copied outside of the client image, additional *returns* can be placed between the lines, which makes the command fail
+    - When copied from outside the client image but pasted into the client image, additional *returns* can be placed between the lines, which makes the command fail
 
 ### Prerequisites ###
 
-- You have access to the Upgrade to 23ai Hands-on-Lab client image
-- A new 23ai database has been created in this image
+- You have access to the Upgrade to 26ai Hands-on-Lab client image
+- A new Oracle AI Database 26ai database has been created in this image
 - All databases in the image are running
-
-
-
 
 When in doubt or need to start the databases use the following steps:
 
@@ -35,10 +32,10 @@ When in doubt or need to start the databases use the following steps:
     ```text
     $ <copy>. oraenv</copy>
     ```
-2. Please enter the SID of the 23ai database that you have created in the first lab. In this example, the SID is **`DB23AI`**
+2. Please enter the SID of the 26ai database that you have created in the first lab. In this example, the SID is **`DB26ai`**
 
     ```text
-    ORACLE_SID = [oracle] ? <copy>DB23AI</copy>
+    ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
 
     The Oracle base has been set to /u01/oracle
     ```
@@ -51,11 +48,11 @@ When in doubt or need to start the databases use the following steps:
     Processing Database instance "CCC": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
     Processing Database instance "RRR": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
     Processing Database instance "TTT": log file /u01/oracle/product/19/dbhome/rdbms/log/startup.log
-    Processing Database instance "DB23AI": log file /u01/oracle/product/23/dbhome/rdbms/log/startup.log
-    ```
-## Task 1: Prepare the target 23ai database ##
+    Processing Database instance "DB26ai": log file /u01/oracle/product/23/dbhome/rdbms/log/startup.log
+    ``
+## Task 1: Prepare the target 26ai database ##
 
-The FTTS functionality requires an existing (pluggable) database as a target. For this, we will log into the existing 23ai instance and create a new Pluggable Database.
+The FTTS functionality requires an existing (pluggable) database as a target. For this, we will log into the existing 26ai instance and create a new Pluggable Database.
 
 ### Set the correct environment and log in using SQL*Plus ###
 
@@ -65,14 +62,14 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
     $ <copy>. oraenv</copy>
     ```
 
-    Enter the SID for the 23ai environment you already created in a previous lab:
+    Enter the SID for the 26ai environment you already created in a previous lab:
 
     ```text
-    ORACLE_SID = [oracle] ? <copy>DB23AI</copy>
+    ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
-2. We can now log in to the 23ai environment. After login, we will create a new pluggable database as the target:
+2. We can now log in to the 26ai environment. After login, we will create a new pluggable database as the target:
 
     ```text
     $ <copy>sqlplus / as sysdba</copy>
@@ -88,9 +85,9 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
     Pluggable database created.
     ```
 
-    In the above example, we choose the location for the filenames by using the file_name_convert clause. Another option would have been setting the `PDB_FILE_NAME_CONVERT` init.ora parameter or have Oracle sort it out using Oracle Managed Files.
+    In the above example, we choose the location for the filenames by using the `FILE_NAME_CONVERT` clause. Another option would have been setting the `PDB_FILE_NAME_CONVERT` init.ora parameter or have Oracle sort it out using Oracle Managed Files.
 
-    The files for this PDB have been created in `/u01/oradata/DB23AI/TTT01` using our create pluggable database command.
+    The files for this PDB have been created in `/u01/oradata/DB26AI/TTT01` using our create pluggable database command.
 
 4. After creating the new PDB, we need to start it so it can be used as a target for our migration:
 
@@ -150,7 +147,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     First, check to see if the user exists in the target environment:
     
     ```text
-    SQL> <copy>select table_name from dba_tables where owner='TOILETMAP';</copy>
+    SQL> <copy>select table_name from dba_tables where owner='TITANIC';</copy>
 
     no rows selected
     ```
@@ -160,11 +157,11 @@ The migration described in this lab requires a directory object for Datapump (fo
 11. The second check, to be sure, see if the table exists in the source database:
 
     ```text
-    SQL> <copy>select table_name from dba_tables@sourcedb where owner='TOILETMAP';</copy>
+    SQL> <copy>select table_name from dba_tables@sourcedb where owner='TITANIC';</copy>
 
     TABLE_NAME
     --------------------------------------------------------------------------------
-    TOILETMAP_AUSTRALIA
+    PASSENGERS
 
     ```
     
@@ -173,11 +170,11 @@ The migration described in this lab requires a directory object for Datapump (fo
  12. As a quick check, we determine how many records are in the remote table:
 
     ```text
-    SQL> <copy>select count(*) from TOILETMAP.TOILETMAP_AUSTRALIA@sourcedb;</copy>
+    SQL> <copy>select count(*) from TITANIC.PASSENGERS@sourcedb;</copy>
 
     COUNT(*)
-    ----------
-         23696
+    --------
+        1309
     ```
 
     The table and user exist in the source 19C database. They do not exist in the (target) PDB to which we are connected.
@@ -198,7 +195,7 @@ The migration described in this lab requires a directory object for Datapump (fo
     $ <copy>. oraenv</copy>
     ```
     ```text
-    ORACLE_SID = [DB23AI] ? <copy>TTT</copy>
+    ORACLE_SID = [DB26ai] ? <copy>TTT</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
@@ -254,24 +251,24 @@ The migration described in this lab requires a directory object for Datapump (fo
 
 ## Task 3: Copy datafiles and import into 19c target PDB ##
 
-1. First, we copy the files to the location we will use for the 23ai target PDB TTT01:
+1. First, we copy the files to the location we will use for the 26ai target PDB TTT01:
 
     ```text
-    $ <copy>cp /u01/oradata/TTT/users01.dbf /u01/oradata/DB23AI/TTT01</copy>
+    $ <copy>cp /u01/oradata/TTT/users01.dbf /u01/oradata/DB26AI/TTT01</copy>
     ```
 
     Now, we can import the database metadata and data (already copied and ready in the data files for the tablespace USERS in the new location) by executing a Datapump command. The Datapump import will be run through the database link you created earlier, so there is no need for a file-based export or a dump file.
 
     Data Pump will take care of everything (currently except XDB and AWR) you need from the system tablespaces and move views, synonyms, triggers, etc., over to the target database (in our case: TTT01). Data Pump can do this beginning from Oracle 11.2.0.3 on the source side but will require an Oracle 12c or higher database as a target. Data Pump will work cross-platform as well but might need RMAN to convert the files from big to little-endian or vice-versa.
 
-2. First, we change our environment parameters back to 23ai:
+2. First, we change our environment parameters back to 26ai:
 
     ```text
     $ <copy>. oraenv</copy>
     ```
     
     ```text
-    ORACLE_SID = [TTT] ? <copy>DB23AI</copy>
+    ORACLE_SID = [TTT] ? <copy>DB26ai</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
@@ -280,35 +277,41 @@ The migration described in this lab requires a directory object for Datapump (fo
     ```text
     $ <copy>impdp system/Welcome_123@//localhost:1521/TTT01 network_link=sourcedb \
             full=y transportable=always metrics=y exclude=statistics logfile=u01_dir:TTTtoTTT01.log \
-            logtime=all transport_datafiles='/u01/oradata/DB23AI/TTT01/users01.dbf'</copy>
+            logtime=all transport_datafiles='/u01/oradata/DB26AI/TTT01/users01.dbf'</copy>
 
-    Import: Release 23.0.0.0.0 - Production on Tue Jun 25 15:05:05 2024
-    Version 23.5.0.24.06
+    Import: Release 23.26.1.0.0 - Production on Thu Jan 8 15:31:21 2026
+    Version 23.26.1.0.0
 
-    Copyright (c) 1982, 2024, Oracle and/or its affiliates.  All rights reserved.
+    Copyright (c) 1982, 2025, Oracle and/or its affiliates.  All rights reserved.
 
-    Connected to: Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production
-    25-JUN-24 15:05:10.351: Starting "SYSTEM"."SYS_IMPORT_FULL_01":  system/********@//localhost:1521/TTT01 network_link=sourcedb full=y transportable=always metrics=y exclude=statistics logfile=u01_dir:TTTtoTTT01.log logtime=all transport_datafiles=/u01/oradata/DB23AI/TTT01/users01.dbf 
-    25-JUN-24 15:05:11.258: W-1 Startup on instance 1 took 1 seconds
+    Connected to: Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - for Oracle Cloud and Engineered Systems
+    08-JAN-26 15:31:27.008: Starting "SYSTEM"."SYS_IMPORT_FULL_01":  system/********@//localhost:1521/TTT01 network_link=sourcedb full=y transportable=always metrics=y exclude=statistics logfile=u01_dir:TTTtoTTT01.log logtime=all transport_datafiles=/u01/oradata/DB26AI/TTT01/users01.dbf 
+    08-JAN-26 15:31:28.541: W-1 Startup on instance 1 took 1 seconds
+    08-JAN-26 15:31:31.776: W-1 Processing object type DATABASE_EXPORT/PLUGTS_FULL/FULL/PLUGTS_TABLESPACE
+    08-JAN-26 15:31:31.895: W-1      Completed 0 PLUGTS_TABLESPACE objects in 2 seconds
+    08-JAN-26 15:31:31.895: W-1 Processing object type DATABASE_EXPORT/PLUGTS_FULL/PLUGTS_BLK
+    08-JAN-26 15:31:34.769: W-1      Completed 1 PLUGTS_BLK objects in 3 seconds
+    08-JAN-26 15:31:34.769: W-1 Processing object type DATABASE_EXPORT/EARLY_OPTIONS/VIEWS_AS_TABLES/TABLE_DATA
 
     (etc)
 
-    25-JUN-24 15:07:02.871: W-1      Completed 1 [internal] Unknown objects in 3 seconds
-    25-JUN-24 15:07:04.152: W-1      Completed 1 DATABASE_EXPORT/EARLY_OPTIONS/VIEWS_AS_TABLES/TABLE_DATA objects in 0 seconds
-    25-JUN-24 15:07:04.154: W-1      Completed 53 DATABASE_EXPORT/NORMAL_OPTIONS/TABLE_DATA objects in 5 seconds
-    25-JUN-24 15:07:04.157: W-1      Completed 16 DATABASE_EXPORT/NORMAL_OPTIONS/VIEWS_AS_TABLES/TABLE_DATA objects in 5 seconds
-    25-JUN-24 15:07:04.197: Job "SYSTEM"."SYS_IMPORT_FULL_01" completed with 9 error(s) at Tue Jun 25 15:07:04 2024 elapsed 0 00:01:56   
+    08-JAN-26 15:33:52.074: W-1      Completed 1 [internal] Unknown objects in 5 seconds
+    08-JAN-26 15:33:53.842: W-1      Completed 1 DATABASE_EXPORT/EARLY_OPTIONS/VIEWS_AS_TABLES/TABLE_DATA objects in 0 seconds
+    08-JAN-26 15:33:53.850: W-1      Completed 54 DATABASE_EXPORT/NORMAL_OPTIONS/TABLE_DATA objects in 8 seconds
+    08-JAN-26 15:33:53.856: W-1      Completed 16 DATABASE_EXPORT/NORMAL_OPTIONS/VIEWS_AS_TABLES/TABLE_DATA objects in 5 seconds
+    08-JAN-26 15:33:53.918: Job "SYSTEM"."SYS_IMPORT_FULL_01" completed with 9 error(s) at Thu Jan 8 15:33:53 2026 elapsed 0 00:02:30
     ```
 
     Usually, you will find errors when using FTTS:
 
     ```text
-    25-JUN-24 15:05:28.843: ORA-39083: Object type ON_USER_GRANT failed to create with error:
+    08-JAN-26 15:32:21.756: ORA-39083: Object type PROCACT_SCHEMA failed to create with error:
     ORA-31625: Schema GSMROOTUSER is needed to import this object, but is unaccessible
     ORA-01435: user does not exist
 
     Failing sql is:
-     GRANT INHERIT PRIVILEGES ON USER "GSMROOTUSER" TO "PUBLIC"
+    BEGIN 
+    sys.dbms_logrep_imp.instantiate_schema(schema_name=>SYS_CONTEXT('USERENV','CURRENT_SCHEMA'), export_db_name=>'TTT', inst_scn=>'8428332');COMMIT; END; 
     ```
     
     You need to check the log file to determine if the errors harm your environment. In our migration, the errors should only concern a few users who could not be created or do not exist.
@@ -322,14 +325,15 @@ The Data Pump process should have migrated the most crucial user in the database
     ```text
     $ <copy>sqlplus / as sysdba</copy>
 
-    SQL*Plus: Release 23.0.0.0.0 - Production on Thu Jul 18 11:43:53 2024
-    Version 23.5.0.24.06
+    SQL*Plus: Release 23.26.1.0.0 - Production on Thu Jan 8 15:38:13 2026
+    Version 23.26.1.0.0
 
-    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2025, Oracle.  All rights reserved.
+
 
     Connected to:
-    Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production
-    Version 23.5.0.24.06
+    Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
+    Version 23.26.1.0.0
     ```
     
 2. Change the session environment to the PDB (container):
@@ -342,25 +346,25 @@ The Data Pump process should have migrated the most crucial user in the database
 3. Check if the table, which is so important, exists in the target database:
 
     ```text
-    SQL> <copy>select table_name from dba_tables where owner='TOILETMAP';</copy>
+    SQL> <copy>select table_name from dba_tables where owner='TITANIC';</copy>
 
     TABLE_NAME
     --------------------------------------------------------------------------------
-    TOILETMAP_AUSTRALIA
+    PASSENGERS
     ```
 
 4. We can also check the number of records in the table by executing the following command:
 
     ```text
-    SQL> <copy>select count(*) from TOILETMAP.TOILETMAP_AUSTRALIA;</copy>
+    SQL> <copy>select count(*) from TITANIC.PASSENGERS;</copy>
 
       COUNT(*)
     ----------
-         23696
+          1309
     ```
 
     In case you get a similar number as the example, the migration seems to be successful.
 
 ## Acknowledgements ##
 
-- **Author** - Robert Pastijn, Database Product Management, PTS EMEA - July 2024
+- **Author** - Robert Pastijn, Database Product Management, PTS EMEA - January 2026
