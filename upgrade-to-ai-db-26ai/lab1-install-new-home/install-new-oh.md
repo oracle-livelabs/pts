@@ -116,11 +116,14 @@ Before using the unzipped Oracle software, we need to run the Oracle Universal I
 
 While running the OUI, we have the option to install only the software (so no database) or to install the software and create a database. For various reasons, we will both install the software and create a new database in this lab.
 
-1. Execute the following commands in your terminal window as oracle user (if you are not already in this directory):
+1. Execute the following commands in your terminal window as oracle user.
+
+    If you are not already in the Oracle Home directory (from the previous task), change to this directory:
 
     ```text
     $ <copy>cd /u01/oracle/product/26ai/dbhome</copy>
     ````
+2. Start the Oracle Universal Installer:
 
     ```text
     <copy>./runInstaller &</copy>
@@ -140,22 +143,14 @@ While running the OUI, we have the option to install only the software (so no da
 
 2. Make sure to check and change the following values in the various fields:
 
-    - Oracle Base
-      - /u01/oracle (no changes)
-    - Database File Location
-      - /u01/oradata **(change this value)**
-    - Database Edition
-      - Enterprise Edition (no changes)
-    - Characterset
-      - Unicode (no changes)
-    - OSBDA group
-      - dba (no changes)
-    - Global Database name
-      - DB26ai **(change this value)**
-    - Password
-      - Welcome_123 **(change this value)**
-    - Pluggable database name
-      - PDB26ai01 **(change this value)**
+    - Oracle Base: '/u01/oracle' (no changes)
+    - Database File Location: '/u01/oradata' **(change this value)**
+    - Database Edition: Enterprise Edition (no changes)
+    - Characterset: Unicode (no changes)
+    - OSBDA group: dba (no changes)
+    - Global Database name: DB26ai **(change this value)**
+    - Password (2x): Welcome_123 **(change this value)**
+    - Pluggable database name: PDB26ai01 **(change this value)**
 
     ![Oracle Universal Installer screen 2](./images/oui-2.png)
 
@@ -208,16 +203,22 @@ While running the OUI, we have the option to install only the software (so no da
 
 ## Task 3: Alter memory and startup ##
 
-The OUI takes a certain percentage of the available memory in our environment as default SGA size. In our workshop environment, this is an SGA of 18G. We need the memory for other tasks (databases) later on, so we will need to lower the memory usage of the new instance:
+The OUI takes a certain percentage of the available memory in our environment as default SGA size. In our workshop environment, the resulting SGA will be too large to host all source databases in our environment. We need to lower the memory usage of the new instance by executing the following commands:
 
 1. Please execute the following commands as `oracle` user to login to the database:
 
     ```text
     $ <copy>. oraenv</copy>
+    ```
 
-    ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
+    Enter the name of our new database:
+
+    ```text
+    ORACLE_SID = [oracle] ? DB26ai
     The Oracle base remains unchanged with value /u01/oracle
     ```
+
+    Start SQL*Plus (or SQLcl) to execute the commands to lower the memory footprint:
 
     ```text
     $ <copy>sqlplus / as sysdba</copy>
@@ -237,14 +238,26 @@ The OUI takes a certain percentage of the available memory in our environment as
 
 2. Change the parameters for the memory setting to a lower value:
 
+    First, take a backup of the spfile (init.ora) in case something happends and we need to revert:
+
+    ``` text
+    SQL> create pfile='/u01/db26ai_init.ora' from spfile;
+
+    File created.
+    ```
+
+    Reduce the target SGA size in the system to prevent swapping:
+
     ```text
-    SQL> <copy>alter system set sga_max_size=3G scope=spfile;</copy>
+    SQL> <copy>alter system set sga_target=3G scope=spfile;</copy>
 
     System altered.
     ```
 
+    Also, lower te maximum SGA size for the environment:
+
     ```text
-    SQL> <copy>alter system set sga_target=3G scope=spfile;</copy>
+    SQL> <copy>alter system set sga_max_size=3G scope=spfile;</copy>
 
     System altered.
     ```

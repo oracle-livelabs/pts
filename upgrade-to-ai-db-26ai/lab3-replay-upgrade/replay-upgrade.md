@@ -209,12 +209,18 @@ Version 19.21.0.0.0
     RRR01(6):SERVER COMPONENT id=CATUPPST: timestamp=2026-01-08 13:48:28 Container=RRR01 Id=6
     ...
     ```
-3. When the upgrade has finished, you will see the regular result when opening a pluggable database:
-    
+3. When the upgrade has finished, depending on the version you have upgraded to, you might see an error:
+
     ```text
-    Pluggable database altered.
+    ORA-24344: A compilation error occurred while creating an object.
+    Help: https://docs.oracle.com/error-help/db/ora-24344/24344. 00000 -  "A compilation error occurred while creating an object."
+    *Cause:    A SQL or PL/SQL compilation error occurred while creating an
+               object.
+    *Action:   Return OCI_SUCCESS_WITH_INFO with the error code.
+
+    Pluggable database RRR01 altered.
     ```
-    
+
 4. In order to synchronise the CDB with the PDB and to make sure everything starts properly after a reboot, stop and start the new Pluggable Database:
 
     ```text
@@ -230,8 +236,102 @@ Version 19.21.0.0.0
     
     Pluggable database altered.
     ```
+
+5. If the error we noticed earlier persists or PDB violations are reported, we can check the PDB_PLUG_IN_VIOLATIONS view:
+
+    ```text
+    SQL> <copy>select name, cause, message           
+         from PDB_PLUG_IN_VIOLATIONS                                                                      
+         where status <> 'RESOLVED'
+         and con_id = (select con_id from dba_pdbs where PDB_NAME='RRR01');</copy>
+
+    NAME   CAUSE      MESSAGE                                                                                                            
+    ------ ---------  --------------------------------------------
+    RRR01  SQL Patch  '23.26.1.0.0 Release_Update 2601021041' is installed in the CDB but no release updates are installed in the PDB    
+    ```
+
+    The Upgrade Replay functionality will upgrade a PDB to the base release of the CDB. However, if the new Oracle Home consists of the base version of the software plus one or more patches, the additional patches are not automatically installed in the PDB. 
+
+    First, exit SQL*Plus:
+
+    ```text
+    exit
+
+    Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
+    Version 23.26.1.0.0
+    ```
+
+    Now run the datapatch command:
+
+    ```text
+    $ <copy>$ORACLE_HOME/OPatch/datapatch</copy>
+
+    SQL Patching tool version 23.26.1.0.0 Production on Tue Jan 13 15:01:24 2026
+    Copyright (c) 2012, 2026, Oracle.  All rights reserved.
+
+    Log file for this invocation: /u01/oracle/product/26ai/dbhome/cfgtoollogs/sqlpatch/sqlpatch_sid_DB26ai_ts_2026_01_13_15_01_24_pid_35993/sqlpatch_invocation.log
+
+    Connecting to database...OK
+    Gathering database info...done
+
+    Bootstrapping registry and package to current versions...done
+    Determining current state...done
+
+    Current state of interim SQL patches:
+      No interim patches found
+
+    Current state of release update SQL patches:
+      Binary registry:
+        23.26.1.0.0 Release_Update 260102104127: Installed
+      PDB CDB$ROOT:
+        Applied 23.26.1.0.0 Release_Update 260102104127 successfully on 08-JAN-26 02.21.04.247945 PM
+      PDB PDB$SEED:
+        Applied 23.26.1.0.0 Release_Update 260102104127 successfully on 08-JAN-26 02.21.04.325939 PM
+      PDB RRR01:
+        Applied 23.26.1.0.0 Release_Update 260102104127 successfully 
+
+    <etc>
+
+    Processing bypass install queue:
+      Patch 38743669 apply (pdb RRR01): SUCCESS (bypass_install)
+
+    SQL Patching tool complete on Tue Jan 08 15:01:32 2026
+    ```
         
-5. We can now check if there are any plugin issues for this new pluggable database:
+5. We can now check if the issues have been solved in our new PDB:
+
+    Login to SQL*Plus:
+    
+    ```text
+    $ <copy>sqlplus / as sysdba</copy>
+
+    SQL*Plus: Release 23.26.1.0.0 - Production on Thu Jan 8 13:28:05 2024
+    Version 23.26.1.0.0
+
+    Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+
+    Connected to:
+    Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
+    Version 23.26.1.0.0
+    ```
+
+    We can see if closing a PDB will cause an issue:
+
+    ```text    
+    SQL> <copy>alter pluggable database RRR01 close;</copy>
+
+    Pluggable database RRR01 altered.
+    ```
+
+    And now see if the error is gone after opening the PDB again:
+
+    ```text
+    SQL> <copy>alter pluggable database RRR01 open;</copy>
+
+    Pluggable database RRR01 altered.
+    ```
+
+    To make sure there are no other issues in the new PDB, we can check the view PDB_PLUG_IN_VIOLATIONS:
 
     ```text
     SQL> <copy>select name, cause, message           
@@ -292,7 +392,7 @@ Version 19.21.0.0.0
     ---------------------------
                               0
 
-                              Function created.
+    Function created.
 
 
     PL/SQL procedure successfully completed.
