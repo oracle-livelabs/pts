@@ -237,7 +237,7 @@ Version 19.21.0.0.0
     Pluggable database altered.
     ```
 
-5. If the error we noticed earlier persists or PDB violations are reported, we can check the PDB_PLUG_IN_VIOLATIONS view:
+5. If the error we noticed earlier persists or PDB violations are reported, we can check the PDB\_PLUG\_IN\_VIOLATIONS view:
 
     ```text
     SQL> <copy>select name, cause, message           
@@ -290,7 +290,7 @@ Version 19.21.0.0.0
       PDB RRR01:
         Applied 23.26.1.0.0 Release_Update 260102104127 successfully 
 
-    <etc>
+    [....]
 
     Processing bypass install queue:
       Patch 38743669 apply (pdb RRR01): SUCCESS (bypass_install)
@@ -331,7 +331,7 @@ Version 19.21.0.0.0
     Pluggable database RRR01 altered.
     ```
 
-    To make sure there are no other issues in the new PDB, we can check the view PDB_PLUG_IN_VIOLATIONS:
+    To make sure there are no other issues in the new PDB, we can check the view PDB\_PLUG\_IN\_VIOLATIONS:
 
     ```text
     SQL> <copy>select name, cause, message           
