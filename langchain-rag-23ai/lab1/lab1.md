@@ -2,29 +2,29 @@
 
 ## Introduction
 
-A typical RAG application design has 7 steps and requires a vector store.  Oracle Database 23ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.
+A typical RAG application design has 7 steps and requires a vector store.  Oracle Database 26ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.
 1.	Load your document.
 2.	Transform the document to text.
 3.	Chunk the text document into smaller pieces.
-4.	Using an embedding model, embed the chunks as vectors into Oracle Database 23ai.
+4.	Using an embedding model, embed the chunks as vectors into Oracle Database 26ai.
 5.	Ask the question for the prompt, the prompt will use the same embedding model to vectorize the question.
-6.	The question will be passed to Oracle Database 23ai and a similarity search is performed on the question.
+6.	The question will be passed to Oracle Database 26ai and a similarity search is performed on the question.
 7.	The results (context) of the search and the prompt are passed to the LLM to generate the response.
 
  ![RAG Design](images/ragdesign.png)
 
 Estimated Time: 10 min
 
-To simplify and complete this application in less than 10 minutes, we have created an image with Oracle Database 23ai.  The Python application template has also been created and a number of library modules have been installed.  We will have you execute the important steps for the RAG application by running the Python code snippets in Jupyter notebook to build the RAG application.
+To simplify and complete this application in less than 10 minutes, we have created an image with Oracle Database 26ai.  The Python application template has also been created and a number of library modules have been installed.  We will have you execute the important steps for the RAG application by running the Python code snippets in Jupyter notebook to build the RAG application.
 
 ### Objectives
 
 In this lab, you will:
-* Use the LangChain framework to build the RAG application with Oracle Database 23ai
+* Use the LangChain framework to build the RAG application with Oracle Database 26ai
 
 ### Prerequisites
 
-* Environment with Oracle Database 23ai
+* Environment with Oracle Database 26ai
 
 ## Task 1: Launch Jupyter Lab Notebook
 
@@ -39,9 +39,9 @@ In this lab, you will:
         $ jupyter notebook
     ```
 
-3. Open the notebook **RAG\_with\_Oracle23ai\_gold1.ipynb**. You can double click or right-click and select **Open**.
+3. Open the notebook **RAG\_with\_Oracle26ai\_gold1.ipynb**. You can double click or right-click and select **Open**.
    
-    ![Open RAG notebook](images/openragwithoracle23ai.png)
+    ![Open RAG notebook](images/openragwithoracle26ai.png)
 
 
     If you want to enlarge the window and have larger fonts, you can zoom in with the browser.
@@ -105,7 +105,7 @@ Let's import the libraries.
 2. This next code snippet defines the function to include metadata with the chunks.  Select the code snippet and click **Run**.
 
     ```python
-    # Function to format and add metadata to Oracle Database 23ai Vector Store
+    # Function to format and add metadata to Oracle Database 26ai Vector Store
 
     def chunks_to_docs_wrapper(row: dict) -> Document:
         """
@@ -117,7 +117,7 @@ Let's import the libraries.
     print("Successfully defined metadata wrapper")
     ```
 
-3. This code loads the environment variables and connects to Oracle Database 23ai with the credentials and connection string.    Select the code snippet and click **Run**.
+3. This code loads the environment variables and connects to Oracle Database 26ai with the credentials and connection string.    Select the code snippet and click **Run**.
 
     ```python
     # Load environment variables
@@ -210,7 +210,7 @@ Our chunk size will be 800 characters, with an overlap of 100 characters with ea
 8. Click **Run** to execute the code.
 
     ```python
-    # RAG Step 4 - Using an embedding model, embed the chunks as vectors into Oracle Database 23ai.
+    # RAG Step 4 - Using an embedding model, embed the chunks as vectors into Oracle Database 26ai.
 
     # Initialize embedding model
     model_4db = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
@@ -223,14 +223,14 @@ Our chunk size will be 800 characters, with an overlap of 100 characters with ea
     print( f"Vectorizing and inserting chunks duration: {round(s2time - s1time, 1)} sec.")
 
     ```
-**Have a look into the Oracle Database 23ai to see the table with the vectors and metadata created. It's long, scroll down to see the text chunks.**
+**Have a look into the Oracle Database 26ai to see the table with the vectors and metadata created. It's long, scroll down to see the text chunks.**
 
-9. Take a moment to celebrate. You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 23ai
+9. Take a moment to celebrate. You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 26ai
 
     ```python
-    # Take a moment to celebrate. You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 23ai
+    # Take a moment to celebrate. You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 26ai
 
-    print("Yay! You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 23ai")
+    print("Yay! You have successfully uploaded the document, transformed it to text, split into chunks, and embedded its vectors in Oracle Database 26ai")
 
     ```
 
@@ -319,7 +319,7 @@ Note: To learn more about using other LLMs and accessing LLMs with secure API ke
 
 ```
 
-13.    The code below builds the prompt template to include both the question and the context, and instantiates the knowledge base class to use the retriever to retrieve context from Oracle Database 23ai. Click **Run** to execute the code.
+13.    The code below builds the prompt template to include both the question and the context, and instantiates the knowledge base class to use the retriever to retrieve context from Oracle Database 26ai. Click **Run** to execute the code.
 
     ```python
     # Set up a template for the question and context, and instantiate the database retriever object
@@ -387,12 +387,12 @@ Click **Run** to execute the congrats code.
 
 ```python
         print("")
-        print("Congratulations! You've completed your RAG application with AI Vector Search in Oracle Database 23ai using LangChain")
+        print("Congratulations! You've completed your RAG application with AI Vector Search in Oracle Database 26ai using LangChain")
 ```
 
 ### Conclusion
 
-By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+By using AI Vector Search in Oracle Database 26ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 26ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 26ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 
 
 You may now [proceed to the next lab](#next).
