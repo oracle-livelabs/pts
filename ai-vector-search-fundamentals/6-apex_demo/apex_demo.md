@@ -105,12 +105,12 @@ Go ahead and experiment with different search terms. You can't hurt anything and
 
 ## Learn More
 
-* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/index.html)
 * [OML4Py: Leveraging ONNX and Hugging Face for AI Vector Search](https://blogs.oracle.com/machinelearning/post/oml4py-leveraging-onnx-and-hugging-face-for-advanced-ai-vector-search)
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/26/rnrdm/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
 * **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2025
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
