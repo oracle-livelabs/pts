@@ -47,7 +47,6 @@ See below for more information on Oracle AI Database 26ai and Oracle AI Vector S
 
 * [Oracle AI Database 26ai Documentation](https://docs.oracle.com/en/database/oracle/oracle-database/)
 * [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/index.html)
-* [Oracle AI Vector Search Blog](https://blogs.oracle.com/database/post/oracle-announces-general-availability-of-ai-vector-search-in-oracle-database-23ai)
 
 You may now [proceed to the next lab](#next).
 

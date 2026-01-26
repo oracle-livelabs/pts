@@ -27,6 +27,11 @@
             "description": "Prepare APEX application for spatial JSON data",
             "filename": "../../spatial-application/spatial-application.md"
         },
+        {            
+            "title": "Lab 4: Prepare application for Web crawling",
+            "description": "Prepare APEX application for Web crawling and indexing",
+            "filename": "../../web-crawling/web-crawling.md"
+        },
         {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",

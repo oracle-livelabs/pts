@@ -26,7 +26,7 @@ Estimated Time: 5 minutes
 ### Objectives
 
 In this workshop, you will learn how to:
-* Use Vectors in Oracle 23ai Free Database.
+* Use Vectors in Oracle 26ai Free Database.
 * Basic query and DML operation on Vectors.
 * Use Vector\_distance functions to find the nearest Vector
 * Use Attribute filtering to narrow down search results

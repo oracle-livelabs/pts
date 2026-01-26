@@ -40,43 +40,43 @@ This lab assumes you have the following:
 
     ![object storage namespace](./images/obj-storage-namespace.png " ")
 
-3. Open the user menu in the upper-right corner and click on your username.
+4. Open the user menu in the upper-right corner and click on your username.
 
     ![user menu](./images/user-menu.png " ")
 
-4. Under User information, copy the User OCID in your notes.
+5. Under User information, copy the User OCID in your notes.
 
     ![user ocid](./images/user-ocid.png " ")
 
-5. Under Resources, select Customer Secret Keys. Click Generate secret key.
+6. Under Resources, select Customer Secret Keys. Click Generate secret key.
 
     ![customer secret keys](./images/customer-secret-keys.png " ")
 
-6. Give it a name and generate.
+7. Give it a name and generate.
 
     ![generate secret key](./images/generate-secret-key.png " ")
 
-7. Copy the Generated key.
+8. Copy the Generated key.
 
     ![copy secret key](./images/copy-secret-key.png " ")
 
-8. Copy the Access key.
+9. Copy the Access key.
 
     ![copy access key](./images/copy-access-key.png " ")
 
-9. Click Auth tokens and Generate token.
+10. Click Auth tokens and Generate token.
 
     ![auth tokens](./images/auth-tokens.png " ")
 
-10. Give it a name and generate.
+11. Give it a name and generate.
 
     ![generate token](./images/generate-token.png " ")
 
-11. Copy the Auth token into your notes.
+12. Copy the Auth token into your notes.
 
     ![copy token](./images/copy-token.png " ")
 
-12. Write down in your notes the Auth token generated. You will need this information for the Object Storage credential:
+13. Write down in your notes the Auth token generated. You will need this information for the Object Storage credential:
 
     - CLOUD_USER='YourOCIusername'
     - CLOUD_TOKEN='6h[H9h)h}hH.23hHha0H'
@@ -85,27 +85,27 @@ This lab assumes you have the following:
 
     ![tenancy identity domain](./images/tenancy-identity-domain.png " ")
 
-13. Click API keys and Add API key.
+14. Click API keys and Add API key.
 
     ![api keys](./images/api-keys.png " ")
 
-14. Download the Private and Public keys and click Add.
+15. Download the Private and Public keys and click Add.
 
     ![add api key](./images/add-api-key.png " ")
 
-15. Click main menu ≡ > Identity & Security > Compartments.
+16. Click main menu ≡ > Identity & Security > Compartments.
 
     ![identity security compartments](./images/identity-security-compartments.png " ")
 
-16. Here is another place where you can find your Tenancy OCID.
+17. Here is another place where you can find your Tenancy OCID.
 
     ![compartments](./images/compartments.png " ")
 
-17. Create a Compartment for the Autonomous Database. Copy the OCID into your notes.
+18. Create a Compartment for the Autonomous Database. Copy the OCID into your notes.
 
     ![copy compartment ocid](./images/copy-compartment-ocid.png " ")
 
-18. You should have in your notes all these details you will need for the Native Credential:
+19. You should have in your notes all these details you will need for the Native Credential:
 
     - Tenancy OCID: `ocid1.tenancy.oc1..aaaaaaaa6aea6xvr6thisismytenancyhahahahaahahaa4opc3fib2a`
     - User OCID: `ocid1.user.oc1..aaaaaaaat2x6ry4xsb6m5thisismyuserhahahahahahahaahahahab2bvcjq`
@@ -125,31 +125,31 @@ This lab assumes you have the following:
     ````
     - Fingerprint: `25:0h:57:07:2h:55:0h:10:6h:h6:ha:06:h1:9h:32:9h`
 
-19. Click main menu ≡ > Storage > Buckets.
+20. Click main menu ≡ > Storage > Buckets.
 
     ![storage buckets](./images/storage-buckets.png " ")
 
-20. Click Create Bucket. 
+21. Click Create Bucket. 
 
     ![buckets in compartment](./images/buckets-in-compartment.png " ")
 
-21. Name it DBAI-bucket.
+22. Name it DBAI-bucket.
 
     ![create bucket](./images/create-bucket.png " ")
 
-22. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
+23. Download `all_MiniLM_L12_v2.onnx` ONNX model from [ONNX Pipeline Models](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/onnx-pipeline-models-text-embedding.html) and unzip.
 
     ![onnx models](./images/onnx-models.png " ")
 
-23. Click Upload.
+24. Click Upload.
 
     ![bucket objects](./images/bucket-objects.png " ")
 
-24. Upload the `all_MiniLM_L12_v2.onnx` large language model (LLM) file to the DBAI-bucket.
+25. Upload the `all_MiniLM_L12_v2.onnx` large language model (LLM) file to the DBAI-bucket.
 
     ![upload onnx llm](./images/upload-onnx-llm.png " ")
 
-25. The LLM file is an object in your bucket.
+26. The LLM file is an object in your bucket.
 
     ![onnx llm object](./images/onnx-llm-object.png " ")
 
@@ -195,7 +195,7 @@ This lab assumes you have the following:
 
     ![granted roles](./images/granted-roles.png " ")
 
-11. On the Oracle Cloud Console, on your ADB instance page, click Database Actions > SQL.
+11. On the Oracle Cloud Console, on your ADB instance page, click Database Actions > SQL. You should be connected as `ADMIN` administrative user.
 
     ![database actions sql](./images/database-actions-sql.png " ")
 
@@ -217,6 +217,7 @@ This lab assumes you have the following:
     grant create ANY DIRECTORY to DBAI;
     grant create MINING MODEL to DBAI;
     grant create PROCEDURE to DBAI;
+    grant create JOB to DBAI;
     grant CTXAPP to DBAI;
     grant execute on CTXSYS.CTX_CLS to DBAI;
     grant execute on CTXSYS.CTX_DDL to DBAI;
@@ -230,7 +231,7 @@ This lab assumes you have the following:
     </copy>
     ````
 
-14. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs. Same for `adobe.io` and `openstreetmap.org` domains.
+14. Run this code to create a new Access Control List (ACL) so the DBAI user can connect to the `oraclecloud.com` domain. This connection is required to access OCI Object Storage buckets and OCI Generative AI service via REST APIs. Same for `adobe.io`, `openstreetmap.org`, and `oraclecloudapps.com` domains.
 
     ````sql
     <copy>
@@ -240,29 +241,18 @@ This lab assumes you have the following:
         ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
                                   principal_name => 'DBAI',
                                   principal_type => xs_acl.ptype_db));
-    END;
-    /
-    </copy>
-    ````
-
-    ````sql
-    <copy>
-    BEGIN
-    DBMS_NETWORK_ACL_ADMIN.append_host_ace (
+      DBMS_NETWORK_ACL_ADMIN.append_host_ace (
         host       => '*.adobe.io',
         ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
                                 principal_name => 'DBAI',
                                 principal_type => xs_acl.ptype_db));
-    END;
-    /
-    </copy>
-    ````
-
-    ````sql
-    <copy>
-    BEGIN
-    DBMS_NETWORK_ACL_ADMIN.append_host_ace (
+      DBMS_NETWORK_ACL_ADMIN.append_host_ace (
         host       => '*.openstreetmap.org',
+        ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
+                                principal_name => 'DBAI',
+                                principal_type => xs_acl.ptype_db));
+      DBMS_NETWORK_ACL_ADMIN.append_host_ace (
+        host       => '*.oraclecloudapps.com',
         ace        => xs$ace_type(privilege_list => xs$name_list('http','connect','resolve'),
                                 principal_name => 'DBAI',
                                 principal_type => xs_acl.ptype_db));
@@ -275,37 +265,45 @@ This lab assumes you have the following:
 
     >Note: Adobe is a trademark of Adobe Systems, Incorporated.
 
-15. On the Oracle Cloud Console, on your ADB instance page, under the Tool Configuration tab, you will use Oracle APEX for the AI Vector Search and RAG application.
+15. Run the following command to append an ACE to the ACL of the cloud host. The ACL controls access to the cloud host from the database, and the ACE specifies the connect privilege granted to the specified user name, your OML user `DBAI`. Replace `<region>` value with your instance region.
+
+    ````sql
+    <copy>
+    exec pyqAppendHostAce('DBAI','adb.<region>.oraclecloudapps.com');
+    </copy>
+    ````
+
+16. On the Oracle Cloud Console, on your ADB instance page, under the Tool Configuration tab, you will use Oracle APEX for the AI Vector Search and RAG application.
 
     ![tool configuration](./images/tool-configuration.png " ")
 
-16. Copy the APEX URL in your notes.
+17. Copy the APEX URL in your notes.
 
     ![copy apex url](./images/copy-apex-url.png " ")
 
-17. Paste your Oracle APEX URL in a new tab of your browser. For example:
+18. Paste your Oracle APEX URL in a new tab of your browser. For example:
 
     - https://apexinstance-adbinstancename.adb.uk-london-1.oraclecloudapps.com/ords/apex
 
-18. Click the Administration Services link.
+19. Click the Administration Services link.
 
     ![administration services](./images/administration-services.png " ")
 
-19. Use the ADB admin user's strong password to log in.
+20. Use the ADB admin user's strong password to log in.
 
     - Password: `Your#5tr0ng_PassW0rd`
 
     ![sign in to administration](./images/sign-in-to-administration.png " ")
 
-20. Click Manage Workspaces > Create Workspace.
+21. Click Manage Workspaces > Create Workspace.
 
     ![manage workspaces create](./images/manage-workspaces-create.png " ")
 
-21. Choose Existing Schema.
+22. Choose Existing Schema.
 
     ![existing schema](./images/existing-schema.png " ")
 
-22. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
+23. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
 
     ![create workspace](./images/create-workspace.png " ")
 
@@ -328,7 +326,7 @@ This lab assumes you have the following:
 
     ![apex workspace](./images/apex-workspace.png " ")
 
-4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/PwomXJU_5EWrhM8w4f2FVbRa58BpGwpoIfYG6U8jUWhUqRp92PdgebCefEaNfIN4/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
+4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/bYdyukrjVm8aKtj4U2Tl-aBxwcenimnhNZqO9vaDjfVga5d87EHp0LGxAdXd4J08/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
 
 5. Go to SQL Workshop > SQL Scripts.
 
@@ -354,7 +352,7 @@ This lab assumes you have the following:
 
 10. Save the script and run it. Make sure there are no errors.
 
-11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/cH9HegImtUSFIQzzT9j3dbyFsmu1J1NM8A3Xq0bqp-C3jhPHUC7yr4KpNx7HOkxH/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
+11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ZzjrPjnCsSy5SM5F3WoZP3lWGHmQDpOO0cr6oQVLskUhgdIO_VFGPodjE_7Olmuv/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
 
 12. Click App Builder and Import.
 
@@ -479,7 +477,16 @@ This lab assumes you have the following:
 
     ![application definition](./images/application-definition.png " ")
 
-8. Under Substitutions, set the correct Compartment OCID, Object Storage namespace (the substitution string is called `TENANCY_NAME`), and Region with the correct values from your notes.
+8. Under **Substitutions**, set the correct for the following (use your notes):
+
+     - `COMPARTMENT_OCID` : Your Compartment OCID.
+     - `TENANCY_NAME` : Your Object Storage namespace.
+     - `TENANCY_REGION` : Your tenancy Region.
+     - `ADOBE_CLIENT_ID` : Your developer.adobe.com console project credentials `client_id` value.
+     - `ADOBE_CLIENT_SECRET` : Your developer.adobe.com console project credentials `client_secret` value.
+     - `APEX_SCHEMA_NAME` : The application schema `DBAI`.
+     - `APEX_SCHEMA_PASS` : The strong password for your ADB instance schema, like `Your#5tr0ng_PassW0rd`.
+     - `APEX_SUBDOMAIN` : On your OCI console Autonomous AI Database page, go to Tool Configuration > Oracle APEX > Public access URL. Copy the first part of the domain `H1AH28AHAHATHAT-A5H4HA9T4HAT7H7A` from the entire URL `https://H1AH28AHAHATHAT-A5H4HA9T4HAT7H7A.adb.uk-london-1.oraclecloudapps.com/ords/apex` value (between `https://` and `.adb.<region>`).
 
     ![substitutions](./images/substitutions.png " ")
 
@@ -627,6 +634,12 @@ This lab assumes you have the following:
 
 You may now **proceed to the next lab**.
 
+
+## Learn More
+
+- [Oracle Cloud Infrastructure Documentation](https://docs.oracle.com/en-us/iaas/Content/home.htm)
+- [Oracle Autonomous AI Database Serverless](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/index.html)
+- [The database can be a document management system](https://medium.com/@valitabacaru/the-database-can-be-a-document-management-system-c3806728857d)
 
 ## **Acknowledgements**
 

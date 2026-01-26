@@ -279,6 +279,12 @@ Compile the function `generate_text_response2` below.  It is called from APEX.
 
 For connecting and authenticating to OCI GenAI you must have created the login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL in the previous lab.
 
+
+**Note on Model Selection:**
+Oracle maintains an up-to-date list of supported pretrained foundational models at: [https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm](https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm)
+
+For the latest model support additions or deprecations, please refer to the documentation link above. Feel free to swap models based on your specific use case—each model offers different strengths and context window capabilities to suit various requirements.
+
 ```sql
 <copy>
 create or replace FUNCTION generate_text_response2 (
@@ -338,7 +344,7 @@ BEGIN
       "provider":"ocigenai",
       "credential_name": "GENAI_CRED",
       "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-      "model": "cohere.command-r-08-2024",
+      "model": "cohere.command-a-03-2025",
       "chatRequest" : {
         "maxTokens": 2000,
         "temperature": 1

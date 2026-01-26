@@ -144,7 +144,7 @@ BEGIN
 
     DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
         host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open. You can use '*' if you want it open to any connection. 
-        ace => xs$ace_type(privilege_list => xs$name_list('connect'),
+        ace => xs$ace_type(privilege_list => xs$name_list('http'),
                            principal_name => 'specific_user_or_role', -- Restrict to a specific user or role. For example, "Public"
                            principal_type => xs_acl.ptype_db)
     );
@@ -237,6 +237,8 @@ Copy this statement and replace with your username and password for Oracle Cloud
 
 
 
+
+
 ```sql
 <copy>
 BEGIN
@@ -275,10 +277,10 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-<https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/uTI0rwPf775nrFGhef3hYJ1tp7GfnWS7B5bjm4TPSwu1Yss4C27zZmdTc_uVCeqq/n/oraclepartnersas/b/onnx_models/o/all-MiniLM-L6-v2.onnx>
+<https://objectstorage.us-phoenix-1.oraclecloud.com/p/0RzlHqjY36-DSHZeYl9XovR9MxrvvCWIsx0-yp95d--Re-93qY4HHl7BVWFQBiJu/n/oraclepartnersas/b/huggingface-models/o/all-MiniLM-L6-v2.onnx>
 
 URL to tinybert.onnx is:
-<https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/sQa5gNgX_0eKJdixQASXd1TyBd5YxsmE1rPkW21RrN5gqf1zjCP9AxAiOOoPNT8z/n/oraclepartnersas/b/onnx_models/o/tinybert.onnx>
+<https://objectstorage.us-phoenix-1.oraclecloud.com/p/aQ46zsq4mIUySbYW9klMXIxuMrTzBYAUQtH4aXKmsZxTkp5Hy1vhTCbXlyUaxbpg/n/oraclepartnersas/b/huggingface-models/o/tinybert.onnx>
 
 For example, to get tinybert.onnx and download it to ADB, the command will look like this:
 
@@ -287,7 +289,7 @@ For example, to get tinybert.onnx and download it to ADB, the command will look 
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/sQa5gNgX_0eKJdixQASXd1TyBd5YxsmE1rPkW21RrN5gqf1zjCP9AxAiOOoPNT8z/n/oraclepartnersas/b/onnx_models/o/tinybert.onnx',
+    object_uri => 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/bUxqKjZhI2qvtRK624QITVHb2vl4wquaSzaYQe7wf21KqV2Rr7EBwRjaeUFnH-AQ/n/oraclepartnersas/b/huggingface-models/o/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
@@ -295,6 +297,8 @@ END;
 /
 </copy>
 ```
+
+By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
 
 By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
 
@@ -312,6 +316,7 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
+## Task 9: Verify Model exists in the Database
 ## Task 8: Load the ONNX Files into the Database
 
 Once the ONNX files are downloaded and verified, you can load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
@@ -360,4 +365,5 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Authors** - Blake Hendricks, Vijay Balebail, Milton Wan
+* **Last Updated By/Date** -  Blake Hendricks, June 2025
 * **Last Updated By/Date** -  Andrei Manoliu, October 2025
