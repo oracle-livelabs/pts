@@ -115,6 +115,7 @@ When you create a new Autonomous Database, you automatically get an account call
     -- QUOTA
     GRANT ORDS_RUNTIME_ROLE TO nationalparks;
     GRANT EXECUTE ON dbms_cloud TO nationalparks;
+    GRANT EXECUTE ON DBMS_NETWORK_ACL_ADMIN TO nationalparks
     GRANT READ,WRITE ON directory data_pump_dir TO nationalparks;
     GRANT CREATE mining model TO nationalparks;
     GRANT SELECT ON sys.v_$vector_memory_pool TO nationalparks;
