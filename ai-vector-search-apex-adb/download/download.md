@@ -91,23 +91,49 @@ END;
 </copy>
 ```
 
-## Task 4: Grant Necessary Privileges
+## Task 4: Grant Necessary Privileges and Create VECTOR User
 
-From ADMIN user, run the following to ensure your database user has the necessary privileges to use DBMS packages. We are using the user VECTOR when creating the schema objects.  If you use a different user, be sure to use the correct schema user during table creation in the subsequent lab.
+From ADMIN user, run the following to create the VECTOR user and ensure it has the necessary privileges to use DBMS packages:
 
 ```sql
 <copy>
-CREATE USER VECTOR identified by <password>;
-GRANT CONNECT to VECTOR;
+-- Create VECTOR user
+CREATE USER VECTOR IDENTIFIED BY <password>;
+GRANT CONNECT TO VECTOR;
 ALTER USER VECTOR QUOTA UNLIMITED ON DATA;
-GRANT CREATE SESSION to VECTOR;
-GRANT RESOURCE to VECTOR;
-GRANT DB_DEVELOPER_ROLE to VECTOR;
-GRANT EXECUTE ON DBMS_CLOUD TO VECTOR;
-GRANT EXECUTE ON DBMS_VECTOR TO VECTOR;
-GRANT EXECUTE ON DBMS_VECTOR_CHAIN TO VECTOR;
-GRANT CREATE ANY DIRECTORY TO VECTOR;
+GRANT CREATE SESSION TO VECTOR;
+GRANT RESOURCE TO VECTOR;
+GRANT DB_DEVELOPER_ROLE TO VECTOR;
+GRANT CREATE MINING MODEL TO VECTOR;
+
+-- Resource Principal must be enabled for Object Storage access
+EXEC DBMS_CLOUD_ADMIN.ENABLE_RESOURCE_PRINCIPAL('VECTOR');
+
+-- Correct schema references for ADB
+GRANT EXECUTE ON C##CLOUD$SERVICE.DBMS_CLOUD TO VECTOR;
+GRANT EXECUTE ON SYS.DBMS_VECTOR TO VECTOR;
+GRANT EXECUTE ON CTXSYS.DBMS_VECTOR_CHAIN TO VECTOR;
 GRANT EXECUTE ON DBMS_CLOUD_AI TO VECTOR;
+
+-- Directory access for file operations
+GRANT READ, WRITE ON DIRECTORY DATA_PUMP_DIR TO VECTOR;
+
+-- Additional DBMS_CLOUD packages for Object Storage
+GRANT EXECUTE ON DBMS_CLOUD_OCI_OBS_OBJECT TO VECTOR;
+GRANT EXECUTE ON DBMS_CLOUD_OCI_OBS_BUCKET TO VECTOR;
+
+-- Network ACL for external API access (if using external LLM services)
+BEGIN
+  DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+    host => '*',
+    ace => xs$ace_type(
+      privilege_list => xs$name_list('connect'),
+      principal_name => 'VECTOR',
+      principal_type => xs_acl.ptype_db
+    )
+  );
+END;
+/
 </copy>
 ```
 
@@ -135,22 +161,20 @@ END;
 </copy>
 ```
 
-
-Last, but not least, we need to create an ACL for making sure that package DBMS_VECTOR_CHAIN (which does a direct callout to internet from PL/SQL without going through APEX webservices packages) works as intended. You can run this as admin:
+Create an ACL for making sure that package DBMS_VECTOR_CHAIN works as intended:
 
 ```sql
 <copy>
 BEGIN
-
     DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
-        host => 'specific_host_or_ip', -- Restrict to a specific host or IP range so it is not wide open. You can use '*' if you want it open to any connection. 
-        ace => xs$ace_type(privilege_list => xs$name_list('http'),
-                           principal_name => 'specific_user_or_role', -- Restrict to a specific user or role. For example, "Public"
-                           principal_type => xs_acl.ptype_db)
+        host => '*',
+        ace => xs$ace_type(
+          privilege_list => xs$name_list('connect'),
+          principal_name => 'VECTOR',
+          principal_type => xs_acl.ptype_db
+        )
     );
-
 END;
-
 /
 </copy>
 ```
@@ -159,28 +183,35 @@ END;
 
 ### OCI GenAI Service
 
-The OCI GenAI service provides access to several LLMs including Cohere and Llama.  
-API authentication is required.
+The OCI GenAI service provides access to several LLMs including Cohere and Llama. API authentication is required.
 
-1. From ADB Database Actions SQL Worksheet or SQL Developer, login as VECTOR user and copy and run the SQL below and replace the following with your ocid and key information you got from the previous lab.
+1. From ADB Database Actions SQL Worksheet, login as VECTOR user and run the SQL below. Replace the following with your OCI information you obtained from Lab 0:
 
-Important Note: Open your private key and copy the private key all onto a single line.
+   * `<your ocid1.user goes here>` - Your User OCID
+   * `<your ocid1.tenancy goes here>` - Your Tenancy OCID
+   * `<your compartment ocid1.compartment goes here>` - Your Compartment OCID
+   * `<your API private key goes here>` - Your private key (Important: entire key on one line)
+   * `<your fingerprint goes here>` - Your fingerprint
+
+**Important Note:** Put the private key all on a single line with no line breaks.
 
 ```sql
 <copy>
-declare
+DECLARE
   jo json_object_t;
-begin
+BEGIN
   jo := json_object_t();
   jo.put('user_ocid','<your ocid1.user goes here>');
   jo.put('tenancy_ocid','<your ocid1.tenancy goes here>');
   jo.put('compartment_ocid','<your compartment ocid1.compartment goes here>');
   jo.put('private_key','<your API private key goes here>');
   jo.put('fingerprint','<your fingerprint goes here>');
+  
   dbms_vector.create_credential(
-    credential_name   => 'GENAI_CRED',
-    params            => json(jo.to_string));
-end;
+    credential_name => 'OCI_CRED',
+    params          => json(jo.to_string)
+  );
+END;
 /
 </copy>
 ```
@@ -188,19 +219,21 @@ end;
 For example:
 
 ```
-declare
- jo json_object_t;
-begin
- jo := json_object_t();
- jo.put('user_ocid','ocid1.user.oc1..aaaaaaaawfpzqgzsrvb4mh6hcld2hrckadyae5y...cvza');
- jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77...zrq');
- jo.put('compartment_ocid','ocid1.compartment.oc1..aaaaaaaaqdp7dblf6tb3gpzbuknvgfgkedtio...yfa');
- jo.put('private_key','MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCP1QXxJxzVj4SXozdfrfIr...A4Iw=');
- jo.put('fingerprint','e3:e5:ab:61:99:51:29:1f:60:2a:ad...5b:a5');
- dbms_vector.create_credential(
- credential_name => 'GENAI_CRED',
- params => json(jo.to_string));
-end;
+DECLARE
+  jo json_object_t;
+BEGIN
+  jo := json_object_t();
+  jo.put('user_ocid','ocid1.user.oc1..aaaaaaaawfpzqgzsrvb4mh6hcld2hrckadyae5y...cvza');
+  jo.put('tenancy_ocid','ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77...zrq');
+  jo.put('compartment_ocid','ocid1.compartment.oc1..aaaaaaaaqdp7dblf6tb3gpzbuknvgfgkedtio...yfa');
+  jo.put('private_key','MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCP1QXxJxzVj4SXozdfrfIr...A4Iw=');
+  jo.put('fingerprint','e3:e5:ab:61:99:51:29:1f:60:2a:ad...5b:a5');
+  
+  dbms_vector.create_credential(
+    credential_name => 'OCI_CRED',
+    params          => json(jo.to_string)
+  );
+END;
 /
 ```
 
@@ -214,16 +247,17 @@ For OpenAI, run the following procedure:
 
 ```sql
 <copy>
-
-declare
+DECLARE
   jo json_object_t;
-begin
+BEGIN
   jo := json_object_t();
   jo.put('access_token', '<your OpenAI API key goes here>');
+  
   dbms_vector.create_credential(
     credential_name   => 'OPENAI_CRED',
-    params            => json(jo.to_string));
-end;
+    params            => json(jo.to_string)
+  );
+END;
 /
 </copy>
 ```
@@ -231,13 +265,7 @@ end;
 
 ## Task 6: Download ONNX embedding models Using `DBMS_CLOUD.GET_OBJECTS`
 
-Now log in as VECTOR or `<your_database_user>`, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.  You will download two different models.
-
-Copy this statement and replace with your username and password for Oracle Cloud.
-
-
-
-
+Now log in as VECTOR user, use the `DBMS_CLOUD.GET_OBJECTS` procedure to download the ONNX embedding model files from the Oracle Object Storage bucket into Oracle ADB.
 
 ```sql
 <copy>
@@ -252,7 +280,7 @@ END;
 </copy>
 ```
 
-Run to create the staging directory.
+Create the staging directory:
 
 ```sql
 <copy>
@@ -260,7 +288,7 @@ CREATE DIRECTORY staging AS 'stage';
 </copy>
 ```
 
-Run to get the onnx models.
+Download the ONNX models:
 
 ```sql
 <copy>
@@ -282,7 +310,7 @@ URL to all-MiniLM-L6-v2.onnx is:
 URL to tinybert.onnx is:
 <https://objectstorage.us-phoenix-1.oraclecloud.com/p/aQ46zsq4mIUySbYW9klMXIxuMrTzBYAUQtH4aXKmsZxTkp5Hy1vhTCbXlyUaxbpg/n/oraclepartnersas/b/huggingface-models/o/tinybert.onnx>
 
-For example, to get tinybert.onnx and download it to ADB, the command will look like this:
+For example, to get tinybert.onnx and download it to ADB:
 
 ```sql
 <copy>
@@ -298,15 +326,12 @@ END;
 </copy>
 ```
 
-By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
-
-By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
-
+By choosing different embedding models, you will have different vectors for the same document. Tinybert has 128 dimensions while all-MiniLM-L6-v2 has 384 dimensions. Usually, the greater the number of dimensions, the higher the quality of the vector embeddings, but this results in slower performance. Choose an embedding model based on your quality and performance requirements.
 
 ## Task 7: Verify the File in Oracle ADB
 
 
-After downloading the file, you can verify its existence in Oracle ADB by listing the contents of the directory.
+After downloading the file, verify its existence in Oracle ADB by listing the contents of the directory:
 
 ```sql
 <copy>
@@ -316,10 +341,9 @@ SELECT * FROM TABLE(DBMS_CLOUD.LIST_FILES('staging'));
 
 This query will show you the files present in the specified directory, ensuring that your file has been successfully downloaded.
 
-## Task 9: Verify Model exists in the Database
 ## Task 8: Load the ONNX Files into the Database
 
-Once the ONNX files are downloaded and verified, you can load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL. This step involves loading the models from the downloaded files and configuring them for use in Oracle ADB.  
+Once the ONNX files are downloaded and verified, load them into the database using DBMS\_VECTOR.LOAD\_ONNX\_MODEL:
 
 ```sql
 <copy>
@@ -342,23 +366,24 @@ END;
 </copy>
 ```
 
-This code loads two ONNX models (tinybert.onnx and all-MiniLM-L6-v2.onnx) into the Oracle ADB, making them available as TINYBERT\_MODEL and ALL\_MINILM\_L6V2MODEL respectively. The json configuration specifies how the models should handle input and output data.
+This code loads two ONNX models into Oracle ADB, making them available as TINYBERT\_MODEL and ALL\_MINILM\_L6V2MODEL respectively. The JSON configuration specifies how the models should handle input and output data.
 
-By just changing the model from tinybert\_model to All\_MINILM\_L6V2MODEL, you will have different vectors for the same document. Each of the models are designed to search the vectors and get the best match according to their algorithms.  Tinybert has 128 dimensions while all-MiniL2-v2 has 384 dimensions.  Usually, the greater the number of dimensions, the higher the quality of the vector embeddings.  A larger number of vector dimensions also tends to result in slower performance.   You should choose an embedding model based on quality first and then consider the size and performance of the vector embedding model.  You may choose to use larger vectors for use cases where accuracy is paramount and smaller vectors where performance is the most important factor.
+## Task 9: Verify Model exists in the Database
 
-To verify the model exists in database run the following statement.
+Verify the model exists in database by running:
 
 ```sql
 <copy>
-    SELECT MODEL_NAME, MINING_FUNCTION,
-    ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB FROM user_mining_models; 
+SELECT MODEL_NAME, MINING_FUNCTION,
+       ALGORITHM, ALGORITHM_TYPE, round(MODEL_SIZE/1024/1024) MB 
+FROM user_mining_models;
 </copy>
 ```
 
 
 ## Summary
 
-In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle AI Database 26ai with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
+In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services. We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle AI Database 26ai with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
 
 You may now [proceed to the next lab](#next).
 
