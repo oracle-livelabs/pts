@@ -42,6 +42,7 @@
         {
             "title": "Lab 5: APEX Demo",
             "description": "Running AI Vector Search in an APEX application",
+            "type": "sandbox",
             "filename": "../../6-apex_demo/apex_demo.md"
         },
         {

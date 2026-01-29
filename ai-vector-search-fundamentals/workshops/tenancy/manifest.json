@@ -52,6 +52,7 @@
         {
             "title": "Lab 8: APEX Demo",
             "description": "Running AI Vector Search in an APEX application",
+            "type": "tenancy",
             "filename": "../../6-apex_demo/apex_demo.md"
         },
         {

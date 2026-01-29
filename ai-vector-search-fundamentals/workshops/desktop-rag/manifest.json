@@ -8,6 +8,11 @@
             "filename": "../../1-introduction/introduction.md"
         },
         {
+            "title": "Database Connection",
+            "description": "Connecting to AI Vector Search database in Oracle's environment (sandbox)",
+            "filename": "../../database_connection/sandbox_connection.md"
+        },
+        {
             "title": "Lab 1: Vector Embeddings",
             "description": "Vectors and vector embeddings in AI Vector Search",
             "filename": "../../2-embedding_models/text_embeddings.md"
@@ -20,6 +25,7 @@
         {
             "title": "Lab 3: Retrieval Augmented Generation",
             "description": "Understanding Retrieval Augmented Generation",
+            "type": "sandbox",
             "filename": "../../rag/rag.md"
         },
         {
