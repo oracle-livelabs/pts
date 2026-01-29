@@ -24,28 +24,35 @@ In this lab, you will:
 
 1. From your Autonomous Database console select Database Actions SQL worksheet
 ![alt text](images/sqlworksheet.png)
-2. Login as VECTOR user and create the crendetial, make sure the private key is on one line.
+
+2. Login as VECTOR user and create the credential. Make sure the private key is on one line.
+
 3. Create a table named *MY\_BOOKS* in the VECTOR schema. We will use this table to load the original PDF file as a BLOB. Copy the code snippet to the SQL worksheet and click **Run**.
 
     ```
     <copy>
-    declare
+    DECLARE
       jo json_object_t;
-    begin
+    BEGIN
       jo := json_object_t();
       jo.put('user_ocid','<your ocid1.user goes here>');
       jo.put('tenancy_ocid','<your ocid1.tenancy goes here>');
       jo.put('compartment_ocid','<your compartment ocid1.compartment goes here>');
       jo.put('private_key','<your API private key goes here>');
       jo.put('fingerprint','<your fingerprint goes here>');
+      
       dbms_vector.create_credential(
-        credential_name   => 'GENAI_CRED',
-        params            => json(jo.to_string));
-    end;
+        credential_name => 'OCI_CRED',
+        params          => json(jo.to_string)
+      );
+    END;
     /
     </copy>
     ```
 
+    **Note:** Replace the placeholder values with your actual OCI credentials from Lab 0.
+
+    Create the MY_BOOKS table:
 
     ```
     <copy>
@@ -174,11 +181,11 @@ Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs. The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
 
-In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
+In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded. This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 
-Compile the function `generate_text_response2` below.  It is called from APEX.
+Compile the function `generate_text_response2` below. It is called from APEX.
 
 ### OpenAI
 
@@ -186,7 +193,7 @@ For connecting and authenticating to OpenAI you must have created the login cred
 
 ```sql
 <copy>
-create or replace FUNCTION generate_text_response2 (
+CREATE OR REPLACE FUNCTION generate_text_response2 (
     user_question VARCHAR2,
     doc_id        NUMBER,
     topn          NUMBER
@@ -197,88 +204,83 @@ create or replace FUNCTION generate_text_response2 (
     output            CLOB;
     message_line      VARCHAR2(4000);
     message_cursor    SYS_REFCURSOR;
-    user_question_vec vector;
-    pages_1             varchar2(4000);
-    embed_id          number ;
+    pages_1           VARCHAR2(4000);
+    embed_id          NUMBER;
 BEGIN
 
   --vectorize the user_question
-
     OPEN message_cursor FOR 'WITH a AS (
-    SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING  :user_question AS data)) AS embed
+    SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING :user_question AS data)) AS embed
     FROM DUAL)
-    SELECT  EMBED_DATA, embed_id
+    SELECT EMBED_DATA, embed_id
      FROM VECTOR_STORE, a
      WHERE doc_id = :doc_id
      ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, a.embed, COSINE)
      FETCH FIRST :topn ROWS ONLY '
      USING user_question, doc_id, topn;
 
-  --select embed_data from vector_store where doc_id=7;
   -- Initialize messages CLOB
-    messages := 'Your task  is to answer the Question from the give text. ';
+    messages := 'Your task is to answer the Question from the given text. ';
     pages_1  := '--';
 
   -- Loop through cursor results and construct messages
     LOOP
-        FETCH message_cursor INTO message_line,embed_id;
-        EXIT WHEN message_cursor%notfound;
+        FETCH message_cursor INTO message_line, embed_id;
+        EXIT WHEN message_cursor%NOTFOUND;
 
     -- Append message line to messages CLOB
-        messages := messages|| '{"message": "'|| message_line|| '"},'|| chr(10);
-        pages_1 := embed_id||','||pages_1;
+        messages := messages || '{"message": "' || message_line || '"},' || chr(10);
+        pages_1 := embed_id || ',' || pages_1;
 
     END LOOP;
 
-    messages := messages|| '{"Question": "'|| user_question|| '"},'|| chr(10);
+    messages := messages || '{"Question": "' || user_question || '"},' || chr(10);
   -- Close the cursor
     CLOSE message_cursor;
 
   -- Remove the trailing comma and newline character
-    messages := rtrim(messages, ',' || chr(10));
+    messages := RTRIM(messages, ',' || chr(10));
 
-  -- Construct params JSON
-    params := '
-{
-  "provider": "openai",
+  -- Construct params JSON for OpenAI
+    params := '{
+  "provider"       : "openai",
   "credential_name": "OPENAI_CRED",
-  "url": "https://api.openai.com/v1/chat/completions",
-  "model": "gpt-4o-mini",
-  "max_tokens": 2000,
-  "temperature": 1.0
+  "url"            : "https://api.openai.com/v1/chat/completions",
+  "model"          : "gpt-4o-mini",
+  "max_tokens"     : 2000,
+  "temperature"    : 1.0
 }';
-    dbms_output.put_line('------------------------');
-   -- dbms_output.put_line(messages);
-    dbms_output.put_line(pages_1);
-  --dbms_output.put_line(to_char(user_question_vec));
+
+    DBMS_OUTPUT.PUT_LINE('------------------------');
+    DBMS_OUTPUT.PUT_LINE(pages_1);
 
   -- Call UTL function to generate text
-  output := dbms_vector_chain.utl_to_generate_text(messages, json(params));
+  -- See: https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html#GUID-017C9002-194C-48E5-B59B-EF5C60BC8405
+    output := dbms_vector_chain.utl_to_generate_text(messages, json(params));
 
   -- Return the generated text
     RETURN output;
 EXCEPTION
     WHEN OTHERS THEN
-        RETURN sqlerrm || sqlcode;
+        RETURN SQLERRM || ' - ' || SQLCODE;
 END;
+/
 </copy>
 ```
 
 ## Task 3: Option 2 OCIGEN AI
 
-
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs. The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
 
-In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
+In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded. This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 
-Compile the function `generate_text_response2` below.  It is called from APEX.
+Compile the function `generate_text_response2` below. It is called from APEX.
 
 ### OCI GenAI
 
 For connecting and authenticating to OCI GenAI you must have created the login credentials using DBMS\_VECTOR.CREATE\_CREDENTIAL in the previous lab.
-
 
 **Note on Model Selection:**
 Oracle maintains an up-to-date list of supported pretrained foundational models at: [https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm](https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm)
@@ -287,7 +289,7 @@ For the latest model support additions or deprecations, please refer to the docu
 
 ```sql
 <copy>
-create or replace FUNCTION generate_text_response2 (
+CREATE OR REPLACE FUNCTION generate_text_response2 (
     user_question VARCHAR2,
     doc_id        NUMBER,
     topn          NUMBER
@@ -298,79 +300,75 @@ create or replace FUNCTION generate_text_response2 (
     output            CLOB;
     message_line      VARCHAR2(4000);
     message_cursor    SYS_REFCURSOR;
-    user_question_vec vector;
-    pages_1             varchar2(4000);
-    embed_id          number ;
+    pages_1           VARCHAR2(4000);
+    embed_id          NUMBER;
 BEGIN
 
   --vectorize the user_question
-
     OPEN message_cursor FOR 'WITH a AS (
-    SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING  :user_question AS data)) AS embed
+    SELECT TO_VECTOR(VECTOR_EMBEDDING(TINYBERT_MODEL USING :user_question AS data)) AS embed
     FROM DUAL)
-    SELECT  EMBED_DATA, embed_id
+    SELECT EMBED_DATA, embed_id
      FROM VECTOR_STORE, a
      WHERE doc_id = :doc_id
      ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, a.embed, COSINE)
      FETCH FIRST :topn ROWS ONLY '
      USING user_question, doc_id, topn;
 
-  --select embed_data from vector_store where doc_id=7;
   -- Initialize messages CLOB
-    messages := 'Your task  is to answer the Question from the give text. ';
+    messages := 'Your task is to answer the Question from the given text. ';
     pages_1  := '--';
 
   -- Loop through cursor results and construct messages
     LOOP
-        FETCH message_cursor INTO message_line,embed_id;
-        EXIT WHEN message_cursor%notfound;
+        FETCH message_cursor INTO message_line, embed_id;
+        EXIT WHEN message_cursor%NOTFOUND;
 
     -- Append message line to messages CLOB
-        messages := messages|| '{"message": "'|| message_line|| '"},'|| chr(10);
-        pages_1 := embed_id||','||pages_1;
+        messages := messages || '{"message": "' || message_line || '"},' || chr(10);
+        pages_1 := embed_id || ',' || pages_1;
 
     END LOOP;
 
-    messages := messages|| '{"Question": "'|| user_question|| '"},'|| chr(10);
+    messages := messages || '{"Question": "' || user_question || '"},' || chr(10);
   -- Close the cursor
     CLOSE message_cursor;
 
   -- Remove the trailing comma and newline character
-    messages := rtrim(messages, ',' || chr(10));
+    messages := RTRIM(messages, ',' || chr(10));
 
-  -- Construct oci genai params JSON
-    params := '
-    {
-      "provider":"ocigenai",
-      "credential_name": "GENAI_CRED",
-      "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-      "model": "cohere.command-a-03-2025",
-      "chatRequest" : {
-        "maxTokens": 2000,
-        "temperature": 1
-      }
-    }';
+  -- Construct params JSON for OCI GenAI
+    params := '{
+  "provider"       : "ocigenai",
+  "credential_name": "OCI_CRED",
+  "url"            : "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
+  "model"          : "cohere.command-r-16k",
+  "chatRequest"    : {
+    "maxTokens": 2000,
+    "temperature": 1.0
+  }
+}';
 
-    dbms_output.put_line('------------------------');
-   -- dbms_output.put_line(messages);
-    dbms_output.put_line(pages_1);
-  --dbms_output.put_line(to_char(user_question_vec));
+    DBMS_OUTPUT.PUT_LINE('------------------------');
+    DBMS_OUTPUT.PUT_LINE(pages_1);
 
   -- Call UTL function to generate text
-  output := dbms_vector_chain.utl_to_generate_text(messages, json(params));
+  -- See: https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html#GUID-017C9002-194C-48E5-B59B-EF5C60BC8405
+    output := dbms_vector_chain.utl_to_generate_text(messages, json(params));
 
   -- Return the generated text
     RETURN output;
 EXCEPTION
     WHEN OTHERS THEN
-        RETURN sqlerrm || sqlcode;
+        RETURN SQLERRM || ' - ' || SQLCODE;
 END;
+/
 </copy>
 ```
 
 ## Conclusion
 
-In this lab we learned how a RAG solution using PLSQL works.  The table below lists the vector functions we used.
+In this lab we learned how a RAG solution using PLSQL works. The table below lists the vector functions we used.
 
 <table>
       <thead>
@@ -397,7 +395,7 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
             Do vector search on question against text chunk embeddings
           </td>
           <td>
-            VECTOR_DISTANCE(EMBED_VECTOR, :user_question_vec, COSINE)
+            VECTOR_DISTANCE(EMBED_VECTOR, a.embed, COSINE)
           </td>
         </tr>
         <tr>
@@ -405,7 +403,7 @@ In this lab we learned how a RAG solution using PLSQL works.  The table below li
             Pass the result chunks and the user question to the LLM
           </td>
           <td>
-            DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params_genai))
+            DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(messages, json(params))
           </td>
         </tr>
         </tbody>
