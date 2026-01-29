@@ -719,7 +719,7 @@ print("Database connection established")
 
 Vector search is a powerful technique that allows AI agents to find semantically similar data (e.g., text, images, or audio) by comparing their numerical vector representations, moving beyond traditional keyword matching. Oracle Vector Store leverages Oracle\`s robust database capabilities for efficient similarity search, making it an ideal backend for RAG (Retrieval-Augmented Generation) tools exposed via MCP.
 
-For this workshop, the **Oracle Table AGENTICS_AI is already loaded with data from the file "Oracle 23ai New features"**. This pre-loaded data will be used by the `rag_search` MCP tool to retrieve relevant information. The `rag_search` tool will perform a vector search, retrieve top N text chunks, and send them along with the user\`s question to the LLM to generate a human-readable answer.
+For this workshop, the **Oracle Table AGENTICS_AI is already loaded with data from the file "Oracle AI Database 26ai New features"**. This pre-loaded data will be used by the `rag_search` MCP tool to retrieve relevant information. The `rag_search` tool will perform a vector search, retrieve top N text chunks, and send them along with the user`s question to the LLM to generate a human-readable answer.
 
 The embedding model we are using is `all-MiniLM-L6-v2`. This model has been downloaded as an ONNX file and is already loaded in the database, ensuring efficient local processing.
 
@@ -817,7 +817,7 @@ The output shows 4 columns: `id`, `text`, `meta`, and `embedding`.
     <tr>
       <th>2</th>
       <td>b\'_\xec\xebf\xff\xc8o8\'</td>
-      <td>Oracle Database®  \nOracle Database New Featur...</td>
+      <td>Oracle AI Database®  \nOracle AI Database New Featur...</td>
       <td>{"id": "0", "link": "Page 0"}</td>
       <td>[-0.03197915479540825, -0.004067039582878351, ...</td>
     </tr>

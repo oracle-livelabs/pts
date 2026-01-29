@@ -14,7 +14,7 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
 ### Prerequisites
 
-* VM environment provided in this lab running Oracle Database 23ai
+* VM environment provided in this lab running Oracle AI Database 26ai
 
 ## Task 1: Run application
 
@@ -52,19 +52,19 @@ To demonstrate the ability of AI agents to do RAG search and access relational d
 
 ## Task 2: Interacting with the Agentic Application
 
-Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.
+Try the following steps question and hit return. In a few seconds the LLM will answer the question and respond with context stored in Oracle AI Database 26ai.
 
 **Step 1: Load a pdf file "23ai new features guide"**
 
 Click on the **Browse files** button and load a PDF document.
 
-After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
+After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle AI Database 26ai.
 
 A prompt area will now appear for you to ask a question about your PDF.  You can type in your own question or use the suggestions listed below.
 
 ![Loading PDF file for querying](images/load_pdf_file.png)
 
-Note: In the Lab 2, we used a table with pre-loaded vector data for "Oracle 23ai new feature guide" document. In this demo we are actually reading the document, chunking and vectorized it in a different table.
+Note: In the Lab 2, we used a table with pre-loaded vector data for "Oracle AI Database 26ai new feature guide" document. In this demo we are actually reading the document, chunking and vectorized it in a different table.
 
 You should see the confirmation of file uploaded as shown in figure below.
 
@@ -78,7 +78,7 @@ Tell LLM your name i.e., "My name is Homer Simpson".  Then check if application 
 
 **Step 3: Do a RAG Search on document uploaded**
 
-Ask a question to query the document i.e.,  "List 5 features of Oracle 23ai from the document"
+Ask a question to query the document i.e.,  "List 5 features of Oracle AI Database 26ai from the document"
 Note: Agentic is prompted to RAG search only if ask search within document.
 
 ![Doing RAG search on the document](images/listing_5_new_features.png)
@@ -95,12 +95,12 @@ Proceed to test other PDF files provided on VM and ask more question as per your
 
 **Suggestions**
 
-For the Oracle Database 23ai documentation:
-* What are the new features in Oracle Database 23ai
+For the Oracle AI Database 26ai documentation:
+* What are the new features in Oracle AI Database 26ai
 * Tell me more about AI Vector Search
 * Tell me more about new enhancement to SQL
 * Tell me more about JSON Relational Duality
-* List 5 new features of Oracle Database 23ai
+* List 5 new features of Oracle AI Database 26ai
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 * Summarize the Oracle 2024 Quarter 2 financial results
@@ -120,9 +120,9 @@ But essentially the code is the same AI Agentic application that we studied in L
 
 ### Conclusion
 
-Now it’s your turn! Try experimenting with different transformers on various data sources—whether it’s video, audio, text, or more. All of them can be embedded as vectors within Oracle Database 23ai.
+Now it's your turn! Try experimenting with different transformers on various data sources—whether it's video, audio, text, or more. All of them can be embedded as vectors within Oracle AI Database 26ai.
 
-By leveraging AI Vector Search in Oracle Database 23ai, you can build agentic AI applications enriched with meaningful context—without needing to retrain the LLM. The relevant context is stored, searched, and retrieved directly from Oracle Database 23ai, then passed to the LLM to generate accurate, up-to-date, and targeted responses to your prompts.
+By leveraging AI Vector Search in Oracle AI Database 26ai, you can build agentic AI applications enriched with meaningful context—without needing to retrain the LLM. The relevant context is stored, searched, and retrieved directly from Oracle AI Database 26ai, then passed to the LLM to generate accurate, up-to-date, and targeted responses to your prompts.
 
 Enterprises can use RAG (Retrieval-Augmented Generation) with AI Vector Search and an LLM to securely answer critical business questions or generate content across a wide range of use cases using private, internal business data.
 

@@ -106,7 +106,7 @@ result = await run_mcp_agent("what is the email for james")
 
 This is a demonstration of doing vector search of data stored in Oracle using vector search.
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
-For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle 23ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
+For this workshop, **Oracle Table AGENTICS_AI is already loaded with data from file "Oracle AI Database 26ai New features"**  So, doing a RAG search on return top N text chunks doing vector search and send the text chunks olong with the question to LLM and return a human reable text.
 
 
 ```python
@@ -234,7 +234,7 @@ Milton
 - Develop more sophisticated MCP tools, such as those for database queries, external API integrations, or report generation
 - Explore different memory mechanisms for long-term context.
 - Explore how MCP decouples LLM reasoning from tool execution, enabling secure, scalable, and auditable AI workflows.
-- For more understanding RAG Vector Search in Oracle Database 23ai, to look at the live lab [AI Vector Search - Complete RAG Application using PL/SQL in Oracle Database 23ai](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3934)
+- For more understanding RAG Vector Search in Oracle AI Database 26ai, to look at the live lab [AI Vector Search - Complete RAG Application using PL/SQL in Oracle AI Database 26ai](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3934)
 - And also the live lab [AI Vector Search - 7 Easy Steps to Building a RAG Application using LangChain](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3927)
 
 

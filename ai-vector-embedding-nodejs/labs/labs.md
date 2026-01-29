@@ -105,7 +105,7 @@ In this lab, you will see the following Vector operations using node.js:
 
           //Check if we are connected to Oracle Database 23.4 that supports vectors
           if (connection.oracleServerVersion < 2304000000) {
-            console.log('This example requires Oracle Database 23.4 or later');
+            console.log('This example requires Oracle AI Database 26ai or later');
             process.exit();
           }
           console.log('Connected to Oracle Database');
@@ -356,7 +356,7 @@ In this lab, you will see the following Vector operations using node.js:
 
           //Check if we are connected to Oracle Database 23.4 that supports vectors
           if (connection.oracleServerVersion < 2304000000) {
-            console.log('This example requires Oracle Database 23.4 or later');
+            console.log('This example requires Oracle AI Database 26ai or later');
             process.exit();
           }
           console.log('Connected to Oracle Database');
@@ -727,7 +727,7 @@ In this lab, you will perform the following tasks:
 
           // Check if we are connected to Oracle Database 23.4 that supports vectors
           if (connection.oracleServerVersion < 2304000000) {
-            console.log('This example requires Oracle Database 23.4 or later');
+            console.log('This example requires Oracle AI Database 26ai or later');
             process.exit();
           }
           console.log('Connected to Oracle Database');
@@ -1025,7 +1025,7 @@ In this lab, you will perform the following tasks:
 
           //Check if we are connected to Oracle Database 23.4 that supports vectors
           if (connection.oracleServerVersion < 2304000000) {
-            console.log('This example requires Oracle Database 23.4 or later');
+            console.log('This example requires Oracle AI Database 26ai or later');
             process.exit();
           }
           console.log('Connected to Oracle Database');
