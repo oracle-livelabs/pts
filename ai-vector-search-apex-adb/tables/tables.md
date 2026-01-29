@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A typical RAG application requires a vector store.  Oracle Autonomous Database 26ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.  `DBMS_VECTOR_CHAIN` package is used in this lab.  To get a better understanding of the RAG steps and the use of Oracle AI Vector Search `DBMS_VECTOR_CHAIN` package, see the PLSQL RAG LiveLabs.
+A typical RAG application requires a vector store.  Oracle AI Database 26ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.  `DBMS_VECTOR_CHAIN` package is used in this lab.  To get a better understanding of the RAG steps and the use of Oracle AI Vector Search `DBMS_VECTOR_CHAIN` package, see the PLSQL RAG LiveLabs.
 
 Estimated Time: 10 minutes
 
@@ -10,7 +10,7 @@ Estimated Time: 10 minutes
 
 In this lab, you will:
 
-* Create the vector table in Oracle Autonomous Database 26ai
+* Create the vector table in Oracle AI Database 26ai
 * Create the credential
 * Create a procedure to store the document
 * Create a trigger to embed the vectors
@@ -18,7 +18,7 @@ In this lab, you will:
 
 ### Prerequisites
 
-* Environment with Oracle Autonomous Database 26ai
+* Environment with Oracle AI Database 26ai
 
 ## Task 1: Create credential and tables to store the document, chunks, and vectors
 
@@ -174,7 +174,7 @@ Create a trigger `trg_mybooks_vector_store_compound` to create embedding for the
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 26ai.
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
 
 In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 
@@ -269,7 +269,7 @@ END;
 
 The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized.
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 26ai.
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle AI Database 26ai.
 
 In the code below we are embedding the user question, performing a vector search in the database for the relevant text chunks using a vector distance function. We pass the doc\_id to select the chunks related to a PDF document we loaded.  This improves the accuracy of the LLM response for the question by restricting the result within the content of PDF. We then send the text chunks to LLM to provide the response.
 

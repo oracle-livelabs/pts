@@ -24,7 +24,7 @@ Before we dive into the procedure, make sure you have the following:
 1. **Oracle Cloud Account**: You need an active Oracle Cloud account with access to Oracle Object Storage and Oracle Autonomous Database.
 2. **Object Storage Bucket**: Create a bucket in Oracle Object Storage and upload the files you want to download into Oracle ADB.
 3. **Credentials**: Ensure you have the necessary credentials (access key and secret key) to access Oracle Object Storage.
-4. **Oracle Autonomous Database 26ai**: Make sure you have an Oracle Autonomous Database 26ai
+4. **Oracle AI Database 26ai**: Make sure you have an Oracle AI Database 26ai
 
 ## Task 1: Login to Oracle Cloud
 
@@ -39,7 +39,7 @@ Before we dive into the procedure, make sure you have the following:
 2. From the hamburger menu (top left side), select Oracle AI Database and chose Autonomous AI Database.
 ![alt text](images/createadw4.png)
 
-3. Select your Compartment. You may have to drill in (click “+”) to see your compartment.
+3. Select your Compartment. You may have to drill in (click "+") to see your compartment.
 
 4. Click Create Autonomous AI Database.
   ![alt text](images/createadw1.png)
@@ -358,7 +358,7 @@ To verify the model exists in database run the following statement.
 
 ## Summary
 
-In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle Autonomous Database with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
+In this lab we granted privileges to your database user to run the needed PLSQL procedures and functions. We created objects to authenticate to LLM services.  We also downloaded embedding models from Oracle Object Storage using DBMS\_CLOUD.GET\_OBJECTS and loaded them into Oracle AI Database 26ai with DBMS\_VECTOR.LOAD\_ONNX\_MODEL.
 
 You may now [proceed to the next lab](#next).
 

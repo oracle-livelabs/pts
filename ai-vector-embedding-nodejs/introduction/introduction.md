@@ -9,7 +9,7 @@ Estimated Time:  1 hour 30 minutes
 ### Objectives
 
 In this workshop, you will learn how to:
-* Use Vectors in Oracle 23ai Free database.
+* Use Vectors in Oracle AI Database 26ai Free database.
 * Learn basic query and DML operation on Vectors.
 * Use vector embedding models leveraging node.js.
 
