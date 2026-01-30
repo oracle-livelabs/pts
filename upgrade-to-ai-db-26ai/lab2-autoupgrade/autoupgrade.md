@@ -522,10 +522,10 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     total 74860
     -rw-r----- 1 oracle oinstall    33772 Jan  7 12:39 phase.log
     -rw-r----- 1 oracle oinstall        0 Jan  7 12:39 autoupgrade20240621123720aaa.log
-    -rw-r----- 1 oracle oinstall      496 Jan  7 12:39 catupgrd20240621123720aaa_catcon_28437.lst
-    -rw-r----- 1 oracle oinstall      153 Jan  7 12:56 catupgrd20240621123720aaa_catcon_kill_sess_28437_ALL.sql
-    -rw-r----- 1 oracle oinstall 19927386 Jan  7 12:56 catupgrd20240621123720aaa1.log
-    -rw-r----- 1 oracle oinstall 38575982 Jan  7 12:56 catupgrd20240621123720aaa0.log
+    -rw-r----- 1 oracle oinstall      496 Jan  7 12:39 catupgrd20260114123720aaa_catcon_28437.lst
+    -rw-r----- 1 oracle oinstall      153 Jan  7 12:56 catupgrd20260114123720aaa_catcon_kill_sess_28437_ALL.sql
+    -rw-r----- 1 oracle oinstall 19927386 Jan  7 12:56 catupgrd20260114123720aaa1.log
+    -rw-r----- 1 oracle oinstall 38575982 Jan  7 12:56 catupgrd20260114123720aaa0.log
     ```
 
 1. In this lab, we are performing multiple upgrades simultaneously. Some upgrades require upgrading multiple databases (CDB + 2 PDBs), while others only require unplugging/plugging a PDB and upgrading it.
@@ -534,25 +534,24 @@ In this example we will put 3 different upgrade scenarios in a single configurat
 
     ```text
     +---+---------------------------------------------------------+
-
- |Job|                                                 Progress|
- +---+---------------------------------------------------------+
- |103|[||||||||||||||||||||||                            ] 42 %|
- |104|[||||||||||||||||||||||||||||||||||||||            ] 75 %|
- |105|[||||||||||||||||||||||                            ] 42 %|
- +---+---------------------------------------------------------+
+    |Job|                                                 Progress|
+    +---+---------------------------------------------------------+
+    |103|[||||||||||||||||||||||                            ] 42 %|
+    |104|[||||||||||||||||||||||||||||||||||||||            ] 75 %|
+    |105|[||||||||||||||||||||||                            ] 42 %|
+    +---+---------------------------------------------------------+
     ```
 
     After a while (about 30 minutes) you might even see `Job 104 completed` on the screen, which is reflected in the progress bar overview under the status command like this:
 
     ```text
     +---+----------------------------------------------------------+
- |Job|                                                  Progress|
- +---+----------------------------------------------------------+
- |103| [||||||||||||||||||||||                            ] 42 %|
- |104|[|||||||||||||||||||||||||||||||||||||||||||||||||||] 100%|
- |105| [||||||||||||||||||||||                            ] 42 %|
- +---+----------------------------------------------------------+
+    |Job|                                                  Progress|
+    +---+----------------------------------------------------------+
+    |103| [||||||||||||||||||||||                            ] 42 %|
+    |104|[|||||||||||||||||||||||||||||||||||||||||||||||||||] 100%|
+    |105| [||||||||||||||||||||||                            ] 42 %|
+    +---+----------------------------------------------------------+
     ```
 
     After about 45 minutes, job 103 will be finished. Job 105 will take the longest.

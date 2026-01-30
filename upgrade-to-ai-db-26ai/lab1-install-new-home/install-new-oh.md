@@ -214,7 +214,7 @@ The OUI takes a certain percentage of the available memory in our environment as
     Enter the name of our new database:
 
     ```text
-    ORACLE_SID = [oracle] ? DB26ai
+    ORACLE_SID = [oracle] ? <copy>DB26ai</copy>
     The Oracle base remains unchanged with value /u01/oracle
     ```
 
@@ -241,7 +241,7 @@ The OUI takes a certain percentage of the available memory in our environment as
     First, take a backup of the spfile (init.ora) in case something happends and we need to revert:
 
     ``` text
-    SQL> create pfile='/u01/db26ai_init.ora' from spfile;
+    SQL> <copy>create pfile='/u01/db26ai_init.ora' from spfile;</copy>
 
     File created.
     ```

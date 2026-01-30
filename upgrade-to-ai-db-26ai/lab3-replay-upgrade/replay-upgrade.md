@@ -255,7 +255,7 @@ Version 19.21.0.0.0
     First, exit SQL*Plus:
 
     ```text
-    exit
+    <copy>exit</copy>
 
     Disconnected from Oracle AI Database 26ai Enterprise Edition Release 23.26.1.0.0 - Production
     Version 23.26.1.0.0
