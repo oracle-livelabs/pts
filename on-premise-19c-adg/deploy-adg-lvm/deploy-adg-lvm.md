@@ -278,7 +278,7 @@ The standby database can be duplicated from the primary database.
 1. From the standby side, copy the password file from the primary side.
 
     ```
-    [oracle@standby ~]$ <copy>scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/dbs/ orapwORCL $ORACLE_HOME/dbs</copy>
+    [oracle@standby ~]$ <copy>scp oracle@primary:/u01/app/oracle/product/19c/dbhome_1/dbs/orapwORCL $ORACLE_HOME/dbs</copy>
     orapwORCL 100% 2048    63.5KB/s   00:00    
     [oracle@standby ~]$
     ```
@@ -294,7 +294,6 @@ The standby database can be duplicated from the primary database.
     mkdir -p /u01/app/oracle/admin/ORCLSTBY/adump
     mkdir -p /u01/app/oracle/admin/ORCLSTBY/dpdump
     mkdir -p /u01/app/oracle/admin/ORCLSTBY/pfile
-    
     </copy>
     ```
 
@@ -347,7 +346,7 @@ The standby database can be duplicated from the primary database.
     Variable Size		  184549376 bytes
     Database Buffers	   50331648 bytes
     Redo Buffers		    7880704 bytes
-    SQL> exit
+    SQL> <copy>exit</copy>
     ```
 
    
@@ -693,6 +692,11 @@ The standby database can be duplicated from the primary database.
     Database "orclstby" added
     DGMGRL> <copy>ENABLE CONFIGURATION;</copy>
     Enabled.
+    ```
+    
+    Show the Configuration of the Data Guard:
+    
+    ```
     DGMGRL> <copy>SHOW CONFIGURATION;</copy>
     
     Configuration - adgconfig
@@ -716,7 +720,7 @@ You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oct 2020 
-* **Last Updated By/Date** - Minqiao Wang, Dec 2022
+* **Last Updated By/Date** - Minqiao Wang, Feb 2023
 
 
 

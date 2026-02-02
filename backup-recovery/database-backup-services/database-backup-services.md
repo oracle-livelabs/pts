@@ -47,7 +47,7 @@ Estimated Time: 2 hours
 4. You can download the backup module from [Oracle Cloud Backup Downloads](https://www.oracle.com/database/technologies/oracle-cloud-backup-downloads.html), however, to load the zip through Cloud Shell, you will use this `wget` command:
 
     ```
-    [oracle@workshop downloads]$ <copy>wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/opc_installer.zip</copy>
+    [oracle@workshop downloads]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/opc_installer.zip</copy>
     ```
 
 5. Extract the contents of the zip file. The file contains two directories: oci\_installer and opc\_installer, and a README file.
@@ -167,17 +167,17 @@ Run the installer, **oci\_install.jar** to install the backup module. This examp
 
 The following table lists the required and some optional parameters.
 
-| **Parameter**             | **Description**                                              | **Required or Optional**|
-| ------------------------- | ------------------------------------------------------------ |-------------------------|
-| -host                     | End point of the Oracle Cloud Infrastructure account. Constructed as https://objectstorage.`<region>`.oraclecloud.com. See [this reference](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm) for the region codes.       |Required                 |
-| -vtKeyFile               | File that contains the private key used to authenticate Oracle Cloud Infrastructure API requests. The key file must be in PEM format. |Required|
-| -pubFingerPrint           | Finger print of the public key paired with the specified private key. |Required|
-| -tOCID          | Tenancy OCID for the Oracle Cloud Infrastructure account.    |Required|
-| -uOCID          | User OCID for the Oracle Cloud Infrastructure account.       |Required|
-| -cOCID          | Resource compartment ID for the Oracle Cloud Infrastructure account. |Required|
-| -bucket         | Name of the bucket in which backups are stored. If this bucket does not exist, then the installer creates it. When this parameter is omitted, a default bucket is automatically created to store backups |Optional|
-| -walletDir      | Directory in which Oracle Cloud Infrastructure Object Storage credentials are stored. |Required|
-| -libDir         | Directory in which the system backup to tape (SBT) library used for backups and restores with Oracle Cloud Infrastructure is stored. |Required|
+| **Parameter**   | **Description**                                                                                                                                                                                                                                  | **Required or Optional** |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| -host           | End point of the Oracle Cloud Infrastructure account. Constructed as https://objectstorage.`<region>`.oraclecloud.com. See [this reference](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm) for the region codes. | Required                 |
+| -vtKeyFile      | File that contains the private key used to authenticate Oracle Cloud Infrastructure API requests. The key file must be in PEM format.                                                                                                            | Required                 |
+| -pubFingerPrint | Finger print of the public key paired with the specified private key.                                                                                                                                                                            | Required                 |
+| -tOCID          | Tenancy OCID for the Oracle Cloud Infrastructure account.                                                                                                                                                                                        | Required                 |
+| -uOCID          | User OCID for the Oracle Cloud Infrastructure account.                                                                                                                                                                                           | Required                 |
+| -cOCID          | Resource compartment ID for the Oracle Cloud Infrastructure account.                                                                                                                                                                             | Required                 |
+| -bucket         | Name of the bucket in which backups are stored. If this bucket does not exist, then the installer creates it. When this parameter is omitted, a default bucket is automatically created to store backups                                         | Optional                 |
+| -walletDir      | Directory in which Oracle Cloud Infrastructure Object Storage credentials are stored.                                                                                                                                                            | Required                 |
+| -libDir         | Directory in which the system backup to tape (SBT) library used for backups and restores with Oracle Cloud Infrastructure is stored.                                                                                                             | Required                 |
 
 
 The installation creates a configuration file *opcORCL.ora* and wallet directory *oci\_wallet* and places these in $ORACLE_HOME/dbs.

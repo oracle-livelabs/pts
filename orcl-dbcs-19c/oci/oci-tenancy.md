@@ -23,7 +23,41 @@ This lab assumes you have:
     * Microsoft Remote Desktop software
     * Putty or OpenSSH, PuttyGen, and web browser
 
-## Task 1: Create a Virtual Cloud Network
+## Task 1: Set required Identity Policies
+
+>**Note** : If your OCI user privileges prevent you from creating Identity Policies, ask your tenancy administrator to create these policies.
+
+1. Click on main menu **≡**, then **Identity & Security** > Identity **Policies**.
+
+2. Select the Compartment where you want them. Typically, Identity Policies are created in the Tenancy (root) Compartment.
+
+3. Click **Create Policy**.
+
+4. Specify a Name and a Description to help identify and track these policies.
+
+5. In Policy Builder enable **Show manual editor**.
+
+6. In the text field, copy-paste these policies, changing the name of the user-group (USER-GROUP), compartment (USER-COMPARTMENT), and region (E.g. FRA) with your own values:
+
+    ````
+    <copy>
+    Allow group USER-GROUP to manage database-family in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to use virtual-network-family in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to inspect work-requests in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to manage dbmgmt-private-endpoints in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to read dbmgmt-work-requests in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to read metrics in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to manage keys in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to manage vaults in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to manage secret-family in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow group USER-GROUP to use dbmgmt-managed-databases in compartment USER-COMPARTMENT where request.region='FRA'
+    Allow service dpd to read secret-family in compartment USER-COMPARTMENT where request.region='FRA'
+    </copy>
+    ````
+
+7. Click **Create**.
+
+## Task 2: Create a Virtual Cloud Network
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
@@ -40,7 +74,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Click **Sign In**.
 
-4. Click on main menu ≡, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
+4. Click on main menu **≡**, then Networking > **Virtual Cloud Networks**. Select your Region and Compartment assigned by the administrator. Click **Start VCN Wizard**.
 
 5. Select **VCN with Internet Connectivity**. Start VCN Wizard.
 
@@ -55,7 +89,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     - Destination Port Range: 1521
     - Description: Database connection
 
-8. Click **+Another Ingress Rule**. (Optional. SSH tunnel can be used for EM Express connection). Under Ingress Rule 2:
+8. (Optional) Click **+Another Ingress Rule**. (Optional. SSH tunnel can be used for EM Express connection). Under Ingress Rule 2:
 
     - CIDR Block: 0.0.0.0/0
     - Destination Port Range: 5500
@@ -63,43 +97,54 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. Click **Add Ingress Rules**.
 
+9. On the left menu click **Egress Rules**. Click **Add Egress Rules**.
 
-## Task 2: Provision Database System
+    - CIDR Block: 10.0.0.0/16
+    - Destination Port Range: 1521
+    - Description: Database Management services
+
+10. Click **Add Egress Rules**.
+
+
+## Task 3: Provision Database System
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
 [Create Flex VM DB System] (youtube:_GwZYPRwLV8)
 
-1. Click on main menu ≡, then **Oracle Database** > **Oracle Base Database**. Click **Create DB System**.
+1. Click on main menu **≡**, then **Oracle Database** > **Oracle Base Database Service**.
+
+2. On the left side, under **Compartment**, click the dropdown list, and **[+]** sign to expand root compartment and sub-compartments until you can select your compartment.
+
+3. Click **Create DB System**.
 
     - Select your compartment (default).
     - Name your DB system: **WS-DB**.
     - Select a shape type: Virtual Machine (default).
     - Select a shape: **VM.Standard.E4.Flex**. Click **Change Shape**. Set **Number of OCPUs per node: 1**.
-    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, **Storage Volume Performance: Balanced**.
+    - Under Configure storage, click **Change storage**. Select **Logical Volume Manager**, Storage Volume Performance: **Balanced**.
     - Oracle Database software edition: **Enterprise Edition Extreme Performance**.
     - Generate SSH key pair, and save both Private Key and Public Key files on your computer. (optionally select Upload SSH key files to use your own id_rsa.pub public key).
     - Choose a license type: Bring Your Own License (BYOL).
 
-2. Specify the network information.
+4. Specify the network information.
 
-    - Virtual cloud network: LLXXXXX-VCN
-    - Client Subnet: Public Subnet LLXXXXX-SUBNET-PUBLIC
+    - Virtual cloud network: **LLXXXXX-VCN**
+    - Client Subnet: **public subnet-LLXXXXX-VCN**
     - Hostname prefix: **db-host**
 
-3. Click Next.
+5. Click Next.
 
     - Database name: **WSDB**
     - Database version: 19c (default).
     - PDB name: **PDB011**.
     - Password: Use a strong password and write it down in your notes.
-    - Select workload type: Transaction Processing (default).
     - Configure database backups: **Enable automatic backups**. Leave default values for backup retention and scheduling.
 
-4. Click **Create DB System**.
+6. Click **Create DB System**.
 
 
-## Task 3: DB Node SSH Connection
+## Task 4: DB Node SSH Connection
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
@@ -115,7 +160,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. Verify SSH connection from a Linux client. Change the permissions on the private key file you saved from DB System. Change `ssh-key-XXXX-XX-XX` with the private key file you saved on your computer. (Linux only)
 
-    ````
+    ````bash
     <copy>
     chmod 400 Downloads/ssh-key-XXXX-XX-XX.key
     </copy>
@@ -123,13 +168,13 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. Connect to the DB Node using SSH. In OpenSSH, local port forwarding is configured using the -L option. Use this option to forward any connection to port 5500 on the local machine to port 5500 on your DB Node.  (Linux only)
 
-    ````
+    ````bash
     <copy>
     ssh -C -i Downloads/ssh-key-XXXX-XX-XX.key -L 5500:localhost:5500 opc@<DB Node Public IP Address>
     </copy>
     ````
 
-5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > Import Key. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
+5. Set SSH connection from a Windows client. Use PuttyGen from your computer to convert the private key file you saved on your computer to Putty `.ppk` format. Click on Conversions > **Import Key**. Open the private key. Click on Save Private Key and Yes to save without a passphrase. Use the same name for the new `.ppk` key file, add only the extension `.ppk`. (Windows only)
 
 6. Connect to DB Node Public IP Address port 22. (Windows only)
 
@@ -148,7 +193,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
     ![Putty security alert](./images/putty-security-alert.png "")
 
 
-## Task 4: Verify DB connection using SQL*Plus.
+## Task 5: Verify DB connection using SQL*Plus.
 
 Please take a moment to watch the video below to learn how to perform the Database Lifecycle Task using the OCI Console, and then afterwards, follow the steps shown.
 
@@ -156,7 +201,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 1. All Oracle software components are installed with **oracle** OS user. Use the substitute user command to start a session as **oracle** user.
 
-    ````
+    ````bash
     <copy>
     sudo su - oracle
     </copy>
@@ -164,7 +209,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 2. Try to connect to your DB System database using SQL*Plus.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@<Database Unique Name> as sysdba
     </copy>
@@ -172,7 +217,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 3. List pluggable databases.
 
-    ````
+    ````sql
     <copy>
     show pdbs
     </copy>
@@ -180,7 +225,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 4. You will see `PDB011` in the list opened in `READ WRITE` mode. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -188,7 +233,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Connect directly to the pluggable database.
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.<Host Domain Name> as sysdba
     </copy>
@@ -196,7 +241,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     Or
 
-    ````
+    ````bash
     <copy>
     sqlplus sys/<Strong Password>@db-host:1521/pdb011.$(domainname -d) as sysdba
     </copy>
@@ -204,7 +249,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 6. Display the current container name.
 
-    ````
+    ````sql
     <copy>
     show con_name
     </copy>
@@ -212,7 +257,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 7. List all users in PDB011.
 
-    ````
+    ````sql
     <copy>
     select username from all_users order by 1;
     </copy>
@@ -220,7 +265,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 8. This pluggable database doesn't have Oracle Sample Schemas. Exit SQL*Plus.
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>

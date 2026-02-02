@@ -4,11 +4,11 @@
 
 In this lab you will create a shard app schema. You will create a sharded table family `Customers->Orders->LineItems` sharded by `CustId`, and a duplicate table `Products`.
 
-Estimated Lab Time: 30 minutes
+Estimated Lab Time: 30 minutes.
 
 ### Objectives
 
-In this lab, you will:
+In this lab, you will perform the following steps:
 - Create the schema user, tablespace set, sharded tables and duplicated tables
 - Verify that the DDLs have been propagated to all the shards
 - Create a global service used to connect to the sharded database
@@ -19,16 +19,22 @@ This lab assumes you have already completed the following:
 - Deploy the Sharded Database
 
 
-## Task 1: Create Shard App Schema
+## **STEP 1:** Create Shard App Schema
 
-1. Login to the shard director host using the public ip address, switch to oracle user.
+1. Login to the shard director host using the public ip address.
 
     ```
     $ ssh -i labkey opc@xxx.xxx.xxx
     Last login: Sun Nov 29 01:26:28 2020 from 59.66.120.23
     -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
     
-    [opc@sdbsd0 ~]$ sudo su - oracle
+    [opc@sdbsd0 ~]$
+    ```
+    
+    Switch to oracle user.
+    
+    ```
+    opc@sdbsd0 ~]$ <copy>sudo su - oracle</copy>
     Last login: Sun Nov 29 02:49:51 GMT 2020 on pts/0
      
     [oracle@sdbsd0 ~]$ 
@@ -36,10 +42,10 @@ This lab assumes you have already completed the following:
 
    
 
-2. Download the SQL scripts `create-app-schema-qs.sql`.
+2. Download the SQL scripts `create-app-schema.sql`.
 
     ```
-    [oracle@sdbsd0 ~]$ <copy>wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/create-app-schema-qs.sql</copy>
+    [oracle@sdbsd0 ~]$ <copy>wget https://github.com/minqiaowang/work-with-db-shard/raw/main/create-app-schema/create-app-schema.sql</copy>
     ```
 
    
@@ -47,7 +53,7 @@ This lab assumes you have already completed the following:
 3. Edit the sql scripts file. Modify the sys user password in the connect string `connect sys/your-own-sys-password@sdbsc0:1521/sdbpdb as sysdba` to the catalog database. Make sure the connect string for the demo app_schema user to the catalog database is correct in your environment: `connect app_schema/App_Schema_Pass_123@sdbsc0:1521/sdbpdb`.
 
     ```
-    [oracle@cata ~]$ <copy>vi create-app-schema-qs.sql</copy>  
+    [oracle@sdbsd0 ~]$ <copy>vi create-app-schema.sql</copy>  
     set echo on 
     set termout on
     set time on
@@ -184,7 +190,7 @@ This lab assumes you have already completed the following:
 4. Use Sqlplus to run this sql scripts
 
     ```
-    [oracle@sdbsd0 ~]$ sqlplus /nolog
+    [oracle@sdbsd0 ~]$ <copy>sqlplus /nolog</copy>
     
     SQL*Plus: Release 19.0.0.0.0 - Production on Mon Nov 30 01:26:03 2020
     Version 19.7.0.0.0
@@ -196,7 +202,7 @@ This lab assumes you have already completed the following:
     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.7.0.0.0
     
-    SQL> @create-app-schema-qs.sql
+    SQL> <copy>@create-app-schema.sql</copy>
     ```
 
    
@@ -407,13 +413,13 @@ This lab assumes you have already completed the following:
     05:49:05 SQL> spool off
     05:49:05 SQL> 
     ```
+
    
-   
-   
+
 6. The shard app demo schema is created. Exit the sqlplus.
 
     ```
-    01:26:41 SQL> exit
+    01:26:41 SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
     Version 19.7.0.0.0
     [oracle@sdbsd0 ~]$
@@ -421,7 +427,7 @@ This lab assumes you have already completed the following:
 
    
 
-## Task 2: Verify the Shard App Schema
+## **STEP 2:** Verify the Shard App Schema
 
 1. Run GDSCTL command.
 
@@ -436,7 +442,7 @@ This lab assumes you have already completed the following:
     Current GSM is set to SDBSD0
     GDSCTL> 
     ```
-   
+
    
 
 2. Run the following commands to observe that there are no failures during the creation of tablespaces.
@@ -462,10 +468,10 @@ This lab assumes you have already completed the following:
 
    
 
-3. Run the config commands as shown below for each of the shards and verify if there are any DDL error. Make sure change the shard db name to the name as what you query out like `sdbsh*_xxxxxx_sdbpdb`.
+3. Run the config commands as shown below for each of the shards and verify if there are any DDL error. Make sure change the shard db name to the name as what you query out like ``sdbsh*_xxxxxx_sdbpdb``.
 
     ```
-    GDSCTL> config shard
+    GDSCTL> <copy>config shard</copy>
     Name                Shard Group         Status    State       Region    Availability 
     ----                -----------         ------    -----       ------    ------------ 
     sdbsh0_icn1gr_sdbpd shardgroup0         Ok        Deployed    apseoul1  ONLINE       
@@ -473,7 +479,7 @@ This lab assumes you have already completed the following:
     sdbsh1_icn1xv_sdbpd shardgroup0         Ok        Deployed    apseoul1  ONLINE       
     b                                                                                    
     
-    GDSCTL> config shard -shard sdbsh0_icn1gr_sdbpdb
+    GDSCTL> <copy>config shard -shard sdbsh0_icn1gr_sdbpdb</copy>
     Name: sdbsh0_icn1gr_sdbpdb
     Shard Group: shardgroup0
     Status: Ok
@@ -497,7 +503,7 @@ This lab assumes you have already completed the following:
     Name                                                            Preferred Status    
     ----                                                            --------- ------    
     
-    GDSCTL> config shard -shard sdbsh1_icn1xv_sdbpdb
+    GDSCTL> <copy>config shard -shard sdbsh1_icn1xv_sdbpdb</copy>
     Name: sdbsh1_icn1xv_sdbpdb
     Shard Group: shardgroup0
     Status: Ok
@@ -532,9 +538,9 @@ This lab assumes you have already completed the following:
     GDSCTL> <copy>exit</copy>
     [oracle@sdbsd0 ~]$ 
     ```
+
    
-   
-   
+
 6. Connect to the shard db0 using your own sys user password.
 
     ```
@@ -588,11 +594,11 @@ This lab assumes you have already completed the following:
 8. Verify that the chunks and chunk tablespaces are created.
 
     ```
-    SQL> set linesize 140
-    SQL> column table_name format a20
-    SQL> column tablespace_name format a20
-    SQL> column partition_name format a20
-    SQL> select table_name, partition_name, tablespace_name from dba_tab_partitions where tablespace_name like 'C%TSP_SET_1' order by tablespace_name;
+    SQL> <copy>set linesize 140</copy>
+    SQL> <copy>column table_name format a20</copy>
+    SQL> <copy>column tablespace_name format a20</copy>
+    SQL> <copy>column partition_name format a20</copy>
+    SQL> <copy>select table_name, partition_name, tablespace_name from dba_tab_partitions where tablespace_name like 'C%TSP_SET_1' order by tablespace_name;</copy>
     
     TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
     -------------------- -------------------- --------------------
@@ -668,7 +674,7 @@ This lab assumes you have already completed the following:
 11. Verify that the chunks and chunk tablespaces are created.
 
     ```
-    SQL> select table_name, partition_name, tablespace_name from dba_tab_partitions where tablespace_name like 'C%TSP_SET_1' order by tablespace_name;
+    SQL> <copy>select table_name, partition_name, tablespace_name from dba_tab_partitions where tablespace_name like 'C%TSP_SET_1' order by tablespace_name;</copy>
     
     TABLE_NAME	     PARTITION_NAME	  TABLESPACE_NAME
     -------------------- -------------------- --------------------
@@ -714,8 +720,8 @@ This lab assumes you have already completed the following:
 13.  Query the `gsmadmin_internal.chunk_loc` table to observe that the chunks are uniformly distributed.
 
     ```
-    SQL> column shard format a40
-    SQL> select a.name Shard,count( b.chunk_number) Number_of_Chunks from gsmadmin_internal.database a, gsmadmin_internal.chunk_loc b where a.database_num=b.database_num group by a.name;
+    SQL> <copy>column shard format a40</copy>
+    SQL> <copy>select a.name Shard,count( b.chunk_number) Number_of_Chunks from gsmadmin_internal.database a, gsmadmin_internal.chunk_loc b where a.database_num=b.database_num group by a.name;</copy>
     
     SHARD					 NUMBER_OF_CHUNKS
     ---------------------------------------- ----------------
@@ -730,9 +736,9 @@ This lab assumes you have already completed the following:
 14. Connect into the app_schema on the catalog, shard0, shard1 databases and verify that the sharded and duplicated tables are created.
 
     ```
-    SQL> connect app_schema/App_Schema_Pass_123@sdbsc0:1521/sdbpdb
+    SQL> <copy>connect app_schema/App_Schema_Pass_123@sdbsc0:1521/sdbpdb</copy>
     Connected.
-    SQL> select table_name from user_tables;
+    SQL> <copy>select table_name from user_tables;</copy>
     
     TABLE_NAME
     --------------------------------------------------------------------------------
@@ -745,9 +751,9 @@ This lab assumes you have already completed the following:
     
     6 rows selected.
     
-    SQL> connect app_schema/App_Schema_Pass_123@sdbsh0:1521/sdbpdb
+    SQL> <copy>connect app_schema/App_Schema_Pass_123@sdbsh0:1521/sdbpdb</copy>
     Connected.
-    SQL> select table_name from user_tables;
+    SQL> <copy>select table_name from user_tables;</copy>
     
     TABLE_NAME
     --------------------------------------------------------------------------------
@@ -757,9 +763,9 @@ This lab assumes you have already completed the following:
     PRODUCTS
     USLOG$_PRODUCTS
     
-    SQL> connect app_schema/App_Schema_Pass_123@sdbsh1:1521/sdbpdb
+    SQL> <copy>connect app_schema/App_Schema_Pass_123@sdbsh1:1521/sdbpdb</copy>
     Connected.
-    SQL> select table_name from user_tables;
+    SQL> <copy>select table_name from user_tables;</copy>
     
     TABLE_NAME
     --------------------------------------------------------------------------------
@@ -777,7 +783,7 @@ This lab assumes you have already completed the following:
 15. Exit the sqlplus.
 
     ```
-    SQL> exit
+    SQL> <copy>exit</copy>
     Disconnected from Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
     Version 19.9.0.0.0
     [oracle@sdbsd0 ~]$
@@ -785,16 +791,22 @@ This lab assumes you have already completed the following:
 
     
 
-## Task 3: Create a global service
+## **STEP 3:** Create a global service
 
-1. Login to the shard director host, switch to oracle user.
+1. Login to the shard director host.
 
     ```
     $ ssh -i labkey opc@xxx.xxx.xxx.xxx
     Last login: Sat Jan 23 05:22:09 2021 from 59.66.120.23
     -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
     
-    [opc@sdbsd0 ~]$ sudo su - oracle
+    [opc@sdbsd0 ~]$
+    ```
+    
+    Switch to oracle user.
+    
+    ```
+    [opc@sdbsd0 ~]$ <copy>sudo su - oracle</copy>
     Last login: Sat Jan 23 05:22:16 GMT 2021 on pts/0
     [oracle@sdbsd0 ~]$ 
     ```
@@ -869,7 +881,7 @@ This lab assumes you have already completed the following:
 7. Exit the GDSCTL.
 
     ```
-    GDSCTL> exit
+    GDSCTL> <copy>exit</copy>
     [oracle@sdbsd0 ~]$
     ```
 
@@ -878,7 +890,7 @@ This lab assumes you have already completed the following:
 8. Check the shard director listener status. You can see listening on 1522 port there is a service named `oltp_rw_srvc.orasdb.oradbcloud` which we create previously.
 
     ```
-    [oracle@sdbsd0 ~]$ lsnrctl status sdbsd0
+    [oracle@sdbsd0 ~]$ <copy>lsnrctl status sdbsd0</copy>
     
     LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 23-JAN-2021 06:34:17
     
@@ -919,6 +931,5 @@ This lab assumes you have already completed the following:
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management, Jan 2021
-* **Last Updated By/Date** - Minqiao Wang, Jul 2021
-* **Workshop Expiry Date** - Jul 2022
+* **Author** - Minqiao Wang, Jan 2021
+* **Last Updated By/Date** - Minqiao Wang, Mar 2023

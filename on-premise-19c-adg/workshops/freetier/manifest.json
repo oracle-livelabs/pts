@@ -1,12 +1,12 @@
 {
-    "workshoptitle": "Setting Up Active Data Guard For On-Premises",
+    "workshoptitle": "Set Up Active Data Guard For On-Premises",
     "tutorials": [
         {           
             "title": "Introduction",
             "filename": "../../introduction/introduction.md"
         },
         {
-            "title": "Getting Started",
+            "title": "Get Started",
             "description": "This is the prerequisites for customers using Free Trial and Paid tenancies, and Always Free accounts (if applicable). The title of the lab and the Contents Menu title (the title above) match for Prerequisite lab. This lab is always first.",
             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
         },
@@ -15,7 +15,7 @@
             "filename": "../../setup-environment/setup-environment.md"
         },
         {            
-            "title": "Lab 2: Prepare The Primary Database",
+            "title": "Lab 2: Setup The Primary Database",
             "filename": "../../prepare-primary/prepare-primary.md"
         },
         {            
@@ -27,7 +27,7 @@
             "filename": "../../deploy-adg-lvm/deploy-adg-lvm.md"
         },
         {            
-            "title": "Lab 5: Testing With Active Data Guard And Perform A Switchover",
+            "title": "Lab 5: Test With Active Data Guard And Perform A Switchover",
             "filename": "../../test-with-adg/test-with-adg.md"
         },
         {            

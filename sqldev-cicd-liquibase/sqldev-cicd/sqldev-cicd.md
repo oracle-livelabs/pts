@@ -1,12 +1,12 @@
-# Capture Oracle Database Changes with Liquibase from SQL Developer
+# Capture changes with Liquibase from SQL Developer
 
 ## Introduction
 
-Capturing object definition and code changes from an Oracle Database can look complex, however, with a little discipline and organization, this process can be totally effortless and simple. 
+Capturing object definition and code changes from an Oracle Database can look complex, however, with a little discipline and organization, this process can be totally effortless and simple.
 
 This scenario is based on the requirement to run all tasks from SQL Developer, so the developer does not have to leave the IDE while working on the requests/tickets received from project manager (logging system).
 
-Estimated Lab Time: 120 minutes
+Estimated Time: 120 minutes
 
 ### Objectives
 In this lab, you will:
@@ -25,7 +25,7 @@ In this lab, you will:
 
 1. If you executed the first lab that runs Liquibase from SQLcl, it is a good practice to re-create the HR schema in your ATP instance. Connect to the **ATPdev01** ATP service as **admin**. Replace `[Your Initials]` with your initials.
 
-    ````
+    ````sh
     <copy>
     export TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01
     cd ~
@@ -33,19 +33,19 @@ In this lab, you will:
     </copy>
     ````
 
-    ````
+    ````sql
     <copy>
     drop user hr cascade;
     </copy>
     ````
 
-    ````
+    ````sql
     <copy>
     @db-sample-schemas-19c/human_resources/hr_main.sql DBlearnPTS#21_ DATA TEMP DBlearnPTS#21_ /home/oracle/logs/ [Your Initials]dev01_high
     </copy>
     ````
 
-    ````
+    ````sql
     <copy>
     exit
     </copy>
@@ -53,7 +53,7 @@ In this lab, you will:
 
 2. Create a new GitHub repository **cicd-ws-rep01**, and clone it on your compute node.
 
-    ````
+    ````sh
     <copy>
     cd ~
     git clone https://github.com/[GitHub username]/cicd-ws-rep01.git
@@ -62,7 +62,7 @@ In this lab, you will:
 
 3. Create a new folder for database changes in your project main folder.
 
-    ````
+    ````sh
     <copy>
     cd ~/cicd-ws-rep01
     mkdir database
@@ -71,7 +71,7 @@ In this lab, you will:
 
 4. Add Liquinase properties file to your Git repository, run your first commit and push.
 
-    ````
+    ````sh
     <copy>
     cp ~/cicd-ws-rep00/liquibase.properties ~/cicd-ws-rep01
     git add liquibase.properties
@@ -82,14 +82,16 @@ In this lab, you will:
 
 5. If your token expired, you will be asked to provide the GitHub username and password. If you have configured two-factor authentication, instead of the password, use your token.
 
-    ````
+    ````sh
+    <copy>
     Username for 'https://github.com': [GitHub username]
     Password for 'https://[GitHub username]@github.com': [GitHub password/token]
+    </copy>
     ````
 
 6. This is **Developer #1** from your team, that is capturing the current **HR** schema, from SQL Developer. Use **hr@Dev01ATP** connection in SQL Developer, copy and paste the following lines in Worksheet, and click **Run Script** ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase --changeLogFile="database/initial_changelog.xml" --changeSetAuthor="Developer1" generateChangeLog
@@ -100,7 +102,7 @@ In this lab, you will:
 
 8. Check object types in **HR** schema, and the number of object of each type. Run the following statement in SQL Developer ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
     select object_type, count(*) from user_objects group by object_type;
     </copy>
@@ -118,7 +120,7 @@ In this lab, you will:
 
 12. As an example, the contents of `secure_employees_trig.sql` must be:
 
-    ````
+    ````sql
     <copy>
     create or replace TRIGGER secure_employees
       BEFORE INSERT OR UPDATE OR DELETE ON employees
@@ -134,7 +136,7 @@ In this lab, you will:
 
 1. Create a Liquibase master changelog to reference other changelogs in your project. The master changelog is used to break up your entire changelog into more manageable pieces, by creating multiple changelogs to separate your changesets in a way that makes sense for your project. Paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; touch database/hr-master.xml
@@ -145,9 +147,9 @@ In this lab, you will:
 
 2. Open `hr-master.xml` in SQL Developer using Files dialog, and add the following contents, to inlcude just the initial **HR** schema changelog:
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -162,7 +164,7 @@ In this lab, you will:
 
 3. Create a manual changelog for code objects not captured by Liquibase (2 procedures and 2 triggers). Paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; touch database/hr-initial-code.xml
@@ -171,9 +173,9 @@ In this lab, you will:
 
 4. This changelog includes the 4 SQL scripts with code changes saved at previous step. Open `hr-initial-code.xml` in SQL Developer, and add these lines:
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -217,9 +219,9 @@ In this lab, you will:
 
 5. Open `hr-master.xml` in SQL Developer, and add a line for the code changelog, and a version tag:
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -236,7 +238,7 @@ In this lab, you will:
 
 6. Mark all these initial changes as deployed in the local development database, as they belong to the initial HR schema we used for our project. Paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase changeLogSync
@@ -245,16 +247,16 @@ In this lab, you will:
 
 7. Run this query ![](./images/run-query.jpg "") in SQL Developer to see changes currently recorded by Liquibase. `DATABASECHANGELOG` table tracks which changesets have been run in your database schema.
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 8. As a best practice, you can generate snapshots before and after modifying objects in your development database. In this lab, we will generate only after snapshots and use them to compare the current database schema state. Generate a snapshot called `Dev1SnapshotV1`. Paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase --outputFile=database/Dev1SnapshotV1.json snapshot --snapshotFormat=json
@@ -263,7 +265,7 @@ In this lab, you will:
 
 9. Add initial schema changes to the Git repository. Paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git add database/*
@@ -279,23 +281,23 @@ In this lab, you will:
 
 2. Using SQL Developer connection to HR schema, as **Developer #2**, we create a new table. Copy, paste and click Run Statement ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
     create table PROSPECTS as
-    (select EMPLOYEE_ID as PERSON_ID, FIRST_NAME, LAST_NAME, lower(EMAIL) || '@example.com' as EMAIL, 
+    (select EMPLOYEE_ID as PERSON_ID, FIRST_NAME, LAST_NAME, lower(EMAIL) || '@example.com' as EMAIL,
             PHONE_NUMBER, add_months(HIRE_DATE,-120) as BIRTH_DATE, SALARY * 10 as SAVINGS from HR.EMPLOYEES);
     </copy>
     ````
 
 3. Create a new package. Copy, paste and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sql
     <copy>
     CREATE OR REPLACE PACKAGE investment_check AS
         TYPE check_record IS RECORD(
            id PROSPECTS.PERSON_ID%TYPE,
-           first_name PROSPECTS.FIRST_NAME%TYPE, 
-           last_name PROSPECTS.LAST_NAME%TYPE, 
+           first_name PROSPECTS.FIRST_NAME%TYPE,
+           last_name PROSPECTS.LAST_NAME%TYPE,
            investment_limit NUMBER);
         TYPE check_table IS TABLE OF check_record;
         FUNCTION get_limits(check_limit NUMBER)
@@ -310,8 +312,8 @@ In this lab, you will:
             l_rec check_record;
         BEGIN
             FOR l_rec IN (
-              select PERSON_ID, FIRST_NAME, LAST_NAME, 3*SAVINGS as INVESTMENT_LIMIT 
-              from PROSPECTS 
+              select PERSON_ID, FIRST_NAME, LAST_NAME, 3*SAVINGS as INVESTMENT_LIMIT
+              from PROSPECTS
               where 3*SAVINGS >= check_limit)
             LOOP
               PIPE ROW (l_rec);
@@ -325,7 +327,7 @@ In this lab, you will:
 
 4. Verify your new package function. Click Run Statement ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
     SELECT * FROM table(investment_check.get_limits(350000));
     </copy>
@@ -333,7 +335,7 @@ In this lab, you will:
 
 5. Generate a changelog with differences between snapshot `Dev1SnapshotV1` and current database. Paste these lines and click Run Script ![](./images/run-script.jpg ""). Before running this script, replace **[Your Initials]** with your initials in `ref_db` definition.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     define ref_db="--referenceUrl=jdbc:oracle:thin:@[Your Initials]dev01_high?TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01"
@@ -347,7 +349,7 @@ In this lab, you will:
 
 7. Create manual changelogs for code objects not captured by Liquibase. Paste these lines and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; touch database/hr-investment_check-code.xml
@@ -356,9 +358,9 @@ In this lab, you will:
 
 8. Open the new changelog `hr-investment_check-code.xml` in SQL Developer, and add:
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -386,9 +388,9 @@ In this lab, you will:
 
 9. Update master changelog `hr-master.xml` to include the latest objects and code, specifying this is the next version of the project.
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -410,7 +412,7 @@ In this lab, you will:
 
 10. Mark these last manual changes as deployed in the local development database. Paste these lines and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase changeLogSync
@@ -419,16 +421,16 @@ In this lab, you will:
 
 11. Verify again changes currently recorded by Liquibase in `DATABASECHANGELOG` table.
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 12. Generate a new snapshot called `Dev2SnapshotV2`.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase --outputFile=database/Dev2SnapshotV2.json snapshot --snapshotFormat=json
@@ -437,7 +439,7 @@ In this lab, you will:
 
 13. Add these last changes to your Git repository.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git add database/*
@@ -453,24 +455,24 @@ In this lab, you will:
 
 2. **Developer #3** creates new objects in this database development environment. Paste these lines in SQL Developer and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sql
     <copy>
     CREATE SEQUENCE "HR_EVENTS_SEQ" MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER NOCYCLE  NOKEEP NOSCALE GLOBAL;
     /
-    CREATE TABLE  "HR_EVENTS" 
+    CREATE TABLE  "HR_EVENTS"
        (	"ID" NUMBER,
-            "EVENT_ID" NUMBER, 
-    	"REGION" VARCHAR2(10), 
+            "EVENT_ID" NUMBER,
+    	"REGION" VARCHAR2(10),
     	"COUNTRY" VARCHAR2(255),
-    	"EVENT_DATE" DATE, 
-    	"EVENT_NAME" VARCHAR2(255), 
+    	"EVENT_DATE" DATE,
+    	"EVENT_NAME" VARCHAR2(255),
     	 CONSTRAINT "HR_EVENTS_PK" PRIMARY KEY ("ID")
       USING INDEX ENABLE
        );
     /
-    CREATE OR REPLACE EDITIONABLE TRIGGER  "bi_HR_EVENTS" 
+    CREATE OR REPLACE EDITIONABLE TRIGGER  "bi_HR_EVENTS"
       before insert on "HR_EVENTS"              
-      for each row 
+      for each row
     begin  
       if :new."ID" is null then
         select "HR_EVENTS_SEQ".nextval into :new."ID" from sys.dual;
@@ -482,7 +484,7 @@ In this lab, you will:
 
 3. **Developer #3** also modifies some objects in this database development environment. Paste these lines in SQL Developer and click Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sql
     <copy>
     ALTER TRIGGER  "bi_HR_EVENTS" ENABLE;
     ALTER TABLE prospects ADD experience NUMBER;
@@ -492,7 +494,7 @@ In this lab, you will:
 
 4. Generate a changelog with differences between snapshot `Dev2SnapshotV2` and current database environment. Before running this script, replace **[Your Initials]** with your initials in `ref_db` definition. Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     define ref_db="--referenceUrl=jdbc:oracle:thin:@[Your Initials]dev01_high?TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01"
@@ -505,7 +507,7 @@ In this lab, you will:
 
 6. Create a manual changelogs for trigger code, that is not captured by Liquibase. Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; touch database/HR_EVENTS_trig-code.xml
@@ -514,9 +516,9 @@ In this lab, you will:
 
 7. Add contentes to the manual changelogs for trigger code. Open HR_EVENTS_trig-code.xml changelog in SQL Developer, and add the following lines:
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -536,9 +538,9 @@ In this lab, you will:
 
 8. Update master changelog to include the last changes added by **Developer #3**.
 
-    ````
+    ````xml
     <copy>
-    <?xml version="1.1" encoding="UTF-8"?> 
+    <?xml version="1.1" encoding="UTF-8"?>
     <databaseChangeLog
       xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -565,7 +567,7 @@ In this lab, you will:
 
 9. Mark the last changes as deployed in the local development database. Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase changeLogSync
@@ -574,16 +576,16 @@ In this lab, you will:
 
 10. Verify changes recorded in `DATABASECHANGELOG` table, and check last changes added by **Developer #3**. Run Statement ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 11. Generate a new snapshot called `Dev3SnapshotV3`.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase --outputFile=database/Dev3SnapshotV3.json snapshot --snapshotFormat=json
@@ -592,7 +594,7 @@ In this lab, you will:
 
 12. Add last changes to your Git development repository.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git add database/*
@@ -610,7 +612,7 @@ In this lab, you will:
 
 2. In this section of the lab **Developer #1** is working on a ticket that has been raised for an issue. This patch can be developed on a separate Git branch. Copy these lines in SQL Developer and Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git checkout -b ticket001
@@ -620,7 +622,7 @@ In this lab, you will:
 
 3. The patch for this issue modifies table `PROSPECTS`. Run Script ![](./images/run-script.jpg "") in SQL Developer.
 
-    ````
+    ````sql
     <copy>
     alter table PROSPECTS set unused (BIRTH_DATE);
     alter table PROSPECTS drop column PHONE_NUMBER;
@@ -630,7 +632,7 @@ In this lab, you will:
 
 4. Generate a changelog with differences between snapshot `Dev3SnapshotV3` and current database, to capture changes required for this patch. Run Script ![](./images/run-script.jpg ""). Before running this script, replace **[Your Initials]** with your initials in `ref_db` definition.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     define ref_db="--referenceUrl=jdbc:oracle:thin:@[Your Initials]dev01_high?TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01"
@@ -642,7 +644,7 @@ In this lab, you will:
 
 6. Update master changelog, adding changeset `hr-drop_phones.xml` at the end of the list.
 
-    ````
+    ````xml
     ...
     <copy>
       <include file="./hr-drop_phones.xml" relativeToChangelogFile="true"/>
@@ -655,7 +657,7 @@ In this lab, you will:
 
 9. Mark these changes as deployed in the local development database. Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase changeLogSync
@@ -664,16 +666,16 @@ In this lab, you will:
 
 10. Verify changes for this patch are recorded in `DATABASECHANGELOG` table. Run Statement ![](./images/run-query.jpg "").
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 11. Generate a new snapshot called `Dev1SnapshotV3t1`, to mark the state of the database with service request ticket `ticket001` solved.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase --outputFile=database/Dev1SnapshotV3t1.json snapshot --snapshotFormat=json
@@ -682,7 +684,7 @@ In this lab, you will:
 
 12. Add last changes to your Git development repository, more exactly to branch called `ticket001`, that was created for this patch.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git add database/*
@@ -693,7 +695,7 @@ In this lab, you will:
 
 13. On GitHub, click on **cicd-ws-rep01** link in the breadcrumbs at the top of the page to refresh it. You will see this message: *ticket001 had recent pushes less than a minute ago*.
 
-14. Click **Compare & pull request** > **Create pull request**. **Merge pull request** > **Confirm merge**. 
+14. Click **Compare & pull request** > **Create pull request**. **Merge pull request** > **Confirm merge**.
 
 15. When finished, you will receive this message: *Pull request successfully merged and closed*. Click **Delete branch**.
 
@@ -704,7 +706,7 @@ In this lab, you will:
 
 2. In this section of the lab **Developer #2** is working on a ticket that has been raised for bug in the code. This fix can be developed on a separate Git branch. Copy these lines in SQL Developer and Run Script ![](./images/run-script.jpg ""). It will create a new branch called `ticket002`.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git checkout -b ticket002
@@ -718,11 +720,11 @@ In this lab, you will:
 
 5. Open `bi_HR_EVENTS_trig.sql` using Files dialog in SQL Developer, and add a second if condition. This is how the file has to look like:
 
-    ````
+    ````sql
     <copy>
-    create or replace TRIGGER  "bi_HR_EVENTS" 
+    create or replace TRIGGER  "bi_HR_EVENTS"
       before insert on "HR_EVENTS"              
-      for each row 
+      for each row
     begin  
       if :new."ID" is null then
         select "HR_EVENTS_SEQ".nextval into :new."ID" from sys.dual;
@@ -739,7 +741,7 @@ In this lab, you will:
 
 7. Generate a changelog with differences between snapshot `Dev1SnapshotV3t1` and current database. Run Script ![](./images/run-script.jpg ""). Before running this script, replace **[Your Initials]** with your initials in `ref_db` definition.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     define ref_db="--referenceUrl=jdbc:oracle:thin:@[Your Initials]dev01_high?TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01"
@@ -751,7 +753,7 @@ In this lab, you will:
 
 9. Add last changes to your Git development repository, more exactly to branch called `ticket002`, that was created for this patch.
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; git add database/*
@@ -762,7 +764,7 @@ In this lab, you will:
 
 13. On GitHub, click on **cicd-ws-rep01** link in the breadcrumbs at the top of the page to refresh it. You will see this message: *ticket002 had recent pushes less than a minute ago*.
 
-14. Click **Compare & pull request**. Review all code changes detailed on the lower part of the page. Click **Create pull request**. **Merge pull request** > **Confirm merge**. 
+14. Click **Compare & pull request**. Review all code changes detailed on the lower part of the page. Click **Create pull request**. **Merge pull request** > **Confirm merge**.
 
 15. When finished, you will receive this message: *Pull request successfully merged and closed*. Click **Delete branch**.
 
@@ -803,7 +805,7 @@ In this lab, you will:
 
 7. Create a new folder and unzip your wallet files.
 
-    ````
+    ````sh
     <copy>
     mkdir /home/oracle/Wallet_[Your Initials]Dev02
     unzip /home/oracle/Downloads/Wallet_[Your Initials]Dev02.zip -d /home/oracle/Wallet_[Your Initials]Dev02/
@@ -812,14 +814,16 @@ In this lab, you will:
 
 8. Edit **sqlnet.ora** file in **Wallet_[Your Initials]Dev02** folder, and set the value of `DIRECTORY` to `${TNS_ADMIN}`.
 
-    ````
+    ````sh
+    <copy>
     WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="${TNS_ADMIN}")))
     SSL_SERVER_DN_MATCH=yes
+    </copy>
     ````
 
 9. Set the `TNS_ADMIN` environment variable to the directory where the unzipped credentials files.
 
-    ````
+    ````sh
     <copy>
     export TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev02
     </copy>
@@ -827,7 +831,7 @@ In this lab, you will:
 
 10. Get service names for your instance from **tnsnames.ora** file.
 
-    ````
+    ````sh
     <copy>
     cat /home/oracle/Wallet_[Your Initials]Dev02/tnsnames.ora
     </copy>
@@ -835,7 +839,7 @@ In this lab, you will:
 
 11. Verify the connectivity using SQL*Plus, using the TP service. If the connection works, exit. Before running this command, replace **[Your Initials]** with your lower case initials (database service).
 
-    ````
+    ````sh
     <copy>
     sqlplus admin/DBlearnPTS#21_@[Your Initials]dev02_tp
 
@@ -843,9 +847,9 @@ In this lab, you will:
     </copy>
     ````
 
-12. Edit `ojdbc.properties` file in **Wallet_[Your Initials]Dev02** folder to set connection properties. 
+12. Edit `ojdbc.properties` file in **Wallet_[Your Initials]Dev02** folder to set connection properties.
 
-    ````
+    ````sh
     <copy>
     cd ~
     gedit Wallet_[Your Initials]Dev02/ojdbc.properties
@@ -853,16 +857,18 @@ In this lab, you will:
     ````
 
 13. We have to make 3 changes:
-    - Comment out the oracle.net.wallet_location line. 
-    - Use TNS_ADMIN environment variable value in javax.net.ssl.trustStore and javax.net.ssl.keyStore. 
+    - Comment out the oracle.net.wallet_location line.
+    - Use TNS_ADMIN environment variable value in javax.net.ssl.trustStore and javax.net.ssl.keyStore.
     - Set javax.net.ssl.trustStorePassword and javax.net.ssl.keyStorePassword to the wallet password.
 
-    ````
+    ````sh
+    <copy>
     #oracle.net.wallet_location=(SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=${TNS_ADMIN})))
     javax.net.ssl.trustStore=${TNS_ADMIN}/truststore.jks
     javax.net.ssl.trustStorePassword=DBlearnPTS#21_
     javax.net.ssl.keyStore=${TNS_ADMIN}/keystore.jks
     javax.net.ssl.keyStorePassword=DBlearnPTS#21_
+    </copy>
     ````
 
 
@@ -872,7 +878,7 @@ In this lab, you will:
 
 2. Edit `liquibase.properties` file in your project folder cicd-ws-rep01.
 
-    ````
+    ````sh
     <copy>
     cd ~/cicd-ws-rep01
     gedit liquibase.properties
@@ -881,7 +887,7 @@ In this lab, you will:
 
 3. Comment **ATPdev01** url line, and add **ATPdev02** url line. Before saving the file, replace **[Your Initials]** with your initials.
 
-    ````
+    ````sh
     <copy>
     driver : oracle.jdbc.OracleDriver
     classpath : /usr/lib/oracle/21/client64/lib/ojdbc8.jar
@@ -895,7 +901,7 @@ In this lab, you will:
 
 4. Connect to the **ATPdev02** ATP service as **admin**. Before running this command, replace **[Your Initials]** with your lower case initials (database service).
 
-    ````
+    ````sh
     <copy>
     sqlplus admin/DBlearnPTS#21_@[Your Initials]dev02_tp
     </copy>
@@ -903,7 +909,7 @@ In this lab, you will:
 
 5. Create an empty HR schema for the new project in **ATPdev02** development environment.
 
-    ````
+    ````sql
     <copy>
     CREATE USER HR IDENTIFIED BY DBlearnPTS#21_;
     GRANT connect, resource to HR;
@@ -915,9 +921,9 @@ In this lab, you will:
 
 6. In SQL Developer, create a new connection to the **ATPdev02** ATP service as **HR**. Connect and Run Statement ![](./images/run-query.jpg ""). You will receive an error, because there is no `DATABASECHANGELOG` table in this database.
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
 
@@ -926,7 +932,7 @@ In this lab, you will:
 
 7. Apply initial HR schema objects and code, tagged as **version_1.0** in master changelog, in this new database environment, using Liquibase. In SQL Developer, use Run Script ![](./images/run-script.jpg "")
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase updateToTag version_1.0
@@ -935,16 +941,16 @@ In this lab, you will:
 
 8. In SQL Developer, use Run Statement ![](./images/run-query.jpg "") again to query `DATABASECHANGELOG` table.
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 9. Verify objects in HR schema, to make sure all initial objects are there.
 
-    ````
+    ````sql
     <copy>
     select object_name, object_type from user_objects order by 2,1;
     </copy>
@@ -952,7 +958,7 @@ In this lab, you will:
 
 10. Apply all HR schema objects and code in master changelog to this new database environment, using Liquibase. Use Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     HOST cd &proj_dir; liquibase update
@@ -961,16 +967,16 @@ In this lab, you will:
 
 11. Query `DATABASECHANGELOG` table in SQL Developer with Run Statement ![](./images/run-query.jpg "")
 
-    ````
+    ````sql
     <copy>
-    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE 
+    select ID, AUTHOR, FILENAME, orderexecuted ORD, DESCRIPTION, TAG, EXECTYPE
       from DATABASECHANGELOG order by 4 desc;
     </copy>
     ````
 
 12. Verify all objects in HR schema, to make sure all objects required by our project are there.
 
-    ````
+    ````sql
     <copy>
     select object_name, object_type from user_objects order by 2,1;
     </copy>
@@ -978,16 +984,16 @@ In this lab, you will:
 
 13. You can compare both database environments, ATPdev01 and ATPdev02, to see if we missed anything. Run Statement ![](./images/run-query.jpg "") in both SQL Developer connections.
 
-    ````
+    ````sql
     <copy>
-    select object_type, count(*) 
+    select object_type, count(*)
       from user_objects group by object_type order by 1;
     </copy>
     ````
 
 14. At the same time, we can perform a comparison with Liquibase, that generates a changelog with differences between ATPdev01 and ATPdev02. Before running this script, replace **[Your Initials]** with your initials in `ref_db` definition. Run Script ![](./images/run-script.jpg "").
 
-    ````
+    ````sh
     <copy>
     define proj_dir="../home/oracle/cicd-ws-rep01"
     define ref_db="--referenceUrl=jdbc:oracle:thin:@[Your Initials]dev01_high?TNS_ADMIN=/home/oracle/Wallet_[Your Initials]Dev01"
@@ -1003,10 +1009,5 @@ In this lab, you will:
 
 
 ## Acknowledgements
-* **Author** - Valentin Leonard Tabacaru, PTS
-* **Last Updated By/Date** -  Valentin Leonard Tabacaru, May 2021
-
-## Need Help?
-Please submit feedback or ask for help using our [LiveLabs Support Forum](https://community.oracle.com/tech/developers/categories/livelabsdiscussions). Please click the **Log In** button and login using your Oracle Account. Click the **Ask A Question** button to the left to start a *New Discussion* or *Ask a Question*.  Please include your workshop name and lab name.  You can also include screenshots and attach files.  Engage directly with the author of the workshop.
-
-If you do not have an Oracle Account, click [here](https://profile.oracle.com/myprofile/account/create-account.jspx) to create one.
+* **Author** - Valentin Leonard Tabacaru
+* **Last Updated By/Date** -  Valentin Leonard Tabacaru, March 2023

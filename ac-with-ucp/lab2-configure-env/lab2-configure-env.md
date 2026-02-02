@@ -8,8 +8,8 @@ In this lab, we will customize the environment that will be used to run the rest
 
 There are three main elements in our environment:
 
-* **VCN-DEMORAC** : a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
-* **dbrac** : a two-node DBCS (aka Oracle Base Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
+* **VCN-DEMORAC** (or another automatically generated name if you run in a sandbox environment): a **Virtual Cloud Network (VCN)** has been pre-created with the required network topology components inside the Oracle Cloud (Subnets, Route Tables, Security Lists, Gateways, etc.)
+* **dbrac** : a two-node Database Cloud Service (aka Oracle Base RAC Database) **RAC database** with **Grid Infrastructure** (which should have also been pre-created)
 * **demotac** : a **Compute instance** Virtual Machine hosting our demo application
 
 Estimated Lab Time: 30 minutes.
@@ -23,7 +23,7 @@ In this lab, you will:
 * Complete the network configuration
 </if>
 <if type="sandbox">
-* Review the network configuration
+* Understand important points in the network configuration
 </if>
 * Configure RAC database services
 * Create a demo schema in the database
@@ -45,15 +45,15 @@ This lab assumes you have:
 
 ## Task 1: Configure the Network for Oracle Net
 
+<if type="sandbox">
+***As you are running in a sandbox environment, you should skip this task and go directly to Task 2. Security restrictions in sandbox environments do not allow the creation of Network Security Groups. However, all required ports are open for the workshop to work. You can read the instructions in this task to better understand which ports need to be open and for which purpose.***
+</if>
+
   1. Create a **Network Security Group** rule allowing Oracle Net connectivity
 
     * It is necessary to **open TCP port 1521** in the VCN to allow the demo application to connect to the database. We can do this by configuring a **Network Security Group Rule** and adding the NSG to the database.
 
-    <if type="sandbox">
-    * *As you are running this workshop in a sandbox environment, the configuration of the Virtual Cloud Network, Network Security Group, and the association between the NSG and the database have been completed automatically. For a better understanding of what was done, follow the instructions in this task without actually creating these components. Changing them will result in errors throughout the workshop.*
-    </if>
-
-    * From the Oracle Cloud web console, go to **Networking** and select your VCN. It should be named **VCN-DEMORAC**.
+    * From the Oracle Cloud web console, go to **Networking** > **Virtual Could Network** sand select your VCN. It should be named **VCN-DEMORAC**.
 
       ![OCI console menu vcn](https://oracle-livelabs.github.io/common/images/console/networking-vcn.png " ")
 
@@ -65,7 +65,7 @@ This lab assumes you have:
 
       ![Select VCN](./images/task1/select-vcn.png " ")
 
-    * Then click on **Network Security Group** under **Resources** to create a Network Security Group in the VCN.
+    * Then click on **Create Network Security Group** under **Security** to create a Network Security Group in the VCN.
 
       ![Create NSG](./images/task1/create-nsg.png " ")
 
@@ -75,9 +75,7 @@ This lab assumes you have:
       Name : <copy>NSG-DEMORAC</copy>
       ````
 
-    * Click **Next**
-
-  2. Then add a **stateful ingress rule** allowing Oracle Net connectivity within the VCN
+    * At the bottom of the same page, add a **stateful ingress rule** allowing Oracle Net connectivity within the VCN
 
     * Enter the following values in the **Add Security Rules** dialog:
 
@@ -111,20 +109,19 @@ This lab assumes you have:
 
   3. Finally add the NSG to the database
 
-    * From the Oracle Cloud web console, go to **Oracle Database**
+    * From the Oracle Cloud web console, go to **Oracle Database** > **Oracle Base Database Service**
 
-      ![OCI console menu database](https://oracle-livelabs.github.io/common/images/console/database-basedb.png " ")
-
+      ![Select dbrac database](./images/task1/basedb.png " ")
 
     * Select database **dbrac**
 
       ![Select dbrac database](./images/task1/select-dbrac-database.png " ")
 
-    * Under Network, Click on **Edit**
+    * Under Network, Find **Network Security Groups** and click **Edit**
 
       ![Add NSG to dbrac](./images/task1/add-nsg-to-dbrac.png " ")
 
-    * select NSG-DEMORAC and **Save**
+    * select NSG-DEMORAC in your compartment and **Save**
 
       ![Select NSG](./images/task1/select-nsg.png " ")
 
@@ -133,6 +130,15 @@ This lab assumes you have:
 
 
   1. Connect to Cloud shell from the details page of database **dbrac**
+
+    * From the Oracle Cloud web console, go to **Oracle Database** > **Oracle Base Database Service**
+
+      ![Select dbrac database](./images/task1/basedb.png " ")
+
+    * Select database **dbrac**
+
+      ![Select dbrac database](./images/task1/select-dbrac-database.png " ")
+
 
     * Click on the Cloud Shell icon from the top right of the OCI console
 
@@ -146,11 +152,11 @@ This lab assumes you have:
 
     * Make sure the mode is set to 400 (**chmod 400 private-key-file**)
 
-        ![Upload Public Key](./images/task2/upload-public-key.png " ")
+        ![Upload Public Key](./images/task2/upload-key.png " ")
 
   2. Check that ONS is running on the server
 
-    * From the database details page, select **Nodes** under **Resources** to find out the public IPs of the database nodes
+    * Find out the public IPs of the database nodes from the database details page, under **Nodes**
 
       ![DB Nodes IPs](./images/task2/db-nodes-ips.png " ")
 
@@ -205,14 +211,14 @@ This lab assumes you have:
     * It is necessary to **open TCP port 6200** in the VCN to allow **Fast Application Notification Events** to flow from the cluster database to the client application. We can do this by adding a **Network Security Group Rule** to the database NSG.
 
     <if type="sandbox">
-    * *As you are running this workshop in a sandbox, this network configuration has already been done automatically, but you should still follow the instructions in this step to review and understand what was done without actually creating the rule to open port 6200.*
+    * *As you are running this workshop in a sandbox, you should skip this step. The port is open by an automatically created Security List. You can read the instructions in this step to review and understand what normally needs to be done manually to open port 6200.*
     </if>
 
     * From the OCI console under **Networking** > **Virtual Cloud Networks**, select the VCN (**VCN-DEMORAC**)
 
-    * Retrieve the Network Security Group **NSG-DEMORAC** of the database under **Resources** and select it.
+    * Retrieve the Network Security Group **NSG-DEMORAC** of the database under **Security** > **Network Security Groups** and select it.
 
-    * Click **Add Rules**
+    * Click **Add Rules** under **Security Rules**
 
     * Enter the following values for another **ingress** rule allowing the propagation of Fast Application Notification (FAN) events to the connection pool
 
@@ -239,7 +245,7 @@ This lab assumes you have:
 
     * Example
 
-      ![NSG ingess rule 6200](./images/task2/nsg-ingress-rule.png " ")
+      ![NSG ingress rule 6200](./images/task2/nsg-ingress-rule.png " ")
 
     * Click **Add**
 
@@ -264,13 +270,13 @@ This lab assumes you have:
   2. Create a database service with standard parameters (no Application Continuity)
 
 
-    * Find out the database unique name from the details page of the database **CONT** in DBCS **dbrac**
+    * Find out the database unique name from the details page of the database **CONT** in Oracle Base Database Service **dbrac**
 
-        Make a note of your Database Unique Name. In should be in the form ***CONT_uvwxyz***.
+        Make a note of your Database Unique Name. In should be in the form ***CONT_xyz***.
 
         ![Find database unique name](./images/task3/find-database-unique-name.png " ")
 
-        *In the following commands, you will need to replace the template database name "cont_prim" by the real value of this database unique name.*
+        *PLEASE NOTE: In the following commands, you need to replace the template database name "cont_prim" by the real value of the database unique name.*
 
         > **Note:** In most cases one can choose the database unique name when provisioning a database system. However, in our workshop, the value had to be automatically generated and needs to be retrieved.
 
@@ -423,6 +429,16 @@ This lab assumes you have:
   1. Understand the demo application directory structure
 
 
+  <if type="sandbox">
+  * ***As you are running this workshop in a sandbox environment, you will have to change the connect strings in SQL and Java files.
+    **.dnsdemorac.vcndemorac** will have to be replaced by **.pub.ll12345vcn** where **12345** is your LiveLab reservation ID. (Note the two lower case **L** followed by reservation number.)
+    The following command may help you to make this change in all the files of the current folder and its subfolders:***
+    ````
+    <copy>grep -lir dnsdemorac.vcndemorac | xargs -i@ sed -i 's/dnsdemorac.vcndemorac/pub.ll12345vcn/g' @</copy>
+    ````
+  </if>
+
+
     * Using noVNC, connect to the remote desktop of the client machine **demotac** as user **oracle**.
 
         ![Remote Desktop](./images/task4/remote-desktop.png " ")
@@ -441,7 +457,9 @@ This lab assumes you have:
         ac/sql       : SQL scripts to be used in next labs
         ```
 
-
+    <if type="sandbox">
+    * As you are running this workshop in a sandbox environment, you should change the connect strings in SQL and Java files before running them. Replace ***.dnsdemorac.vcndemorac*** by ***.pub.ll12345vcn*** where ***12345*** is your LiveLab reservation ID.
+    </if>
 
   2. Open a terminal window (as oracle) and change directory to $HOME/work/ac/ddl
 
@@ -612,6 +630,18 @@ This lab assumes you have:
 
     * Verify the value of strScan and change it in MyCUPDemo.java if necessary.
 
+    <if type="sandbox">
+    * ***As you are running this workshop in a sandbox environment, you should change the connect string in the application code. Replace **.dnsdemorac.vcndemorac** by **.pub.ll12345vcn** where **12345** is your LiveLab reservation ID. Note the two lower case L.
+    For instance:***
+
+    ```
+    //String strScan = "ruby-scan.dnsdemorac.vcndemorac.oraclevcn.com";
+    String strScan = "ruby-scan.pub.ll12345vcn.oraclevcn.com";
+    //String strService = strAlias + ".dnsdemorac.vcndemorac.oraclevcn.com";
+    String strService = strAlias + ".pub.ll12345vcn.oraclevcn.com";
+    ```
+    </if>
+
 
   4. Compile the demo application
 
@@ -635,4 +665,4 @@ This lab assumes you have:
 ## Acknowledgements
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
-* **Last Updated By/Date** - François Pons, September, 15th 2022
+* **Last Updated By/Date** - François Pons, July 2025

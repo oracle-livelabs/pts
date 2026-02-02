@@ -1,20 +1,18 @@
-# Provision Catalog and Shard Database
+# Provision the Database and Compute Instance
 
 ## Introduction
 
-In this lab you will setup 4 compute instances using Oracle Resource Manager and Terraform. The databases are automatically installed in the instances. One will be used as the sharding catalog named cata. Others are used as the sharded database name shd1, shd2 and shd3.
+In this lab you will provision 4 OCI Base Database Services an 1 OCI VM Compute Instance using Oracle Resource Manager. After this lab, You will get the following resource:
 
-Estimated Lab Time: 45 minutes.
+-   3 Base Database Services for Shards
+-   1 Base Database Service for Catalog
+-   1 Compute instance for GSM
 
-<!--Watch the video below for a quick walk through of the lab.
-[](youtube:oO-1-XYmFYY)-->
-
-Watch the video below for a quick walk-through of the lab.
-[Setup the Environment](videohub:1_bpctm06z)
+Estimated Lab Time: 50 minutes.
 
 ### Objectives
 
--   Use Terraform and Resource Manager to setup the shard catalog and sharded database.
+-   Use Resource Manager to provision the lab resources.
 
 ### Prerequisites
 
@@ -22,88 +20,120 @@ This lab assumes you have already completed the following:
 - An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account
 - Create a SSH Keys pair
 
-Click on the link below to download the Resource Manager zip files you need to build your environment.
+Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [sdb19c-market-19.14-1.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/u8b0_dUgBARhabj2Be6wGjxasMz8i4Q0WysZVKH8eP53kcqSAGdw5FmA0Pd21VVz/n/c4u04/b/livelabsfiles/o/labfiles/sdb19c-market-19.14-1.zip) - Packaged terraform primary database instances creation script.
+- [gdd-raft-23ai-23.9.zip](https://github.com/minqiaowang/globally-distributed-database-with-raft/raw/main/setup-environment/gdd-raft-23ai-23.9.zip) - Packaged terraform resources creation script.
 
 
 
-## Task 1: Prepare the Shard Database
+## **Task 1:** Create the Resource Manager Stack
 
-1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Developer Services > Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
+1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
-    ![Login to the Oracle Cloud Console.](./images/cloud-homepage.png " ")
-
-    ![image-20220827113112652](images/image-20220827113112652.png)
+    ![image-resmanager](images/image-resmanager.png)
 
     
 
-    ![Click the create stack button.](./images/step1-3-createstackpage.png " ")
+    ![image-stack](images/image-stack.png)
 
-2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`sdb19c-market-19.14.zip`) that you downloaded before. Click **Select** to upload the zip file.
+    
 
-    ![Select and upload zip file.](images/selectzipfile.png)
+2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`gdd-raft-23ai.zip`) that you downloaded. Click **Select** to upload the zip file.
 
+    ![image-terraform-scripts](images/image-terraform-scripts.png)
+
+    
+    
     Accept all the defaults and click **Next**.
 
 
-3. Accept the default value of the  `Catalog DB VM Shape` and `Shard DB VM Shape`. Upload or Paste the content of the public key you create before to the `Public SSH Key`,  and click **Next**. (Note: If you don't want to compare the performance in the following labs and want save the resource, you can change the catalog db shape to VM.Standard2.1).
+3. Upload or Paste the content of the public key you create before.
 
-    ![image-20220827113653468](images/image-20220827113653468.png)
+    ![image-sshkey](images/image-sshkey.png)
 
-    
+4. Input the DB Unique Name Suffix, the default value is "workshop". You can input your own suffix to make sure the db unique name is different from other users when multiple users do the same workshop using the same tenant. Then click **Next**.
+
+    ![image-dbsuffix](images/image-dbsuffix.png)
 
 4. Click **Create**.
 
-    ![Click to create stack.](images/clickcreate.png)
+    ![image-review](images/image-review.png)
 
-5. Your stack has now been created!  Now to create your environment. *Note: If you get an error about an invalid DNS label, go back to your Display Name, please do not enter ANY special characters or spaces. It will fail.*
+5. Your stack has now been created!  Now to create your environment. 
 
-    ![image-20220827114025396](images/image-20220827114025396.png)
+    ![image-stack-detail](images/image-stack-detail.png)
 
 
-## Task 2: Terraform Apply
 
-When using Resource Manager to deploy an environment, execute a terraform **Plan** and **Apply**. Let's do that now.
+## **Task 2:** Terraform Apply
 
-1. At the top of your page, click on **Stack Details**.  Click the **Apply** button. Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
+When using Resource Manager to deploy an environment, execute a terraform  **Apply**. Let's do that now.
 
-    ![image-20220827114209669](images/image-20220827114209669.png)
+1. At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This takes about 15-20 minutes, please be patient.
 
-    ![Click apply from Terraform Actions.](images/applyterraformactions.png)
+    ![image-apply](images/image-apply.png)
 
-    ![Apply job in progress.](./images/applyjob2.png " ")
+    ![image-apply-confirm](images/image-apply-confirm.png)
 
-    ![Apply job succeeded.](./images/step3-1-applyjob3.png " ")
+    ![image-accepted](images/image-accepted.png)
 
-    
+    ![image-in-progress](images/image-in-progress.png)
 
-2. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** and **private ip address** for each of the instances. Congratulations, your environment is created! Time to login to your instances to finish the configuration.
-
-    ![Click outputs from Terraform.](images/terraformoutputs.png)
-
-3.  Write down all the public and private ip for later use. It's same like the following.
-
-    ```
-    152.67.196.50  10.0.0.2 cata 
-    152.67.196.240 10.0.0.3 shd1 
-    152.67.199.233 10.0.0.4 shd2 
-    152.67.196.227 10.0.0.5 shd3 
-    ```
+    ![image-successed](images/image-successed.png)
 
     
 
-## Task 3: Connect to your Instance
+2. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** for the GSM host instance. 
+
+    If you encouter with error message like:
+
+    ```
+    Error Message: work request did not succeed, workId: ocid1.coreservicesworkrequest.oc1.ap-seoul-1.abu...hmltq, entity: database, action: CREATED. Message: Create DB System operation failed. Refer to work request ID fe65f...t1f when opening a Service Request at My Oracle Support.
+    
+    Resource OCID: ocid1.dbsystem.oc1.ap-seoul-1.anu...twbq
+    
+    Suggestion: Please retry or contact support for help with service: Database Db System
+    ```
+
+    or
+
+    ```
+    Error: 400-InvalidParameter, Cannot access Object Storage using the subnet with the following OCID: ocid1.subnet.oc1.ap-seoul-1.aaa...xfa. Review your VCN configuration. If you need further assistance, contact Oracle Support.
+    
+    Suggestion: Please update the parameter(s) in the Terraform config as per error message Cannot access Object Storage using the subnet with the following OCID: ocid1.subnet.oc1.ap-seoul-1.aaa...xfa. Review your VCN configuration. If you need further assistance, contact Oracle Support.
+    ```
+
+    In this situation, some base databases have been provisioned, others with error. You can click **Apply** again in the stack details page to provision the rest resources).
+
+    ![image-output](images/image-output.png)
+
+    
+
+3. Write down the gsmhost public ip address. It's will be used in the next Tasks.
+
+4. Now, you have gotten the lab resources like the following (**Note:** the DB Unique Name may different if you input the different suffix name when creating the stack).  **The shardhost0 is used for catalog database.**
+
+    | Host       | Private IP | DB Name | DB Unique Name | PDB Name |
+    | ---------- | ---------- | ------- | -------------- | -------- |
+    | shardhost0 | 10.0.0.10  | sdb0    | sdb0_workshop  | shard0   |
+    | shardhost1 | 10.0.0.11  | sdb1    | sdb1_workshop  | shard1   |
+    | shardhost2 | 10.0.0.12  | sdb2    | sdb2_workshop  | shard2   |
+    | shardhost3 | 10.0.0.13  | sdb3    | sdb3_workshop  | shard3   |
+    | gsmhost    | 10.0.0.20  |         |                |          |
+
+    The `db_domain` is `subnet1.primaryvcn.oraclevcn.com`. The default password for database dba is `WelcomePTS_2024# `.
+
+## **Task 3:** Connect to your Instance
 
 ### MAC or Windows CYGWIN Emulator
 
-1.  Open up a terminal (MAC) or cygwin emulator as the opc user.  Enter yes when prompted.
+1.  Open up a terminal (MAC) or cygwin emulator connect the gsmhost instance as the opc user.  Enter yes when prompted.
 
     ````
-    ssh -i ~/.ssh/optionskey opc@<Your Compute Instance Public IP Address>
+    ssh -i <ssh_private_key> opc@<Your GSM host Public IP Address>
     ````
 
-2. After successfully logging in, proceed to STEP 5.
+    The output like this:
 
     ```
     ssh -i labkey opc@xxx.xxx.xxx.xxx
@@ -112,7 +142,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
     Warning: Permanently added 'xxx.xxx.xxx.xxx' (ECDSA) to the list of known hosts.
     -bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
-    [opc@primary ~]$ 
+    [opc@gsmhost ~]$ 
     ```
 
     
@@ -123,7 +153,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 2.  Enter a name for the session and click **Save**.
 
-    ![Enter a session name and click save.](./images/putty-setup.png " ")
+    ![](./images/putty-setup.png " ")
 
 3.  Click **Connection** > **Data** in the left navigation pane and set the Auto-login username to **opc**.
 
@@ -131,7 +161,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 5.  Navigate to the location where you saved your SSH private key file, select the file, and click Open.  NOTE:  You cannot connect while on VPN or in the Oracle office on clear-corporate (choose clear-internet).
 
-    ![Navigate to your SSH private key and click open.](./images/putty-auth.png " ")
+    ![](./images/putty-auth.png " ")
 
 6.  The file path for the SSH private key file now displays in the Private key file for authentication field.
 
@@ -139,73 +169,16 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 8.  Click Open to begin your session with the instance.
 
-## Task 4: Verify the Database is Up
-
-1.  From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
-
-    ````
-    <copy>
-    tail -f /u01/ocidb/buildsingle.log
-    </copy>
-    ````
-    ![This file has the configures log of the database.](./images/tailofbuilddbinstancelog.png " ")
-
-2.  When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes). You can press Ctrl-C to exit from the tail command.
-
-    ![After seeing success message exit from tail command.](./images/tailofbuilddbinstancelog-finished.png " ")
-
-3.  Run the following command to verify the database with the SID **ORCL** is up and running.
-
-    ````
-    <copy>
-    ps -ef | grep ORCL
-    </copy>
-    ````
-
-    ![Run the command.](./images/pseforcl.png " ")
-
-4. Verify the listener is running:
-
-    ````
-    <copy>
-    ps -ef | grep tns
-    </copy>
-    ````
-
-    ![Verify the listener is running.](./images/pseftns.png " ")
-
-5.  Do the same steps to the other VMs, make sure all the databases are created correctly. Connect to the Database using SQL*Plus as the **oracle** user. The 4 CDBs we created named `cata, shd1, shd2, shd3` and the PDB named `catapdb, shdpdb1, shdpdb2, shdpdb3`.
-
-    ````
-    <copy>
-    sudo su - oracle
-    sqlplus system/Ora_DB4U@localhost:1521/catapdb
-    </copy>
-    ````
-
-    ![Make sure all databases are created correctly.](./images/sqlplus-login-orclpdb.png " ")
     
-6.  To leave `sqlplus` you need to use the exit command. Copy and paste the text below into your terminal to exit sqlplus.
 
-    ````
-    <copy>
-    exit
-    </copy>
-    ````
-
-7.  Copy and paste the below command to exit from oracle user and become an **opc** user.
-
-    ````
-    <copy>
-    exit
-    </copy>
-    ````
-
-You now have a fully functional Oracle Database 19c instance running on Oracle Cloud Compute. Check all the 4 instances and make sure they are ready.
-
-You may now proceed to the next lab.
+You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management, Dec 2020
-* **Last Updated By/Date** - Minqiao Wang, Aug 2022
+* **Author** - Minqiao Wang, Oracle SE
+
+* **Contributor** - Satyabrata Mishra, Database Product Management
+
+* **Last Updated By/Date** - Minqiao Wang, Sep 2024  
+
+    
 
