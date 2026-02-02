@@ -1,0 +1,33 @@
+{
+    "workshoptitle": "Upgrade to Oracle AI Database 26ai",
+    "help": "livelabs-help-database_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction to the Upgrade to Oracle AI Database 26ai Hands-On Lab instructions.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+            "title": "Lab 1: Install a new Oracle Home",
+            "description": "Install the 23.26 software that is needed for all of the following labs",
+            "filename": "../../lab1-install-new-home/install-new-oh.md"
+        },
+        {
+            "title": "Lab 2: Auto Upgrade",
+            "filename": "../../lab2-autoupgrade/autoupgrade.md"
+        },
+        {
+            "title": "Lab 3: Replay Upgrade",
+            "filename": "../../lab3-replay-upgrade/replay-upgrade.md"
+        },
+        {
+            "title": "Lab 4: Full Transportable Tablespaces",
+            "filename": "../../lab4-full-transportable/full-transportable.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+        }
+    ]
+}
