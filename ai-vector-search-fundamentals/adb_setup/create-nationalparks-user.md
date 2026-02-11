@@ -115,7 +115,9 @@ When you create a new Autonomous Database, you automatically get an account call
     -- QUOTA
     GRANT ORDS_RUNTIME_ROLE TO nationalparks;
     GRANT EXECUTE ON dbms_cloud TO nationalparks;
-    GRANT EXECUTE ON DBMS_NETWORK_ACL_ADMIN TO nationalparks
+    GRANT EXECUTE ON dbms_cloud_ai TO nationalparks;
+    GRANT EXECUTE ON dbms_vector TO nationalparks;
+    GRANT EXECUTE ON DBMS_NETWORK_ACL_ADMIN TO nationalparks;
     GRANT READ,WRITE ON directory data_pump_dir TO nationalparks;
     GRANT CREATE mining model TO nationalparks;
     GRANT SELECT ON sys.v_$vector_memory_pool TO nationalparks;
@@ -147,23 +149,17 @@ When you create a new Autonomous Database, you automatically get an account call
     <copy>
     begin
       dbms_cloud.get_object(
-        object_uri=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/clip-vit-base-patch32_txt.onnx',
+        object_uri=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/all_MiniLM_L12_v2.onnx',
         directory_name=>'DATA_PUMP_DIR',
-        file_name=>'clip-vit-base-patch32_txt.onnx'
+        file_name=>'all_MiniLM_L12_v2.onnx'
       );
     end;
     /
     begin
-      dbms_vector.load_onnx_model(directory=>'DATA_PUMP_DIR', 
-        file_name=>'clip-vit-base-patch32_txt.onnx', model_name=>'clip_vit_txt',
-        metadata=>JSON('{"function" : "embedding", "embeddingOutput" : "embedding" , "input": {"input": ["DATA"]}}'));
-    end;
-    /
-    begin
       dbms_cloud.get_object(
-        object_uri=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/all_MiniLM_L12_v2.onnx',
+        object_uri=>'https://objectstorage.us-ashburn-1.oraclecloud.com/p/Fi6_7TWwA2VkaSHTl76t2TiSUkdAfL7C8aR_3S_WIPMGth0XWXyPDzutxTD63oAk/n/oradbclouducm/b/bucket-vector/o/Sample_Employee_Handbook.pdf',
         directory_name=>'DATA_PUMP_DIR',
-        file_name=>'all_MiniLM_L12_v2.onnx'
+        file_name=>'Sample_Employee_Handbook.pdf'
       );
     end;
     /
@@ -183,12 +179,18 @@ When you create a new Autonomous Database, you automatically get an account call
     DECLARE
       l_job_state      VARCHAR2(1000);
       l_job_handle     NUMBER;
+      dumpFile         VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/_ixVvYet-j7csDKdAgh-E70r1LKw9GYLWZEPkcAzjOklSmvl9KlFOIEFKOIZOIgo/n/oradbclouducm/b/bucket-vector/o/natparks2.dmp';
+      logFile          VARCHAR2(1024)  := 'natparks2_imp.log';
+      logDir           VARCHAR2(20)     := 'DATA_PUMP_DIR';
+      objStor_uri      VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oradbclouducm/b/bucket-vector/o/';
+      logType          NUMBER          := dbms_datapump.ku$_file_type_log_file;
     BEGIN
-      l_job_handle := DBMS_DATAPUMP.OPEN(OPERATION=>'IMPORT', JOB_MODE=>'FULL', JOB_NAME=>'TEST_DP_1', VERSION => 'LATEST');
-      DBMS_DATAPUMP.ADD_FILE(HANDLE=>l_job_handle, FILENAME=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/natparks.dmp', DIRECTORY=>'DATA_PUMP_DIR');
-      DBMS_DATAPUMP.START_JOB(HANDLE=>l_job_handle, SKIP_CURRENT=>0, ABORT_STEP=>0);
-      DBMS_DATAPUMP.WAIT_FOR_JOB(HANDLE=>l_job_handle, JOB_STATE=>l_job_state);
-      DBMS_DATAPUMP.DETACH(HANDLE=>l_job_handle);
+      l_job_handle := DBMS_DATAPUMP.OPEN(OPERATION=>'IMPORT', JOB_MODE=>'FULL', JOB_NAME=>'IMP_DP_1', VERSION => 'LATEST');
+      DBMS_DATAPUMP.ADD_FILE(HANDLE => l_job_handle, FILENAME => dumpFile, DIRECTORY => logDir);
+      DBMS_DATAPUMP.ADD_FILE(HANDLE => l_job_handle, FILENAME => logFile, DIRECTORY => logDir, FILETYPE => logType);
+      DBMS_DATAPUMP.START_JOB(HANDLE => l_job_handle, SKIP_CURRENT => 0, ABORT_STEP => 0);
+      DBMS_DATAPUMP.WAIT_FOR_JOB(HANDLE => l_job_handle, JOB_STATE => l_job_state);
+      DBMS_DATAPUMP.DETACH(HANDLE => l_job_handle);
     END;
     /
     </copy>
@@ -200,7 +202,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![create cloudshell](images/cloudshell_selection.png)
 
-  You can expand the cloudshell window by clicking on the slanted double arrows if you want to make the window bigger.
+    You can expand the cloudshell window by clicking on the slanted double arrows if you want to make the window bigger.
 
     ![expand cloudshell](images/create_cloudshell.png)
 
@@ -208,8 +210,9 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ```
     <copy>
-    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/w100001.sql
-    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/f114.sql
+    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_workspace.sql
+    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_natparks_demo.sql
+    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_benny_benefits.sql
     </copy>
     ```
   ![copy apex files](images/copy_apex_files.png)
@@ -243,8 +246,41 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ```
     sql ADMIN/Training4ADW@<insert your TNS alias here>
-    @w100001.sql
-    @f114.sql
+    -- Use this to prevent getting a remote server error message.
+    BEGIN
+       -- first set the workspace
+       apex_util.set_workspace(p_workspace => 'NATIONALPARKS');
+    
+        apex_application_install.set_remote_server(
+            p_static_id => 'oci_gen_ai',
+            p_base_url => 'https://inference.generativeai.us-chicago-1.oci.oraclecloud.com');
+    END;
+    /
+    @apex_workspace.sql
+    @apex_natparks_demo.sql
+    @apex_benny_benefits.sql
+    BEGIN
+       -- This is required to set the OCIDs for the new environment
+       -- so that the GenAI access will work
+       
+       -- first set the workspace
+       apex_util.set_workspace(p_workspace => 'NATIONALPARKS');
+    
+      -- set_persistent_credentials for "credentials_for_oci_gen_ai"
+      -- p_credential_static_id = Static ID
+      -- p_client_id = OCI User ID
+      -- p_client_secret = OCI Private Key
+      -- p_namespace = OCI Tenancy OCID
+      -- p_fingerprint = OCI Public Key Fingerprint
+      --
+      apex_credential.set_persistent_credentials (
+          p_credential_static_id => 'credentials_for_oci_gen_ai',
+          p_client_id => 'ocid1.user.oc1..  ',
+          p_client_secret => '  ',
+         p_namespace => 'ocid1.tenancy.oc1..  ',
+         p_fingerprint => '  ' );
+    END;
+    /
     ```
 
     ![run sqlcl](images/run_sqlcl.png)
@@ -256,4 +292,4 @@ You may now **proceed to the next lab**
 
 - **Author** - Andy Rivenes, Product Manager, AI Vector Search
 - **Contributors** - David Start
-- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2025
+- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

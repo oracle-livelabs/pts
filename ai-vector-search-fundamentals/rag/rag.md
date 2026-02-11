@@ -98,9 +98,9 @@ This task will load the sample employee handbook into the database, and then con
     ```
     <copy>
     VARIABLE user_query VARCHAR2(1000);
-    EXEC :user_query := 'How do I drop a dependent?';
+    EXEC :user_query := 'How much sick leave do I get?';
     SELECT doc_id, embed_id, embed_data FROM doc_chunks
-    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_query as data), COSINE)
+    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_query AS data), COSINE)
     FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
@@ -152,14 +152,22 @@ To set up the OCI Gen AI Service for our Lab we will first create a network ACL 
     BEGIN
       DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
         host => '*',
-        ace => xs$ace_type(privilege_list => xs$name_list('connect'),
+        ace => xs$ace_type(privilege_list => xs$name_list('http'),
                            principal_name => 'NATIONALPARKS',
                            principal_type => xs_acl.ptype_db));
     END;
     </copy>
     ```
 
-2. Next we will create an OCI credential. To do this you will need to look up some information about your OCI lab environment.  Generative AI requires the following authentication parameters:
+2. You can run the following to verify that the ACL has been created:
+
+    ```
+    <copy>
+    SELECT * FROM DBA_NETWORK_ACL_PRIVILEGES;
+    </copy>
+    ```
+
+3. Next we will create an OCI credential. To do this you will need to look up some information about your OCI lab environment.  Generative AI requires the following authentication parameters:
 
     ```
     "user_ocid"
@@ -172,36 +180,36 @@ To set up the OCI Gen AI Service for our Lab we will first create a network ACL 
     The first step will be to create API Keys for the user and tenancy ocids and your private fingerprint.
     You can find more details about this in the [DBMS\_VECTOR\_CHAIN](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html?source=%3Aso%3Afb%3Aor%3Aawr%3Aodb%3A%3A%3AEM13CTechForum+%3Aow%3Aevp%3Acpo%3A%3A%3A%3ARC_WWMK220222P00068%3AOER400222946Enterprisebyrelease) description in the Oracle AI Database 26ai PL/SQL Packages and Types Reference.
 
-1. Click **My Profile** at the top-right corner and select **User settings**.
+4. Click **My Profile** at the top-right corner and select **User settings**.
 
     ![Profile Menu](./images/profile.png " ")
 
-2. Under **Tokens and keys** tab and click **Add API key**.
+5. Under **Tokens and keys** tab and click **Add API key**.
 
     ![Add API Key](./images/api-keys.png " ")
 
-3. The Add API key dialog is displayed. Select **Generate API key pair** to create a new key pair.
+6. The Add API key dialog is displayed. Select **Generate API key pair** to create a new key pair.
 
-4. Click **Download private key**. A **.pem** file will be saved to your local device. You do not need to download the public key.
+7. Click **Download private key**. A **.pem** file will be saved to your local device. You do not need to download the public key.
 
     >*Note: You will use this private key while configuring the web credentials in a following step.*
 
-5. Click **Add**.
+8. Click **Add**.
 
     ![Profile Menu](./images/add-api-key.png " ")
 
-6. The key is added, and the Configuration file preview is displayed. Copy and save the configuration file snippet from the text box into a notepad. You will use this information to create OCI credential id a following step.
+9. The key is added, and the Configuration file preview is displayed. Copy and save the configuration file snippet from the text box into a notepad. You will use this information to create OCI credential id a following step.
 
     ![Profile Menu](./images/configuration-preview.png " ")
 
-7. Copy the following template into a Database Actions SQL window, but do not execute it:
+10. Copy the following template into a Database Actions SQL window, but do not execute it:
 
     ```
     <copy>
     DECLARE
-      jo json_object_t;
+      jo JSON_OBJECT_T;
     BEGIN
-      jo := json_object_t();
+      jo := JSON_OBJECT_T();
       jo.put('user_ocid','ocid1.user. ');
       jo.put('tenancy_ocid','ocid1.tenancy. ');
       jo.put('compartment_ocid','ocid1.compartment. ');
@@ -214,18 +222,19 @@ To set up the OCI Gen AI Service for our Lab we will first create a network ACL 
     </copy>
     ```
 
-  Now add your ocid specific strings, private_key and fingerprint to the PL/SQL block. The following will help you find each string value in your OCI console:
-    ```
-    "user_ocid"       : "<user ocid>",        <= see Profile -> User name -> Details
-    "tenancy_ocid"    : "<tenancy ocid>",     <= see Profile -> Tenancy: <tenancy name>
-    "compartment_ocid": "<compartment ocid>", <= see Compartments for Vector-Search-PM
-    "private_key"     : "<private key>",      <= downloaded private key in .pem file
-    "fingerprint"     : "<fingerprint>"       <= see Profile -> User name -> Tokens and Keys
-    ```
+    Now add your ocid specific strings, private_key and fingerprint to the PL/SQL block. The following will help you find each string value in your OCI console:
 
-8. Now execute the create credential PL/SQL block by clicking on the run script icon.
+      ```
+      "user_ocid"        : "<user ocid>",        <= see Profile -> User name -> Details
+      "tenancy_ocid"     : "<tenancy ocid>",     <= see Profile -> Tenancy: <tenancy name>
+      "compartment_ocid" : "<compartment ocid>", <= see Compartments for Vector-Search-PM
+      "private_key"      : "<private key>",      <= downloaded private key in .pem file
+      "fingerprint"      : "<fingerprint>"       <= see Profile -> User name -> Tokens and Keys
+      ```
 
-9. You can run the following to verify that the credential has been created:
+11. Now execute the create credential PL/SQL block by clicking on the run script icon.
+
+12. You can run the following to verify that the credential has been created:
 
     ```
     <copy>
@@ -308,11 +317,11 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
 
     ```
     <copy>
-    variable user_question varchar2(1000);
-    exec :user_question := 'What is the retirement plan?';
-    select embed_data from doc_chunks
-    order by vector_distance(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_question as data), COSINE)
-    fetch first 3 rows only;
+    VARIABLE user_question VARCHAR2(1000);
+    EXEC :user_question := 'What is the retirement plan?';
+    SELECT embed_data FROM doc_chunks
+    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_question as data), COSINE)
+    FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
     You should see something similar to the following:
@@ -352,28 +361,28 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
 
     ```
     <copy>
-    declare
-      llm_params         varchar2(1000);
-      user_question      varchar2(1000);
-      llm_response       clob;
-      llm_prompt_text    clob;
-    begin
+    DECLARE
+      llm_params         VARCHAR2(1000);
+      user_question      VARCHAR2(1000);
+      llm_response       CLOB;
+      llm_prompt_text    CLOB;
+    BEGIN
       llm_params := '{"provider":"ocigenai","credential_name":"OCI_GENAI_CRED","url":"https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat","model":"meta.llama-3.2-90b-vision-instruct"}';
       user_question := 'What is the retirement plan?';
       --
-      with
-        top_k as
-          (select embed_data from doc_chunks
-           order by vector_distance(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question as data), COSINE)
-           fetch first 3 rows only),
-        llm_prompt as
-          (select ('Question: ' ||
-           user_question || ', Context: ' || LISTAGG(embed_data, CHR(10))) as prompt_text from top_k)
-      select prompt_text into llm_prompt_text from llm_prompt;
+      WITH
+        top_k AS
+          (SELECT embed_data FROM doc_chunks
+           ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question AS data), COSINE)
+           FETCH FIRST 3 ROWS ONLY),
+        llm_prompt AS
+          (SELECT ('Question: ' ||
+           user_question || ', Context: ' || LISTAGG(embed_data, CHR(10))) AS prompt_text FROM top_k)
+      SELECT prompt_text INTO llm_prompt_text FROM llm_prompt;
       --
-      llm_response := dbms_vector_chain.utl_to_generate_text(llm_prompt_text, json(llm_params));
-      dbms_output.put_line('llm_response: ' || llm_response);
-    end;
+      llm_response := DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(llm_prompt_text, JSON(llm_params));
+      DBMS_OUTPUT.PUT_LINE('llm_response: ' || llm_response);
+    END;
     </copy>
     ```
 

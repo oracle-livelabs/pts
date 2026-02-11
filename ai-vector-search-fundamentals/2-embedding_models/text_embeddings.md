@@ -16,7 +16,7 @@ To enable similarity search, we will need to create vector embeddings for the co
 
 Vector embeddings are generated using Machine Learning models. How do you decide which embedding model to use? After all, there are open-source embedding models and proprietary embedding models that you might have to pay for, or you could create and train your own embedding models. To add to the confusion, each embedding model has been trained on specific data. The type of embedding model you use will depend on the type of data that you plan to embed and how well that model performs for the searches you or your application need to perform.
 
-Once you decide on one or more embedding models to try, you can choose to create vector embeddings outside the database or inside the database by importing the models directly into Oracle Database if they are compatible with the Open Neural Network Exchange (ONNX) standard. Since Oracle Database uses the ONNX runtime directly within the database, these imported models can be used to generate vector embeddings in Oracle Database.
+Once you decide on one or more embedding models to try, you can choose to create vector embeddings outside the database or inside the database by importing the models directly into Oracle AI Database if they are compatible with the Open Neural Network Exchange (ONNX) standard. Since Oracle AI Database uses the ONNX runtime directly within the database, these imported models can be used to generate vector embeddings in Oracle AI Database.
 
 In this Lab we are going to be searching on a text column, and we will use the all-MiniLM-L12-v2 model. This model was built using the sentence-transformers library. This model takes sentences or paragraphs and converts them into 384-dimensional vectors. Each of these 384 dimensions captures a specific aspect of the sentence's meaning or characteristics. We will be using a pre-built version of this model, which just means that it has already been converted into an ONNX format and is ready to be loaded into the database. You can find the details about how this was done in the blog post [Now Available! Pre-built Embedding Generation model for Oracle Database 23ai] (https://blogs.oracle.com/machinelearning/post/use-our-prebuilt-onnx-model-now-available-for-embedding-generation-in-oracle-database-23ai).
 
@@ -38,7 +38,7 @@ This lab assumes you have:
 
 ## Task 1: Load an embedding model into the database
 
-This task will involve identifying and loading an ONNX model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
+This task will involve identifying and loading an ONNX compatible embedding model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
 
 1. Let's verify that the all\_MiniLM\_L12\_v2 embedding model is not currently loaded:
     ```
@@ -50,7 +50,7 @@ This task will involve identifying and loading an ONNX model into the database. 
 
     ![Mining models query](images/embedding_models1.png " ")
 
-    You may see the CLIP\_VIT\_TXT embedding model that we will use later in the Image Search lab.
+    You will see the CLIP\_VIT\_TXT and CLIP\_VIT\_IMG embedding models that will used in other labs.
 
 2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DATA\_PUMP\_DIR directory. You can display this directory with the following SQL:
 
@@ -111,11 +111,11 @@ This task will involve identifying and loading an ONNX model into the database. 
 
 ## Task 2: Describe and display a vector
 
-AI Vector Search adds a new VECTOR data type to Oracle Database. You can add one or more VECTOR data type columns to your application's table(s) to store vector embeddings. A vector embedding is a mathematical representation of data points or, more simply, an array of numbers. Vector embeddings are generated using Machine Learning models to represent the meaning of the data. We will create vector embeddings in the next lab using the VECTOR data type we add in this lab.
+AI Vector Search adds a new VECTOR data type to Oracle AI Database. You can add one or more VECTOR data type columns to your application's table(s) to store vector embeddings. A vector embedding is a mathematical representation of data points or, more simply, an array of numbers. Vector embeddings are generated using Machine Learning models, like the all\_MiniLM\_L12\_v2 embedding model that we loaded in Task 1, to represent the meaning of the data. We will create vector embeddings in the next task and store them in our database in a VECTOR data type that we will add in this lab.
 
 The VECTOR data type is created as a column in a table. You can optionally specify the number of dimensions and their format. If you don't specify any dimension or format, you can enter vectors of different dimensions with different formats. This is a simplification to help you get started with using vectors in Oracle Database with different vector embedding models.
 
-The number of dimensions must be strictly greater than zero, with a maximum of 65535 vectors.
+The number of dimensions must be strictly greater than zero, with a maximum of 65535 dimensions.
 
 The possible dimension formats are:
 *	INT8 (8-bit integers) 
@@ -123,7 +123,7 @@ The possible dimension formats are:
 *	FLOAT64 (64-bit IEEE floating-point numbers) 
 *	BINARY (packed UINT8 bytes where each dimension is a single bit) 
 
-Now that we have loaded an embedding model let's take a look at what a vector looks like.
+Now that we have loaded an embedding model let's create a vector and see what it looks like.
 
 1. In the SQL Developer Web window copy the following example of creating a vector embedding for the word 'hello'.
 

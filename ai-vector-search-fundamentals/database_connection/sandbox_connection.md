@@ -20,7 +20,7 @@ This lab assumes you have:
 
 ## Task 1: Connecting to your Oracle AI Vector Database
 
-The lab environment is run in Oracle Autonomous Database (ADB) 23ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that should now be displayed after you clicked on the launch the workshop button.
+The lab environment is run in Oracle Autonomous Database (ADB) 26ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that should now be displayed after you clicked on the launch the workshop button.
 
 See the image below for an example:
 
