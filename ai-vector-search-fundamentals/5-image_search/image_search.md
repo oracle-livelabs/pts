@@ -186,7 +186,9 @@ In this task we will run similar queries to the ones we ran in the previous labs
 
     ![rock climbing query](images/query_rock_climbing.png " ")
 
-    If you highlight a resulting URL and right click you can choose the "Go to ..." option to open the image in a new browser tab:
+    If you highlight a resulting URL and right click you can choose the "Go to ..." option to open the image in a new browser tab.
+    
+    Note: Your image might be different than the one below.
 
     ![rock climbing image](images/rock_climber.png " ")
 

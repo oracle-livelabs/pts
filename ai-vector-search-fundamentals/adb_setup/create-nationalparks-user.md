@@ -85,7 +85,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
   ![SQL worksheet](images/sql_admin_worksheet.png)
 
-2. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
+2. If you created the NATIONALPARKS user in the OCI console as described above then the following roles and REST enable script have already been run. If you created the user with a CREATE USER statement or you are using an existing user then the following should be run for that user:
 
     ```sql
     <copy>
@@ -111,8 +111,14 @@ When you create a new Autonomous Database, you automatically get an account call
       commit;
     END;
     /
+    </copy>
+    ```
 
-    -- QUOTA
+3. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window:
+
+    ```sql
+    <copy>
+    -- Privileges
     GRANT ORDS_RUNTIME_ROLE TO nationalparks;
     GRANT EXECUTE ON dbms_cloud TO nationalparks;
     GRANT EXECUTE ON dbms_cloud_ai TO nationalparks;
@@ -129,21 +135,21 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![grant privileges](images/grant_privileges.png " ")
 
-3. Confirm that you can login with the new user.
+4. Confirm that you can login with the new user.
 
   This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". You should then sign in as the NATIONALPARKS user with the password of "Welcome_12345".
 
   ![NATIONALPARKS](images/nationalparks_login.png)
 
-  For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the documentation.
+  For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the Oracle documentation.
 
-## Task 4: Import ONNX Models
+## Task 4: Copy ONNX Model and Sample Employee Handbook
 
 1. Now that you are logged in as the NATIONALPARKS user bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
 
   ![sqldev browser](images/sql_np_worksheet.png " ")
 
-2. Copy the ONNX models to the DATA\_PUMP\_DIR directory and load into the database by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
+2. Copy the two files below from Object Storage to the DATA\_PUMP\_DIR directory by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
 
     ```sql
     <copy>
@@ -168,7 +174,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
   ![import onnx files](images/import_onnx.png " ")
 
-## Task 5: Import Tables into NATIONALPARKS schema
+## Task 5: Import Schema into the NATIONALPARKS user
 
 1. As the NATIONALPARKS user you will import the NATIONALPARKS schema in the next step.
 
@@ -210,9 +216,11 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ```
     <copy>
-    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_workspace.sql
-    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_natparks_demo.sql
-    wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/apex_benny_benefits.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/idpwCyi_u7mUdkPrRzucNrXrvLL4CN79CasXCMYsWZD502NajL4HG4rJlFg-x1gr/n/oradbclouducm/b/bucket-vector/o/apex_workspace_natparks.sql
+    
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0nnZRnmOD7TeYI5xso7lJmS07kra4IcWbNLHixEtAPkEXdp4ecoRDS39A2QQFgkq/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
+    
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/CAJiU6QDUQl42dx1oq1ab3NvfUobY1HMD70lW2NKTm6X6XCMQfwxr-0eWephk0uc/n/oradbclouducm/b/bucket-vector/o/apex_benny_benefits_f100.sql
     </copy>
     ```
   ![copy apex files](images/copy_apex_files.png)
@@ -242,23 +250,24 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![list tnsnames](images/list_tnsnames.png)
 
-4. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step:
+4. Copy the following code to an editor and make the appropriate changes for the credential parameters. Then connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step and run the script:
 
     ```
     sql ADMIN/Training4ADW@<insert your TNS alias here>
     -- Use this to prevent getting a remote server error message.
     BEGIN
        -- first set the workspace
-       apex_util.set_workspace(p_workspace => 'NATIONALPARKS');
-    
-        apex_application_install.set_remote_server(
-            p_static_id => 'oci_gen_ai',
-            p_base_url => 'https://inference.generativeai.us-chicago-1.oci.oraclecloud.com');
+      APEX_UTIL.SET_WORKSPACE(P_WORKSPACE => 'NATIONALPARKS');
+      APEX_APPLICATION_INSTALL.SET_REMOTE_SERVER(
+        P_STATIC_ID => 'oci_gen_ai',
+        P_BASE_URL => 'https://inference.generativeai.us-chicago-1.oci.oraclecloud.com');
+      APEX_INSTANCE_ADMIN.SET_PARAMETER('ALLOW_PUBLIC_FILE_UPLOAD','Y');
+      COMMIT;
     END;
     /
-    @apex_workspace.sql
-    @apex_natparks_demo.sql
-    @apex_benny_benefits.sql
+    @apex_workspace_natparks.sql
+    @apex_natparks_f108.sql
+    @apex_benny_benefits_f100.sql
     BEGIN
        -- This is required to set the OCIDs for the new environment
        -- so that the GenAI access will work

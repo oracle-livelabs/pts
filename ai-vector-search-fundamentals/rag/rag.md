@@ -18,7 +18,11 @@ Estimated Lab Time: 10 minutes
 
 In this Lab we will be using a [Sample Employee Handbook] (https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. The goal of the Lab is to create a "Benny Benefits" chatbot that can be used by "employees" to find out information about their benefits. Part of the benefit of RAG is the ability to augment queries with private information that LLMs don't have access to. In order to demonstrate this we will use the Sample Employee Handbook to show that without AI Vector Search to "augment" our employee questions we won't get the correct answers. The LLM will use information it knows about but that isn't accurate for our employees.
 
-As part of this Lab we will load the handbook, which is in pdf form, into the database, convert it to text, chunk it into smaller sections and then vectorize those sections so that they can be searched with AI Vector Search. We will then try some similarity search queries to see what AI Vector Search finds in the employee handbook, and then send that information to the LLM to see what a full RAG query looks like. Lastly we will demo an APEX pre-built chatbot that uses the same RAG query that we created in the Lab to see how this might work in the real world.
+As part of this Lab we will load the handbook, which is in pdf form, into the database, convert it to text, chunk it into smaller sections and then vectorize those sections so that they can be searched with AI Vector Search. We will then try some similarity search queries to see what AI Vector Search finds in the employee handbook, and then send that information to the LLM to see what a full RAG query looks like. 
+
+Lastly we will demo an APEX pre-built chatbot that uses the same RAG query that we created in the Lab to see how this might work in the real world.
+
+**Note:** The chatbot will not work unless you complete Task 1 since it depends on the Sample Handbook data to work.
 
 ### Objectives
 
@@ -136,14 +140,14 @@ This task will load the sample employee handbook into the database, and then con
 
 ## Task 2: Define the OCI Gen AI Service
 
-In this Lab we will using the OCI Gen AI Service as a public REST provider to access an LLM. 
+In this Lab we will using the OCI Gen AI Service as a public REST provider to access an LLM.
 
 <if type="sandbox">
-To use the OCI Gen AI Service for our Lab we have already created a network ACL that will allow us to access the LLM host, and an OCI credential to allow us to access the REST endpoint for the LLM we will be using.
+To use the OCI Gen AI Service for our Lab we have already created a network ACL that will allow us to access the LLM host, and an OCI Generative AI credential to allow us to access the REST endpoint for the LLM we will be using.
 </if>
 
 <if type="tenancy">
-To set up the OCI Gen AI Service for our Lab we will first create a network ACL that will allow us to access the LLM host, we will then create an OCI credential to allow us to access the REST endpoint for the LLM we will be using.
+To set up the OCI Gennerative AI Service for our Lab we will first create a network ACL that will allow us to access the LLM host, and we will then create an OCI Generative AI credential to allow us to access the REST endpoint for the LLM we will be using.
 
 1. Create a Network ACL for the NATIONALPARKS user:
 
@@ -408,7 +412,7 @@ The last task for this Lab will be to put all of this together and see how we mi
 
 <if type="sandbox">
 
-1. To run the demo you simply need to run the Benny Benefits Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the Benny Benefits Demo URL and sign in if asked with the username "NATIONALPARKS" and the password "Welcome_12345".
+1. To run the demo you simply need to run the Benny Benefits Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right and click on the Benny Benefits Demo URL.
 
     [Temporary Link](https://rddainsuh6u1okc-trainingdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home)
 
@@ -416,7 +420,40 @@ The last task for this Lab will be to put all of this together and see how we mi
 
     ![rag demo url](images/rag_url.png " ")
 
-    After signing in with the Username and User Password from the Terraform Values section shown in your version of the page above you should see a browser window like the following:
+    After clicking on the URL you should see a new browser window like the following:
+
+    ![chatbot screen](images/chatbot_initial_screen.png " ")
+
+</if>
+
+<if type="tenancy">
+
+1. To run the demo in your own tenancy environment you will need to navigate to the "Tool configuration" tab in the ADB page:
+
+    ![tool config](images/tool_config.png " ")
+
+    and copy the APEX "Public access URL":
+
+    ![apex_url](images/apex_url.png " ")
+
+    You will then need to open a new browser window or tab and copy the URL into the address bar (note that your URL may have a different hostname) and replace "apex" at the end of the URL:
+
+    `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
+
+    with the following string:
+    ```
+    <copy>
+    /r/nationalparks/benefits/home
+    </copy>
+    ```
+
+    The resulting URL should look like this (note that your URL may have a different hostname):
+
+    `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home`
+
+    [Temporary Link](https://rddainsuh6u1okc-trainingdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home)
+    
+    After signing in you should see a browser window like the following:
 
     ![chatbot screen](images/chatbot_initial_screen.png " ")
 
