@@ -261,7 +261,6 @@ When you create a new Autonomous Database, you automatically get an account call
       APEX_APPLICATION_INSTALL.SET_REMOTE_SERVER(
         P_STATIC_ID => 'oci_gen_ai',
         P_BASE_URL => 'https://inference.generativeai.us-chicago-1.oci.oraclecloud.com');
-      APEX_INSTANCE_ADMIN.SET_PARAMETER('ALLOW_PUBLIC_FILE_UPLOAD','Y');
       COMMIT;
     END;
     /
@@ -288,6 +287,9 @@ When you create a new Autonomous Database, you automatically get an account call
           p_client_secret => '  ',
          p_namespace => 'ocid1.tenancy.oc1..  ',
          p_fingerprint => '  ' );
+      --
+      APEX_INSTANCE_ADMIN.SET_PARAMETER('ALLOW_PUBLIC_FILE_UPLOAD','Y');
+      COMMIT;
     END;
     /
     ```
