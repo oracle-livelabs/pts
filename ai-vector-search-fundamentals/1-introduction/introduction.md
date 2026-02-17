@@ -28,10 +28,14 @@ At the heart of AI Vector Search is the ability to do a similarity search. A sim
 
 Another big benefit of AI Vector Search is that similarity search can be combined with relational search on business data in one single system. This is not only powerful but also significantly more effective because AI Vector Search allows you to generate, store, index, and query vector embeddings along with other business data, using the full power of SQL. This means you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
 
-In this lab we will build the AI Vector Search features that will enable you to use AI Vector Search to search on text and image data to find attributes of US National Parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run using the APEX-based demo in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
+In this workshop we will build the AI Vector Search features that will enable you to use AI Vector Search to search on text and image data.
+There will be labs that will use a US National Parks dataset to search on descriptions and images of parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run using the APEX-based demo in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
 
 ![apex demo](images/apex_demo.png " ")
 
+In addition, there is also a lab that will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This lab will use a sample employee handbook to build queries that will use AI Vector Search to augment queries with private information that an LLM would not have access to. Finally, the RAG query created in this lab will be used simulate a chatbot application using an APEX-based demo.
+
+![chatbot demo](images/chatbot_demo.png " ")
 
 ### Objectives
 
@@ -45,6 +49,7 @@ In this workshop, you will learn how to:
 * Perform an approximate similarity search.
 * Use similarity search with traditional relational searches.
 * Run an APEX demo using the previously created data and queries.
+* Learn how to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search.
 
 ### Prerequisites
 

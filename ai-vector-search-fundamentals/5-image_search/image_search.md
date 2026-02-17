@@ -12,9 +12,9 @@ Estimated Lab Time: 10 minutes
 
 ### About Image Similarity Search
 
-In the previous labs, we looked at embedding models and similarity search on text-based data. Now we are going to look at something even more impressive. The ability to use text phrases or images to search for images. This will require using different embedding models depending on whether a text phrase or an image is being used for the search comparison. In this lab we will be using the multi-modal embedding model CLIP (Contrastive Language-Image Pretraining) which is a deep learning model developed by OpenAI.  that understands how to vectorize an image for input to our similarity search. This lab will continue We will again be using the US National Parks dataset. Recall that there are two tables in this dataset, one that describes parks and then another that has images for those parks. We are going to search for images using text phrases or images, and then also combine a query to join the two tables and look through images based on a general location.
+In the previous labs, we looked at embedding models and similarity search on text-based data. Now we are going to look at something even more impressive. The ability to use text phrases or images to search for images. This will require using different embedding models depending on whether a text phrase or an image is being used for the search comparison. In this lab we will be using the multi-modal embedding model CLIP (Contrastive Language-Image Pretraining) which is a deep learning model developed by OpenAI that understands how to vectorize an image for input to our similarity search. This lab will continue our use of the US National Parks dataset. Recall that there are two tables in this dataset, one that describes parks and then another that has images for those parks. We are going to search for images using text phrases or images, and then also combine a query to join the two tables and look through images based on a general location.
 
-The vector embeddings for the dataset images have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was also the CLIP multi-modal embedding pipeline, and can be split into two different ONNX compatible embedding models to allow searching for images based on text phrases or actual images as mentioned previously. This is described in more detail in the [Oracle AI Vector Search User's Guide] (https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). Both of these models have already been loaded into the database as you saw earlier. The text version is called CLIP\_VIT\_TXT and the image version is called CLIP\_VIT\_IMG.
+The vector embeddings for the dataset images have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was also the CLIP multi-modal embedding pipeline mentioned above. Since the model is multi-modal it can be split into two different ONNX compatible embedding models to allow searching for images based on text phrases or actual images as mentioned previously. This is described in more detail in the [Oracle AI Vector Search User's Guide] (https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). Both of these models have already been loaded into the database as you saw earlier. The text version is called CLIP\_VIT\_TXT and the image version is called CLIP\_VIT\_IMG.
 
 
 ### Objectives
@@ -121,9 +121,9 @@ In this task we will run similar queries to the ones we ran in the previous labs
 
     ![civil war open image](images/civil_war.png " ")
 
-2. Now let's see if we can find images that have rock climbing, but this time we will search with an image of a rock climber and not the phrase "rock climbing". For simplicity we will use one of the images from the PARK\_IMAGES table to use as our search criteria. This will involve a bit of PL/SQL to do, but in the interest of showing you how it is done we chose not to embed the details in a separate function.
+2. Now let's see if we can find images that have rock climbing, but this time we will search with an image of a rock climber and not the phrase "rock climbing". For simplicity we will use one of the images from the PARK\_IMAGES table to use as our search criteria. This will involve a bit of PL/SQL to do, but in the interest of showing you how it is done we chose not to hide the details in a separate function.
 
-    In the APEX_DEMO lab we will let you choose your own image to search on, but the following shows you how to accomplish this with SQL:
+    In the APEX_DEMO lab we will let you choose your own image to search on, but the following shows you how to accomplish this with a pre-determined image:
 
     ```
     <copy>
@@ -186,7 +186,7 @@ In this task we will run similar queries to the ones we ran in the previous labs
 
     ![rock climbing query](images/query_rock_climbing.png " ")
 
-    If you highlight a resulting URL and right click you can choose the "Go to ..." option to open the image in a new browser tab.
+    If you highlight a resulting URL and right click on it you can choose the "Go to ..." option to open the image in a new browser tab.
     
     Note: Your image might be different than the one below. The image below is the URL for the "woman climber on slab".
 

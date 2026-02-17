@@ -414,8 +414,6 @@ The last task for this Lab will be to put all of this together and see how we mi
 
 1. To run the demo you simply need to run the Benny Benefits Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right and click on the Benny Benefits Demo URL.
 
-    [Temporary Link](https://rddainsuh6u1okc-trainingdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home)
-
     See the image below for an example:
 
     ![rag demo url](images/rag_url.png " ")
