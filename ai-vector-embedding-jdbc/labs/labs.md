@@ -4,7 +4,7 @@
 
 ## Introduction
 
-In this lab we will learn how to use the embedding models from the Oracle OCI GenAI Cohere service with vectors stored in Oracle Database 23ai. 
+In this lab we will learn how to use the embedding models from the Oracle OCI GenAI Cohere service with vectors stored in Oracle AI Database 26ai. 
 
 ------------
 Estimated Time: 25 minutes
@@ -23,7 +23,7 @@ In this lab, you will see the following Vector operations using Java:
 
 This lab assumes you have:
 * An Oracle Cloud Infrastructure account
-* Oracle Database 23ai is installed and running 
+* Oracle AI Database 26ai is installed and running 
 * Java 11 or newer installed
 * Maven 3.9.6 or newer installed
 
@@ -478,12 +478,12 @@ We will continue to use Cohere embedding through OCI Generative AI Service, so t
 
 Congratulations you've completed the lab!
 
-You have seen how easy it is to use Oracle OCI Generative AI Cohere with JDBC and Oracle Database 23ai with Similarity Search. You are ready to use this on your own application.
+You have seen how easy it is to use Oracle OCI Generative AI Cohere with JDBC and Oracle AI Database 26ai with Similarity Search. You are ready to use this on your own application.
 
 
 ## Learn More
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/)
-* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/)
+* [Oracle AI Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/26/rnrdm/)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/)
 * [Oracle Documentation](http://docs.oracle.com)
 
 
@@ -501,7 +501,7 @@ You have seen how easy it is to use Oracle OCI Generative AI Cohere with JDBC an
 
 ## Introduction
 
-In this lab we will learn how to use the OpenAI embedding models and JDBC with Oracle Database 23ai. OpenAI is a commercial product and as such requires a licensed key to use their embedding models.
+In this lab we will learn how to use the OpenAI embedding models and JDBC with Oracle AI Database 26ai. OpenAI is a commercial product and as such requires a licensed key to use their embedding models.
 
 
 ### **Objectives**
@@ -519,7 +519,7 @@ This lab assumes you have:
 * An Oracle Cloud Infrastructure account
 * Your workshop environment is configured (Completed Lab 0)
 * An API key for OpenAI (Can be a free trial key)
-* Oracle Database 23ai is installed and running 
+* Oracle AI Database 26ai is installed and running 
 * Java 11 or newer installed
 * Maven 3.9.6 or newer installed
 
@@ -970,11 +970,11 @@ Now that we have ran our similarity search, we can take a quick look at the Vect
 
 Congratulations you've completed the lab!
 
-You have seen how easy it is to use OpenAI with JDBC and Oracle Database 23ai with Similarity Search. This concludes this lab.
+You have seen how easy it is to use OpenAI with JDBC and Oracle AI Database 26ai with Similarity Search. This concludes this lab.
 
 ## Learn More
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/)
-* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/)
+* [Oracle AI Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/26/rnrdm/)
+* [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/)
 * [Oracle Documentation](http://docs.oracle.com)
 
 

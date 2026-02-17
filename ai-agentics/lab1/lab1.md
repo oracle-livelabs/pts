@@ -127,7 +127,7 @@ print("Database connection established")
 Vector search is a way to find similar data (like text, images, or audio) by comparing their vector representations which are numerical forms of that data rather than using traditional keyword matching.
 
 Oracle Vector Store leverages Oracle's database capabilities for efficient similarity search.
-For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle 23ai New features"**  So we will be doing a vector search and returning the top N text chunks and sending the text chunks along with the question to the LLM and returning a human readable text.
+For this workshop, **Oracle Table AGENTICS\_AI is already loaded with data from file "Oracle AI Database 26ai New features"**  So we will be doing a vector search and returning the top N text chunks and sending the text chunks along with the question to the LLM and returning a human readable text.
 
 The model we are using is all-MiniLM-L6-v2. This model has been downloaded as ONNX file and loaded in the database already.
 
@@ -243,7 +243,7 @@ The diagram shows the core structure of an AI agent: **Tools**, **Model**, and *
 
 We’ll define a set of specialized tools that the AI agent will utilize to perform its tasks, aligning with the workflow shown in the diagram:
 
-- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and Retrieval-Augmented Generation (RAG) answers from a large language model(LLM), enhancing its ability to provide accurate, data-driven responses from Oracle Database 23ai.
+- **rag\_search**: This tool enables the agent to perform Oracle Vector Search and Retrieval-Augmented Generation (RAG) answers from a large language model(LLM), enhancing its ability to provide accurate, data-driven responses from Oracle AI Database 26ai.
   
 - **fetch\_recipients**: Designed to look up email addresses based on a given name, this tool allows the agent to dynamically fetch recipient details for email automation tasks, ensuring seamless communication workflows.
 

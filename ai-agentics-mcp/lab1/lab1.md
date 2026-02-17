@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Model Context Protocol (MCP) is a powerful, open standard that enables AI agents to securely manage context, memory, and tool usage. This lab offers a hands-on deep dive into MCP, showing how it powers intelligent, modular, and secure agent systems—especially when integrated with Oracle Database 23ai and GenAI tools.
+The Model Context Protocol (MCP) is a powerful, open standard that enables AI agents to securely manage context, memory, and tool usage. This lab offers a hands-on deep dive into MCP, showing how it powers intelligent, modular, and secure agent systems—especially when integrated with Oracle AI Database 26ai and GenAI tools.
 
 Let’s explore how MCP brings AI agents to life.
 
@@ -64,11 +64,11 @@ At its core, an MCP-driven agent system comprises several interconnected compone
 *   **Large Language Model (LLM):** The LLM acts as the primary reasoning and decision-making engine. It interprets user requests, generates plans, and, crucially, determines which MCP-registered tools to use based on the current context and the rich metadata provided by MCP.
 *   **Context:** MCP explicitly defines how context is structured and passed between components. This includes inputs, available tools, and the history of prior steps, ensuring the agent always operates with a comprehensive and up-to-date understanding of its operational environment.
 
-**Oracle Database 23ai** plays a pivotal role within this MCP-centric architecture, providing a robust, AI-native platform that seamlessly integrates through MCP:
+**Oracle AI Database 26ai** plays a pivotal role within this MCP-centric architecture, providing a robust, AI-native platform that seamlessly integrates through MCP:
 
 *   **AI Vector Search Tools:** MCP can wrap Oracle's Vector Search capabilities, allowing agents to perform highly efficient semantic searches and retrieval-augmented generation (RAG) operations.
 *   **Relational and JSON Queries:** Agents can securely access and manipulate structured and unstructured data within the converged database via MCP-compliant SQL and JSON tools.
-*   **Structured Memory Storage:** Agent memory and context can be persistently stored within Oracle Database 23ai in a converged format, ensuring data integrity, availability, and high performance.
+*   **Structured Memory Storage:** Agent memory and context can be persistently stored within Oracle AI Database 26ai in a converged format, ensuring data integrity, availability, and high performance.
 *   **Graph Reasoning:** MCP can facilitate the agent's use of Oracle's graph capabilities for complex relationship analysis and advanced decision-making, integrating graph queries as MCP tools.
 
 **MCP acts as the universal middleware protocol**, ensuring consistent, secure, and standardized interaction across all these diverse components. This unified approach simplifies development, enhances debugging, and provides a clear pathway for deploying sophisticated, production-ready AI agents.
