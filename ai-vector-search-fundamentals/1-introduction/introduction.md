@@ -29,18 +29,19 @@ At the heart of AI Vector Search is the ability to do a similarity search. A sim
 Another big benefit of AI Vector Search is that similarity search can be combined with relational search on business data in one single system. This is not only powerful but also significantly more effective because AI Vector Search allows you to generate, store, index, and query vector embeddings along with other business data, using the full power of SQL. This means you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
 
 In this workshop we will build the AI Vector Search features that will enable you to use AI Vector Search to search on text and image data.
-There will be labs that will use a US National Parks dataset to search on descriptions and images of parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to run using the APEX-based demo in the last lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
+There will be labs that will use a US National Parks dataset to search on descriptions and images of parks based on your interests. For example, you may want to search for parks where you can have a family picnic, go rock climbing, or see other spectacular sights. Below you can see a search on "picnic tables" that you will be able to in the APEX Demo lab. The labs in this workshop will build the SQL and show you the features of AI Vector Search that enable this APEX-based demo.
 
 ![apex demo](images/apex_demo.png " ")
 
-In addition, there is also a lab that will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This lab will use a sample employee handbook to build queries that will use AI Vector Search to augment queries with private information that an LLM would not have access to. Finally, the RAG query created in this lab will be used simulate a chatbot application using an APEX-based demo.
+In addition, there is also a lab that will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This lab will use a sample employee handbook to build queries that will use AI Vector Search to augment queries with private information that an LLM would not have access to. Finally, the RAG query created in this lab will be used in a chatbot application using another APEX-based demo.
 
 ![chatbot demo](images/chatbot_demo.png " ")
 
 ### Objectives
 
 In this workshop, you will learn how to:
-* Load a vector embedding model into Oracle database.
+
+* Load a vector embedding model into Oracle AI Database.
 * Learn about vectors and the new vector data type.
 * Create vector embeddings from the embedding model you loaded.
 * Learn what similarity search is.
@@ -54,6 +55,7 @@ In this workshop, you will learn how to:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 
 
@@ -63,16 +65,15 @@ This workshop will use a public dataset from the [US National Parks] (https://ww
 
 ## Tools
 
-The examples in the Lab were run using the Google Chrome browser. If you use a different browser some attributes may be slightly different. For example, cut and paste may behave differently, and opening new windows based on a URL may have slightly different instructions.
+The examples in the Lab were run using the Google Chrome browser. If you use a different browser some attributes may look slightly different. For example, cut and paste may behave differently, and opening new windows based on a URL may have slightly different instructions.
 
-In this Lab you will use the SQL Developer Web tool to access the database and run queries. The URL to invoke SQL Developer Web is listed in the "View Login Info" details. If you are not familiar with SQL Developer Web you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Developer Web in each of the following labs.
+In this Lab you will use Database Actions SQL Worksheet to access the database and run queries. The URL to invoke SQL Worksheet is listed in the "View Login Info" details. If you are not familiar with SQL Worksheet you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Worksheet in each of the following labs.
 
 ![sqldev help](images/sqldev_help.png " ")
 
 In the last lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
 
 Each lab starts out with a "Connecting to your Oracle AI Vector Database" section which explains how to find and invoke the URL in detail.
-
 
 You may now **proceed to the next lab**
 
@@ -86,4 +87,4 @@ You may now **proceed to the next lab**
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

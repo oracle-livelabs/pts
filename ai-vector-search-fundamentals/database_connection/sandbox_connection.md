@@ -9,18 +9,19 @@ Estimated Lab Time: 5 minutes
 ### Objectives
 
 In this lab, you will:
+
 * Connect to the NATIONALPARKS user
 
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
 
-
 ## Task 1: Connecting to your Oracle AI Vector Database
 
-The lab environment is run in Oracle Autonomous Database (ADB) 26ai which includes AI Vector Search. We will be running the lab exercises using SQL Developer Web. The URL to access SQL Developer Web can be found on the Introduction page that should now be displayed after you clicked on the launch the workshop button.
+The lab environment is run in Oracle Autonomous Database (ADB) 26ai which includes AI Vector Search. We will be running the lab exercises using Database Actions SQL Worksheet. The URL to access SQL Worksheet can be found on the Introduction page that should now be displayed after you clicked on the launch the workshop button.
 
 See the image below for an example:
 
@@ -36,9 +37,7 @@ After signing in you should see a browser window like the following:
 
 ![sqldev browser](images/sql_np_worksheet.png " ")
 
-
 You may now **proceed to the next lab**
-
 
 ## Learn More
 
@@ -50,4 +49,4 @@ You may now **proceed to the next lab**
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors**
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

@@ -24,6 +24,7 @@ In this Lab we are going to be searching on a text column, and we will use the a
 ### Objectives
 
 In this lab, you will:
+
 * Load an embedding model
 * Describe and display a vector
 * Create a vector column and describe the attributes
@@ -32,16 +33,17 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
 
 ## Task 1: Load an embedding model into the database
 
 This task will involve identifying and loading an ONNX compatible embedding model into the database. The pre-built all\_MiniLM\_L12\_v2 will be used as described in the "About Vector Embedding" section above.
 
 1. Let's verify that the all\_MiniLM\_L12\_v2 embedding model is not currently loaded:
-    ```
+
+    ```[]
     <copy>
     SELECT model_name, mining_function,algorithm, algorithm_type, model_size
     FROM user_mining_models;
@@ -54,7 +56,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
 2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DATA\_PUMP\_DIR directory. You can display this directory with the following SQL:
 
-    ```
+    ```[]
     <copy>
     SELECT *
     FROM (DBMS_CLOUD.LIST_FILES(directory_name=>'DATA_PUMP_DIR'));
@@ -67,7 +69,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
 3. Load the all\_MiniLM\_L12\_v2 embedding model into the database:
 
-    ```
+    ```[]
     <copy>
     BEGIN
       DBMS_VECTOR.LOAD_ONNX_MODEL('DATA_PUMP_DIR','all_MiniLM_L12_v2.onnx','minilm_l12_v2',
@@ -82,7 +84,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
 4. Display the newly loaded model:
 
-    ```
+    ```[]
     <copy>
     SELECT model_name, mining_function,algorithm, algorithm_type, model_size
     FROM user_mining_models;
@@ -95,7 +97,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
 5. Display the model details:
 
-    ```
+    ```[]
     <copy>
     SELECT model_name, attribute_name, attribute_type, data_type, vector_info
     FROM user_mining_model_attributes
@@ -108,7 +110,6 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     You may notice that the VECTOR\_INFO column displays 'VECTOR(384,FLOAT32)' which matches our description in the About section where we stated that the all\_MiniLM\_L12\_v2 model has 384-dimensional vectors and a dimension format of FLOAT32.
 
-
 ## Task 2: Describe and display a vector
 
 AI Vector Search adds a new VECTOR data type to Oracle AI Database. You can add one or more VECTOR data type columns to your application's table(s) to store vector embeddings. A vector embedding is a mathematical representation of data points or, more simply, an array of numbers. Vector embeddings are generated using Machine Learning models, like the all\_MiniLM\_L12\_v2 embedding model that we loaded in Task 1, to represent the meaning of the data. We will create vector embeddings in the next task and store them in our database in a VECTOR data type that we will add in this lab.
@@ -118,16 +119,17 @@ The VECTOR data type is created as a column in a table. You can optionally speci
 The number of dimensions must be strictly greater than zero, with a maximum of 65535 dimensions.
 
 The possible dimension formats are:
-*	INT8 (8-bit integers) 
-*	FLOAT32 (32-bit IEEE floating-point numbers) 
-*	FLOAT64 (64-bit IEEE floating-point numbers) 
-*	BINARY (packed UINT8 bytes where each dimension is a single bit) 
+
+* INT8 (8-bit integers) 
+* FLOAT32 (32-bit IEEE floating-point numbers)
+* FLOAT64 (64-bit IEEE floating-point numbers)
+* BINARY (packed UINT8 bytes where each dimension is a single bit)
 
 Now that we have loaded an embedding model let's create a vector and see what it looks like.
 
 1. In the SQL Developer Web window copy the following example of creating a vector embedding for the word 'hello'.
 
-    ```
+    ```[]
     <copy>
     SELECT VECTOR_EMBEDDING(minilm_l12_v2 USING 'hello' AS data);
     </copy>
@@ -143,7 +145,7 @@ Now that we have loaded an embedding model let's create a vector and see what it
 
 2. Now let's create a vector for the DESCRIPTION column in the PARKS table. We will just create the vector for one row in the table, but in the next section we will create vectors for the entire table based on the DESCRIPTION column.
 
-    ```
+    ```[]
     <copy>
     SELECT description, VECTOR_EMBEDDING(minilm_l12_v2 USING description AS data)
     FROM parks
@@ -156,7 +158,7 @@ Now that we have loaded an embedding model let's create a vector and see what it
     ![table vector query](images/parks_row_vector.png " ")
 
     Note: your DESCRIPTION, and therefore vector, may be different than in our example since we didn't add an ORDER BY clause. This example is just showing how you can create a vector for one row in the PARKS table.
-    
+
     If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
 
 
@@ -164,7 +166,7 @@ Now that we have loaded an embedding model let's create a vector and see what it
 
 Now we are ready to take a look at the PARKS table. We will be using the DESCRIPTION column which is a text string describing the particular park's attributes. We will create a vector embedding for this column.
 
-1. In the SQL Developer Web window you can expand the PARKS table by clicking on the arrow just to the left of the PARKS table. The table's columns will display underneath. You can display all of the table attributes by right clicking on the table name and choosing Open.
+1. In the SQL Worksheet window you can expand the PARKS table by clicking on the arrow just to the left of the PARKS table. The table's columns will display underneath. You can display all of the table attributes by right clicking on the table name and choosing Open.
 
     See the image below:
 
@@ -172,7 +174,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
 2. Next we will add a new column to the table of type VECTOR. We will call the column DESC\_VECTOR.
 
-    ```
+    ```[]
     <copy>
     ALTER TABLE parks ADD (desc_vector VECTOR);
     </copy>
@@ -186,7 +188,7 @@ Now we are ready to take a look at the PARKS table. We will be using the DESCRIP
 
 4. Now let's describe the table and take a look at the VECTOR column definitions:
 
-    ```
+    ```[]
     <copy>
     DESC parks
     </copy>
@@ -202,7 +204,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
 1. Create vector embeddings for the DESCRIPTION column in the PARKS table:
 
-    ```
+    ```[]
     <copy>
     UPDATE parks
     SET desc_vector = VECTOR_EMBEDDING(minilm_l12_v2 USING description AS data);
@@ -219,7 +221,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
     Since the vectors are quite large we will just display a small number of rows to verify our work:
 
-    ```
+    ```[]
     <copy>
     SELECT description, desc_vector
     FROM parks
@@ -244,4 +246,4 @@ You may now **proceed to the next lab**
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

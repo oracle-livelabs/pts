@@ -14,7 +14,7 @@ Estimated Lab Time: 10 minutes
 
 In the previous labs, we looked at embedding models and similarity search on text-based data. Now we are going to look at something even more impressive. The ability to use text phrases or images to search for images. This will require using different embedding models depending on whether a text phrase or an image is being used for the search comparison. In this lab we will be using the multi-modal embedding model CLIP (Contrastive Language-Image Pretraining) which is a deep learning model developed by OpenAI that understands how to vectorize an image for input to our similarity search. This lab will continue our use of the US National Parks dataset. Recall that there are two tables in this dataset, one that describes parks and then another that has images for those parks. We are going to search for images using text phrases or images, and then also combine a query to join the two tables and look through images based on a general location.
 
-The vector embeddings for the dataset images have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was also the CLIP multi-modal embedding pipeline mentioned above. Since the model is multi-modal it can be split into two different ONNX compatible embedding models to allow searching for images based on text phrases or actual images as mentioned previously. This is described in more detail in the [Oracle AI Vector Search User's Guide] (https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). Both of these models have already been loaded into the database as you saw earlier. The text version is called CLIP\_VIT\_TXT and the image version is called CLIP\_VIT\_IMG.
+The vector embeddings for the dataset images have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was also the CLIP multi-modal embedding pipeline mentioned above. Since the model is multi-modal it can be split into two different ONNX compatible embedding models to allow searching for images based on text phrases or actual images as mentioned previously. This is described in more detail in the [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). Both of these models have already been loaded into the database as you saw earlier. The text version is called CLIP\_VIT\_TXT and the image version is called CLIP\_VIT\_IMG.
 
 
 ### Objectives
@@ -29,9 +29,9 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
 
 ## Task 1: Display the CLIP embedding models
 
@@ -39,7 +39,7 @@ The CLIP embedding models have already been converted to ONNX format and loaded 
 
 1. Display the CLIP embedding models:
 
-    ```
+    ```[]
     <copy>
     SELECT model_name, mining_function, algorithm, algorithm_type, model_size
     FROM user_mining_models;
@@ -48,10 +48,9 @@ The CLIP embedding models have already been converted to ONNX format and loaded 
 
     ![model query](images/clip_emb_model.png " ")
 
-      
 2. Display the model details:
 
-    ```
+    ```[]
     <copy>
     SELECT model_name, attribute_name, attribute_type, data_type, vector_info
     FROM user_mining_model_attributes
@@ -62,14 +61,13 @@ The CLIP embedding models have already been converted to ONNX format and loaded 
 
     ![model details query](images/clip_emb_model_details.png " ")
 
-    You may notice that the VECTOR\_INFO column displays 'VECTOR(512,FLOAT32)' for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP model uses 512 dimensions.
-
+    You may notice that the VECTOR\_INFO column displays VECTOR(512,FLOAT32) for this model which is different than what we saw for the all\_MiniLM\_L12\_v2 model which was VECTOR(384, FLOAT32).  This means that the CLIP model uses 512 dimensions.
 
 ## Task 2: Display the Vector column in the PARKS_IMAGES table
 
-In this task we will take a look at the PARK\_IMAGES table. The table itself has a URL to the park images, they are not actually stored in the table. Vector embeddings of each of those images have been created and stored in the IMAGES\_VECTOR column. These embeddings were created externally using the CLIP embedding model.
+In this task we will take a look at the PARK\_IMAGES table. The table itself has a URL to the park images, they are not actually stored in the table. Vector embeddings of each of those images have been created and stored in the IMAGES\_VECTOR column. Those embeddings were created externally using the CLIP embedding model.
 
-1. Display the columns in the PARK\_IMAGES table by clicking on the arrow next to the PARK\_IMAGES table in the SQL Developer Web navigator column on the left. Alternatively you can right-click on the PARK\_IMAGES table and click the "Open" option.
+1. Display the columns in the PARK\_IMAGES table by clicking on the arrow next to the PARK\_IMAGES table in the SQL Worksheet navigator column on the left. Alternatively you can right-click on the PARK\_IMAGES table and click the "Open" option.
 
     See the image below:
 
@@ -77,7 +75,7 @@ In this task we will take a look at the PARK\_IMAGES table. The table itself has
 
 2. Display one of the vectors in IMAGE\_VECTOR column:
 
-    ```
+    ```[]
     <copy>
     SELECT image_vector
     FROM park_images
@@ -97,7 +95,7 @@ In this task we will run similar queries to the ones we ran in the previous labs
 
 1. First we can search for Civil War park images:
 
-    ```
+    ```[]
     <copy>
     SELECT description, url
     FROM park_images
@@ -112,20 +110,20 @@ In this task we will run similar queries to the ones we ran in the previous labs
     If you click on the first URL and then click on the eye icon the URL will open in a new window:
 
     ![civil war url](images/query_civil_war_2_click_eye.png " ")
-    
+
     If you then highlight the URL and right click on it a dialog box will open. Depending on your browser, there should be an option to open the URL in a new window. The following example uses Google Chrome, other browsers use slightly different terminology. With Google Chrome you can choose the "Go to ..." option to open the image in a new browser window:
-    
+
     ![civil war url](images/query_civil_war_3_open_url.png " ")
-    
+
     You should see an image like the following:
 
     ![civil war open image](images/civil_war.png " ")
 
 2. Now let's see if we can find images that have rock climbing, but this time we will search with an image of a rock climber and not the phrase "rock climbing". For simplicity we will use one of the images from the PARK\_IMAGES table to use as our search criteria. This will involve a bit of PL/SQL to do, but in the interest of showing you how it is done we chose not to hide the details in a separate function.
 
-    In the APEX_DEMO lab we will let you choose your own image to search on, but the following shows you how to accomplish this with a pre-determined image:
+    In the APEX_DEMO lab we will let you choose your own image to search on, but the following shows you how to accomplish this with a pre-determined image. Note that comments have been added to the PL/SQL block if you are interested in the details.
 
-    ```
+    ```[]
     <copy>
     DECLARE
       v_image_url     VARCHAR2(1000);
@@ -187,14 +185,14 @@ In this task we will run similar queries to the ones we ran in the previous labs
     ![rock climbing query](images/query_rock_climbing.png " ")
 
     If you highlight a resulting URL and right click on it you can choose the "Go to ..." option to open the image in a new browser tab.
-    
+
     Note: Your image might be different than the one below. The image below is the URL for the "woman climber on slab".
 
     ![rock climbing image](images/rock_climber.png " ")
 
 3. Lastly, let's search for waterfalls, but let's add a twist. We will add a join to the PARKS table so we can include the park location details. Since the author of this Lab is based out of Redwood Shores, CA we will restrict our query of parks with waterfalls to the western United States:
 
-    ```
+    ```[]
     <copy>
     SELECT p.description, p.city, p.states, pi.url
     FROM park_images pi, parks p
@@ -212,9 +210,7 @@ In this task we will run similar queries to the ones we ran in the previous labs
 
     ![waterfall image](images/waterfall.png " ")
 
-
 You may now **proceed to the next lab**
-
 
 ## Learn More
 
@@ -224,6 +220,7 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
+
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
