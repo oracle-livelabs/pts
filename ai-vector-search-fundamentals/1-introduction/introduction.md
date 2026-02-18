@@ -61,7 +61,10 @@ This lab assumes you have:
 
 ## Dataset
 
-This workshop will use a public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
+This workshop will use two public sources:
+
+* A public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
+* A [Sample Employee Handbook](https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. This pdf will be used in the Retrieval Augmented Generation (RAG) lab.
 
 ## Tools
 
