@@ -28,7 +28,6 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 * Some familiarity with Oracle SQL and AI Vector Search
-* Run the Vector Embedding Lab
 
 ## Task 1: Connecting to the APEX application
 
