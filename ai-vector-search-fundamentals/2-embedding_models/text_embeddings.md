@@ -6,7 +6,7 @@ This lab walks you through the steps to load a vector embedding model into the d
 
 Watch the video below for a quick walk-through of the vector embeddings lab:
 
-[Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab/1_usorsq27)
+[Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab2/1_bjgnd8ai)
 
 Estimated Lab Time: 10 minutes
 

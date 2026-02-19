@@ -10,7 +10,7 @@ The final step will be to show an APEX chatbot that uses the queries and dataset
 
 Watch the video below for a quick walk-through of the RAG lab:
 
-[RAG Lab](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab/1_6hwxhdjg)
+[RAG Lab](https://videohub.oracle.com/media/Vector-Search-RAG-Demo-Lab/1_oofv0mt0)
 
 Estimated Lab Time: 10 minutes
 

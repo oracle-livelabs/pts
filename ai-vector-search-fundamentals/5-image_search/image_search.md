@@ -6,7 +6,7 @@ This lab walks you through the steps to run similarity searches on images using 
 
 Watch the video below for a quick walk-through of the similarity search on images lab:
 
-[Similarity Search on Images](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab/1_6hwxhdjg)
+[Similarity Search on Images](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab2/1_oy371cdj)
 
 Estimated Lab Time: 10 minutes
 

@@ -4,6 +4,10 @@
 
 This lab walks you through the steps to connect to your AI Vector Search database. The process is different if you are running the workshop on your own environment (tenancy) versus running the workshop in an Oracle environment (sandbox).
 
+Watch the video below for a quick walk-through of the similarity search on images lab:
+
+[Database Connection lab video](https://videohub.oracle.com/media/Vector-Search-Database-Connection-Lab/1_86zguvif)
+
 Estimated Lab Time: 5 minutes
 
 ### Objectives
