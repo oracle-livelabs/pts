@@ -29,7 +29,6 @@ In this Lab we will use HNSW indexes to enable approximate similarity search sin
 In this lab, you will:
 
 * View the Vector Pool
-* Run the vector memory advisor to estimate the space required
 * Create an HNSW vector index on the PARKS table vector column
 * Show index memory usage and information
 * Run approximate similarity searches

@@ -51,7 +51,7 @@ Retrieval Augmented Generation (RAG) involves augmenting prompts to Large Langua
 
 This task will load the sample employee handbook into the database, and then convert it to text, chunk the text data into smaller amounts of data that an embedding model can understand, and then vectorize those chunks using the all\_MiniLM\_L12\_v2 embedding model that was loaded into the database in the Vector Embedding lab.
 
-1.  The following will create a table called "DOCUMENTATION_TAB" that we will load the employee handbook into.
+1. The following will create a table called "DOCUMENTATION_TAB" that we will load the employee handbook into.
 
     ```[]
     <copy>
@@ -67,6 +67,8 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
+    ![create doc table](images/doc_table.png " ")
+
 2. Next we will load the employee handbook into the database. The file "Sample\_Employee\_Handbook.pdf" has already been copied to the database directory DATA\_PUMP\_DIR during the workshop setup.
 
     ```[]
@@ -79,6 +81,10 @@ This task will load the sample employee handbook into the database, and then con
     COMMIT;
     </copy>
     ```
+
+    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![insert handbook](images/insert_handbook.png " ")
 
 3. Create a table called DOC\_CHUNKS to convert the pdf file to text, chunk it, and vectorize the text.
 
@@ -98,6 +104,8 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
+    ![create doc_chunks table](images/doc_chunks.png " ")
+
 4. Run a test question to verify the data. Copy the following SQL into a SQL worksheet and run as a script:
 
     ```[]
@@ -109,6 +117,10 @@ This task will load the sample employee handbook into the database, and then con
     FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
+
+    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![query doc_chunks](images/query_doc.png " ")
 
     You should see 3 rows returned like the following:
 
@@ -277,6 +289,8 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     </copy>
     ```
 
+    ![GenAI Query](images/genai_query.png " ")
+
     You should see something similar to the following:
 
     ```[]
@@ -334,6 +348,10 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
+
+    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![vector search query](images/vec_search.png " ")
 
     You should see something similar to the following:
 
@@ -396,6 +414,8 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     END;
     </copy>
     ```
+
+    ![rag query](images/rag_query.png " ")
 
     You should see something similar to the following:
 

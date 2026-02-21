@@ -127,7 +127,7 @@ The possible dimension formats are:
 
 Now that we have loaded an embedding model let's create a vector and see what it looks like.
 
-1. In the SQL Developer Web window copy the following example of creating a vector embedding for the word 'hello'.
+1. In the SQL Worksheet window copy the following example of creating a vector embedding for the word 'hello'.
 
     ```[]
     <copy>
@@ -211,6 +211,8 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     COMMIT;
     </copy>
     ```
+
+    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
 
     ![add vectors](images/parks_embedding.png " ")
 
