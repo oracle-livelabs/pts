@@ -82,7 +82,7 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
-    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+    **Note:** There are two statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
 
     ![insert handbook](images/insert_handbook.png " ")
 
@@ -118,7 +118,7 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
-    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+    **Note:** There are multiple statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
 
     ![query doc_chunks](images/query_doc.png " ")
 
@@ -349,7 +349,7 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     </copy>
     ```
 
-    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+    **Note:** There are multiple statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
 
     ![vector search query](images/vec_search.png " ")
 

@@ -212,7 +212,7 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     </copy>
     ```
 
-    **Note:** Since there are two statements that need to be run should use the "Run Script" button rather than the "Run Statement" button.
+    **Note:** There are two statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
 
     ![add vectors](images/parks_embedding.png " ")
 
