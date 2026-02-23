@@ -154,7 +154,7 @@ This task will load the sample employee handbook into the database, and then con
 
 ## Task 2: Define the OCI Gen AI Service
 
-In this Lab we will using the OCI Gen AI Service as a public REST provider to access an LLM.
+In this Lab we will be using the OCI Gen AI Service as a public REST provider to access an LLM.
 
 <if type="sandbox">
 

@@ -52,7 +52,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     ![Mining models query](images/embedding_models1.png " ")
 
-    You will see the CLIP\_VIT\_TXT and CLIP\_VIT\_IMG embedding models that will used in other labs.
+    You will see the CLIP\_VIT\_TXT and CLIP\_VIT\_IMG embedding models that will be used in other labs.
 
 2. Next we will load the all\_MiniLM\_L12\_v2 embedding model into the database. The file is in the DATA\_PUMP\_DIR directory. You can display this directory with the following SQL:
 
