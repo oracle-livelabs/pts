@@ -16,19 +16,19 @@ In the previous Lab, Exhaustive Search, we performed exhaustive similarity searc
 
 There are currently three types of vector indexes available in AI Vector Search:
 
-*	**In-Memory Neighbor Graph Vector Index** – Oracle AI Vector Search supports an in-memory Hierarchical Navigable Small World (HNSW) type of In-Memory Neighbor Graph vector index where vertices represent vectors and edges between vertices represent similarity.  This is an in-memory only index. This type of index is typically highly efficient for both accuracy and speed.
+* **In-Memory Neighbor Graph Vector Index** – Oracle AI Vector Search supports an in-memory Hierarchical Navigable Small World (HNSW) type of In-Memory Neighbor Graph vector index where vertices represent vectors and edges between vertices represent similarity.  This is an in-memory only index. This type of index is typically highly efficient for both accuracy and speed.
+
 * **Neighbor Partition Vector Index** – Oracle AI Vector Search also supports an Inverted File Flat (IVF) partition-based index with vectors clustered into table partitions based on similarity. This type of index typically provides an efficient scale-out index, with fast and seamless transactional support, and is an alternative to an HNSW index when there is not enough memory to fit the whole index in-memory.
+
 * **Hybrid Vector Index** - There is also a Hybrid Vector Index that combines the information retrieval capabilities of Oracle Text search indexes and the semantic search capabilities of Oracle AI Vector Search vector indexes.
 
 In this Lab we will use HNSW indexes to enable approximate similarity search since they provide the fastest performance and our dataset will easily fit in-memory.
-
 
 ### Objectives
 
 In this lab, you will:
 
 * View the Vector Pool
-* Run the vector memory advisor to estimate the space required
 * Create an HNSW vector index on the PARKS table vector column
 * Show index memory usage and information
 * Run approximate similarity searches
@@ -38,9 +38,9 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
 
 ## Task 1: View the Vector Pool
 
@@ -48,7 +48,7 @@ When HNSW indexes are used, you must enable a new memory area in the database ca
 
 1. Let's see how much memory has been allocated to the Vector Pool in our Lab environment:
 
-    ```
+    ```[]
     <copy>
     SELECT * FROM v$vector_memory_pool;
     </copy>
@@ -64,7 +64,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 1. Create a vector index for the DESC\_VECTOR column in the PARKS table:
 
-    ```
+    ```[]
     <copy>
     CREATE VECTOR INDEX parks_hnsw_idx ON parks (desc_vector)
     ORGANIZATION INMEMORY NEIGHBOR GRAPH
@@ -78,7 +78,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 2. Display information about the new vector index:
 
-    ```
+    ```[]
     <copy>
     SELECT owner, index_name, index_organization, num_vectors
     FROM v$vector_index
@@ -92,7 +92,7 @@ In this task we will create an HNSW vector index and see how much space is used 
 
 3. See how much memory was used in the Vector Pool:
 
-    ```
+    ```[]
     <copy>
     SELECT * FROM v$vector_memory_pool;
     </copy>
@@ -108,7 +108,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
 1. Recall that the first query we ran in the Exhaustive Search lab looked for parks that were associated with the Civil War. Notice that we have changed the EXACT keyword on the fetch line to APPROX for approximate. If the EXACT keyword is NOT used, the optimizer will choose a vector index if one exists and if the access cost is less than an exhaustive search. Specifying APPROX can help ensure that you are actually running an approximate search. The APPROX keyword is optional but helps make the intent to run an approximate query more obvious. The EXACT keyword forces an exhaustive search.
 
-    ```
+    ```[]
     <copy>
     SELECT name, city, states, description
     FROM parks
@@ -122,7 +122,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
 2. Lets also re-run our "rock climbing" query and see if there are any differences running an approximate search:
 
-    ```
+    ```[]
     <copy>
     SELECT name, city, states, description
     FROM parks
@@ -138,7 +138,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
 3. Since we are now doing an approximate search using a vector index, what does the execution plan look like?
 
-    ```
+    ```[]
     <copy>
     SELECT name, city, states, description
     FROM parks
@@ -147,16 +147,14 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
     FETCH APPROX FIRST 10 ROWS ONLY;
     </copy>
     ```
-  
+
     Click on the "Explain Plan" button and select the "Advanced View" button to display an image like the one below:
 
-	![plan query](images/parks_approx_execute_plan.png " ")
+    ![plan query](images/parks_approx_execute_plan.png " ")
 
     Notice that a vector index access is now performed on the PARKS table since we have a vector index available.
 
-
 You may now **proceed to the next lab**
-
 
 ## Learn More
 
@@ -166,6 +164,7 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
+
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
