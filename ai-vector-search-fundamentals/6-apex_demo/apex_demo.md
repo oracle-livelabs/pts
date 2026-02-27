@@ -93,7 +93,9 @@ You can now enter any search term or image that you would like to search on. You
 
     ![apex search terms](images/apex_pulldown_screen.png " ")
 
-3. If you would like to run a search using an image then click on the "Upload image for search" box and choose an image from your machine. If you don't have an image then you can right click on one of the images from a previous search and save that image to your machine. You can then choose that image to search on. Once the image is selected click on the Search Image button. In this example an image of an alligator was used:
+3. If you would like to run a search using an image then click on the "Upload image for search" box and choose an image from your machine. If you don't have an image then you can right click on one of the images from a previous search and save that image to your machine. You can then choose that image to search on. Once the image is selected click on the Search Image button. Not all image types are supported by APEX. For a list of the supported and unsupported types, click on the question mark to the right of the image upload graphic.
+
+    In this example an image of an alligator was used:
 
     ![apex image search](images/apex_image_search.png " ")
 
@@ -101,8 +103,30 @@ You can now enter any search term or image that you would like to search on. You
 
     ![apex sql query](images/apex_query_screen.png " ")
 
-Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
+    You may notice that the query is slightly different than the one we created in the examples in the Image Search lab. In particular you might notice that there are no VECTOR\_EMBEDDING calls. This is due to the way that APEX works and how the application was designed, since we wanted to use the same query whether we were searching with a vector generated from a text phrase or a vector generated from an image. The actual VECTOR\_EMBEDDING calls are made using an APEX API, that is APEX_AI.GET\_VECTOR\_EMBEDDINGS, and stored in a variable called P2\_SEARCH\_VECTOR. This allowed us to use the appropriate embedding model, the CLIP\_VIT\_TXT and CLIP\_VIT\_IMG models that we used earlier and not have to have several different queries that did basically the same thing.
 
+    The following is the code in the APEX application that generates the vector embedding for the search input based on whether it is a text phrase or an image:
+
+    ```[]
+    DECLARE
+      l_vector_clob CLOB;
+    BEGIN
+      IF :P2_MODEL = 'clip_text_model' THEN
+        l_vector_clob := FROM_VECTOR(
+           APEX_AI.GET_VECTOR_EMBEDDINGS (
+             p_value   =>  :P2_DATA,
+             p_service_static_id => 'clip_text_model'));
+      ELSE
+        l_vector_clob := FROM_VECTOR(
+           APEX_AI.GET_VECTOR_EMBEDDINGS (
+             p_value   =>  :P2_IMAGE_CLOB,
+             p_service_static_id => 'clip_image_model'));
+      END IF;
+      RETURN l_vector_clob;
+    END;
+    ```
+
+Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
 
 ## Learn More
 
