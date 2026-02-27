@@ -1,30 +1,30 @@
-# Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and PLSQL
+﻿# Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and PLSQL
 
 ## Introduction
 
-A typical RAG application design has 7 steps and requires a vector store.  Oracle Database 23ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.
+A typical RAG application design has 7 steps and requires a vector store.  Oracle AI Database 26ai will be used as the vector store. In this lab, we will use documents as the source data, but you can apply these steps to other data types including audio and video.
 1.	Load your document.
 2.	Transform the document to text.
 3.	Chunk the text document into smaller pieces.
-4.	Using an embedding model, embed the chunks as vectors into Oracle Database 23ai.
+4.	Using an embedding model, embed the chunks as vectors into Oracle AI Database 26ai.
 5.	Ask the question for the prompt, the prompt will use the same embedding model to vectorize the question.
-6.	The question will be passed to Oracle Database 23ai and a similarity search is performed on the question.
+6.	The question will be passed to Oracle AI Database 26ai and a similarity search is performed on the question.
 7.	The results (context) of the search and the prompt are passed to the LLM to generate the response.
 
  ![RAG Design](images/ragdesign.png)
 
 Estimated Time: 10 min
 
-To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle Database 23ai Free edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
+To simplify and complete this application in less than 10 minutes, the workshop comes with a sandbox instance which has all the software and code used in the labs.  The sandbox instance comes with Oracle AI Database 26ai Free edition installed along with SQLPlus, SQL Developer, and environment setting needed to connect to LLMs and Oracle database.  We will have you execute the important steps for the RAG application step by step by running the code snippet provided in Jupyter notebook.
 
 ### Objectives
 
 In this lab, you will:
-* Use PLSQL to build the RAG application with Oracle Database 23ai
+* Use PLSQL to build the RAG application with Oracle AI Database 26ai
 
 ### Prerequisites
 
-* Environment with Oracle Database 23ai
+* Environment with Oracle AI Database 26ai
 
 ## Task 1: Launch Jupyter notebook, check connection to the database, create tables
 
@@ -35,7 +35,7 @@ In this lab, you will:
 2. From the terminal OS prompt type the following to launch jupyter notebook:
 
     ```
-        $ cd /home/oracle/AIdemo
+        $ cd /home/oracle/aidemo
         $ jupyter lab
     ```
 
@@ -48,7 +48,7 @@ In this lab, you will:
 
     When the code snippet has completed running a number will appear in the square brackets. You can then proceed to the next cell and code snippet.  Some of the code will print an output so you can get feedback. Pay attention to the 7 steps for RAG as you proceed. At any time you can also re-run the code snippets in the Jupyter cell.
 
-    In the current environment all the required libraries and modules have already been installed for this RAG application. We are going to use the **oracledb** python driver which is the latest driver release for the 23ai database.  We no longer need the **cx\_oracle** driver.
+    In the current environment all the required libraries and modules have already been installed for this RAG application. We are going to use the **oracledb** python driver which is the latest driver release for the 26ai database.  We no longer need the **cx\_oracle** driver.
 
 
     *`from dotenv import load_dotenv`* statement will load environment variables from .env file on the current directory.  This will have the connection and authentication information.
@@ -73,7 +73,7 @@ In this lab, you will:
 
     ```
 
-5. This code will establish the connection to Oracle Database 23ai using the oracledb driver. Select the code snippet and click **Run**.
+5. This code will establish the connection to Oracle AI Database 26ai using the oracledb driver. Select the code snippet and click **Run**.
 
     ``` 
     # Load environment variables
@@ -88,7 +88,7 @@ In this lab, you will:
 
     # Connect to the database
     try: 
-        conn23ai = oracledb.connect(user=username, password=password, dsn=dsn)
+        conn26ai = oracledb.connect(user=username, password=password, dsn=dsn)
         print("Connection successful!")
     except Exception as e:
         print("Connection failed!")
@@ -159,7 +159,7 @@ In this lab, you will:
 
 **3 - Split the text into chunks**
 
-4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to_chunks** to convert the BLOB into plain text and then show the first four text chunks.  Click **Run** to execute the code.
+4. Use package **DBMS\_VECTOR\_CHAIN.utl\_to\_chunks** to convert the BLOB into plain text and then show the first three text chunks.  Click **Run** to execute the code.
 
     ``` 
     %%sql 
@@ -219,7 +219,7 @@ In this lab, you will:
 
 ONNX, which stands for Open Neural Network Exchange, is an open-source format designed to represent deep learning models. It aims to provide interoperability between different deep learning frameworks, allowing models trained in one framework to be used in another without the need for extensive conversion or retraining.
 
-Using ONNX models in Oracle Database 23ai to create vectors can be more secure, scalable and convenient than creating vectors outside the database. Currently the vector_embedding SQL function is significantly slower than creating vectors outside of the database with local embedding models.
+Using ONNX models in Oracle AI Database 26ai to create vectors can be more secure, scalable and convenient than creating vectors outside the database. Currently the vector_embedding SQL function is significantly slower than creating vectors outside of the database with local embedding models.
 
 
 **Load two ONNX models into the database**
@@ -228,7 +228,7 @@ Using ONNX models in Oracle Database 23ai to create vectors can be more secure, 
 
     ```
     # Create a cursor
-    cursor = conn23ai.cursor()
+    cursor = conn26ai.cursor()
     procedure_query = """
     BEGIN
       DBMS_DATA_MINING.DROP_MODEL(model_name => 'TINYBERT_MODEL', force => true);
@@ -425,7 +425,7 @@ You need to convert the question/query into a vector.  You must use the same vec
 1. Select the cell and click **Run**.
 
     ```
-    %sql select vector_embedding(tinybert_model USING ‘What is the result of the release version’ as data) as embedding
+    %sql select vector_embedding(tinybert_model USING 'What is the result of the release version' as data) as embedding
     ```
 
 **2 - Perform the vector search on the question using Cosine distance function.**
@@ -437,7 +437,7 @@ In this step we are selecting the text chunks that has relevant information for 
   ```
   %%sql
   WITH query_vector AS (
-              SELECT VECTOR_EMBEDDING(tinybert_model USING ‘list some limitations’ AS data) as embedding)
+              SELECT VECTOR_EMBEDDING(tinybert_model USING 'list some limitations' AS data) as embedding)
   SELECT embed_id, embed_data
   FROM VECTOR_STORE, query_vector
   ORDER BY VECTOR_DISTANCE(EMBED_VECTOR, query_vector.embedding, COSINE)
@@ -452,7 +452,7 @@ In this step we are selecting the text chunks that has relevant information for 
 In this lab we are using the Oracle Gen AI LLM service.   The LLM involves processing both the user question and relevant text excerpts to generate responses tailored specifically to the provided context. It's essential to note that the nature of the response is contingent upon the question and the LLM utilized, with a multitude of parameters available for fine-tuning to optimize response quality.
 
 
-LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The following PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 23ai. 
+LLM prompt engineering enables you to craft input queries or instructions to create more accurate and desirable outputs.  The following PLSQL uses a SQL CURSOR and CLOBs to generate the LLM prompt based on facts from the similarity search from Oracle Database 26ai. 
 
 
 *Note: The generation process involves synthesizing information, considering linguistic nuances, and producing a coherent answer. The model's output reflects its comprehension of the input context and its ability to generate contextually relevant responses, demonstrating the power of AI in natural language understanding and generation tasks.*
@@ -465,7 +465,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
     ```
     # Create a cursor
-    cursor = conn23ai.cursor()
+    cursor = conn26ai.cursor()
     procedure_query = """
     create or replace FUNCTION generate_text_response_gen(user_question VARCHAR2, doc_id number) RETURN CLOB IS
       messages CLOB;
@@ -505,19 +505,17 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
       -- Construct params JSON
       -- In order to use the ocigenai provider below we have precreated the credentials
-      params_genai := '
-    {
-      "provider":"ocigenai",
-      "credential_name": "GENAI_CRED",
-      "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/generateText",
-      "model": "cohere.command",
-      "inferenceRequest": {
-        "maxTokens": 2000,
-        "temperature": 1
-      }
+      -- Construct params JSON
+      params_genai:=   '{
+              "provider": "ocigenai",
+              "credential_name" : "GENAI_CRED",
+              "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
+              "model": "cohere.command-a-03-2025",
+              "chatRequest": {
+                "maxTokens": 300}
+              }';
 
-    }
-    ';
+
     -- dbms_output.put_line(messages);
       dbms_output.put_line(to_char(user_question_vec));
 
@@ -554,7 +552,7 @@ For connecting to OCI GenAI we have pre-created login credentials using DBMS\_VE
 
     ```
     %%sql
-    select generate_text_response_gen('List specific points in the Oracle Database 23c release note', 1)  from dual
+    select generate_text_response_gen('List specific points in the Oracle AI Database 23c release note', 1)  from dual
     ```
 
 
@@ -622,7 +620,7 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
 1. Create a procedure `insert_my_table_row`
 
     ```
-    cursor = conn23ai.cursor()
+    cursor = conn26ai.cursor()
     procedure_query = """
     create or replace PROCEDURE insert_my_table_row(
         p_file_name IN my_books.file_name%TYPE,
@@ -664,7 +662,7 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
 2.  Create a trigger `trg_mybooks_vector_store_compound`
 
     ```
-    cursor = conn23ai.cursor()
+    cursor = conn26ai.cursor()
     create_trigger = """
     CREATE OR REPLACE TRIGGER trg_mybooks_vector_store_compound
     FOR INSERT ON my_books
@@ -716,7 +714,7 @@ b. Create a trigger `trg_mybooks_vector_store_compound` to create embedding for 
     ```
 
 
-• In the next LAB, python-oracle DB code is only focused on calling the package routines in the 23ai database.
+• In the next LAB, python-oracle DB code is only focused on calling the package routines in the 26ai database.
 
 • This means that these packages could then easily be called from any programming language, eg.,
 
@@ -733,4 +731,112 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan, Rajeev Rumale
-* **Last Updated By/Date** - Vijay Balebail, May 2024
+* **Last Updated By/Date** - Vijay Balebail, October 2024
+
+CREATE TABLE case_issues (
+    case_id       VARCHAR2(100) PRIMARY KEY,
+    title         VARCHAR2(255),
+    error         CLOB,
+    work_around   CLOB,
+    case_status   VARCHAR2(50),
+    created_date  DATE DEFAULT SYSDATE,
+    vector        VECTOR(1536)
+)
+
+CREATE OR REPLACE PROCEDURE process_error_pdf(
+    p_case_id IN VARCHAR2,
+    p_title IN VARCHAR2,
+    p_error IN CLOB,
+    p_work_around IN CLOB,
+    p_case_status IN VARCHAR2 DEFAULT 'Open'
+)
+IS
+    v_pdf_content BLOB;
+    v_text_chunks CLOB;
+    v_embedding CLOB;
+BEGIN
+    -- Load PDF content
+    v_pdf_content := to_blob(bfilename('VEC_DUMP', 'oracle_errors.pdf'));
+    
+    -- Extract text and create chunks
+    v_text_chunks := dbms_vector_chain.utl_to_text(v_pdf_content);
+    
+    -- Create embedding for the error text
+    v_embedding := dbms_vector_chain.utl_to_embeddings(
+        dbms_vector_chain.utl_to_chunks(
+            v_text_chunks,
+            json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
+        ),
+        json('{"provider":"database", "model":"TINYBERT_MODEL"}')
+    );
+    
+    -- Insert into case_issues table
+    INSERT INTO case_issues (
+        case_id,
+        title,
+        error,
+        work_around,
+        case_status,
+        vector
+    ) VALUES (
+        p_case_id,
+        p_title,
+        p_error,
+        p_work_around,
+        p_case_status,
+        to_vector(v_embedding)
+    );
+    
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RAISE;
+END process_error_pdf;
+
+CREATE OR REPLACE TRIGGER trg_case_issues_vector
+BEFORE INSERT ON case_issues
+FOR EACH ROW
+BEGIN
+    IF :NEW.vector IS NULL AND :NEW.error IS NOT NULL THEN
+        :NEW.vector := to_vector(
+            dbms_vector_chain.utl_to_embeddings(
+                dbms_vector_chain.utl_to_chunks(
+                    :NEW.error,
+                    json('{"by":"words","max":"300","split":"sentence","normalize":"all"}')
+                ),
+                json('{"provider":"database", "model":"TINYBERT_MODEL"}')
+            )
+        );
+    END IF;
+END;
+
+CREATE OR REPLACE FUNCTION find_similar_cases(
+    p_search_text IN VARCHAR2,
+    p_limit IN NUMBER DEFAULT 5
+) RETURN SYS_REFCURSOR
+IS
+    v_result SYS_REFCURSOR;
+    v_search_vector VECTOR;
+BEGIN
+    -- Create vector for search text
+    v_search_vector := to_vector(
+        vector_embedding(tinybert_model USING p_search_text as data)
+    );
+    
+    -- Open cursor with similar cases
+    OPEN v_result FOR
+    SELECT 
+        case_id,
+        title,
+        error,
+        work_around,
+        case_status,
+        vector_distance(vector, v_search_vector, COSINE) as similarity
+    FROM case_issues
+    ORDER BY vector_distance(vector, v_search_vector, COSINE)
+    FETCH FIRST p_limit ROWS ONLY;
+    
+    RETURN v_result;
+END;
+

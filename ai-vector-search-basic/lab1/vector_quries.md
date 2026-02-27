@@ -39,7 +39,7 @@ This lab assumes you have:
 
 ## Connecting to your Vector Database
 
-The lab environment includes a preinstalled Oracle 23ai Free Database which includes Oracle AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *vector* with the password: *vector*
+The lab environment includes a preinstalled Oracle 26ai Free Database which includes Oracle AI Vector Search. We will be running the lab exercises from a pluggable database called: *orclpdb1* and connecting to the database as the user: *vector* with the password: *vector*
 
 The VM image has SQLDeveloper, SQL\*Plus and SQLCL installed, so you can choose your favorite client for running the LiveLabs. To connect with SQL\*Plus you can use:
 
@@ -425,7 +425,7 @@ All three of the statements will throw the following Oracle error message:
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 

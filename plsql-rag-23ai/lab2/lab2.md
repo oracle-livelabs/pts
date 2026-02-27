@@ -1,4 +1,4 @@
-# Lab 2: Run the same RAG Application interactively with a User Interface
+﻿# Lab 2: Run the same RAG Application interactively with a User Interface
 
 ## Introduction
 
@@ -18,13 +18,13 @@ In this lab you will run the RAG application interactively using a user interfac
 1.  From the terminal, go to directory 
 
     ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     ```
 
 2.  Run the RAG application
 
     ```
-    $ genai_run genai_plsql.py
+    $ streamlit run genai_plsql.py
     ```
 
 3. A browser will launch. If not, open a browser from the Activities menu and select Firefox or Chrome.
@@ -37,7 +37,7 @@ Your application will now be running.  Simply follow the UI.
 
     ![Select Home folder](images/home.png)
     
-    After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
+    After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle AI Database 26ai.
 
     ![Genai app UI](images/streamlitocigenai.png)
 
@@ -45,12 +45,12 @@ Your application will now be running.  Simply follow the UI.
 
 6. Type a question and hit return.
 
-    In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.  
+    In a few seconds the LLM will answer the question and respond with context stored in Oracle AI Database 26ai.  
 
     **Some Suggestions for question to be asked**
 
-    For the Oracle Database 23ai Users Guide:
-    - What are the new features in Oracle Database 23ai
+    For the Oracle AI Database 26ai Users Guide:
+    - What are the new features in Oracle AI Database 26ai
     - Tell me more about AI Vector Search
     - Tell me more about new enhancement to SQL
     - Tell me more about JSON Relational Duality
@@ -67,7 +67,7 @@ Now check out the application code using the UI. From a terminal window type:
 
 
 ```
-    $ cd /home/oracle/AIdemo
+    $ cd /home/oracle/aidemo
     $ more genai_plsql.py
 ```
 
@@ -76,7 +76,7 @@ But essentially the code is the same as LAB 1 for building a RAG application wit
 
 ### Conclusion
 
-By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+By using AI Vector Search in Oracle AI Database 26ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle AI Database 26ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle AI Database 26ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 
 
 **Completed. Thanks for running the lab.**
@@ -84,4 +84,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 ## Acknowledgements
 * **Authors** - Vijay Balebail, Milton Wan
 * **Contributors** - Rajeev Rumale, Doug Hood
-* **Last Updated By/Date** -  Milton Wan, May 2024
+* **Last Updated By/Date** -  Rajeev Rumale, October 2024

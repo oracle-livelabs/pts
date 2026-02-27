@@ -143,7 +143,7 @@ In this Lab we have seen some of the methods for managing Vectors within the Ora
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 

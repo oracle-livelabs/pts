@@ -1,0 +1,25 @@
+{
+    "workshoptitle": "Oracle Database custom audit events",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+            "title": "Getting Started",
+            "description": "This is the prerequisites for customers using Free Trial and Paid tenancies, and Always Free accounts (if applicable).",
+            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
+        },
+        {
+            "title": "Lab 1: Oracle Database custom audit events",
+            "description": "Collect audit information from an Oracle Database instance and use it to build customized charts and reports.",
+            "filename": "../../custom-audit-events/audit-events.md"
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+        }
+    ]
+}
