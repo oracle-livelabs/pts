@@ -126,7 +126,7 @@ You can now enter any search term or image that you would like to search on. You
     END;
     ```
 
-Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
+    Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
 
 ## Learn More
 
