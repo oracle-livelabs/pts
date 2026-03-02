@@ -71,7 +71,7 @@ with the following string:
 
 The resulting URL should look like this (note that your URL may have a different hostname):
 
-`https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks/image-search`
+`https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/nationalparks108/image-search`
 
 Then hit enter to go to invoke the APEX demo. You should see a browser window like the following:
 
@@ -139,4 +139,4 @@ You can now enter any search term or image that you would like to search on. You
 
 * **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026
