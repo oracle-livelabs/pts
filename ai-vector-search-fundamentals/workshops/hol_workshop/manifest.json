@@ -20,25 +20,25 @@
             "filename": "../../database_connection/sandbox_connection.md"
         },
         {
-            "title": "Lab 1: APEX Demo",
-            "description": "Running AI Vector Search in an APEX application",
-            "type": "sandbox",
-            "filename": "../../6-apex_demo/apex_demo.md"
-        },
-        {
-            "title": "Lab 2: Vector Embeddings",
+            "title": "Lab 1: Vector Embeddings",
             "description": "Vectors and vector embeddings in AI Vector Search",
             "filename": "../../2-embedding_models/text_embeddings.md"
         },
         {
-            "title": "Lab 3: Exhaustive Search",
+            "title": "Lab 2: Exhaustive Search",
             "description": "Understanding Exhaustive Similarity Search",
             "filename": "../../3-exhaustive_search/exhaustive_search.md"
         },
         {
-            "title": "Lab 4: Image Search",
+            "title": "Lab 3: Image Search",
             "description": "Exploring Image Search",
             "filename": "../../5-image_search/image_search.md"
+        },
+        {
+            "title": "Lab 4: APEX Demo",
+            "description": "Running AI Vector Search in an APEX application",
+            "type": "sandbox",
+            "filename": "../../6-apex_demo/apex_demo.md"
         },
         {
             "title": "Need Help?",
