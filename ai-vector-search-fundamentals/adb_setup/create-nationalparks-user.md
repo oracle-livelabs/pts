@@ -253,7 +253,7 @@ In this task you will import the workshop's APEX workspace and two applications:
 4. Copy the following code to an editor and make the appropriate changes for the credential parameters. Save the file with a name like **apex_setup.sql**. You will run this script in the next step.
 
     ```[]
-    sql ADMIN/Training4ADW@<insert your TNS alias here>
+    <copy>
     -- Use this to prevent getting a remote server error message.
     BEGIN
        -- first set the workspace
@@ -292,6 +292,7 @@ In this task you will import the workshop's APEX workspace and two applications:
       COMMIT;
     END;
     /
+    </copy>
     ```
 
 5. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step and run the script you created in the previous step:
