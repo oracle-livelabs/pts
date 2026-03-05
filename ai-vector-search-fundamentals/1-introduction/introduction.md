@@ -62,7 +62,7 @@ This lab assumes you have:
 
 ## Dataset
 
-This workshop will use two public sources:
+This workshop uses two public sources:
 
 * A public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
 * A [Sample Employee Handbook](https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. This pdf will be used in the Retrieval Augmented Generation (RAG) lab.
@@ -75,9 +75,7 @@ In this Lab you will use Database Actions SQL Worksheet to access the database a
 
 ![sqldev help](images/sqldev_help.png " ")
 
-In the last lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
-
-Each lab starts out with a "Connecting to your Oracle AI Vector Database" section which explains how to find and invoke the URL in detail.
+In the APEX demo lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
 
 You may now **proceed to the next lab**
 
@@ -91,4 +89,4 @@ You may now **proceed to the next lab**
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026

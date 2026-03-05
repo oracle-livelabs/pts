@@ -128,6 +128,8 @@ You can now enter any search term or image that you would like to search on. You
 
     Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
 
+You may now **proceed to the next lab**
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/index.html)

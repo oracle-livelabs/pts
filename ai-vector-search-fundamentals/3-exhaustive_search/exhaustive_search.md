@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab walks you through the steps to run exhaustive similarity searches and what is happening during the search.
+This lab walks you through the steps to run exhaustive similarity searches and describes what is happening during the search.
 
 Watch the video below for a quick walk-through of the exhaustive similarity search lab:
 

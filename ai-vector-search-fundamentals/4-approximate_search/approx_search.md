@@ -134,7 +134,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
     ![exact query2](images/parks_approx_rock_climbing.png " ")
 
-   Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
+    Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
 
 3. Since we are now doing an approximate search using a vector index, what does the execution plan look like?
 

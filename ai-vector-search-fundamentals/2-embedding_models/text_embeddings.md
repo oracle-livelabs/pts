@@ -80,7 +80,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     ![load model sql](images/load_model.png " ")
 
-   Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DATA\_PUMP\_DIR directory and loaded it into the database.
+    Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DATA\_PUMP\_DIR directory and loaded it into the database.
 
 4. Display the newly loaded model:
 
@@ -93,7 +93,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     ![model query](images/embedding_models2.png " ")
 
-   You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
+    You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
 
 5. Display the model details:
 
@@ -236,7 +236,6 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     We displayed just the first 15 rows, or embeddings, that were created. Feel free to query more rows if you wish. The PARKS table has a total of 472 rows.
 
 You may now **proceed to the next lab**
-
 
 ## Learn More
 
