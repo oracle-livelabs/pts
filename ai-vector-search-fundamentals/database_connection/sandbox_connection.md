@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the similarity search on image
 
 [Database Connection lab video](https://videohub.oracle.com/media/Vector-Search-Database-Connection-Lab/1_86zguvif)
 
-Estimated Lab Time: 5 minutes
+Estimated Lab Time: X
 
 ### Objectives
 
@@ -40,8 +40,6 @@ See the image below for an example:
 After signing in you should see a browser window like the following:
 
 ![sqldev browser](images/sql_np_worksheet.png " ")
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

@@ -1,14 +1,10 @@
 # Introduction
 
-## Introduction
-
-This lab will introduce you to the Oracle AI Vector Search Workshop.
-
-Estimated Lab Time: 5 minutes
-
-### About This Workshop
+## About This Workshop
 
 The **Getting Started with AI Vector Search** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
+
+Estimated Workshop Time: 60 minutes
 
 Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
 
@@ -59,7 +55,6 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 
-
 ## Dataset
 
 This workshop uses two public sources:
@@ -76,8 +71,6 @@ In this Lab you will use Database Actions SQL Worksheet to access the database a
 ![sqldev help](images/sqldev_help.png " ")
 
 In the APEX demo lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

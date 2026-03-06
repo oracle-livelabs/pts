@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the exhaustive similarity sear
 
 [Exhaustive Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About Exhaustive Similarity Search
 
@@ -102,8 +102,6 @@ In this task we will put our work to use and run some exhaustive similarity sear
     ![plan query](images/parks_execute_plan.png " ")
 
     Notice that a TABLE ACCESS is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

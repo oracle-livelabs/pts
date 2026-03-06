@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the APEX demo search on images
 
 [APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab2/1_brgqm6c6)
 
-Estimated Lab Time: 5 minutes
+Estimated Lab Time: X
 
 ### About APEX Demo
 
@@ -31,7 +31,7 @@ This lab assumes you have:
 
 ## Task 1: Connecting to the APEX application
 
-This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser. 
+This lab will be run by accessing an APEX application running in our LiveLabs database. You simply need to run the APEX Demo URL in your web browser.
 
 <if type="sandbox">
 
@@ -127,8 +127,6 @@ You can now enter any search term or image that you would like to search on. You
     ```
 
     Go ahead and experiment with different search terms. You can't hurt anything and you may be amazed at just how good AI Vector Search really is.
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

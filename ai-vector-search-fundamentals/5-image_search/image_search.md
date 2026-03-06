@@ -8,14 +8,13 @@ Watch the video below for a quick walk-through of the similarity search on image
 
 [Similarity Search on Images](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab2/1_oy371cdj)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About Image Similarity Search
 
 In the previous labs, we looked at embedding models and similarity search on text-based data. Now we are going to look at something even more impressive. The ability to use text phrases or images to search for images. This will require using different embedding models depending on whether a text phrase or an image is being used for the search comparison. In this lab we will be using the multi-modal embedding model CLIP (Contrastive Language-Image Pretraining) which is a deep learning model developed by OpenAI that understands how to vectorize an image for input to our similarity search. This lab will continue our use of the US National Parks dataset. Recall that there are two tables in this dataset, one that describes parks and then another that has images for those parks. We are going to search for images using text phrases or images, and then also combine a query to join the two tables and look through images based on a general location.
 
 The vector embeddings for the dataset images have already been created since that would have taken too long for this lab environment, but we will still take a look at them. The embedding model that was used to create the vector embeddings was also the CLIP multi-modal embedding pipeline mentioned above. Since the model is multi-modal it can be split into two different ONNX compatible embedding models to allow searching for images based on text phrases or actual images as mentioned previously. This is described in more detail in the [Oracle AI Vector Search User's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/onnx-pipeline-models-multi-modal-embedding.html). Both of these models have already been loaded into the database as you saw earlier. The text version is called CLIP\_VIT\_TXT and the image version is called CLIP\_VIT\_IMG.
-
 
 ### Objectives
 
@@ -209,8 +208,6 @@ In this task we will run similar queries to the ones we ran in the previous labs
     If you click on the first URL, click on the eye icon, then highlight the URL and right click you can choose the "Go to ..." option to open the image in a new browser tab:
 
     ![waterfall image](images/waterfall.png " ")
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

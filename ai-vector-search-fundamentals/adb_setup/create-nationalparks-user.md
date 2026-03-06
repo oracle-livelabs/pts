@@ -4,7 +4,7 @@
 
 This lab walks you through the steps to get started with Database Actions. You will create the NATIONALPARKS user and provide that user the access to run the Getting Started with AI Vector Search lab. You will then load the ONNX models, create the NATIONALPARKS schema, and then setup up the APEX demo that will be used in the last lab.
 
-Estimated time: 10 minutes
+Estimated time: X
 
 ### Objectives
 
@@ -18,7 +18,6 @@ Estimated time: 10 minutes
 
 - Oracle Cloud account
 - Provisioned Autonomous Database
-
 
 ## Task 1: Login to Database Actions
 
@@ -298,8 +297,6 @@ In this task you will import the workshop's APEX workspace and two applications:
 5. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in the previous step and run the script you created in the previous step:
 
     ![run sqlcl](images/run_sqlcl.png)
-
-You may now **proceed to the next lab**
 
 ## Acknowledgements
 
