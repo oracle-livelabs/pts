@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the approximate similarity sea
 
 [Approximate Similarity Search](https://videohub.oracle.com/media/Vector-Search-Approximate-Search-Lab/1_zmvlhld8)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About Approximate Similarity Search
 
@@ -134,7 +134,7 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 
     ![exact query2](images/parks_approx_rock_climbing.png " ")
 
-   Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
+    Notice that the results are the same for both queries with potentially less work and faster execution. Since our dataset is so small you may not notice much difference. However, in practice with large datasets the difference can be very large.
 
 3. Since we are now doing an approximate search using a vector index, what does the execution plan look like?
 
@@ -153,8 +153,6 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
     ![plan query](images/parks_approx_execute_plan.png " ")
 
     Notice that a vector index access is now performed on the PARKS table since we have a vector index available.
-
-You may now **proceed to the next lab**
 
 ## Learn More
 

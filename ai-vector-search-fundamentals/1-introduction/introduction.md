@@ -1,14 +1,10 @@
 # Introduction
 
-## Introduction
-
-This lab will introduce you to the Oracle AI Vector Search Workshop.
-
-Estimated Lab Time: 5 minutes
-
-### About This Workshop
+## About This Workshop
 
 The **Getting Started with AI Vector Search** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
+
+Estimated Workshop Time: 60 minutes
 
 Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
 
@@ -59,10 +55,9 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 
-
 ## Dataset
 
-This workshop will use two public sources:
+This workshop uses two public sources:
 
 * A public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
 * A [Sample Employee Handbook](https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. This pdf will be used in the Retrieval Augmented Generation (RAG) lab.
@@ -75,11 +70,7 @@ In this Lab you will use Database Actions SQL Worksheet to access the database a
 
 ![sqldev help](images/sqldev_help.png " ")
 
-In the last lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
-
-Each lab starts out with a "Connecting to your Oracle AI Vector Database" section which explains how to find and invoke the URL in detail.
-
-You may now **proceed to the next lab**
+In the APEX demo lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
 
 ## Learn More
 
@@ -91,4 +82,4 @@ You may now **proceed to the next lab**
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026

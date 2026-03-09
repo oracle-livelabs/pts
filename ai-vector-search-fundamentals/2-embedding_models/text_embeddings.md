@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the vector embeddings lab:
 
 [Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab2/1_bjgnd8ai)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About Vector Embedding
 
@@ -19,7 +19,6 @@ Vector embeddings are generated using Machine Learning models. How do you decide
 Once you decide on one or more embedding models to try, you can choose to create vector embeddings outside the database or inside the database by importing the models directly into Oracle AI Database if they are compatible with the Open Neural Network Exchange (ONNX) standard. Since Oracle AI Database uses the ONNX runtime directly within the database, these imported models can be used to generate vector embeddings in Oracle AI Database.
 
 In this Lab we are going to be searching on a text column, and we will use the all-MiniLM-L12-v2 model. This model was built using the sentence-transformers library. This model takes sentences or paragraphs and converts them into 384-dimensional vectors. Each of these 384 dimensions captures a specific aspect of the sentence's meaning or characteristics. We will be using a pre-built version of this model, which just means that it has already been converted into an ONNX format and is ready to be loaded into the database. You can find the details about how this was done in the blog post [Now Available! Pre-built Embedding Generation model for Oracle Database 23ai] (https://blogs.oracle.com/machinelearning/post/use-our-prebuilt-onnx-model-now-available-for-embedding-generation-in-oracle-database-23ai).
-
 
 ### Objectives
 
@@ -80,7 +79,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     ![load model sql](images/load_model.png " ")
 
-   Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DATA\_PUMP\_DIR directory and loaded it into the database.
+    Using the DBMS\_VECTOR.LOAD\_ONNX\_MODEL procedure the database read the all\_MiniLM\_L12\_v2.onnx file in the DATA\_PUMP\_DIR directory and loaded it into the database.
 
 4. Display the newly loaded model:
 
@@ -93,7 +92,7 @@ This task will involve identifying and loading an ONNX compatible embedding mode
 
     ![model query](images/embedding_models2.png " ")
 
-   You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
+    You may notice that the 'MINING FUNCTION' column has the attribute of EMBEDDING since this particular machine learning model is an embedding model.
 
 5. Display the model details:
 
@@ -120,7 +119,7 @@ The number of dimensions must be strictly greater than zero, with a maximum of 6
 
 The possible dimension formats are:
 
-* INT8 (8-bit integers) 
+* INT8 (8-bit integers)
 * FLOAT32 (32-bit IEEE floating-point numbers)
 * FLOAT64 (64-bit IEEE floating-point numbers)
 * BINARY (packed UINT8 bytes where each dimension is a single bit)
@@ -160,7 +159,6 @@ Now that we have loaded an embedding model let's create a vector and see what it
     Note: your DESCRIPTION, and therefore vector, may be different than in our example since we didn't add an ORDER BY clause. This example is just showing how you can create a vector for one row in the PARKS table.
 
     If you would like to look at the entire vector you can click on the "eye" icon next to the end of the vector display.
-
 
 ## Task 3: Create a vector column and describe the attributes
 
@@ -218,7 +216,6 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
     There are other methods of creating vector embeddings that can be much faster, but for the small number of rows in our PARKS table this was probably the simplest method and only took a short amount of time.
 
-
 2. Verify that embeddings were created:
 
     Since the vectors are quite large we will just display a small number of rows to verify our work:
@@ -234,9 +231,6 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
     ![verify vectors query](images/parks_embeddings_query.png " ")
 
     We displayed just the first 15 rows, or embeddings, that were created. Feel free to query more rows if you wish. The PARKS table has a total of 472 rows.
-
-You may now **proceed to the next lab**
-
 
 ## Learn More
 
