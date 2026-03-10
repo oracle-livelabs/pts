@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the exhaustive similarity sear
 
 [Exhaustive Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About Exhaustive Similarity Search
 

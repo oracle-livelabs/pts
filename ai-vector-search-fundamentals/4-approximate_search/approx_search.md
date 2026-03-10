@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the approximate similarity sea
 
 [Approximate Similarity Search](https://videohub.oracle.com/media/Vector-Search-Approximate-Search-Lab/1_zmvlhld8)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About Approximate Similarity Search
 

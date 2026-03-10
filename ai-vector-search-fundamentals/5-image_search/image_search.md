@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the similarity search on image
 
 [Similarity Search on Images](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab2/1_oy371cdj)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About Image Similarity Search
 

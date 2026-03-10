@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the vector embeddings lab:
 
 [Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab2/1_bjgnd8ai)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About Vector Embedding
 

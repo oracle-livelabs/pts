@@ -4,7 +4,7 @@
 
 This lab walks you through the steps to get started with Database Actions. You will create the NATIONALPARKS user and provide that user the access to run the Getting Started with AI Vector Search lab. You will then load the ONNX models, create the NATIONALPARKS schema, and then setup up the APEX demo that will be used in the last lab.
 
-Estimated time: X
+Estimated Time: X
 
 ### Objectives
 
