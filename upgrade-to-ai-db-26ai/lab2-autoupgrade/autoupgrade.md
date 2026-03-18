@@ -327,7 +327,7 @@ In this example we will put 3 different upgrade scenarios in a single configurat
 
 1. Check the overall status of the jobs
 
-    In the output of the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in, for example, your Firefox browser:
+    In the output of the Autoupgrade tool provided, you can see the location of a summary report. It is available both in HTML format and in text format. Using the following command, you can view the output of the overall status in your Chrome browser:
 
     ```text
     <copy>firefox /u01/autoupgrade/log/cfgtoollogs/upgrade/auto/status/status.html</copy>
@@ -360,7 +360,7 @@ In this example we will put 3 different upgrade scenarios in a single configurat
     upg>
     ```
 
-1. The tool will now upgrade the requested databases in the background. You can request the status by executing the List Jobs (`lsj`) command:
+1. The tool will now upgrade the requested databases in the background. You can request the status by executing the 'lsj' command:
 
     ```text
     upg> <copy>lsj</copy>

@@ -46,6 +46,12 @@
             "filename": "../../6-apex_demo/apex_demo.md"
         },
         {
+            "title": "Lab 6: Retrieval Augmented Generation",
+            "description": "Understanding Retrieval Augmented Generation",
+            "type": "sandbox",
+            "filename": "../../rag/rag.md"
+        },
+        {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
             "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"

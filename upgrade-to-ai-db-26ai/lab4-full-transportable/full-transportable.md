@@ -78,7 +78,7 @@ The FTTS functionality requires an existing (pluggable) database as a target. Fo
     $ <copy>sqlplus / as sysdba</copy>
     ```
 
-    ### Create a new PDB called TTT01 ###
+    ### Create a new PDB called PDB19C02 ###
 
 1. Please create a new PDB using the following command:
 

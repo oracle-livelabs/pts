@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This Lab will use the Oracle Cloud Infrastructure Generative AI service (OCI Gen AI) to access an LLM. The LLM used will be "meta.llama-3.2-90b-vision-instruct". You can find more details about this model here: https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-2-90b.htm#meta.llama-3.2-90b-vision-instruct.
+This lab will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This Lab will use the Oracle Cloud Infrastructure Generative AI service (OCI Gen AI) to access an LLM. The LLM used will be "meta.llama-3.2-90b-vision-instruct". You can find more details about this model here: [Meta Llama 3.2 90B Vision](https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-2-90b.htm#meta.llama-3.2-90b-vision-instruct).
 
 This Lab will demonstrate accessing an LLM, creating a similarity search to return question specific results, and finally creating a RAG query that will combine a question and the private data returned from a similarity search to create a natural language response from an LLM.
 
@@ -10,15 +10,19 @@ The final step will be to show an APEX chatbot that uses the queries and dataset
 
 Watch the video below for a quick walk-through of the RAG lab:
 
-[RAG Lab](https://videohub.oracle.com/media/Vector-Search-Image-Search-Lab/1_6hwxhdjg)
+[RAG Lab](https://videohub.oracle.com/media/Vector-Search-RAG-Demo-Lab/1_oofv0mt0)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About This Lab
 
-In this Lab we will be using a [Sample Employee Handbook] (https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. The goal of the Lab is to create a "Benny Benefits" chatbot that can be used by "employees" to find out information about their benefits. Part of the benefit of RAG is the ability to augment queries with private information that LLMs don't have access to. In order to demonstrate this we will use the Sample Employee Handbook to show that without AI Vector Search to "augment" our employee questions we won't get the correct answers. The LLM will use information it knows about but that isn't accurate for our employees.
+In this Lab we will be using a [Sample Employee Handbook](https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. The goal of the Lab is to create a "Benny Benefits" chatbot that can be used by "employees" to find out information about their benefits. Part of the benefit of RAG is the ability to augment queries with private information that LLMs don't have access to. In order to demonstrate this we will use the Sample Employee Handbook to show that without AI Vector Search to "augment" our employee questions we won't get the correct answers. The LLM will use information it knows about but that isn't accurate for our employees.
 
-As part of this Lab we will load the handbook, which is in pdf form, into the database, convert it to text, chunk it into smaller sections and then vectorize those sections so that they can be searched with AI Vector Search. We will then try some similarity search queries to see what AI Vector Search finds in the employee handbook, and then send that information to the LLM to see what a full RAG query looks like. Lastly we will demo an APEX pre-built chatbot that uses the same RAG query that we created in the Lab to see how this might work in the real world.
+As part of this Lab we will load the handbook, which is in pdf form, into the database, convert it to text, chunk it into smaller sections and then vectorize those sections so that they can be searched with AI Vector Search. We will then try some similarity search queries to see what AI Vector Search finds in the employee handbook, and then send that information to the LLM to see what a full RAG query looks like.
+
+Lastly we will demo an APEX pre-built chatbot that uses the same RAG query that we created in the Lab to see how this might work in the real world.
+
+**Note:** The chatbot will not work unless you complete Task 1 since it depends on the Sample Handbook data to work.
 
 ### Objectives
 
@@ -34,6 +38,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * Some familiarity with Oracle SQL and AI Vector Search
 * Run the Vector Embedding Lab
@@ -46,25 +51,27 @@ Retrieval Augmented Generation (RAG) involves augmenting prompts to Large Langua
 
 This task will load the sample employee handbook into the database, and then convert it to text, chunk the text data into smaller amounts of data that an embedding model can understand, and then vectorize those chunks using the all\_MiniLM\_L12\_v2 embedding model that was loaded into the database in the Vector Embedding lab.
 
-1.  The following will create a table called "DOCUMENTATION_TAB" that we will load the employee handbook into.
+1. The following will create a table called "DOCUMENTATION_TAB" that we will load the employee handbook into.
 
-    ```
+    ```[]
     <copy>
     CREATE TABLE IF NOT EXISTS documentation_tab
-        ( 
-        ID             INTEGER GENERATED BY DEFAULT ON NULL AS IDENTITY 
-            ( START WITH 1 CACHE 20 ) PRIMARY KEY, 
-        file_name      VARCHAR2 (900) , 
-        file_size      INTEGER , 
-        file_type      VARCHAR2 (100) , 
+        (
+        ID             INTEGER GENERATED BY DEFAULT ON NULL AS IDENTITY
+            ( START WITH 1 CACHE 20 ) PRIMARY KEY,
+        file_name      VARCHAR2 (900) ,
+        file_size      INTEGER ,
+        file_type      VARCHAR2 (100) ,
         file_content   BLOB
         );
     </copy>
     ```
-     
+
+    ![create doc table](images/doc_table.png " ")
+
 2. Next we will load the employee handbook into the database. The file "Sample\_Employee\_Handbook.pdf" has already been copied to the database directory DATA\_PUMP\_DIR during the workshop setup.
 
-    ```
+    ```[]
     <copy>
     INSERT INTO documentation_tab(file_name,file_size,file_type,file_content)
     VALUES
@@ -75,9 +82,13 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
+    **Note:** There are two statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![insert handbook](images/insert_handbook.png " ")
+
 3. Create a table called DOC\_CHUNKS to convert the pdf file to text, chunk it, and vectorize the text.
 
-    ```
+    ```[]
     <copy>
     CREATE TABLE doc_chunks AS (
       SELECT dt.id doc_id, et.embed_id, et.embed_data, TO_VECTOR(et.embed_vector) embed_vector
@@ -93,20 +104,27 @@ This task will load the sample employee handbook into the database, and then con
     </copy>
     ```
 
+    ![create doc_chunks table](images/doc_chunks.png " ")
+
 4. Run a test question to verify the data. Copy the following SQL into a SQL worksheet and run as a script:
 
-    ```
+    ```[]
     <copy>
     VARIABLE user_query VARCHAR2(1000);
-    EXEC :user_query := 'How do I drop a dependent?';
+    EXEC :user_query := 'How much sick leave do I get?';
     SELECT doc_id, embed_id, embed_data FROM doc_chunks
-    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_query as data), COSINE)
+    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_query AS data), COSINE)
     FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
+
+    **Note:** There are multiple statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![query doc_chunks](images/query_doc.png " ")
+
     You should see 3 rows returned like the following:
 
-    ```
+    ```[]
     DOC_ID EMBED_ID EMBED_DATA
     ------ -------- ----------------------------------------------------------------------------------------------------
          1       86 prorated sick leave benefits, (i.e., 3.5 hours per month if the Employee works 17.5 hours per
@@ -115,7 +133,7 @@ This task will load the sample employee handbook into the database, and then con
     hourly increments.
     Unused sick leave can accumulate from year to year up to a maximum of 30 days (210
     hours) for full-time employees. This limitation on accrual of sick leave benefits is prorated
-    accordingly for part-time employees. No sick leave benefits are paid upon separation of                    
+    accordingly for part-time employees. No sick leave benefits are paid upon separation of
          1       29 C.
     Sick Leave..........................................................................................................
     XX
@@ -136,32 +154,43 @@ This task will load the sample employee handbook into the database, and then con
 
 ## Task 2: Define the OCI Gen AI Service
 
-In this Lab we will using the OCI Gen AI Service as a public REST provider to access an LLM. 
+In this Lab we will be using the OCI Gen AI Service as a public REST provider to access an LLM.
 
 <if type="sandbox">
-To use the OCI Gen AI Service for our Lab we have already created a network ACL that will allow us to access the LLM host, and an OCI credential to allow us to access the REST endpoint for the LLM we will be using.
+
+To use the OCI Gen AI Service for our Lab we have already created a network ACL that will allow us to access the LLM host, and an OCI Generative AI credential to allow us to access the REST endpoint for the LLM we will be using.
+
 </if>
 
 <if type="tenancy">
-To set up the OCI Gen AI Service for our Lab we will first create a network ACL that will allow us to access the LLM host, we will then create an OCI credential to allow us to access the REST endpoint for the LLM we will be using.
+
+To set up the OCI Generative AI Service for our Lab we will first create a network ACL that will allow us to access the LLM host, and we will then create an OCI Generative AI credential to allow us to access the REST endpoint for the LLM we will be using.
 
 1. Create a Network ACL for the NATIONALPARKS user:
 
-    ```
+    ```[]
     <copy>
     BEGIN
       DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
         host => '*',
-        ace => xs$ace_type(privilege_list => xs$name_list('connect'),
+        ace => xs$ace_type(privilege_list => xs$name_list('http'),
                            principal_name => 'NATIONALPARKS',
                            principal_type => xs_acl.ptype_db));
     END;
     </copy>
     ```
 
-2. Next we will create an OCI credential. To do this you will need to look up some information about your OCI lab environment.  Generative AI requires the following authentication parameters:
+2. You can run the following to verify that the ACL has been created:
 
+    ```[]
+    <copy>
+    SELECT * FROM DBA_NETWORK_ACL_PRIVILEGES;
+    </copy>
     ```
+
+3. Next we will create an OCI credential. To do this you will need to look up some information about your OCI lab environment.  Generative AI requires the following authentication parameters:
+
+    ```[]
     "user_ocid"
     "tenancy_ocid"
     "compartment_ocid"
@@ -172,36 +201,36 @@ To set up the OCI Gen AI Service for our Lab we will first create a network ACL 
     The first step will be to create API Keys for the user and tenancy ocids and your private fingerprint.
     You can find more details about this in the [DBMS\_VECTOR\_CHAIN](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/dbms_vector_chain1.html?source=%3Aso%3Afb%3Aor%3Aawr%3Aodb%3A%3A%3AEM13CTechForum+%3Aow%3Aevp%3Acpo%3A%3A%3A%3ARC_WWMK220222P00068%3AOER400222946Enterprisebyrelease) description in the Oracle AI Database 26ai PL/SQL Packages and Types Reference.
 
-1. Click **My Profile** at the top-right corner and select **User settings**.
+4. Click **My Profile** at the top-right corner and select **User settings**.
 
     ![Profile Menu](./images/profile.png " ")
 
-2. Under **Tokens and keys** tab and click **Add API key**.
+5. Under **Tokens and keys** tab and click **Add API key**.
 
     ![Add API Key](./images/api-keys.png " ")
 
-3. The Add API key dialog is displayed. Select **Generate API key pair** to create a new key pair.
+6. The Add API key dialog is displayed. Select **Generate API key pair** to create a new key pair.
 
-4. Click **Download private key**. A **.pem** file will be saved to your local device. You do not need to download the public key.
+7. Click **Download private key**. A **.pem** file will be saved to your local device. You do not need to download the public key.
 
     >*Note: You will use this private key while configuring the web credentials in a following step.*
 
-5. Click **Add**.
+8. Click **Add**.
 
     ![Profile Menu](./images/add-api-key.png " ")
 
-6. The key is added, and the Configuration file preview is displayed. Copy and save the configuration file snippet from the text box into a notepad. You will use this information to create OCI credential id a following step.
+9. The key is added, and the Configuration file preview is displayed. Copy and save the configuration file snippet from the text box into a notepad. You will use this information to create OCI credential id a following step.
 
     ![Profile Menu](./images/configuration-preview.png " ")
 
-7. Copy the following template into a Database Actions SQL window, but do not execute it:
+10. Copy the following template into a Database Actions SQL window, but do not execute it:
 
-    ```
+    ```[]
     <copy>
     DECLARE
-      jo json_object_t;
+      jo JSON_OBJECT_T;
     BEGIN
-      jo := json_object_t();
+      jo := JSON_OBJECT_T();
       jo.put('user_ocid','ocid1.user. ');
       jo.put('tenancy_ocid','ocid1.tenancy. ');
       jo.put('compartment_ocid','ocid1.compartment. ');
@@ -214,24 +243,26 @@ To set up the OCI Gen AI Service for our Lab we will first create a network ACL 
     </copy>
     ```
 
-  Now add your ocid specific strings, private_key and fingerprint to the PL/SQL block. The following will help you find each string value in your OCI console:
-    ```
-    "user_ocid"       : "<user ocid>",        <= see Profile -> User name -> Details
-    "tenancy_ocid"    : "<tenancy ocid>",     <= see Profile -> Tenancy: <tenancy name>
-    "compartment_ocid": "<compartment ocid>", <= see Compartments for Vector-Search-PM
-    "private_key"     : "<private key>",      <= downloaded private key in .pem file
-    "fingerprint"     : "<fingerprint>"       <= see Profile -> User name -> Tokens and Keys
-    ```
+    Now add your ocid specific strings, private_key and fingerprint to the PL/SQL block. The following will help you find each string value in your OCI console:
 
-8. Now execute the create credential PL/SQL block by clicking on the run script icon.
+      ```[]
+      "user_ocid"        : "<user ocid>",        <= see Profile -> User name -> Details
+      "tenancy_ocid"     : "<tenancy ocid>",     <= see Profile -> Tenancy: <tenancy name>
+      "compartment_ocid" : "<compartment ocid>", <= see Compartments for Vector-Search-PM
+      "private_key"      : "<private key>",      <= downloaded private key in .pem file
+      "fingerprint"      : "<fingerprint>"       <= see Profile -> User name -> Tokens and Keys
+      ```
 
-9. You can run the following to verify that the credential has been created:
+11. Now execute the create credential PL/SQL block by clicking on the run script icon.
 
-    ```
+12. You can run the following to verify that the credential has been created:
+
+    ```[]
     <copy>
     SELECT owner, credential_name, username, comments FROM all_credentials;
     </copy>
     ```
+
 </if>
 
 ## Task 3: Run a Generative AI query
@@ -240,7 +271,7 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
 
 1. The following PL/SQL block will send the question "What is the retirement plan?" to the LLM. We can expect the response to simply be generic based on information that the LLM was trained on since we have supplied no information about our specific company benefits.
 
-    ```
+    ```[]
     <copy>
     DECLARE
       llm_params    VARCHAR2(1000);
@@ -257,9 +288,12 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     END;
     </copy>
     ```
+
+    ![GenAI Query](images/genai_query.png " ")
+
     You should see something similar to the following:
 
-    ```
+    ```[]
     A retirement plan is a financial plan that helps individuals save and invest for their future retirement goals. The main objective of a retirement plan is to ensure that an individual has a steady income stream and financial security during their retirement years.
 
     There are various types of retirement plans, including:
@@ -301,23 +335,27 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
 
     If you go look at our Employee Handbook you will realize that the above response has nothing to do with our actual employee benefits.
 
-
 ## Task 4: Run an AI Vector Search for the same question
 
 1. In this task we will run a similarity search using the same question that we sent to the LLM to see what actual policies are documented in the Employee Handbook.
 
-    ```
+    ```[]
     <copy>
-    variable user_question varchar2(1000);
-    exec :user_question := 'What is the retirement plan?';
-    select embed_data from doc_chunks
-    order by vector_distance(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_question as data), COSINE)
-    fetch first 3 rows only;
+    VARIABLE user_question VARCHAR2(1000);
+    EXEC :user_question := 'What is the retirement plan?';
+    SELECT embed_data FROM doc_chunks
+    ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_question as data), COSINE)
+    FETCH FIRST 3 ROWS ONLY;
     </copy>
     ```
+
+    **Note:** There are multiple statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
+
+    ![vector search query](images/vec_search.png " ")
+
     You should see something similar to the following:
 
-    ```
+    ```[]
     EMBED_DATA
     ------------------------------------------------------------------------------------------------------------------------ 
     Tax Deferred Annuity Plan..............................................................................................X
@@ -338,49 +376,51 @@ In this task we will run a Generative AI query to ask the LLM a simple benefits 
     annually by the {ORGANIZATION NAME} Board of Directors. Information about
     {ORGANIZATION NAME}ʹs retirement plan will be provided to the employee at the time of
     employment.
-    E. 
+    E.
     Workersʹ Compensation and Unemployment Insurance............................................X
     D.
     Retirement Plan
     ```
 
-    As you can see, this answer is quite different than the answer we got back from the LLM for the same question.
+    As you can see, this answer is quite different than the answer we got back from the LLM for the same question. However, the response is not formatted in a conversational manner. It is just the result of the first 3 most similar chunks in our DOC\_CHUNKS table.
 
 ## Task 5: Run a RAG query
 
-1. In this task we will run a RAG query combining our similarity search results to augment the question sent to the LLM with actual policies documented in the Employee Handbook.
+1. In this task we will run a RAG query combining our similarity search results to augment the question sent to the LLM with actual policies documented in the Employee Handbook to produce a response that is clear and concise and something that you might expect to see someone respond with in a formal communication like an email.
 
-    ```
+    ```[]
     <copy>
-    declare
-      llm_params         varchar2(1000);
-      user_question      varchar2(1000);
-      llm_response       clob;
-      llm_prompt_text    clob;
-    begin
+    DECLARE
+      llm_params         VARCHAR2(1000);
+      user_question      VARCHAR2(1000);
+      llm_response       CLOB;
+      llm_prompt_text    CLOB;
+    BEGIN
       llm_params := '{"provider":"ocigenai","credential_name":"OCI_GENAI_CRED","url":"https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat","model":"meta.llama-3.2-90b-vision-instruct"}';
       user_question := 'What is the retirement plan?';
       --
-      with
-        top_k as
-          (select embed_data from doc_chunks
-           order by vector_distance(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question as data), COSINE)
-           fetch first 3 rows only),
-        llm_prompt as
-          (select ('Question: ' ||
-           user_question || ', Context: ' || LISTAGG(embed_data, CHR(10))) as prompt_text from top_k)
-      select prompt_text into llm_prompt_text from llm_prompt;
+      WITH
+        top_k AS
+          (SELECT embed_data FROM doc_chunks
+           ORDER BY VECTOR_DISTANCE(embed_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question AS data), COSINE)
+           FETCH FIRST 3 ROWS ONLY),
+        llm_prompt AS
+          (SELECT ('Question: ' ||
+           user_question || ', Context: ' || LISTAGG(embed_data, CHR(10))) AS prompt_text FROM top_k)
+      SELECT prompt_text INTO llm_prompt_text FROM llm_prompt;
       --
-      llm_response := dbms_vector_chain.utl_to_generate_text(llm_prompt_text, json(llm_params));
-      dbms_output.put_line('llm_response: ' || llm_response);
-    end;
+      llm_response := DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(llm_prompt_text, JSON(llm_params));
+      DBMS_OUTPUT.PUT_LINE('llm_response: ' || llm_response);
+    END;
     </copy>
     ```
 
+    ![rag query](images/rag_query.png " ")
+
     You should see something similar to the following:
 
-    ```
-    llm_response: The retirement plan is a Tax Deferred Annuity Plan provided by {ORGANIZATION NAME} for eligible full-time and part-time employees who are 21 years of age or older. 
+    ```[]
+    llm_response: The retirement plan is a Tax Deferred Annuity Plan provided by {ORGANIZATION NAME} for eligible full-time and part-time employees who are 21 years of age or older.
 
     Key details of the plan include:
     1. Employer contribution: {ORGANIZATION NAME} contributes to the employee's retirement plan when the employee becomes vested after one year of employment.
@@ -399,15 +439,45 @@ The last task for this Lab will be to put all of this together and see how we mi
 
 <if type="sandbox">
 
-1. To run the demo you simply need to run the Benny Benefits Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right. You can click on the Benny Benefits Demo URL and sign in if asked with the username "NATIONALPARKS" and the password "Welcome_12345".
-
-    [Temporary Link](https://rddainsuh6u1okc-trainingdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home)
+1. To run the demo you simply need to run the Benny Benefits Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right and click on the Benny Benefits Demo URL.
 
     See the image below for an example:
 
     ![rag demo url](images/rag_url.png " ")
 
-    After signing in with the Username and User Password from the Terraform Values section shown in your version of the page above you should see a browser window like the following:
+    After clicking on the URL you should see a new browser window like the following:
+
+    ![chatbot screen](images/chatbot_initial_screen.png " ")
+
+</if>
+
+<if type="tenancy">
+
+1. To run the demo in your own tenancy environment you will need to navigate to the "Tool configuration" tab in the ADB page:
+
+    ![tool config](images/tool_config.png " ")
+
+    and copy the APEX "Public access URL":
+
+    ![apex_url](images/apex_url.png " ")
+
+    You will then need to open a new browser window or tab and copy the URL into the address bar (note that your URL may have a different hostname) and replace "apex" at the end of the URL:
+
+    `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/apex`
+
+    with the following string:
+
+    ```[]
+    <copy>
+    /r/nationalparks/benefits/home
+    </copy>
+    ```
+
+    The resulting URL should look like this (note that your URL may have a different hostname):
+
+    `https://host_name.adb.us-ashburn-1.oraclecloudapps.com/ords/r/nationalparks/benefits/home`
+
+    After signing in you should see a browser window like the following:
 
     ![chatbot screen](images/chatbot_initial_screen.png " ")
 
@@ -415,7 +485,7 @@ The last task for this Lab will be to put all of this together and see how we mi
 
 2. One important detail to note with the RAG query that we are using in the chatbot. We have added a System Prompt that helps the LLM respond with relevant, accurate and safe responses. We want the chatbot's responses to look like they came from a real benefits representative. The following is the System Prompt that is used:
 
-    ```
+    ```[]
     If the question cannot be answered based on the above context, say "Information Not Found!".
     ###ROLE: You are an expert on Benny Benefits policies
     ###GUARDRAILS:
@@ -445,5 +515,6 @@ The last task for this Lab will be to put all of this together and see how we mi
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
+
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

@@ -27,14 +27,14 @@ We have already downloaded the software for you in this workshop. You need to ad
 
 ### Step 1: Install the 26ai pre-install RPM on the system
 
-If there is not an Terminal window open yet to execute commands on the command line, open a new terminal button by clicking on "Activities" in the left top of your noVNC remote desktop screen. After this, click on the Terminal option. Position the Chrome browser and the Terminal window side by side for easy copy-and-past actions.
-
 An easy way to make sure all system parameters are correct in a Linux environment is to use the preinstall rpm package. For non-Linux environments, please check the manual for the appropriate environment values. We have already downloaded the preinstall rpm in the environment, so you can simply install it.
 
 Run the installer to start the database software installation. The user executing the command should be then 'oracle' user.
 
 ```text
-[oracle@26ai-upgrade:~]$ <copy>sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm </copy>
+$ <copy>sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm </copy>
+
+[oracle@26ai-upgrade:~]$ sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm
 
 Last metadata expiration check: 4:26:40 ago on Tue 06 Jan 2026 10:17:30 AM GMT.
 Dependencies resolved.

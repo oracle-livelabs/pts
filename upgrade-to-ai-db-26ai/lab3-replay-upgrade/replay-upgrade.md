@@ -194,9 +194,7 @@ Version 19.21.0.0.0
     
     This command will seem to hang for about 15 minutes. 
     
-2. While the upgrade is running, you can open another (terminal) session and check the progress of the upgrade in the alert log of the database. To open another terminal session, click File and choose for New Tab or New Window. After this you can execute the command below.
-
-    Please note that the first messages will only appear about 6 minutes after the alter command has been started and that initially, some errors might be displayed (which will be solved automatically during the upgrade):
+2. While the upgrade is running, you can open another (terminal) session and check the progress of the upgrade in the alert log of the database. Please note that the first messages will only appear about 6 minutes after the alter command has been started and that initially, some errors might be displayed (which will be solved automatically during the upgrade):
 
     ```text
     $ <copy>tail -f /u01/oracle/diag/rdbms/db26ai/DB26ai/trace/alert_DB26ai.log</copy>

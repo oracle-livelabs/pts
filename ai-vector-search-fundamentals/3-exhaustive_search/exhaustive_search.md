@@ -2,20 +2,19 @@
 
 ## Introduction
 
-This lab walks you through the steps to run exhaustive similarity searches and what is happening during the search.
+This lab walks you through the steps to run exhaustive similarity searches and describes what is happening during the search.
 
 Watch the video below for a quick walk-through of the exhaustive similarity search lab:
 
 [Exhaustive Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
 
-Estimated Lab Time: 10 minutes
+Estimated Lab Time: X
 
 ### About Exhaustive Similarity Search
 
 An exhaustive similarity search looks at the distances, based on a given query vector, to all other vectors in a data set. This type of search produces the most accurate results as all vectors are compared.
 
 In this Lab we are going to be performing exhaustive similarity searches on a text column, and we will use the all-MiniLM-L12-v2 model. This is the same model we used in the Embedding Models lab to create the vector embeddings for the DESCRIPTION column in the PARKS table.
-
 
 ### Objectives
 
@@ -28,9 +27,9 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
+
 * An Oracle Account (oracle.com account)
 * All previous labs successfully completed
-
 
 ## Task 1: Run exhaustive similarity searches
 
@@ -38,7 +37,7 @@ In this task we will put our work to use and run some exhaustive similarity sear
 
 1. Our first query will look for parks that are associated with the American Civil War (1861-1865):
 
-    ```
+    ```[]
     <copy>
     SELECT name, city, states, description
     FROM parks
@@ -54,7 +53,7 @@ In this task we will put our work to use and run some exhaustive similarity sear
 
 2. For our second query we will try a query with, "rock climbing", a term that doesn't show up in the description:
 
-    ```
+    ```[]
     <copy>
     SELECT name, city, states, description
     FROM parks
@@ -70,7 +69,7 @@ In this task we will put our work to use and run some exhaustive similarity sear
 
 3. We mentioned in the introduction that vectors are used to search for semantically similar objects based on their proximity to each other. In other words, the embedding process enables the use of specialized algorithms to search for the closest matches to the vector embedding being compared based on the distance between the search vector and the target vectors. Lets add the distance calculation to our query to see how this actually works.
 
-    ```
+    ```[]
     <copy>
     SELECT name,
       VECTOR_DISTANCE(desc_vector,
@@ -82,13 +81,13 @@ In this task we will put our work to use and run some exhaustive similarity sear
     </copy>
     ```
 
-	 ![distance query](images/parks_exhaustive_rock_climbing_distance.png " ")
+    ![distance query](images/parks_exhaustive_rock_climbing_distance.png " ")
 
     Notice that the distance number, the DISTANCE column, is increasing. This means that the best match is first with the smallest distance and as the distance increases the matches have less and less similarity to the search vector.
 
 4. One last step. Since we are doing exhaustive queries, that is we have not created any vector indexes, what does an execution plan look like?
 
-    ```
+    ```[]
     <copy>
     SELECT name, description
     FROM parks
@@ -97,16 +96,12 @@ In this task we will put our work to use and run some exhaustive similarity sear
     FETCH EXACT FIRST 10 ROWS ONLY;
     </copy>
     ```
-  
+
     Click on the "Explain Plan" button and choose the "Advanced View" button to display an image like the one below:
 
-	 ![plan query](images/parks_execute_plan.png " ")
+    ![plan query](images/parks_execute_plan.png " ")
 
     Notice that a TABLE ACCESS is performed on the PARKS table since we have not defined any indexes. In the next Lab we will take a look at how to create a vector index and perform approximate similarity searches.
-
-
-You may now **proceed to the next lab**
-
 
 ## Learn More
 
@@ -116,6 +111,7 @@ You may now **proceed to the next lab**
 * [Oracle Documentation](http://docs.oracle.com)
 
 ## Acknowledgements
+
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
 * **Contributors** - Sean Stacey, Product Manager, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, January 2026
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
