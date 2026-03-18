@@ -8,7 +8,7 @@ This hands-on workshop focuses on **upgrading your environment to version 23.26 
 
 This hands-on lab can be run standalone, but be aware that individual steps might take time to complete. Usually, the hands-on lab is delivered as part of the PTS "Oracle AI Database 26ai Upgrade Workshop", and uses the time you need to wait with explanations and additional information.
 
-Estimated time: 3 hours.
+Estimated Workshop Time: 3 hours.
 
 ### Objectives
 
