@@ -1,4 +1,4 @@
-# Prepare The Primary Database
+# Setup The Primary Database
 
 ## Introduction
 In this lab, You will check and modify the status of the primary site database, make it ready to ADG.

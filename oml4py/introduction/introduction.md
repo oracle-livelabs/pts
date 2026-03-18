@@ -14,7 +14,7 @@ Oracle Machine Learning for Python (OML4Py) is a component of Oracle Database, t
 
 Watch the video below on introduction to Oracle Machine Learning for Python.
 
-[] (youtube:P861m__PEMQ)
+[Oracle Machine Learning for Python](youtube:P861m__PEMQ)
 
 ### Objectives
 

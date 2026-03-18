@@ -186,7 +186,7 @@ The .dmp file has been copied to the Object Storage.  You will use this in a lat
 AShburn, US East:
 ```
 <copy>
-https://objectstorage.us-ashburn-1.oraclecloud.com/p/LNAcA6wNFvhkvHGPcWIbKlyGkicSOVCIgWLIu6t7W2BQfwq2NSLCsXpTL9wVzjuP/n/c4u04/b/livelabsfiles/o/developer-library/soedump18C_1G.dmp
+https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/developer-library/soedump18C_1G.dmp
 </copy>
 ```
 
@@ -242,7 +242,7 @@ Execute the impdb statement below from your compute with Instant Client software
 4. Set parallel import to 2 since we can use 2 the OCPU cores in ATP.
 
     ```
-    $ <copy>impdp admin/<password>@<My_ATP_high> directory=data_pump_dir credential=<credential name> schemas=soe dumpfile=https://objectstorage.us-ashburn-1.oraclecloud.com/p/LNAcA6wNFvhkvHGPcWIbKlyGkicSOVCIgWLIu6t7W2BQfwq2NSLCsXpTL9wVzjuP/n/c4u04/b/livelabsfiles/o/developer-library/soedump18C_1G.dmp logfile=import.log parallel=2</copy>
+    $ <copy>impdp admin/<password>@<My_ATP_high> directory=data_pump_dir credential=<credential name> schemas=soe dumpfile=https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/developer-library/soedump18C_1G.dmp logfile=import.log parallel=2</copy>
     ```
 
   It should take about 15-25 minutes to import.  If successful, you will see a similar output like the following:
@@ -264,7 +264,7 @@ Execute the impdb statement below from your compute with Instant Client software
 
     Master table "ADMIN"."SYS_IMPORT_SCHEMA_01" successfully loaded/unloaded
 
-    Starting "ADMIN"."SYS_IMPORT_SCHEMA_01": admin/********@atp18c_high directory=data_pump_dir credential=STORAGE_CREDENTIAL schemas=soe dumpfile=https://objectstorage.us-ashburn-1.oraclecloud.com/p/jyHA4nclWcTaekNIdpKPq3u2gsLb00v_1mmRKDIuOEsp--D6GJWS_tMrqGmb85R2/n/c4u04/b/livelabsfiles/o/labfiles/soedump18C_1G.dmp logfile=import.log parallel=2
+    Starting "ADMIN"."SYS_IMPORT_SCHEMA_01": admin/********@atp18c_high directory=data_pump_dir credential=STORAGE_CREDENTIAL schemas=soe dumpfile=https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/soedump18C_1G.dmp logfile=import.log parallel=2
 
     Processing object type SCHEMA_EXPORT/USER
 

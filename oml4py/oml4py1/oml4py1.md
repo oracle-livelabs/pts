@@ -1146,7 +1146,9 @@ Watch the video below for a quick walk through of the lab.
 9. What rank does it specify for the marital status feature? Is this feature important enough as you considered in the previous step?
 
     ```
+    <copy>
     MARITAL_STATUS    importance: 0.189213     rank: 7
+    </copy>
     ```
 
 

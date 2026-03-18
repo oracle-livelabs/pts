@@ -99,7 +99,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Change Shape](./images/change-shape.png "")
 
-    - Generate SSH key pair, and save both Private Key (this is the SSH_KEY_FILE) and Public Key files on your computer.
+    - Generate SSH key pair, and save both Private Key (this is the `SSH_KEY_FILE`) and Public Key files on your computer.
 
     ![Add SSH keys](./images/add-ssh-keys.png "")
 
@@ -149,7 +149,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ![Change Shape](./images/change-shape.png "")
 
-    - Use the Public Key file generated when creating the first DB System DBS21B from your computer.
+    - Use the Public Key file saved on your computer when creating the first DB System DBS21A.
     - Choose a license type: Bring Your Own License (BYOL).
 
 6. Specify the network information.
@@ -190,14 +190,14 @@ Please take a moment to watch the video below to learn how to perform the Databa
 3. Set values for all variables in prepare.sh script.
 
     - SSH key file name `SSH_KEY_FILE`. This is the name of the Private Key file downloaded during DBS21A DB System creation.
+    - Strong password `STRONG_PASS`. Use the strong password you saved in your notes.
+    - Host domain name `DOMAIN_NAME`. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
+    - DBS21A Database unique name `DBS21A_DB_NAME`. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
     - DBS21A Public IP address `DBS21A_PUBLIC`. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
     - DBS21A Private IP address `DBS21A_PRIVATE`. On the DBS21A DB System Details page, in the lower left under Resources click on Nodes.
+    - DBS21B Database unique name `DBS21B_DB_NAME`. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
     - DBS21B Public IP address `DBS21B_PUBLIC`. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
     - DBS21B Private IP address `DBS21B_PRIVATE`. On the DBS21B DB System Details page, in the lower left under Resources click on Nodes.
-    - DBS21A Database unique name `DBS21A_DB_NAME`. On the DBS21A DB System Details page, in the lower left under Resources click on Databases.
-    - DBS21B Database unique name `DBS21B_DB_NAME`. On the DBS21B DB System Details page, in the lower left under Resources click on Databases.
-    - Host domain name `DOMAIN_NAME`. On the DBS21A DB System Details page, on the right side under Network. Click Copy link next to Host domain name.
-    - Strong password `STRONG_PASS`. Use the strong password you saved in your notes.
 
 4. Open Oracle Cloud Shell.
 
@@ -205,15 +205,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 5. Upload on Cloud Shell environment the **Private Key** downloaded during DBS21A DB System creation and **prepare.sh** script.
 
-6. Make sure prepare.sh script has Unix format.
-
-    ````bash
-    <copy>
-    dos2unix prepare.sh
-    </copy>
-    ````
-
-7. Execute prepare.sh script.
+6. Execute prepare.sh script.
 
     ````bash
     <copy>
@@ -221,11 +213,11 @@ Please take a moment to watch the video below to learn how to perform the Databa
     </copy>
     ````
 
-8. Connect via SSH to DBS21A DB System node as **oracle* user using DBS21A Public IP address.
+7. Connect via SSH to DBS21A DB System node as **oracle** user.
 
     ````bash
     <copy>
-    ssh -C -i SSH_KEY_FILE oracle@DBS21A_PUBLIC
+    ssh -C -i ${SSH_KEY_FILE} oracle@${DBS21A_PUBLIC}
     </copy>
     ````
 

@@ -18,8 +18,8 @@ This lab assumes you have already completed the following:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [db19c-primary-num.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-num.zip) - Packaged terraform primary database instance creation script
-- [db19c-standby-nodb.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/VEKec7t0mGwBkJX92Jn0nMptuXIlEpJ5XJA-A6C9PymRgY2LhKbjWqHeB5rVBbaV/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-standby-nodb.zip) - Packaged terraform standby database instance creation script
+- [db19c-primary-num-19.20.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-num-19.20.zip) - Packaged terraform primary database instance creation script
+- [db19c-standby-nodb-19.20.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-standby-nodb-19.20.zip) - Packaged terraform standby database instance creation script
 
 
 
@@ -27,67 +27,55 @@ Click on the link below to download the Resource Manager zip files you need to b
 
 1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Developer Services**, under **Resource Manager** choose **Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. 
 
-    ![](images/image-resourcemanager.png " ")
+    ![Resource Manager](images/image-resourcemanager.png " ")
     
     
     
-    ![](./images/step1.3-createstackpage.png " ")
+    ![Create Stack Page](./images/step1.3-createstackpage.png " ")
     
 2. Check the **ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`db19c-primary-num.zip`) that you downloaded. Click **Select** to upload the zip file.
 
-    ![](images/image-createstack.png)
+    ![Stack Information Page](images/image-stackinforpage.png)
 
     Accept all the defaults and click **Next**.
 
 
-3. Accept the default value of the `Instance_Shape`. Paste the content of the public key you create before to the `SSH_PUBLIC_KEY`,  and click **Next**. 
+3. Choose the **Compartment** you want to deploy the database instance. Upload or Paste the content of the public key you create before,  and click **Next**. 
 
-    ![](images/image-configvariable.png)
+    ![Configure Variables Page](images/image-configurevariable.png)
 
     
 
 4. Click **Create**.
 
-    ![](images/image-review.png)
+    ![Stack Review Page](images/image-stackreviewpage.png)
 
-5. Your stack has now been created!  Now to create your environment. *Note: If you get an error about an invalid DNS label, go back to your Display Name, please do not enter ANY special characters or spaces. It will fail.*
+5. Your stack has now been created!  Now to create your environment. 
 
-    ![](./images/step1.7-stackcreated.png " ")
+    ![Stack Details](images/image-stackdetail.png)
 
-## Task 2: Terraform Plan (OPTIONAL)
 
-When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional Task in this lab.
 
-1.  [OPTIONAL] Click **Terraform Actions** -> **Plan** to validate your configuration. Click **Plan**. This takes about a minute, please be patient.
-
-    ![](./images/terraformactions.png " ")
-    
-    ![](images/image-plan.png)
-    
-    ![](./images/planjob.png " ")
-    
-    ![](./images/planjob1.png " ")
-
-## Task 3: Terraform Apply
+## Task 2: Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Plan** and **Apply**. Let's do that now.
 
-1.  At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
+1.  In the **Stack Details** page.  Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
 
-    ![](./images/applyjob1.png " ")
+    ![Apply](images/image-applypage.png)
     
-    ![](images/image-apply.png)
+    ![Apply Confirm](images/image-applyconfirm.png)
     
-    ![](./images/applyjob2.png " ")
+    ![Apply Running](images/image-applyrunning.png)
     
-    ![](./images/step3.1-applyjob3.png " ")
+    ![Apply Finished](images/image-applyfinished.png)
 
 2.  Once this job succeeds, you will get an apply complete notification from Terraform.  In the end of the apply log,  you can get the **public ip address** of the primary instance. Congratulations, your environment is created! Time to login to your instance to finish the configuration.
 
-    ![](images/image-output.png)
+    ![Public IP](images/image-publicip.png)
 
 
-## **Task 4:** Connect To Your Instance
+## **Task 3:** Connect To Your Instance
 
 ### MAC or Windows CYGWIN Emulator
 
@@ -117,7 +105,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 2.  Enter a name for the session and click **Save**.
 
-    ![](./images/putty-setup.png " ")
+    ![Putty Setup](./images/putty-setup.png " ")
 
 3.  Click **Connection** > **Data** in the left navigation pane and set the Auto-login username to root.
 
@@ -125,7 +113,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 5.  Navigate to the location where you saved your SSH private key file, select the file, and click Open.  NOTE:  You cannot connect while on VPN or in the Oracle office on clear-corporate (choose clear-internet).
 
-    ![](./images/putty-auth.png " ")
+    ![Putty Auth](./images/putty-auth.png " ")
 
 6.  The file path for the SSH private key file now displays in the Private key file for authentication field.
 
@@ -134,7 +122,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 8.  Click Open to begin your session with the instance.
 
 
-## **Task 5:** Verify The Database Is Up
+## **Task 4:** Verify The Database Is Up
 
 1.  From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
 
@@ -143,11 +131,11 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     tail -f /u01/ocidb/buildsingle.log
     </copy>
     ````
-    ![](./images/tailOfBuildDBInstanceLog.png " ")
+    ![Tail of Build DB](./images/tailOfBuildDBInstanceLog.png " ")
 
-2.  When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes). You can do the **Task 6** to setup the standby environment while waiting the primary database ready .
+2.  When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes). You can do the **Task 5** to setup the standby environment while waiting the primary database ready .
 
-    ![](./images/tailOfBuildDBInstanceLog_finished.png " ")
+    ![tail of Build DB Finished](./images/tailOfBuildDBInstanceLog_finished.png " ")
 
 3.  Run the following command to verify the database with the SID **ORCL** is up and running.
 
@@ -157,7 +145,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     </copy>
     ````
 
-    ![](./images/pseforcl.png " ")
+    ![ps ef orcl](./images/pseforcl.png " ")
 
 4. Verify the listener is running:
 
@@ -167,7 +155,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     </copy>
     ````
 
-    ![](./images/pseftns.png " ")
+    ![ps ef tns](./images/pseftns.png " ")
 
 5.  Connect to the Database using SQL*Plus as the **oracle** user.
 
@@ -179,7 +167,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     ````
     
 
-    ![](./images/sqlplus_login_orclpdb.png " ")
+    ![SQL Plus connect](images/image-sqlplusconnect.png)
     
 6.  To leave `sqlplus` you need to use the exit command. Copy and paste the text below into your terminal to exit sqlplus.
 
@@ -199,9 +187,9 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 You now have a fully functional Oracle Database 19c instance **ORCL** running on Oracle Cloud Compute, the default pdb name is **orclpdb**. This instance is your primary DB.
 
-## **Task 6:** Prepare The Standby Host
+## **Task 5:** Prepare The Standby Host
 
-Repeat from the Task 1 to Task 4 to prepare the standby host. This time please choose the `db19c-standby-nodb.zip` file in the Resource Manager. And you can choose another region and compartment for the standby database.
+Repeat from the **Task 1** to **Task 3** to prepare the standby host. This time please choose the `db19c-standby-nodb.zip` file in the Resource Manager. And you can choose another region and compartment for the standby database.
 
 After complete, you have a standby host which has the database software only been installed and no database created.
 
@@ -209,8 +197,8 @@ You may now **proceed to the next lab**.
 
 ## Acknowledgements
 * **Author** - Minqiao Wang, Oct 2020
-* **Last Updated By/Date** - Minqiao Wang, Apr 2022
-* **Workshop Expiry Date** - Nov 30, 2022
+* **Last Updated By/Date** - Minqiao Wang, April 2024
+* **Workshop Expiry Date** - Nov 30, 2024
 
 
 

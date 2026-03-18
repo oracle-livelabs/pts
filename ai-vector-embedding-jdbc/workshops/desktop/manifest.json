@@ -1,0 +1,35 @@
+{
+    "workshoptitle": "AI Vector Search - Using vector embedding models with JDBC",
+    "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "The Introduction to AI Vector Search.",
+            "filename": "../../introduction/introduction.md"
+        },
+        {
+            "title": "Get Started",
+            "description": "Using noVNC Remote Desktop",
+            "filename": "https://oracle-livelabs.github.io/common/labs/remote-desktop/using-novnc-remote-desktop.md"
+          },
+        {
+            "title": "Understanding the common Java Code",
+            "description": "Let's review the code which shall be used during the lab and it's placement.",
+            "filename": "../../common/common.md"
+        },
+        {
+            "title": "Labs: AI Vector Search - Using vector embedding models with JDBC",
+            "description": "Use Java to perform operations with Oracle Ai Vectors",
+            "filename": "../../labs/labs.md",
+            "type": {
+                    "Cohere" : "Cohere Through OCI GenAi",
+                    "OpenAi" : "OpenAi"
+                    }
+        },
+        {
+            "title": "Need Help?",
+            "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+        }
+    ]
+} 

@@ -1,10 +1,20 @@
 {
     "workshoptitle": "Capture Oracle Database Changes for CI/CD",
+    "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
+        {
+            "title": "Introduction",
+            "description": "Introduction to Oracle Database CI/CD.",
+            "filename": "./../../introduction/introduction.md"
+        },
+        {
+            "title": "Get Started",
+             "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/cloud-login-livelabs.md"
+        },
         {
             "title": "Lab 1: Development environment preparation",
             "description": "Provision Oracle Cloud Infrastructure basic resources to Capture Oracle Database Changes for CI/CD.",
-            "filename": "./../../introduction/intro-cicd-pts.md"
+            "filename": "./../../provision/oci-cicd-pts.md"
         },
         {
             "title": "Lab 2: Use SQLcl to Capture Database Changes with Liquibase",
@@ -19,7 +29,7 @@
         {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
         }
     ]
 }

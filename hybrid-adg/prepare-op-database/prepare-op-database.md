@@ -77,61 +77,75 @@ Oracle MAA best practice recommends using Oracle Transparent Data Encryption (TD
 
    
 
-2. Create a directory for the wallet.
+2. Connect to the database.
 
      ```
-     <copy>mkdir -p /u01/app/oracle/admin/ORCL/wallet</copy>
+     <copy>sqlplus / as sysdba</copy>
      ```
 
-3. Edit sqlnet.ora
+3. Set Wallet_ROOT static init parameter.
 
      ```
-     <copy>vi $ORACLE_HOME/network/admin/sqlnet.ora</copy>
+     <copy>alter system set wallet_root='/u01/app/oracle/product/19c/dbhome_1/wallet' scope=spfile;</copy>
      ```
 
-4. Add following lines to the file, save and exit.
+4. Restart the database to enable the parameter.
 
      ```
-     <copy>
-     ENCRYPTION_WALLET_LOCATION =
-        (SOURCE = (METHOD = FILE)
-          (METHOD_DATA =
-           (DIRECTORY = /u01/app/oracle/admin/ORCL/wallet)
-          )
-        )
-     </copy>
+     <copy>shutdown immediate
+     startup</copy>
      ```
-
-5. Connect to sqlplus as sysdba, create keystore.
-
-     ```
-     [oracle@workshop ~]$ sqlplus / as sysdba
      
-     SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jan 31 03:26:52 2020
-     Version 19.10.0.0.0
-     
-     Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+5. Set TDE_CONFIGURATION parameter to set the keystore type to file.
+
+     ```
+     <copy>alter system set tde_configuration="KEYSTORE_CONFIGURATION=FILE" scope=both;</copy>
+     ```
      
      
-     Connected to:
-     Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
-     Version 19.10.0.0.0
      
-     SQL> administer key management create keystore '/u01/app/oracle/admin/ORCL/wallet' identified by "Ora_DB4U";
+5. Created a password-protected keystore.
+
+     ```
+     SQL> <copy>administer key management create keystore identified by "Ora_DB4U";</copy>
      
      keystore altered.
+     ```
      
-     SQL> 
+     
+     
+     
+     
+7. Check the keystone files. `ewallet.p12` is the password-protected keystore.
+
+     ```
+     SQL> <copy>!ls -l /u01/app/oracle/product/19c/dbhome_1/wallet/tde</copy>
+     total 4
+     -rw-------. 1 oracle dba 2555 Sep 25 05:23 ewallet.p12
      ```
 
-6. Open the keystore.
+     
+
+8. Open the password-protected keystore.
 
      ```
-     SQL> <copy>administer key management set keystore open identified by "Ora_DB4U" container=all;</copy>
+     SQL> <copy>administer key management set keystore open force keystore identified by "Ora_DB4U" container=all;</copy>
      
      keystore altered.
+     ```
+
      
-     SQL> 
+
+9. Check current status of the wallet.
+
+     ```
+     SQL> <copy>select con_id, wallet_type, status from v$encryption_wallet;</copy>
+     
+         CON_ID WALLET_TYPE		STATUS
+     ---------- -------------------- ------------------------------
+     	 1 PASSWORD		OPEN_NO_MASTER_KEY
+     	 2 PASSWORD		OPEN_NO_MASTER_KEY
+     	 3 PASSWORD		OPEN_NO_MASTER_KEY
      ```
 
 7. Create master key.
@@ -147,121 +161,53 @@ Oracle MAA best practice recommends using Oracle Transparent Data Encryption (TD
 8. Verify the keystore, you can see the wallet is opened by password.
 
      ```
-     SQL> <copy>select * from v$encryption_wallet;</copy>
+     SQL> <copy>select con_id, wallet_type, status from v$encryption_wallet;</copy>
      
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     /u01/app/oracle/admin/ORCL/wallet/
-     OPEN			       PASSWORD 	    SINGLE    NONE     NO
-     	 1
-     
-     
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     
-     OPEN			       PASSWORD 	    SINGLE    UNITED   NO
-     	 2
-     
-     
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     
-     OPEN			       PASSWORD 	    SINGLE    UNITED   NO
-     	 3
-     
-     
-     SQL> 
+         CON_ID WALLET_TYPE		STATUS
+     ---------- -------------------- ------------------------------
+     	 1 PASSWORD		OPEN
+     	 2 PASSWORD		OPEN
+     	 3 PASSWORD		OPEN
      ```
-
-9. Make keystore autologin.
+     
+9. Make the Keystore Auto-Login.
 
      ```
-     SQL> <copy>administer key management create auto_login keystore from keystore '/u01/app/oracle/admin/ORCL/wallet' identified by "Ora_DB4U";</copy>
+     SQL> <copy>administer key management create auto_login keystore from keystore identified by "Ora_DB4U";</copy>
      
      keystore altered.
-     
-     SQL> 
      ```
-
-10. Reset wallet from PASSWORD to AUTOLOGIN mode.
+     
+10. To start using the auto-login keystore, we should close the password-protected keystore.
 
      ```
      SQL> <copy>administer key management set keystore close identified by "Ora_DB4U" container=all;</copy>
      
      keystore altered.
-     
-     SQL> 
      ```
-
+    
 11. Verify the keystore again, now you can see the wallet is configure to autologin.
 
+    ```
+    SQL> <copy>select con_id, wallet_type, status from v$encryption_wallet;</copy>
+    
+        CON_ID WALLET_TYPE		STATUS
+    ---------- -------------------- ------------------------------
+    	 1 AUTOLOGIN		OPEN
+    	 2 AUTOLOGIN		OPEN
+    	 3 AUTOLOGIN		OPEN
+    ```
+    
+    
+    
+11. We can check what files we have now. In which, `ewallet.p12` is the password-protected keystore,  `cwallet.sso` is the auto-login keystore and ```ewallet_*_backup.p12``` is the keystore backup file.
+
      ```
-     SQL> <copy>select * from v$encryption_wallet;</copy>
-     
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     /u01/app/oracle/admin/ORCL/wallet/
-     OPEN			       AUTOLOGIN	    SINGLE    NONE     NO
-     	 1
-     
-     
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     
-     OPEN			       AUTOLOGIN	    SINGLE    UNITED   NO
-     	 2
-     
-     
-     WRL_TYPE
-     --------------------
-     WRL_PARAMETER
-     --------------------------------------------------------------------------------
-     STATUS			       WALLET_TYPE	    WALLET_OR KEYSTORE FULLY_BAC
-     ------------------------------ -------------------- --------- -------- ---------
-         CON_ID
-     ----------
-     FILE
-     
-     OPEN			       AUTOLOGIN	    SINGLE    UNITED   NO
-     	 3
-     
-     
-     SQL> 
+     SQL> !ls -l /u01/app/oracle/product/19c/dbhome_1/wallet/tde
+     total 20
+     -rw-------. 1 oracle dba 5512 Sep 25 07:31 cwallet.sso
+     -rw-------. 1 oracle dba 2555 Sep 25 07:30 ewallet_2023092507301183_backup.p12
+     -rw-------. 1 oracle dba 5467 Sep 25 07:30 ewallet.p12
      ```
 
 
@@ -273,11 +219,11 @@ According to the best practice, you should encrypt all the data files. In this l
 1. Connect to the orclpdb, check the encrypt status of the tablespace.
 
      ```
-     SQL> alter session set container=orclpdb;
+     SQL> <copy>alter session set container=orclpdb;</copy>
      
      Session altered.
      
-     SQL> select tablespace_name, encrypted from dba_tablespaces;
+     SQL> <copy>select tablespace_name, encrypted from dba_tablespaces;</copy>
      
      TABLESPACE_NAME 	       ENC
      ------------------------------ ---
@@ -291,11 +237,11 @@ According to the best practice, you should encrypt all the data files. In this l
 2. Run the command to encrypt the USERS tablespace online, then check the status. You can see the USERS tablespace has already encrypted.
 
      ```
-     SQL> alter tablespace users encryption online encrypt;
+     SQL> <copy>alter tablespace users encryption online encrypt;</copy>
      
      Tablespace altered.
      
-     SQL> select tablespace_name, encrypted from dba_tablespaces;
+     SQL> <copy>select tablespace_name, encrypted from dba_tablespaces;</copy>
      
      TABLESPACE_NAME 	       ENC
      ------------------------------ ---
@@ -323,9 +269,9 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 2. Check the network service banner before encryption.
 
      ```
-     SQL> set linesize 120
-     SQL> col network_service_banner for a85
-     SQL> select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';
+     SQL> <copy>set linesize 120</copy>
+     SQL> <copy>col network_service_banner for a85</copy>
+     SQL> <copy>select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';</copy>
      
      NETWORK_SERVICE_BANNER
      -------------------------------------------------------------------------------------
@@ -334,7 +280,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Encryption service for Linux: Version 19.0.0.0.0 - Production
      Crypto-checksumming service for Linux: Version 19.0.0.0.0 - Production
      
-     SQL> exit
+     SQL> <copy>exit</copy>
      Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
      Version 19.10.0.0.0
      [oracle@primary ~]$
@@ -366,7 +312,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Check the network service banner again, the network encryption is enable now.
 
      ```
-     [oracle@workshop ~]$ sqlplus / as sysdba
+     [oracle@workshop ~]$ <copy>sqlplus / as sysdba</copy>
      
      SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jan 31 03:51:46 2020
      Version 19.10.0.0.0
@@ -378,9 +324,9 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
      Version 19.10.0.0.0
      
-     SQL> set linesize 120
-     SQL> col network_service_banner for a85
-     SQL> select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';
+     SQL> <copy>set linesize 120</copy>
+     SQL> <copy>col network_service_banner for a85</copy>
+     SQL> <copy>select i.network_service_banner from v$session_connect_info i, v$session s where s.sid=i.sid and s.serial# = i.serial# and s.username = 'SYS';</copy>
      
      NETWORK_SERVICE_BANNER
      -------------------------------------------------------------------------------------
@@ -403,7 +349,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 1. Check the achivelog mode, you can find it's disable now.
 
      ```
-     SQL> archive log list
+     SQL> <copy>archive log list</copy>
      Database log mode	       No Archive Mode
      Automatic archival	       Disabled
      Archive destination	       USE_DB_RECOVERY_FILE_DEST
@@ -415,11 +361,11 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 2. Enable the archive mode and flashback on.
 
      ```
-     SQL> shutdown immediate
+     SQL> <copy>shutdown immediate</copy>
      Database closed.
      Database dismounted.
      ORACLE instance shut down.
-     SQL> startup mount
+     SQL> <copy>startup mount</copy>
      ORACLE instance started.
      
      Total System Global Area 6845104048 bytes
@@ -428,19 +374,19 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
      Database Buffers	 5553258496 bytes
      Redo Buffers		    7626752 bytes
      Database mounted.
-     SQL> alter database archivelog;
+     SQL> <copy>alter database archivelog;</copy>
      
      Database altered.
      
-     SQL> !mkdir -p /u01/app/oracle/fra/ORCL
-     SQL> ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 10G SCOPE=BOTH SID='*';
-     SQL> ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/app/oracle/fra/ORCL' SCOPE=BOTH SID='*';
+     SQL> <copy>!mkdir -p /u01/app/oracle/fra/ORCL</copy>
+     SQL> <copy>ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 10G SCOPE=BOTH SID='*';</copy>
+     SQL> <copy>ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/app/oracle/fra/ORCL' SCOPE=BOTH SID='*';</copy>
      
-     SQL> alter database flashback on;
+     SQL> <copy>alter database flashback on;</copy>
      
      Database altered.
      
-     SQL> alter database open;
+     SQL> <copy>alter database open;</copy>
      
      Database altered.
      
@@ -450,7 +396,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 3. Check the status again, it's enable now.
 
      ```
-     SQL> archive log list
+     SQL> <copy>archive log list</copy>
      Database log mode	       Archive Mode
      Automatic archival	       Enabled
      Archive destination	       USE_DB_RECOVERY_FILE_DEST
@@ -463,7 +409,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Enable force logging.
 
      ```
-     SQL> alter database force logging;
+     SQL> <copy>alter database force logging;</copy>
      
      Database altered.
      
@@ -477,7 +423,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 1. Change the redo log size to 1024M according to the best practice. Check the status of the redo log first.
 
      ```
-     SQL> select group#, bytes, status from v$log;
+     SQL> <copy>select group#, bytes, status from v$log;</copy>
      
          GROUP#	BYTES STATUS
      ---------- ---------- ----------------
@@ -508,7 +454,7 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 4. Check the status again.
 
      ```
-     SQL> select group#, bytes, status from v$log;
+     SQL> <copy>select group#, bytes, status from v$log;</copy>
      
          GROUP#	BYTES STATUS
      ---------- ---------- ----------------
@@ -527,15 +473,15 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 5. When the first 3 groups status is INACTIVE, you can drop these group now.
 
      ```
-     SQL> alter database drop logfile group 1; 
+     SQL> <copy>alter database drop logfile group 1;</copy> 
      
      Database altered.
      
-     SQL> alter database drop logfile group 2; 
+     SQL> <copy>alter database drop logfile group 2;</copy> 
      
      Database altered.
      
-     SQL> alter database drop logfile group 3; 
+     SQL> <copy>alter database drop logfile group 3;</copy> 
      
      Database altered.
      
@@ -545,23 +491,23 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 6. Create 4 standby log group.
 
      ```
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo01.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo01.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo02.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo02.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo03.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo03.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo04.log' size 1024M;
+     SQL> <copy>alter database add standby logfile thread 1 '/u01/app/oracle/oradata/ORCL/srl_redo04.log' size 1024M;</copy>
      
      Database altered.
      
-     SQL> select group#,thread#,bytes from v$standby_log;
+     SQL> <copy>select group#,thread#,bytes from v$standby_log;</copy>
      
          GROUP#    THREAD#	   BYTES
      ---------- ---------- ----------
@@ -576,30 +522,29 @@ VPN connection or Oracle Net encryption is also required for encryption-in-fligh
 
 ## Task 8: Modify the Init Parameters for Best Practice
 
-Modify some init parameters for best practice.
+1.   Modify some init parameters for best practice.
 
-```
-SQL> alter system set STANDBY_FILE_MANAGEMENT=AUTO scope=both;
- 
-System altered.
- 
-SQL> alter system set DB_LOST_WRITE_PROTECT=TYPICAL scope=both;
- 
-System altered.
- 
-SQL> alter system set FAST_START_MTTR_TARGET=300 scope=both;
- 
-System altered.
- 
-SQL> exit;
-```
+     ```
+     SQL> <copy>alter system set STANDBY_FILE_MANAGEMENT=AUTO scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>alter system set DB_LOST_WRITE_PROTECT=TYPICAL scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>alter system set FAST_START_MTTR_TARGET=300 scope=both;</copy>
+         
+     System altered.
+         
+     SQL> <copy>exit;</copy>
+     ```
 
-
+     ​      
 
 You may proceed to the next lab.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, DB Product Management
-* **Last Updated By/Date** - Minqiao Wang, October 2020
-
+* **Author** - Minqiao Wang, Oracle China
+* **Last Updated By/Date** - Minqiao Wang, Sep 2023
 

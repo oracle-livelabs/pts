@@ -440,6 +440,144 @@ This lab assumes you have:
     </copy>
     ````
 
+## Task 6: Provide read/write clones to developers
+
+It is not possible to close a refreshable clone that has been open in read/write to re-enable the refresh mode. And for development and testing environments we need read/write PDBs that can be maintained updated from the production environment. In this case, we can use manual or automatic (Snapshot Carousel) snapshots created from the refreshable clone, and open them in read/write for developers and testing engineers.
+
+1. Start SQL*Plus.
+
+    ````bash
+    <copy>
+    sqlplus /nolog
+    </copy>
+    ````
+
+2. Execute the SQL script with all the commands for this task.
+
+    ````sql
+    <copy>
+    @snapshots.sql
+    </copy>
+    ````
+
+3. This is the SQL script snapshots.sql, you don't need to copy and execute it from here.
+
+    ````sql
+    <copy>
+    -- Connect to DBS21B container database on Site B as SYSDBA.
+    conn sys/STRONG_PASS@DBS21B_PRIVATE:1521/DBS21B_DB_NAME.DOMAIN_NAME as sysdba
+
+    -- List PDBs on Site B.
+    show pdbs
+
+    -- Create auto refreshable clone PDB1A_SNCL0 on Site B with Snapshot Carousel every 24 hours from DBS21A_PDB1 pluggable database on Site A.
+    create pluggable database PDB1A_SNCL0 from DBS21A_PDB1@dbs21a refresh mode every 2 minutes SNAPSHOT MODE EVERY 24 HOURS keystore identified by "STRONG_PASS";
+
+    -- List all pluggable databases on Site B.
+    show pdbs
+
+    col PDB_NAME for A12
+    col SNAPSHOT_MODE for A15
+    col PROPERTY_NAME for A20
+    col PROPERTY_VALUE for A15
+    col DESCRIPTION for A50
+
+    -- Verify snapshot pluggable databases on Site B.
+    select CON_ID, PDB_NAME, SNAPSHOT_MODE, SNAPSHOT_INTERVAL from CDB_PDBS order by 1;
+
+    -- Check maximum number of snapshots for pluggable databases on Site B.
+    select pr.CON_ID, p.PDB_NAME, pr.PROPERTY_NAME, pr.PROPERTY_VALUE, pr.DESCRIPTION
+    from CDB_PROPERTIES pr join CDB_PDBS p on pr.CON_ID = p.CON_ID
+    where pr.PROPERTY_NAME = 'MAX_PDB_SNAPSHOTS' order by pr.PROPERTY_NAME;
+
+    -- Switch to pluggable database PDB1A_SNCL0.
+    alter session set container=PDB1A_SNCL0;
+
+    -- Open refreshable clone PDB1A_SNCL0 in read-only mode.
+    alter pluggable database PDB1A_SNCL0 open read only;
+
+    -- Create a snapshot with a system generated snapshot name.
+    alter pluggable database snapshot;
+
+    -- Create a snapshot with a user-defined snapshot name.
+    alter pluggable database snapshot MY_SNAPSHOT;
+
+    -- Switch to the root container database.
+    alter session set container=CDB$ROOT;
+
+    col CON_NAME for a10
+    col SNAPSHOT_NAME for a30
+    col SNAPSHOT_SCN for 9999999
+    col FULL_SNAPSHOT_PATH for a50
+
+    -- Verify pluggable database snapshot details on Site B.
+    select CON_ID, CON_NAME, SNAPSHOT_NAME, SNAPSHOT_SCN, FULL_SNAPSHOT_PATH
+    from cdb_pdb_snapshots order by CON_ID, SNAPSHOT_SCN;
+
+    -- Use snapshots from the PDB1A_SNCL0 Snapshot Carousel to create pluggable databases for development and testing.
+
+    -- List all pluggable databases on Site B.
+    show pdbs
+
+    -- Create pluggable database PDB_SYSSN on Site B from PDB1A_SNCL0 snapshot with system generated snapshot name.
+    create pluggable database PDB_SYSSN from PDB1A_SNCL0 using snapshot SYSTEM_GENERATED_SNAPSHOT_NAME keystore identified by "STRONG_PASS";
+
+    -- Create pluggable database PDB_USRSN on Site B from PDB1A_SNCL0 snapshot with user-defined snapshot name.
+    create pluggable database PDB_USRSN from PDB1A_SNCL0 using snapshot MY_SNAPSHOT keystore identified by "STRONG_PASS";
+
+    -- List all pluggable databases on Site B.
+    show pdbs
+
+    -- Open pluggable database PDB_SYSSN in read/write mode for development.
+    alter pluggable database PDB_SYSSN open;
+
+    -- Open pluggable database PDB_USRSN in read/write mode for testing.
+    alter pluggable database PDB_USRSN open;
+
+    -- Verify pluggable databases PDB_SYSSN and PDB_USRSN are open on Site B.
+    show pdbs
+
+    -- Connect to PDB_SYSSN pluggable database on Site B as developer user.
+    conn PEOPLEMGR/STRONG_PASS@DBS21B_PRIVATE:1521/PDB_SYSSN.DOMAIN_NAME
+
+    -- Verify new records in application table.
+    SELECT * FROM people;
+
+    -- Insert two new records into application table.
+    INSERT INTO people (id, given_name, family_name, title, birth_date)
+      WITH names AS (
+        select 8, 'Carlos',   'Sierra',   'Mr',    date'1993-05-23'    from dual union all
+        select 9, 'Juan',     'Palma',    'Dr',    NULL                from dual )
+      SELECT * FROM names;
+
+    -- Commit these two rows.
+    commit;
+
+    -- Verify new records in application table.
+    SELECT * FROM people;
+
+    -- Connect to PDB_USRSN pluggable database on Site B as testing user.
+    conn PEOPLEMGR/STRONG_PASS@DBS21B_PRIVATE:1521/PDB_USRSN.DOMAIN_NAME
+
+    -- Verify new records in application table.
+    SELECT * FROM people;
+
+    -- Insert two new records into application table.
+    INSERT INTO people (id, given_name, family_name, title, birth_date)
+      WITH names AS (
+        select 8, 'Valeria',  'Tomaso',   'Mrs',   date'1984-11-29'    from dual union all
+        select 9, 'Corina',   'Campesi',  'Miss',  date'1978-02-06'    from dual )
+      SELECT * FROM names;
+
+    -- Commit these two rows.
+    commit;
+
+    -- Verify new records in application table.
+    SELECT * FROM people;
+
+    </copy>
+    ````
+
 ## Acknowledgements
 
 - **Author** - Valentin Leonard Tabacaru

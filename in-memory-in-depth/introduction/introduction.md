@@ -104,10 +104,11 @@ In-Memory Dynamic Scans (IM dynamic scans) further increase scan performance. Wh
 
 ## **More Information on In-Memory**
  **[Oracle 19c InMemory White paper](https://www.oracle.com/a/tech/docs/twp-oracle-database-in-memory-19c.pdf)**
+ 
+ **[Database In-Memory Channel](https://www.youtube.com/channel/UCSYHgTG68nrHa5aTGfFH4pA)**
+  
+ **[Oracle Database Product Management Videos on In-Memory](https://www.youtube.com/channel/UCr6mzwq_gcdsefQWBI72wIQ/search?query=in-memory)**
 
-Database In-Memory Channel [![ ](https://github.com/vijaybalebail/learning-library/raw/master/data-management-library/database/in-memory/intro/images/inmem.png)](https://www.youtube.com/channel/UCSYHgTG68nrHa5aTGfFH4pA)
-
-Oracle Database Product Management Videos on In-Memory [![ ](https://github.com/vijaybalebail/learning-library/raw/master/data-management-library/database/in-memory/intro/images/youtube.png)](https://www.youtube.com/channel/UCr6mzwq_gcdsefQWBI72wIQ/search?query=in-memory)
 
 Please proceed to the next lab.
 

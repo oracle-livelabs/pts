@@ -28,9 +28,9 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
 [Update a VM DB System Demo] (youtube:rKKnu153kww)
 
-1. On Oracle cloud console, click on main menu ≡, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
+1. On Oracle cloud console, click on main menu **≡**, then **Oracle Base Database** under Oracle Database. Click **WS-DB** DB System.
 
-2. Click the database name link **WSDB** in the bottom table called Databases. View Database Version field on the Database Information Page.
+2. Click the database name link **WSDB** in the bottom table called Databases. View **Database Version** field on the Database Information Page.
 
     - Database Version: 19.7.0.0.0
 
@@ -53,11 +53,11 @@ Available	GI patch	19.16.0.0.0	Mon, Oct 31, 2022, 08:51:46 UTC	Tue, Jul 19, 2022
 
 ## Task 2: Precheck and apply DB System update
 
-1. At the end of the DB System update row, click ⋮ > **Run precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
+1. At the end of the DB System update row, click **⋮** > **Run precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
 
 2. Click on **Update History** on the left menu. View the first row in the Database System table, with Checking State. Wait until it finishes with State Precheck Passed.
 
-3. Click on **Updates** on the left menu. Click on ⋮ > **Apply**. Click **Apply patch** in the confirm dialog. Patch state is now Applying.
+3. Click on **Updates** on the left menu. Click on **⋮** > **Apply**. Click **Apply patch** in the confirm dialog. Patch state is now Applying.
 
 4. Click on **Update History** on the left menu. View the first row in the Database System table, with Applying State. Wait until it finishes with State Applied.
 
@@ -66,11 +66,11 @@ Available	GI patch	19.16.0.0.0	Mon, Oct 31, 2022, 08:51:46 UTC	Tue, Jul 19, 2022
 
 1. Click on **Update History** on the left menu.
 
-2. At the end of the Database update row, click ⋮ > **Precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
+2. At the end of the Database update row, click **⋮** > **Precheck**. Click **Run precheck** in the Confirm dialog. Patch state is now Checking.
 
 3. Click on **Update History** on the left menu. View the first row in the Database table below, with Checking State. Wait until it finishes with State Precheck Passed.
 
-4. Click on **Updates** on the left menu. Click on ⋮ > **Apply**. Click **OK** in the confirm dialog. Patch state is now Applying.
+4. Click on **Updates** on the left menu. Click on **⋮** > **Apply**. Click **OK** in the confirm dialog. Patch state is now Applying.
 
 5. Click on **Update History** on the left menu. View the first row in the Database table, with Applying State. Wait until it finishes with State Applied.
 
