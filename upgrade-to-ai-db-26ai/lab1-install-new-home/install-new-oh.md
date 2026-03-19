@@ -27,14 +27,14 @@ We have already downloaded the software for you in this workshop. You need to ad
 
 ### Step 1: Install the 26ai pre-install RPM on the system
 
+If there is not an Terminal window open yet to execute commands on the command line, open a new terminal button by clicking on "Activities" in the left top of your noVNC remote desktop screen. After this, click on the Terminal option. Position the Chrome browser and the Terminal window side by side for easy copy-and-past actions.
+
 An easy way to make sure all system parameters are correct in a Linux environment is to use the preinstall rpm package. For non-Linux environments, please check the manual for the appropriate environment values. We have already downloaded the preinstall rpm in the environment, so you can simply install it.
 
 Run the installer to start the database software installation. The user executing the command should be then 'oracle' user.
 
 ```text
-$ <copy>sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm </copy>
-
-[oracle@26ai-upgrade:~]$ sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm
+[oracle@26ai-upgrade:~]$ <copy>sudo dnf -y localinstall /source/oracle-ai-database-preinstall-26ai-1.0-1.el8.x86_64.rpm </copy>
 
 Last metadata expiration check: 4:26:40 ago on Tue 06 Jan 2026 10:17:30 AM GMT.
 Dependencies resolved.
@@ -73,38 +73,38 @@ The software downloaded from the Oracle network is a zip file for your operating
 
 1. We need to create a new location for the software. Execute the following command as an oracle user after starting a new terminal window in your image:
 
-```text
-<copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
-```
+    ```text
+    <copy>mkdir -p /u01/oracle/product/26ai/dbhome</copy>
+    ```
 
 1. We can now use this new location to unzip our software.
 
-   ```text
-   <copy>cd /u01/oracle/product/26ai/dbhome</copy>
-   ```
+    ```text
+    <copy>cd /u01/oracle/product/26ai/dbhome</copy>
+    ```
 
-   ```text
-   $ <copy>unzip /source/db_home*.zip</copy>
+    ```text
+    $ <copy>unzip /source/db_home*.zip</copy>
 
-   ...
-     python/bin/python      -> python3
-     python/bin/python3     -> python3.13
-     python/bin/python3-config -> python3.13-config
-     python/lib/libcrypto.so -> libcrypto.so.3
-     python/lib/libffi.so   -> libffi.so.8.1.2
-     python/lib/libffi.so.8 -> libffi.so.8.1.2
-     python/lib/libpython3.13.so -> libpython3.13.so.1.0
-     python/lib/libsqlite3.so -> libsqlite3.so.3.50.2
-     python/lib/libsqlite3.so.0 -> libsqlite3.so.3.50.2
-     python/lib/libssl.so   -> libssl.so.3
-     python/lib/libz.so     -> libz.so.1.3.1
-     python/lib/libz.so.1   -> libz.so.1.3.1
-     python/lib/pkgconfig/python3-embed.pc -> python-3.13-embed.pc
-     python/lib/pkgconfig/python3.pc -> python-3.13.pc
+    ...
+      python/bin/python      -> python3
+      python/bin/python3     -> python3.13
+      python/bin/python3-config -> python3.13-config
+      python/lib/libcrypto.so -> libcrypto.so.3
+      python/lib/libffi.so   -> libffi.so.8.1.2
+      python/lib/libffi.so.8 -> libffi.so.8.1.2
+      python/lib/libpython3.13.so -> libpython3.13.so.1.0
+      python/lib/libsqlite3.so -> libsqlite3.so.3.50.2
+      python/lib/libsqlite3.so.0 -> libsqlite3.so.3.50.2
+      python/lib/libssl.so   -> libssl.so.3
+      python/lib/libz.so     -> libz.so.1.3.1
+      python/lib/libz.so.1   -> libz.so.1.3.1
+      python/lib/pkgconfig/python3-embed.pc -> python-3.13-embed.pc
+      python/lib/pkgconfig/python3.pc -> python-3.13.pc
 
-[oracle@26ai-upgrade:/u01/oracle/product/26ai/dbhome]$
+    [oracle@26ai-upgrade:/u01/oracle/product/26ai/dbhome]$
 
-````
+    ````
 
 We will not install any patches during this workshop; therefore, we can continue to prepare the operating system environment.
 
