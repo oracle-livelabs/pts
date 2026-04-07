@@ -9,7 +9,7 @@
         {
             "title": "Get Started",
             "description": "Check and Verify Sandbox Connection information and test connectivity.",
-            "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+            "filename": "https://livelabs.oracle.com/cdn/common/labs/verify-compute/verify-compute-novnc.md"
         },
         {
             "title": "Introduction",
@@ -49,7 +49,7 @@
         {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+            "filename": "https://livelabs.oracle.com/cdn/common/labs/need-help/need-help-livelabs.md"
         }
     ]
 }

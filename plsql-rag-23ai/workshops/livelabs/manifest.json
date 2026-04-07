@@ -12,7 +12,7 @@
       {
         "title": "Setup the environment",
         "description": "Verify Setup of compute instance",
-        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        "filename": "https://livelabs.oracle.com/cdn/common/labs/verify-compute/verify-compute-novnc.md"
       },
       {
       "title": "Lab 1: Build and Run the RAG Application with Oracle AI Vector Search and PLSQL",
@@ -27,7 +27,7 @@
       {
       "title": "Need Help?",
       "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-      "filename": "https://oracle-livelabs.github.io/common/labs/need-help/need-help-livelabs.md"
+      "filename": "https://livelabs.oracle.com/cdn/common/labs/need-help/need-help-livelabs.md"
     }
   ]
 }

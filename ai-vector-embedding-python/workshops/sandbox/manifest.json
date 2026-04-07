@@ -12,7 +12,7 @@
         {
         "title": "Get Started",
         "description": "Check and Verify Sandbox Connection information and test connectivity.",
-        "filename": "https://oracle-livelabs.github.io/common/labs/verify-compute/verify-compute-novnc.md"
+        "filename": "https://livelabs.oracle.com/cdn/common/labs/verify-compute/verify-compute-novnc.md"
         },
         {
             "title": "Labs:  Use Oracle AI Vector Search and Python to perform AI Vector Search operations",
