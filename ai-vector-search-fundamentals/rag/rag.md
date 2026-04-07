@@ -12,7 +12,7 @@ Watch the video below for a quick walk-through of the RAG lab:
 
 [RAG Lab](https://videohub.oracle.com/media/Vector-Search-RAG-Demo-Lab/1_oofv0mt0)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About This Lab
 

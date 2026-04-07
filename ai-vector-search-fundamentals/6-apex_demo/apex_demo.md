@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the APEX demo search on images
 
 [APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab2/1_brgqm6c6)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### About APEX Demo
 

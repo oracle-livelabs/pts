@@ -8,7 +8,7 @@ Watch the video below for a quick walk-through of the similarity search on image
 
 [Database Connection lab video](https://videohub.oracle.com/media/Vector-Search-Database-Connection-Lab/1_86zguvif)
 
-Estimated Lab Time: X
+Estimated Time: X
 
 ### Objectives
 
