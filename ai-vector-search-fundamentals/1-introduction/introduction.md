@@ -30,10 +30,6 @@ There will be labs that will use a US National Parks dataset to search on descri
 
 ![apex demo](images/apex_demo.png " ")
 
-In addition, there is also a lab that will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search to augment a query to a Large Language Model (LLM). This lab will use a sample employee handbook to build queries that will use AI Vector Search to augment queries with private information that an LLM would not have access to. Finally, the RAG query created in this lab will be used in a chatbot application using another APEX-based demo.
-
-![chatbot demo](images/chatbot_demo.png " ")
-
 ### Objectives
 
 In this workshop, you will learn how to:
@@ -47,7 +43,6 @@ In this workshop, you will learn how to:
 * Perform an approximate similarity search.
 * Use similarity search with traditional relational searches.
 * Run an APEX demo using the previously created data and queries.
-* Learn how to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search.
 
 ### Prerequisites
 
@@ -57,10 +52,9 @@ This lab assumes you have:
 
 ## Dataset
 
-This workshop uses two public sources:
+This workshop uses a public source:
 
 * A public dataset from the [US National Parks] (https://www.nps.gov/subjects/science/science-data.htm) web site. There are two tables, a PARKS table that describes the different National Parks, and a PARK_IMAGES table that has one or more images for each of the parks.
-* A [Sample Employee Handbook](https://www.501commons.org/resources/tools-and-best-practices/human-resources/sample-employee-handbook-national-council-of-nonprofits) from the National Council of Nonprofit Associations. This pdf will be used in the Retrieval Augmented Generation (RAG) lab.
 
 ## Tools
 
