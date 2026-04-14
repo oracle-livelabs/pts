@@ -241,5 +241,5 @@ In this next task we will create vector embeddings on the DESCRIPTION column for
 
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Contributors**
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

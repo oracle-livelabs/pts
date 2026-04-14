@@ -138,5 +138,5 @@ You can now enter any search term or image that you would like to search on. You
 ## Acknowledgements
 
 * **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
-* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Contributors**
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026

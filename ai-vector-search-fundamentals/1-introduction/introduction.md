@@ -75,5 +75,5 @@ In the APEX demo lab you will use APEX to run an application demonstration of ju
 
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
+* **Contributors** - Markus Kissling, Product Managers, AI Vector Search
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026
