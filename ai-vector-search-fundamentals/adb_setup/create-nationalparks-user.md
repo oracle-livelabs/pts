@@ -140,7 +140,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the Oracle documentation.
 
-## Task 4: Copy ONNX Model and Sample Employee Handbook
+## Task 4: Copy ONNX Model
 
 1. Now that you are logged in as the NATIONALPARKS user bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
 
@@ -155,14 +155,6 @@ When you create a new Autonomous Database, you automatically get an account call
         object_uri=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/labfiles/all_MiniLM_L12_v2.onnx',
         directory_name=>'DATA_PUMP_DIR',
         file_name=>'all_MiniLM_L12_v2.onnx'
-      );
-    END;
-    /
-    BEGIN
-      dbms_cloud.get_object(
-        object_uri=>'https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/pzbq5kemV30KTdTo_5zIvw7_U2oaOTZrTEggVXAIcohImHr8Xb7d3B6aLlm3khWW/n/c4u04/b/ai-vector-search/o/Sample Employee Handbook.pdf',
-        directory_name=>'DATA_PUMP_DIR',
-        file_name=>'Sample_Employee_Handbook.pdf'
       );
     END;
     /
@@ -217,8 +209,6 @@ In this task you will import the workshop's APEX workspace and two applications:
     wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/idpwCyi_u7mUdkPrRzucNrXrvLL4CN79CasXCMYsWZD502NajL4HG4rJlFg-x1gr/n/oradbclouducm/b/bucket-vector/o/apex_workspace_natparks.sql
 
     wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0nnZRnmOD7TeYI5xso7lJmS07kra4IcWbNLHixEtAPkEXdp4ecoRDS39A2QQFgkq/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
-
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/CAJiU6QDUQl42dx1oq1ab3NvfUobY1HMD70lW2NKTm6X6XCMQfwxr-0eWephk0uc/n/oradbclouducm/b/bucket-vector/o/apex_benny_benefits_f100.sql
     </copy>
     ```
 
@@ -265,7 +255,6 @@ In this task you will import the workshop's APEX workspace and two applications:
     /
     @apex_workspace_natparks.sql
     @apex_natparks_f108.sql
-    @apex_benny_benefits_f100.sql
     BEGIN
        -- This is required to set the OCIDs for the new environment
        -- so that the GenAI access will work
