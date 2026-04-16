@@ -120,7 +120,7 @@ In this next task we will create vector embeddings on the INCIDENT\_TEXT column 
 
     We displayed just the first 15 rows, or embeddings, that were created. Feel free to query more rows if you wish. The SUPPORT\_INCIDENTS table has a total of 500 rows.
 
-## Task 2: Define the OCI Gen AI Service
+## Task 3: Define the OCI Gen AI Service
 
 In this Lab we will be using the OCI Gen AI Service as a public REST provider to access an LLM.
 
@@ -233,7 +233,7 @@ To set up the OCI Generative AI Service for our Lab we will first create a netwo
 
 </if>
 
-## Task 3: Run a Generative AI query
+## Task 4: Run a Generative AI query
 
 In this task we will run a Generative AI query to ask the LLM a simple support related question.
 
@@ -282,7 +282,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
     Unfortunately the above is just a generic response. The LLM does not know anything about our actual support incidents.
 
-## Task 4: Run an AI Vector Search for the same question
+## Task 5: Run an AI Vector Search for the same question
 
 1. In this task we will run a similarity search using the same question that we sent to the LLM to see if any support incidents exist in our system and what their resolutions actually were.
 
@@ -336,7 +336,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
     As you can see, these answers have to do with problems similar to an application timeout or connection issues. Remember that we are looking for similar incidents and their resolution. You can compare the resolutions to the suggestions in the previous query to get a sense of the difference that actual resolutions look like versus generic ones that the LLM came up with.
 
-## Task 5: Run a RAG query
+## Task 6: Run a RAG query
 
 1. In this task we will run a RAG query combining our similarity search results to augment the question that we send to the LLM with actual resolutions to similar problems.
 
@@ -383,7 +383,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
     You might notice that in this query we added additional instructions to the LLM. These are not the exact instructions, but they are close to what we will use in the chatbot demo in the next task. Since we are creating a query that we want to look like it came from an actual Support representative we needed to give the LLM some instructions to better construct a more suitable answer and the answer above should closely mirror what we see in the chatbot since they are essentially the same query with the same data.
 
-## Task 6: Run Support Incidents chatbot demo
+## Task 7: Run Support Incidents chatbot demo
 
 The last task for this Lab will be to put all of this together and see how we might use it in the real world. We have built an APEX chatbot demo called "Support Incidents" that uses the same RAG query that we built in Task 5 above. You can ask the chatbot a support question, but it will only answer incident questions that it can create an answer for with the data available to it.
 
