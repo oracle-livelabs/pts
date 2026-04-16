@@ -280,7 +280,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     If you're still experiencing issues, provide more details about your device, operating system, and camera app, and I'll do my best to assist you further.
     ```
 
-    Unfortunately the above is just a generic response. The LLM knows about our actual support incidents.
+    Unfortunately the above is just a generic response. The LLM does not know anything about our actual support incidents.
 
 ## Task 4: Run an AI Vector Search for the same question
 
