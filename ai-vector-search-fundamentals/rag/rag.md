@@ -40,7 +40,9 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 * Some familiarity with Oracle SQL and AI Vector Search
-* Run the Vector Embedding Lab
+* Run the Introduction Lab (Recommended)
+* Run the Vector Embeddings Lab (Required)
+* Run the Exhaustive Search Lab (Recommended)
 
 ### About Retrieval Augmented Generation
 
@@ -95,7 +97,7 @@ In this next task we will create vector embeddings on the INCIDENT\_TEXT column 
     ```[]
     <copy>
     UPDATE support_incidents
-    SET incident_vector = VECTOR_EMBEDDING(minilm_l12_v2 USING incident_text AS data);
+    SET incident_vector = VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING incident_text AS data);
     COMMIT;
     </copy>
     ```
@@ -292,7 +294,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     EXEC :user_query := 'The Camera App times out during authentication';
     SELECT incident_text, resolution_notes FROM support_incidents
     WHERE status IN ('Closed','Resolved') AND resolution_notes IS NOT NULL
-    ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING :user_question AS DATA), COSINE)
+    ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING :user_question AS DATA), COSINE)
     FETCH FIRST 5 ROWS ONLY;
     </copy>
     ```
@@ -361,10 +363,10 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
       WITH
         top_k AS
           (SELECT 'Problem: ' || incident_text || ' Resolution: ' || resolution_notes || ' Similarity score: ' || 
-             VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question AS data), COSINE) AS incident_info
+             VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING user_question AS data), COSINE) AS incident_info
            FROM support_incidents
            WHERE status IN ('Closed','Resolved') AND resolution_notes IS NOT NULL
-           ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(minilm_l12_v2 USING user_question AS data), COSINE)
+           ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING user_question AS data), COSINE)
            FETCH FIRST 5 ROWS ONLY),
         llm_prompt AS
           (SELECT ('Question: ' ||

@@ -28,6 +28,8 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 * Some familiarity with Oracle SQL and AI Vector Search
+* Run the Introduction Lab (Recommended)
+* Run the Vector Embeddings Lab (Required)
 
 ## Task 1: Connecting to the APEX application
 

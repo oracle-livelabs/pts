@@ -22,7 +22,7 @@
         {
             "title": "Lab 2: Create User and Populate Tables",
             "description":"Create a database user and populate tables",
-            "filename":"../../adb_setup/create-nationalparks-user.md"
+            "filename":"../../adb_setup/create-database-users.md"
         },
         {
             "title": "Lab 3: Introduction",
