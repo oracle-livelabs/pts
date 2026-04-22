@@ -154,7 +154,7 @@ To set up the OCI Generative AI Service for our Lab we will first create a netwo
 
     ```[]
     <copy>
-    SELECT * FROM DBA_NETWORK_ACL_PRIVILEGES;
+    SELECT * FROM USER_NETWORK_ACL_PRIVILEGES;
     </copy>
     ```
 
@@ -259,6 +259,8 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     </copy>
     ```
 
+    ![genai query](images/genai_query.png " ")
+
     You should see something similar to the following:
 
     ```[]
@@ -301,7 +303,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
     **Note:** There are multiple statements that need to be run so you should use the "Run Script" button rather than the "Run Statement" button.
 
-    ![vector search query](images/vec_search.png " ")
+    ![vector search query](images/vector_search.png " ")
 
     You should see something similar to the following:
 

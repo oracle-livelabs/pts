@@ -106,7 +106,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     For the NATIONALPARKS user:
 
-    ```sql
+    ```sql[]
     <copy>
     -- ADD ROLES
     GRANT CONNECT TO NATIONALPARKS;
@@ -134,7 +134,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     For the INCIDENT user:
 
-    ```sql
+    ```sql[]
     <copy>
     -- ADD ROLES
     GRANT CONNECT TO INCIDENT;
@@ -162,7 +162,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
 3. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window for the NATIONALPARKS user:
 
-    ```sql
+    ```sql[]
     <copy>
     -- Privileges
     GRANT ORDS_RUNTIME_ROLE TO nationalparks;
@@ -183,7 +183,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
 4. Use the following **Grant privileges** for the INCIDENT user:
 
-    ```sql
+    ```sql[]
     <copy>
     -- Privileges
     GRANT ORDS_RUNTIME_ROLE TO incident;
@@ -201,7 +201,11 @@ When you create a new Autonomous Database, you automatically get an account call
 
 5. Confirm that you can login with the new users.
 
-    This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". You should then sign in as the INCIDENT user with the password of "Welcome_12345".
+    This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". After signing in as each user below you should bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
+
+    ![sqldev browser](images/sql_np_worksheet.png " ")
+
+    Sign in as the INCIDENT user with the password of "Welcome_12345".
 
     ![NATIONALPARKS](images/incident_login.png)
 
@@ -211,15 +215,13 @@ When you create a new Autonomous Database, you automatically get an account call
 
     For details, see the ["Create Users on Autonomous Database with Database Actions"](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html#GUID-DD0D847B-0283-47F5-9EF3-D8252084F0C1) section in the Oracle documentation.
 
-## Task 4: Copy ONNX Model
+## Task 4: Copy an ONNX Model
 
-1. Log in as the NATIONALPARKS user and bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
+As the ADMIN user you will copy an ONNX model to the DATA\_PUMP\_DIR directory.
 
-    ![sqldev browser](images/sql_np_worksheet.png " ")
+1. Copy the file below from Object Storage to the DATA\_PUMP\_DIR directory by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
 
-2. Copy the file below from Object Storage to the DATA\_PUMP\_DIR directory by copying the script below, paste it into the Database Actions SQL window and then click on the "Run Script" button:
-
-    ```sql
+    ```sql[]
     <copy>
     BEGIN
       dbms_cloud.get_object(
@@ -240,12 +242,12 @@ As the ADMIN user you will import the NATIONALPARKS and INCIDENT schemas in the 
 
 1. Import the NATIONALPARKS and INCIDENT schemas by copying the script below and pasting it into the Database Actions SQL window and click run script:
 
-    ```sql
+    ```sql[]
     <copy>
     DECLARE
       l_job_state      VARCHAR2(1000);
       l_job_handle     NUMBER;
-      dumpFile         VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/ciOj8VAWAqfZuRg4nRX56xiw578-8AJIcNVfPdvp238W4ghQRoAYvUTfiQAvCSXU/n/oradbclouducm/b/bucket-vector/o/natparks3.dmp';
+      dumpFile         VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/kAws91diz_tuf8hGzB8n7F8WS-LGyJRG2QpFDU-0artLaYlvBlPfbBpA-3Ubo22u/n/oradbclouducm/b/bucket-vector/o/natparks3.dmp';
       logFile          VARCHAR2(1024)  := 'natparks3_imp.log';
       logDir           VARCHAR2(20)     := 'DATA_PUMP_DIR';
       logType          NUMBER          := dbms_datapump.ku$_file_type_log_file;
@@ -261,7 +263,24 @@ As the ADMIN user you will import the NATIONALPARKS and INCIDENT schemas in the 
     </copy>
     ```
 
-## Task 6: Import APEX Demo Workspace and Application
+## Task 6: Create Network ACL for the NATIONALPARKS user
+
+1. To allow us to access an LLM host with OCI Generative AI Service for our Lab we will need to create the following network ACL.
+
+    ```sql[]
+    <copy>
+    BEGIN
+      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+        host => '*',
+        ace => xs$ace_type(privilege_list => xs$name_list('http'),
+                           principal_name => 'NATIONALPARKS',
+                           principal_type => xs_acl.ptype_db));
+    END;
+    /
+        </copy>
+    ```
+
+## Task 7: Import APEX Demo Workspace and Application
 
 In this task you will import the workshop's APEX workspaces and applications:
 
@@ -277,13 +296,13 @@ In this task you will import the workshop's APEX workspaces and applications:
 
     ```[]
     <copy>
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/idpwCyi_u7mUdkPrRzucNrXrvLL4CN79CasXCMYsWZD502NajL4HG4rJlFg-x1gr/n/oradbclouducm/b/bucket-vector/o/apex_workspace_natparks.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dto9zFILbvAAKzAZ7rYwQ3eF1NeV-td2XFVVl23mMXEJ4BlGPpcQYAea3Ty59Iuz/n/oradbclouducm/b/bucket-vector/o/apex_natparks_workspace.sql
 
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0nnZRnmOD7TeYI5xso7lJmS07kra4IcWbNLHixEtAPkEXdp4ecoRDS39A2QQFgkq/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/AM_AMybNTch1OLZyPHn-t2OfyYtOWOzXjlXeuXnJ7Hr5i8N_lUpNBc8CM6an2OWc/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
 
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/W5ypTf50JO99t2uRgghHZnOcJbobXgRaBsExGugWRAlW4IvJUK7JZWQ8Kh9radzP/n/oradbclouducm/b/bucket-vector/o/apex_workspace_incident.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/IrlSoAMWQGGX5QqZTmlhqyddnhHGsbDjGCoLQSqXzRAkScPQC7nbr5UeDtYSJDMo/n/oradbclouducm/b/bucket-vector/o/apex_incident_workspace.sql
 
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/HJhvmWOUNLGLq-uzScjRkNVw-CjUqINHP4YetQMla0c3QwWbp_i7rxMlJ-YJETOv/n/oradbclouducm/b/bucket-vector/o/apex_incident_f101.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/gzmO8SiFEb9gGOApj3QhyvGg1mRijo3lg_oA64GRXou-qvuKSNtCT1nc4CgeEaHZ/n/oradbclouducm/b/bucket-vector/o/apex_incident_f101.sql
     </copy>
     ```
 
@@ -314,7 +333,7 @@ In this task you will import the workshop's APEX workspaces and applications:
 
     ![list tnsnames](images/list_tnsnames.png)
 
-4. Copy the following code to an editor and make the appropriate changes for the credential parameters. Save the file with a name like **apex\_natparks\_setup.sql**. You will run this script in a following step.
+4. Copy the following code to an editor and save the file with a name like **apex\_natparks\_setup.sql**. You will run this script in a following step.
 
     ```[]
     <copy>
@@ -324,7 +343,7 @@ In this task you will import the workshop's APEX workspaces and applications:
       COMMIT;
     END;
     /
-    @apex_workspace_natparks.sql
+    @apex_natparks_workspace.sql
     @apex_natparks_f108.sql
     BEGIN
       APEX_INSTANCE_ADMIN.SET_PARAMETER('ALLOW_PUBLIC_FILE_UPLOAD','Y');
@@ -348,7 +367,7 @@ In this task you will import the workshop's APEX workspaces and applications:
       COMMIT;
     END;
     /
-    @apex_workspace_incident.sql
+    @apex_incident_workspace.sql
     @apex_incident_f101.sql
     BEGIN
       -- This is required to set the OCIDs for the new environment
