@@ -233,7 +233,7 @@ To set up the OCI Generative AI Service for our Lab we will first create a netwo
     </copy>
     ```
 
-</if>
+    </if>
 
 ## Task 4: Run a Generative AI query
 
@@ -403,9 +403,9 @@ The last task for this Lab will be to put all of this together and see how we mi
 
     ![chatbot screen](images/chatbot_initial_screen.png " ")
 
-</if>
+    </if>
 
-<if type="tenancy">
+    <if type="tenancy">
 
 1. To run the demo in your own tenancy environment you will need to navigate to the "Tool configuration" tab in the ADB page:
 
@@ -435,7 +435,7 @@ The last task for this Lab will be to put all of this together and see how we mi
 
     ![chatbot screen](images/chatbot_initial_screen.png " ")
 
-</if>
+    </if>
 
 2. One important detail to note with the RAG query that we are using in the chatbot. We have added a System Prompt that helps the LLM respond with relevant, accurate and safe responses. We want the chatbot's responses to look like they came from a real Support representative. The following is the System Prompt that is used:
 
