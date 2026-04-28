@@ -206,9 +206,9 @@ In this task you will import the workshop's APEX workspace and two applications:
 
     ```[]
     <copy>
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/idpwCyi_u7mUdkPrRzucNrXrvLL4CN79CasXCMYsWZD502NajL4HG4rJlFg-x1gr/n/oradbclouducm/b/bucket-vector/o/apex_workspace_natparks.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dto9zFILbvAAKzAZ7rYwQ3eF1NeV-td2XFVVl23mMXEJ4BlGPpcQYAea3Ty59Iuz/n/oradbclouducm/b/bucket-vector/o/apex_natparks_workspace.sql
 
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0nnZRnmOD7TeYI5xso7lJmS07kra4IcWbNLHixEtAPkEXdp4ecoRDS39A2QQFgkq/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
+    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/AM_AMybNTch1OLZyPHn-t2OfyYtOWOzXjlXeuXnJ7Hr5i8N_lUpNBc8CM6an2OWc/n/oradbclouducm/b/bucket-vector/o/apex_natparks_f108.sql
     </copy>
     ```
 
