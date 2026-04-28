@@ -253,7 +253,7 @@ In this task you will import the workshop's APEX workspace and two applications:
       COMMIT;
     END;
     /
-    @apex_workspace_natparks.sql
+    @apex_natparks_workspace.sql
     @apex_natparks_f108.sql
     BEGIN
        -- This is required to set the OCIDs for the new environment
