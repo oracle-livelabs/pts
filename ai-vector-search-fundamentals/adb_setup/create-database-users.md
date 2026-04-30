@@ -263,24 +263,7 @@ As the ADMIN user you will import the NATIONALPARKS and INCIDENT schemas in the 
     </copy>
     ```
 
-## Task 6: Create Network ACL for the NATIONALPARKS user
-
-1. To allow us to access an LLM host with OCI Generative AI Service for our Lab we will need to create the following network ACL.
-
-    ```sql[]
-    <copy>
-    BEGIN
-      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
-        host => '*',
-        ace => xs$ace_type(privilege_list => xs$name_list('http'),
-                           principal_name => 'NATIONALPARKS',
-                           principal_type => xs_acl.ptype_db));
-    END;
-    /
-        </copy>
-    ```
-
-## Task 7: Import APEX Demo Workspace and Application
+## Task 6: Import APEX Demo Workspace and Application
 
 In this task you will import the workshop's APEX workspaces and applications:
 
@@ -402,4 +385,4 @@ In this task you will import the workshop's APEX workspaces and applications:
 
 - **Author** - Andy Rivenes, Product Manager, AI Vector Search
 - **Contributors** - David Start
-- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
+- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2026
