@@ -56,7 +56,7 @@ In this task we will add a vector column to the SUPPORT\_INCIDENTS table. We wil
 
     **Note:** For this lab you will be connecting to the **INCIDENT** user with the password **Welcome_12345**.
 
-    ![query browser_setup](images/browser_setup.png " ")
+    ![query browser_setup](images/rag_url.png " ")
 
 2. In the SQL Worksheet window you can expand the SUPPORT\_INCIDENTS table by clicking on the arrow just to the left of the SUPPORT\_INCIDENTS table. The table's columns will display underneath. You can display all of the table attributes by right clicking on the table name and choosing Open.
 
@@ -383,9 +383,9 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
     ![rag query](images/rag_query.png " ")
 
-    If you compare the answer that we got back in Task 3 above to this answer, you can see that the LLM took the responses from the support_incidents query and wrote a much simpler and concise natural language answer.
+    If you compare the answer that we got back in Task 3 above to this answer, you can see that the LLM took the responses from the SUPPORT_INCIDENTS query and wrote a much simpler and concise natural language answer.
 
-    You might notice that in this query we added additional instructions to the LLM. These are not the exact instructions, but they are close to what we will use in the chatbot demo in the next task. Since we are creating a query that we want to look like it came from an actual Support representative we needed to give the LLM some instructions to better construct a more suitable answer and the answer above should closely mirror what we see in the chatbot since they are essentially the same query with the same data.
+    You might notice that in this query we added additional instructions to the LLM. These are not the exact instructions, but they are close to what we will use in the chatbot demo in the next task. Since we are creating a query that we want to look like it came from an actual Support Representative we needed to give the LLM some instructions to better construct a more suitable answer and the answer above should closely mirror what we see in the chatbot since they are using essentially the same query with the same data.
 
 ## Task 7: Run Support Incidents chatbot demo
 
@@ -393,7 +393,7 @@ The last task for this Lab will be to put all of this together and see how we mi
 
 <if type="sandbox">
 
-1. To run the demo you simply need to run the Support Incidents Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right and click on the Support Incidents Demo URL.
+1. To run the demo you simply need to run the RAG Demo URL that can be found on the Introduction page that is displayed after you launch the workshop. If you first click on the "View Login Info" button in the upper left corner of the page a pop up page will appear on the right and click on the RAG Demo URL.
 
     See the image below for an example:
 
@@ -437,7 +437,7 @@ The last task for this Lab will be to put all of this together and see how we mi
 
     </if>
 
-2. One important detail to note with the RAG query that we are using in the chatbot. We have added a System Prompt that helps the LLM respond with relevant, accurate and safe responses. We want the chatbot's responses to look like they came from a real Support representative. The following is the System Prompt that is used:
+2. One important detail to note with the RAG query that we are using in the chatbot. We have added a System Prompt that helps the LLM respond with relevant, accurate and safe responses. We want the chatbot's responses to look like they came from a real Support Representative. The following is the System Prompt that is used:
 
     ```[]
     If the question cannot be answered based on the above context, say "Information Not Found!".
@@ -460,11 +460,11 @@ The last task for this Lab will be to put all of this together and see how we mi
     3. **Accuracy:** Generate content that is factually accurate and trustworthy, avoiding misinformation or false claims.
     ```
 
-3. When you click on the Ask a Question button the chatbot will pop up and look like the image below. Note that we have given you two questions that you can use that will give you good responses.
+3. When you click on the My Problem button in the upper right corner the chatbot will pop up and look like the image below. Note that we have given you two questions that you can use that will give you good responses.
 
     ![chatbot popup](images/chatbot_popup.png " ")
 
-4. The following is what the "The Camera App times out during authentication" response looks like in the chatbot:
+4. The following is what the "Camera App times out during authentication" response looks like in the chatbot:
 
     ![chatbot response](images/chatbot_response_camera_app.png " ")
 
