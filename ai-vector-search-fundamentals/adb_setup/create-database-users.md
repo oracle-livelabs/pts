@@ -95,7 +95,6 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![The Create User dialog](images/adb_incident_create.png " ")
 
-
 ## Task 3: Grant database privileges
 
 1. Switch back to the **SQL | Oracle Database Actions** window.
@@ -197,7 +196,6 @@ When you create a new Autonomous Database, you automatically get an account call
     **Note:** Run the entire script by clicking on the "Run Script" button.
 
     ![grant privileges](images/grant_incident_privileges.png " ")
-
 
 5. Confirm that you can login with the new users.
 
