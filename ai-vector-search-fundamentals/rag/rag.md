@@ -264,24 +264,28 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     You should see something similar to the following:
 
     ```[]
-    The Camera App timing out during authentication can be frustrating. Here are some steps to help resolve the issue:
+    If the Camera App is timing out during authentication, here are some potential solutions to resolve the issue:
 
-    1. **Restart the App and Device**: Try restarting the Camera App and your device to see if that resolves the issue.
-    2. **Check Internet Connection**: Ensure that your device is connected to a stable internet connection. Authentication may fail if your connection is slow or unstable.
-    3. **Update the App**: Make sure the Camera App is updated to the latest version. Go to the app store, check for updates, and install the latest version.
-    4. **Clear Cache and Data**: Clearing the app's cache and data can resolve authentication issues. Go to your device's settings, find the Camera App, and clear its cache and data.
-    5. **Disable and Re-enable Camera Permissions**: Disable and re-enable camera permissions for the app. Go to your device's settings, find the Camera App, and toggle off the camera permission. Wait for a few seconds, then toggle it back on.
-    6. **Check for Conflicting Apps**: Other apps may be interfering with the Camera App's authentication process. Try closing other apps or uninstalling recently installed apps to see if that resolves the issue.
-    7. **Reset the App**: Some devices allow you to reset the app to its default settings. Go to your device's settings, find the Camera App, and look for a "Reset" or "Clear defaults" option.
-    8. **Check for Device Issues**: If none of the above steps work, there may be an issue with your device's hardware or software. Try using a different camera app or resetting your device to its factory settings.
-    9. **Contact the App Developer**: If none of the above steps work, reach out to the app developer's support team for further assistance.
+    1. **Check your internet connection**: Ensure that your device has a stable internet connection. A slow or unstable connection can cause the authentication process to time out.
+    2. **Restart the Camera App**: Close the Camera App and restart it. This can resolve any temporary issues that may be causing the authentication timeout.
+    3. **Check your account credentials**: Verify that your account credentials (username and password) are correct and up-to-date. If you've recently changed your password, try updating the credentials in the Camera App.
+    4. **Clear app data and cache**: Clearing the app data and cache can resolve any issues caused by corrupted data or cache. To do this, go to your device's settings, then select "Apps" or "Application Manager," find the Camera App, and select "Clear data" and "Clear cache."
+    5. **Update the Camera App**: Ensure that the Camera App is updated to the latest version. Outdated apps can cause compatibility issues and authentication timeouts.
+    6. **Disable and re-enable the Camera App**: Disable the Camera App and then re-enable it. This can reset the app's settings and resolve any issues.
+    7. **Reset the device's network settings**: Go to your device's settings, then select "Network & internet" or "Connections," and select "Reset network settings." This will reset your device's network settings to their default values.
+    8. **Contact the Camera App support**: If none of the above solutions work, contact the Camera App support team for further assistance. They can help you troubleshoot the issue or provide additional guidance.
 
-    If you're using a specific camera app, such as the Google Camera App or the Camera+ App, you can try additional steps specific to that app. For example:
+    Additional troubleshooting steps for specific devices or operating systems:
 
-    * For the Google Camera App, try clearing the app's data and cache, then restarting the app.
-    * For the Camera+ App, try disabling and re-enabling the app's camera permissions.
+    * **For Android devices**: Go to Settings > Apps > Camera App > Storage > Clear data and Clear cache. Then, go to Settings > Accounts > Google > Account sync > toggle off and then toggle on the Camera App sync option.
+    * **For iOS devices**: Go to Settings > Camera App > toggle off and then toggle on the "Use Camera App" option. Then, go to Settings > Safari > Clear History and Website Data.
 
-    If you're still experiencing issues, provide more details about your device, operating system, and camera app, and I'll do my best to assist you further.
+    If you're still experiencing issues after trying these solutions, please provide more details about your device, operating system, and Camera App version, and I'll be happy to help you further.
+
+
+    PL/SQL procedure successfully completed.
+
+    Elapsed: 00:00:13.558
     ```
 
     Unfortunately the above is just a generic response. The LLM does not know anything about our actual support incidents.
@@ -308,32 +312,27 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     You should see something similar to the following:
 
     ```[]
-    INCIDENT_TEXT                                         RESOLUTION_NOTES
-    ----------------------------------------------------- --------------------------------------------------
-    Samuel Anderson notes that VPN Client times out       Cleared the cached session and re-enrolled MFA.
-    during authentication after the latest update;
-    it is holding up an approval workflow. The incident
-    affects only one device in the office.
+    INCIDENT_TEXT                                                     RESOLUTION_NOTES
+    ----------------------------------------------------------------- --------------------------------------------------- 
+    Harper Brown mentions that Zoom does not respond consistently     Cleared Zoom cached credentials.
+    during a long meeting; it is stopping document work. The error
+    message is consistent across retries.
 
-    Henry Harris reports that Docking Station shows       Updated dock firmware and reseated cables.
-    intermittent errors after reconnecting to Wi-Fi;
-    it is interrupting a video meeting. The symptom
-    goes away briefly after reconnecting.
+    Wyatt Nelson describes how Zoom reports an unexpected failure     Cleared Zoom cached credentials. 
+    after reconnecting to Wi-Fi and delaying email triage. The
+    problem affects both browser and desktop workflows.
 
-    Jack Walker reports that Microsoft Teams fails        Reset the audio device and restarted Teams.
-    to connect after the latest update and preventing
-    a clean sign-in. The issue appears on the primary
-    work laptop.
+    Chloe Patel says that Camera loops back to sign-in during a       Reset camera permissions and restarted the service.
+    long meeting, which is disrupting customer calls. The user
+    confirmed the problem after a restart.
 
-    Ethan Green mentions that Office Printer drops        Cleaned the sensor and replaced the pickup roller.
-    the session after reconnecting to Wi-Fi and
-    holding up an approval workflow. The problem
-    started after a routine patch cycle.
+    Nathan Hill notes that Camera times out during authentication     Reset camera permissions and restarted the service.
+    after reconnecting to Wi-Fi; it is slowing down daily work.
+    The incident affects only one device in the office.
 
-    Elijah Lewis notes that Outlook times out             Rebuilt the search index.
-    during authentication after reconnecting to
-    Wi-Fi; it is slowing down daily work. The
-    incident affects only one device in the office.
+    Chloe Patel reports that Zoom fails to connect when opening       Cleared Zoom cached credentials.
+    a shared file and preventing access to team folders. The issue
+    appears on the primary work laptop.
     ```
 
     **Note:** The output was reformatted to make it easier to read.
@@ -382,6 +381,16 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     ```
 
     ![rag query](images/rag_query.png " ")
+
+    You should see something similar to the following:
+
+    ```[]
+    llm_response: To resolve the Camera App timing out during authentication, try resetting the camera permissions and driver. If that doesn't work, you can also try restarting the service.
+
+    PL/SQL procedure successfully completed.
+
+    Elapsed: 00:00:02.573
+    ```
 
     If you compare the answer that we got back in Task 3 above to this answer, you can see that the LLM took the responses from the SUPPORT_INCIDENTS query and wrote a much simpler and concise natural language answer.
 
