@@ -6,7 +6,7 @@ This lab walks you through a demonstration of AI Vector Search in an APEX applic
 
 Watch the video below for a quick walk-through of the APEX demo search on images lab:
 
-[APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab2/1_brgqm6c6)
+[APEX Demo Search on Images](https://videohub.oracle.com/media/Vector-Search-APEX-Demo-Lab3/1_jhjt9ec0)
 
 Estimated Time: X
 
@@ -28,6 +28,8 @@ This lab assumes you have:
 
 * An Oracle Account (oracle.com account)
 * Some familiarity with Oracle SQL and AI Vector Search
+* Run the Introduction Lab (Recommended)
+* Run the Vector Embeddings Lab (Required)
 
 ## Task 1: Connecting to the APEX application
 
@@ -138,5 +140,5 @@ You can now enter any search term or image that you would like to search on. You
 ## Acknowledgements
 
 * **Author** - Andy Rivenes, Markus Kissling, Product Managers, AI Vector Search
-* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Contributors**
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026

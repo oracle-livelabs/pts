@@ -4,25 +4,25 @@
     "variables": ["../../variables/variables.json",
         "../../variables/variables-in-another-file.json"],
     "include": {
-     "adb-goto-service-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/goto-service-body.md",
-     "adb-provision-body.md":"https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/provision-body.md"
+     "adb-goto-service-body.md":"https://livelabs.oracle.com/cdn/common/building-blocks/tasks/adb/goto-service-body.md",
+     "adb-provision-body.md":"https://livelabs.oracle.com/cdn/common/building-blocks/tasks/adb/provision-body.md"
     },
     "tutorials": [
         {
             "title": "Get Started",
             "description": "Register for a Free Tier account",
-            "filename": "https://oracle-livelabs.github.io/common/labs/cloud-login/pre-register-free-tier-account.md"
+            "filename": "https://livelabs.oracle.com/cdn/common/labs/cloud-login/pre-register-free-tier-account.md"
         },
         {
             "title": "Lab 1: Create an Autonomous Database",
             "description":"Setup an Always Free autonomous database instance",
             "type": "freetier",
-            "filename":"https://oracle-livelabs.github.io/common/building-blocks/blocks/adb/provision/provision-console.md"
+            "filename":"https://livelabs.oracle.com/cdn/common/building-blocks/blocks/adb/provision/provision-console.md"
         },
         {
             "title": "Lab 2: Create User and Populate Tables",
             "description":"Create a database user and populate tables",
-            "filename":"../../adb_setup/create-nationalparks-user.md"
+            "filename":"../../adb_setup/create-database-users.md"
         },
         {
             "title": "Lab 3: Introduction",
@@ -56,9 +56,15 @@
             "filename": "../../6-apex_demo/apex_demo.md"
         },
         {
+            "title": "Lab 9: Retrieval Augmented Generation (RAG)",
+            "description": "Understanding Retrieval Augmented Generation",
+            "type": "tenancy",
+            "filename": "../../rag/rag.md"
+        },
+        {
             "title": "Need Help?",
             "description": "Solutions to Common Problems and Directions for Receiving Live Help",
-            "filename":"https://oracle-livelabs.github.io/common/labs/need-help/need-help-freetier.md"
+            "filename":"https://livelabs.oracle.com/cdn/common/labs/need-help/need-help-freetier.md"
         }
     ]
 }

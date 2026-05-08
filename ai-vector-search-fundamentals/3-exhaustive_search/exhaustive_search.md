@@ -113,5 +113,5 @@ In this task we will put our work to use and run some exhaustive similarity sear
 ## Acknowledgements
 
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Contributors**
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026

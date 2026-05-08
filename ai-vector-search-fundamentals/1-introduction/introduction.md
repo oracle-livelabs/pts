@@ -4,7 +4,7 @@
 
 The **Getting Started with AI Vector Search** workshop will show you how you can combine the ability to perform similarity search on unstructured data like text and images with relational data to enable a whole new class of applications.
 
-Estimated Workshop Time: 60 minutes
+Estimated Workshop Time: 80 minutes
 
 Oracle AI Vector Search is a sophisticated suite of capabilities, empowering developers to seamlessly store, index, and search vector data within Oracle Database. Vector data, represented as arrays of numbers, plays a pivotal role in capturing diverse features within unstructured data, including images, text, audio and video.
 
@@ -30,6 +30,10 @@ There will be labs that will use a US National Parks dataset to search on descri
 
 ![apex demo](images/apex_demo.png " ")
 
+In addition, there is a lab that will walk you through the steps to create a Retrieval Augmented Generation (RAG) pipeline. Using AI Vector Search to augment a query to a Large Language Model (LLM), this lab will demonstrate a Support Incidents system and will use the results of resolved incidents to augment queries with private information that an LLM would not have access to. Finally, the RAG query created in this lab will be used in an APEX-based chatbot application to show how AI Vector Search can be used in a real application.
+
+![chatbot demo](images/chatbot_popup.png " ")
+
 ### Objectives
 
 In this workshop, you will learn how to:
@@ -43,6 +47,7 @@ In this workshop, you will learn how to:
 * Perform an approximate similarity search.
 * Use similarity search with traditional relational searches.
 * Run an APEX demo using the previously created data and queries.
+* Learn how to create a Retrieval Augmented Generation (RAG) pipeline using AI Vector Search.
 
 ### Prerequisites
 
@@ -66,6 +71,8 @@ In this Lab you will use Database Actions SQL Worksheet to access the database a
 
 In the APEX demo lab you will use APEX to run an application demonstration of just how powerful AI Vector Search can be. The URL to invoke the APEX demo is also listed in the "View Login Info" details.
 
+The RAG lab uses a chatbot demo that was also written in APEX and has its own URL that is also listed in the "View Login Info" details.
+
 ## Learn More
 
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/index.html)
@@ -75,5 +82,5 @@ In the APEX demo lab you will use APEX to run an application demonstration of ju
 
 ## Acknowledgements
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors** - Sean Stacey, Markus Kissling, Product Managers, AI Vector Search
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, March 2026
+* **Contributors** - Markus Kissling, Product Managers, AI Vector Search
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2026

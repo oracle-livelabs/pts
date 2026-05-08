@@ -164,5 +164,5 @@ In this task we will run the same queries we ran in the the Exhaustive Search la
 ## Acknowledgements
 
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors** - Sean Stacey, Product Manager, AI Vector Search
+* **Contributors**
 * **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, February 2026
