@@ -1,4 +1,4 @@
-# Lab 2: Run the same RAG Application interactively
+﻿# Lab 2: Run the same RAG Application interactively
 
 ## Introduction
 
@@ -10,7 +10,7 @@ In this lab you will run the RAG application interactively using a simple user i
 
 ### Prerequisites
 
-* VM environment running Oracle Database 23ai
+* VM environment running Oracle Database 26ai
 
 
 ## Task 1: Run application
@@ -34,7 +34,7 @@ Your application will now be running.  Simply follow the UI.
 
 5. Click on the **Browse files** button and load a PDF document.
 
-After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 23ai.
+After a few seconds the PDF document will be loaded, transformed to text, chunked, and vectorized into Oracle Database 26ai.
 
 ![Streamlit UI](images/streamlitocigenai.png)
 
@@ -42,16 +42,16 @@ A prompt area will now appear for you to ask a question about your PDF.  You can
 
 6. Type a question and hit return.
 
-In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 23ai.  
+In a few seconds the LLM will answer the question and respond with context stored in Oracle Database 26ai.  
 
 **Suggestions**
 
- For the Oracle Database 23ai documentation:
-- What are the new features in Oracle Database 23ai
+ For the Oracle Database 26ai documentation:
+- What are the new features in Oracle Database 26ai
 - Tell me more about AI Vector Search
 - Tell me more about new enhancement to SQL
 - Tell me more about JSON Relational Duality
-- List 5 new features of Oracle Database 23ai
+- List 5 new features of Oracle Database 26ai
 
 For the Oracle Fiscal Year 2024 Quarter 2 Financial Results document:
 - Summarize the Oracle 2024 Quarter 2 financial results
@@ -72,9 +72,9 @@ But essentially the code is the same 7 steps for building a RAG application with
 
 ### Conclusion
 
-In Lab 2 you ran a RAG application with a UI using the same 7 steps for RAG and Oracle AI Vector Search.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 23ai.
+In Lab 2 you ran a RAG application with a UI using the same 7 steps for RAG and Oracle AI Vector Search.  The blueprint is the same.  Now it's your turn.  Experiment with different transformers for different data sources.  It could be video, audio, text and more.  They're all embedded as vectors in Oracle Database 26ai.
 
-By using AI Vector Search in Oracle Database 23ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 23ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 23ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
+By using AI Vector Search in Oracle Database 26ai, you can build RAG applications with important context without having to retrain the LLM.  The context is stored, searched and retrieved from Oracle Database 26ai and passed to the LLM to generate accurate, up to date, and targeted responses to your prompts.  Businesses and enterprises can use RAG with AI Vector Search in Oracle Database 26ai and an LLM to securely respond to important business questions or to generate content for many use cases using private, internal business information.
 
 
 **Completed. Thanks for running the lab.**
@@ -83,3 +83,4 @@ By using AI Vector Search in Oracle Database 23ai, you can build RAG application
 * **Authors** - Vijay Balebail, Milton Wan 
 * **Contributors** - Rajeev Rumale
 * **Last Updated By/Date** -  Rajeev Rumale, October 2024
+

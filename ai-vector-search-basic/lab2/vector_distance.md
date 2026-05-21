@@ -43,7 +43,7 @@ Connect to your database, and use the SQL vector() constructor or to\_vector() t
 
 You need to specify the vector values, with optional number dimensions and format.
 The following constructors represent the above e two-dimensional coordinates.
-In Oracle Database 23ai, you do not need to specify a table for a SQL function.
+In Oracle Database 26ai, you do not need to specify a table for a SQL function.
 The values in the vector will be in scientific format.
 
 1. **OPTIONAL:** The following commands can be set to echo your sql commands and format output results.
@@ -220,7 +220,7 @@ The vector\_distance() SQL function
 
 ## Learn More
 
-* [Oracle Database 23ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
+* [Oracle Database 26ai Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/23/rnrdm/index.html)
 * [Oracle AI Vector Search Users Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/vecse/index.html)
 * [Oracle Documentation](http://docs.oracle.com)
 

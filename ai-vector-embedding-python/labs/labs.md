@@ -1080,7 +1080,7 @@ You should now be ready to proceed with using Sentence Transformers!
 
 ## Introduction
 
-In this lab we will learn how to use the embedding models from the Oracle OCI GenAI Cohere service with vectors stored in Oracle Database 23ai.
+In this lab we will learn how to use the embedding models from the Oracle OCI GenAI Cohere service with vectors stored in Oracle Database 26ai.
 
 ------------
 Estimated Time: 20 minutes
@@ -1100,7 +1100,7 @@ In this lab, you will learn how to perform the following Vector operations using
 This lab assumes you have:
 * An Oracle account
 * Your workshop environment is configured (Completed Lab 0)
-* Oracle Database 23ai is installed and running
+* Oracle Database 26ai is installed and running
 
 
 ## Task 1: Create and setup a table for the lab
