@@ -146,7 +146,7 @@ Please take a moment to watch the video below to learn how to perform the Databa
 
     ````bash
     <copy>
-    wget https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/J6rZFSP6qxAC3poE69uR3QHnW8a91ZVmM7RzqDfIP64fT_Dti8w0sRMY-JTuW6AH/n/oraclepartnersas/b/WS-files/o/BaseDatabaseWS/db-sample-schemas-19c.zip
+    wget https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/Wk1fGQbVyydjNGcQiHby4d6IZYz1BXp-ieyI2DGn4i5RmD9q6DoMSaLcjxQz_ead/n/oraclepartnersas/b/WS-files/o/BaseDatabaseWS/db-sample-schemas-19c.zip -O db-sample-schemas-19c.zip
     </copy>
     ````
 
