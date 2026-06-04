@@ -285,25 +285,35 @@ This lab assumes you have the following:
 
     - https://apexinstance-adbinstancename.adb.uk-london-1.oraclecloudapps.com/ords/apex
 
-19. Click the Administration Services link.
+19. On Oracle Autonomous AI Database, use this dialog to sign in with your ADMIN user.
+
+    ![apex admin sign in dialog](./images/apex-admin-sign-in.png " ")
+
+    - Password: `Your#5tr0ng_PassW0rd`
+
+20. On Oracle Autonomous AI Database, select Administration Services workspace.
+
+    ![select administration services](./images/select-administration-services.png " ")
+
+21. On other database deployments, click the Administration Services link.
 
     ![administration services](./images/administration-services.png " ")
 
-20. Use the ADB admin user's strong password to log in.
+22. On other database deployments, use the ADB admin user's strong password to log in.
 
     - Password: `Your#5tr0ng_PassW0rd`
 
     ![sign in to administration](./images/sign-in-to-administration.png " ")
 
-21. Click Manage Workspaces > Create Workspace.
+23. Click Manage Workspaces > Create Workspace.
 
     ![manage workspaces create](./images/manage-workspaces-create.png " ")
 
-22. Choose Existing Schema.
+24. Choose Existing Schema.
 
     ![existing schema](./images/existing-schema.png " ")
 
-23. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
+25. Use these attributes for the new Workspace. Use the same strong password the ADB admin user has. The existing database user for the new workspace should be `DBAI`.
 
     ![create workspace](./images/create-workspace.png " ")
 
@@ -314,7 +324,17 @@ This lab assumes you have the following:
 
     ![sign in to dbai](./images/sign-in-to-dbai.png " ")
 
-2. Use the details specified during workspace creation to log in.
+2. On Oracle Autonomous AI Database, use this dialog to sign in with your DBAIADMIN user.
+
+    ![apex dbaiadmin sign-in dialog](./images/apex-dbaiadmin-sign-in.png " ")
+
+    - Password: `Your#5tr0ng_PassW0rd`
+
+3. On Oracle Autonomous AI Database, select DBAI workspace.
+
+    ![select dbai workspace](./images/select-dbai-workspace.png " ")
+
+4. On other database deployments, use the details specified during workspace creation to log in.
 
     - Workspace: DBAI
     - User: DBAIADMIN
@@ -322,71 +342,71 @@ This lab assumes you have the following:
 
     ![sign in](./images/sign-in.png " ")
 
-3. You are now in the new APEX Workspace.
+5. You are now in the new APEX Workspace.
 
     ![apex workspace](./images/apex-workspace.png " ")
 
-4. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/bYdyukrjVm8aKtj4U2Tl-aBxwcenimnhNZqO9vaDjfVga5d87EHp0LGxAdXd4J08/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
+6. Download the AI Vector Search and RAG demo application schema objects script: [QandA-schema-objects.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/bYdyukrjVm8aKtj4U2Tl-aBxwcenimnhNZqO9vaDjfVga5d87EHp0LGxAdXd4J08/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-schema-objects.sql).
 
-5. Go to SQL Workshop > SQL Scripts.
+7. Go to SQL Workshop > SQL Scripts.
 
     ![sql workshop sql scripts](./images/sql-wkshop-sql-scripts.png " ")
 
-6. Click Upload.
+8. Click Upload.
 
     ![sql scripts create](./images/sql-scripts-create.png " ")
 
-7. Select the downloaded SQL file to be uploaded.
+9. Select the downloaded SQL file to be uploaded.
 
     ![sql script upload](./images/sql-script-upload.png " ")
 
-8. Click Edit.
+10. Click Edit.
 
     ![sql script run](./images/sql-script-run.png " ")
 
-9. Set the correct values for the first 7 variables in the script.
+11. Set the correct values for the first 7 variables in the script.
 
     ![sql script variables](./images/sql-script-variables.png " ")
 
     > **Note:** If your tenancy uses an Identity Domain, `username` value should be 'YourIdentityDomain/YourOCIusername'.
 
-10. Save the script and run it. Make sure there are no errors.
+12. Save the script and run it. Make sure there are no errors.
 
-11. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ZzjrPjnCsSy5SM5F3WoZP3lWGHmQDpOO0cr6oQVLskUhgdIO_VFGPodjE_7Olmuv/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
+13. Download the AI Vector Search and RAG demo application: [QandA-livelab-f100.sql](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ZzjrPjnCsSy5SM5F3WoZP3lWGHmQDpOO0cr6oQVLskUhgdIO_VFGPodjE_7Olmuv/n/oraclepartnersas/b/WS-files/o/AIvectorRAGws/QandA-livelab-f100.sql). This application will be imported in your APEX Workspace.
 
-12. Click App Builder and Import.
+14. Click App Builder and Import.
 
     ![app builder](./images/app-builder.png " ")
 
-13. Import App: `QandA-livelab-f100.sql`. Click Next.
+15. Import App: `QandA-livelab-f100.sql`. Click Next.
 
     ![import app](./images/import-app.png " ")
 
-14. Review the installation details and click Install Application.
+16. Review the installation details and click Install Application.
 
     ![install application](./images/install-application.png " ")
 
-15. Once the application is installed successfully, click Edit Application.
+17. Once the application is installed successfully, click Edit Application.
 
     ![application installed](./images/application-installed.png " ")
 
-16. Check application pages. Click Shared Components.
+18. Check application pages. Click Shared Components.
 
     ![application pages](./images/application-pages.png " ")
 
-17. Click List of Values.
+19. Click List of Values.
 
     ![shared components other](./images/shared-components-other.png " ")
 
-18. This application uses a set of roles to authorize users to perform different tasks.
+20. This application uses a set of roles to authorize users to perform different tasks.
 
     ![list of values roles](./images/list-of-values-roles.png " ")
 
-19. Navigate to SQL Workshop > SQL Commands.
+21. Navigate to SQL Workshop > SQL Commands.
 
     ![sql workshop](./images/sql-workshop.png " ")
 
-20. Verify the new Credential. List objects in your Object Storage Bucket.
+22. Verify the new Credential. List objects in your Object Storage Bucket.
 
     ````sql
     -- Test OCI token credential
@@ -405,7 +425,7 @@ This lab assumes you have the following:
 
     ![select list objects](./images/select-list-objects.png " ")
 
-21. Import `all_MiniLM_L12_v2.onnx` large language model (LLM) into your ADB instance from the object storage bucket. Make sure you use your `object_uri` attribute value.
+23. Import `all_MiniLM_L12_v2.onnx` large language model (LLM) into your ADB instance from the object storage bucket. Make sure you use your `object_uri` attribute value.
 
     ````sql
     -- import LLM from Object Storage
@@ -427,7 +447,7 @@ This lab assumes you have the following:
 
     ![load onnx model](./images/load-onnx-model.png " ")
 
-22. List LLM models in your ADB instance and their attributes.
+24. List LLM models in your ADB instance and their attributes.
 
     ````sql
     <copy>
@@ -445,6 +465,43 @@ This lab assumes you have the following:
 
     ![select mining model](./images/select-mining-model.png " ")
 
+25. Create a context retrieval function based on the LLM model imported into the database.
+
+    ````sql
+    <copy>
+    -- use graph from documents to retrieve the closest relations to build context
+    create or replace FUNCTION retrieve_context (question CLOB) RETURN CLOB IS
+    l_context CLOB := empty_clob();
+    l_qgraph CLOB;
+    BEGIN
+    select extract_graph(question) into l_qgraph;
+    if l_qgraph is NOT NULL then
+        for l_qgraph_relation in (select jt.head_type || ': ' || jt.head || ' -[' || upper(jt.relation) || ']-> ' || jt.tail_type || ': ' || jt.tail text
+                                    from JSON_TABLE (l_qgraph, '$[*]'
+                                            COLUMNS ( head VARCHAR2(256) PATH '$.head',
+                                                    head_type VARCHAR2(256) PATH '$.head_type',
+                                                    relation VARCHAR2(256) PATH '$.relation',
+                                                    tail VARCHAR2(256) PATH '$.tail',
+                                                    tail_type VARCHAR2(256) PATH '$.tail_type' ) ) jt) loop
+        for l_docs_relation in (select re.TEXT from RELATED_ENTITIES re
+                                    order by VECTOR_DISTANCE(re.EMBEDDING, 
+                                                            TO_VECTOR(VECTOR_EMBEDDING(ALLMINL12V2 using l_qgraph_relation.TEXT as DATA)),
+                                                            COSINE)
+                                    fetch first 10 rows ONLY) loop
+            l_context := apex_string.join_clobs(apex_t_clob( l_context, l_docs_relation.TEXT ));
+        end loop;
+        end loop;
+    else
+        NULL;
+    end if;
+    return l_context;
+    exception
+        when others then
+        return('Build Context Error: ' || SQLERRM);
+    END;
+    /
+    </copy>
+    ````
 
 ## Task 4: Fix app code with your OCI components
 
