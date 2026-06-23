@@ -261,7 +261,27 @@ As the ADMIN user you will import the NATIONALPARKS and INCIDENT schemas in the 
     </copy>
     ```
 
-## Task 6: Import APEX Demo Workspace and Application
+## Task 6: Create a Network ACL for the NATIONALPARKS Schema
+
+As the ADMIN user you will create an ACL for the NATIONALPARKS schema to allow access to image URLs.
+
+1. Run the following script by copying the script below and pasting it into the Database Actions SQL window and click run script:
+
+    ```sql[]
+    <copy>
+    -- Granting network access to the NATIONALPARKS user
+    BEGIN
+      DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+        host => '*',
+        ace => xs$ace_type(privilege_list => xs$name_list('http'),
+                           principal_name => 'NATIONALPARKS',
+                           principal_type => xs_acl.ptype_db));
+    END;
+    /
+    </copy>
+    ```
+
+## Task 7: Import APEX Demo Workspace and Application
 
 In this task you will import the workshop's APEX workspaces and applications:
 
