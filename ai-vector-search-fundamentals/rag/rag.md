@@ -398,7 +398,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
 
 ## Task 7: Run Support Incidents chatbot demo
 
-The last task for this Lab will be to put all of this together and see how we might use it in the real world. We have built an APEX chatbot demo called "Support Incidents" that uses the same RAG query that we built in Task 5 above. You can ask the chatbot a support question, but it will only answer incident questions that it can create an answer for with the data available to it.
+The last task for this Lab will be to put all of this together and see how we might use it in the real world. We have built an APEX chatbot demo called "Support Incidents" that uses the same RAG query that we built in Task 5 above. You can ask the chatbot a support question, but it will only answer incident questions that it can create an answer for given the data that has been made available to it.
 
 <if type="sandbox">
 
