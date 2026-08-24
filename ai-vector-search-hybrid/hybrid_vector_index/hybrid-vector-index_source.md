@@ -4,24 +4,25 @@
 
 Keyword search finds exact words or phrases from a query. Vector search finds content with similar meaning, even when it uses different words. Hybrid search combines both approaches. It can return exact matches and relevant passages that keyword search alone might miss. A hybrid vector index stores both search methods in one index. 
 
-Oracle prepares data for vector search during hybrid vector index creation. It splits each source document into smaller pieces called chunks. It then generates an embedding for every chunk. For example, a 20-page PDF becomes smaller sections, each with its own embedding. Search can then find a relevant passage instead of matching only the whole document. You do not need a separate chunk table or embedding pipeline.
+Oracle also handles the preparation of the data for vector search and prepares the data during hybrid vector index creation. It splits each source document into smaller pieces called chunks. It then generates an embedding for every chunk. For example, a 20-page PDF becomes smaller sections, each with its own embedding. Search can then find a relevant passage instead of matching only the whole document. You do not need a separate chunk table or embedding pipeline.
 
-### How Hybrid Vector Index Creation Works
 
-When you run `CREATE HYBRID VECTOR INDEX`, Oracle reads documents from a datastore. The default `DIRECT_DATASTORE` reads data from a database column. Each row becomes one document. Oracle then processes each document as follows:
+How does it work? 
 
-1. **Filter** converts binary documents, such as PDFs, Word files, and Excel files, to plain text.
-2. **Tokenizer** prepares text for keyword search. **Vectorizer** creates chunks and their embeddings for vector search.
-3. **Indexing engine** creates and populates the secondary index tables.
+When you create an index with a CREATE HYBRID VECTOR INDEX statement, the indexing pipeline starts with reading the documents from a
+datastore. The default datastore is the so called DIRECT_DATASTORE where the data is stored in the a database column. Each row is indexed as a single document. Then the documents passes through a series of processing steps such as:
 
-As the system passes documents through this indexing engine, it populates and indexes a set of secondary tables that makes up a hybrid vector index. 
+1 Filter (conversion of binary documents such as PDF, Word, or Excel to plain text)
+2 Tokenizer (tokenization of data for keyword search) and Vectorizer (chunking and embedding generation for vector search)
+3 Indexing Engine (creation of secondary tables)
 
-Oracle creates two key secondary tables.
+As the system passes documents through this indexing engine, it populates and indexes a set of secondary tables that are collectively part of a hybrid vector index. 
 
-- `$I`, which contains the inverted index with tokenized terms.
-- `$VR`, which contains indexed chunks and their embeddings. It also stores a `ROWID` that maps to the source-table row and a `DOCID` that maps to the Oracle Text document ID. These values link chunks, tokens, and source documents. Use the `<index_name>$VECTORS` view to inspect row IDs, chunks, and embeddings instead of querying `$VR` directly.
+The two main secondary tables created are:
+- $I contains the inverted indexed data with tokenized terms.
+- $VR contains the indexed data with generated chunks and corresponding embeddings. $VR also contains a ROWID column that maps back to the document table's row IDs, and a DOCID column that links back to Oracle Text document-level IDs. This creates a link between chunks, tokens, and documents. You can directly examine the $VR table using the dictionary view <index name>$VECTORS, which lets you query all row ids, chunks, and embeddings.
 
-In this lab, you create the `HYBRID_IDX` hybrid vector index on the `TEXT` column of `WIKI_DATA`. You create and use a named vectorizer preference, then inspect the index metadata and generated chunks.
+In this lab, you create an hybrid vector index with name `HYBRID_IDX` on `WIKI_DATA` column `text`. You create and use a named vectorizer preference, then inspect the index metadata and generated chunks.
 
 ### Objectives
 

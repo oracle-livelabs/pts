@@ -2,26 +2,13 @@
 
 ## Introduction
 
-Keyword search finds exact words or phrases from a query. Vector search finds content with similar meaning, even when it uses different words. Hybrid search combines both approaches. It can return exact matches and relevant passages that keyword search alone might miss. A hybrid vector index stores both search methods in one index. 
+Keyword search finds exact words or phrases from a query. Vector search finds content with similar meaning, even when it uses different words. Hybrid search combines both approaches. It can return exact matches and relevant passages that keyword search alone might miss. A hybrid vector index stores both search methods in one index.
 
-Oracle prepares data for vector search during hybrid vector index creation. It splits each source document into smaller pieces called chunks. It then generates an embedding for every chunk. For example, a 20-page PDF becomes smaller sections, each with its own embedding. Search can then find a relevant passage instead of matching only the whole document. You do not need a separate chunk table or embedding pipeline.
+Oracle also handles the preparation of the data for vector search and prepares the data during hybrid vector index creation. It splits each source document into smaller pieces called chunks. It then generates an embedding for every chunk. For example, a 20-page PDF becomes smaller sections, each with its own embedding. Search can then find a relevant passage instead of matching only the whole document. You do not need a separate chunk table or embedding pipeline.
 
-### How Hybrid Vector Index Creation Works
+Use index preferences to configure the text and vector parts of the index. Preferences are optional. The index can use default settings.
 
-When you run `CREATE HYBRID VECTOR INDEX`, Oracle reads documents from a datastore. The default `DIRECT_DATASTORE` reads data from a database column. Each row becomes one document. Oracle then processes each document as follows:
-
-1. **Filter** converts binary documents, such as PDFs, Word files, and Excel files, to plain text.
-2. **Tokenizer** prepares text for keyword search. **Vectorizer** creates chunks and their embeddings for vector search.
-3. **Indexing engine** creates and populates the secondary index tables.
-
-As the system passes documents through this indexing engine, it populates and indexes a set of secondary tables that makes up a hybrid vector index. 
-
-Oracle creates two key secondary tables.
-
-- `$I`, which contains the inverted index with tokenized terms.
-- `$VR`, which contains indexed chunks and their embeddings. It also stores a `ROWID` that maps to the source-table row and a `DOCID` that maps to the Oracle Text document ID. These values link chunks, tokens, and source documents. Use the `<index_name>$VECTORS` view to inspect row IDs, chunks, and embeddings instead of querying `$VR` directly.
-
-In this lab, you create the `HYBRID_IDX` hybrid vector index on the `TEXT` column of `WIKI_DATA`. You create and use a named vectorizer preference, then inspect the index metadata and generated chunks.
+In this lab, you create the `HYBRID_IDX` hybrid vector index on `WIKI_DATA` column `text`. You use a named vectorizer preference, then inspect the index metadata and generated chunks.
 
 ### Objectives
 
@@ -55,7 +42,7 @@ Estimated Time: 20 minutes
 
     `MODEL` identifies the model that generates vectors for input text. Oracle creates an Inverted File Flat (IVF) vector index by default. For larger indexes, test explicit memory and parallelism settings.
 
-2. Create the vectorizer preference `my_vectorizer_pref` which stores the chunking, embedding, and indexing settings.
+2. Create the vectorizer preference which stores the chunking, embedding, and indexing settings.
 
     ```[]
     <copy>
@@ -171,7 +158,7 @@ Estimated Time: 20 minutes
 
 During index creation, Oracle splits each source document into chunks and generates an embedding for each chunk.
 
-`DR$HYBRID_IDX$VR` is the internal secondary Oracle Text table for the vector part of the hybrid index. It stores document chunks, metadata, and generated embeddings.
+`DR$HYBRID_IDX$VR` is an internal Oracle Text table for the vector, or semantic-search, part of the hybrid index. It stores document chunks, metadata, and generated embeddings.
 
 For querying or inspecting this data, use the associated view `HYBRID_IDX$VECTORS` rather than accessing the internal $VR table directly.
 
