@@ -35,11 +35,11 @@ If you click on the "View Login Info" button in the upper left corner of the Int
 
 See the image below for an example:
 
-![browser setup](images/browser_setup.png " ")
+![browser setup](images/intro_view_info.png " ")
 
 After signing in you should see a browser window like the following:
 
-![sqldev browser](images/sql_np_worksheet.png " ")
+![sqldev browser](images/sql_wikiquery_worksheet.png " ")
 
 ## Learn More
 

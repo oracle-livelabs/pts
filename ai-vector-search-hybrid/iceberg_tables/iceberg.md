@@ -48,41 +48,45 @@ This lab assumes you have:
 
 Iceberg tables can have two different formats, they can be Manifest-file based or they can be Catalog-backed. If you're interested in these two different formats more information is available here: [Apache Iceberg Tables Overview](https://docs.oracle.com/en/database/oracle/oracle-database/26/sutil/oracle_bigdata-accessing-apache-iceberg.html#GUID-C88E404B-77C1-45EF-BA2C-5F3F8CA1B3E3). In this Lab we will use a Manifest-file based Iceberg table.
 
-1. The Iceberg table is stored in OCI Object Storage in a storage bucket. You can query different parts of the Iceberg table with the following SQL:
+1. The Iceberg table is stored in OCI Object Storage in a storage bucket. You will need to click on the "View Login Info" button in the upper left corner of the Introduction page to fill in the correct URL information. See the image below for an example:
 
-    ```[]
-    <copy>
-    SELECT *
-    FROM DBMS_CLOUD.LIST_OBJECTS(
-      'ICEBERG_OCI_CRED',
-      'https://objectstorage.us-phoenix-1.oraclecloud.com/n/idxtq30nokep/b/ai-vector-iceberg-48735/o/iceberg/db/wiki_iceberg_1K'
-    );
-    </copy>
-    ```
+![list objects](images/view_info_iceberg.png " ")
 
-    The output should show you something similar to the following. Note the data/\*.parquet is the parquet file, or the actual data, and the metadata/ files are the metadata that describes how to access the data.
+Copy and paste the query below into your Database Actions SQL Worksheet window, and then copy the Iceberg Bucket URL from your "View Login Info" and  paste it into the query replacing just the text: `<Paste Iceberg Bucket URL here>`. You can then run the query to display the files that are part of the Iceberg table.
 
-    ![list objects](images/list_objects.png " ")
+  ```[]
+  <copy>
+  SELECT *
+  FROM DBMS_CLOUD.LIST_OBJECTS(
+    'ICEBERG_OCI_CRED',
+    'https://&ltPaste Iceberg Bucket URL here&gt'
+  );
+  </copy>
+  ```
+
+  The output should show you something similar to the following. Note the data/\*.parquet is the parquet file, or the actual data, and the metadata/ files are the metadata that describes how to access the data.
+
+  ![list objects](images/list_objects.png " ")
 
 ## Task 2: Create an external table
 
-Next we will create an external table so that we can access our Iceberg table.
+Next we will create an external table so that we can access the Iceberg table.
 
-1. Run the following SQL to create an external table named WIKI\_ICEBERG:
+1. Again, copy and paste the query below into your Database Actions SQL Worksheet window, and then copy the Iceberg Bucket URL and replace the text: `<Paste Iceberg Bucket URL here>` and run the SQL to create an external table named WIKI\_ICEBERG.
 
     ```[]
     <copy>
     BEGIN
       DBMS_CLOUD.CREATE_EXTERNAL_TABLE(
-        table_name =>'wiki_iceberg',
-        credential_name => 'ICEBERG_OCI_CRED',
-        file_uri_list=>'https://objectstorage.us-phoenix-1.oraclecloud.com/n/idxtq30nokep/b/ai-vector-iceberg-48735/o/iceberg/db/wiki_iceberg_1K/metadata/v1.metadata.json',
-        format=>'{"access_protocol":{"protocol_type":"iceberg"}}',
-        column_list => 'id varchar2(32) PRIMARY KEY RELY DISABLE,
-          url varchar2(300),
-          title varchar2(200),
-          text clob,
-          emb vector(1024, float32)'
+        TABLE_NAME => 'wiki_iceberg',
+        CREDENTIAL_NAME => 'ICEBERG_OCI_CRED',
+        FILE_URI_LIST => 'https://&ltPaste Iceberg Bucket URL here&gt/metadata/v1.metadata.json',
+        FORMAT => '{"access_protocol":{"protocol_type":"iceberg"}}',
+        COLUMN_LIST => 'id VARCHAR2(32) PRIMARY KEY RELY DISABLE,
+          url VARCHAR2(300),
+          title VARCHAR2(200),
+          text CLOB,
+          emb VECTOR(1024, FLOAT32)'
       );
     END;
     </copy>
@@ -90,23 +94,23 @@ Next we will create an external table so that we can access our Iceberg table.
 
     ![create table](images/create_wiki_iceberg.png " ")
 
-    Notice that we have explicitly specified the columns for the table using Oracle data types including the VECTOR data type for the vector embedded column. Also note that we have referenced the storage location in our Object Storage bucket for the Iceberg table.
+    Notice that we have explicitly specified the columns for the table using Oracle data types including the VECTOR data type for the vector  column. Also note that we have referenced the storage location in our Object Storage bucket for the Iceberg table.
 
-## Task 3: Run a describe on the new table
+## Task 3: Display information about the new table
 
-In this task we will run a describe on the new table to verify the columns created.
+In this task we will display information about the new table to verify the columns created.
 
-1. Run the following to describe the table columns:
+1. Use the **INFO** command to display information about the WIKI_ICEBERG table:
 
     ```[]
     <copy>
-    DESC wiki_iceberg
+    INFO wiki_iceberg
     </copy>
     ```
 
-    The output should look like the following:
+    The output should look similar to the following:
 
-    ![describe table columns](images/desc_wiki_iceberg.png " ")
+    ![describe table columns](images/info_wiki_iceberg.png " ")
 
     Notice the EMB column has a VECTOR datatype.
 
@@ -114,21 +118,34 @@ In this task we will run a describe on the new table to verify the columns creat
 
 In this task we will run a similarity search on the Iceberg table data by accessing the external table we just created.
 
-1. The following query will search for Wikipedia articles about football. In this Lab we are using the OCI Gen AI service to access the same "cohere.embed-multilingual-v3.0" embedding model that was used to create the data vectors in the Iceberg table. Run the following query:
+1. The following query will search for Wikipedia articles about football. In this Lab we are using the OCI Gen AI service to access the same "cohere.embed-multilingual-v3.0" embedding model that was used to create the data vectors in the Iceberg table. Run the following query to return the first 5 rows that are closest in distance to our query vector.
+
+    Copy and paste the following SQL and run using the "Run Script (F5)" button:
 
     ```[]
     <copy>
+    VARIABLE query_vec VECTOR
+    BEGIN
+      :query_vec := DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING(
+        'Find articles about football',
+        JSON('{
+          "provider": "ocigenai",
+          "credential_name": "AI_CREDENTIAL",
+          "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
+          "model": "cohere.embed-multilingual-v3.0",
+          "transfer_timeout": 1200
+        }')
+      );
+    END;
+    /
     SELECT
-      w.title,
-      VECTOR_DISTANCE(w.emb,
-        (SELECT DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING('football',
-           JSON('{"provider": "ocigenai",
-                  "credential_name": "AI_CREDENTIAL",
-                  "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-                  "model": "cohere.embed-multilingual-v3.0",
-                  "transfer_timeout":1200}'))) ) AS dist,
-      w.text
-    FROM  wiki_iceberg w
+      title,
+      VECTOR_DISTANCE(
+        emb,
+        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        COSINE) AS dist,
+      text
+    FROM wiki_iceberg
     ORDER BY dist
     FETCH FIRST 5 ROWS ONLY;
     </copy>
@@ -136,17 +153,48 @@ In this task we will run a similarity search on the Iceberg table data by access
 
     ![similarity search](images/similarity_search.png " ")
 
-    We have included the vector distance, that is the distance between the 'football' vector and the data vector. The closest match is first and then the next four closest matches are next.
+    We have included the vector distance, that is the distance between the 'Find articles about football' query vector and the data vectors that were returned. The closest match is first and then the next four closest matches are next.
 
 2. The last step in this task is to take a look at the execution plan. Since we have not created any indexes we will expect to see a FULL TABLE SCAN of the WIKI\_ICEBERG table.
 
-    Click on the Explain Plan button to display an execution plan. See the following image:
+    Note: Since the Database Actions SQL Worksheet is stateless, and with the restrictions imposed by ADB Serverless, we will only be able to show an [Explain Plan](https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/generating-and-displaying-execution-plans.html) and not the actual execution plan.
 
-    ![explain plan icon](images/explain_plan_icon.png " ")
+    Copy and paste the following SQL and run using the "Run Script (F5)" button:
 
-    You should see an execution plan similar to the following:
+    ```[]
+    <copy>
+    VARIABLE query_vec VECTOR
+    BEGIN
+      :query_vec := DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING(
+        'Find articles about football',
+        JSON('{
+          "provider": "ocigenai",
+          "credential_name": "AI_CREDENTIAL",
+          "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
+          "model": "cohere.embed-multilingual-v3.0",
+          "transfer_timeout": 1200
+        }')
+      );
+    END;
+    /
+    EXPLAIN PLAN SET STATEMENT_ID = 'DPLAN' FOR
+    SELECT
+      title,
+      VECTOR_DISTANCE(
+        emb,
+        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        COSINE) AS dist,
+      text
+    FROM wiki_iceberg
+    ORDER BY dist
+    FETCH FIRST 5 ROWS ONLY;
+    SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(statement_id=>'DPLAN'));
+    </copy>
+    ```
 
-    ![search plan](images/search_plan.png " ")
+    ![explain plan](images/search_plan.png " ")
+
+    Notice that the plan shows a full table access since we have not yet created any indexes.
 
 ## Task 5: Create a vector index on the Iceberg Table
 
@@ -167,21 +215,32 @@ In this task we will create a vector index on the Iceberg table.
 
 Now that you have created a vector index you can run the same similarity search you ran in Task 4. The query execution should take advantage of the vector index and run much faster and access many fewer vectors.
 
-1. Run the following query:
+1. Run the following query using the "Run Script (F5)" button:
 
     ```[]
     <copy>
+    VARIABLE query_vec VECTOR
+    BEGIN
+      :query_vec := DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING(
+        'Find articles about football',
+        JSON('{
+          "provider": "ocigenai",
+          "credential_name": "AI_CREDENTIAL",
+          "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
+          "model": "cohere.embed-multilingual-v3.0",
+          "transfer_timeout": 1200
+        }')
+      );
+    END;
+    /
     SELECT
-      w.title,
-      VECTOR_DISTANCE(w.emb,
-        (SELECT DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING('football',
-           JSON('{"provider": "ocigenai",
-                  "credential_name": "AI_CREDENTIAL",
-                  "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-                  "model": "cohere.embed-multilingual-v3.0",
-                  "transfer_timeout":1200}'))) ) AS dist,
-      w.text
-    FROM  wiki_iceberg w
+      title,
+      VECTOR_DISTANCE(
+        emb,
+        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        COSINE) AS dist,
+      text
+    FROM wiki_iceberg
     ORDER BY dist
     FETCH FIRST 5 ROWS ONLY;
     </copy>
@@ -189,19 +248,48 @@ Now that you have created a vector index you can run the same similarity search 
 
     ![index query](images/index_search.png " ")
 
-    This time the query should have run much faster, and notice that the results might not be the same. Recall that a similarity search using a vector index is an **approximate** search, not exhaustive. That means that not all of the vectors were compared and therefore the search may produce slightly different results.
+    This time the query should have run much faster, and notice that the results might not be exactly the same. Recall that a similarity search using a vector index is an **approximate** search, not exhaustive. That means that not all of the vectors were compared and therefore the search may produce slightly different results.
 
-2. Now click on the Explain Plan button to display an execution plan. See the following image:
+2. To see the explain plan with the index copy and paste the following SQL. Note that this is the same SQL we ran in Task 4 to generate the explain plan and is equivalent to the above query.
 
-    ![explain plan icon](images/explain_plan_icon.png " ")
+    Copy and paste the following SQL and run using the "Run Script (F5)" button:
 
-    You should see an execution plan similar to the following:
+    ```[]
+    <copy>
+    VARIABLE query_vec VECTOR
+    BEGIN
+      :query_vec := DBMS_VECTOR_CHAIN.UTL_TO_EMBEDDING(
+        'Find articles about football',
+        JSON('{
+          "provider": "ocigenai",
+          "credential_name": "AI_CREDENTIAL",
+          "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
+          "model": "cohere.embed-multilingual-v3.0",
+          "transfer_timeout": 1200
+        }')
+      );
+    END;
+    /
+    EXPLAIN PLAN SET STATEMENT_ID = 'DPLAN' FOR
+    SELECT
+      title,
+      VECTOR_DISTANCE(
+        emb,
+        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        COSINE) AS dist,
+      text
+    FROM wiki_iceberg
+    ORDER BY dist
+    FETCH FIRST 5 ROWS ONLY;
+    SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(statement_id=>'DPLAN'));
+    </copy>
+    ```
 
     ![index plan](images/index_plan.png " ")
 
-    You might notice that the plan is a bit difficult to decipher to identify the use of the index. Here is what it looks like using DBMS\_XPLAN:
+    Now you should see a plan with an index access. The plan may be a bit difficult to decipher to identify the use of the index. The following is the full plan. Note the access of the `VECTOR$WIKI_ICEBERG_IDX$<...>` objects which are the access of the index that we created in the previous step. Also note that an IVF index access shows up a bit differently than what you might be used to when looking at a B-tree or Bitmap index on relational data.
 
-    ![index xplan](images/index_xplan.png " ")
+    ![index full plan](images/index_full_plan.png " ")
 
 ## Learn More
 
@@ -213,5 +301,5 @@ Now that you have created a vector index you can run the same similarity search 
 ## Acknowledgements
 
 * **Author** - Andy Rivenes, Product Manager, AI Vector Search
-* **Contributors**
-* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, August 2026
+* **Contributors** - William Masdon, LiveLabs Team
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, September 2026

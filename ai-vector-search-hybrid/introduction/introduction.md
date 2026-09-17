@@ -65,9 +65,17 @@ This workshop uses a public source:
 
 The examples in the Lab were run using the Google Chrome browser. If you use a different browser some attributes may look slightly different. For example, cut and paste may behave differently, and opening new windows based on a URL may have slightly different instructions.
 
-In this Lab you will use Database Actions SQL Worksheet to access the database and run queries. The URL to invoke SQL Worksheet is listed in the "View Login Info" details. If you are not familiar with SQL Worksheet you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Worksheet in each of the following labs.
+In this Lab you will use Database Actions SQL Worksheet to access the database and run queries. The URL to invoke SQL Worksheet is listed in the "View Login Info" details which we will show you in the Database Connection lab. If you are not familiar with SQL Worksheet you can run through a short tutorial by clicking on the binoculars in the circled image below once you start SQL Worksheet in each of the following labs.
 
 ![sqldev help](images/sqldev_help.png " ")
+
+One more thing to note about the Database Actions SQL Worksheet. To run SQL you can click on either the Run Statement button or the Run Script button. See each below. Note that some of the lab instructions will tell you to use the Run Script button, otherwise you will get an error since all of the SQL needs to run together as one script.
+
+![sqldev run statement](images/sqldev_run_statement.png " ")
+
+![sqldev run script](images/sqldev_run_script.png " ")
+
+Proceed to the Database Connection lab. Skip the Get Started lab unless you decide to access the OCI Console.
 
 ## Learn More
 
