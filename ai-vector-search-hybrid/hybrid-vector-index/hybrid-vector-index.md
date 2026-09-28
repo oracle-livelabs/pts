@@ -32,6 +32,10 @@ In this lab, you will:
 - Verify the index status and the indexed table column.
 - Examine the generated chunk view.
 
+Watch the video below for a quick walk-through of the Create Hybrid Vector Index lab:
+
+[Hybrid Vector Index](https://videohub.oracle.com/media/hybrid_vector_index/1_vpywqwj6)
+
 Estimated Time: 20 minutes
 
 ### Prerequisites
@@ -114,6 +118,8 @@ Estimated Time: 20 minutes
     See the image below:
 
     ![Create hybrid vector index](images/hvi_create.png " ")
+
+    **Note:** Creating the vector index should take between 3 and 4 minutes. The Database Actions SQL window may report an execution error due to timing out waiting for the index creation to finish even though the index creation is still running. If you run the next query in Task 2 below you may see an index status of POPULATE. Shortly it should change to a status of INDEXED.
 
 ## Task 2: Verify Hybrid Index Metadata
 
