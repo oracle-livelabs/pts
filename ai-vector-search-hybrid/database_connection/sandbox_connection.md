@@ -4,9 +4,9 @@
 
 This lab walks you through the steps to connect to your Oracle AI Database 26ai database.
 
-Watch the video below for a quick walk-through of the similarity search on images lab:
+Watch the video below for a quick walk-through of the Database Connection lab:
 
-[Database Connection lab video](https://videohub.oracle.com/media/Vector-Search-Database-Connection-Lab/1_86zguvif)
+[Database Connection lab video](https://videohub.oracle.com/media/get_started/1_r529i8bj)
 
 Estimated Time: X
 

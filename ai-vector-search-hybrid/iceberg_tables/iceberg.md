@@ -6,7 +6,7 @@ This lab walks you through the steps to run a similarity search on an Iceberg ta
 
 Watch the video below for a quick walk-through of the Similarity Search on Iceberg Tables lab:
 
-[Iceberg Similarity Search](https://videohub.oracle.com/media/Vector-Search-Exhaustive-Search-Lab/1_cmymq19w)
+[Iceberg Similarity Search](https://videohub.oracle.com/media/iceberg_tables/1_hel63ry6)
 
 Estimated Time: X
 

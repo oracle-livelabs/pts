@@ -25,6 +25,10 @@ In this lab, you will:
 
 This lab contains three tasks.
 
+Watch the video below for a quick walk-through of the Hybrid Similarity Search lab:
+
+[Hybrid Query](https://videohub.oracle.com/media/hybrid_query/1_pzz57a5e)
+
 Estimated Time: 20 minutes.
 
 ### Prerequisites

@@ -12,11 +12,9 @@ In this lab, you will:
 * Inspect the model and its vector format
 * Generate and display a vector embedding
 
-The video shows the lab workflow.
+Watch the video below for a quick walk-through of the Vector Embeddings lab:
 
-Watch the following video.
-
-[Vector Embeddings](https://videohub.oracle.com/media/Vector-Search-Embeddings-Lab2/1_bjgnd8ai)
+[Vector Embeddings](https://videohub.oracle.com/media/vector_embeddings/1_0lgfw9qy)
 
 ### About Vector Embeddings
 

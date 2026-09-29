@@ -44,6 +44,10 @@ In this lab, you will:
 
 Follow the four tasks below.
 
+Watch the video below for a quick walk-through of the Vector-only Similarity Search lab:
+
+[Vevtor Similarity Search](https://videohub.oracle.com/media/search_vector/1_ygw3rpug)
+
 Estimated Time: 20 minutes
 
 ### Prerequisites
