@@ -22,7 +22,8 @@ For more information about Apache Iceberg tables see [What Is Apache Iceberg? Un
 
 The first part of this Lab will focus on performing a similarity search on an Iceberg table. We will create an external table to access the Iceberg table data since it is located in Object Storage which is external to Oracle AI Database. The Oracle external table format supports the VECTOR data type and makes the access of Iceberg tables transparent within Oracle AI Database.
 
-In this Lab we have already created the Iceberg table on OCI Object Storage. The table is based on Wikipedia data and the dataset is available on [Hugging Face](https://huggingface.co/datasets/CohereLabs/wikipedia-2023-11-embed-multilingual-v3). The dataset was created by CohereLabs using the [Cohere Embed V3 embedding model](https://txt.cohere.com/introducing-embed-v3/) to create the vector embeddings. We are just using a small 1000 article subset of the data for this Lab. The files on Hugging Face were distributed as Parquet files and we used Python and Spark SQL scripts to create the actual Iceberg table.
+In this Lab we have already created the Iceberg table on OCI Object Storage. The table is based on Wikipedia data and the dataset is available on [Hugging Face](https://huggingface.co/datasets/CohereLabs/wikipedia-2023-11-embed-multilingual-v3). The dataset was created by CohereLabs using the [Cohere Embed V3 embedding model](https://txt.cohere.com/introducing-embed-v3/) to create the vector embeddings. Due to deprecation of that model in OCI Gen AI, we had to recreate the embeddings using cohere.embed-v4.0. 
+We are just using a small 1000 article subset of the data for this Lab. The files on Hugging Face were distributed as Parquet files and we used Python and Spark SQL scripts to create the actual Iceberg table.
 
 ### Part 2 - Vector Indexes on Iceberg Tables (Vectors on Ice)
 
@@ -86,7 +87,7 @@ Next we will create an external table so that we can access the Iceberg table.
           url VARCHAR2(300),
           title VARCHAR2(200),
           text CLOB,
-          emb VECTOR(1024, FLOAT32)'
+          emb VECTOR(1536, FLOAT32)'
       );
     END;
     </copy>
@@ -132,7 +133,7 @@ In this task we will run a similarity search on the Iceberg table data by access
           "provider": "ocigenai",
           "credential_name": "AI_CREDENTIAL",
           "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-          "model": "cohere.embed-multilingual-v3.0",
+          "model": "cohere.embed-v4.0",
           "transfer_timeout": 1200
         }')
       );
@@ -142,7 +143,7 @@ In this task we will run a similarity search on the Iceberg table data by access
       title,
       VECTOR_DISTANCE(
         emb,
-        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        TO_VECTOR(:query_vec, 1536, FLOAT32),
         COSINE) AS dist,
       text
     FROM wiki_iceberg
@@ -171,7 +172,7 @@ In this task we will run a similarity search on the Iceberg table data by access
           "provider": "ocigenai",
           "credential_name": "AI_CREDENTIAL",
           "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-          "model": "cohere.embed-multilingual-v3.0",
+          "model": "cohere.embed-v4.0",
           "transfer_timeout": 1200
         }')
       );
@@ -182,7 +183,7 @@ In this task we will run a similarity search on the Iceberg table data by access
       title,
       VECTOR_DISTANCE(
         emb,
-        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        TO_VECTOR(:query_vec, 1536, FLOAT32),
         COSINE) AS dist,
       text
     FROM wiki_iceberg
@@ -194,7 +195,7 @@ In this task we will run a similarity search on the Iceberg table data by access
 
     ![explain plan](images/search_plan.png " ")
 
-    Notice that the plan shows a full table access since we have not yet created any indexes.
+    Notice that the plan shows a full scan, an "EXTERNAL TABLE ACCESS STORAGE FULL" in this case, since we have not yet created any indexes.
 
 ## Task 5: Create a vector index on the Iceberg Table
 
@@ -213,7 +214,7 @@ In this task we will create a vector index on the Iceberg table.
 
 ## Task 6: Run the similarity search a second time
 
-Now that you have created a vector index you can run the same similarity search you ran in Task 4. The query execution should take advantage of the vector index and run much faster and access many fewer vectors.
+Now that you have created a vector index you can run the same similarity search you ran in Task 4. The query execution should take advantage of the vector index and run faster and access fewer vectors.
 
 1. Run the following query using the "Run Script (F5)" button:
 
@@ -227,7 +228,7 @@ Now that you have created a vector index you can run the same similarity search 
           "provider": "ocigenai",
           "credential_name": "AI_CREDENTIAL",
           "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-          "model": "cohere.embed-multilingual-v3.0",
+          "model": "cohere.embed-v4.0",
           "transfer_timeout": 1200
         }')
       );
@@ -237,7 +238,7 @@ Now that you have created a vector index you can run the same similarity search 
       title,
       VECTOR_DISTANCE(
         emb,
-        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        TO_VECTOR(:query_vec, 1536, FLOAT32),
         COSINE) AS dist,
       text
     FROM wiki_iceberg
@@ -248,7 +249,7 @@ Now that you have created a vector index you can run the same similarity search 
 
     ![index query](images/index_search.png " ")
 
-    This time the query should have run much faster, and notice that the results might not be exactly the same. Recall that a similarity search using a vector index is an **approximate** search, not exhaustive. That means that not all of the vectors were compared and therefore the search may produce slightly different results.
+    This time the query should have run faster, although our table is pretty small so there won't be a big difference, and notice that the results might not be exactly the same. Recall that a similarity search using a vector index is an **approximate** search, not exhaustive. That means that not all of the vectors were compared and therefore the search may produce slightly different results.
 
 2. To see the explain plan with the index copy and paste the following SQL. Note that this is the same SQL we ran in Task 4 to generate the explain plan and is equivalent to the above query.
 
@@ -264,7 +265,7 @@ Now that you have created a vector index you can run the same similarity search 
           "provider": "ocigenai",
           "credential_name": "AI_CREDENTIAL",
           "url": "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/embedText",
-          "model": "cohere.embed-multilingual-v3.0",
+          "model": "cohere.embed-v4.0",
           "transfer_timeout": 1200
         }')
       );
@@ -275,7 +276,7 @@ Now that you have created a vector index you can run the same similarity search 
       title,
       VECTOR_DISTANCE(
         emb,
-        TO_VECTOR(:query_vec, 1024, FLOAT32),
+        TO_VECTOR(:query_vec, 1536, FLOAT32),
         COSINE) AS dist,
       text
     FROM wiki_iceberg
@@ -290,6 +291,8 @@ Now that you have created a vector index you can run the same similarity search 
     Now you should see a plan with an index access. The plan may be a bit difficult to decipher to identify the use of the index. The following is the full plan. Note the access of the `VECTOR$WIKI_ICEBERG_IDX$<...>` objects which are the access of the index that we created in the previous step. Also note that an IVF index access shows up a bit differently than what you might be used to when looking at a B-tree or Bitmap index on relational data.
 
     ![index full plan](images/index_full_plan.png " ")
+
+    Notice that after scanning the index we only accessed 50 rows from the WIKI_ICEBERG table instead of all 1000 rows when we didn't have the index. That may not seem like a big difference, but consider that most Iceberg tables are typically very large and a full scan of those tables will take a very long time. With a vector index defined there is the potential for huge savings in scan time and I/O.
 
 ## Learn More
 
