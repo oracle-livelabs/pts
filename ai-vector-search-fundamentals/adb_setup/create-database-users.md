@@ -8,16 +8,16 @@ Estimated Time: X
 
 ### Objectives
 
-- Learn how to setup the required database roles in Database Actions.
-- Learn how to create database users in Database Actions.
-- Load the ONNX embedding models
-- Import the the workshop schemas
-- Import the APEX workspaces and applications
+* Learn how to setup the required database roles in Database Actions.
+* Learn how to create database users in Database Actions.
+* Load the ONNX embedding models
+* Import the the workshop schemas
+* Import the APEX workspaces and applications
 
 ### Prerequisites
 
-- Oracle Cloud account
-- Provisioned Autonomous Database
+* Oracle Cloud account
+* Provisioned Autonomous Database
 
 ## Task 1: Login to Database Actions
 
@@ -29,17 +29,17 @@ Although you can connect to your Oracle Autonomous Database using desktop tools 
 
     ![Autonomous Databases homepage.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/oci-adb-list-with-db.png " ")
 
-2. In your ADB database's details page, click the **Database Actions** button and then choose the **View all database actions** option.
+1. In your ADB database's details page, click the **Database Actions** button and then choose the **View all database actions** option.
 
     ![Click Database Actions button.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-dbactions-goto.png " ")
 
     Logging in from the OCI service console expects that you are the ADMIN user. Log in as ADMIN, or your admin user, if you are not automatically logged in.
 
-3. The Database Actions page opens. In the **Development** box, click **SQL**.
+1. The Database Actions page opens. In the **Development** box, click **SQL**.
 
     ![Click SQL.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-dbactions-click-sql.png " ")
 
-4. The first time you open SQL Worksheet, a series of pop-up informational boxes may appear, providing you a tour that introduces the main features. If not, click the Tour button (labeled with binoculars symbol) in the upper right corner. Click **Next** to take a tour through the informational boxes.
+1. The first time you open SQL Worksheet, a series of pop-up informational boxes may appear, providing you a tour that introduces the main features. If not, click the Tour button (labeled with binoculars symbol) in the upper right corner. Click **Next** to take a tour through the informational boxes.
 
     ![SQL Worksheet.](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/adb-sql-worksheet-opening-tour.png " ")
 
@@ -55,41 +55,41 @@ When you create a new Autonomous Database, you automatically get an account call
 
     You will automatically be logged in as the ADMIN user, or you may be prompted to provide the username and password of the administrator you specified when you created the Autonomous Database instance.
 
-2. You can see that your ADMIN user appears as the current user. And, several other system users may already exist. On the right-hand side, click the **+ Create User** button.
+1. You can see that your ADMIN user appears as the current user. And, several other system users may already exist. On the right-hand side, click the **+ Create User** button.
 
     ![Create User button highlighted on the Database Users page](https://oracle-livelabs.github.io/common/building-blocks/tasks/adb/images/db-actions-click-create-user.png " ")
 
-3. The **Create User** form will appear on the right-hand side of your browser window. Use the settings below to complete the form for the NATIONALPARKS user:
+1. The **Create User** form will appear on the right-hand side of your browser window. Use the settings below to complete the form for the NATIONALPARKS user:
 
-    - User Name: **NATIONALPARKS**
-    - Password:  **Welcome_12345**
-    - Quota on tablespace DATA: UNLIMITED
+    * User Name: **NATIONALPARKS**
+    * Password:  **Welcome_12345**
+    * Quota on tablespace DATA: UNLIMITED
 
-    - Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
-    - Leave the **Account is Locked** toggle button as off. 
+    * Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
+    * Leave the **Account is Locked** toggle button as off.
 
-    - Leave the **Graph** toggle button as off.
-    - Toggle the **Web Access** button to **On**.
-    - Leave the **OML** button as off.
-    - Toggle the **REST, GraphQL, MondoDB, and Web access** button to **On**.
+    * Leave the **Graph** toggle button as off.
+    * Toggle the **Web Access** button to **On**.
+    * Leave the **OML** button as off.
+    * Toggle the **REST, GraphQL, MondoDB, and Web access** button to **On**.
 
     Click **Create User** at the bottom of the form.
 
     ![The Create User dialog](images/adb_nationalparks_create.png " ")
 
-4. Click the **+ Create User** button again and create a second user on the **Create User** form. Use the settings below to complete the form for the INCIDENT user:
+1. Click the **+ Create User** button again and create a second user on the **Create User** form. Use the settings below to complete the form for the INCIDENT user:
 
-    - User Name: **INCIDENT**
-    - Password:  **Welcome_12345**
-    - Quota on tablespace DATA: UNLIMITED
+    * User Name: **INCIDENT**
+    * Password:  **Welcome_12345**
+    * Quota on tablespace DATA: UNLIMITED
 
-    - Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
-    - Leave the **Account is Locked** toggle button as off. 
+    * Leave the **Password Expired** toggle button as off (Note: this controls whether the user is prompted to change their password when they next log in).
+    * Leave the **Account is Locked** toggle button as off.
 
-    - Leave the **Graph** toggle button as off.
-    - Toggle the **Web Access** button to **On**.
-    - Leave the **OML** button as off.
-    - Toggle the **REST, GraphQL, MondoDB, and Web access** button to **On**.
+    * Leave the **Graph** toggle button as off.
+    * Toggle the **Web Access** button to **On**.
+    * Leave the **OML** button as off.
+    * Toggle the **REST, GraphQL, MondoDB, and Web access** button to **On**.
 
     Click **Create User** at the bottom of the form.
 
@@ -101,7 +101,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![SQL worksheet](images/sql_admin_worksheet.png)
 
-2. If you created the NATIONALPARKS and INCIDENT users in the OCI console as described above then the following roles and REST enable script have already been run. If you created the users with a CREATE USER statement or you are using an existing user then the following should be run for both users.
+1. If you created the NATIONALPARKS and INCIDENT users in the OCI console as described above then the following roles and REST enable script have already been run. If you created the users with a CREATE USER statement or you are using an existing user then the following should be run for both users.
 
     For the NATIONALPARKS user:
 
@@ -159,7 +159,7 @@ When you create a new Autonomous Database, you automatically get an account call
     </copy>
     ```
 
-3. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window for the NATIONALPARKS user:
+1. Proceed with **Grant privileges** by copying and pasting the following into the Database Actions SQL window for the NATIONALPARKS user:
 
     ```sql[]
     <copy>
@@ -180,7 +180,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![grant privileges](images/grant_natparks_privileges.png " ")
 
-4. Use the following **Grant privileges** for the INCIDENT user:
+1. Use the following **Grant privileges** for the INCIDENT user:
 
     ```sql[]
     <copy>
@@ -197,7 +197,7 @@ When you create a new Autonomous Database, you automatically get an account call
 
     ![grant privileges](images/grant_incident_privileges.png " ")
 
-5. Confirm that you can login with the new users.
+1. Confirm that you can login with the new users.
 
     This will require that you log out of the ADMIN user, click on the down error next to the ADMIN user name at the top right of the screen and click "Sign Out". After signing in as each user below you should bring up a Database Actions SQL worksheet. You can do this by selecting the **Development** tab and the **SQL** option from the pop-up menu or navigate to the main menu in the upper left corner of the screen and choose **SQL** from the **</> Development** menu.
 
@@ -293,7 +293,7 @@ In this task you will import the workshop's APEX workspaces and applications:
 
     ![expand cloudshell](images/create_cloudshell.png)
 
-2. Copy the APEX workspace and application files from object storage to the local directory:
+1. Copy the APEX workspace and application files from object storage to the local directory:
 
     ```[]
     <copy>
@@ -309,7 +309,7 @@ In this task you will import the workshop's APEX workspaces and applications:
 
     ![copy apex files](images/copy_apex_files.png)
 
-3. Create a wallet zip file and unzip for TNS connection to the database:
+1. Create a wallet zip file and unzip for TNS connection to the database:
 
     ```[]
     oci db autonomous-database generate-wallet --autonomous-database-id <Insert your OCID here> --file adb.zip --password  Welcome_12345
@@ -334,7 +334,7 @@ In this task you will import the workshop's APEX workspaces and applications:
 
     ![list tnsnames](images/list_tnsnames.png)
 
-4. Copy the following code to an editor and save the file with a name like **apex\_natparks\_setup.sql**. You will run this script in a following step.
+1. Copy the following code to an editor and save the file with a name like **apex\_natparks\_setup.sql**. You will run this script in a following step.
 
     ```[]
     <copy>
@@ -354,7 +354,7 @@ In this task you will import the workshop's APEX workspaces and applications:
     </copy>
     ```
 
-5. Copy the following code to an editor and make the appropriate changes for the credential parameters. Save the file with a name like **apex\_incident\_setup.sql**. You will run this script in a following step.
+1. Copy the following code to an editor and make the appropriate changes for the credential parameters. Save the file with a name like **apex\_incident\_setup.sql**. You will run this script in a following step.
 
     ```[]
     <copy>
@@ -395,12 +395,12 @@ In this task you will import the workshop's APEX workspaces and applications:
     </copy>
     ```
 
-6. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in  step 3 and run both of the scripts you created in the steps 4 and 5:
+1. Connect to SQLcl with the ADMIN user using the TNS string from the tnsnames.ora file created in  step 3 and run both of the scripts you created in the steps 4 and 5:
 
     ![run sqlcl](images/run_sqlcl.png)
 
 ## Acknowledgements
 
-- **Author** - Andy Rivenes, Product Manager, AI Vector Search
-- **Contributors** - David Start
-- **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2026
+* **Author** - Andy Rivenes, Product Manager, AI Vector Search
+* **Contributors** - David Start
+* **Last Updated By/Date** - Andy Rivenes, Product Manager, AI Vector Search, April 2026

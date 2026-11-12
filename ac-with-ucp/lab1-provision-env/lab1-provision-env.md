@@ -26,27 +26,27 @@ This lab assumes you have:
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [BusinessContinuityStack.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/labfiles/BusinessContinuity-freetier-mkplc_18032024.zip) - Packaged Terraform Environment creation script.
+* [BusinessContinuityStack.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/labfiles/BusinessContinuity-freetier-mkplc_18032024.zip) - Packaged Terraform Environment creation script.
 
 ## Task 1: Load Terraform Stack
 
-  1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**.
+1. Login to the Oracle Cloud Console, click the **Navigation Menu** in the upper left, navigate to **Developer Services**, and select **Stacks**.
 
     >**Note:** If you are in a workshop, double check your region to ensure you are on the assigned region.
 
-  ![OCI console menu stacks](./images/task1/developer-resmgr-stacks.png " ")
+    ![OCI console menu stacks](./images/task1/developer-resmgr-stacks.png " ")
 
     Click **Create Stack**
 
     ![Create stack dialog](./images/task1/create-stack-dialog.png " ")
 
-  2. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityXXX.zip**) that you downloaded. Click **Select** to upload the zip file.
+1. Check the **.ZIP File**, Click the **Browse** link and select the zip file (**BusinessContinuityXXX.zip**) that you downloaded. Click **Select** to upload the zip file.
 
     ![Create stack dialog validation](./images/task1/create-stack-dialog-validation.png " ")
 
     Then click **Next**
 
-  3. Select the following values and click **Next**
+1. Select the following values and click **Next**
 
     * Availability domain																: AD-1
     * Public SSH Key string (Pubic key for compute instance and database nodes) : Browse to and upload your public key file
@@ -58,7 +58,7 @@ Click on the link below to download the Resource Manager zip files you need to b
     * Instance Shape																		: VM.Standard.E3.Flex or VM.Standard.E4.Flex
     * OCPU																							: 1
 
-  4. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
+1. Leave **Run Apply** unchecked and click **Create** to upload the Terraform stack
 
     ![Upload stack dialog](./images/task1/upload-stack-dialog.png " ")
     You should now see that your stack has been created!
@@ -70,7 +70,7 @@ Click on the link below to download the Resource Manager zip files you need to b
 
   When using Resource Manager to deploy an environment, execute a terraform **Plan** to verify the configuration. This is an optional step in this lab.
 
-  1.  [OPTIONAL] Select the Stack and Click **Plan** to validate your configuration. This takes about a minute, please be patient.
+1. [OPTIONAL] Select the Stack and Click **Plan** to validate your configuration. This takes about a minute, please be patient.
 
     ![Plan job running](./images/task1/plan-job-running.png " ")
 
@@ -85,13 +85,13 @@ Click on the link below to download the Resource Manager zip files you need to b
 
   When using Resource Manager to deploy an environment, execute a terraform **Apply** job. Let's do that now.
 
-  1.  Select the Stack and click **Apply**. Click **Apply** again to confirm the dialog. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
+1. Select the Stack and click **Apply**. Click **Apply** again to confirm the dialog. This will provision the environment. The job will take about 90 minutes to complete, please be patient.
 
     ![Apply job dialog](./images/task1/apply-job-dialog.png " ")
 
-  2. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
+1. Go to **Jobs** under **Resources** to monitor the progress of the Apply job.
 
-  3. Once the apply job succeeds, click on its name and access to the log (you can also download it).
+1. Once the apply job succeeds, click on its name and access to the log (you can also download it).
 
     Go to the bottom of the log.
 
@@ -106,9 +106,10 @@ Click on the link below to download the Resource Manager zip files you need to b
     ![Compute Instance Desktop in noVNC](./images/task1/compute-instance-desktop.png " ")
 
 
-**You can proceed to the next lab…**
+    **You can proceed to the next lab…**
 
 ## Acknowledgements
+
 * **Author** - François Pons, Senior Principal Product Manager
 * **Contributors** - Andrei Manoliu, Principal Product Manager
 * **Last Updated By/Date** - François Pons, July 2025

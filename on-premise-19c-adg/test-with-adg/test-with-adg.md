@@ -1,21 +1,22 @@
 # Testing with Active Data Guard And Perform Switchover
 
 ## Introduction
+
 In this lab, You can run some testing with the ADG and Perform a Switchover.
 
 Estimated Time: 40 minutes
 
 ### Objectives
 
-- Test transaction replication
-- Check lag between the primary and standby
-- Switchover to the standby
+* Test transaction replication
+* Check lag between the primary and standby
+* Switchover to the standby
 
 ### Prerequisites
 
 This lab assumes you have already completed the following labs:
 
-- Deploy Active Data Guard
+* Deploy Active Data Guard
 
 ## **Task 1:** Test Transaction Replication
 
@@ -37,9 +38,8 @@ This lab assumes you have already completed the following labs:
     SQL> 
     ```
 
-    
 
-2. Create a test user in orclpdb, and grant privileges to the user. You need open the pdb if it is closed.
+1. Create a test user in orclpdb, and grant privileges to the user. You need open the pdb if it is closed.
 
     ```
     SQL> <copy>show pdbs;</copy>
@@ -72,7 +72,7 @@ This lab assumes you have already completed the following labs:
     SQL> <copy>exit;</copy>
     ```
 
-2. Connect with **testuser**.
+1. Connect with **testuser**.
 
     ```
     [oracle@primary ~]$ <copy>sqlplus testuser/testuser@localhost:1521/orclpdb</copy>
@@ -89,10 +89,9 @@ This lab assumes you have already completed the following labs:
     
     SQL> 
     ```
-    
-    
-    
-2. Create a test table and insert a test record.
+
+
+1. Create a test table and insert a test record.
 
     ```
     SQL> <copy>create table test(a number,b varchar2(20));</copy>
@@ -108,8 +107,8 @@ This lab assumes you have already completed the following labs:
     
     SQL>  
     ```
-    
-3. From the standby side, connect to the database as sysdba.
+
+1. From the standby side, connect to the database as sysdba.
 
     ```
     [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
@@ -126,10 +125,9 @@ This lab assumes you have already completed the following labs:
     
     SQL> 
     ```
-    
-    
-    
-3. Open the standby database as read only.
+
+
+1. Open the standby database as read only.
 
     ```
     SQL> <copy>select open_mode,database_role from v$database;</copy>
@@ -164,7 +162,9 @@ This lab assumes you have already completed the following labs:
     Version 19.10.0.0.0
     [oracle@dbstby ~]$ 
     ```
+
     If the `OPEN_MODE` is **READ ONLY**, you can run the following command in sqlplus as sysdba, then check the `open_mode` again, you can see the `OPEN_MODE` is **READ ONLY WITH APPLY** now.
+
     ```
     SQL> <copy>alter database recover managed standby database cancel;</copy>
     
@@ -180,8 +180,8 @@ This lab assumes you have already completed the following labs:
     -------------------- ----------------
     READ ONLY WITH APPLY PHYSICAL STANDBY
     ```
-    
-4. From the standby side, connect as **testuser** to orclpdb. 
+
+1. From the standby side, connect as **testuser** to orclpdb.
 
     ```
     [oracle@standby ~]$ <copy>sqlplus testuser/testuser@localhost:1521/orclpdb</copy>
@@ -199,10 +199,9 @@ This lab assumes you have already completed the following labs:
     
     SQL> 
     ```
-    
-    
-    
-4. Check if the test table and record has replicated to the standby.
+
+
+1. Check if the test table and record has replicated to the standby.
 
     ```
     SQL> <copy>select * from test;</copy>
@@ -227,9 +226,8 @@ There are several ways to check the lag between the primary and standby.
     </copy>
     ```
 
-   
 
-2. From primary side, run as **oracle** user, download scripts using the command you copied.
+1. From primary side, run as **oracle** user, download scripts using the command you copied.
 
     ```
     [oracle@primary ~]$ wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/workload.sh
@@ -259,9 +257,8 @@ There are several ways to check the lag between the primary and standby.
     [oracle@primary ~]$  
     ```
 
-   
 
-3. Change mode of the `workload.sh` file and run the workload. Ignore the error message of drop table. Keep this window open and running for the next few Task s in this lab.
+1. Change mode of the `workload.sh` file and run the workload. Ignore the error message of drop table. Keep this window open and running for the next few Task s in this lab.
 
     ```
     [oracle@primary ~]$ <copy>chmod a+x workload.sh</copy> 
@@ -316,9 +313,8 @@ There are several ways to check the lag between the primary and standby.
         
     ```
 
-   
 
-4. From the standby side, connect as **testuser** to orclpdb.
+1. From the standby side, connect as **testuser** to orclpdb.
 
     ```
     [oracle@standby ~]$ <copy>sqlplus testuser/testuser@standby:1521/orclpdb</copy>
@@ -336,10 +332,9 @@ There are several ways to check the lag between the primary and standby.
     
     SQL> 
     ```
-    
-    
-    
-4. Count the records in the sample table several times. Compare the record number with the primary side.
+
+
+1. Count the records in the sample table several times. Compare the record number with the primary side.
 
     ```
     SQL> <copy>select count(*) from sale_orders;</copy>
@@ -350,20 +345,18 @@ There are several ways to check the lag between the primary and standby.
     
     SQL> 
     ```
-    
-    
-    
-5. From standby site, connect to the database as sysdba. 
+
+
+1. From standby site, connect to the database as sysdba.
 
     ```
     SQL> <copy>connect / as sysdba</copy>
     Connected.
     SQL> 
     ```
-    
-    
-    
-5. Check the Oracle System Change Number (SCN). Compare it with the primary side.
+
+
+1. Check the Oracle System Change Number (SCN). Compare it with the primary side.
 
     ```
     SQL> <copy>SELECT current_scn FROM v$database;</copy>
@@ -373,9 +366,8 @@ There are several ways to check the lag between the primary and standby.
         2784330
     ```
 
-   
 
-6. From standby site, query the `v$dataguard_stats` view to check the lag.
+1. From standby site, query the `v$dataguard_stats` view to check the lag.
 
     ```
     SQL> <copy>set linesize 120;</copy>
@@ -395,9 +387,8 @@ There are several ways to check the lag between the primary and standby.
     SQL> 
     ```
 
-   
 
-7. Login to Data Guard Broker.
+1. Login to Data Guard Broker.
 
     ```
     [oracle@standby ~]$ <copy>dgmgrl sys/Ora_DB4U@orcl</copy>
@@ -411,10 +402,9 @@ There are several ways to check the lag between the primary and standby.
     Connected as SYSDBA.
     DGMGRL> 
     ```
-    
-    
-    
-7. Check lag between primary and standby.
+
+
+1. Check lag between primary and standby.
 
     ```
     DGMGRL> <copy>show database ORCLSTBY</copy>
@@ -435,17 +425,15 @@ There are several ways to check the lag between the primary and standby.
     
     DGMGRL> 
     ```
-    
-8. From the on-premise side, press `Ctrl-C` to terminate the running workload.
+
+1. From the on-premise side, press `Ctrl-C` to terminate the running workload.
 
 
+## **Task 3:** Switchover To Standby
 
+At any time, you can manually execute a Data Guard switchover (planned event) or failover (unplanned event). Customers may also choose to automate Data Guard failover by configuring Fast-Start failover. Switchover and failover reverse the roles of the databases in a Data Guard configuration – the standby database becomes primary and the original primary becomes the standby database. Refer to Oracle MAA Best Practices for additional information on Data Guard role transitions.
 
-## **Task 3:** Switchover To Standby 
-
-At any time, you can manually execute a Data Guard switchover (planned event) or failover (unplanned event). Customers may also choose to automate Data Guard failover by configuring Fast-Start failover. Switchover and failover reverse the roles of the databases in a Data Guard configuration – the standby database becomes primary and the original primary becomes the standby database. Refer to Oracle MAA Best Practices for additional information on Data Guard role transitions. 
-
-Switchovers are always a planned event that guarantees no data is lost. To execute a switchover, perform the following in Data Guard Broker 
+Switchovers are always a planned event that guarantees no data is lost. To execute a switchover, perform the following in Data Guard Broker
 
 1. Connect DGMGRL from the primary side.
 
@@ -461,10 +449,9 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     Connected as SYSDBA.
     DGMGRL> 
     ```
-    
-    
-    
-1. Validate the standby database to see if **Ready For Switchover** is Yes. 
+
+
+1. Validate the standby database to see if **Ready For Switchover** is Yes.
 
     ```
     DGMGRL> <copy>validate database ORCLSTBY</copy>
@@ -487,8 +474,8 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     
     DGMGRL> 
     ```
-    
-2. Switch over to the standby database, and show the configurations.
+
+1. Switch over to the standby database, and show the configurations.
 
     ```
     DGMGRL> <copy>switchover to orclstby</copy>
@@ -524,7 +511,7 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     DGMGRL> <copy>exit</copy>
     ```
 
-3. From the original primary side, connect to the database as sysdba. 
+1. From the original primary side, connect to the database as sysdba.
 
     ```
     [oracle@primary ~]$ <copy>sqlplus / as sysdba</copy>
@@ -541,10 +528,9 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     
     SQL> 
     ```
-    
-    
-    
-3. You can see the previous primary side becomes the new standby side.
+
+
+1. You can see the previous primary side becomes the new standby side.
 
     ```
     SQL> <copy>show pdbs</copy>
@@ -561,8 +547,8 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     
     SQL> 
     ```
-    
-4. From the original standby side, connect to the database as sysdba.
+
+1. From the original standby side, connect to the database as sysdba.
 
     ```
     [oracle@standby ~]$ <copy>sqlplus / as sysdba</copy>
@@ -579,10 +565,9 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
     
     SQL> 
     ```
-    
-     
-    
-4. You can see it's becomes the new primary side.
+
+
+1. You can see it's becomes the new primary side.
 
     ```
     SQL> <copy>show pdbs</copy>
@@ -603,6 +588,7 @@ Switchovers are always a planned event that guarantees no data is lost. To execu
 You may now **proceed to the next lab**.
 
 ## Acknowledgements
-* **Author** - Minqiao Wang, Oct 2020 
+
+* **Author** - Minqiao Wang, Oct 2020
 * **Last Updated By/Date** - Minqiao Wang, Dec 2022
 

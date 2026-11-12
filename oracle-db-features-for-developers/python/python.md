@@ -22,12 +22,13 @@ To learn about how to connect to an oracle database from python, watch the video
 
 ### Objectives
 
--   Learn how to use Python in the Oracle Database
--   Learn how to validate Python operations
+* Learn how to use Python in the Oracle Database
+* Learn how to validate Python operations
 
 ### Prerequisites
 
 This lab assumes you have completed the following labs:
+
 * Lab: Login to Oracle Cloud
 * Lab: Generate SSH Key
 * Lab: Environment Setup
@@ -37,13 +38,13 @@ This lab assumes you have completed the following labs:
 
 Python comes preinstalled on most Linux distributions, and it is available as a package on others. The Python packages can be obtained from the software repository of your Linux distribution using the package manager.
 
-1.  Open up the Oracle Cloud shell (or terminal of your choice) and ssh into your compute instance as the *opc* user.
+1. Open up the Oracle Cloud shell (or terminal of your choice) and ssh into your compute instance as the *opc* user.
 
     ````
     ssh -i ~/.ssh/<sshkeyname> opc@<Your Compute Instance Public IP Address>
     ````
 
-2.  Check if python3 has been installed by running the command.
+1. Check if python3 has been installed by running the command.
 
     ````
     <copy>
@@ -51,7 +52,7 @@ Python comes preinstalled on most Linux distributions, and it is available as a 
     </copy>
     ````
 
-3.  If Python is not installed then install it. There is no harm in running this command multiple times, the system will either install packages or let you know they are already installed.
+1. If Python is not installed then install it. There is no harm in running this command multiple times, the system will either install packages or let you know they are already installed.
 
     ````
     <copy>
@@ -59,15 +60,15 @@ Python comes preinstalled on most Linux distributions, and it is available as a 
     </copy>
     ````
 
-    ![](./images/step1.3-installpython3.png " " )
+    ![Step1.3 installpython3](./images/step1.3-installpython3.png " " )
 
-    ![](./images/p_installPython.jpg " ")
+    ![P installPython](./images/p_installPython.jpg " ")
 
 ## Task 2: The Python Interpreter
 
 There are several ways to execute Python code. In this step, we start with two examples on how to execute Python code from the command line. The first example executing code from the command prompt i.e. executing commands directly in the interpreter. The second example to save your code in a .py file and invoke the interpreter to execute the file.
 
-1.  To execute code from command line open the Python command-line editor and type the following commands, one by one (each line is one command).
+1. To execute code from command line open the Python command-line editor and type the following commands, one by one (each line is one command).
 
     ````
     <copy>
@@ -78,11 +79,11 @@ There are several ways to execute Python code. In this step, we start with two e
     'Hello World'
     ````
 
-    ![](./images/p_python-1.png " " )
+    ![P python 1](./images/p_python-1.png " " )
 
     To quit from the Python interpreter type *quit()* in the command-line editor.
 
-2.  To create a simple script, open up a text editor (like vi) as *vi test.py* and enter the following script.
+1. To create a simple script, open up a text editor (like vi) as *vi test.py* and enter the following script.
 
     ````
     <copy>
@@ -91,7 +92,7 @@ There are several ways to execute Python code. In this step, we start with two e
     </copy>
     ````
 
-3.  Save the file as *test.py* in the /home/oracle directory.
+1. Save the file as *test.py* in the /home/oracle directory.
 
     ````
     <copy>
@@ -99,22 +100,23 @@ There are several ways to execute Python code. In this step, we start with two e
     </copy>
     ````
 
-    ![](./images/p_python-2.png " " )
+    ![P python 2](./images/p_python-2.png " " )
 
 ## Task 3: Install Python Oracle module and connect to a database
 
 *cx\_Oracle* is a python module that enables access to Oracle databases. This module is supported by Oracle 11.2 and higher and works for both Python 2.X and 3.X. There are various ways in which cx\_Oracle can be installed. In this example, we will use pip (installed by default for python 3.4 and up). For more ways to install cx\_Oracle (like yum) check the documentation on [https://yum.oracle.com/oracle-linux-python.html#Aboutcx_Oracle](https://yum.oracle.com/oracle-linux-python.html#Aboutcx_Oracle "documentation").
 
-1.  Since our client libraries are installed in our VM under the oracle user, we will now 'sudo' into the oracle user. (If you have an environment that does not have client libraries accessible to the user running the python3 script, install the Oracle instant client as described in the documentation.) Become the *Oracle* user.
+1. Since our client libraries are installed in our VM under the oracle user, we will now 'sudo' into the oracle user. (If you have an environment that does not have client libraries accessible to the user running the python3 script, install the Oracle instant client as described in the documentation.) Become the *Oracle* user.
 
     ````
     <copy>
     sudo su - oracle
     </copy>
     ````
-    ![](./images/sudo-oracle.png " ")
 
-2.  Install the *cx\_Oracle* module using python3 and pip for the oracle user.
+    ![Sudo oracle](./images/sudo-oracle.png " ")
+
+1. Install the *cx\_Oracle* module using python3 and pip for the oracle user.
 
     ````
     <copy>
@@ -122,9 +124,9 @@ There are several ways to execute Python code. In this step, we start with two e
     </copy>
     ````
 
-    ![](./images/p_installcxOracle.png " " )
+    ![P installcxOracle](./images/p_installcxOracle.png " " )
 
-3.  Test your install by launching the python console and list the available modules.
+1. Test your install by launching the python console and list the available modules.
 
     ````
     <copy>
@@ -133,7 +135,8 @@ There are several ways to execute Python code. In this step, we start with two e
     ORACLE_SID = [ORCL] ? ORCL
     The Oracle base remains unchanged with value /u01/app/oracle
     ````
-    ![](./images/oraenv.png " ")
+
+    ![Oraenv](./images/oraenv.png " ")
 
     ````
     <copy>
@@ -144,9 +147,9 @@ There are several ways to execute Python code. In this step, we start with two e
 
     This command will show you a list of installed modules that should include the cx\_Oracle module we installed in the previous step.
 
-    ![](./images/p_installcxOracle-2.png " ")
+    ![P installcxOracle 2](./images/p_installcxOracle-2.png " ")
 
-4.  Connect to the Oracle database and print the version of the database via python. (This confirms you are connected to an Oracle instance and returns the database version.)
+1. Connect to the Oracle database and print the version of the database via python. (This confirms you are connected to an Oracle instance and returns the database version.)
 
     ````
     <copy>
@@ -160,13 +163,13 @@ There are several ways to execute Python code. In this step, we start with two e
     </copy>
     ````
 
-    ![](./images/p_python-3.png " ")
+    ![P python 3](./images/p_python-3.png " ")
 
 ## Task 4: Querying the Oracle database
 
 Retrieving records from Oracle database using cursors is a simple as embedding a SQL statement within a cursor().execute statement. For this example, we will use an existing table from the *SH* sample schema.
 
-1.  Create a script called /home/oracle/db_connect.py with the following contents.
+1. Create a script called /home/oracle/db_connect.py with the following contents.
 
     ````
     <copy>
@@ -187,7 +190,7 @@ Retrieving records from Oracle database using cursors is a simple as embedding a
     </copy>
     ````
 
-2.  Execute the script and check the result.
+1. Execute the script and check the result.
 
     ````
     <copy>
@@ -197,19 +200,19 @@ Retrieving records from Oracle database using cursors is a simple as embedding a
 
     The result should be a list of customers.
 
-    ![](./images/p_python-4.png " ")
+    ![P python 4](./images/p_python-4.png " ")
 
-Querying Oracle database from Python leverages cursor technology and follows the standard cursor execution cycle: opening a cursor, the fetching stage, and closing a cursor to flush the allocated memory. The cursor syntax cx_Oracle uses can be found under: [http://cx-oracle.readthedocs.org/en/latest/index.html](https://cx-oracle.readthedocs.io/en/latest/api_manual/cursor.html#cursor-object "documentation")
+    Querying Oracle database from Python leverages cursor technology and follows the standard cursor execution cycle: opening a cursor, the fetching stage, and closing a cursor to flush the allocated memory. The cursor syntax cx_Oracle uses can be found under: [http://cx-oracle.readthedocs.org/en/latest/index.html](https://cx-oracle.readthedocs.io/en/latest/api_manual/cursor.html#cursor-object "documentation")
 
-Retrieving records from the Oracle database using cursors is a simple as embedding the SQL statement within the cursor().execute statement.
+    Retrieving records from the Oracle database using cursors is a simple as embedding the SQL statement within the cursor().execute statement.
 
-**Note**: Closing the cursor is considered good practice. Oracle will automatically close the cursor after the execution of its parent block finishes.
+    **Note**: Closing the cursor is considered good practice. Oracle will automatically close the cursor after the execution of its parent block finishes.
 
 ## Task 5: Query a JSON table from PYTHON
 
 This section provides detail on how to work with JSON data in Oracle Database 19c using Python’s interface. The exercises include creating a table in the pluggable database ORCLPDB, loading data into the table, validating documents with IS JSON check, and querying data from Python.
 
-1.  Open the Python interpreter and enter the following statements one by one to create a table to hold our data.
+1. Open the Python interpreter and enter the following statements one by one to create a table to hold our data.
 
     ````
     <copy>
@@ -217,7 +220,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-1.png " " )
+    ![P pythQuery 1](./images/p_pythQuery-1.png " " )
 
     ````
     <copy>
@@ -231,9 +234,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-2.png " " )
+    ![P pythQuery 2](./images/p_pythQuery-2.png " " )
 
-2.  Query the table data.
+1. Query the table data.
 
     **Note**: Ensure to have three spaces in front of the *‘print row’* command. These three spaces are a code indentation that indicates a block of code in Python, you must indent each line of the block by the same amount. In this case, ‘print row’ is the block of code we execute in the loop ‘for row in cur:’. Make sure you have those spaces when you execute the command. Hit Enter to close the block of code in the loop.
 
@@ -246,11 +249,11 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-3.png " " )
+    ![P pythQuery 3](./images/p_pythQuery-3.png " " )
 
     Python returns an empty row.
 
-3.  Insert a row into the table.
+1. Insert a row into the table.
 
     ````
     <copy>
@@ -260,9 +263,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-4.png " " )
+    ![P pythQuery 4](./images/p_pythQuery-4.png " " )
 
-4.  Query the table again.
+1. Query the table again.
 
     ````
     <copy>
@@ -273,11 +276,11 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-5.png " " )
+    ![P pythQuery 5](./images/p_pythQuery-5.png " " )
 
     We retrieve the LOB pointer.
 
-5.  Retrieve the *rating* portion of the JSON document.
+1. Retrieve the *rating* portion of the JSON document.
 
     ````
     <copy>
@@ -285,9 +288,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/step5.5-rating.png " " )
+    ![Step5.5 rating](./images/step5.5-rating.png " " )
 
-6.  Print the current cursor (the rating information).
+1. Print the current cursor (the rating information).
 
     ````
     <copy>
@@ -296,9 +299,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-6.png " " )
+    ![P pythQuery 6](./images/p_pythQuery-6.png " " )
 
-7.  Retrieve the *comment titles*.
+1. Retrieve the *comment titles*.
 
     ````
     <copy>
@@ -309,9 +312,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-7.png " " )
+    ![P pythQuery 7](./images/p_pythQuery-7.png " " )
 
-8.  *JSON\_VALUE* and *JSON\_QUERY*.
+1. *JSON\_VALUE* and *JSON\_QUERY*.
 
     To retrieve a single value of a JSON document, the JSON\_VALUE function was used. JSON\_VALUE retrieves only one value. JSON\_VALUE uses dot-notation syntax – JSON Path Expression – to navigate through a JSON document hierarchy. The dot-notation syntax is a table alias (represented by the ‘$’ sign) followed by a dot (.) and the name of a JSON column we want to retrieve (or more if the document structure includes nested values).
 
@@ -328,7 +331,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-8.png " " )
+    ![P pythQuery 8](./images/p_pythQuery-8.png " " )
 
     You will notice that no records are returned even though we know they have been populated with data. This is due to JSON\_VALUE being able to work only with scalar SQL data types (that is, not an object or collection data type). To retrieve fragments of a JSON document, JSON\_QUERY has to be used.
 
@@ -341,9 +344,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-9.png " " )
+    ![P pythQuery 9](./images/p_pythQuery-9.png " " )
 
-9.  *Is it JSON? Or NOT?*
+1. *Is it JSON? Or NOT?*
 
     Insert a second row into the  *test\_json* table in a non-JSON formatted.
 
@@ -355,7 +358,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/step5.9-insertsecondrow.png " " )
+    ![Step5.9 insertsecondrow](./images/step5.9-insertsecondrow.png " " )
 
     The record is committed to the database without an error because the table does not specifically define its input has to be of the JSON format. Check that the record has been added to the table by counting the number of rows *test\_json*.
 
@@ -368,7 +371,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-10.png " " )
+    ![P pythQuery 10](./images/p_pythQuery-10.png " " )
 
     You can filter out records that do not follow JSON format with IS JSON and IS NOT JSON SQL extensions. First, check if there are any non-JSON records in the table.
 
@@ -380,7 +383,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/p_pythQuery-11.png " " )
+    ![P pythQuery 11](./images/p_pythQuery-11.png " " )
 
     **Note**: The index number may be different in the query executed, in which case change the id from *2* specified in the delete statement following.
 
@@ -394,9 +397,9 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/step5.9-deletenonjson.png " " )
+    ![Step5.9 deletenonjson](./images/step5.9-deletenonjson.png " " )
 
-10. Close the cursor and close the connection.
+1. Close the cursor and close the connection.
 
     ````
     <copy>
@@ -406,7 +409,7 @@ This section provides detail on how to work with JSON data in Oracle Database 19
     </copy>
     ````
 
-    ![](./images/step5.10-conclose.png " " )
+    ![Step5.10 conclose](./images/step5.10-conclose.png " " )
 
 ## Task 6: Load JSON data into a table using PYTHON
 
@@ -428,7 +431,7 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-2. Download a ZIP file containing *departments.dmp* and expand this in the directory you have just created
+1. Download a ZIP file containing *departments.dmp* and expand this in the directory you have just created
 
     ````
     <copy>
@@ -438,14 +441,15 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-3.  Connect to the database as SYS and create a new DIRECTORY object.
+1. Connect to the database as SYS and create a new DIRECTORY object.
 
     ````
     <copy>
     sqlplus sys/Ora_DB4U@localhost:1521/orclpdb as sysdba
     </copy>
     ````
-    ![](./images/sqlplus.png " ")
+
+    ![Sqlplus](./images/sqlplus.png " ")
 
     ````
     <copy>
@@ -455,9 +459,9 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-    ![](./images/p_pyth_cr_dir.png " " )
+    ![P pyth cr dir](./images/p_pyth_cr_dir.png " " )
 
-4.  Open the python interpreter and connect to the Oracle database as the *SH* user. Open a cursor.
+1. Open the python interpreter and connect to the Oracle database as the *SH* user. Open a cursor.
 
     ````
     <copy>
@@ -475,9 +479,9 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-    ![](./images/step6.2-connectdb.png " " )
+    ![Step6.2 connectdb](./images/step6.2-connectdb.png " " )
 
-5.  To create an external table pointing to the JSON document *departments.dmp*, execute the following in the Python shell.
+1. To create an external table pointing to the JSON document *departments.dmp*, execute the following in the Python shell.
 
     ````
     <copy>
@@ -485,7 +489,7 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-6.  Query the JSON table retrieving all the documents.
+1. Query the JSON table retrieving all the documents.
 
     ````
     <copy>
@@ -495,9 +499,9 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-    ![](./images/p_pythQuery-12.png " " )
+    ![P pythQuery 12](./images/p_pythQuery-12.png " " )
 
-7.  The data in the file *departments.dmp* is not a single JSON document. Each row is JSON data consisting of a *Department* object which contains an array of *employees* objects. Each employees object has a Name, a Job Title, and a Hire Date. The Oracle database can manipulate JSON directly, as you have seen with the SQL/JSON operator json\_query. Other operators include json\_value, json\_table, and so on.
+1. The data in the file *departments.dmp* is not a single JSON document. Each row is JSON data consisting of a *Department* object which contains an array of *employees* objects. Each employees object has a Name, a Job Title, and a Hire Date. The Oracle database can manipulate JSON directly, as you have seen with the SQL/JSON operator json\_query. Other operators include json\_value, json\_table, and so on.
 
     Use Python to retrieve the data from our table, load it into an array, and print the first department name (the indentation is important).
 
@@ -516,9 +520,9 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-    ![](./images/step6.5-retrievedata.png " " )
+    ![Step6.5 retrievedata](./images/step6.5-retrievedata.png " " )
 
-8.  Now determine how many employees there are per department.
+1. Now determine how many employees there are per department.
 
     ````
     <copy>
@@ -527,7 +531,7 @@ You need to create a file-system directory and place a JSON document in this dir
     </copy>
     ````
 
-    ![](./images/p_pythQuery-14.png " " )
+    ![P pythQuery 14](./images/p_pythQuery-14.png " " )
 
 ## Conclusion
 
@@ -538,9 +542,9 @@ The second part of the guide goes through a number of demo cases available throu
 
 An additional lab on using Python with Spatial data is also available elsewhere in this module.
 
-## **Acknowledgements**
+## Acknowledgements
 
-- **Author** - Troy Anthony
-- **Contributors** - Anoosha Pilli, Dylan McLeod, Arabella Yao
-- **Last Updated By/Date** - Troy Anthony, November 2021
+* **Author** - Troy Anthony
+* **Contributors** - Anoosha Pilli, Dylan McLeod, Arabella Yao
+* **Last Updated By/Date** - Troy Anthony, November 2021
 

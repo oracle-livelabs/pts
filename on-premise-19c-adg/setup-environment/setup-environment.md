@@ -8,69 +8,66 @@ Estimated Time: 40 minutes
 
 ### Objectives
 
-- Use Terraform and Resource Manager to setup the primary and standby environment.
+* Use Terraform and Resource Manager to setup the primary and standby environment.
 
 ### Prerequisites
 
 This lab assumes you have already completed the following:
-- An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account
-- Create a SSH Keys pair
+
+* An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account
+* Create a SSH Keys pair
 
 Click on the link below to download the Resource Manager zip files you need to build your environment.
 
-- [db19c-primary-num-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-num-19.20.zip) - Packaged terraform primary database instance creation script
-- [db19c-standby-nodb-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-standby-nodb-19.20.zip) - Packaged terraform standby database instance creation script
-
+* [db19c-primary-num-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-primary-num-19.20.zip) - Packaged terraform primary database instance creation script
+* [db19c-standby-nodb-19.20.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/db19c-standby-nodb-19.20.zip) - Packaged terraform standby database instance creation script
 
 
 ## **Task 1:** Prepare The Primary Database
 
-1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Developer Services**, under **Resource Manager** choose **Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. 
+1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Developer Services**, under **Resource Manager** choose **Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button.
 
     ![Resource Manager](images/image-resourcemanager.png " ")
-    
-    
-    
+
+
     ![Create Stack Page](./images/step1.3-createstackpage.png " ")
-    
-2. Check the **ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`db19c-primary-num.zip`) that you downloaded. Click **Select** to upload the zip file.
+
+1. Check the **ZIP FILE**, Click the **Browse** link and select the primary database setup zip file (`db19c-primary-num.zip`) that you downloaded. Click **Select** to upload the zip file.
 
     ![Stack Information Page](images/image-stackinforpage.png)
 
     Accept all the defaults and click **Next**.
 
 
-3. Choose the **Compartment** you want to deploy the database instance. Upload or Paste the content of the public key you create before,  and click **Next**. 
+1. Choose the **Compartment** you want to deploy the database instance. Upload or Paste the content of the public key you create before,  and click **Next**.
 
     ![Configure Variables Page](images/image-configurevariable.png)
 
-    
 
-4. Click **Create**.
+1. Click **Create**.
 
     ![Stack Review Page](images/image-stackreviewpage.png)
 
-5. Your stack has now been created!  Now to create your environment. 
+1. Your stack has now been created!  Now to create your environment.
 
     ![Stack Details](images/image-stackdetail.png)
-
 
 
 ## Task 2: Terraform Apply
 
 When using Resource Manager to deploy an environment, execute a terraform **Plan** and **Apply**. Let's do that now.
 
-1.  In the **Stack Details** page.  Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
+1. In the **Stack Details** page.  Click **Apply**. This will create your instance and install Oracle 19c. This takes about a minute, please be patient.
 
     ![Apply](images/image-applypage.png)
-    
+
     ![Apply Confirm](images/image-applyconfirm.png)
-    
+
     ![Apply Running](images/image-applyrunning.png)
-    
+
     ![Apply Finished](images/image-applyfinished.png)
 
-2.  Once this job succeeds, you will get an apply complete notification from Terraform.  In the end of the apply log,  you can get the **public ip address** of the primary instance. Congratulations, your environment is created! Time to login to your instance to finish the configuration.
+1. Once this job succeeds, you will get an apply complete notification from Terraform.  In the end of the apply log,  you can get the **public ip address** of the primary instance. Congratulations, your environment is created! Time to login to your instance to finish the configuration.
 
     ![Public IP](images/image-publicip.png)
 
@@ -79,13 +76,13 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
 ### MAC or Windows CYGWIN Emulator
 
-1.  Open up a terminal (MAC) or cygwin emulator as the opc user.  Enter yes when prompted.
+1. Open up a terminal (MAC) or cygwin emulator as the opc user.  Enter yes when prompted.
 
     ````
     <copy>ssh -i labkey opc@<Your Compute Instance Public IP Address></copy>
     ````
 
-2. After successfully logging in, proceed to Task 5.
+1. After successfully logging in, proceed to Task 5.
 
     ```
     ssh -i labkey opc@xxx.xxx.xxx.xxx
@@ -97,47 +94,47 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     [opc@primary ~]$ 
     ```
 
-    
 
 ### Windows Using Putty
 
-1.  Open up putty and create a new connection.
+1. Open up putty and create a new connection.
 
-2.  Enter a name for the session and click **Save**.
+1. Enter a name for the session and click **Save**.
 
     ![Putty Setup](./images/putty-setup.png " ")
 
-3.  Click **Connection** > **Data** in the left navigation pane and set the Auto-login username to root.
+1. Click **Connection** > **Data** in the left navigation pane and set the Auto-login username to root.
 
-4.  Click **Connection** > **SSH** > **Auth** in the left navigation pane and configure the SSH private key to use by clicking Browse under Private key file for authentication.
+1. Click **Connection** > **SSH** > **Auth** in the left navigation pane and configure the SSH private key to use by clicking Browse under Private key file for authentication.
 
-5.  Navigate to the location where you saved your SSH private key file, select the file, and click Open.  NOTE:  You cannot connect while on VPN or in the Oracle office on clear-corporate (choose clear-internet).
+1. Navigate to the location where you saved your SSH private key file, select the file, and click Open.  NOTE:  You cannot connect while on VPN or in the Oracle office on clear-corporate (choose clear-internet).
 
     ![Putty Auth](./images/putty-auth.png " ")
 
-6.  The file path for the SSH private key file now displays in the Private key file for authentication field.
+1. The file path for the SSH private key file now displays in the Private key file for authentication field.
 
-7.  Click Session in the left navigation pane, then click Save in the Load, save or delete a stored session Task .
+1. Click Session in the left navigation pane, then click Save in the Load, save or delete a stored session Task .
 
-8.  Click Open to begin your session with the instance.
+1. Click Open to begin your session with the instance.
 
 
 ## **Task 4:** Verify The Database Is Up
 
-1.  From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
+1. From your connected session of choice **tail** the `buildsingle.log`, This file has the configures log of the database.
 
     ````
     <copy>
     tail -f /u01/ocidb/buildsingle.log
     </copy>
     ````
+
     ![Tail of Build DB](./images/tailOfBuildDBInstanceLog.png " ")
 
-2.  When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes). You can do the **Task 5** to setup the standby environment while waiting the primary database ready .
+1. When you see the following message, the database setup is complete - **Completed successfully in XXXX seconds** (this may take up to 30 minutes). You can do the **Task 5** to setup the standby environment while waiting the primary database ready .
 
     ![tail of Build DB Finished](./images/tailOfBuildDBInstanceLog_finished.png " ")
 
-3.  Run the following command to verify the database with the SID **ORCL** is up and running.
+1. Run the following command to verify the database with the SID **ORCL** is up and running.
 
     ````
     <copy>
@@ -147,7 +144,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
     ![ps ef orcl](./images/pseforcl.png " ")
 
-4. Verify the listener is running:
+1. Verify the listener is running:
 
     ````
     <copy>
@@ -157,7 +154,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
 
     ![ps ef tns](./images/pseftns.png " ")
 
-5.  Connect to the Database using SQL*Plus as the **oracle** user.
+1. Connect to the Database using SQL*Plus as the **oracle** user.
 
     ````
     <copy>
@@ -165,11 +162,11 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     sqlplus system/Ora_DB4U@localhost:1521/orclpdb
     </copy>
     ````
-    
+
 
     ![SQL Plus connect](images/image-sqlplusconnect.png)
-    
-6.  To leave `sqlplus` you need to use the exit command. Copy and paste the text below into your terminal to exit sqlplus.
+
+1. To leave `sqlplus` you need to use the exit command. Copy and paste the text below into your terminal to exit sqlplus.
 
     ````
     <copy>
@@ -177,7 +174,7 @@ When using Resource Manager to deploy an environment, execute a terraform **Plan
     </copy>
     ````
 
-7.  Copy and paste the below command to exit from oracle user and become an **opc** user.
+1. Copy and paste the below command to exit from oracle user and become an **opc** user.
 
     ````
     <copy>
@@ -196,9 +193,8 @@ After complete, you have a standby host which has the database software only bee
 You may now **proceed to the next lab**.
 
 ## Acknowledgements
+
 * **Author** - Minqiao Wang, Oct 2020
 * **Last Updated By/Date** - Minqiao Wang, April 2024
 * **Workshop Expiry Date** - Nov 30, 2024
-
-
 
