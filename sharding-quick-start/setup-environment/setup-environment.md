@@ -5,25 +5,25 @@
 In this lab you will setup the shard database environment using Oracle Resource Manager and Terraform. The terraform script builds the following:
 
 1. Compute service for Shard Directors (based on the shape that user wants to select).
-2. Database service for Shard and Catalog databases (based on the shape that user wants to select).
+1. Database service for Shard and Catalog databases (based on the shape that user wants to select).
 
 Estimated Lab Time: 45 minutes.
 
 ### Objectives
 
--   Use Terraform and Resource Manager to setup the shard database environment.
--   Verify the shard database environment
+* Use Terraform and Resource Manager to setup the shard database environment.
+* Verify the shard database environment
 
 ### Prerequisites
 
 This lab assumes you have already completed the following:
-- An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account
-- Create a SSH Keys pair
+
+* An Oracle Free Tier, Always Free, Paid or LiveLabs Cloud Account
+* Create a SSH Keys pair
 
 Click on the link below to download the Resource Manager zip files you need to build your enviornment.
 
-- [shardstack-marketplace-103-nodomain.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/shardstack-marketplace-103-nodomain.zip) - Packaged terraform primary database instances creation script.
-
+* [shardstack-marketplace-103-nodomain.zip](https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/shardstack-marketplace-103-nodomain.zip) - Packaged terraform primary database instances creation script.
 
 
 ## **STEP 1:** Create the Shard Database Stacks
@@ -31,57 +31,54 @@ Click on the link below to download the Resource Manager zip files you need to b
 1. Login to the Oracle Cloud Console, open the hamburger menu in the left hand corner. Choose **Resource Manager > Stacks**. Choose the **Compartment** that you want to use, click the  **Create Stack** button. *Note: If you are in a workshop, double check your region to ensure you are on the assigned region.*
 
     ![Cloud Homepage](./images/cloud-homepage.png " ")
-    
+
     ![Resource](./images/resource.png " ")
-    
-    
-    
+
+
     ![Create Stack Page](./images/step1.3-createstackpage.png " ")
 
-2. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`shardstack-nodomain.zip`) that you downloaded. Click **Select** to upload the zip file.
+1. Check the **ZIP FILE**, Click the **Browse** link and select the setup zip file (`shardstack-nodomain.zip`) that you downloaded. Click **Select** to upload the zip file.
 
-    ![Stack Infor](images/image-stackinfor.png)
-
-    
+    ![Upload the shardstack-nodomain ZIP file](images/image-20210123085353928.png)
 
 
-3. Scroll down the screen, you can accept all the default informations and click **Next**.
+1. Scroll down the screen, you can accept all the default informations and click **Next**.
 
     ![Stack Info 2](images/image-stackinfo2.png)
 
-4. Oracle Sharded Database General Configuration. Enter the Sharded Database Name, for example: **sdb**. Accept all other default values.
+1. Oracle Sharded Database General Configuration. Enter the Sharded Database Name, for example: **sdb**. Accept all other default values.
 
     ![Configure Variable SDB](images/image-configurevariablesdb.png)
 
-5. Scroll down the screen, in the Shard configuration sector, You can set the shard database shape, number of the primary shards and shard database available storage. Accept the default values.
+1. Scroll down the screen, in the Shard configuration sector, You can set the shard database shape, number of the primary shards and shard database available storage. Accept the default values.
 
     ![Shard DB Shape](images/image-sharddbshape.png)
 
-6. In the Shard Catalog configuration sector, you can set the shard catalog database shape, shard catalog db available storage. Accept the default values.
+1. In the Shard Catalog configuration sector, you can set the shard catalog database shape, shard catalog db available storage. Accept the default values.
 
     ![Catalog DB Shape](images/image-catalogdbshape.png)
 
-7. In the replication sector, you can set the number of the replication factor. If the selected value is 1, then only a single replica set of the primary shard will be created. If the selected value is 2, then both the primary shard replica set and standby shard replica set will be created. In this workshop, we will not use the standby shard, so accept the default value **1**.
+1. In the replication sector, you can set the number of the replication factor. If the selected value is 1, then only a single replica set of the primary shard will be created. If the selected value is 2, then both the primary shard replica set and standby shard replica set will be created. In this workshop, we will not use the standby shard, so accept the default value **1**.
 
     ![Replication Factor](images/image-replicationfactor.png)
 
-8. In Shard Director Configuration,  you can set the shard director VM shape, and number of the shard directors. Accept the default values.
+1. In Shard Director Configuration,  you can set the shard director VM shape, and number of the shard directors. Accept the default values.
 
     ![Shard Director Shape](images/image-sharddirectorshape.png)
 
-9. In the Network setting sector, You can choose create new network or use a previously created network. In this workshop, we use create new network, you can select the compartment for VCN and subnet network. Accept all other default values.
+1. In the Network setting sector, You can choose create new network or use a previously created network. In this workshop, we use create new network, you can select the compartment for VCN and subnet network. Accept all other default values.
 
     ![Network](images/image-network.png)
 
-10. In the ssh configuration, You can choose the ssh public key file which you created before or paste the ssh public key value in it.
+1. In the ssh configuration, You can choose the ssh public key file which you created before or paste the ssh public key value in it.
 
     ![SSH Public Key](images/image-sshpublickey.png)
 
-11. Click **Next**, you can review you configuration variables.
+1. Click **Next**, you can review you configuration variables.
 
     ![Review Page](images/image-reviewpage.png)
 
-12. Click **Create**. Your stack has now been created!  
+1. Click **Create**. Your stack has now been created!  
 
     ![Create Page](images/image-createpage.png)
 
@@ -92,20 +89,19 @@ When using Resource Manager to deploy an environment, execute a terraform **Appl
 1. At the top of your page, click on **Stack Details**.  Click the button, **Terraform Actions** -> **Apply**. Click **Apply**. This will create the shard database. This takes about about 30 minutes, please be patient.
 
     ![Apply](images/image-apply.png)
-    
+
     ![Apply Confirm](images/image-applyconfirm.png)
-    
+
     ![Job Running](images/image-jobrunning.png)
-    
+
     ![Job Finished](images/image-jobfinished.png)
 
-    
 
-2. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** for the shard director, shard catalog and shard database. You can also get the sys user password for the catalog database and shard database. 
+1. Once this job succeeds, you will get an apply complete notification from Terraform.  Click **Outputs**,  you can get the **public ip address** for the shard director, shard catalog and shard database. You can also get the sys user password for the catalog database and shard database.
 
     ![Job Output](images/image-joboutput.png)
 
-3. Write down all the public ip's and sys password for later use. It will be similar to the following. All the pdb name in the catalog and shard database is named `sdbpdb` by default. For example, the sys user password is: `sd_yonN176_uGAE009qa`
+1. Write down all the public ip's and sys password for later use. It will be similar to the following. All the pdb name in the catalog and shard database is named `sdbpdb` by default. For example, the sys user password is: `sd_yonN176_uGAE009qa`
 
     | Public IP       | Hostname | Act as              | PDB name |
     | --------------- | -------- | ------------------- | -------- |
@@ -114,9 +110,8 @@ When using Resource Manager to deploy an environment, execute a terraform **Appl
     | 193.123.251.185 | sdbsh0   | Shard Database 0    | sdbpdb   |
     | 193.123.237.163 | sdbsh1   | Shard Database 1    | sdbpdb   |
 
-    
 
-You now have a fully functional Oracle shard database which uses the system managed shard method. 
+You now have a fully functional Oracle shard database which uses the system managed shard method.
 
 ## **STEP 3:** Verify the Shard Database
 
@@ -136,17 +131,15 @@ You now have a fully functional Oracle shard database which uses the system mana
     [oracle@sdbsd0 ~]$ 
     ```
 
-   
 
-2. Edit the `.bash_profile`.
+1. Edit the `.bash_profile`.
 
     ```
     [oracle@sdbsd0 ~]$ <copy>vi .bash_profile</copy>
     ```
 
-   
 
-3. Add the following lines to the end of the profile. Save the file and exit the editor.
+1. Add the following lines to the end of the profile. Save the file and exit the editor.
 
     ```
     <copy>ORACLE_HOME=/u01/app/oracle/product/19.3.0/gsmhome_1
@@ -157,18 +150,16 @@ You now have a fully functional Oracle shard database which uses the system mana
     export LD_LIBRARY_PATH</copy>
     ```
 
-   
 
-4. Activate the environment variables.
+1. Activate the environment variables.
 
     ```
     [oracle@sdbsd0 ~]$ <copy>. .bash_profile</copy>
     [oracle@sdbsd0 ~]$
     ```
 
-   
 
-5. Run the following command to check the services in the director. You can find the default service named `GDS$CATALOG.oradbcloud` and `GDS$COORDINATOR.oradbcloud` which is listening on port 1522 and connected to the catalog instance.
+1. Run the following command to check the services in the director. You can find the default service named `GDS$CATALOG.oradbcloud` and `GDS$COORDINATOR.oradbcloud` which is listening on port 1522 and connected to the catalog instance.
 
     ```
     [oracle@sdbsd0 ~]$ <copy>lsnrctl status sdbsd0</copy>
@@ -204,9 +195,8 @@ You now have a fully functional Oracle shard database which uses the system mana
     [oracle@sdbsd0 ~]$ 
     ```
 
-   
 
-6. Run the GDSCTL Command.
+1. Run the GDSCTL Command.
 
     ```
     [oracle@sdbsd0 ~]$ <copy>gdsctl</copy>
@@ -220,9 +210,8 @@ You now have a fully functional Oracle shard database which uses the system mana
     GDSCTL> 
     ```
 
-   
 
-7. Verify the Sharding Topology. 
+1. Verify the Sharding Topology.
 
     ```
     GDSCTL> <copy>config</copy>
@@ -270,9 +259,8 @@ You now have a fully functional Oracle shard database which uses the system mana
     GDSCTL> 
     ```
 
-   
 
-8. Check the shard status, It's may look similar to the following.
+1. Check the shard status, It's may look similar to the following.
 
     ```
     GDSCTL> <copy>config shard</copy>
@@ -287,9 +275,8 @@ You now have a fully functional Oracle shard database which uses the system mana
     GDSCTL> 
     ```
 
-   
 
-9. Observe all shard database are registered.
+1. Observe all shard database are registered.
 
     ```
     GDSCTL> <copy>databases</copy>
@@ -303,9 +290,8 @@ You now have a fully functional Oracle shard database which uses the system mana
     GDSCTL> 
     ```
 
-   
 
-10. Show the created chunks.
+1. Show the created chunks.
 
     ```
     GDSCTL> <copy>config chunks</copy>
@@ -319,13 +305,11 @@ You now have a fully functional Oracle shard database which uses the system mana
     GDSCTL>   
     ```
 
-    
 
-You may now [proceed to the next lab](#next).
+You may now [proceed to the next lab](../create-app-schema/create-app-schema.md).
 
 ## Acknowledgements
+
 * **Author** - Minqiao Wang, Jan 2021
 * **Last Updated By/Date** - Minqiao Wang, Mar 2023
-
-
 
