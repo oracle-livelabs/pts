@@ -2,21 +2,23 @@
 
 ## Introduction
 
-To learn more about Oracle Sharded Databases, download and deploy the system-managed SDB demo application. The demo application uses the SDB environment and schema you have just created to simulate the workload of an online retail store. 
+To learn more about Oracle Sharded Databases, download and deploy the system-managed SDB demo application. The demo application uses the SDB environment and schema you have just created to simulate the workload of an online retail store.
 
 Estimated Lab Time: 30 minutes.
 
 ### Objectives
 
 In this lab, you will perform the following steps:
-- Setup and Configure the sharding demo application
-- Start the workload to load the demo data
+
+* Setup and Configure the sharding demo application
+* Start the workload to load the demo data
 
 ### Prerequisites
 
 This lab assumes you have already completed the following:
-- Sharded Database Deployment
-- Create Demo App Schema
+
+* Sharded Database Deployment
+* Create Demo App Schema
 
 ## **STEP 1:** Setup and Configure the Sharding Demo Application
 
@@ -29,26 +31,24 @@ This lab assumes you have already completed the following:
     
     [opc@sdbsd0 ~]$
     ```
-    
+
     Switch to oracle user.
-    
+
     ```
     [opc@sdbsd0 ~]$ <copy>sudo su - oracle</copy>
     Last login: Sat Jan 23 06:23:20 GMT 2021 on pts/0
     [oracle@sdbsd0 ~]$ 
     ```
 
-   
 
-2. Download the `sdb-demo-app-qs.zip`  file. 
+1. Download the `sdb-demo-app-qs.zip`  file.
 
     ```
-    oracle@cata ~]$ <copy>wget https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb-demo-app-qs.zip</copy>
+    oracle@cata ~]$ <copy>wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/data-management-library-files/sdb-demo-app-qs.zip</copy>
     ```
 
-   
 
-3. Unzip the file. This will create `sdb_demo_app` directory under the `/home/oracle`
+1. Unzip the file. This will create `sdb_demo_app` directory under the `/home/oracle`
 
     ```
     [oracle@sdbsd0 ~]$ <copy>unzip sdb-demo-app-qs.zip</copy> 
@@ -150,18 +150,16 @@ This lab assumes you have already completed the following:
     [oracle@sdbsd0 ~]$ 
     ```
 
-   
 
-4. Change to the `sdb_demo_app/sql` directory.
+1. Change to the `sdb_demo_app/sql` directory.
 
     ```
     [oracle@sdbsd0 ~]$ <copy>cd ./sdb_demo_app/sql</copy>
     [oracle@sdbsd0 sql]$
     ```
 
-   
 
-5. Edit the content of the `demo_app_ext.sql`. Modify the sys user password to your own in the **two connect strings**. Make sure the connect string is correct.
+1. Edit the content of the `demo_app_ext.sql`. Modify the sys user password to your own in the **two connect strings**. Make sure the connect string is correct.
 
     ```
     [oracle@sdbsd0 sql]$ <copy>vi demo_app_ext.sql</copy> 
@@ -201,9 +199,8 @@ This lab assumes you have already completed the following:
     [oracle@sdbsd0 sql]$ 
     ```
 
-   
 
-6. Using SQLPLUS to run the script.
+1. Using SQLPLUS to run the script.
 
     ```
     [oracle@sdbsd0 sql]$ <copy>sqlplus /nolog</copy>
@@ -216,9 +213,8 @@ This lab assumes you have already completed the following:
     SQL> <copy>@demo_app_ext.sql</copy>
     ```
 
-   
 
-7. The result likes the following.
+1. The result likes the following.
 
     ```
     Connected.
@@ -340,9 +336,8 @@ This lab assumes you have already completed the following:
     SQL> 
     ```
 
-   
 
-8. Exit the sqlplus. Change directory to the `sdb_demo_app`.
+1. Exit the sqlplus. Change directory to the `sdb_demo_app`.
 
     ```
     SQL> <copy>exit</copy>
@@ -351,17 +346,15 @@ This lab assumes you have already completed the following:
     
     [oracle@sdbsd0 sql]$ 
     ```
-    
-    
-    
+
+
     ```
     [oracle@sdbsd0 sql]$ <copy>cd ~/sdb_demo_app</copy>
     [oracle@sdbsd0 sdb_demo_app]$
     ```
 
-   
 
-9. View the `demo.properties` file, make sure it's like the following. Because we have no data guard standby database setup in this lab, we also use the `oltp_rw_srvc.sdb.oradbcloud` for the readonly service.
+1. View the `demo.properties` file, make sure it's like the following. Because we have no data guard standby database setup in this lab, we also use the `oltp_rw_srvc.sdb.oradbcloud` for the readonly service.
 
     ```
     name=demo
@@ -377,9 +370,6 @@ This lab assumes you have already completed the following:
     app.threads=7
     ```
 
-   
-
-   
 
 ## **STEP 2:** Start the workload
 
@@ -389,9 +379,8 @@ This lab assumes you have already completed the following:
     [oracle@sdbsd0 sdb_demo_app]$ <copy>./run.sh demo</copy>
     ```
 
-   
 
-2. The result likes the following.
+1. The result likes the following.
 
     ```
     Performing initial fill of the products table...
@@ -418,9 +407,8 @@ This lab assumes you have already completed the following:
           32092         5180            0            0          786
     ```
 
-   
 
-3. Wait several minutes, remember the APS (Transcation per Second).
+1. Wait several minutes, remember the APS (Transcation per Second).
 
     ```
     RO Queries | RW Queries | RO Failed  | RW Failed  | APS 
@@ -443,9 +431,8 @@ This lab assumes you have already completed the following:
          703757       117163            0            0         1143
     ```
 
-   
 
-4. Open another terminal, connect to the shard director host,.
+1. Open another terminal, connect to the shard director host,.
 
     ```
     $ ssh -i labkey opc@xxx.xxx.xxx.xxx
@@ -454,26 +441,25 @@ This lab assumes you have already completed the following:
     
     [opc@sdbsd0 ~]$
     ```
-    
+
     Switch to oracle user.
-    
+
     ```
     [opc@sdbsd0 ~]$ <copy>sudo su - oracle</copy>
     Last login: Sat Jan 23 07:29:32 GMT 2021 on pts/0
     
     [oracle@sdbsd0 ~]$
     ```
-    
+
      Change the directory to `sdb_demo_app`.
-    
+
     ```
     [oracle@sdbsd0 ~]$ <copy>cd sdb_demo_app</copy>
     [oracle@sdbsd0 sdb_demo_app]$ 
     ```
 
-   
 
-5. Start the monitoring tool via the following command. Ignore the FileNotFoundException message.
+1. Start the monitoring tool via the following command. Ignore the FileNotFoundException message.
 
     ```
      [oracle@sdbsd0 sdb_demo_app]$ <copy>./run.sh monitor</copy>
@@ -494,26 +480,23 @@ This lab assumes you have already completed the following:
     	at java.lang.Thread.run(Thread.java:748)
     ```
 
-   
 
-6. From your laptop, launch a browser and use the URL: `http://xxx.xxx.xxx.xxx:8081`. Using the public ip address of the shard director host and the port number is 8081.
+1. From your laptop, launch a browser and use the URL: `http://xxx.xxx.xxx.xxx:8081`. Using the public ip address of the shard director host and the port number is 8081.
 
     ![Demo Page](images/image-demopage.png)
 
-   
 
-7. Scroll down the screen, you can see the Last inserted orders:
+1. Scroll down the screen, you can see the Last inserted orders:
 
     ![Scroll Down Page](images/image-scrolldownpage.png)
 
-   
 
-8. Press `Ctrl+C` to cancel the demo in both of the terminal.
+1. Press `Ctrl+C` to cancel the demo in both of the terminal.
 
-    
 
-You may now [proceed to the next lab](#next).
+You may now [proceed to the next lab](../data-depend-route/data-depend-route.md).
 
 ## Acknowledgements
+
 * **Author** - Minqiao Wang, Jan 2021
 * **Last Updated By/Date** - Minqiao Wang, Mar 2023
