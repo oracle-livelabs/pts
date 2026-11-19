@@ -245,7 +245,7 @@ As the ADMIN user you will import the NATIONALPARKS and INCIDENT schemas in the 
     DECLARE
       l_job_state      VARCHAR2(1000);
       l_job_handle     NUMBER;
-      dumpFile         VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/kAws91diz_tuf8hGzB8n7F8WS-LGyJRG2QpFDU-0artLaYlvBlPfbBpA-3Ubo22u/n/oradbclouducm/b/bucket-vector/o/natparks3.dmp';
+      dumpFile         VARCHAR2(1024)  := 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/natparks3.dmp';
       logFile          VARCHAR2(1024)  := 'natparks3_imp.log';
       logDir           VARCHAR2(20)     := 'DATA_PUMP_DIR';
       logType          NUMBER          := dbms_datapump.ku$_file_type_log_file;
