@@ -305,10 +305,10 @@ END;
 ```
 
 URL to all-MiniLM-L6-v2.onnx is:
-<https://objectstorage.us-phoenix-1.oraclecloud.com/p/0RzlHqjY36-DSHZeYl9XovR9MxrvvCWIsx0-yp95d--Re-93qY4HHl7BVWFQBiJu/n/oraclepartnersas/b/huggingface-models/o/all-MiniLM-L6-v2.onnx>
+<https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/huggingface-models/all-MiniLM-L6-v2.onnx>
 
 URL to tinybert.onnx is:
-<https://objectstorage.us-phoenix-1.oraclecloud.com/p/aQ46zsq4mIUySbYW9klMXIxuMrTzBYAUQtH4aXKmsZxTkp5Hy1vhTCbXlyUaxbpg/n/oraclepartnersas/b/huggingface-models/o/tinybert.onnx>
+<https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/huggingface-models/tinybert.onnx>
 
 For example, to get tinybert.onnx and download it to ADB:
 
@@ -317,7 +317,7 @@ For example, to get tinybert.onnx and download it to ADB:
 BEGIN
   DBMS_CLOUD.GET_OBJECT(
     credential_name => 'OBJ_STORE_CRED',
-    object_uri => 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/bUxqKjZhI2qvtRK624QITVHb2vl4wquaSzaYQe7wf21KqV2Rr7EBwRjaeUFnH-AQ/n/oraclepartnersas/b/huggingface-models/o/tinybert.onnx',
+    object_uri => 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/4Au3jJ-t8Wtw3LWyYsDMqQk2FdlXDvXCb1MYRS0J6P4QS-GCrv2YNOolWdtFMLZq/n/c4u04/b/livelabsfiles/o/huggingface-models/tinybert.onnx',
     directory_name => 'staging',
     file_name => 'tinybert.onnx'
   );
