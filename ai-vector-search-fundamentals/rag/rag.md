@@ -66,6 +66,8 @@ In this task we will add a vector column to the SUPPORT\_INCIDENTS table. We wil
 
 3. Next we will add a new column to the table of type VECTOR. We will call the column INCIDENT\_VECTOR.
 
+    Run `DESC support_incidents`. If `INCIDENT_VECTOR` is already listed, skip the `ALTER TABLE` statement and continue to Task 2.
+
     ```[]
     <copy>
     ALTER TABLE support_incidents ADD (incident_vector VECTOR);
@@ -93,6 +95,8 @@ In this task we will add a vector column to the SUPPORT\_INCIDENTS table. We wil
 In this next task we will create vector embeddings on the INCIDENT\_TEXT column for all of the rows in the SUPPORT\_INCIDENTS table. We will use the all\_MiniLM\_L12\_v2 embedding model that was loaded into the database in the Vector Embeddings lab.
 
 1. Create vector embeddings for the INCIDENT\_TEXT column in the SUPPORT\_INCIDENTS table:
+
+    If you started directly at Lab 6, first complete Lab 1, Task 1 as `NATIONALPARKS` to load the embedding model. Then return to the `INCIDENT` worksheet.
 
     ```[]
     <copy>
@@ -250,7 +254,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     BEGIN
       llm_params := '{"provider":"ocigenai","credential_name":"OCI_GENAI_CRED",
         "url":"https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat",
-        "model":"meta.llama-3.2-90b-vision-instruct"}';
+        "model":"meta.llama-3.3-70b-instruct"}';
       user_question := 'The Camera App times out during authentication';
       --
       llm_response := DBMS_VECTOR_CHAIN.UTL_TO_GENERATE_TEXT(user_question, JSON(llm_params));
@@ -300,7 +304,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
     EXEC :user_query := 'The Camera App times out during authentication';
     SELECT incident_text, resolution_notes FROM support_incidents
     WHERE status IN ('Closed','Resolved') AND resolution_notes IS NOT NULL
-    ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING :user_question AS DATA), COSINE)
+    ORDER BY VECTOR_DISTANCE(incident_vector, VECTOR_EMBEDDING(nationalparks.minilm_l12_v2 USING :user_query AS DATA), COSINE)
     FETCH FIRST 5 ROWS ONLY;
     </copy>
     ```
@@ -358,7 +362,7 @@ In this task we will run a Generative AI query to ask the LLM a simple support r
       llm_response       CLOB;
       llm_prompt_text    CLOB;
     BEGIN
-      llm_params := '{"provider":"ocigenai","credential_name":"OCI_GENAI_CRED","url":"https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat","model":"meta.llama-3.2-90b-vision-instruct"}';
+      llm_params := '{"provider":"ocigenai","credential_name":"OCI_GENAI_CRED","url":"https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/chat","model":"meta.llama-3.3-70b-instruct"}';
       user_question := 'The Camera App times out during authentication';
       --
       WITH
